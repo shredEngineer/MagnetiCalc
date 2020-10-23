@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>magneticalc.CalculationThread.CalculationThread : API documentation</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">
+            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="showPrivate">
+      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code>magneticalc.CalculationThread.CalculationThread(<span title="QThread">QThread</span>)</code> <small>class documentation</small></h1>
+
+        <span id="partOf">
+          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.CalculationThread.html" class="code" data-type="Module">CalculationThread</a></code>
+          
+          <a href="classIndex.html#magneticalc.CalculationThread.CalculationThread">(View In Hierarchy)</a>
+        </span>
+      </div>
+
+      <div class="extrasDocstring">
+        
+      </div>
+
+      <div class="moduleDocstring">
+        <div><p>CalculationThread class. The calculation thread implements an offloaded pipeline of subsequent calculation subtasks. The pipeline may be interrupted at any time, thereby exiting this thread.</p></div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id9">
+  
+  <tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#progress_update" class="code" data-type="Class Variable">progress_update</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#__init__" class="code" data-type="Method">__init__</a></td>
+    <td><span>Initializes calculation thread.</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#progress_callback" class="code" data-type="Instance Variable">progress_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#run" class="code" data-type="Method">run</a></td>
+    <td><span>Thread main function.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_redraw" class="code" data-type="Method">trigger_redraw</a></td>
+    <td><span>Re-draws the 3D scene.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_finished" class="code" data-type="Method">trigger_finished</a></td>
+    <td><span>Signals that the calculation finished.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_on_wire_valid" class="code" data-type="Method">trigger_on_wire_valid</a></td>
+    <td><span>Gets called when the wire was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_on_sampling_volume_valid" class="code" data-type="Method">trigger_on_sampling_volume_valid</a></td>
+    <td><span>Gets called when the sampling volume was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_on_field_valid" class="code" data-type="Method">trigger_on_field_valid</a></td>
+    <td><span>Gets called when the field was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.CalculationThread.CalculationThread.html#trigger_on_metric_valid" class="code" data-type="Method">trigger_on_metric_valid</a></td>
+    <td><span>Gets called when the metric was successfully calculated.</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="baseclassvariable">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.progress_update">
+    
+  </a>
+  <a name="progress_update">
+    
+  </a>
+  <div class="functionHeader">
+    progress_update =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    __init__(self, gui):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Initializes calculation thread.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    gui =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.progress_callback">
+    
+  </a>
+  <a name="progress_callback">
+    
+  </a>
+  <div class="functionHeader">
+    progress_callback =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.run">
+    
+  </a>
+  <a name="run">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    run(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Thread main function.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_redraw">
+    
+  </a>
+  <a name="trigger_redraw">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_redraw(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Re-draws the 3D scene.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_finished">
+    
+  </a>
+  <a name="trigger_finished">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_finished(self, success):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Signals that the calculation finished.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">success</td><td>True if calculation was successful, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_on_wire_valid">
+    
+  </a>
+  <a name="trigger_on_wire_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_on_wire_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the wire was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_on_sampling_volume_valid">
+    
+  </a>
+  <a name="trigger_on_sampling_volume_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_on_sampling_volume_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the sampling volume was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_on_field_valid">
+    
+  </a>
+  <a name="trigger_on_field_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_on_field_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the field was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.CalculationThread.CalculationThread.trigger_on_metric_valid">
+    
+  </a>
+  <a name="trigger_on_metric_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    trigger_on_metric_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the metric was successfully calculated.</p></div>
+  </div>
+</div>
+
+      </div>
+      <address>
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-24 01:08:02.
+      </address>
+
+    </div>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

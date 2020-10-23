@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>magneticalc.Metric.Metric : API documentation</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">
+            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="showPrivate">
+      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code>magneticalc.Metric.Metric</code> <small>class documentation</small></h1>
+
+        <span id="partOf">
+          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Metric.html" class="code" data-type="Module">Metric</a></code>
+          
+          <a href="classIndex.html#magneticalc.Metric.Metric">(View In Hierarchy)</a>
+        </span>
+      </div>
+
+      <div class="extrasDocstring">
+        
+      </div>
+
+      <div class="moduleDocstring">
+        <div><p>Provides different metrics, mapping some field vector properties to some color and alpha range. For a list of color maps, see: https://matplotlib.org/3.1.1/gallery/color/colormap_reference.html</p></div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id28">
+  
+  <tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#Magnitude" class="code" data-type="Class Variable">Magnitude</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#MagnitudeXY" class="code" data-type="Class Variable">MagnitudeXY</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#MagnitudeXZ" class="code" data-type="Class Variable">MagnitudeXZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#MagnitudeYZ" class="code" data-type="Class Variable">MagnitudeYZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#LogMagnitude" class="code" data-type="Class Variable">LogMagnitude</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#LogMagnitudeXY" class="code" data-type="Class Variable">LogMagnitudeXY</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#LogMagnitudeXZ" class="code" data-type="Class Variable">LogMagnitudeXZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#LogMagnitudeYZ" class="code" data-type="Class Variable">LogMagnitudeYZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#AngleXY" class="code" data-type="Class Variable">AngleXY</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#AngleXZ" class="code" data-type="Class Variable">AngleXZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#AngleYZ" class="code" data-type="Class Variable">AngleYZ</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#Presets" class="code" data-type="Class Variable">Presets</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#get_by_id" class="code" data-type="Static Method">get_by_id</a></td>
+    <td><span>Selects a preset by name.</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#LogNormMinimum" class="code" data-type="Class Variable">LogNormMinimum</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#__init__" class="code" data-type="Method">__init__</a></td>
+    <td><span>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#color" class="code" data-type="Instance Variable">color</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#alpha" class="code" data-type="Instance Variable">alpha</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#is_valid" class="code" data-type="Method">is_valid</a></td>
+    <td><span>Indicates valid data for display.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#invalidate" class="code" data-type="Method">invalidate</a></td>
+    <td><span>Resets data, hiding from display.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#get_colors" class="code" data-type="Method">get_colors</a></td>
+    <td><span>Returns calculated colors.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#get_limits" class="code" data-type="Method">get_limits</a></td>
+    <td><span>Returns calculated limits.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#recalculate" class="code" data-type="Method">recalculate</a></td>
+    <td><span>Recalculate color and alpha values for field.</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#_colors" class="code" data-type="Instance Variable">_colors</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#_limits" class="code" data-type="Instance Variable">_limits</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.Magnitude">
+    
+  </a>
+  <a name="Magnitude">
+    
+  </a>
+  <div class="functionHeader">
+    Magnitude =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.MagnitudeXY">
+    
+  </a>
+  <a name="MagnitudeXY">
+    
+  </a>
+  <div class="functionHeader">
+    MagnitudeXY =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.MagnitudeXZ">
+    
+  </a>
+  <a name="MagnitudeXZ">
+    
+  </a>
+  <div class="functionHeader">
+    MagnitudeXZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.MagnitudeYZ">
+    
+  </a>
+  <a name="MagnitudeYZ">
+    
+  </a>
+  <div class="functionHeader">
+    MagnitudeYZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.LogMagnitude">
+    
+  </a>
+  <a name="LogMagnitude">
+    
+  </a>
+  <div class="functionHeader">
+    LogMagnitude =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.LogMagnitudeXY">
+    
+  </a>
+  <a name="LogMagnitudeXY">
+    
+  </a>
+  <div class="functionHeader">
+    LogMagnitudeXY =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.LogMagnitudeXZ">
+    
+  </a>
+  <a name="LogMagnitudeXZ">
+    
+  </a>
+  <div class="functionHeader">
+    LogMagnitudeXZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.LogMagnitudeYZ">
+    
+  </a>
+  <a name="LogMagnitudeYZ">
+    
+  </a>
+  <div class="functionHeader">
+    LogMagnitudeYZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.AngleXY">
+    
+  </a>
+  <a name="AngleXY">
+    
+  </a>
+  <div class="functionHeader">
+    AngleXY =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.AngleXZ">
+    
+  </a>
+  <a name="AngleXZ">
+    
+  </a>
+  <div class="functionHeader">
+    AngleXZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.AngleYZ">
+    
+  </a>
+  <a name="AngleYZ">
+    
+  </a>
+  <div class="functionHeader">
+    AngleYZ =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.Presets">
+    
+  </a>
+  <a name="Presets">
+    
+  </a>
+  <div class="functionHeader">
+    Presets =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  <a name="magneticalc.Metric.Metric.get_by_id">
+    
+  </a>
+  <a name="get_by_id">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />
+    def
+    get_by_id(_id_):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Selects a preset by name.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_id_</td><td>Preset ID string</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Preset parameters (or None if ID not found)</td></tr></table></div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Metric.Metric.LogNormMinimum">
+    
+  </a>
+  <a name="LogNormMinimum">
+    
+  </a>
+  <div class="functionHeader">
+    LogNormMinimum =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    __init__(self, color_preset, alpha_preset):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">color_preset</td><td>Color metric preset</td></tr><tr><td></td><td class="fieldArg">alpha_preset</td><td>Alpha metric preset</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Metric.Metric.color">
+    
+  </a>
+  <a name="color">
+    
+  </a>
+  <div class="functionHeader">
+    color =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Metric.Metric.alpha">
+    
+  </a>
+  <a name="alpha">
+    
+  </a>
+  <div class="functionHeader">
+    alpha =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Metric.Metric._colors">
+    
+  </a>
+  <a name="_colors">
+    
+  </a>
+  <div class="functionHeader">
+    _colors =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Metric.Metric._limits">
+    
+  </a>
+  <a name="_limits">
+    
+  </a>
+  <div class="functionHeader">
+    _limits =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.is_valid">
+    
+  </a>
+  <a name="is_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    is_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Indicates valid data for display.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if data is valid for display, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.invalidate">
+    
+  </a>
+  <a name="invalidate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    invalidate(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Resets data, hiding from display.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.get_colors">
+    
+  </a>
+  <a name="get_colors">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_colors(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns calculated colors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of color values (4-tuples)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.get_limits">
+    
+  </a>
+  <a name="get_limits">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_limits(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns calculated limits.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Dictionary</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.recalculate">
+    
+  </a>
+  <a name="recalculate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    recalculate(self, field_vectors, progress_callback):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Recalculate color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_vectors</td><td>Field vectors</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+  </div>
+</div>
+
+      </div>
+      <address>
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-24 01:08:02.
+      </address>
+
+    </div>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

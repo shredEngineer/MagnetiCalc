@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>magneticalc.SamplingVolume.SamplingVolume : API documentation</title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">
+            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="showPrivate">
+      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code>magneticalc.SamplingVolume.SamplingVolume</code> <small>class documentation</small></h1>
+
+        <span id="partOf">
+          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.SamplingVolume.html" class="code" data-type="Module">SamplingVolume</a></code>
+          
+          <a href="classIndex.html#magneticalc.SamplingVolume.SamplingVolume">(View In Hierarchy)</a>
+        </span>
+      </div>
+
+      <div class="extrasDocstring">
+        
+      </div>
+
+      <div class="moduleDocstring">
+        <div><p>Sampling volume class.</p></div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id40">
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#__init__" class="code" data-type="Method">__init__</a></td>
+    <td><span>Initializes an empty sampling volume, with zero bounds and no constraints.</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#resolution" class="code" data-type="Instance Variable">resolution</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#constraints" class="code" data-type="Instance Variable">constraints</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#bounds_min" class="code" data-type="Instance Variable">bounds_min</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#bounds_max" class="code" data-type="Instance Variable">bounds_max</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#is_valid" class="code" data-type="Method">is_valid</a></td>
+    <td><span>Indicates valid data for display.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#invalidate" class="code" data-type="Method">invalidate</a></td>
+    <td><span>Resets data, hiding from display.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_bounds" class="code" data-type="Method">get_bounds</a></td>
+    <td><span>Returns this volume's bounding box.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_points" class="code" data-type="Method">get_points</a></td>
+    <td><span>Returns this sampling volume's points.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#set_bounds_nearest" class="code" data-type="Method">set_bounds_nearest</a></td>
+    <td><span>Adjusts this volume's bounding box to fully enclose a 3D wire curve. This expands the bounding box to the next integer grid coordinates.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#set_padding" class="code" data-type="Method">set_padding</a></td>
+    <td><span>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#add_constraint" class="code" data-type="Method">add_constraint</a></td>
+    <td><span>Adds some constraint to this volume's point generator.</span></td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#constraint_dict" class="code" data-type="Static Method">constraint_dict</a></td>
+    <td><span>Returns a parameters for a given point, containing its coordinates, 3D radius and 2D radii in different planes.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#recalculate" class="code" data-type="Method">recalculate</a></td>
+    <td><span>Recalculates the sampling volume points.</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_points" class="code" data-type="Instance Variable">_points</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    __init__(self, resolution):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Initializes an empty sampling volume, with zero bounds and no constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Resolution</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.resolution">
+    
+  </a>
+  <a name="resolution">
+    
+  </a>
+  <div class="functionHeader">
+    resolution =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.constraints">
+    
+  </a>
+  <a name="constraints">
+    
+  </a>
+  <div class="functionHeader">
+    constraints =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>List</code>)
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.bounds_min">
+    
+  </a>
+  <a name="bounds_min">
+    
+  </a>
+  <div class="functionHeader">
+    bounds_min =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.bounds_max">
+    
+  </a>
+  <a name="bounds_max">
+    
+  </a>
+  <div class="functionHeader">
+    bounds_max =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume._points">
+    
+  </a>
+  <a name="_points">
+    
+  </a>
+  <div class="functionHeader">
+    _points =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.is_valid">
+    
+  </a>
+  <a name="is_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    is_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Indicates valid data for display.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.invalidate">
+    
+  </a>
+  <a name="invalidate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    invalidate(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Resets data, hiding from display.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_bounds">
+    
+  </a>
+  <a name="get_bounds">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_bounds(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this volume's bounding box.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">bounds_min, bounds_max</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_points">
+    
+  </a>
+  <a name="get_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_points(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this sampling volume's points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.set_bounds_nearest">
+    
+  </a>
+  <a name="set_bounds_nearest">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_bounds_nearest(self, bounds_min, bounds_max):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Adjusts this volume's bounding box to fully enclose a 3D wire curve. This expands the bounding box to the next integer grid coordinates.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">bounds_min</td><td>Minimum bounding box point</td></tr><tr><td></td><td class="fieldArg">bounds_max</td><td>Maximum bounding box point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Rounded (bounds_min, bounds_max)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.set_padding">
+    
+  </a>
+  <a name="set_padding">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_padding(self, dx, dy, dz):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">dx</td><td>Amount of padding in X-direction.</td></tr><tr><td></td><td class="fieldArg">dy</td><td>Amount of padding in Y-direction.</td></tr><tr><td></td><td class="fieldArg">dz</td><td>Amount of padding in Z-direction.</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.add_constraint">
+    
+  </a>
+  <a name="add_constraint">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    add_constraint(self, lambda_expression):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Adds some constraint to this volume's point generator.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">lambda_expression</td><td>Lambda expression, evaluating to boolean (dict as argument, see <a href="magneticalc.SamplingVolume.SamplingVolume.html#constraint_dict"><code>constraint_dict</code></a>)</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.constraint_dict">
+    
+  </a>
+  <a name="constraint_dict">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />
+    def
+    constraint_dict(x, y, z):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns a parameters for a given point, containing its coordinates, 3D radius and 2D radii in different planes.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">x</td><td>X-coordinate</td></tr><tr><td></td><td class="fieldArg">y</td><td>Y-coordinate</td></tr><tr><td></td><td class="fieldArg">z</td><td>Z-coordinate</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Constraint variables parameters</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.recalculate">
+    
+  </a>
+  <a name="recalculate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    recalculate(self, progress_callback):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Recalculates the sampling volume points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+  </div>
+</div>
+
+      </div>
+      <address>
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-24 01:08:02.
+      </address>
+
+    </div>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

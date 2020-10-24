@@ -102,7 +102,6 @@ If this software has been helpful to you in some way or another, please let me a
 
 License
 -------
-
 Copyright © 2020, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
 
 <b>ISC License</b>
@@ -118,3 +117,9 @@ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES<br>
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN<br>
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF<br>
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+Video Demo
+----------
+Here is a very short demo of MagnetiCalc in action:
+
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://yt-embed.herokuapp.com/embed?v=rsVbu5uF0eU)](https://www.youtube.com/watch?v=rsVbu5uF0eU)

@@ -24,7 +24,6 @@ import qtawesome as qta
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
@@ -64,7 +63,10 @@ class GUI(QMainWindow):
         atexit.register(self.quit)
 
         # Create the model first, as the following objects will access it (each widget acts as view *and* controller)
-        self.model = Model()
+        self.model = Model(
+            # This callback is needed to clear metric labels after the metric became invalid
+            on_metric_invalidated=lambda: self.sidebar_right.metric_widget.invalidate_labels()
+        )
 
         # Create the left and right sidebar
         # Note: These create the wire, sampling volume and metric widgets, each populating the model from configuration

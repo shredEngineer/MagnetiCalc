@@ -27,9 +27,11 @@ class Model:
     When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).
     """
 
-    def __init__(self):
+    def __init__(self, on_metric_invalidated):
         """
         Initializes the model.
+
+        @param on_metric_invalidated: Callback (needed to clear metric labels after the metric became invalid)
         """
         Debug(self, ": Init")
 
@@ -37,6 +39,7 @@ class Model:
         self.sampling_volume = None  # Will be initialized by SamplingVolume_Widget
         self.field = Field()         # There is no dedicated "Field_Widget"; set a single field here and reuse it
         self.metric = None
+        self.on_metric_invalidated = on_metric_invalidated
 
     def is_valid(self):
         """ Indicates valid data. """
@@ -74,6 +77,7 @@ class Model:
             if self.metric is not None:
                 if self.metric.is_valid():
                     self.metric.invalidate()
+                    self.on_metric_invalidated()
 
     def set_wire(self, wire):
         """

@@ -16,8 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPalette, QColor
+from PyQt5.QtWidgets import QGroupBox, QVBoxLayout
 
 
 class Groupbox(QGroupBox):
@@ -31,18 +32,30 @@ class Groupbox(QGroupBox):
         """
         QGroupBox.__init__(self)
 
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-
         self.setTitle(title)
         self.setStyleSheet("""
             QGroupBox {
-                font-weight: bold;
+                border: 1px solid #cccccc;
+                border-radius: 3px;
+                margin-top: 20px;
                 color: #2a7db0;
+                font-weight: bold;
+                background-color: #e5e5e5;
+            }
+
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                subcontrol-position: top left;
+                background-color: palette(window);
             }
         """)
 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
+
+        self.palette = self.palette()
+        self.palette.setColor(QPalette.Button, QColor(3, 18, 14))
+        self.setPalette(self.palette)
 
     # noinspection PyPep8Naming
     def addWidget(self, widget):
@@ -51,7 +64,7 @@ class Groupbox(QGroupBox):
 
         @param widget: QWidget
         """
-        self.layout.addWidget(widget, alignment=Qt.AlignTop)
+        self.layout.addWidget(widget)
 
     # noinspection PyPep8Naming
     def addSpacing(self, spacing):

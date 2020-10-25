@@ -30,10 +30,16 @@ class Metric:
     For a list of color maps, see: https://matplotlib.org/3.1.1/gallery/color/colormap_reference.html
     """
 
+    # Length scale
+    LengthScale = 1e-2  # m  (== 1 cm)
+
+    # Cutoff for logarithmic scaling
+    LogNormMinimum = 1e-12
+
     # Metric value: Magnitude in XYZ-space (linear)
     Magnitude = {
         "id": "Magnitude",
-        "func": lambda point: 1e3 * np.linalg.norm(point),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(point),
         "log": False,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -42,7 +48,7 @@ class Metric:
     # Metric value: Magnitude in XY-plane (linear)
     MagnitudeXY = {
         "id": "Magnitude XY",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[0], point[1]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[1]])),
         "log": False,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -51,7 +57,7 @@ class Metric:
     # Metric value: Magnitude in XZ-plane (linear)
     MagnitudeXZ = {
         "id": "Magnitude XZ",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[0], point[2]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[2]])),
         "log": False,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -60,7 +66,7 @@ class Metric:
     # Metric value: Magnitude in YZ-plane (linear)
     MagnitudeYZ = {
         "id": "Magnitude YZ",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[1], point[2]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[1], point[2]])),
         "log": False,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -69,7 +75,7 @@ class Metric:
     # Metric value: Magnitude in XYZ-space (logarithmic)
     LogMagnitude = {
         "id": "Log Magnitude",
-        "func": lambda point: 1e3 * np.linalg.norm(point),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(point),
         "log": True,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -78,7 +84,7 @@ class Metric:
     # Metric value: Magnitude in XY-plane (logarithmic)
     LogMagnitudeXY = {
         "id": "Log Magnitude XY",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[0], point[1]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[1]])),
         "log": True,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -87,7 +93,7 @@ class Metric:
     # Metric value: Magnitude in XZ-plane (logarithmic)
     LogMagnitudeXZ = {
         "id": "Log Magnitude XZ",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[0], point[2]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[2]])),
         "log": True,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -96,7 +102,7 @@ class Metric:
     # Metric preset: Magnitude in YZ-plane (logarithmic)
     LogMagnitudeYZ = {
         "id": "Log Magnitude YZ",
-        "func": lambda point: 1e3 * np.linalg.norm(np.array([point[1], point[2]])),
+        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[1], point[2]])),
         "log": True,
         "is_angle": False,
         "colormap": cm.cool  # divergent
@@ -157,21 +163,18 @@ class Metric:
                 return preset
         return None
 
-    # Logarithmic scaling: Positive minimum cutoff
-    LogNormMinimum = 1e-6
-
     def __init__(self, color_preset, alpha_preset):
         """
         This class holds a pair of metric presets.
         Using these metric presets, colors (including alpha channel) and field limits are calculated.
 
-        @param color_preset: Color metric preset
-        @param alpha_preset: Alpha metric preset
+        @param color_preset: Color metric preset (dictionary)
+        @param alpha_preset: Alpha metric preset (dictionary)
         """
         Debug(self, ": Init")
 
-        self.color = color_preset
-        self.alpha = alpha_preset
+        self._color_preset = color_preset
+        self._alpha_preset = alpha_preset
 
         self._colors = None
         self._limits = None
@@ -187,11 +190,29 @@ class Metric:
             self._limits is not None
 
     def invalidate(self):
-        """ Resets data, hiding from display. """
+        """
+        Resets data, hiding from display.
+        """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._colors = None
         self._limits = None
+
+    def get_color_preset(self):
+        """
+        Returns color metric preset.
+
+        @return: Color metric preset (dictionary)
+        """
+        return self._color_preset
+
+    def get_alpha_preset(self):
+        """
+        Returns alpha metric preset.
+
+        @return: Alpha metric preset (dictionary)
+        """
+        return self._alpha_preset
 
     def get_colors(self):
         """
@@ -212,7 +233,7 @@ class Metric:
     def recalculate(self, field_vectors, progress_callback):
         """
         Recalculate color and alpha values for field.
-        
+
         @param field_vectors: Field vectors
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
@@ -223,8 +244,8 @@ class Metric:
         color_values = np.zeros(len(field_vectors))
         alpha_values = np.zeros(len(field_vectors))
         for i in range(len(field_vectors)):
-            color_values[i] = self.color["func"](field_vectors[i])
-            alpha_values[i] = self.alpha["func"](field_vectors[i])
+            color_values[i] = self._color_preset["func"](field_vectors[i])
+            alpha_values[i] = self._alpha_preset["func"](field_vectors[i])
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
@@ -235,22 +256,22 @@ class Metric:
                     return False
 
         # Select color range
-        if self.color["is_angle"]:
+        if self._color_preset["is_angle"]:
             color_min, color_max = 0, 1
         else:
             color_min, color_max = min(color_values), max(color_values)
 
         # Select alpha range
-        if self.alpha["is_angle"]:
+        if self._alpha_preset["is_angle"]:
             alpha_min, alpha_max = 0, 1
         else:
             alpha_min, alpha_max = min(alpha_values), max(alpha_values)
 
         # Select color normalizer
-        if self.color["log"]:
-            Assert_Dialog(not self.color["is_angle"], "Logarithmic angles don't make any sense")
+        if self._color_preset["log"]:
+            Assert_Dialog(not self._color_preset["is_angle"], "Logarithmic angles don't make any sense")
 
-            # Adjust range for logarithm (out-of-range values will be clipped)
+            # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
             color_min_ = max(color_min, Metric.LogNormMinimum)   # avoiding "ValueError: minvalue must be positive"
             color_max_ = max(color_min_, color_max)              # avoiding "ValueError: minvalue must be <= maxvalue"
 
@@ -261,10 +282,10 @@ class Metric:
             color_normalize = Normalize(vmin=color_min_, vmax=color_max_)
 
         # Select alpha normalizer
-        if self.alpha["log"]:
-            Assert_Dialog(not self.alpha["is_angle"], "Logarithmic angles don't make any sense")
+        if self._alpha_preset["log"]:
+            Assert_Dialog(not self._alpha_preset["is_angle"], "Logarithmic angles don't make any sense")
 
-            # Adjust range for logarithm (out-of-range values will be clipped)
+            # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
             alpha_min_ = max(alpha_min, Metric.LogNormMinimum)   # avoiding "ValueError: minvalue must be positive"
             alpha_max_ = max(alpha_min_, alpha_max)              # avoiding "ValueError: minvalue must be <= maxvalue"
 
@@ -281,11 +302,11 @@ class Metric:
         for i in range(len(field_vectors)):
 
             # Calculate normalized color and alpha values
-            # Note: If using logarithmic scaling, out-of-range values (exceeding [0...1]) may be clipped
+            # Note: If using logarithmic scaling, out-of-range values (still exceeding [0...1] here) may be clipped
             color_value_normalized = color_normalize(color_values[i], clip=True)
             alpha_value_normalized = alpha_normalize(alpha_values[i], clip=True)
 
-            colors[i] = self.color["colormap"](color_value_normalized)
+            colors[i] = self._color_preset["colormap"](color_value_normalized)
             colors[i][3] = alpha_value_normalized
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)

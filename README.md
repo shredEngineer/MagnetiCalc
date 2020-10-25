@@ -10,7 +10,7 @@ MagnetiCalc
 **What does MagnetiCalc do?**
 
 MagnetiCalc calculates the magnetic field of arbitrary air coils, examples included.
-Inside a VisPy-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to DC currents) is displayed
+Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to DC currents) is displayed
 in interactive 3D, using multiple metrics for highlighting this field's properties.
 All parameters and presets can interactively be changed inside the GUI.
 
@@ -41,7 +41,7 @@ field color and alpha transparency are individually mapped using one of the vari
 Screenshot
 ----------
 
-![Example](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/Screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Screenshot.png)
 
 (Screenshot taken from the latest GitHub release.)
 
@@ -82,8 +82,11 @@ pip uninstall magneticalc -y
 
 ToDo
 ----
+* Highlight the currently selected base point (and all of its rotational-symmetry-duplicates).
 * Add support for adding, editing and removing sampling volume constraints;
   the SamplingVolume module already supports constraints, but the GUI currently doesn't.
+  This will also require changes to the way the field labels are currently distributed (relying on a *complete* grid).
+* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display. 
 * Add support for calculation of compensation factor, i.e. the ratio of total vector sum to metric limits.
 * Add support for calculation of self-inductance;
   a loop detector creates polygons over which the B-field is integrated,
@@ -120,6 +123,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Video Demo
 ----------
-Here is a very short demo of MagnetiCalc in action:
+Here is a very short demo of an earlier version of MagnetiCalc in action:
 
-[![Magnetic Field Calculation with Python (MagnetiCalc)](https://yt-embed.herokuapp.com/embed?v=rsVbu5uF0eU)](https://www.youtube.com/watch?v=rsVbu5uF0eU)
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=rsVbu5uF0eU)

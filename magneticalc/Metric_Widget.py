@@ -16,21 +16,19 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from si_prefix import *
+from si_prefix import si_format
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
+from magneticalc.HLine import HLine
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 
 
 class Metric_Widget(Groupbox):
     """ Metric_Widget class. """
-
-    # Display settings
-    VerticalSpacing = 16
 
     # Metric limit formatting settings
     LimitsPrecision = 1
@@ -48,11 +46,11 @@ class Metric_Widget(Groupbox):
         # Initially load metric from configuration
         self.set_metric(recalculate=False, update_labels=False)
 
-        self.addWidget(IconLabel("fa.tint", "Color:"))
+        self.addWidget(IconLabel("fa.tint", "Color"))
         color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric.Presets):
             color_metric_combobox.addItem(preset["id"])
-            if preset["id"] == self.gui.model.metric.color["id"]:
+            if preset["id"] == self.gui.model.metric.get_color_preset()["id"]:
                 color_metric_combobox.setCurrentIndex(i)
         color_metric_combobox.currentIndexChanged.connect(
             lambda: self.set_metric(color_preset=Metric.get_by_id(color_metric_combobox.currentText()))
@@ -78,13 +76,15 @@ class Metric_Widget(Groupbox):
         )
         self.addWidget(self.color_metric_limits_widget)
 
-        self.addSpacing(self.VerticalSpacing)
+        # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(IconLabel("mdi.blur", "Alpha:"))
+        self.addWidget(HLine())
+
+        self.addWidget(IconLabel("mdi.blur", "Alpha"))
         alpha_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric.Presets):
             alpha_metric_combobox.addItem(preset["id"])
-            if preset["id"] == self.gui.model.metric.alpha["id"]:
+            if preset["id"] == self.gui.model.metric.get_alpha_preset()["id"]:
                 alpha_metric_combobox.setCurrentIndex(i)
         alpha_metric_combobox.currentIndexChanged.connect(
             lambda: self.set_metric(alpha_preset=Metric.get_by_id(alpha_metric_combobox.currentText()))
@@ -149,9 +149,11 @@ class Metric_Widget(Groupbox):
 
             limits = self.gui.model.metric.get_limits()
 
-            if self.gui.model.metric.color["is_angle"]:
+            if self.gui.model.metric.get_color_preset()["is_angle"]:
                 color_label_min = "N/A"
                 color_label_max = "N/A"
+
+                # ToDo: Show "hsv" colormap gradient instead of nothing at all
                 self.color_metric_limits_widget.setStyleSheet("""""")
             else:
                 color_label_min = si_format(limits["color_min"], precision=self.LimitsPrecision) + "T"
@@ -160,9 +162,11 @@ class Metric_Widget(Groupbox):
                     background: qlineargradient(x1:0 y1:0, x2:1 y2:0, stop:0 #00fffe, stop:1 #ff22f9);
                 """)
 
-            if self.gui.model.metric.alpha["is_angle"]:
+            if self.gui.model.metric.get_alpha_preset()["is_angle"]:
                 alpha_label_min = "N/A"
                 alpha_label_max = "N/A"
+
+                # ToDo: Show "hsv" colormap gradient instead of nothing at all
                 self.alpha_metric_limits_widget.setStyleSheet("""""")
             else:
                 alpha_label_min = si_format(limits["alpha_min"], precision=self.LimitsPrecision) + "T"

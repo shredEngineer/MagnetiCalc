@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
-from PyQt5.QtCore import *
+from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
 
@@ -25,7 +25,7 @@ from magneticalc.Debug import Debug
 class SamplingVolume:
     """ Sampling volume class. """
 
-    def __init__(self, resolution):
+    def __init__(self, resolution: int):
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
 
@@ -33,36 +33,50 @@ class SamplingVolume:
         """
         Debug(self, ": Init")
 
-        self.resolution = resolution
+        self._resolution = resolution
 
         self.constraints = []
 
-        self.bounds_min = np.zeros(3)
-        self.bounds_max = np.zeros(3)
+        self._bounds_min = np.zeros(3)
+        self._bounds_max = np.zeros(3)
 
         self._points = None
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
 
     def is_valid(self):
-        """ Indicates valid data for display. """
+        """
+        Indicates valid data for display.
+
+        @return: True if data is valid for display, False otherwise
+        """
         return self._points is not None
 
     def invalidate(self):
-        """ Resets data, hiding from display. """
+        """
+        Resets data, hiding from display.
+        """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._points = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    def get_resolution(self):
+        """
+        Returns this volume's resolution.
+
+        @return: Resolution
+        """
+        return self._resolution
+
     def get_bounds(self):
         """
         Returns this volume's bounding box.
 
-        @return: bounds_min, bounds_max
+        @return: _bounds_min, _bounds_max
         """
-        return self.bounds_min, self.bounds_max
+        return self._bounds_min, self._bounds_max
 
     def get_points(self):
         """
@@ -85,10 +99,10 @@ class SamplingVolume:
 
         @param bounds_min: Minimum bounding box point
         @param bounds_max: Maximum bounding box point
-        @return: Rounded (bounds_min, bounds_max)
+        @return: Rounded (_bounds_min, _bounds_max)
         """
-        self.bounds_min = np.array([np.floor(x) for x in bounds_min])
-        self.bounds_max = np.array([np.ceil(x) for x in bounds_max])
+        self._bounds_min = np.array([np.floor(x) for x in bounds_min])
+        self._bounds_max = np.array([np.ceil(x) for x in bounds_max])
 
     def set_padding(self, dx, dy, dz):
         """
@@ -100,8 +114,8 @@ class SamplingVolume:
         @param dy: Amount of padding in Y-direction.
         @param dz: Amount of padding in Z-direction.
         """
-        self.bounds_min = list(np.array(self.bounds_min) - np.array([dx, dy, dz]))
-        self.bounds_max = list(np.array(self.bounds_max) + np.array([dx, dy, dz]))
+        self._bounds_min -= np.array([dx, dy, dz])
+        self._bounds_max += np.array([dx, dy, dz])
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -145,31 +159,24 @@ class SamplingVolume:
         """
         Debug(self, ".recalculate()", color=(0, 128, 0))
 
+        # Calculate all possible grid coordinates
         coordinates = [[], [], []]
         for i in range(3):
-            steps = np.ceil((self.bounds_max[i] - self.bounds_min[i]) * self.resolution).astype(int) + 1
-            coordinates[i] = np.linspace(self.bounds_min[i], self.bounds_max[i], steps)
+            steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
+            coordinates[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
-        # Calculate total number of possible points
-        n = len(coordinates[0]) * len(coordinates[1]) * len(coordinates[2])
+        # Calculate the total number of possible grid points
 
         points = []
 
-        # Iterate through all possible points
+        # Iterate through all possible grid points
+        # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
+        span = np.array([len(axis) for axis in coordinates])
+        n = span[0] * span[1] * span[2]
         x, y, z = 0, 0, 0
         for i in range(n):
-            point = np.array([coordinates[0][x], coordinates[1][y], coordinates[2][z]])
 
-            # Linear access
-            if x + 1 < len(coordinates[0]):
-                x += 1
-            else:
-                x = 0
-                if y + 1 < len(coordinates[1]):
-                    y += 1
-                else:
-                    y = 0
-                    z += 1
+            point = np.array([coordinates[0][x], coordinates[1][y], coordinates[2][z]])
 
             # Calculate inclusion relation
             inclusion = True
@@ -179,6 +186,17 @@ class SamplingVolume:
                     break
             if inclusion:
                 points.append(point)
+
+            # Move to the next "x, y, z" grid index
+            if x + 1 < span[0]:
+                x += 1
+            else:
+                x = 0
+                if y + 1 < span[1]:
+                    y += 1
+                else:
+                    y = 0
+                    z += 1
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:

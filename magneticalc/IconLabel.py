@@ -17,15 +17,15 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel
 
 
 class IconLabel(QWidget):
     """ IconLabel class. """
 
     IconSize = QSize(16, 16)
-    HorizontalSpacing = 2
+    HorizontalSpacing = 1
 
     def __init__(self, qta_id, text):
         """

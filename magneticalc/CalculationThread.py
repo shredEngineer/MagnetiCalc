@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import *
+from PyQt5.QtCore import QThread, pyqtSignal
 from multiprocessing import cpu_count
 
 
@@ -45,7 +45,9 @@ class CalculationThread(QThread):
         self.progress_callback = self.progress_update.emit
 
     def run(self):
-        """ Thread main function. """
+        """
+        Thread main function.
+        """
 
         if not self.gui.model.wire.is_valid():
             self.gui.calculation_status.emit("Calculating Wire Segments...")
@@ -90,7 +92,7 @@ class CalculationThread(QThread):
         if not self.gui.model.metric.is_valid():
             self.gui.calculation_status.emit("Calculating Metric...")
 
-            if not self.gui.model.metric.recalculate(self.gui.model.field.get_vectors(), self.progress_callback):
+            if not self.gui.model.calculate_metric(self.progress_callback):
                 self.trigger_finished(False)
                 return
 
@@ -101,10 +103,6 @@ class CalculationThread(QThread):
         self.trigger_finished(True)
 
     # ------------------------------------------------------------------------------------------------------------------
-
-    def trigger_redraw(self):
-        """ Re-draws the 3D scene. """
-        self.gui.vispy_canvas.redraw()
 
     def trigger_finished(self, success):
         """
@@ -123,20 +121,28 @@ class CalculationThread(QThread):
     # ------------------------------------------------------------------------------------------------------------------
 
     def trigger_on_wire_valid(self):
-        """ Gets called when the wire was successfully calculated. """
+        """
+        Gets called when the wire was successfully calculated.
+        """
         self.gui.sidebar_left.wire_widget.update_sliced_total_label()
-        self.trigger_redraw()
+        self.gui.vispy_canvas.redraw()
 
     def trigger_on_sampling_volume_valid(self):
-        """ Gets called when the sampling volume was successfully calculated. """
+        """
+        Gets called when the sampling volume was successfully calculated.
+        """
         self.gui.sidebar_left.sampling_volume_widget.update_total_label()
-        self.trigger_redraw()
+        self.gui.vispy_canvas.redraw()
 
     def trigger_on_field_valid(self):
-        """ Gets called when the field was successfully calculated. """
-        self.trigger_redraw()
+        """
+        Gets called when the field was successfully calculated.
+        """
+        self.gui.vispy_canvas.redraw()
 
     def trigger_on_metric_valid(self):
-        """ Gets called when the metric was successfully calculated. """
+        """
+        Gets called when the metric was successfully calculated.
+        """
         self.gui.sidebar_right.metric_widget.update_labels()
-        self.trigger_redraw()
+        self.gui.vispy_canvas.redraw()

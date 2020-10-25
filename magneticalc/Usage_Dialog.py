@@ -17,15 +17,15 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 
 
 class Usage_Dialog(QDialog):
     """ Usage_Dialog class. """
 
     # Window dimensions
-    Width = 800
+    Width = 835
     Height = 590
 
     # HTML content
@@ -36,7 +36,7 @@ class Usage_Dialog(QDialog):
             <li>Customize the wire's base points inside the spreadsheet.</li>
             <li>Apply some transformations to your basic wire; rotate or stretch its shape.</li>
             <li>Reduce the slicer limit to improve the B-field calculation accuracy.</li>
-            <li>Set a DC current flowing through your wire.</li> 
+            <li>Set a DC current flowing through your wire.</li>
         </ul>
 
         <ul>
@@ -46,16 +46,16 @@ class Usage_Dialog(QDialog):
             </li>
             <li>
                 By default, the cuboid sampling volume covers the wire completely;<br>
-                however, you may symmetrically adjust its bounding box by adding (subtracting) some padding. 
+                however, you may symmetrically adjust its bounding box by adding (subtracting) some padding.
             </li>
         </ul>
 
         <ul>
             <li>
                 Select a color/alpha metric to adjust the field's hue/transparency individually.<br>
-                Because all metrics are normalized, changes in DC current do not affect the field hue/transparency;
-                however, the displayed metric limits linearly scale with the DC current. 
-            </li> 
+                Because all metrics are normalized, changes in DC current do not affect the field hue/transparency;<br>
+                however, the displayed metric limits linearly scale with the DC current.
+            </li>
         </ul>
 
         <ul>
@@ -73,20 +73,21 @@ class Usage_Dialog(QDialog):
         Deleting or renaming this file will restore the default settings.
 
         <h3 style="color: #2a7db0;">What does MagnetiCalc do?</h3>
-        
+
         MagnetiCalc calculates the magnetic field of arbitrary air coils, examples included.<br>
-        Inside this VisPy-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to a DC current)<br>
+        Inside this VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to a DC current)
+        <br>
         is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.<br>
         All parameters and presets can interactively be changed inside the GUI.
-        
+
         <h3 style="color: #2a7db0;">Who needs MagnetiCalc?</h3>
-        
+
         MagnetiCalc does its job for hobbyists, students, engineers and researchers of magnetic phenomena.<br>
         I designed MagnetiCalc from scratch, because I didn't want to mess around with expensive and/or<br>
         overly complex simulation software whenever I needed to solve a magnetostatic problem.
-        
+
         <h3 style="color: #2a7db0;">How does it work?</h3>
-        
+
         The field calculation is implemented using the Biot-Savart law <span style="color: #2a7db0;">[1]</span>,
         employing multiprocessing techniques.<br>
         The use of easily constrainable "sampling volumes" allows for selective calculation over arbitrary shapes.<br>
@@ -143,5 +144,7 @@ class Usage_Dialog(QDialog):
         layout.addLayout(button_box)
 
     def show(self):
-        """ Shows this dialog. """
+        """
+        Shows this dialog.
+        """
         self.exec()

@@ -16,30 +16,24 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from functools import *
+from functools import partial
 import qtawesome as qta
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QPushButton, QAbstractItemView
 
 
 class Table(QTableWidget):
     """ Table class. """
 
-    def __init__(self, height=None, enabled=True, cell_edited_callback=None, row_deleted_callback=None, minimum_rows=2):
+    def __init__(self, enabled=True, cell_edited_callback=None, row_deleted_callback=None, minimum_rows=2):
         """
         Initializes table.
 
-        @param height: Sets the exact table height (if not None)
         @param cell_edited_callback: Set this to make cells editable
         @param row_deleted_callback: Set this to make rows deletable
         @param minimum_rows: Minimum number of rows (no further rows can be deleted)
         """
         QTableWidget.__init__(self)
-
-        if height is not None:
-            self.setMinimumHeight(height)
-            self.setMaximumHeight(height)
 
         self.enabled = enabled
         self.cell_edited_callback = cell_edited_callback
@@ -60,6 +54,14 @@ class Table(QTableWidget):
                 padding: 2;
             }
         """)
+
+        self.setAlternatingRowColors(True)
+        self.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.selectionModel().selectionChanged.connect(self.selection_changed)
+
+    def selection_changed(self, a, b):
+        print(a, b)
 
     def set_horizontal_header(self, header):
         """
@@ -99,7 +101,9 @@ class Table(QTableWidget):
         """)
 
     def clear_rows(self):
-        """ Clears table rows. """
+        """
+        Clears table rows.
+        """
         self.setRowCount(0)
 
     def set_contents(self, contents):
@@ -116,7 +120,7 @@ class Table(QTableWidget):
                 item = QTableWidgetItem(col_contents)
                 item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
-                flags = Qt.NoItemFlags
+                flags = Qt.NoItemFlags | Qt.ItemIsSelectable
                 if self.enabled:
                     flags |= Qt.ItemIsEnabled
                 if self.cell_edited_callback is not None:

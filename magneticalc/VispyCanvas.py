@@ -17,16 +17,19 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
+from si_prefix import si_format
 from vispy import io, scene, visuals
 from vispy.scene.cameras import TurntableCamera
 from magneticalc.Debug import Debug
+from magneticalc.Metric import Metric
 
 
 class VispyCanvas(scene.SceneCanvas):
     """ VispyCanvas class. """
 
     # Font
-    DefaultFont = "DejaVu Sans Mono"
+    DefaultFontFace = "DejaVu Sans Mono"
+    DefaultFontSize = 9
 
     # Enable to additionally debug drawing of visuals
     DebugVisuals = False
@@ -42,6 +45,12 @@ class VispyCanvas(scene.SceneCanvas):
     # Zoom limits
     ScaleFactorMin = 1e-2
     ScaleFactorMax = 1e+3
+
+    # Divisor cutoff (mitigating divisions by zero)
+    DivisorCutoff = 1e-12
+
+    # Magnitude formatting settings
+    MagnitudePrecision = 1
 
     # Preset: Isometric
     Isometric = {
@@ -78,6 +87,19 @@ class VispyCanvas(scene.SceneCanvas):
         PlaneYZ
     ]
 
+    @staticmethod
+    def get_by_id(_id_):
+        """
+        Selects a preset by name.
+
+        @param _id_: Preset ID string
+        @return: Preset parameters (or None if ID not found)
+        """
+        for preset in VispyCanvas.Presets:
+            if _id_ == preset["id"]:
+                return preset
+        return None
+
     def __init__(self, gui):
         """
         Initialize VisPy canvas.
@@ -100,14 +122,23 @@ class VispyCanvas(scene.SceneCanvas):
 
         self.visual_coordinate_system = scene.visuals.create_visual_node(visuals.XYZAxisVisual)()
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.font_manager = visuals.text.text.FontManager(method="gpu")
+
         self.visual_perspective_info = scene.visuals.create_visual_node(visuals.TextVisual)(
             parent=self.view_text.scene,
             pos=(10, 10),
             anchor_x="left",
             anchor_y="bottom",
-            font_size=9,
-            face=self.DefaultFont,
+            face=self.DefaultFontFace,
+            font_size=self.DefaultFontSize,
+            font_manager=self.font_manager
         )
+
+        self.visual_field_labels = {}  # Managed by L{redraw_field_labels}
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.visual_wire_segments = scene.visuals.create_visual_node(visuals.LineVisual)()
         self.visual_wire_points_sliced = scene.visuals.create_visual_node(visuals.MarkersVisual)()
@@ -182,6 +213,7 @@ class VispyCanvas(scene.SceneCanvas):
         self.visual_perspective_info.parent = self.view_text.scene if visible else None
 
         if visible:
+            # Calculate linearized zoom value from VisPy "scale factor"
             zoom_log_range = np.log10(self.ScaleFactorMax) - np.log10(self.ScaleFactorMin)
             zoom_log_shift = np.log10(self.view_main.camera.scale_factor) - np.log10(self.ScaleFactorMin)
             zoom = 1000 * (1 - zoom_log_shift / zoom_log_range)
@@ -219,6 +251,9 @@ class VispyCanvas(scene.SceneCanvas):
 
         self.redraw_field_arrows(colors)
         self.redraw_field_points(colors)
+        self.redraw_field_labels(colors)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def redraw_wire_segments(self):
         """
@@ -280,7 +315,6 @@ class VispyCanvas(scene.SceneCanvas):
         arrow_scale = self.gui.config.get_float("field_arrow_scale")
 
         visible = \
-            self.gui.model.sampling_volume.is_valid() and \
             self.gui.model.field.is_valid() and \
             arrow_scale > 0
 
@@ -294,8 +328,8 @@ class VispyCanvas(scene.SceneCanvas):
 
             for i in range(len(self.gui.model.sampling_volume.get_points())):
 
-                # Calculate normalized field direction
-                field_vector_length = max(1e-12, np.linalg.norm(self.gui.model.field.get_vectors()[i]))
+                # Calculate normalized field direction (mitigating divisions by zero)
+                field_vector_length = max(self.DivisorCutoff, np.linalg.norm(self.gui.model.field.get_vectors()[i]))
                 field_direction_norm = self.gui.model.field.get_vectors()[i] / field_vector_length
 
                 # Calculate arrow start & end coordinates
@@ -342,7 +376,7 @@ class VispyCanvas(scene.SceneCanvas):
     def redraw_field_points(self, colors):
         """
         Re-draws field points.
-        
+
         @param colors: Colors
         """
         point_scale = self.gui.config.get_float("field_point_scale")
@@ -371,6 +405,90 @@ class VispyCanvas(scene.SceneCanvas):
                 edge_color=None,
                 symbol="disc"
             )
+
+    def redraw_field_labels(self, colors):
+        """
+        Re-draws field labels.
+
+        @param colors: Colors
+        """
+        visible = \
+            self.gui.model.metric.is_valid() and \
+            self.gui.config.get_bool("display_magnitude_labels")
+
+        # Labels are not visible
+        if not visible:
+
+            # Delete old labels
+            if len(self.visual_field_labels) > 0:
+                for i, visual in self.visual_field_labels.items():
+                    visual.parent = None
+
+                if self.DebugVisuals:
+                    Debug(self, f".redraw_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+                self.visual_field_labels = {}
+
+        # Labels are visible
+        else:
+
+            # Use foreground color for all labels
+            if not self.gui.config.get_bool("field_colors_labels"):
+                colors = [self.foreground] * len(self.gui.model.sampling_volume.get_points())
+
+            # Create new labels
+            if len(self.visual_field_labels) == 0:
+
+                bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
+                resolution = self.gui.model.sampling_volume.get_resolution()
+
+                # ToDo: When sampling volume constraints are implemented, adapt this to work with "incomplete grids":
+                # Iterate through the sampling volume points
+                # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
+                span = (bounds_max - bounds_min) * resolution + np.array([1, 1, 1])
+                n = len(self.gui.model.sampling_volume.get_points())
+                x, y, z = 0, 0, 0
+                for i in range(n):
+
+                    # Provide some spacing between labels
+                    if x % resolution == 0 and y % resolution == 0 and z % resolution == 0:
+
+                        magnitude = Metric.LengthScale * np.linalg.norm(self.gui.model.field.get_vectors()[i])
+                        text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + "T"
+
+                        visual = scene.visuals.create_visual_node(visuals.TextVisual)(
+                            parent=self.view_main.scene,
+                            pos=self.gui.model.sampling_volume.get_points()[i],
+                            face=self.DefaultFontFace,
+                            font_size=self.DefaultFontSize,
+                            color=np.append(colors[i][:3], 1.0),
+                            text=text,
+                            font_manager=self.font_manager
+                        )
+
+                        self.visual_field_labels[i] = visual
+
+                    # Move to the next "x, y, z" grid index
+                    if x + 1 < span[0]:
+                        x += 1
+                    else:
+                        x = 0
+                        if y + 1 < span[1]:
+                            y += 1
+                        else:
+                            y = 0
+                            z += 1
+
+                if self.DebugVisuals:
+                    Debug(self, f".redraw_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+            else:
+
+                # Update colors of existing labels
+                for i, visual in self.visual_field_labels.items():
+                    visual.color = np.append(colors[i][:3], 1.0)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def boost_color(self, color):
         """

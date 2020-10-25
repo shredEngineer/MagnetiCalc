@@ -16,8 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from inspect import *
-from colorit import *
+from inspect import isclass, stack
+from colorit import color_front, bold
 
 
 class Debug:
@@ -34,6 +34,7 @@ class Debug:
         "Field",
         "Groupbox",
         "GUI",
+        "HLine",
         "IconLabel",
         "Menu",
         "Metric",
@@ -101,8 +102,4 @@ class Debug:
         else:
             color_text = color_front(bold(name), *color) + color_front(text, *color)
 
-        print(
-            color_front(hierarchy, 128, 128, 128) +
-            color_text +
-            "\n", end=""
-        )
+        print(color_front(hierarchy, 128, 128, 128) + color_text + "\n", end="")

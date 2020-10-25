@@ -1,10 +1,8 @@
-#!/bin/usr/env python3
-
-""" MagnetiCalc main module. """
+""" HLine module. """
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -18,35 +16,27 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import sys
-from colorit import bold
-from PyQt5.QtWidgets import QApplication
-from magneticalc.Config import Config
-from magneticalc.GUI import GUI
-from magneticalc.Version import Version
+from PyQt5.QtWidgets import QFrame
 
 
-def main():
-    """ MagnetiCalc main function. """
+class HLine(QFrame):
+    """ HLine class. """
 
-    print()
-    print(bold(Version.String))
-    print(Version.Copyright)
-    print(Version.License)
-    print()
+    # Display settings
+    VerticalSpacing = 12
 
-    config = Config()
+    def __init__(self):
+        """
+        Creates a horizontal line.
+        """
+        super().__init__()
 
-    app = QApplication(sys.argv)
-
-    gui = GUI(config)
-
-    gui.show()
-
-    rc = app.exec()
-
-    sys.exit(rc)
-
-
-if __name__ == '__main__':
-    main()
+        self.setFixedHeight(self.VerticalSpacing)
+        self.setFrameShape(QFrame.HLine)
+        self.setFrameShadow(QFrame.Plain)
+        self.setStyleSheet(f"""
+            border-top: 1px solid #cccccc;
+            border-bottom: 1px solid #f0f0f0;
+            margin-top: {self.VerticalSpacing // 2 - 1}px;
+            margin-bottom: {self.VerticalSpacing // 2 - 1}px;
+        """)

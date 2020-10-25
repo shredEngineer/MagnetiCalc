@@ -18,9 +18,9 @@
 
 import webbrowser
 import qtawesome as qta
-from functools import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from functools import partial
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 from magneticalc.Version import Version
 
 
@@ -101,5 +101,7 @@ class About_Dialog(QDialog):
         layout.addLayout(button_box)
 
     def show(self):
-        """ Shows this dialog. """
+        """
+        Shows this dialog.
+        """
         self.exec()

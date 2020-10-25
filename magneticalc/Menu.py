@@ -17,10 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import qtawesome as qta
-from functools import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from functools import partial
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMenu, QAction
 from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire import Wire
@@ -63,6 +62,8 @@ class Menu:
         view_menu = QMenu("&View", self.gui)
         self.add_config_bound_checkbox("Show Wire Segments", "show_wire_segments", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox("Show Wire Points", "show_wire_points", view_menu, self.gui.redraw)
+        view_menu.addSeparator()
+        self.add_config_bound_checkbox("Use Field Colors for Labels", "field_colors_labels", view_menu, self.gui.redraw)
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox("Show Perspective Info", "show_perspective_info", view_menu, self.gui.redraw)

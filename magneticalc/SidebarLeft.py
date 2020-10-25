@@ -16,8 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QScrollArea, QVBoxLayout, QSizePolicy
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
 from magneticalc.Wire_Widget import Wire_Widget
 
@@ -26,7 +26,8 @@ class SidebarLeft(QScrollArea):
     """ SidebarLeft class. """
 
     # Display settings
-    VerticalSpacing = 16
+    MaximumWidth = 380
+    VerticalSpacing = 12
 
     def __init__(self, gui):
         """
@@ -46,11 +47,17 @@ class SidebarLeft(QScrollArea):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setWidgetResizable(True)
+        self.setMaximumWidth(self.MaximumWidth)
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.wire_widget = Wire_Widget(self.gui)
-        layout.addWidget(self.wire_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.wire_widget)
+
         layout.addSpacing(self.VerticalSpacing)
 
+        # --------------------------------------------------------------------------------------------------------------
+
         self.sampling_volume_widget = SamplingVolume_Widget(self.gui)
-        layout.addWidget(self.sampling_volume_widget, alignment=Qt.AlignTop)
-        layout.addStretch()
+        layout.addWidget(self.sampling_volume_widget)

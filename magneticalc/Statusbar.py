@@ -17,8 +17,8 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QCheckBox, QComboBox, QProgressBar, QLabel
 from multiprocessing import cpu_count
 
 
@@ -113,7 +113,9 @@ class Statusbar:
             self.progressbar.setValue(100)
 
     def cancel(self):
-        """ Cancels the ongoing calculation. """
+        """
+        Cancels the ongoing calculation.
+        """
         self.gui.interrupt_calculation()
         self.disarm(False)
 
@@ -126,7 +128,9 @@ class Statusbar:
         self.label.setText(text)
 
     def auto_calculation_changed(self):
-        """ Handles changed auto-calculation setting. """
+        """
+        Handles changed auto-calculation setting.
+        """
         self.gui.config.set_bool("auto_calculation", self.auto_calculation_checkbox.isChecked())
         if self.auto_calculation_checkbox.isChecked():
             if not self.gui.model.is_valid():

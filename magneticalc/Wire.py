@@ -144,8 +144,9 @@ class Wire:
         self._slicer_limit = slicer_limit
         self._dc = dc
 
-        self._points_transformed = self._points_base
         self._points_sliced = None
+
+        self._points_transformed = self._points_base.copy()
 
         self._set_stretch(stretch)
         self._set_rotational_symmetry(rotational_symmetry)
@@ -153,13 +154,16 @@ class Wire:
         Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
 
     def is_valid(self):
-        """ Indicates valid data. """
+        """
+        Indicates valid data for display.
+
+        @return: True if data is valid for display, False otherwise
+        """
         return self._points_sliced is not None
 
     def invalidate(self):
         """
         Resets data, hiding from display.
-        Note: This also resets any transformations on the base points.
         """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
@@ -239,6 +243,9 @@ class Wire:
         @param stretch: XYZ stretch transform factors (3D point)
         """
         Debug(self, ".stretch()")
+
+        print("A", self.get_points_base())
+        print("B", self.get_points_transformed())
 
         axes = self.get_points_transformed().transpose()
 

@@ -21,9 +21,8 @@ import time
 import atexit
 import datetime
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSplitter, QFileDialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
@@ -31,6 +30,7 @@ from magneticalc.Model import Model
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
+from magneticalc.Version import Version
 from magneticalc.VispyCanvas import VispyCanvas
 
 
@@ -64,8 +64,8 @@ class GUI(QMainWindow):
 
         # Create the model first, as the following objects will access it (each widget acts as view *and* controller)
         self.model = Model(
-            # This callback is needed to clear metric labels after the metric became invalid
-            on_metric_invalidated=lambda: self.sidebar_right.metric_widget.invalidate_labels()
+            # This callback is needed to clear the metric labels after the metric became invalid
+            on_metric_invalidated=self.on_metric_invalidated
         )
 
         # Create the left and right sidebar
@@ -84,7 +84,6 @@ class GUI(QMainWindow):
         self.splitter.addWidget(self.sidebar_right)
         self.setCentralWidget(self.splitter)
         self.splitter.setHandleWidth(8)
-        self.splitter.setSizes([100, 256, 1])
 
         # Insert the menu
         self.menu = Menu(self)
@@ -154,6 +153,7 @@ class GUI(QMainWindow):
         else:
             Debug(self, f".on_calculation_exited(): Interrupted after {calculation_time:.2f} s", color=(0, 0, 255))
 
+        # Note: For some reason, most of the time we need an additional ("final-final") re-draw here
         self.redraw()
 
         self.statusbar.disarm(success)
@@ -183,13 +183,21 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    def on_metric_invalidated(self):
+        """
+        Needed to clear the metric labels after the metric became invalid.
+        """
+        self.sidebar_right.metric_widget.invalidate_labels()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     def set_window(self):
         """
         Sets the basic window properties.
         """
 
         # Set window title, icon and dimensions
-        self.setWindowTitle("MagnetiCalc")
+        self.setWindowTitle(Version.String)
         self.setWindowIcon(qta.icon("ei.magnet"))
         self.resize(self.config.get_int("window_width"), self.config.get_int("window_height"))
 
@@ -202,7 +210,9 @@ class GUI(QMainWindow):
         self.move(fg.topLeft())
 
     def quit(self):
-        """ Quits the application. """
+        """
+        Quits the application.
+        """
         if self.calculation_thread != QThread.currentThread():
             Debug(self, ".quit()")
             if self.calculation_thread is not None:
@@ -222,28 +232,21 @@ class GUI(QMainWindow):
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
         atexit.unregister(self.quit)
 
-    def closeEvent(self, event):
+    def closeEvent(self, _event):
         """
         Handle close event.
 
-        @param event: Close event
+        @param _event: Close event
         """
         self.quit()
 
-    def keyPressEvent(self, event):
-        """
-        Handle key press event.
-
-        @param event: Key press event
-        """
-        # "Intentionally left blank" for adding some shortcuts later, e.g.:
-        # if event.key() == Qt.Key_Escape:
-        #     self.quit()
-
     def file_save(self):
-        """ Saves the currently displayed scene to PNG file. """
+        """
+        Saves the currently displayed scene to PNG file.
+        """
+
         # noinspection PyCallByClass,PyTypeChecker
-        filename, chosen_extension = QFileDialog.getSaveFileName(
+        filename, _chosen_extension = QFileDialog.getSaveFileName(
             self,
             "Save Image",
             datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc"),
@@ -252,7 +255,7 @@ class GUI(QMainWindow):
         )
 
         if filename != "":
-            file_name, file_extension = os.path.splitext(filename)
+            _file_name, file_extension = os.path.splitext(filename)
 
             if file_extension.lower() != ".png":
                 filename += ".png"

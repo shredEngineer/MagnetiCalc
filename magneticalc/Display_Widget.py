@@ -16,17 +16,16 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import *
-from magneticalc.IconLabel import IconLabel
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QCheckBox
 from magneticalc.Groupbox import Groupbox
+from magneticalc.HLine import HLine
+from magneticalc.IconLabel import IconLabel
 from magneticalc.SliderFloat import SliderFloat
 
 
 class Display_Widget(Groupbox):
     """ Display_Widget class. """
-
-    # Display settings
-    VerticalSpacing = 16
 
     # SliderFloat limits
     FieldArrowScaleMinimum = 0
@@ -49,7 +48,7 @@ class Display_Widget(Groupbox):
 
         self.gui = gui
 
-        self.addWidget(IconLabel("fa.circle", "Point Scale:"))
+        self.addWidget(IconLabel("fa.circle", "Point Scale"))
         self.field_point_scale_slider = SliderFloat(Qt.Horizontal)
         self.field_point_scale_slider.set_range_step(
             self.FieldPointScaleMinimum,
@@ -62,9 +61,11 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_point_scale_slider)
 
-        self.addSpacing(self.VerticalSpacing)
+        # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(IconLabel("fa.arrow-right", "Arrow Scale:"))
+        self.addWidget(HLine())
+
+        self.addWidget(IconLabel("fa.arrow-right", "Arrow Scale"))
         self.field_arrow_scale_slider = SliderFloat(Qt.Horizontal)
         self.field_arrow_scale_slider.set_range_step(
             self.FieldArrowScaleMinimum,
@@ -77,9 +78,11 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_arrow_scale_slider)
 
-        self.addSpacing(self.VerticalSpacing)
+        # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(IconLabel("fa.adjust", "Field Boost:"))
+        self.addWidget(HLine())
+
+        self.addWidget(IconLabel("fa.adjust", "Field Boost"))
         self.field_boost_slider = SliderFloat(Qt.Horizontal)
         self.field_boost_slider.set_range_step(
             self.FieldBoostMinimum,
@@ -92,7 +95,19 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_boost_slider)
 
-    def set_field_arrow_scale(self, value):
+        # --------------------------------------------------------------------------------------------------------------
+
+        self.addWidget(HLine())
+
+        self.addWidget(IconLabel("fa.tags", "Field Labels"))
+        self.display_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")  # Leading space for alignment
+        self.display_magnitude_labels_checkbox.setChecked(self.gui.config.get_bool("display_magnitude_labels"))
+        self.display_magnitude_labels_checkbox.stateChanged.connect(
+            lambda: self.set_display_magnitude_labels(self.display_magnitude_labels_checkbox.isChecked())
+        )
+        self.addWidget(self.display_magnitude_labels_checkbox)
+
+    def set_field_arrow_scale(self, value: float):
         """
         Sets field arrow scale.
 
@@ -101,7 +116,7 @@ class Display_Widget(Groupbox):
         self.gui.config.set_float("field_arrow_scale", value)
         self.gui.redraw()
 
-    def set_field_point_scale(self, value):
+    def set_field_point_scale(self, value: float):
         """
         Sets field point scale.
 
@@ -110,11 +125,20 @@ class Display_Widget(Groupbox):
         self.gui.config.set_float("field_point_scale", value)
         self.gui.redraw()
 
-    def set_field_boost(self, value):
+    def set_field_boost(self, value: float):
         """
         Sets field boost value.
 
         @param value: Value
         """
         self.gui.config.set_float("field_boost", value)
+        self.gui.redraw()
+
+    def set_display_magnitude_labels(self, value: bool):
+        """
+        Sets "Display Magnitude" value.
+
+        @param value: Value
+        """
+        self.gui.config.set_bool("display_magnitude_labels", value)
         self.gui.redraw()

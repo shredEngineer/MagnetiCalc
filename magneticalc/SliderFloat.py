@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QSlider
 
 
 class SliderFloat(QSlider):
@@ -30,8 +30,6 @@ class SliderFloat(QSlider):
         """
         QSlider.__init__(self, orientation)
 
-        self._minimum = 0
-        self._maximum = 0
         self._step = 0
 
     def set_range_step(self, minimum: float, maximum: float, step: float):
@@ -42,12 +40,10 @@ class SliderFloat(QSlider):
         @param minimum: Minimum value
         @param maximum: Maximum value
         """
-        self._minimum = minimum
-        self._maximum = maximum
         self._step = step
 
-        super().setMinimum(round(minimum / step))
-        super().setMaximum(round(maximum / step))
+        super().setMinimum(round(minimum / self._step))
+        super().setMaximum(round(maximum / self._step))
         super().setSingleStep(1)
 
     def setValue(self, value: float):

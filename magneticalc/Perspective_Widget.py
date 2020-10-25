@@ -16,18 +16,16 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from functools import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from functools import partial
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from magneticalc.Groupbox import Groupbox
+from magneticalc.HLine import HLine
 from magneticalc.VispyCanvas import VispyCanvas
 
 
 class Perspective_Widget(Groupbox):
     """ Perspective_Widget class. """
-
-    # Display settings
-    VerticalSpacing = 16
 
     def __init__(self, gui):
         """
@@ -38,21 +36,6 @@ class Perspective_Widget(Groupbox):
         Groupbox.__init__(self, "Perspective")
 
         self.gui = gui
-
-        hint_label = QLabel("Axis Colors:")
-        x_label = QLabel("X")
-        y_label = QLabel("Y")
-        z_label = QLabel("Z")
-        hint_label.setStyleSheet("font-style: italic;")
-        x_label.setStyleSheet("color: #cc0000;")
-        y_label.setStyleSheet("color: #00cc00;")
-        z_label.setStyleSheet("color: #0000cc;")
-        xyz_hint_layout = QHBoxLayout()
-        xyz_hint_layout.addWidget(hint_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(x_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(y_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(z_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        self.addLayout(xyz_hint_layout)
 
         planar_perspective_layout = QVBoxLayout()
 
@@ -68,6 +51,28 @@ class Perspective_Widget(Groupbox):
             planar_perspective_layout.addWidget(button, alignment=Qt.AlignTop)
 
         self.addLayout(planar_perspective_layout)
+
+        # --------------------------------------------------------------------------------------------------------------
+
+        self.addWidget(HLine())
+
+        hint_label = QLabel("Axis Colors:")
+        x_label = QLabel("X")
+        y_label = QLabel("Y")
+        z_label = QLabel("Z")
+        hint_label.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
+        x_label.setStyleSheet("color: #cc0000; font-weight: bold;")
+        y_label.setStyleSheet("color: #00cc00; font-weight: bold;")
+        z_label.setStyleSheet("color: #0000cc; font-weight: bold;")
+        xyz_hint_layout = QHBoxLayout()
+        xyz_hint_layout.addWidget(hint_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
+        xyz_hint_layout.addWidget(x_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
+        xyz_hint_layout.addWidget(y_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
+        xyz_hint_layout.addWidget(z_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
+        self.addLayout(xyz_hint_layout)
 
     def set_perspective(self, preset):
         """

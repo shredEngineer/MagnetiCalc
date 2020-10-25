@@ -17,9 +17,10 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
-from functools import *
-from PyQt5.QtCore import *
+from functools import partial
+from PyQt5.QtCore import QThread
 from magneticalc.Debug import Debug
+from magneticalc.Metric import Metric
 
 
 class BiotSavart:
@@ -29,7 +30,10 @@ class BiotSavart:
     """
 
     # Constant for Biot-Savart law, in SI units
-    k = 1e-6    # mH / cm.
+    k = 1e-7  # H / m
+
+    # Divisor cutoff (avoiding divisions by zero)
+    DivisorCutoff = 1e-12
 
     # Class attributes
     dc = None
@@ -64,11 +68,11 @@ class BiotSavart:
         vector = np.zeros(3)
 
         for element_center, element_direction in current_elements:
-            vector_distance = sampling_volume_point - element_center
+            vector_distance = (sampling_volume_point - element_center) * Metric.LengthScale
             scalar_distance_cubed = np.linalg.norm(vector_distance) ** 3
 
-            # Skip divisions by zero
-            if scalar_distance_cubed < 1e-6:
+            # Avoiding divisions by zero
+            if scalar_distance_cubed < BiotSavart.DivisorCutoff:
                 continue
 
             vector += np.cross(element_direction, vector_distance) / scalar_distance_cubed

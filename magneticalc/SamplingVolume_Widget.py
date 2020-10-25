@@ -16,13 +16,13 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import numpy as np
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QSizePolicy
 from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
+from magneticalc.HLine import HLine
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.SamplingVolume import SamplingVolume
 
@@ -31,14 +31,13 @@ class SamplingVolume_Widget(Groupbox):
     """ SamplingVolume_Widget class. """
 
     # Display settings
-    VerticalSpacing = 16
+    UnitsLabelWidth = 26
 
     # Spinbox limits
     PaddingMin = -99
     PaddingMax = 99
     ResolutionMinimum = 1
     ResolutionMaximum = 50
-    ResolutionStep = 0.5
 
     def __init__(self, gui):
         """
@@ -50,16 +49,15 @@ class SamplingVolume_Widget(Groupbox):
 
         self.gui = gui
 
-        self.padding_bounds_min = np.zeros(3)
-        self.padding_bounds_max = np.zeros(3)
-
-        padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding:")
-        padding_reset_button = QPushButton()
-        padding_reset_button.setIcon(qta.icon("fa.eraser"))
-        padding_reset_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        padding_reset_button.clicked.connect(self.clear_padding)
-        padding_icon_label.addWidget(padding_reset_button)
-        padding_icon_label.addWidget(QLabel("Units: cm"))
+        padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding")
+        padding_clear_button = QPushButton()
+        padding_clear_button.setIcon(qta.icon("fa.eraser"))
+        padding_clear_button.clicked.connect(self.clear_padding)
+        padding_icon_label.addWidget(padding_clear_button)
+        padding_units_label = QLabel("cm")
+        padding_units_label.setAlignment(Qt.AlignRight)
+        padding_units_label.setFixedWidth(self.UnitsLabelWidth)
+        padding_icon_label.addWidget(padding_units_label)
         self.addWidget(padding_icon_label)
 
         padding_layout = QHBoxLayout()
@@ -72,33 +70,40 @@ class SamplingVolume_Widget(Groupbox):
             self.padding_spinbox[i].setValue(self.gui.config.get_point("sampling_volume_padding")[i])
             self.padding_spinbox[i].valueChanged.connect(self.update_padding)
             padding_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
-            padding_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Ignored)
+            padding_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
             padding_layout.addWidget(padding_label[i], alignment=Qt.AlignVCenter)
             padding_layout.addWidget(self.padding_spinbox[i], alignment=Qt.AlignVCenter)
         self.addLayout(padding_layout)
 
-        self.addSpacing(self.VerticalSpacing)
+        # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(IconLabel("fa.th", "Resolution:"))
-        resolution_spinbox = QDoubleSpinBox(self.gui)
+        self.addWidget(HLine())
+
+        self.addWidget(IconLabel("fa.th", "Resolution"))
+        resolution_spinbox = QSpinBox(self.gui)
         resolution_spinbox.setMinimum(self.ResolutionMinimum)
         resolution_spinbox.setMaximum(self.ResolutionMaximum)
-        resolution_spinbox.setSingleStep(self.ResolutionStep)
-        resolution_spinbox.setValue(self.gui.config.get_float("sampling_volume_resolution"))
+        resolution_spinbox.setValue(self.gui.config.get_int("sampling_volume_resolution"))
         resolution_spinbox.valueChanged.connect(
             lambda: self.set_sampling_volume(resolution=resolution_spinbox.value())
         )
         resolution_layout = QHBoxLayout()
         resolution_layout.addWidget(resolution_spinbox, alignment=Qt.AlignVCenter)
-        points_cm_label = QLabel("Points / cm")
-        points_cm_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Ignored)
-        resolution_layout.addWidget(points_cm_label, alignment=Qt.AlignVCenter)
+        points_units_label = QLabel("Points / cm")
+        points_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        resolution_layout.addWidget(points_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(resolution_layout)
 
         total_layout = QHBoxLayout()
         total_label_left = QLabel("Total constrained points:")
-        total_label_left.setStyleSheet("font-style: italic;")
+        total_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
         self.total_label = QLabel("")
+        self.total_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
         self.total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_layout.addWidget(total_label_left, alignment=Qt.AlignVCenter)
         total_layout.addWidget(self.total_label, alignment=Qt.AlignVCenter)
@@ -143,15 +148,15 @@ class SamplingVolume_Widget(Groupbox):
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
         Parameters may be left set to None in order to load their default value.
 
-        @param resolution: Sampling volume resolution
+        @param resolution: Sampling volume _resolution
         @param padding: Padding (3D point)
         @param recalculate: Enable to trigger final re-calculation (boolean)
         """
         with ModelAccess(self.gui, recalculate):
 
-            resolution = self.gui.config.set_get_float("sampling_volume_resolution", resolution)
+            resolution = self.gui.config.set_get_int("sampling_volume_resolution", resolution)
 
-            self.gui.model.sampling_volume = SamplingVolume(resolution)
+            self.gui.model.set_sampling_volume(SamplingVolume(resolution))
 
             self.readjust(padding)
 

@@ -39,7 +39,9 @@ class ModelAccess:
         self.recalculate = recalculate
 
     def __enter__(self):
-        """ Entering the context kills possibly running calculation if recalculation is enabled. """
+        """
+        Entering the context kills possibly running calculation if recalculation is enabled.
+        """
         Debug(self, ".enter()")
 
         Assert_Dialog(not self.locked, "Invalid model access")
@@ -50,8 +52,10 @@ class ModelAccess:
             if self.gui.calculation_thread is not None:
                 self.gui.interrupt_calculation()
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """ Leaving the context starts recalculation if enabled; otherwise, just redraw. """
+    def __exit__(self, _exc_type, _exc_val, _exc_tb):
+        """
+        Leaving the context starts recalculation if enabled; otherwise, just redraw.
+        """
         Debug(self, ".exit()")
 
         Assert_Dialog(self.locked, "Invalid model access")

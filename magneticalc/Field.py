@@ -25,7 +25,9 @@ class Field:
     """ Field class. """
 
     def __init__(self):
-        """ Initializes an empty field. """
+        """
+        Initializes an empty field.
+        """
         Debug(self, ": Init")
 
         self._vectors = None
@@ -39,7 +41,9 @@ class Field:
         return self._vectors is not None
 
     def invalidate(self):
-        """ Resets data, hiding from display. """
+        """
+        Resets data, hiding from display.
+        """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._vectors = None

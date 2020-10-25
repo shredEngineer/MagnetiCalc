@@ -31,7 +31,7 @@ class Model:
         """
         Initializes the model.
 
-        @param on_metric_invalidated: Callback (needed to clear metric labels after the metric became invalid)
+        @param on_metric_invalidated: Callback (needed to clear the metric labels after the metric became invalid)
         """
         Debug(self, ": Init")
 
@@ -42,7 +42,11 @@ class Model:
         self.on_metric_invalidated = on_metric_invalidated
 
     def is_valid(self):
-        """ Indicates valid data. """
+        """
+        Indicates valid data for display.
+
+        @return: True if data is valid for display, False otherwise
+        """
         return \
             self.wire.is_valid() and \
             self.sampling_volume.is_valid() and \
@@ -87,6 +91,15 @@ class Model:
         """
         self.wire = wire
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
+
+    def set_sampling_volume(self, sampling_volume):
+        """
+        Sets the sampling volume.
+
+        @param sampling_volume: Sampling volume
+        """
+        self.sampling_volume = sampling_volume
+        self.invalidate(do_field=True, do_metric=True)
 
     def set_metric(self, metric):
         """

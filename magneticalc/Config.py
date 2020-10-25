@@ -19,6 +19,7 @@
 import os
 import configparser
 from magneticalc.Debug import Debug
+from magneticalc.VispyCanvas import VispyCanvas
 from magneticalc.Wire import Wire
 
 
@@ -29,13 +30,16 @@ class Config:
     Filename = "MagnetiCalc.ini"
 
     # Enable to instantly save every change to file (useful for debugging)
-    InstantSave = True
+    InstantSave = False
 
     # Enable to additionally debug read access to configuration
     DebugGetters = False
 
     # Default wire preset
-    DefaultWirePreset = "Compensated Double Loop (centered)"
+    DefaultWirePreset = "Straight Line"
+
+    # Default perspective preset
+    DefaultPerspectivePreset = "Isometric"
 
     # Default configuration
     Default = {
@@ -44,27 +48,29 @@ class Config:
         "auto_calculation"              : "True",
         "num_cores"                     : "0",
         "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "1.0, 1.0, 1.0",
+        "wire_stretch"                  : "0.3, 1.0, 1.0",
         "wire_slicer_limit"             : "0.1",
         "wire_dc"                       : "1.0",
-        "rotational_symmetry_count"     : "4",
+        "rotational_symmetry_count"     : "10",
         "rotational_symmetry_radius"    : "1.0",
         "rotational_symmetry_axis"      : "2",
         "sampling_volume_padding"       : "1, -2, 2",
-        "sampling_volume_resolution"    : "8.0",
-        "color_metric"                  : "Log Magnitude XZ",
+        "sampling_volume_resolution"    : "10",
+        "color_metric"                  : "Magnitude",
         "alpha_metric"                  : "Log Magnitude",
         "field_point_scale"             : "1.0",
-        "field_arrow_scale"             : "0.3",
+        "field_arrow_scale"             : "0.2",
         "field_boost"                   : "0.1",
+        "display_magnitude_labels"         : "True",
         "show_wire_segments"            : "True",
         "show_wire_points"              : "True",
+        "field_colors_labels"           : "False",
         "show_coordinate_system"        : "True",
         "show_perspective_info"         : "True",
         "dark_background"               : "True",
-        "azimuth"                       : "0",
-        "elevation"                     : "0",
-        "scale_factor"                  : "6.5"
+        "azimuth"                       : None,  # Will be set in __init__
+        "elevation"                     : None,  # Will be set in __init__
+        "scale_factor"                  : "5.0"
     }
 
     def __init__(self):
@@ -76,6 +82,8 @@ class Config:
         Debug(self, ": file://" + self.absolute_filename.replace(" ", "%20"), force=True)
 
         self.Default["wire_points_base"] = Config.points_to_str(Wire.get_by_id(Config.DefaultWirePreset)["points"])
+        self.Default["azimuth"] = VispyCanvas.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
+        self.Default["elevation"] = VispyCanvas.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
 
         self.config = configparser.ConfigParser()
         self.synced = False

@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id40">
+        <table class="children sortable" id="id42">
   
   <tr class="method">
     
@@ -56,22 +56,7 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#resolution" class="code" data-type="Instance Variable">resolution</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#constraints" class="code" data-type="Instance Variable">constraints</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#bounds_min" class="code" data-type="Instance Variable">bounds_min</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#bounds_max" class="code" data-type="Instance Variable">bounds_max</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
@@ -83,6 +68,11 @@
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#invalidate" class="code" data-type="Method">invalidate</a></td>
     <td><span>Resets data, hiding from display.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_resolution" class="code" data-type="Method">get_resolution</a></td>
+    <td><span>Returns this volume's resolution.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -121,6 +111,21 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_resolution" class="code" data-type="Instance Variable">_resolution</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_bounds_min" class="code" data-type="Instance Variable">_bounds_min</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_bounds_max" class="code" data-type="Instance Variable">_bounds_max</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_points" class="code" data-type="Instance Variable">_points</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
@@ -151,16 +156,16 @@
     
     <div><p>Initializes an empty sampling volume, with zero bounds and no constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Resolution</td></tr></table></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.SamplingVolume.SamplingVolume.resolution">
+  <a name="magneticalc.SamplingVolume.SamplingVolume._resolution">
     
   </a>
-  <a name="resolution">
+  <a name="_resolution">
     
   </a>
   <div class="functionHeader">
-    resolution =
+    _resolution =
     
   </div>
   <div class="functionBody">
@@ -183,32 +188,32 @@
     
     <div class="undocumented">Undocumented</div> (type: <code>List</code>)
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.SamplingVolume.SamplingVolume.bounds_min">
+  <a name="magneticalc.SamplingVolume.SamplingVolume._bounds_min">
     
   </a>
-  <a name="bounds_min">
+  <a name="_bounds_min">
     
   </a>
   <div class="functionHeader">
-    bounds_min =
+    _bounds_min =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.SamplingVolume.SamplingVolume.bounds_max">
+  <a name="magneticalc.SamplingVolume.SamplingVolume._bounds_max">
     
   </a>
-  <a name="bounds_max">
+  <a name="_bounds_max">
     
   </a>
   <div class="functionHeader">
-    bounds_max =
+    _bounds_max =
     
   </div>
   <div class="functionBody">
@@ -248,7 +253,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Indicates valid data for display.</p></div>
+    <div><p>Indicates valid data for display.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if data is valid for display, False otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -271,6 +276,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_resolution">
+    
+  </a>
+  <a name="get_resolution">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_resolution(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this volume's resolution.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Resolution</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.SamplingVolume.SamplingVolume.get_bounds">
     
   </a>
@@ -286,7 +310,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this volume's bounding box.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">bounds_min, bounds_max</td></tr></table></div>
+    <div><p>Returns this volume's bounding box.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">_bounds_min, _bounds_max</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -324,7 +348,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Adjusts this volume's bounding box to fully enclose a 3D wire curve. This expands the bounding box to the next integer grid coordinates.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">bounds_min</td><td>Minimum bounding box point</td></tr><tr><td></td><td class="fieldArg">bounds_max</td><td>Maximum bounding box point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Rounded (bounds_min, bounds_max)</td></tr></table></div>
+    <div><p>Adjusts this volume's bounding box to fully enclose a 3D wire curve. This expands the bounding box to the next integer grid coordinates.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">bounds_min</td><td>Minimum bounding box point</td></tr><tr><td></td><td class="fieldArg">bounds_max</td><td>Maximum bounding box point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Rounded (_bounds_min, _bounds_max)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -406,7 +430,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-24 01:08:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-25 18:54:03.
       </address>
 
     </div>

@@ -18,10 +18,12 @@
 
 import numpy as np
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import \
+    QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
+from magneticalc.HLine import HLine
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Table import Table
 from magneticalc.Wire import Wire
@@ -31,22 +33,22 @@ class Wire_Widget(Groupbox):
     """ Wire_Widget class. """
 
     # Display settings
-    VerticalSpacing = 16
+    UnitsLabelWidth = 26
 
     # Spinbox limits
     RotationalSymmetryCountMin = 1
-    RotationalSymmetryCountMax = 50
+    RotationalSymmetryCountMax = 99
     RotationalSymmetryRadiusMin = 0
-    RotationalSymmetryRadiusMax = 10
-    RotationalSymmetryRadiusStep = 0.25
+    RotationalSymmetryRadiusMax = 99
+    RotationalSymmetryRadiusStep = 0.1
     StretchMin = -99
     StretchMax = 99
-    StretchStep = 0.25
+    StretchStep = 0.1
     SlicerLimitMinimum = 0.01
     SlicerLimitMaximum = 2.0
     SlicerLimitStep = 0.01
-    DcMinimum = 0.0
-    DcMaximum = 10.0
+    DcMinimum = -999.0
+    DcMaximum = 999.0
     DcStep = 0.1
 
     def __init__(self, gui):
@@ -59,17 +61,17 @@ class Wire_Widget(Groupbox):
 
         Groupbox.__init__(self, "Wire")
 
-        points_icon_label = IconLabel("mdi.vector-square", "Points:")
+        points_icon_label = IconLabel("mdi.vector-square", "Points")
         table_add_button = QPushButton()
         table_add_button.setIcon(qta.icon("fa.plus"))
-        table_add_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         points_icon_label.addWidget(table_add_button)
-        units_cm_label = QLabel("Units: cm")
-        points_icon_label.addWidget(units_cm_label)
+        table_units_label = QLabel("cm")
+        table_units_label.setAlignment(Qt.AlignRight)
+        table_units_label.setFixedWidth(self.UnitsLabelWidth)
+        points_icon_label.addWidget(table_units_label)
         table_add_button.clicked.connect(self.on_table_row_added)
         self.addWidget(points_icon_label)
         self.table = Table(
-            height=16 * 9,
             cell_edited_callback=self.on_table_cell_edited,
             row_deleted_callback=self.on_table_row_deleted
         )
@@ -78,8 +80,14 @@ class Wire_Widget(Groupbox):
 
         table_total_layout = QHBoxLayout()
         table_total_label_left = QLabel("Total base points:")
-        table_total_label_left.setStyleSheet("font-style: italic;")
+        table_total_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
         self.base_total_label = QLabel("")
+        self.base_total_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
         self.base_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         table_total_layout.addWidget(table_total_label_left, alignment=Qt.AlignVCenter)
         table_total_layout.addWidget(self.base_total_label, alignment=Qt.AlignVCenter)
@@ -87,15 +95,17 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addSpacing(self.VerticalSpacing)
+        self.addWidget(HLine())
 
-        stretch_icon_label = IconLabel("mdi.arrow-all", "Stretch:")
-        stretch_reset_button = QPushButton()
-        stretch_reset_button.setIcon(qta.icon("fa.eraser"))
-        stretch_reset_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        stretch_reset_button.clicked.connect(self.clear_stretch)
-        stretch_icon_label.addWidget(stretch_reset_button)
-        stretch_icon_label.addWidget(QLabel("Units: cm"))
+        stretch_icon_label = IconLabel("mdi.arrow-all", "Stretch")
+        stretch_clear_button = QPushButton()
+        stretch_clear_button.setIcon(qta.icon("fa.eraser"))
+        stretch_clear_button.clicked.connect(self.clear_stretch)
+        stretch_icon_label.addWidget(stretch_clear_button)
+        stretch_units_label = QLabel("cm")
+        stretch_units_label.setAlignment(Qt.AlignRight)
+        stretch_units_label.setFixedWidth(self.UnitsLabelWidth)
+        stretch_icon_label.addWidget(stretch_units_label)
         self.addWidget(stretch_icon_label)
 
         self.stretch_spinbox = [None, None, None]
@@ -109,16 +119,16 @@ class Wire_Widget(Groupbox):
             self.stretch_spinbox[i].setValue(self.gui.config.get_point("wire_stretch")[i])
             self.stretch_spinbox[i].valueChanged.connect(self.set_stretch)
             stretch_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
-            stretch_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Ignored)
+            stretch_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
             stretch_layout.addWidget(stretch_label[i], alignment=Qt.AlignVCenter)
             stretch_layout.addWidget(self.stretch_spinbox[i], alignment=Qt.AlignVCenter)
         self.addLayout(stretch_layout)
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addSpacing(self.VerticalSpacing)
+        self.addWidget(HLine())
 
-        self.addWidget(IconLabel("mdi.rotate-3d-variant", "Rotational Symmetry:"))
+        self.addWidget(IconLabel("mdi.rotate-3d-variant", "Rotational Symmetry"))
         rotational_symmetry_layout = QHBoxLayout()
         rotational_symmetry_layout_left = QVBoxLayout()
         rotational_symmetry_layout_middle = QVBoxLayout()
@@ -127,21 +137,26 @@ class Wire_Widget(Groupbox):
         rotational_symmetry_layout.addLayout(rotational_symmetry_layout_middle)
         rotational_symmetry_layout.addLayout(rotational_symmetry_layout_right)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         self.rotational_symmetry_count_spinbox = QSpinBox()
         self.rotational_symmetry_count_spinbox.setMinimum(self.RotationalSymmetryCountMin)
         self.rotational_symmetry_count_spinbox.setMaximum(self.RotationalSymmetryCountMax)
         self.rotational_symmetry_count_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_count"))
         count_label = QLabel("Count:")
         count_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(count_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_layout_left.addWidget(count_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
         rotational_symmetry_layout_middle.addWidget(
             self.rotational_symmetry_count_spinbox,
             alignment=Qt.AlignVCenter
         )
         self.rotational_symmetry_count_spinbox.valueChanged.connect(self.set_rotational_symmetry)
-        cm_label = QLabel("cm")
-        cm_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Ignored)
-        rotational_symmetry_layout_right.addWidget(cm_label, alignment=Qt.AlignVCenter)
+        rotational_symmetric_units_label = QLabel("cm")
+        rotational_symmetric_units_label.setAlignment(Qt.AlignRight)
+        rotational_symmetric_units_label.setFixedWidth(self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetric_units_label, alignment=Qt.AlignVCenter)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.rotational_symmetry_radius_spinbox = QDoubleSpinBox()
         self.rotational_symmetry_radius_spinbox.setMinimum(self.RotationalSymmetryRadiusMin)
@@ -150,12 +165,14 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_radius_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_radius"))
         radius_label = QLabel("Radius:")
         radius_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(radius_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_layout_left.addWidget(radius_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
         rotational_symmetry_layout_middle.addWidget(
             self.rotational_symmetry_radius_spinbox,
             alignment=Qt.AlignVCenter
         )
         self.rotational_symmetry_radius_spinbox.valueChanged.connect(self.set_rotational_symmetry)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.rotational_symmetry_axis_combobox = QComboBox()
         for i, axis in enumerate(["X", "Y", "Z"]):
@@ -164,19 +181,27 @@ class Wire_Widget(Groupbox):
                 self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
         axis_label = QLabel("Axis:")
         axis_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(axis_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_layout_left.addWidget(axis_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
         rotational_symmetry_layout_middle.addWidget(
             self.rotational_symmetry_axis_combobox,
             alignment=Qt.AlignVCenter
         )
         self.rotational_symmetry_axis_combobox.currentIndexChanged.connect(self.set_rotational_symmetry)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         self.addLayout(rotational_symmetry_layout)
 
         rotational_symmetry_total_layout = QHBoxLayout()
         rotational_symmetry_total_label_left = QLabel("Total transformed points:")
-        rotational_symmetry_total_label_left.setStyleSheet("font-style: italic;")
+        rotational_symmetry_total_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
         self.transformed_total_label = QLabel("")
+        self.transformed_total_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
         self.transformed_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         rotational_symmetry_total_layout.addWidget(
             rotational_symmetry_total_label_left,
@@ -184,12 +209,12 @@ class Wire_Widget(Groupbox):
         )
         rotational_symmetry_total_layout.addWidget(self.transformed_total_label, alignment=Qt.AlignVCenter)
         self.addLayout(rotational_symmetry_total_layout)
-        
+
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addSpacing(self.VerticalSpacing)
+        self.addWidget(HLine())
 
-        self.addWidget(IconLabel("mdi.box-cutter", "Slicer Limit:"))
+        self.addWidget(IconLabel("mdi.box-cutter", "Slicer Limit"))
         slicer_limit_spinbox = QDoubleSpinBox()
         slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
         slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
@@ -198,17 +223,24 @@ class Wire_Widget(Groupbox):
         slicer_limit_spinbox.valueChanged.connect(
             lambda: self.set_wire(slicer_limit=slicer_limit_spinbox.value())
         )
-        slicer_limit_cm_label = QLabel("cm")
-        slicer_limit_cm_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        slicer_limit_units_label = QLabel("cm")
+        slicer_limit_units_label.setAlignment(Qt.AlignRight)
+        slicer_limit_units_label.setFixedWidth(self.UnitsLabelWidth)
         slicer_limit_layout = QHBoxLayout()
         slicer_limit_layout.addWidget(slicer_limit_spinbox, alignment=Qt.AlignVCenter)
-        slicer_limit_layout.addWidget(slicer_limit_cm_label, alignment=Qt.AlignVCenter)
+        slicer_limit_layout.addWidget(slicer_limit_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(slicer_limit_layout)
 
         sliced_total_layout = QHBoxLayout()
         sliced_total_label_left = QLabel("Total sliced points:")
-        sliced_total_label_left.setStyleSheet("font-style: italic;")
+        sliced_total_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
         self.sliced_total_label = QLabel("")
+        self.sliced_total_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
         self.sliced_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         sliced_total_layout.addWidget(sliced_total_label_left, alignment=Qt.AlignVCenter)
         sliced_total_layout.addWidget(self.sliced_total_label, alignment=Qt.AlignVCenter)
@@ -216,10 +248,10 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addSpacing(self.VerticalSpacing)
+        self.addWidget(HLine())
 
         dc_spinbox = QDoubleSpinBox()
-        self.addWidget(IconLabel("fa.cog", "DC:"))
+        self.addWidget(IconLabel("fa.cog", "Wire Current"))
         dc_spinbox.setMinimum(self.DcMinimum)
         dc_spinbox.setMaximum(self.DcMaximum)
         dc_spinbox.setSingleStep(self.DcStep)
@@ -228,7 +260,8 @@ class Wire_Widget(Groupbox):
         dc_layout = QHBoxLayout()
         dc_layout.addWidget(dc_spinbox, alignment=Qt.AlignVCenter)
         dc_unit_label = QLabel("A")
-        dc_unit_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Ignored)
+        dc_unit_label.setAlignment(Qt.AlignRight)
+        dc_unit_label.setFixedWidth(self.UnitsLabelWidth)
         dc_layout.addWidget(dc_unit_label, alignment=Qt.AlignVCenter)
         self.addLayout(dc_layout)
 

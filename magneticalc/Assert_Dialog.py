@@ -17,16 +17,15 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import sys
-from inspect import *
 import qtawesome as qta
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 from magneticalc.Debug import Debug
 from magneticalc.Version import Version
 from urllib.parse import urlencode, quote_plus
 
 
-class Assert_Dialog():
+class Assert_Dialog:
     """ Assert_Dialog class. """
 
     # Window dimensions
@@ -49,6 +48,7 @@ class Assert_Dialog():
 
         Debug(self, f": Failed: {message}", color=(255, 0, 0), force=True)
 
+        # noinspection PyArgumentList
         self.dialog = QDialog()
 
         self.dialog.setWindowTitle("Assertion failed")
@@ -128,10 +128,3 @@ class Assert_Dialog():
         User chose to resume.
         """
         self.dialog.accept()
-
-    def failed(self):
-        """
-        Returns the evaluated assertion.
-        @return: False if the assertion failed, True otherwise
-        """
-        return not self.assertion

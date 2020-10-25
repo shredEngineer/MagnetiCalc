@@ -16,9 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QScrollArea, QVBoxLayout, QSizePolicy
 from magneticalc.Display_Widget import Display_Widget
 from magneticalc.Metric_Widget import Metric_Widget
 from magneticalc.Perspective_Widget import Perspective_Widget
@@ -28,7 +27,8 @@ class SidebarRight(QScrollArea):
     """ SidebarRight class. """
 
     # Display settings
-    VerticalSpacing = 16
+    MaximumWidth = 380
+    VerticalSpacing = 12
 
     def __init__(self, gui):
         """
@@ -48,15 +48,26 @@ class SidebarRight(QScrollArea):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setWidgetResizable(True)
+        self.setMaximumWidth(self.MaximumWidth)
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.metric_widget = Metric_Widget(self.gui)
         layout.addWidget(self.metric_widget, alignment=Qt.AlignTop)
+
         layout.addSpacing(self.VerticalSpacing)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.perspective_widget = Perspective_Widget(self.gui)
         layout.addWidget(self.perspective_widget, alignment=Qt.AlignTop)
+
         layout.addSpacing(self.VerticalSpacing)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.display_widget = Display_Widget(self.gui)
         layout.addWidget(self.display_widget, alignment=Qt.AlignTop)
+
         layout.addStretch()

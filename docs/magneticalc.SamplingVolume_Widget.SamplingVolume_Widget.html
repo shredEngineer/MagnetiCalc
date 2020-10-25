@@ -46,12 +46,12 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id42">
+        <table class="children sortable" id="id44">
   
   <tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#VerticalSpacing" class="code" data-type="Class Variable">VerticalSpacing</a></td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#UnitsLabelWidth" class="code" data-type="Class Variable">UnitsLabelWidth</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
@@ -73,11 +73,6 @@
     <td>Class Variable</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionMaximum" class="code" data-type="Class Variable">ResolutionMaximum</a></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionStep" class="code" data-type="Class Variable">ResolutionStep</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -87,16 +82,6 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#gui" class="code" data-type="Instance Variable">gui</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#padding_bounds_min" class="code" data-type="Instance Variable">padding_bounds_min</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#padding_bounds_max" class="code" data-type="Instance Variable">padding_bounds_max</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -139,12 +124,17 @@
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.Groupbox.Groupbox.html" class="code" data-type="Class">Groupbox</a>:
           </p>
-          <table class="children sortable" id="id43">
+          <table class="children sortable" id="id45">
   
   <tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.Groupbox.Groupbox.html#layout" class="code" data-type="Instance Variable">layout</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="baseinstancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Groupbox.Groupbox.html#palette" class="code" data-type="Instance Variable">palette</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="basemethod">
     
@@ -172,14 +162,14 @@
 
         <div class="baseclassvariable">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.VerticalSpacing">
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.UnitsLabelWidth">
     
   </a>
-  <a name="VerticalSpacing">
+  <a name="UnitsLabelWidth">
     
   </a>
   <div class="functionHeader">
-    VerticalSpacing =
+    UnitsLabelWidth =
     
   </div>
   <div class="functionBody">
@@ -250,22 +240,6 @@
     
     <div class="undocumented">Undocumented</div> (type: <code>int</code>)
   </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionStep">
-    
-  </a>
-  <a name="ResolutionStep">
-    
-  </a>
-  <div class="functionHeader">
-    ResolutionStep =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
 </div><div class="basemethod">
   
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.__init__">
@@ -295,38 +269,6 @@
   </a>
   <div class="functionHeader">
     gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_bounds_min">
-    
-  </a>
-  <a name="padding_bounds_min">
-    
-  </a>
-  <div class="functionHeader">
-    padding_bounds_min =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_bounds_max">
-    
-  </a>
-  <a name="padding_bounds_max">
-    
-  </a>
-  <div class="functionHeader">
-    padding_bounds_max =
     
   </div>
   <div class="functionBody">
@@ -420,7 +362,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Sampling volume resolution</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation (boolean)</td></tr></table></div>
+    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Sampling volume _resolution</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation (boolean)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -464,7 +406,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-24 01:08:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-25 18:54:03.
       </address>
 
     </div>

@@ -40,7 +40,7 @@ class ModelAccess:
 
     def __enter__(self):
         """
-        Entering the context kills possibly running calculation if recalculation is _enabled.
+        Entering the context kills possibly running calculation if recalculation is enabled.
         """
         Debug(self, ".enter()")
 
@@ -54,7 +54,7 @@ class ModelAccess:
 
     def __exit__(self, _exc_type, _exc_val, _exc_tb):
         """
-        Leaving the context starts recalculation if _enabled; otherwise, just redraw.
+        Leaving the context starts recalculation if enabled; otherwise, just redraw.
         """
         Debug(self, ".exit()")
 

@@ -198,7 +198,7 @@ class SamplingVolume_Widget(Groupbox):
             self.padding_spinbox[i].setMinimum(bounds_min[i])
         self.blockSignals(False)
 
-        self.gui.model.sampling_volume.set_padding(*padding)
+        self.gui.model.sampling_volume.set_padding_nearest(padding)
 
     # ------------------------------------------------------------------------------------------------------------------
 

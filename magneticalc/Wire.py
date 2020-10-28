@@ -244,9 +244,6 @@ class Wire:
         """
         Debug(self, ".stretch()")
 
-        print("A", self.get_points_base())
-        print("B", self.get_points_transformed())
-
         axes = self.get_points_transformed().transpose()
 
         for i in range(3):

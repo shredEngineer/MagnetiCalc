@@ -145,4 +145,5 @@ class CalculationThread(QThread):
         Gets called when the metric was successfully calculated.
         """
         self.gui.sidebar_right.metric_widget.update_labels()
+        self.gui.vispy_canvas.create_field_labels()
         self.gui.vispy_canvas.redraw()

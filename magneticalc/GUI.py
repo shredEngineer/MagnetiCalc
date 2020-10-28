@@ -22,7 +22,7 @@ import atexit
 import datetime
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSplitter, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSplitter, QFileDialog, QDesktopWidget
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
@@ -188,6 +188,7 @@ class GUI(QMainWindow):
         Needed to clear the metric labels after the metric became invalid.
         """
         self.sidebar_right.metric_widget.invalidate_labels()
+        self.vispy_canvas.delete_field_labels()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -196,18 +197,13 @@ class GUI(QMainWindow):
         Sets the basic window properties.
         """
 
-        # Set window title, icon and dimensions
+        # Set window title and icon
         self.setWindowTitle(Version.String)
         self.setWindowIcon(qta.icon("ei.magnet"))
-        self.resize(self.config.get_int("window_width"), self.config.get_int("window_height"))
 
-        # Center window
-        fg = self.frameGeometry()
-        # noinspection PyArgumentList
-        screen = QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos())
-        # noinspection PyArgumentList
-        fg.moveCenter(QApplication.desktop().screenGeometry(screen).center())
-        self.move(fg.topLeft())
+        # Adjust window dimensions to desktop dimensions
+        screen = QDesktopWidget().screenGeometry()
+        self.setGeometry(0, 0, screen.width(), screen.height())
 
     def quit(self):
         """
@@ -234,11 +230,20 @@ class GUI(QMainWindow):
 
     def closeEvent(self, _event):
         """
-        Handle close event.
+        Handle close _event.
 
-        @param _event: Close event
+        @param _event: Close _event
         """
         self.quit()
+
+    def keyPressEvent(self, event):
+        """
+        Handles key press event.
+
+        @param event: Key press event
+        """
+        if event.key() == Qt.Key_Escape:
+            self.setFocus()
 
     def file_save(self):
         """

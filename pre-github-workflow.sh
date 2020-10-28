@@ -11,7 +11,7 @@ BIN=$HOME/MagnetiCalc/venv/bin/
 
 # Check for unused code (some names explicitly excluded)
 "$BIN"/vulture \
-  --ignore-names run,set_get_bool,set_get_str,closeEvent,add_constraint,bgcolor,parent \
+  --ignore-names run,set_get_bool,set_get_str,closeEvent,keyPressEvent,focusOutEvent,add_constraint,bgcolor,parent \
   magneticalc/
 
 # Generate documentation

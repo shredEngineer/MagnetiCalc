@@ -41,6 +41,8 @@ class VispyCanvas(scene.SceneCanvas):
     # Display settings
     ArrowHeadSize = 6
     WirePointSize = 4
+    WirePointSelectedSize = 10
+    WirePointSelectedColor = (1, 0, 0)
 
     # Zoom limits
     ScaleFactorMin = 1e-2
@@ -141,10 +143,19 @@ class VispyCanvas(scene.SceneCanvas):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.visual_wire_segments = scene.visuals.create_visual_node(visuals.LineVisual)()
+        self.visual_wire_points_selected = scene.visuals.create_visual_node(visuals.MarkersVisual)()
         self.visual_wire_points_sliced = scene.visuals.create_visual_node(visuals.MarkersVisual)()
         self.visual_field_points = scene.visuals.create_visual_node(visuals.MarkersVisual)()
         self.visual_field_arrow_lines = scene.visuals.create_visual_node(visuals.LineVisual)()
         self.visual_field_arrow_heads = scene.visuals.create_visual_node(visuals.MarkersVisual)()
+
+        if self.DebugVisuals:
+            Debug(self, f": visual_wire_segments        =    {self.visual_wire_segments}", color=(255, 0, 255))
+            Debug(self, f": visual_wire_points_selected = {self.visual_wire_points_selected}", color=(255, 0, 255))
+            Debug(self, f": visual_wire_points_sliced   = {self.visual_wire_points_sliced}", color=(255, 0, 255))
+            Debug(self, f": visual_field_points         = {self.visual_field_points}", color=(255, 0, 255))
+            Debug(self, f": visual_field_arrow_lines    =    {self.visual_field_arrow_lines}", color=(255, 0, 255))
+            Debug(self, f": visual_field_arrow_heads    = {self.visual_field_arrow_heads}", color=(255, 0, 255))
 
         self.foreground = None
         self.background = None
@@ -235,7 +246,8 @@ class VispyCanvas(scene.SceneCanvas):
         self.redraw_perspective_info()
 
         self.redraw_wire_segments()
-        self.redraw_wire_points()
+        self.redraw_wire_points_sliced()
+        self.redraw_wire_points_selected()
 
         # Determine which field colors to use (if at all)
         if self.gui.model.metric.is_valid():
@@ -278,9 +290,9 @@ class VispyCanvas(scene.SceneCanvas):
                 color=self.foreground
             )
 
-    def redraw_wire_points(self):
+    def redraw_wire_points_sliced(self):
         """
-        Re-draws wire points.
+        Re-draws sliced wire points.
         """
         visible = \
             self.gui.model.wire.is_valid() and \
@@ -292,7 +304,7 @@ class VispyCanvas(scene.SceneCanvas):
             if self.DebugVisuals:
                 Debug(
                     self,
-                    ".redraw_wire_points(): "
+                    ".redraw_wire_points_sliced(): "
                     f"pos[{len(self.gui.model.wire.get_points_sliced())}]",
                     color=(255, 0, 255)
                 )
@@ -306,6 +318,48 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="disc"
             )
 
+    def redraw_wire_points_selected(self):
+        """
+        Re-draws selected wire base points.
+        """
+        point_index = self.gui.sidebar_left.wire_widget.table.get_selected_row()
+
+        visible = \
+            self.gui.model.wire.is_valid() and \
+            self.gui.config.get_bool("show_wire_points") and \
+            point_index is not None
+
+        self.set_visible(self.visual_wire_points_selected, visible)
+
+        if visible:
+            points_selected = np.array([
+                self.gui.model.wire.get_points_transformed()[i]
+                for i in range(
+                    point_index,
+                    len(self.gui.model.wire.get_points_transformed()) + point_index - 1,
+                    len(self.gui.model.wire.get_points_base())
+                )
+            ])
+
+            if self.DebugVisuals:
+                Debug(
+                    self,
+                    ".redraw_wire_points_selected(): "
+                    f"pos[{len(points_selected)}]",
+                    color=(255, 0, 255)
+                )
+
+            self.visual_wire_points_selected.set_data(
+                pos=points_selected,
+                face_color=VispyCanvas.WirePointSelectedColor,
+                size=VispyCanvas.WirePointSelectedSize,
+                edge_width=0,
+                edge_color=None,
+                symbol="disc"
+            )
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     def redraw_field_arrows(self, colors):
         """
         Re-draws field arrows.
@@ -316,7 +370,8 @@ class VispyCanvas(scene.SceneCanvas):
 
         visible = \
             self.gui.model.field.is_valid() and \
-            arrow_scale > 0
+            arrow_scale > 0 and \
+            self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         self.set_visible(self.visual_field_arrow_lines, visible)
         self.set_visible(self.visual_field_arrow_heads, visible)
@@ -383,7 +438,8 @@ class VispyCanvas(scene.SceneCanvas):
 
         visible = \
             self.gui.model.sampling_volume.is_valid() and \
-            point_scale > 0
+            point_scale > 0 and \
+            self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         self.set_visible(self.visual_field_points, visible)
 
@@ -406,6 +462,8 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="disc"
             )
 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     def redraw_field_labels(self, colors):
         """
         Re-draws field labels.
@@ -414,79 +472,82 @@ class VispyCanvas(scene.SceneCanvas):
         """
         visible = \
             self.gui.model.metric.is_valid() and \
-            self.gui.config.get_bool("display_magnitude_labels")
+            self.gui.config.get_bool("display_magnitude_labels") and \
+            self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
-        # Labels are not visible
-        if not visible:
+        for i, visual in self.visual_field_labels.items():
+            visual.parent = self.view_main.scene if visible else None
 
-            # Delete old labels
-            if len(self.visual_field_labels) > 0:
-                for i, visual in self.visual_field_labels.items():
-                    visual.parent = None
+        if visible:
 
-                if self.DebugVisuals:
-                    Debug(self, f".redraw_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
+            if self.DebugVisuals:
+                Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}", color=(255, 0, 255))
 
-                self.visual_field_labels = {}
-
-        # Labels are visible
-        else:
-
-            # Use foreground color for all labels
             if not self.gui.config.get_bool("field_colors_labels"):
+                # Use foreground color for all labels
                 colors = [self.foreground] * len(self.gui.model.sampling_volume.get_points())
 
-            # Create new labels
-            if len(self.visual_field_labels) == 0:
+            # Update label colors
+            for i, visual in self.visual_field_labels.items():
+                visual.color = np.append(colors[i][:3], 1.0)
 
-                bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
-                resolution = self.gui.model.sampling_volume.get_resolution()
+    def create_field_labels(self):
+        """
+        Creates field labels.
+        """
+        bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
+        resolution = self.gui.model.sampling_volume.get_resolution()
 
-                # ToDo: When sampling volume constraints are implemented, adapt this to work with "incomplete grids":
-                # Iterate through the sampling volume points
-                # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
-                span = (bounds_max - bounds_min) * resolution + np.array([1, 1, 1])
-                n = len(self.gui.model.sampling_volume.get_points())
-                x, y, z = 0, 0, 0
-                for i in range(n):
+        # ToDo: When sampling volume constraints are implemented, adapt this to work with "incomplete grids":
+        # Iterate through the sampling volume points
+        # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
+        span = (bounds_max - bounds_min) * resolution + np.array([1, 1, 1])
+        n = len(self.gui.model.sampling_volume.get_points())
+        x, y, z = 0, 0, 0
+        for i in range(n):
 
-                    # Provide some spacing between labels
-                    if x % resolution == 0 and y % resolution == 0 and z % resolution == 0:
+            # Provide some spacing between labels
+            if x % resolution == 0 and y % resolution == 0 and z % resolution == 0:
+                magnitude = Metric.LengthScale * np.linalg.norm(self.gui.model.field.get_vectors()[i])
+                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + "T"
 
-                        magnitude = Metric.LengthScale * np.linalg.norm(self.gui.model.field.get_vectors()[i])
-                        text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + "T"
+                visual = scene.visuals.create_visual_node(visuals.TextVisual)(
+                    parent=self.view_main.scene,
+                    pos=self.gui.model.sampling_volume.get_points()[i],
+                    face=self.DefaultFontFace,
+                    font_size=self.DefaultFontSize,
+                    color=self.foreground,
+                    text=text,
+                    font_manager=self.font_manager
+                )
 
-                        visual = scene.visuals.create_visual_node(visuals.TextVisual)(
-                            parent=self.view_main.scene,
-                            pos=self.gui.model.sampling_volume.get_points()[i],
-                            face=self.DefaultFontFace,
-                            font_size=self.DefaultFontSize,
-                            color=np.append(colors[i][:3], 1.0),
-                            text=text,
-                            font_manager=self.font_manager
-                        )
+                self.visual_field_labels[i] = visual
 
-                        self.visual_field_labels[i] = visual
-
-                    # Move to the next "x, y, z" grid index
-                    if x + 1 < span[0]:
-                        x += 1
-                    else:
-                        x = 0
-                        if y + 1 < span[1]:
-                            y += 1
-                        else:
-                            y = 0
-                            z += 1
-
-                if self.DebugVisuals:
-                    Debug(self, f".redraw_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
-
+            # Move to the next "x, y, z" grid index
+            if x + 1 < span[0]:
+                x += 1
             else:
+                x = 0
+                if y + 1 < span[1]:
+                    y += 1
+                else:
+                    y = 0
+                    z += 1
 
-                # Update colors of existing labels
-                for i, visual in self.visual_field_labels.items():
-                    visual.color = np.append(colors[i][:3], 1.0)
+        if self.DebugVisuals:
+            Debug(self, f".create_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+    def delete_field_labels(self):
+        """
+        Deletes the field labels.
+        """
+        for i, visual in self.visual_field_labels.items():
+            visual.parent = None
+
+        if self.DebugVisuals:
+            Debug(self, f".delete_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+        self.visual_field_labels = {}
 
     # ------------------------------------------------------------------------------------------------------------------
 

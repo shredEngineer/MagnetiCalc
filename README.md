@@ -54,26 +54,37 @@ Tested with Python 3.8 in Ubuntu 20.04.
 The following dependency packages have to be installed first (Ubuntu 20.04):
 ```shell
 sudo apt install python3-dev
-sudo apt-get install --reinstall libxcb-xinerama0
+sudo apt install libxcb-xinerama0 --reinstall
 ```
 
 ### Option A: Automatic install via pip
+**Note:** On some systems, it may be necessary to upgrade pip first:
+```shell
+python3 -m pip install pip --upgrade
+```
+
 Install MagnetiCalc to the user site-packages directory and start it from there: 
 ```shell
 pip3 install magneticalc
 python3 -m magneticalc
 ```
 
+This will automatically install all dependency packages.
+
 ### Option B: Manual download
+First, manually install all dependency packages (upgrading each to the latest version):
+```shell
+pip3 install PyQt5 qtawesome vispy matplotlib numpy colorit si-prefix --upgrade
+```
+
 Clone the latest version of MagnetiCalc from GitHub and start it directly: 
 ```shell
-pip3 install --upgrade PyQt5 qtawesome vispy matplotlib numpy colorit si-prefix
 git clone https://github.com/shredEngineer/MagnetiCalc
 cd MagnetiCalc
 python3 -m magneticalc
 ```
 
-For debugging, you may also install / uninstall the package in a virtual environment:
+For debugging, you may now also install (uninstall) the package in a virtual environment:
 ```shell
 pip install .
 …
@@ -82,7 +93,7 @@ pip uninstall magneticalc -y
 
 ToDo
 ----
-* Highlight the currently selected base point (and all of its rotational-symmetry-duplicates).
+* Improve Windows support; add installation instructions, ensure consistent PyQt5 look and feel.
 * Add support for adding, editing and removing sampling volume constraints;
   the SamplingVolume module already supports constraints, but the GUI currently doesn't.
   This will also require changes to the way the field labels are currently distributed (relying on a *complete* grid).

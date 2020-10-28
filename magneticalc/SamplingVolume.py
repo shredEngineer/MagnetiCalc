@@ -104,18 +104,17 @@ class SamplingVolume:
         self._bounds_min = np.array([np.floor(x) for x in bounds_min])
         self._bounds_max = np.array([np.ceil(x) for x in bounds_max])
 
-    def set_padding(self, dx, dy, dz):
+    def set_padding_nearest(self, padding):
         """
         Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.
+        This expands the bounding box to the next integer grid coordinates.
 
         Note: This will not automatically invalidate the sampling volume
 
-        @param dx: Amount of padding in X-direction.
-        @param dy: Amount of padding in Y-direction.
-        @param dz: Amount of padding in Z-direction.
+        @param padding: Amount of padding (3D point)
         """
-        self._bounds_min -= np.array([dx, dy, dz])
-        self._bounds_max += np.array([dx, dy, dz])
+        self._bounds_min -= np.array([np.floor(x) for x in padding])
+        self._bounds_max += np.array([np.ceil(x) for x in padding])
 
     # ------------------------------------------------------------------------------------------------------------------
 

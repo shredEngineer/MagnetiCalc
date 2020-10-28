@@ -86,6 +86,16 @@
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#WirePointSelectedSize" class="code" data-type="Class Variable">WirePointSelectedSize</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#WirePointSelectedColor" class="code" data-type="Class Variable">WirePointSelectedColor</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
     <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#ScaleFactorMin" class="code" data-type="Class Variable">ScaleFactorMin</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
@@ -181,6 +191,11 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_wire_points_selected" class="code" data-type="Instance Variable">visual_wire_points_selected</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_wire_points_sliced" class="code" data-type="Instance Variable">visual_wire_points_sliced</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
@@ -256,8 +271,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_points" class="code" data-type="Method">redraw_wire_points</a></td>
-    <td><span>Re-draws wire points.</span></td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_points_sliced" class="code" data-type="Method">redraw_wire_points_sliced</a></td>
+    <td><span>Re-draws sliced wire points.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_points_selected" class="code" data-type="Method">redraw_wire_points_selected</a></td>
+    <td><span>Re-draws selected wire base points.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -273,6 +293,16 @@
     <td>Method</td>
     <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_field_labels" class="code" data-type="Method">redraw_field_labels</a></td>
     <td><span>Re-draws field labels.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#create_field_labels" class="code" data-type="Method">create_field_labels</a></td>
+    <td><span>Creates field labels.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#delete_field_labels" class="code" data-type="Method">delete_field_labels</a></td>
+    <td><span>Deletes the field labels.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -403,6 +433,38 @@
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedSize">
+    
+  </a>
+  <a name="WirePointSelectedSize">
+    
+  </a>
+  <div class="functionHeader">
+    WirePointSelectedSize =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedColor">
+    
+  </a>
+  <a name="WirePointSelectedColor">
+    
+  </a>
+  <div class="functionHeader">
+    WirePointSelectedColor =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>Tuple[int, ...]</code>)
   </div>
 </div><div class="baseclassvariable">
   
@@ -716,6 +778,22 @@
   </div>
 </div><div class="baseinstancevariable">
   
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_selected">
+    
+  </a>
+  <a name="visual_wire_points_selected">
+    
+  </a>
+  <div class="functionHeader">
+    visual_wire_points_selected =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
   <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_sliced">
     
   </a>
@@ -977,22 +1055,41 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points">
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_sliced">
     
   </a>
-  <a name="redraw_wire_points">
+  <a name="redraw_wire_points_sliced">
     
   </a>
   <div class="functionHeader">
     
     def
-    redraw_wire_points(self):
+    redraw_wire_points_sliced(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Re-draws wire points.</p></div>
+    <div><p>Re-draws sliced wire points.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_selected">
+    
+  </a>
+  <a name="redraw_wire_points_selected">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    redraw_wire_points_selected(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Re-draws selected wire base points.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -1053,6 +1150,44 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.VispyCanvas.VispyCanvas.create_field_labels">
+    
+  </a>
+  <a name="create_field_labels">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    create_field_labels(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Creates field labels.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.delete_field_labels">
+    
+  </a>
+  <a name="delete_field_labels">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    delete_field_labels(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Deletes the field labels.</p></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.VispyCanvas.VispyCanvas.boost_color">
     
   </a>
@@ -1093,7 +1228,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-25 18:54:03.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-28 17:48:35.
       </address>
 
     </div>

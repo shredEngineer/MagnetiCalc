@@ -53,31 +53,21 @@
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#__init__" class="code" data-type="Method">__init__</a></td>
     <td><span>Initializes table.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Table.Table.html#enabled" class="code" data-type="Instance Variable">enabled</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Table.Table.html#cell_edited_callback" class="code" data-type="Instance Variable">cell_edited_callback</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Table.Table.html#row_deleted_callback" class="code" data-type="Instance Variable">row_deleted_callback</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Table.Table.html#minimum_rows" class="code" data-type="Instance Variable">minimum_rows</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Table.Table.html#selection_changed" class="code" data-type="Method">selection_changed</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><a href="magneticalc.Table.Table.html#on_selection_changed" class="code" data-type="Method">on_selection_changed</a></td>
+    <td><span>Gets called when the table selection changed.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#focusOutEvent" class="code" data-type="Method">focusOutEvent</a></td>
+    <td><span>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#get_selected_row" class="code" data-type="Method">get_selected_row</a></td>
+    <td><span>Returns the currently selected row index.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -98,6 +88,31 @@
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#set_contents" class="code" data-type="Method">set_contents</a></td>
     <td><span>Sets table contents.</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_enabled" class="code" data-type="Instance Variable">_enabled</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_cell_edited_callback" class="code" data-type="Instance Variable">_cell_edited_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_row_deleted_callback" class="code" data-type="Instance Variable">_row_deleted_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_minimum_rows" class="code" data-type="Instance Variable">_minimum_rows</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_selection_changed_callback" class="code" data-type="Instance Variable">_selection_changed_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -118,72 +133,88 @@
   <div class="functionHeader">
     
     def
-    __init__(self, enabled=(True), cell_edited_callback=None, row_deleted_callback=None, minimum_rows=2):
+    __init__(self, enabled=(True), cell_edited_callback=None, row_deleted_callback=None, minimum_rows=2, selection_changed_callback=None):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">cell_edited_callback</td><td>Set this to make cells editable</td></tr><tr><td></td><td class="fieldArg">row_deleted_callback</td><td>Set this to make rows deletable</td></tr><tr><td></td><td class="fieldArg">minimum_rows</td><td>Minimum number of rows (no further rows can be deleted)</td></tr></table></div>
+    <div><p>Initializes table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">cell_edited_callback</td><td>Set this to make cells editable</td></tr><tr><td></td><td class="fieldArg">row_deleted_callback</td><td>Set this to make rows deletable</td></tr><tr><td></td><td class="fieldArg">minimum_rows</td><td>Minimum number of rows (no further rows can be deleted)</td></tr><tr><td></td><td class="fieldArg">selection_changed_callback</td><td>Used to inform the GUI that another row was selected</td></tr></table></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table.enabled">
+  <a name="magneticalc.Table.Table._enabled">
     
   </a>
-  <a name="enabled">
+  <a name="_enabled">
     
   </a>
   <div class="functionHeader">
-    enabled =
+    _enabled =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table.cell_edited_callback">
+  <a name="magneticalc.Table.Table._cell_edited_callback">
     
   </a>
-  <a name="cell_edited_callback">
+  <a name="_cell_edited_callback">
     
   </a>
   <div class="functionHeader">
-    cell_edited_callback =
+    _cell_edited_callback =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table.row_deleted_callback">
+  <a name="magneticalc.Table.Table._row_deleted_callback">
     
   </a>
-  <a name="row_deleted_callback">
+  <a name="_row_deleted_callback">
     
   </a>
   <div class="functionHeader">
-    row_deleted_callback =
+    _row_deleted_callback =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table.minimum_rows">
+  <a name="magneticalc.Table.Table._minimum_rows">
     
   </a>
-  <a name="minimum_rows">
+  <a name="_minimum_rows">
     
   </a>
   <div class="functionHeader">
-    minimum_rows =
+    _minimum_rows =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Table.Table._selection_changed_callback">
+    
+  </a>
+  <a name="_selection_changed_callback">
+    
+  </a>
+  <div class="functionHeader">
+    _selection_changed_callback =
     
   </div>
   <div class="functionBody">
@@ -192,22 +223,60 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Table.Table.selection_changed">
+  <a name="magneticalc.Table.Table.on_selection_changed">
     
   </a>
-  <a name="selection_changed">
+  <a name="on_selection_changed">
     
   </a>
   <div class="functionHeader">
     
     def
-    selection_changed(self, a, b):
+    on_selection_changed(self, _selected, _deselected):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div class="undocumented">Undocumented</div>
+    <div><p>Gets called when the table selection changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_selected</td><td>Currently selected QItemSelection</td></tr><tr><td></td><td class="fieldArg">_deselected</td><td>Currently deselected QItemSelection</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.focusOutEvent">
+    
+  </a>
+  <a name="focusOutEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    focusOutEvent(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.get_selected_row">
+    
+  </a>
+  <a name="get_selected_row">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_selected_row(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the currently selected row index.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Index of currently selected row (None if none selected)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -289,7 +358,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-25 18:54:03.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-28 17:48:35.
       </address>
 
     </div>

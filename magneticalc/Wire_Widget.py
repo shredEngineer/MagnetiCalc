@@ -73,7 +73,8 @@ class Wire_Widget(Groupbox):
         self.addWidget(points_icon_label)
         self.table = Table(
             cell_edited_callback=self.on_table_cell_edited,
-            row_deleted_callback=self.on_table_row_deleted
+            row_deleted_callback=self.on_table_row_deleted,
+            selection_changed_callback=self.gui.redraw
         )
         self.table.set_horizontal_header(["X", "Y", "Z"])
         self.addWidget(self.table)

@@ -20,6 +20,7 @@ import os
 import configparser
 from magneticalc.Debug import Debug
 from magneticalc.VispyCanvas import VispyCanvas
+from magneticalc.Version import Version
 from magneticalc.Wire import Wire
 
 
@@ -36,32 +37,31 @@ class Config:
     DebugGetters = False
 
     # Default wire preset
-    DefaultWirePreset = "Straight Line"
+    DefaultWirePreset = "Compensated Double Loop (centered)"
 
     # Default perspective preset
     DefaultPerspectivePreset = "Isometric"
 
     # Default configuration
     Default = {
-        "window_width"                  : "1500",
-        "window_height"                 : "1000",
+        "version"                       : Version.String,
         "auto_calculation"              : "True",
         "num_cores"                     : "0",
         "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "0.3, 1.0, 1.0",
+        "wire_stretch"                  : "1.8, 1.0, 0.2",
         "wire_slicer_limit"             : "0.1",
         "wire_dc"                       : "1.0",
-        "rotational_symmetry_count"     : "10",
+        "rotational_symmetry_count"     : "2",
         "rotational_symmetry_radius"    : "1.0",
         "rotational_symmetry_axis"      : "2",
-        "sampling_volume_padding"       : "1, -2, 2",
+        "sampling_volume_padding"       : "0, 1, -1",
         "sampling_volume_resolution"    : "10",
-        "color_metric"                  : "Magnitude",
-        "alpha_metric"                  : "Log Magnitude",
+        "color_metric"                  : "Angle YZ",
+        "alpha_metric"                  : "Magnitude",
         "field_point_scale"             : "1.0",
         "field_arrow_scale"             : "0.2",
         "field_boost"                   : "0.1",
-        "display_magnitude_labels"         : "True",
+        "display_magnitude_labels"      : "True",
         "show_wire_segments"            : "True",
         "show_wire_points"              : "True",
         "field_colors_labels"           : "False",

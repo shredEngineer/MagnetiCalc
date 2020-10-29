@@ -22,7 +22,7 @@ import atexit
 import datetime
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSplitter, QFileDialog, QDesktopWidget
+from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu

@@ -41,7 +41,6 @@ class Menu:
 
         # File menu
         file_menu = QMenu("&File", self.gui)
-        file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.picture-o"), "&Save Image...", self.gui.file_save, Qt.CTRL + Qt.Key_S)
         file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.close, Qt.CTRL + Qt.Key_Q)

@@ -37,7 +37,7 @@ class Config:
     DebugGetters = False
 
     # Default wire preset
-    DefaultWirePreset = "Compensated Double Loop (centered)"
+    DefaultWirePreset = "Single Circular Loop (offset)"
 
     # Default perspective preset
     DefaultPerspectivePreset = "Isometric"
@@ -48,15 +48,15 @@ class Config:
         "auto_calculation"              : "True",
         "num_cores"                     : "0",
         "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "1.8, 1.0, 0.2",
+        "wire_stretch"                  : "1.0, 1.2, 1.0",
         "wire_slicer_limit"             : "0.1",
         "wire_dc"                       : "1.0",
-        "rotational_symmetry_count"     : "2",
-        "rotational_symmetry_radius"    : "1.0",
+        "rotational_symmetry_count"     : "12",
+        "rotational_symmetry_radius"    : "0.8",
         "rotational_symmetry_axis"      : "2",
-        "sampling_volume_padding"       : "0, 1, -1",
-        "sampling_volume_resolution"    : "10",
-        "color_metric"                  : "Angle YZ",
+        "sampling_volume_padding"       : "0, 0, -1",
+        "sampling_volume_resolution"    : "5",
+        "color_metric"                  : "Log Magnitude",
         "alpha_metric"                  : "Magnitude",
         "field_point_scale"             : "1.0",
         "field_arrow_scale"             : "0.2",

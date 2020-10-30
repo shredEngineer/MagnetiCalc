@@ -34,9 +34,9 @@ class Wire:
         ]
     }
 
-    # Preset: A single loop with offset connections.
-    SingleLoop_Offset = {
-        "id": "Single Loop (offset)",
+    # Preset: A single square loop with offset connections.
+    SingleSquareLoop_Offset = {
+        "id": "Single Square Loop (offset)",
         "points": [
             [-1/2, +1/2, +1/2],
             [+0/2, +1/2, +1/2],
@@ -48,9 +48,9 @@ class Wire:
         ]
     }
 
-    # Preset: A single loop with centered connections.
-    SingleLoop_Centered = {
-        "id": "Single Loop (centered)",
+    # Preset: A single square loop with centered connections.
+    SingleSquareLoop_Centered = {
+        "id": "Single Square Loop (centered)",
         "points": [
             [-1/2, +1/2, +0/2],
             [+0/2, +1/2, +0/2],
@@ -63,9 +63,9 @@ class Wire:
         ]
     }
 
-    # Preset: A "compensated" double loop with offset connections.
-    CompensatedDoubleLoop_Offset = {
-        "id": "Compensated Double Loop (offset)",
+    # Preset: A "compensated" double square loop with offset connections.
+    CompensatedDoubleSquareLoop_Offset = {
+        "id": "Compensated Double Square Loop (offset)",
         "points": [
             [-3/6, +1/2, +1/2],
             [-1/6, +1/2, +1/2],
@@ -82,9 +82,9 @@ class Wire:
         ]
     }
 
-    # Preset: A "compensated" double loop with centered connections.
-    CompensatedDoubleLoop_Centered = {
-        "id": "Compensated Double Loop (centered)",
+    # Preset: A "compensated" double square loop with centered connections.
+    CompensatedDoubleSquareLoop_Centered = {
+        "id": "Compensated Double Square Loop (centered)",
         "points": [
             [-3/6, +1/2, +0/2],
             [-1/6, +1/2, +0/2],
@@ -103,13 +103,99 @@ class Wire:
         ]
     }
 
+    # Preset: A single circular loop with offset connections.
+    SingleCircularLoop_Offset = {
+        "id": "Single Circular Loop (offset)",
+        "points": [
+            [
+                0,
+                -np.cos(2 * np.pi * i / 16) / 2,
+                +np.sin(2 * np.pi * i / 16) / 2
+            ]
+            for i in range(16)
+        ]
+    }
+
+    # Preset: A solenoid of 4 circular loops.
+    SolenoidCircularLoops4 = {
+        "id": "Solenoid: 4 circular loops",
+        "points": [
+            [
+                i / 64 - 1 / 2,
+                -np.cos(2 * np.pi * i / 16) / 2,
+                +np.sin(2 * np.pi * i / 16) / 2
+            ]
+            for i in range(64)
+        ]
+    }
+
+    # Preset: A solenoid of 8 circular loops.
+    SolenoidCircularLoops8 = {
+        "id": "Solenoid: 8 circular loops",
+        "points": [
+            [
+                i / 128 - 1 / 2,
+                -np.cos(2 * np.pi * i / 16) / 2,
+                +np.sin(2 * np.pi * i / 16) / 2
+            ]
+            for i in range(128)
+        ]
+    }
+
+    # Preset: A compensated solenoid of 2x 4 circular loops.
+    CompensatedSolenoidCircularLoops4 = {
+        "id": "Compensated Solenoid: 2x 4 circular loops",
+        "points": [
+            [
+                i / 64 - 1 - 0.125 / 2,
+                -np.cos(+2 * np.pi * i / 16) / 2,
+                +np.sin(+2 * np.pi * i / 16) / 2
+            ]
+            for i in range(64)
+        ] +
+        [
+            [
+                i / 64 + 0.125 / 2,
+                -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
+                +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+            ]
+            for i in range(64)
+        ]
+    }
+
+    # Preset: A compensated solenoid of 2x 8 circular loops.
+    CompensatedSolenoidCircularLoops8 = {
+        "id": "Compensated Solenoid: 2x 8 circular loops",
+        "points": [
+            [
+                i / 128 - 1.125,
+                -np.cos(+2 * np.pi * i / 16) / 2,
+                +np.sin(+2 * np.pi * i / 16) / 2
+            ]
+            for i in range(128)
+        ] +
+        [
+            [
+                i / 128 + 0.125,
+                -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
+                +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+            ]
+            for i in range(128)
+        ]
+    }
+
     # List of all above presets
     Presets = [
         StraightLine,
-        SingleLoop_Offset,
-        SingleLoop_Centered,
-        CompensatedDoubleLoop_Offset,
-        CompensatedDoubleLoop_Centered
+        SingleSquareLoop_Offset,
+        SingleSquareLoop_Centered,
+        CompensatedDoubleSquareLoop_Offset,
+        CompensatedDoubleSquareLoop_Centered,
+        SingleCircularLoop_Offset,
+        SolenoidCircularLoops4,
+        SolenoidCircularLoops8,
+        CompensatedSolenoidCircularLoops4,
+        CompensatedSolenoidCircularLoops8
     ]
 
     @staticmethod
@@ -140,6 +226,30 @@ class Wire:
         Debug(self, ": Init")
 
         self._points_base = np.array(points)
+
+        print(self.CompensatedSolenoidCircularLoops8["points"])
+
+        """
+        # Note: This is my playground for creating new wire presets!
+        self._points_base = np.array(
+            [
+                [
+                    i / 128 - 1.125,
+                    -np.cos(+2 * np.pi * i / 16) / 2,
+                    +np.sin(+2 * np.pi * i / 16) / 2
+                ]
+                for i in range(128)
+            ] +
+            [
+                [
+                    i / 128 + 0.125,
+                    -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
+                    +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+                ]
+                for i in range(128)
+            ]
+        )
+        """
 
         self._slicer_limit = slicer_limit
         self._dc = dc

@@ -49,6 +49,10 @@ Installation
 ------------
 Tested with Python 3.8 in Ubuntu 20.04.
 
+If you have trouble installing MagnetiCalc,
+make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
+so I can help you get it up and running!
+
 ### Prerequisites
 
 The following dependency packages have to be installed first (Ubuntu 20.04):
@@ -137,3 +141,8 @@ Video Demo
 Here is a very short demo of an earlier version of MagnetiCalc in action:
 
 [![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=rsVbu5uF0eU)
+
+Links
+-----
+If you want to comment on the project or see additional info, please visit my personal website:
+https://paulwilhelm.de/magneticalc/

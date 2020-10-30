@@ -6,7 +6,7 @@ BIN=$HOME/MagnetiCalc/venv/bin/
 # Check code style
 "$BIN"/pycodestyle \
   --max-line-length=120 \
-  --ignore=E203,E226 \
+  --ignore=E203,E226,W504 \
   magneticalc/
 
 # Check for unused code (some names explicitly excluded)

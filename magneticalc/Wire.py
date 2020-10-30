@@ -227,29 +227,26 @@ class Wire:
 
         self._points_base = np.array(points)
 
-        print(self.CompensatedSolenoidCircularLoops8["points"])
-
-        """
         # Note: This is my playground for creating new wire presets!
-        self._points_base = np.array(
-            [
+        if False:
+            self._points_base = np.array(
                 [
-                    i / 128 - 1.125,
-                    -np.cos(+2 * np.pi * i / 16) / 2,
-                    +np.sin(+2 * np.pi * i / 16) / 2
-                ]
-                for i in range(128)
-            ] +
-            [
+                    [
+                        i / 128 - 1.125,
+                        -np.cos(+2 * np.pi * i / 16) / 2,
+                        +np.sin(+2 * np.pi * i / 16) / 2
+                    ]
+                    for i in range(128)
+                ] +
                 [
-                    i / 128 + 0.125,
-                    -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
-                    +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+                    [
+                        i / 128 + 0.125,
+                        -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
+                        +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+                    ]
+                    for i in range(128)
                 ]
-                for i in range(128)
-            ]
-        )
-        """
+            )
 
         self._slicer_limit = slicer_limit
         self._dc = dc

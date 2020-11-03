@@ -27,7 +27,12 @@ setup(
     package_dir={"magneticalc": "magneticalc"},
     name="MagnetiCalc",
     version=version["__VERSION__"],
-    description="MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.",
+    description="""MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
+Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to DC currents) is displayed
+in interactive 3D, using multiple metrics for highlighting this field's properties.
+Alternatively, the magnetic vector potential (A-field) may be displayed.
+All parameters and presets can interactively be changed inside the GUI.
+There is also an experimental feature to calculate the coil's energy and self-inductance.""",
     url="https://github.com/shredEngineer/MagnetiCalc",
     author="Paul Wilhelm",
     author_email="anfrage@paulwilhelm.de",
@@ -39,9 +44,8 @@ setup(
         "Topic :: Scientific/Engineering",
         "Development Status :: 4 - Beta"
     ],
-    # ToDo: Find out why this is rejected by PyPI... -_-
-    # long_description_content_type="text/markdown",
-    # long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    long_description=open("README.md").read(),
     platforms=["any"],
     python_requires=">=3.6",
     install_requires=[

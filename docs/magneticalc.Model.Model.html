@@ -46,13 +46,18 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id35">
+        <table class="children sortable" id="id38">
   
   <tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#__init__" class="code" data-type="Method">__init__</a></td>
     <td><span>Initializes the model.</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Model.Model.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
@@ -72,11 +77,6 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.Model.Model.html#metric" class="code" data-type="Instance Variable">metric</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#on_metric_invalidated" class="code" data-type="Instance Variable">on_metric_invalidated</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
@@ -98,6 +98,11 @@
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#set_sampling_volume" class="code" data-type="Method">set_sampling_volume</a></td>
     <td><span>Sets the sampling volume.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#set_field" class="code" data-type="Method">set_field</a></td>
+    <td><span>Sets the field.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -123,6 +128,46 @@
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#calculate_metric" class="code" data-type="Method">calculate_metric</a></td>
     <td><span></span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_wire_valid" class="code" data-type="Method">on_wire_valid</a></td>
+    <td><span>Gets called when the wire was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_sampling_volume_valid" class="code" data-type="Method">on_sampling_volume_valid</a></td>
+    <td><span>Gets called when the sampling volume was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_field_valid" class="code" data-type="Method">on_field_valid</a></td>
+    <td><span>Gets called when the field was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_metric_valid" class="code" data-type="Method">on_metric_valid</a></td>
+    <td><span>Gets called when the metric was successfully calculated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_wire_invalid" class="code" data-type="Method">on_wire_invalid</a></td>
+    <td><span>Gets called when the wire was invalidated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_sampling_volume_invalid" class="code" data-type="Method">on_sampling_volume_invalid</a></td>
+    <td><span>Gets called when the sampling volume was invalidated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_field_invalid" class="code" data-type="Method">on_field_invalid</a></td>
+    <td><span>Gets called when the field was invalidated.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#on_metric_invalid" class="code" data-type="Method">on_metric_invalid</a></td>
+    <td><span>Gets called when the metric was invalidated.</span></td>
   </tr>
 </table>
         
@@ -143,13 +188,29 @@
   <div class="functionHeader">
     
     def
-    __init__(self, on_metric_invalidated):
+    __init__(self, gui):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes the model.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">on_metric_invalidated</td><td>Callback (needed to clear the metric labels after the metric became invalid)</td></tr></table></div>
+    <div><p>Initializes the model.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Model.Model.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    gui =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -209,22 +270,6 @@
   </a>
   <div class="functionHeader">
     metric =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.on_metric_invalidated">
-    
-  </a>
-  <a name="on_metric_invalidated">
-    
-  </a>
-  <div class="functionHeader">
-    on_metric_invalidated =
     
   </div>
   <div class="functionBody">
@@ -309,6 +354,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Model.Model.set_field">
+    
+  </a>
+  <a name="set_field">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_field(self, field):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Model.Model.set_metric">
     
   </a>
@@ -324,7 +388,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the metric.</p></div>
+    <div><p>Sets the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">metric</td><td>Metric</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -402,11 +466,163 @@
     
     <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_wire_valid">
+    
+  </a>
+  <a name="on_wire_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_wire_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the wire was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_sampling_volume_valid">
+    
+  </a>
+  <a name="on_sampling_volume_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_sampling_volume_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the sampling volume was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_field_valid">
+    
+  </a>
+  <a name="on_field_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_field_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the field was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_metric_valid">
+    
+  </a>
+  <a name="on_metric_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_metric_valid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the metric was successfully calculated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_wire_invalid">
+    
+  </a>
+  <a name="on_wire_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_wire_invalid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the wire was invalidated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_sampling_volume_invalid">
+    
+  </a>
+  <a name="on_sampling_volume_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_sampling_volume_invalid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the sampling volume was invalidated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_field_invalid">
+    
+  </a>
+  <a name="on_field_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_field_invalid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the field was invalidated.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.on_metric_invalid">
+    
+  </a>
+  <a name="on_metric_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_metric_invalid(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the metric was invalidated.</p></div>
+  </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-30 16:29:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-03 21:44:31.
       </address>
 
     </div>

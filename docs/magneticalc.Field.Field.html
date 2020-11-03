@@ -66,8 +66,23 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_type" class="code" data-type="Method">get_type</a></td>
+    <td><span>Gets field type.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_units" class="code" data-type="Method">get_units</a></td>
+    <td><span>Gets field units.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Field.Field.html#get_vectors" class="code" data-type="Method">get_vectors</a></td>
-    <td><span>Get field vectors.</span></td>
+    <td><span>Gets field vectors.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_total_limited" class="code" data-type="Method">get_total_limited</a></td>
+    <td><span>Gets total number of distance limited points.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -76,7 +91,22 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_type" class="code" data-type="Instance Variable">_type</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_distance_limit" class="code" data-type="Instance Variable">_distance_limit</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.Field.Field.html#_vectors" class="code" data-type="Instance Variable">_vectors</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_total_limited" class="code" data-type="Instance Variable">_total_limited</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -98,13 +128,45 @@
   <div class="functionHeader">
     
     def
-    __init__(self):
+    __init__(self, _type, distance_limit):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes an empty field.</p></div>
+    <div><p>Initializes an empty field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-Field; 1: B-Field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._type">
+    
+  </a>
+  <a name="_type">
+    
+  </a>
+  <div class="functionHeader">
+    _type =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._distance_limit">
+    
+  </a>
+  <a name="_distance_limit">
+    
+  </a>
+  <div class="functionHeader">
+    _distance_limit =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -116,6 +178,22 @@
   </a>
   <div class="functionHeader">
     _vectors =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._total_limited">
+    
+  </a>
+  <a name="_total_limited">
+    
+  </a>
+  <div class="functionHeader">
+    _total_limited =
     
   </div>
   <div class="functionBody">
@@ -162,6 +240,44 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Field.Field.get_type">
+    
+  </a>
+  <a name="get_type">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_type(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets field type.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field type (0: A-Field; 1: B-Field)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field.Field.get_units">
+    
+  </a>
+  <a name="get_units">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_units(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets field units.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field units (string)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Field.Field.get_vectors">
     
   </a>
@@ -177,7 +293,26 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Get field vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D vectors</td></tr></table></div>
+    <div><p>Gets field vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D vectors (field vectors &amp; corresponding sampling volume points have the same indices)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field.Field.get_total_limited">
+    
+  </a>
+  <a name="get_total_limited">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_total_limited(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets total number of distance limited points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Total number of distance limited points</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -202,7 +337,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-30 16:29:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-03 21:44:31.
       </address>
 
     </div>

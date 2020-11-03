@@ -29,74 +29,95 @@ class BiotSavart:
     Employing static & class methods only, for better multiprocessing performance.
     """
 
-    # Constant for Biot-Savart law, in SI units
+    # Constant for Biot-Savart law
     k = 1e-7  # H / m
 
-    # Divisor cutoff (avoiding divisions by zero)
-    DivisorCutoff = 1e-12
-
     # Class attributes
+    _type = None
     dc = None
     current_elements = None
     sampling_volume_points = None
+    distance_limit = None
+    total_limited = None
+
     progress_callback = None
 
     @classmethod
-    def init(cls, dc, current_elements, sampling_volume_points, progress_callback):
+    def init(cls, _type, dc, current_elements, sampling_volume_points, distance_limit, progress_callback):
         """
         Populates class attributes.
 
-        @param dc: DC factor
+        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param dc: Wire current (A)
         @param current_elements: List of current elements (list of 3D vector pairs: (element center, element direction))
         @param sampling_volume_points: List of sampling volume points
+        @param distance_limit: Distance limit (mitigating divisions by zero)
         @param progress_callback: Progress callback
         """
+        cls._type = _type
         cls.dc = dc
         cls.current_elements = current_elements
         cls.sampling_volume_points = sampling_volume_points
+        cls.distance_limit = distance_limit
+        cls.total_limited = 0
         cls.progress_callback = progress_callback
 
     @staticmethod
-    def worker(current_elements, sampling_volume_point):
+    def worker(_type, current_elements, distance_limit, sampling_volume_point):
         """
         Calculates the magnetic flux density at some sampling volume point using the Biot-Savart law.
 
-        @param current_elements: List of current elements (list of 3D vector pairs: (element center, element direction))
+        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param current_elements: Ordered list of current elements (3D vector pairs: (element center, element direction))
+        @param distance_limit: Distance limit (mitigating divisions by zero)
         @param sampling_volume_point: Sampling volume point (3D vector)
         @return: Magnetic flux density vector (3D vector)
         """
         vector = np.zeros(3)
+        total_limited = 0
 
         for element_center, element_direction in current_elements:
             vector_distance = (sampling_volume_point - element_center) * Metric.LengthScale
-            scalar_distance_cubed = np.linalg.norm(vector_distance) ** 3
 
-            # Avoiding divisions by zero
-            if scalar_distance_cubed < BiotSavart.DivisorCutoff:
-                continue
+            # Calculate distance (mitigating divisions by zero)
+            scalar_distance = np.linalg.norm(vector_distance)
+            if scalar_distance < distance_limit:
+                scalar_distance = distance_limit
+                total_limited += 1
 
-            vector += np.cross(element_direction, vector_distance) / scalar_distance_cubed
+            if _type == 0:
+                # Calculate A-Field (vector potential)
+                vector += element_direction / scalar_distance
 
-        return vector
+            elif _type == 1:
+                # Calculate B-Field (flux density)
+                vector += np.cross(element_direction, vector_distance) / (scalar_distance ** 3)
+
+        return vector, total_limited
 
     @classmethod
     def get_vectors(cls, pool):
         """
         Calculates the magnetic flux density at every point of the sampling volume.
 
-        @return: List of vectors if successful, None if interrupted
+        @return: (Ordered list of 3D vectors, total # of distance limited points) if successful, None if interrupted
         """
         Debug(cls, ".get_vectors()", color=(0, 0, 255))
 
-        # Map sampling volume points to worker function, passing current elements as constant argument
-        result = pool.imap(partial(cls.worker, cls.current_elements), cls.sampling_volume_points)
+        # Map sampling volume points to worker method, passing type, current elements & distance limit as const. args
+        result = pool.imap(
+            partial(cls.worker, cls._type, cls.current_elements, cls.distance_limit),
+            cls.sampling_volume_points
+        )
 
         vectors = []
+        total_limited = 0
 
         # Fetch resulting vectors
-        for i, point in enumerate(result):
+        for i, tup in enumerate(result):
 
-            vectors.append(point)
+            vectors.append(tup[0])
+            total_limited += tup[1]
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
@@ -106,7 +127,7 @@ class BiotSavart:
                     Debug(cls, ": Interruption requested, exiting now", color=(0, 0, 255))
                     return None
 
-        # Apply Biot-Savart constant scaling and DC factor
+        # Apply Biot-Savart constant & wire current scaling
         vectors = np.array(vectors) * BiotSavart.k * BiotSavart.dc
 
-        return vectors
+        return vectors, total_limited

@@ -42,6 +42,10 @@ class Config:
     # Default perspective preset
     DefaultPerspectivePreset = "Isometric"
 
+    # Formatting settings
+    FloatPrecision = 4
+    CoordinatePrecision = 2
+
     # Default configuration
     Default = {
         "version"                       : Version.String,
@@ -56,6 +60,8 @@ class Config:
         "rotational_symmetry_axis"      : "2",
         "sampling_volume_padding"       : "0, 0, -1",
         "sampling_volume_resolution"    : "5",
+        "field_type"                    : "1",
+        "field_distance_limit"          : "0.0005",
         "color_metric"                  : "Log Magnitude",
         "alpha_metric"                  : "Magnitude",
         "field_point_scale"             : "1.0",
@@ -129,6 +135,8 @@ class Config:
             self.config.write(file)
         self.synced = True
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def get_bool(self, key):
         """
         Gets boolean value, convert from string.
@@ -187,6 +195,8 @@ class Config:
         value = self.config.get("User", key)
         return value
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def set_bool(self, key, value):
         """
         Sets boolean value, convert to string.
@@ -203,7 +213,7 @@ class Config:
         @param key: Key
         @param value: Value
         """
-        self.set_str(key, f"{float(value):.3f}")
+        self.set_str(key, f"{float(value):.{Config.FloatPrecision}f}")
 
     def set_int(self, key, value):
         """
@@ -249,7 +259,7 @@ class Config:
 
     def set_get_bool(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (bool) or None
@@ -262,7 +272,7 @@ class Config:
 
     def set_get_float(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (float) or None
@@ -275,7 +285,7 @@ class Config:
 
     def set_get_int(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (int) or None
@@ -288,7 +298,7 @@ class Config:
 
     def set_get_points(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (string) or None
@@ -301,7 +311,7 @@ class Config:
 
     def set_get_point(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (string) or None
@@ -314,7 +324,7 @@ class Config:
 
     def set_get_str(self, key, value):
         """
-        If value is not None, writes and returns key-value; Otherwise (if value is None), reads and returns key-value.
+        If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key (string)
         @param value: Value (string) or None
@@ -325,6 +335,8 @@ class Config:
             self.set_str(key, value)
             return value
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     @staticmethod
     def point_to_str(point):
         """
@@ -333,7 +345,10 @@ class Config:
         @param point: Single 3D point
         @return: String
         """
-        return f"{point[0]:+0.03f}, {point[1]:+0.03f}, {point[2]:+0.03f}"
+        return \
+            f"{point[0]:+0.0{Config.CoordinatePrecision}f}, " \
+            f"{point[1]:+0.0{Config.CoordinatePrecision}f}, " \
+            f"{point[2]:+0.0{Config.CoordinatePrecision}f}"
 
     @staticmethod
     def points_to_str(points):
@@ -364,3 +379,67 @@ class Config:
         @return: List of 3D points
         """
         return [Config.str_to_point(str_point) for str_point in str_points.split(";")]
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def get_generic(self, _key, _type):
+        """
+        Gets some "_key"-"_value" of data type "_type".
+
+        @param _key: Key (string)
+        @param _type: Data type
+        @return _value: Data (type determined by "_type")
+        """
+        set_func = {
+            "bool"  : self.get_bool,
+            "float" : self.get_float,
+            "int"   : self.get_int,
+            "point" : self.get_point,
+            "points": self.get_points,
+            "str"   : self.get_str
+        }
+
+        # noinspection PyArgumentList
+        return set_func.get(_type)(_key)
+
+    def set_generic(self, _key, _type, _value):
+        """
+        Sets some "_key"-"_value" of data type "_type".
+
+        @param _key: Key (string)
+        @param _type: Data type
+        @param _value: Data (type determined by "_type")
+        """
+        set_func = {
+            "bool"  : self.set_bool,
+            "float" : self.set_float,
+            "int"   : self.set_int,
+            "point" : self.set_point,
+            "points": self.set_points,
+            "str"   : self.set_str
+        }
+
+        # noinspection PyArgumentList
+        set_func.get(_type)(_key, _value)
+
+    def set_get_dict(self, prefix, types, values):
+        """
+        If "values" is None, reads and returns all key-values in "types".
+        Note: The actual keys saved in the configuration file are prefixed with "prefix".
+
+        If "values" is not None, writes and returns all key-values in "types".
+        Note: In this case, "values" must have the same keys as "types.
+
+        @param prefix: Prefix (string)
+        @param types: Key:Type (Dictionary)
+        @param values: Key:Value (Dictionary) or None
+        """
+        if values is None:
+            result = {}
+            for _key, _type in types.items():
+                result[_key] = self.get_generic(prefix + _key, _type)
+            return result
+        else:
+            for _key, _type in types.items():
+                self.set_generic(prefix + _key, _type, values[_key])
+            return values

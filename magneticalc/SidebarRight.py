@@ -19,6 +19,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QScrollArea, QVBoxLayout, QSizePolicy
 from magneticalc.Display_Widget import Display_Widget
+from magneticalc.Field_Widget import Field_Widget
 from magneticalc.Metric_Widget import Metric_Widget
 from magneticalc.Perspective_Widget import Perspective_Widget
 
@@ -50,6 +51,13 @@ class SidebarRight(QScrollArea):
         self.setWidgetResizable(True)
         self.setMaximumWidth(self.MaximumWidth)
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+
+        # --------------------------------------------------------------------------------------------------------------
+
+        self.field_widget = Field_Widget(self.gui)
+        layout.addWidget(self.field_widget, alignment=Qt.AlignTop)
+
+        layout.addSpacing(self.VerticalSpacing)
 
         # --------------------------------------------------------------------------------------------------------------
 

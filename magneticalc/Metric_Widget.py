@@ -16,8 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from si_prefix import si_format
 import qtawesome as qta
+from si_prefix import si_format
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
 from magneticalc.IconLabel import IconLabel
@@ -30,8 +30,8 @@ from magneticalc.ModelAccess import ModelAccess
 class Metric_Widget(Groupbox):
     """ Metric_Widget class. """
 
-    # Metric limit formatting settings
-    LimitsPrecision = 1
+    # Formatting settings
+    ValuePrecision = 1
 
     def __init__(self, gui):
         """
@@ -45,6 +45,8 @@ class Metric_Widget(Groupbox):
 
         # Initially load metric from configuration
         self.set_metric(recalculate=False, update_labels=False)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.addWidget(IconLabel("fa.tint", "Color"))
         color_metric_combobox = QComboBox()
@@ -76,7 +78,7 @@ class Metric_Widget(Groupbox):
         )
         self.addWidget(self.color_metric_limits_widget)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 
@@ -110,6 +112,45 @@ class Metric_Widget(Groupbox):
         )
         self.addWidget(self.alpha_metric_limits_widget)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.addWidget(HLine())
+
+        experimental_label = IconLabel("fa.flask", "Experimental")
+        self.addWidget(experimental_label)
+
+        energy_layout = QHBoxLayout()
+        energy_label_left = QLabel("Energy:")
+        energy_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
+        self.energy_label = QLabel("")
+        self.energy_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
+        self.energy_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        energy_layout.addWidget(energy_label_left, alignment=Qt.AlignVCenter)
+        energy_layout.addWidget(self.energy_label, alignment=Qt.AlignVCenter)
+        self.addLayout(energy_layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self_inductance_layout = QHBoxLayout()
+        self_inductance_label_left = QLabel("Self-inductance:")
+        self_inductance_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
+        self.self_inductance_label = QLabel("")
+        self.self_inductance_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
+        self.self_inductance_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self_inductance_layout.addWidget(self_inductance_label_left, alignment=Qt.AlignVCenter)
+        self_inductance_layout.addWidget(self.self_inductance_label, alignment=Qt.AlignVCenter)
+        self.addLayout(self_inductance_layout)
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_metric(self, color_preset=None, alpha_preset=None, recalculate=True, update_labels=True):
@@ -141,6 +182,35 @@ class Metric_Widget(Groupbox):
             if update_labels:
                 self.update_labels()
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    Cool_Gradient_CSS = """
+        background: qlineargradient(
+            x1:0 y1:0, x2:1 y2:0,
+            stop:0 #00fffe,
+            stop:1 #ff22f9
+        );
+    """
+
+    HSV_Gradient_CSS = """
+        background: qlineargradient(
+            x1:0 y1:0, x2:1 y2:0,
+            stop:0.00 #ff0000,
+            stop:0.08 #ff8000,
+            stop:0.17 #ffff00,
+            stop:0.25 #80ff00,
+            stop:0.33 #00ff00,
+            stop:0.42 #00ff80,
+            stop:0.50 #00ffff,
+            stop:0.58 #0080ff,
+            stop:0.67 #0000ff,
+            stop:0.75 #8000ff,
+            stop:0.83 #ff00ff,
+            stop:0.92 #ff0080,
+            stop:1.00 #ff0000
+        );
+    """
+
     def update_labels(self):
         """
         Updates the metric limit labels.
@@ -149,47 +219,65 @@ class Metric_Widget(Groupbox):
 
             limits = self.gui.model.metric.get_limits()
 
+            field_units = self.gui.model.field.get_units()
+
             if self.gui.model.metric.get_color_preset()["is_angle"]:
                 color_label_min = "N/A"
                 color_label_max = "N/A"
-
-                # ToDo: Show "hsv" colormap gradient instead of nothing at all
-                self.color_metric_limits_widget.setStyleSheet("""""")
+                self.color_metric_limits_widget.setStyleSheet(self.HSV_Gradient_CSS)
+                self.color_metric_min_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.color_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
             else:
-                color_label_min = si_format(limits["color_min"], precision=self.LimitsPrecision) + "T"
-                color_label_max = si_format(limits["color_max"], precision=self.LimitsPrecision) + "T"
-                self.color_metric_limits_widget.setStyleSheet("""
-                    background: qlineargradient(x1:0 y1:0, x2:1 y2:0, stop:0 #00fffe, stop:1 #ff22f9);
-                """)
+                color_label_min = si_format(limits["color_min"], precision=self.ValuePrecision) + field_units
+                color_label_max = si_format(limits["color_max"], precision=self.ValuePrecision) + field_units
+                self.color_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
+                self.color_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
+                self.color_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
 
             if self.gui.model.metric.get_alpha_preset()["is_angle"]:
                 alpha_label_min = "N/A"
                 alpha_label_max = "N/A"
-
-                # ToDo: Show "hsv" colormap gradient instead of nothing at all
-                self.alpha_metric_limits_widget.setStyleSheet("""""")
+                self.alpha_metric_limits_widget.setStyleSheet(self.HSV_Gradient_CSS)
+                self.alpha_metric_min_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.alpha_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
             else:
-                alpha_label_min = si_format(limits["alpha_min"], precision=self.LimitsPrecision) + "T"
-                alpha_label_max = si_format(limits["alpha_max"], precision=self.LimitsPrecision) + "T"
-                self.alpha_metric_limits_widget.setStyleSheet("""
-                    background: qlineargradient(x1:0 y1:0, x2:1 y2:0, stop:0 #00fffe, stop:1 #ff22f9);
-                """)
+                alpha_label_min = si_format(limits["alpha_min"], precision=self.ValuePrecision) + field_units
+                alpha_label_max = si_format(limits["alpha_max"], precision=self.ValuePrecision) + field_units
+                self.alpha_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
+                self.alpha_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
+                self.alpha_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
 
             self.color_metric_min_label.setText(color_label_min)
             self.color_metric_max_label.setText(color_label_max)
             self.alpha_metric_min_label.setText(alpha_label_min)
             self.alpha_metric_max_label.setText(alpha_label_max)
 
-        else:
-            self.invalidate_labels()
+            if self.gui.model.field.get_type() == 1:
+                # Field is B-Field (flux density)
 
-    def invalidate_labels(self):
-        """
-        Invalidates the metric limit labels.
-        """
-        self.color_metric_min_label.setText("N/A")
-        self.color_metric_max_label.setText("N/A")
-        self.alpha_metric_min_label.setText("N/A")
-        self.alpha_metric_max_label.setText("N/A")
-        self.color_metric_limits_widget.setStyleSheet("""""")
-        self.alpha_metric_limits_widget.setStyleSheet("""""")
+                self.energy_label.setText(
+                    si_format(self.gui.model.metric.get_energy(), precision=self.ValuePrecision) + "J"
+                )
+                self.self_inductance_label.setText(
+                    si_format(self.gui.model.metric.get_self_inductance(), precision=self.ValuePrecision) + "H"
+                )
+            else:
+                self.energy_label.setText("N/A")
+                self.self_inductance_label.setText("N/A")
+
+        else:
+
+            self.color_metric_min_label.setText("N/A")
+            self.color_metric_max_label.setText("N/A")
+            self.color_metric_limits_widget.setStyleSheet("""""")
+            self.color_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
+            self.color_metric_max_label.setStyleSheet("""background: none; color: #000000;""")
+
+            self.alpha_metric_min_label.setText("N/A")
+            self.alpha_metric_max_label.setText("N/A")
+            self.alpha_metric_limits_widget.setStyleSheet("""""")
+            self.alpha_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
+            self.alpha_metric_max_label.setStyleSheet("""background: none; color: #000000;""")
+
+            self.energy_label.setText("N/A")
+            self.self_inductance_label.setText("N/A")

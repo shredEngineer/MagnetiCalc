@@ -124,26 +124,26 @@ class CalculationThread(QThread):
         """
         Gets called when the wire was successfully calculated.
         """
-        self.gui.sidebar_left.wire_widget.update_sliced_total_label()
+        self.gui.model.on_wire_valid()
         self.gui.vispy_canvas.redraw()
 
     def trigger_on_sampling_volume_valid(self):
         """
         Gets called when the sampling volume was successfully calculated.
         """
-        self.gui.sidebar_left.sampling_volume_widget.update_total_label()
+        self.gui.model.on_sampling_volume_valid()
         self.gui.vispy_canvas.redraw()
 
     def trigger_on_field_valid(self):
         """
         Gets called when the field was successfully calculated.
         """
+        self.gui.model.on_field_valid()
         self.gui.vispy_canvas.redraw()
 
     def trigger_on_metric_valid(self):
         """
         Gets called when the metric was successfully calculated.
         """
-        self.gui.sidebar_right.metric_widget.update_labels()
-        self.gui.vispy_canvas.create_field_labels()
+        self.gui.model.on_metric_valid()
         self.gui.vispy_canvas.redraw()

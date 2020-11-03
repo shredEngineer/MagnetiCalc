@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id63">
+        <table class="children sortable" id="id66">
   
   <tr class="classvariable">
     
@@ -126,18 +126,8 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_dc" class="code" data-type="Method">get_dc</a></td>
-    <td><span>Returns DC value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><a href="magneticalc.Wire.Wire.html#get_bounds" class="code" data-type="Method">get_bounds</a></td>
     <td><span>Returns this curve's bounding box.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_elements" class="code" data-type="Method">get_elements</a></td>
-    <td><span>Returns this curve's elements, i.e. a list of segment center points and directions.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -153,6 +143,16 @@
     <td>Method</td>
     <td><a href="magneticalc.Wire.Wire.html#get_points_sliced" class="code" data-type="Method">get_points_sliced</a></td>
     <td><span>Returns this wire's points after slicing.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Wire.Wire.html#get_elements" class="code" data-type="Method">get_elements</a></td>
+    <td><span>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Wire.Wire.html#get_dc" class="code" data-type="Method">get_dc</a></td>
+    <td><span>Returns DC value.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -414,7 +414,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>A 3D piecewise linear curve with some DC current associated with it.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>List of 3D coordinates (see presets)</td></tr><tr><td></td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr><tr><td></td><td class="fieldArg">rotational_symmetry</td><td>Dictionary for rotational symmetry transform</td></tr><tr><td></td><td class="fieldArg">slicer_limit</td><td>Slicer limit</td></tr><tr><td></td><td class="fieldArg">dc</td><td>DC current (float)</td></tr></table></div>
+    <div><p>A 3D piecewise linear curve with some DC current associated with it.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>Ordered list of 3D coordinates (see presets)</td></tr><tr><td></td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr><tr><td></td><td class="fieldArg">rotational_symmetry</td><td>Dictionary for rotational symmetry transform</td></tr><tr><td></td><td class="fieldArg">slicer_limit</td><td>Slicer limit</td></tr><tr><td></td><td class="fieldArg">dc</td><td>DC current (float)</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -536,25 +536,6 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Wire.Wire.get_dc">
-    
-  </a>
-  <a name="get_dc">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_dc(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns DC value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">DC value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
   <a name="magneticalc.Wire.Wire.get_bounds">
     
   </a>
@@ -574,25 +555,6 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Wire.Wire.get_elements">
-    
-  </a>
-  <a name="get_elements">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_elements(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns this curve's elements, i.e. a list of segment center points and directions.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">[(element_center, element_direction), ...]</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
   <a name="magneticalc.Wire.Wire.get_points_base">
     
   </a>
@@ -608,7 +570,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this wire's base points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
+    <div><p>Returns this wire's base points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -627,7 +589,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this wire's transformed points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
+    <div><p>Returns this wire's transformed points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -646,7 +608,45 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this wire's points after slicing.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
+    <div><p>Returns this wire's points after slicing.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Wire.Wire.get_elements">
+    
+  </a>
+  <a name="get_elements">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_elements(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">[(element_center, element_direction), ...]</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Wire.Wire.get_dc">
+    
+  </a>
+  <a name="get_dc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_dc(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns DC value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">DC value</td></tr></table></div>
   </div>
 </div><div class="basemethod private">
   
@@ -667,25 +667,6 @@
     
     <div><p>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</p><p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr></table></div>
   </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Wire.Wire.recalculate">
-    
-  </a>
-  <a name="recalculate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    recalculate(self, progress_callback):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
-  </div>
 </div><div class="basemethod private">
   
   <a name="magneticalc.Wire.Wire._set_rotational_symmetry">
@@ -705,11 +686,30 @@
     
     <div><p>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</p><p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">parameters</td><td>Dictionary containing the transformation parameters (number of replications, radius and axis)</td></tr></table></div>
   </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Wire.Wire.recalculate">
+    
+  </a>
+  <a name="recalculate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    recalculate(self, progress_callback):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+  </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-30 16:29:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-03 21:44:31.
       </address>
 
     </div>

@@ -25,8 +25,8 @@ class Usage_Dialog(QDialog):
     """ Usage_Dialog class. """
 
     # Window dimensions
-    Width = 835
-    Height = 590
+    Width = 800
+    Height = 610
 
     # HTML content
     HTML = f"""
@@ -35,13 +35,13 @@ class Usage_Dialog(QDialog):
             <li>Go to <b>Load Wire Preset</b> to select a basic wire shape.</li>
             <li>Customize the wire's base points inside the spreadsheet.</li>
             <li>Apply some transformations to your basic wire; rotate or stretch its shape.</li>
-            <li>Reduce the slicer limit to improve the B-field calculation accuracy.</li>
-            <li>Set a DC current flowing through your wire.</li>
+            <li>Reduce the slicer limit to improve the field calculation accuracy.</li>
+            <li>Set the electrical current flowing through your wire.</li>
         </ul>
 
         <ul>
             <li>
-                The sampling volume is the grid over which the B-field is calculated;<br>
+                The sampling volume is the grid over which the field is calculated;<br>
                 increase its resolution to the desired level to show every detail of the field.
             </li>
             <li>
@@ -52,21 +52,39 @@ class Usage_Dialog(QDialog):
 
         <ul>
             <li>
+                Select the type of field to calculate:
+                <b>A</b>-field (vector potential) or
+                <b>B</b>-field (flux density).
+            </li>
+            <li>
+                Current element center points may be located very close to sampling volume points;<br>
+                as this distance approaches zero, the field magnitude approaches infinity (singular behaviour).<br>
+                Therefore, some distance limit must be set to cut-off these infinities during calculation.
+            </li>
+        </ul>
+
+        <ul>
+            <li>
                 Select a color/alpha metric to adjust the field's hue/transparency individually.<br>
-                Because all metrics are normalized, changes in DC current do not affect the field hue/transparency;<br>
+                Because all metrics are normalized, changes in DC current do not affect the field color/alpha;<br>
                 however, the displayed metric limits linearly scale with the DC current.
             </li>
         </ul>
 
         <ul>
             <li>Take a look at the minimum and maximum magnetic flux densities reached in each metric.</li>
+            <li>
+                <i>Experimental feature:</i> Coil energy and self-inductance are also calculated.<br>
+                However, these values are currently not reliable, varying strongly with the other parameters;<br>
+                essentially, the sampling volume must enclose a large, non-singular portion of the field.
+            </li>
         </ul>
 
         <ul>
             <li>Use the scroll wheel to zoom in and out of the 3D scene.</li>
             <li>Click and drag into the 3D scene to rotate.</li>
             <li>Press SHIFT while dragging to <i>move</i> the entire 3D scene.</li>
-            <li>If you like the result, press CTRL+S to save a screenshot!
+            <li>If you like the result, press CTRL+S to save a screenshot!</li>
         </ul>
 
         All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file.<br>
@@ -74,38 +92,46 @@ class Usage_Dialog(QDialog):
 
         <h3 style="color: #2a7db0;">What does MagnetiCalc do?</h3>
 
-        MagnetiCalc calculates the magnetic field of arbitrary air coils, examples included.<br>
-        Inside this VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to a DC current)
-        <br>
-        is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.<br>
+        MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
+        Inside this VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
+        (<b>B</b>-field due to a DC current, in units of <i>Tesla</i>)  is displayed in interactive 3D,
+        using multiple metrics for highlighting this field's properties.
+        Alternatively, the magnetic vector potential (<b>A</b>-field, in units of <i>Tesla-meter</i>) may be displayed.
         All parameters and presets can interactively be changed inside the GUI.
+        There is also an experimental feature to calculate the coil's energy and self-inductance.
 
         <h3 style="color: #2a7db0;">Who needs MagnetiCalc?</h3>
 
-        MagnetiCalc does its job for hobbyists, students, engineers and researchers of magnetic phenomena.<br>
-        I designed MagnetiCalc from scratch, because I didn't want to mess around with expensive and/or<br>
+        MagnetiCalc does its job for hobbyists, students, engineers and researchers of magnetic phenomena.
+        I designed MagnetiCalc from scratch, because I didn't want to mess around with expensive and/or
         overly complex simulation software whenever I needed to solve a magnetostatic problem.
 
         <h3 style="color: #2a7db0;">How does it work?</h3>
 
-        The field calculation is implemented using the Biot-Savart law <span style="color: #2a7db0;">[1]</span>,
-        employing multiprocessing techniques.<br>
-        The use of easily constrainable "sampling volumes" allows for selective calculation over arbitrary shapes.<br>
-        <br>
-        The shape of any wire is modeled as a 3D piecewise linear curve.<br>
-        Arbitrary loops of wire are sliced into differential current elements,<br>
-        each of which contributes to the total magnetic flux density B at some fixed 3D grid point.<br>
-        <br>
-        At each grid point, the field is displayed using colored arrows and/or dots;<br>
-        field color and alpha transparency are individually mapped using one of the various available metrics.<br>
-        <br>
-        <span style="color: #2a7db0;">[1]</span>: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
-        <br>
-        <br>
-        <span style="color: #2a7db0;">
+        The <b>B</b>-field calculation is implemented using the Biot-Savart law [1],
+        employing multiprocessing techniques. The use of easily constrainable "sampling volumes"
+        allows for selective calculation over grids of arbitrary shape.<br><br>
+
+        The shape of any wire is modeled as a 3D piecewise linear curve.
+        Arbitrary loops of wire are sliced into differential current elements, each of which
+        contributes to the total field magnitude at some fixed 3D grid point.<br><br>
+
+        At each grid point, the field is displayed using colored arrows and/or dots;
+        field color and alpha transparency are individually mapped using one of the various available metrics.<br><br>
+
+        As an experimental feature, the coil's energy [2] and self-inductance [3]
+        are calculated by integrating the squared <b>B</b>-field over the entire sampling volume.
+        However, these values are currently not reliable, varying strongly with the other parameters;
+        essentially, the sampling volume must enclose a large, non-singular portion of the field.
+        <br><br>
+
+        [1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
+        [2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
+        [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
+
+        <br><br><span style="color: #2a7db0;">
             This and more information about MagnetiCalc can be found in the <code>README.md</code> file.
-        </span>
-        <br>
+        </span><br>
         """
 
     def __init__(self):

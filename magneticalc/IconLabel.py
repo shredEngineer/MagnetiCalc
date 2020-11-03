@@ -27,12 +27,14 @@ class IconLabel(QWidget):
     IconSize = QSize(16, 16)
     HorizontalSpacing = 1
 
-    def __init__(self, qta_id, text):
+    def __init__(self, qta_id, text, icon_color="#12344a", label_color="#12344a"):
         """
         Initializes the icon label.
 
         @param qta_id: QtAwesome icon id
         @param text: Label text
+        @param icon_color: Icon color (string)
+        @param label_color: Label color (string)
         """
         # noinspection PyArgumentList
         QWidget.__init__(self)
@@ -43,12 +45,13 @@ class IconLabel(QWidget):
 
         if qta_id is not None:
             icon = QLabel()
-            icon.setPixmap(qta.icon(qta_id).pixmap(self.IconSize))
+            icon.setPixmap(qta.icon(qta_id, color=icon_color).pixmap(self.IconSize))
             self.layout.addWidget(icon, alignment=Qt.AlignVCenter)
             self.layout.addSpacing(self.HorizontalSpacing)
 
         label = QLabel(text)
-        label.setStyleSheet("""
+        label.setStyleSheet(f"""
+            color: {label_color};
             font-weight: bold;
         """)
         self.layout.addWidget(label, alignment=Qt.AlignVCenter)

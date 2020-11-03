@@ -27,7 +27,7 @@ from magneticalc.SliderFloat import SliderFloat
 class Display_Widget(Groupbox):
     """ Display_Widget class. """
 
-    # SliderFloat limits
+    # Slider limits
     FieldArrowScaleMinimum = 0
     FieldArrowScaleMaximum = 1
     FieldArrowScaleStep = .1

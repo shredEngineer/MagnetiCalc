@@ -85,13 +85,13 @@ class Wire_Widget(Groupbox):
             color: #555555;
             font-style: italic;
         """)
-        self.base_total_label = QLabel("")
-        self.base_total_label.setStyleSheet("""
+        self.table_total_label = QLabel("")
+        self.table_total_label.setStyleSheet("""
             color: #2a7db0;
         """)
-        self.base_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.table_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         table_total_layout.addWidget(table_total_label_left, alignment=Qt.AlignVCenter)
-        table_total_layout.addWidget(self.base_total_label, alignment=Qt.AlignVCenter)
+        table_total_layout.addWidget(self.table_total_label, alignment=Qt.AlignVCenter)
         self.addLayout(table_total_layout)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -300,20 +300,11 @@ class Wire_Widget(Groupbox):
             slicer_limit = self.gui.config.set_get_float("wire_slicer_limit", slicer_limit)
             dc = self.gui.config.set_get_float("wire_dc", dc)
 
-            # ToDo: Implement some kind of "self.gui.config.set_get_dict" to make this shorter
-            if rotational_symmetry is None:
-                count = self.gui.config.get_int("rotational_symmetry_count")
-                radius = self.gui.config.get_float("rotational_symmetry_radius")
-                axis = self.gui.config.get_int("rotational_symmetry_axis")
-            else:
-                count = self.gui.config.set_get_int("rotational_symmetry_count", rotational_symmetry["count"])
-                radius = self.gui.config.set_get_float("rotational_symmetry_radius", rotational_symmetry["radius"])
-                axis = self.gui.config.set_get_int("rotational_symmetry_axis", rotational_symmetry["axis"])
-            rotational_symmetry = {
-                "count": count,
-                "radius": radius,
-                "axis": axis
-            }
+            rotational_symmetry = self.gui.config.set_get_dict(
+                prefix="rotational_symmetry_",
+                types={"count": "int", "radius": "float", "axis": "int"},
+                values=rotational_symmetry,
+            )
 
             self.gui.model.set_wire(
                 Wire(
@@ -382,13 +373,14 @@ class Wire_Widget(Groupbox):
 
         self.table.set_contents(points)
 
-        self.base_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
+        self.table_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
 
     def on_table_row_added(self):
         """
-        Adds a wire base point after a row has been added to the table.
+        Adds a wire base point after a row has been added to the table. (Appending to the end and focusing the row.)
         """
-        self.set_wire(points=[np.array([0, 0, 0])] + list(self.gui.model.wire.get_points_base()))
+        self.set_wire(points=list(self.gui.model.wire.get_points_base()) + [np.array([0, 0, 0])])
+        self.table.select_last_row()
 
     def on_table_cell_edited(self, item):
         """

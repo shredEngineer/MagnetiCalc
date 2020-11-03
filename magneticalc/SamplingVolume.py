@@ -82,7 +82,7 @@ class SamplingVolume:
         """
         Returns this sampling volume's points.
 
-        @return: List of 3D points
+        @return: Ordered list of 3D points
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 

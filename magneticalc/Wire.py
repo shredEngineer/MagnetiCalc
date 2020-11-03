@@ -217,7 +217,7 @@ class Wire:
         """
         A 3D piecewise linear curve with some DC current associated with it.
 
-        @param points: List of 3D coordinates (see presets)
+        @param points: Ordered list of 3D coordinates (see presets)
         @param stretch: XYZ stretch transform factors (3D point)
         @param rotational_symmetry: Dictionary for rotational symmetry transform
         @param slicer_limit: Slicer limit
@@ -228,7 +228,8 @@ class Wire:
         self._points_base = np.array(points)
 
         # Note: This is my playground for creating new wire presets!
-        if False:
+        x = False
+        if x:
             self._points_base = np.array(
                 [
                     [
@@ -278,14 +279,6 @@ class Wire:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_dc(self):
-        """
-        Returns DC value.
-
-        @return: DC value
-        """
-        return self._dc
-
     def get_bounds(self):
         """
         Returns this curve's bounding box.
@@ -297,9 +290,35 @@ class Wire:
         bounds_max = [max(axes[0]), max(axes[1]), max(axes[2])]
         return bounds_min, bounds_max
 
+    def get_points_base(self):
+        """
+        Returns this wire's base points.
+
+        @return: Ordered list of 3D points
+        """
+        return self._points_base
+
+    def get_points_transformed(self):
+        """
+        Returns this wire's transformed points.
+
+        @return: Ordered list of 3D points
+        """
+        return self._points_transformed
+
+    def get_points_sliced(self):
+        """
+        Returns this wire's points after slicing.
+
+        @return: Ordered list of 3D points
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
+
+        return self._points_sliced
+
     def get_elements(self):
         """
-        Returns this curve's elements, i.e. a list of segment center points and directions.
+        Returns this curve's elements, i.e. an ordered list of segment center points and directions.
 
         @return: [(element_center, element_direction), ...]
         """
@@ -312,31 +331,13 @@ class Wire:
             result.append((element_center, element_direction))
         return result
 
-    def get_points_base(self):
+    def get_dc(self):
         """
-        Returns this wire's base points.
+        Returns DC value.
 
-        @return: List of 3D points
+        @return: DC value
         """
-        return self._points_base
-
-    def get_points_transformed(self):
-        """
-        Returns this wire's transformed points.
-
-        @return: List of 3D points
-        """
-        return self._points_transformed
-
-    def get_points_sliced(self):
-        """
-        Returns this wire's points after slicing.
-
-        @return: List of 3D points
-        """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
-
-        return self._points_sliced
+        return self._dc
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -357,6 +358,40 @@ class Wire:
             axes[i] *= stretch[i]
 
         self._points_transformed = axes.transpose()
+
+    def _set_rotational_symmetry(self, parameters):
+        """
+        This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
+
+        Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
+
+        @param parameters: Dictionary containing the transformation parameters (number of replications, radius and axis)
+        """
+        Debug(self, "._set_rotational_symmetry()")
+
+        axes = self.get_points_transformed().transpose()
+
+        x, y, z = [], [], []
+
+        axis_other_1 = (parameters["axis"] + 1) % 3
+        axis_other_2 = (parameters["axis"] + 2) % 3
+
+        for a in np.linspace(0, 2 * np.pi, parameters["count"], endpoint=False):
+            x = np.append(x, axes[axis_other_1] * np.sin(a) - (axes[axis_other_2] + parameters["radius"]) * np.cos(a))
+            y = np.append(y, axes[axis_other_1] * np.cos(a) + (axes[axis_other_2] + parameters["radius"]) * np.sin(a))
+            z = np.append(z, axes[parameters["axis"]])
+
+        axes = [x, y, z]
+
+        # Close the resulting loop
+        for i in range(3):
+            axes[i] = np.append(axes[i], axes[i][0])
+
+        self._points_transformed = np.array(axes).transpose()
+
+        return self
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def recalculate(self, progress_callback):
         """
@@ -394,37 +429,3 @@ class Wire:
         self._points_sliced = np.array(points_sliced)
 
         return True
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def _set_rotational_symmetry(self, parameters):
-        """
-        This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
-
-        Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
-
-        @param parameters: Dictionary containing the transformation parameters (number of replications, radius and axis)
-        """
-        Debug(self, "._set_rotational_symmetry()")
-
-        axes = self.get_points_transformed().transpose()
-
-        x, y, z = [], [], []
-
-        axis_other_1 = (parameters["axis"] + 1) % 3
-        axis_other_2 = (parameters["axis"] + 2) % 3
-
-        for a in np.linspace(0, 2 * np.pi, parameters["count"], endpoint=False):
-            x = np.append(x, axes[axis_other_1] * np.sin(a) - (axes[axis_other_2] + parameters["radius"]) * np.cos(a))
-            y = np.append(y, axes[axis_other_1] * np.cos(a) + (axes[axis_other_2] + parameters["radius"]) * np.sin(a))
-            z = np.append(z, axes[parameters["axis"]])
-
-        axes = [x, y, z]
-
-        # Close the resulting loop
-        for i in range(3):
-            axes[i] = np.append(axes[i], axes[i][0])
-
-        self._points_transformed = np.array(axes).transpose()
-
-        return self

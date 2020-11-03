@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id30">
+        <table class="children sortable" id="id33">
   
   <tr class="classvariable">
     
@@ -161,8 +161,23 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#get_energy" class="code" data-type="Method">get_energy</a></td>
+    <td><span>Returns calculated energy.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#get_self_inductance" class="code" data-type="Method">get_self_inductance</a></td>
+    <td><span>Returns calculated self-inductance.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Metric.Metric.html#recalculate" class="code" data-type="Method">recalculate</a></td>
     <td><span>Recalculate color and alpha values for field.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#recalculate_energy_and_self_inductance" class="code" data-type="Method">recalculate_energy_and_self_inductance</a></td>
+    <td><span>Calculates the coil's energy and self-inductance. See: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1. See: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -182,6 +197,16 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.Metric.Metric.html#_limits" class="code" data-type="Instance Variable">_limits</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#_energy" class="code" data-type="Instance Variable">_energy</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Metric.Metric.html#_self_inductance" class="code" data-type="Instance Variable">_self_inductance</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -518,6 +543,38 @@
     
     <div class="undocumented">Undocumented</div>
   </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Metric.Metric._energy">
+    
+  </a>
+  <a name="_energy">
+    
+  </a>
+  <div class="functionHeader">
+    _energy =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Metric.Metric._self_inductance">
+    
+  </a>
+  <a name="_self_inductance">
+    
+  </a>
+  <div class="functionHeader">
+    _self_inductance =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
 </div><div class="basemethod">
   
   <a name="magneticalc.Metric.Metric.is_valid">
@@ -634,6 +691,44 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Metric.Metric.get_energy">
+    
+  </a>
+  <a name="get_energy">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_energy(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns calculated energy.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Float</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.get_self_inductance">
+    
+  </a>
+  <a name="get_self_inductance">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_self_inductance(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns calculated self-inductance.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Float</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Metric.Metric.recalculate">
     
   </a>
@@ -643,19 +738,38 @@
   <div class="functionHeader">
     
     def
-    recalculate(self, field_vectors, progress_callback):
+    recalculate(self, wire, sampling_volume, field, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Recalculate color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_vectors</td><td>Field vectors</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Recalculate color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr><tr><td></td><td class="fieldArg">sampling_volume</td><td>SamplingVolume</td></tr><tr><td></td><td class="fieldArg">field</td><td>Field (see BiotSavart module)</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Metric.Metric.recalculate_energy_and_self_inductance">
+    
+  </a>
+  <a name="recalculate_energy_and_self_inductance">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    recalculate_energy_and_self_inductance(self, wire, sampling_volume, field):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Calculates the coil's energy and self-inductance. See: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1. See: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr><tr><td></td><td class="fieldArg">sampling_volume</td><td>SamplingVolume</td></tr><tr><td></td><td class="fieldArg">field</td><td>Field (see BiotSavart module)</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-10-30 16:29:02.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-03 21:44:31.
       </address>
 
     </div>

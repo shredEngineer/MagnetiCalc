@@ -109,7 +109,7 @@ class SamplingVolume_Widget(Groupbox):
         total_layout.addWidget(self.total_label, alignment=Qt.AlignVCenter)
         self.addLayout(total_layout)
 
-        # ToDo: Add a table to add, edit and remove sampling volume constraints
+        # ToDo: Add some widget to add, edit and remove sampling volume constraints
 
         # Initially load sampling volume from configuration
         self.set_sampling_volume(recalculate=False)

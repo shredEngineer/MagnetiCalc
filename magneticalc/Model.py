@@ -17,7 +17,6 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from magneticalc.Debug import Debug
-from magneticalc.Field import Field
 
 
 class Model:
@@ -27,19 +26,20 @@ class Model:
     When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).
     """
 
-    def __init__(self, on_metric_invalidated):
+    def __init__(self, gui):
         """
         Initializes the model.
 
-        @param on_metric_invalidated: Callback (needed to clear the metric labels after the metric became invalid)
+        @param gui: GUI
         """
         Debug(self, ": Init")
 
+        self.gui = gui
+
         self.wire = None             # Will be initialized by Wire_Widget
         self.sampling_volume = None  # Will be initialized by SamplingVolume_Widget
-        self.field = Field()         # There is no dedicated "Field_Widget"; set a single field here and reuse it
-        self.metric = None
-        self.on_metric_invalidated = on_metric_invalidated
+        self.field = None            # Will be initialized by Field_Widget
+        self.metric = None           # Will be initialized by Metric_Widget
 
     def is_valid(self):
         """
@@ -66,22 +66,25 @@ class Model:
             if self.wire is not None:
                 if self.wire.is_valid():
                     self.wire.invalidate()
+                    self.wire.on_wire_invalid()
 
         if do_sampling_volume:
             if self.sampling_volume is not None:
                 if self.sampling_volume.is_valid():
                     self.sampling_volume.invalidate()
+                    self.on_sampling_volume_invalid()
 
         if do_field:
             if self.field is not None:
                 if self.field.is_valid():
                     self.field.invalidate()
+                    self.on_field_invalid()
 
         if do_metric:
             if self.metric is not None:
                 if self.metric.is_valid():
                     self.metric.invalidate()
-                    self.on_metric_invalidated()
+                    self.on_metric_invalid()
 
     def set_wire(self, wire):
         """
@@ -101,12 +104,22 @@ class Model:
         self.sampling_volume = sampling_volume
         self.invalidate(do_field=True, do_metric=True)
 
+    def set_field(self, field):
+        """
+        Sets the field.
+
+        @param field: Field
+        """
+        self.field = field
+        self.invalidate(do_metric=True)
+
     def set_metric(self, metric):
         """
         Sets the metric.
+
+        @param metric: Metric
         """
         self.metric = metric
-        self.invalidate(do_metric=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -139,4 +152,58 @@ class Model:
         @return: True if successful, False if interrupted
         """
         Debug(self, ".calculate_metric()", color=(0, 0, 255))
-        return self.metric.recalculate(self.field.get_vectors(), progress_callback)
+        return self.metric.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_wire_valid(self):
+        """
+        Gets called when the wire was successfully calculated.
+        """
+        self.gui.sidebar_left.wire_widget.update_sliced_total_label()
+
+    def on_sampling_volume_valid(self):
+        """
+        Gets called when the sampling volume was successfully calculated.
+        """
+        self.gui.sidebar_left.sampling_volume_widget.update_total_label()
+
+    def on_field_valid(self):
+        """
+        Gets called when the field was successfully calculated.
+        """
+        self.gui.sidebar_right.field_widget.update_labels()
+
+    def on_metric_valid(self):
+        """
+        Gets called when the metric was successfully calculated.
+        """
+        self.gui.sidebar_right.metric_widget.update_labels()
+        self.gui.vispy_canvas.create_field_labels()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_wire_invalid(self):
+        """
+        Gets called when the wire was invalidated.
+        """
+        self.gui.sidebar_left.wire_widget.update_sliced_total_label()
+
+    def on_sampling_volume_invalid(self):
+        """
+        Gets called when the sampling volume was invalidated.
+        """
+        self.gui.sidebar_left.sampling_volume_widget.update_total_label()
+
+    def on_field_invalid(self):
+        """
+        Gets called when the field was invalidated.
+        """
+        self.gui.sidebar_right.field_widget.update_labels()
+
+    def on_metric_invalid(self):
+        """
+        Gets called when the metric was invalidated.
+        """
+        self.gui.sidebar_right.metric_widget.update_labels()
+        self.gui.vispy_canvas.delete_field_labels()

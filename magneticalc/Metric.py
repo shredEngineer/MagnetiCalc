@@ -33,7 +33,7 @@ class Metric:
     # Length scale
     LengthScale = 1e-2  # m  (== 1 cm)
 
-    # Cutoff for logarithmic scaling
+    # Minimum argument limit for logarithmic scaling
     LogNormMinimum = 1e-12
 
     # Metric value: Magnitude in XYZ-space (linear)
@@ -178,6 +178,8 @@ class Metric:
 
         self._colors = None
         self._limits = None
+        self._energy = None
+        self._self_inductance = None
 
     def is_valid(self):
         """
@@ -185,6 +187,7 @@ class Metric:
 
         @return: True if data is valid for display, False otherwise
         """
+        # Note: Not checking _energy and _self_inductance here as these are not always calculated (only for B-field)
         return \
             self._colors is not None and \
             self._limits is not None
@@ -197,6 +200,8 @@ class Metric:
 
         self._colors = None
         self._limits = None
+        self._energy = None
+        self._self_inductance = None
 
     def get_color_preset(self):
         """
@@ -230,26 +235,49 @@ class Metric:
         """
         return self._limits
 
-    def recalculate(self, field_vectors, progress_callback):
+    def get_energy(self):
+        """
+        Returns calculated energy.
+
+        @return: Float
+        """
+        return self._energy
+
+    def get_self_inductance(self):
+        """
+        Returns calculated self-inductance.
+
+        @return: Float
+        """
+        return self._self_inductance
+
+    def recalculate(self, wire, sampling_volume, field, progress_callback):
         """
         Recalculate color and alpha values for field.
 
-        @param field_vectors: Field vectors
+        @param wire: Wire
+        @param sampling_volume: SamplingVolume
+        @param field: Field (see BiotSavart module)
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
         Debug(self, ".recalculate()", color=(0, 128, 0))
 
+        n = len(field.get_vectors())
+
         # Calculate color and alpha metric values
-        color_values = np.zeros(len(field_vectors))
-        alpha_values = np.zeros(len(field_vectors))
-        for i in range(len(field_vectors)):
-            color_values[i] = self._color_preset["func"](field_vectors[i])
-            alpha_values[i] = self._alpha_preset["func"](field_vectors[i])
+        color_values = np.zeros(n)
+        alpha_values = np.zeros(n)
+        for i in range(n):
+
+            field_vector = field.get_vectors()[i]
+
+            color_values[i] = self._color_preset["func"](field_vector)
+            alpha_values[i] = self._alpha_preset["func"](field_vector)
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
-                progress_callback(10 * (i + 1) / len(field_vectors))
+                progress_callback(10 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
@@ -298,8 +326,8 @@ class Metric:
         # (1) Calculate color and alpha normalization
         # (2) Calculate colormap and assemble final color/alpha values
         #     Note: Of course, the alpha metric colormap is ignored
-        colors = np.zeros([len(field_vectors), 4])
-        for i in range(len(field_vectors)):
+        colors = np.zeros([n, 4])
+        for i in range(n):
 
             # Calculate normalized color and alpha values
             # Note: If using logarithmic scaling, out-of-range values (still exceeding [0...1] here) may be clipped
@@ -311,7 +339,7 @@ class Metric:
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
-                progress_callback(10 + 90 * (i + 1) / len(field_vectors))
+                progress_callback(10 + 90 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
@@ -326,4 +354,33 @@ class Metric:
             "alpha_max": alpha_max
         }
 
+        if field.get_type() == 1:
+            # Field is B-Field
+            self.recalculate_energy_and_self_inductance(wire, sampling_volume, field)
+
         return True
+
+    def recalculate_energy_and_self_inductance(self, wire, sampling_volume, field):
+        """
+        Calculates the coil's energy and self-inductance.
+        See: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.
+        See: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).
+
+        @param wire: Wire
+        @param sampling_volume: SamplingVolume
+        @param field: Field (see BiotSavart module)
+        """
+        self._energy = 0
+        for point in field.get_vectors():
+            self._energy += np.dot(point, point)
+
+        # Sampling volume element
+        dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3
+
+        # Magnetic field constant µ0
+        mu_0 = 1.2566e-6
+
+        self._energy *= dV / mu_0
+        self._self_inductance = self._energy / np.square(wire.get_dc())
+
+        # ToDo: Find and fix the scaling error...

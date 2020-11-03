@@ -63,13 +63,10 @@ class GUI(QMainWindow):
         atexit.register(self.quit)
 
         # Create the model first, as the following objects will access it (each widget acts as view *and* controller)
-        self.model = Model(
-            # This callback is needed to clear the metric labels after the metric became invalid
-            on_metric_invalidated=self.on_metric_invalidated
-        )
+        self.model = Model(self)
 
         # Create the left and right sidebar
-        # Note: These create the wire, sampling volume and metric widgets, each populating the model from configuration
+        # Note: These create the wire, sampling volume, field and metric widgets, each populating the model from config.
         self.sidebar_left = SidebarLeft(self)
         self.sidebar_right = SidebarRight(self)
 
@@ -183,15 +180,6 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_metric_invalidated(self):
-        """
-        Needed to clear the metric labels after the metric became invalid.
-        """
-        self.sidebar_right.metric_widget.invalidate_labels()
-        self.vispy_canvas.delete_field_labels()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     def set_window(self):
         """
         Sets the basic window properties.
@@ -199,7 +187,7 @@ class GUI(QMainWindow):
 
         # Set window title and icon
         self.setWindowTitle(Version.String)
-        self.setWindowIcon(qta.icon("ei.magnet"))
+        self.setWindowIcon(qta.icon("ei.magnet", color="#2a7db0"))
 
         # Adjust window dimensions to desktop dimensions
         screen = QDesktopWidget().screenGeometry()
@@ -242,8 +230,23 @@ class GUI(QMainWindow):
 
         @param event: Key press event
         """
-        if event.key() == Qt.Key_Escape:
+        if event.key() == Qt.Key_F5:
+
+            # Focus the main window (make sure to un-focus the wire base points table)
             self.setFocus()
+
+            # (Re-)Start calculation
+            self.recalculate()
+
+        elif event.key() == Qt.Key_Escape:
+
+            # Focus the main window (make sure to un-focus the wire base points table)
+            self.setFocus()
+
+            if self.calculation_thread is not None:
+                if self.calculation_thread.isRunning():
+                    # Cancel the running calculation
+                    self.interrupt_calculation()
 
     def file_save(self):
         """

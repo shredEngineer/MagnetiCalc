@@ -25,6 +25,9 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QPushBu
 class Table(QTableWidget):
     """ Table class. """
 
+    # Display settings
+    MinimumHeight = 150
+
     def __init__(
             self,
             enabled=True,
@@ -51,6 +54,8 @@ class Table(QTableWidget):
 
         if self._cell_edited_callback is not None:
             self.itemChanged.connect(self._cell_edited_callback)
+
+        self.setMinimumHeight(self.MinimumHeight)
 
         self.setStyleSheet("""
             QTableCornerButton::section {
@@ -99,6 +104,17 @@ class Table(QTableWidget):
             return self.selectionModel().currentIndex().row()
         else:
             return None
+
+    def select_last_row(self):
+        """
+        Selects the last row. (Used after inserting a new row.)
+        """
+        self.setFocus()
+        item = self.item(self.rowCount() - 1, 0)
+        item.setSelected(True)
+        self.scrollToItem(item, QAbstractItemView.PositionAtTop)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def set_horizontal_header(self, header):
         """

@@ -33,14 +33,22 @@ class Statusbar:
         """
         self.gui = gui
 
+        # Start button
+        self.start_button = QPushButton(qta.icon("fa.play-circle"), "", self.gui)
+        self.start_button.setText(" F5 ")
+        self.start_button.setStyleSheet("padding: 3px;")
+        self.start_button.clicked.connect(self.start)
+
         # Cancel button
-        self.cancel_button = QPushButton(qta.icon("fa.window-close"), "", self.gui)
+        self.cancel_button = QPushButton(qta.icon("fa.stop-circle"), "", self.gui)
+        self.cancel_button.setText("ESC")
+        self.cancel_button.setStyleSheet("padding: 3px;")
         self.cancel_button.clicked.connect(self.cancel)
 
         # Auto-calculation checkbox
         self.auto_calculation_checkbox = QCheckBox("Auto-Calculation")
         self.auto_calculation_checkbox.setChecked(self.gui.config.get_bool("auto_calculation"))
-        self.auto_calculation_checkbox.stateChanged.connect(self.auto_calculation_changed)
+        self.auto_calculation_checkbox.stateChanged.connect(self._auto_calculation_changed)
 
         # Number-of-cores combobox
         self.cores_combobox = QComboBox()
@@ -71,6 +79,8 @@ class Statusbar:
 
         # Populate statusbar layout
         layout = QHBoxLayout()
+        layout.addWidget(self.start_button, alignment=Qt.AlignVCenter)
+        layout.addSpacing(4)
         layout.addWidget(self.cancel_button, alignment=Qt.AlignVCenter)
         layout.addSpacing(4)
         layout.addWidget(self.auto_calculation_checkbox, alignment=Qt.AlignVCenter)
@@ -82,17 +92,30 @@ class Statusbar:
         layout.addWidget(self.label, alignment=Qt.AlignVCenter)
         layout.setContentsMargins(8, 2, 10, 2)
 
-        # noinspection PyArgumentList
         container_widget = QWidget()
         container_widget.setLayout(layout)
         gui.statusBar().addPermanentWidget(container_widget, stretch=10)
 
         gui.statusBar().setSizeGripEnabled(False)
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def _auto_calculation_changed(self):
+        """
+        Handles changed auto-calculation setting.
+        """
+        self.gui.config.set_bool("auto_calculation", self.auto_calculation_checkbox.isChecked())
+        if self.auto_calculation_checkbox.isChecked():
+            if not self.gui.model.is_valid():
+                self.gui.recalculate()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     def arm(self):
         """
         "Arms" the statusbar before calculation.
         """
+        self.start_button.setEnabled(False)
         self.cancel_button.setEnabled(True)
         self.auto_calculation_checkbox.setEnabled(False)
         self.cores_combobox.setEnabled(False)
@@ -104,6 +127,7 @@ class Statusbar:
 
         @param success: Reflects calculation success or failure
         """
+        self.start_button.setEnabled(True)
         self.cancel_button.setEnabled(False)
         self.auto_calculation_checkbox.setEnabled(True)
         self.cores_combobox.setEnabled(True)
@@ -111,6 +135,13 @@ class Statusbar:
 
         if success:
             self.progressbar.setValue(100)
+
+    def start(self):
+        """
+        Starts the calculation.
+        """
+        self.gui.recalculate()
+        self.disarm(True)
 
     def cancel(self):
         """
@@ -126,12 +157,3 @@ class Statusbar:
         @param text: Text
         """
         self.label.setText(text)
-
-    def auto_calculation_changed(self):
-        """
-        Handles changed auto-calculation setting.
-        """
-        self.gui.config.set_bool("auto_calculation", self.auto_calculation_checkbox.isChecked())
-        if self.auto_calculation_checkbox.isChecked():
-            if not self.gui.model.is_valid():
-                self.gui.recalculate()

@@ -48,10 +48,10 @@ class VispyCanvas(scene.SceneCanvas):
     ScaleFactorMin = 1e-2
     ScaleFactorMax = 1e+3
 
-    # Divisor cutoff (mitigating divisions by zero)
-    DivisorCutoff = 1e-12
+    # Magnitude limit (mitigating divisions by zero)
+    MagnitudeLimit = 1e-12
 
-    # Magnitude formatting settings
+    # Formatting settings
     MagnitudePrecision = 1
 
     # Preset: Isometric
@@ -383,8 +383,10 @@ class VispyCanvas(scene.SceneCanvas):
 
             for i in range(len(self.gui.model.sampling_volume.get_points())):
 
-                # Calculate normalized field direction (mitigating divisions by zero)
-                field_vector_length = max(self.DivisorCutoff, np.linalg.norm(self.gui.model.field.get_vectors()[i]))
+                # Calculate field vector magnitude (mitigating divisions by zero)
+                field_vector_length = max(self.MagnitudeLimit, np.linalg.norm(self.gui.model.field.get_vectors()[i]))
+
+                # Calculate normalized field direction
                 field_direction_norm = self.gui.model.field.get_vectors()[i] / field_vector_length
 
                 # Calculate arrow start & end coordinates
@@ -495,6 +497,8 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Creates field labels.
         """
+        field_units = self.gui.model.field.get_units()
+
         bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
         resolution = self.gui.model.sampling_volume.get_resolution()
 
@@ -509,7 +513,7 @@ class VispyCanvas(scene.SceneCanvas):
             # Provide some spacing between labels
             if x % resolution == 0 and y % resolution == 0 and z % resolution == 0:
                 magnitude = Metric.LengthScale * np.linalg.norm(self.gui.model.field.get_vectors()[i])
-                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + "T"
+                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
 
                 visual = scene.visuals.create_visual_node(visuals.TextVisual)(
                     parent=self.view_main.scene,

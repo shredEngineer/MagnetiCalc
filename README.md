@@ -51,7 +51,7 @@ integrated over the positions of all current elements
 At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various available metrics:
 
-| Metric               | Symbols                                                                                      | Description                         |
+| Metric               | Symbol                                                                                       | Description                         |
 |----------------------|----------------------------------------------------------------------------------------------|-------------------------------------|
 | ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">            | Magnitude in space                  |
 | ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{XY}}\mid">       | Magnitude in XY-plane               |
@@ -119,7 +119,7 @@ python3 -m magneticalc
 
 This will automatically install all dependency packages.
 
-**Note:** From inside a *Jupyter Notebook*, MagnetiCalc may be installed and run like this:
+**Note:** From within a *Jupyter Notebook*, MagnetiCalc may be installed and run like this:
 ```python
 import sys
 !{sys.executable} -m pip install magneticalc

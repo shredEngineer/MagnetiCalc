@@ -32,7 +32,7 @@ Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B
 in interactive 3D, using multiple metrics for highlighting this field's properties.
 Alternatively, the magnetic vector potential (A-field) may be displayed.
 All parameters and presets can interactively be changed inside the GUI.
-There is also an experimental feature to calculate the coil's energy and self-inductance.""",
+There is also an experimental feature to calculate the coil's energy and self-inductance.""".replace("\n", " "),
     url="https://github.com/shredEngineer/MagnetiCalc",
     author="Paul Wilhelm",
     author_email="anfrage@paulwilhelm.de",

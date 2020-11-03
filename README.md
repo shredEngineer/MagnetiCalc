@@ -49,7 +49,21 @@ integrating over the positions of all current elements
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \int \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{|\mathbf{x} - \mathbf{x^'}|} \,d\mathbf{x^'}"><br>
 
 At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
-field color and alpha transparency are individually mapped using one of the various available metrics.
+field color and alpha transparency are individually mapped using one of the various available metrics:
+
+| Metric               | Symbol                                                                                       | Description                         |
+|----------------------|----------------------------------------------------------------------------------------------|-------------------------------------|
+| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">            | Magnitude in space                  |
+| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{XY}}\mid">       | Magnitude in XY-plane               |
+| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{XZ}}\mid">       | Magnitude in XZ-plane               |
+| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{YZ}}\mid">       | Magnitude in YZ-plane               |
+| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">         | Logarithmic Magnitude in space      |
+| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{XY}}\mid">    | Logarithmic Magnitude in XY-plane   |
+| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{XZ}}\mid">    | Logarithmic Magnitude in XZ-plane   |
+| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{YZ}}\mid">    | Logarithmic Magnitude in YZ-plane   |
+| ``AngleXY``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{XY}}"> | Field angle in XY-plane             |
+| ``AngleXZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{XZ}}"> | Field angle in XZ-plane             |
+| ``AngleYZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{YZ}}"> | Field angle in YZ-plane             |
 
 As an experimental feature,
 the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]

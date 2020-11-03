@@ -120,7 +120,7 @@ python3 -m magneticalc
 This will automatically install all dependency packages.
 
 **Note:** From within a *Jupyter Notebook*, MagnetiCalc may be installed and run like this:
-```python
+```shell
 import sys
 !{sys.executable} -m pip install magneticalc
 !{sys.executable} -m magneticalc

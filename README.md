@@ -11,12 +11,12 @@ MagnetiCalc
 
 MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
 Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}">-field due to DC currents,
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field due to DC currents,
 in units of <i>Tesla</i>) is displayed
 in interactive 3D, using multiple metrics for highlighting the field properties.
 Alternatively, the magnetic vector potential
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}">-field, in units of <i>Tesla-meter</i>)
-may be displayed.
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
+in units of <i>Tesla-meter</i>) may be displayed.
 All parameters and presets can interactively be changed inside the GUI.
 There is also an experimental feature to calculate the coil's energy and self-inductance.
 
@@ -29,20 +29,20 @@ whenever I needed to solve a magnetostatic problem.
 
 **How does it work?**
 
-The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}">-field calculation
+The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
 is implemented using the Biot-Savart law [1], employing multiprocessing techniques.
 The use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape.
 
 The shape of any wire is modeled as a 3D piecewise linear curve.
 Arbitrary loops of wire are sliced into differential current elements
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{\ell}">),
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{\ell}" alt="l">),
 each of which contributes to the total resulting field
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}">,
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}">)
-at some fixed 3D grid point (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}">),
-integrated over the positions of all current elements
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x^'}">): 
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">,
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">)
+at some fixed 3D grid point (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}" alt="x">),
+integrating over the positions of all current elements
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x^'}" alt="x'">):
 
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \int \frac{\mathbf{\ell}(\mathbf{x^')}}{|\mathbf{x} - \mathbf{x^'}|} \,d\mathbf{x^'}"><br>
 
@@ -66,10 +66,10 @@ field color and alpha transparency are individually mapped using one of the vari
 | ``AngleYZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{YZ}}"> | Field angle in YZ-plane             |
 
 As an experimental feature,
-the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E"> [2]
-and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L"> [3]
+the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
+and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
 are calculated by integrating the squared
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}">-field over the entire sampling volume.
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field over the entire sampling volume.
 However, these values are currently not reliable, varying strongly with the other parameters;
 essentially, the sampling volume must enclose a large, non-singular portion of the field.
 

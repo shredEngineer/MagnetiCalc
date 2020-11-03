@@ -14,7 +14,7 @@ Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field due to DC currents,
 in units of <i>Tesla</i>) is displayed
 in interactive 3D, using multiple metrics for highlighting the field properties.
-Alternatively, the magnetic vector potential
+Alternatively, the magnetic vector potential<br>
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
 in units of <i>Tesla-meter</i>) may be displayed.
 All parameters and presets can interactively be changed inside the GUI.

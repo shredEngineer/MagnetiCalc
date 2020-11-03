@@ -44,8 +44,8 @@ There is also an experimental feature to calculate the coil's energy and self-in
         "Topic :: Scientific/Engineering",
         "Development Status :: 4 - Beta"
     ],
-    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
+    long_description=open("README.md").read(),
     platforms=["any"],
     python_requires=">=3.6",
     install_requires=[

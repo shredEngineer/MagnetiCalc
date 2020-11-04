@@ -68,7 +68,7 @@ field color and alpha transparency are individually mapped using one of the vari
 As an experimental feature,
 the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
 and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
-are calculated by summing the squared
+are calculated by summing the squared<br>
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
 over the entire sampling volume.
 However, these values are currently not reliable, varying strongly with the other parameters;
@@ -112,18 +112,18 @@ sudo apt install libxcb-xinerama0 --reinstall
 python3 -m pip install pip --upgrade
 ```
 
-Install MagnetiCalc to the user site-packages directory and start it from there: 
+Install (or upgrade) MagnetiCalc to the user site-packages directory and start it from there: 
 ```shell
-python3 -m pip install magneticalc
+python3 -m pip install magneticalc --upgrade
 python3 -m magneticalc
 ```
 
 This will automatically install all dependency packages.
 
-**Note:** From within a *Jupyter Notebook*, MagnetiCalc may be installed and run like this:
+**Note:** From within a *Jupyter Notebook*, MagnetiCalc must be installed and run like this:
 ```python
 import sys
-!{sys.executable} -m pip install magneticalc
+!{sys.executable} -m pip install magneticalc --upgrade
 !{sys.executable} -m magneticalc
 ```
 

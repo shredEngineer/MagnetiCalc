@@ -114,13 +114,14 @@ class Usage_Dialog(QDialog):
 
         The shape of any wire is modeled as a 3D piecewise linear curve.
         Arbitrary loops of wire are sliced into differential current elements, each of which
-        contributes to the total field magnitude at some fixed 3D grid point.<br><br>
+        contributes to the total field magnitude at some fixed 3D grid point,
+        summing over the positions of all current elements.<br><br>
 
         At each grid point, the field is displayed using colored arrows and/or dots;
         field color and alpha transparency are individually mapped using one of the various available metrics.<br><br>
 
         As an experimental feature, the coil's energy [2] and self-inductance [3]
-        are calculated by integrating the squared <b>B</b>-field over the entire sampling volume.
+        are calculated by summing the squared <b>B</b>-field over the entire sampling volume.
         However, these values are currently not reliable, varying strongly with the other parameters;
         essentially, the sampling volume must enclose a large, non-singular portion of the field.
         <br><br>

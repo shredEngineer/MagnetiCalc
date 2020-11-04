@@ -41,12 +41,12 @@ each of which contributes to the total resulting field
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">,
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">)
 at some fixed 3D grid point (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}" alt="x">),
-integrating over the positions of all current elements
+summing over the positions of all current elements
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x^'}" alt="x'">):
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \int \frac{\mathbf{\ell}(\mathbf{x^')}}{|\mathbf{x} - \mathbf{x^'}|} \,d\mathbf{x^'}"><br>
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \frac{\mathbf{\ell}(\mathbf{x^')}}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \int \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{|\mathbf{x} - \mathbf{x^'}|} \,d\mathbf{x^'}"><br>
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
 
 At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various available metrics:
@@ -54,26 +54,27 @@ field color and alpha transparency are individually mapped using one of the vari
 | Metric               | Symbol                                                                                       | Description                         |
 |----------------------|----------------------------------------------------------------------------------------------|-------------------------------------|
 | ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">            | Magnitude in space                  |
-| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{XY}}\mid">       | Magnitude in XY-plane               |
-| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{XZ}}\mid">       | Magnitude in XZ-plane               |
-| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B_{YZ}}\mid">       | Magnitude in YZ-plane               |
+| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">       | Magnitude in XY-plane               |
+| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">       | Magnitude in XZ-plane               |
+| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">       | Magnitude in YZ-plane               |
 | ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">         | Logarithmic Magnitude in space      |
-| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{XY}}\mid">    | Logarithmic Magnitude in XY-plane   |
-| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{XZ}}\mid">    | Logarithmic Magnitude in XZ-plane   |
-| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_{YZ}}\mid">    | Logarithmic Magnitude in YZ-plane   |
-| ``AngleXY``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{XY}}"> | Field angle in XY-plane             |
-| ``AngleXZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{XZ}}"> | Field angle in XZ-plane             |
-| ``AngleYZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B_{YZ}}"> | Field angle in YZ-plane             |
+| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XY}\mid">    | Logarithmic Magnitude in XY-plane   |
+| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XZ}\mid">    | Logarithmic Magnitude in XZ-plane   |
+| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{YZ}\mid">    | Logarithmic Magnitude in YZ-plane   |
+| ``Angle XY``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}"> | Field angle in XY-plane             |
+| ``Angle XZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}"> | Field angle in XZ-plane             |
+| ``Angle YZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}"> | Field angle in YZ-plane             |
 
 As an experimental feature,
 the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
 and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
-are calculated by integrating the squared
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field over the entire sampling volume.
+are calculated by summing the squared
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
+over the entire sampling volume.
 However, these values are currently not reliable, varying strongly with the other parameters;
 essentially, the sampling volume must enclose a large, non-singular portion of the field.
 
-<img src="https://render.githubusercontent.com/render/math?math=E=\frac{1}{\mu_0} \cdot \displaystyle \int \mathbf{B} \cdot \mathbf{B} \,d\mathbf{x^'}"><br>
+<img src="https://render.githubusercontent.com/render/math?math=E=\frac{1}{\mu_0} \cdot \displaystyle \sum_\mathbf{x} \mathbf{B}(\mathbf{x}) \cdot \mathbf{B}(\mathbf{x})"><br>
 
 <img src="https://render.githubusercontent.com/render/math?math=L=\frac{1}{\I^2} \cdot E"><br>
 
@@ -120,7 +121,7 @@ python3 -m magneticalc
 This will automatically install all dependency packages.
 
 **Note:** From within a *Jupyter Notebook*, MagnetiCalc may be installed and run like this:
-```shell
+```python
 import sys
 !{sys.executable} -m pip install magneticalc
 !{sys.executable} -m magneticalc
@@ -154,7 +155,7 @@ ToDo
 * Add support for adding, editing and removing sampling volume constraints;
   the SamplingVolume module already supports constraints, but the GUI currently doesn't.
   This will also require changes to the way the field labels are currently distributed (relying on a *complete* grid).
-* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display. 
+* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
 * Add support for different media with arbitrary geometry and permeability.
 * Add support for multiple wires, study mutual induction.
 * Move the field and metric calculations directly to the OpenGL shader engines,

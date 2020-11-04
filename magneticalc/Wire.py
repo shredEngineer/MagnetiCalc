@@ -228,8 +228,8 @@ class Wire:
         self._points_base = np.array(points)
 
         # Note: This is my playground for creating new wire presets!
-        x = False
-        if x:
+        override_base = False
+        if override_base:
             self._points_base = np.array(
                 [
                     [
@@ -253,6 +253,7 @@ class Wire:
         self._dc = dc
 
         self._points_sliced = None
+        self._length = None
 
         self._points_transformed = self._points_base.copy()
 
@@ -276,6 +277,7 @@ class Wire:
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._points_sliced = None
+        self._length = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -338,6 +340,14 @@ class Wire:
         @return: DC value
         """
         return self._dc
+
+    def get_length(self):
+        """
+        Returns this curve's length.
+
+        @return: Length (float)
+        """
+        return self._length
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -403,12 +413,14 @@ class Wire:
         Debug(self, ".recalculate()", color=(0, 128, 0))
 
         points_sliced = []
+        length = 0
 
         for i in range(len(self.get_points_transformed()) - 1):
 
             # Calculate direction and length of wire segment
             segment_direction = np.array(self.get_points_transformed()[i + 1] - self.get_points_transformed()[i])
             segment_length = np.linalg.norm(segment_direction)
+            length += segment_length
 
             # Calculate required number of slices (subdivisions) and perform linear interpolation
             slices = np.ceil(segment_length / self._slicer_limit).astype(int)
@@ -427,5 +439,6 @@ class Wire:
         points_sliced.append(self.get_points_transformed()[-1])
 
         self._points_sliced = np.array(points_sliced)
+        self._length = length
 
         return True

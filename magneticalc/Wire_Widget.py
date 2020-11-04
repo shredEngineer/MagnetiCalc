@@ -193,6 +193,24 @@ class Wire_Widget(Groupbox):
 
         self.addLayout(rotational_symmetry_layout)
 
+        total_length_layout = QHBoxLayout()
+        total_length_label_left = QLabel("Total wire length:")
+        total_length_label_left.setStyleSheet("""
+            color: #555555;
+            font-style: italic;
+        """)
+        self.total_length_label = QLabel("")
+        self.total_length_label.setStyleSheet("""
+            color: #2a7db0;
+        """)
+        self.total_length_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_length_layout.addWidget(
+            total_length_label_left,
+            alignment=Qt.AlignVCenter
+        )
+        total_length_layout.addWidget(self.total_length_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_length_layout)
+
         rotational_symmetry_total_layout = QHBoxLayout()
         rotational_symmetry_total_label_left = QLabel("Total transformed points:")
         rotational_symmetry_total_label_left.setStyleSheet("""
@@ -210,6 +228,14 @@ class Wire_Widget(Groupbox):
         )
         rotational_symmetry_total_layout.addWidget(self.transformed_total_label, alignment=Qt.AlignVCenter)
         self.addLayout(rotational_symmetry_total_layout)
+
+        replace_base_points_button = QPushButton()
+        replace_base_points_button.setIcon(qta.icon("mdi.content-copy"))
+        replace_base_points_button.setText("Replace base points")
+        replace_base_points_button.clicked.connect(
+            lambda: self.set_wire(points=self.gui.model.wire.get_points_transformed())
+        )
+        self.addWidget(replace_base_points_button)
 
         # --------------------------------------------------------------------------------------------------------------
 
@@ -414,5 +440,7 @@ class Wire_Widget(Groupbox):
         """
         if self.gui.model.wire.is_valid():
             self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
+            self.total_length_label.setText(f"{self.gui.model.wire.get_length():.2f} cm")
         else:
             self.sliced_total_label.setText("N/A")
+            self.total_length_label.setText("N/A")

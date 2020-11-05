@@ -22,6 +22,7 @@ from matplotlib.colors import Normalize, LogNorm
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class Metric:
@@ -280,7 +281,7 @@ class Metric:
                 progress_callback(10 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
+                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
         # Select color range
@@ -342,7 +343,7 @@ class Metric:
                 progress_callback(10 + 90 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
+                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
         self._colors = colors

@@ -25,6 +25,7 @@ from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Theme import Theme
 
 
 class Metric_Widget(Groupbox):
@@ -67,9 +68,9 @@ class Metric_Widget(Groupbox):
         self.color_metric_max_label = QLabel("N/A")
         color_metric_dots_icon = QLabel()
         color_metric_dots_icon.setPixmap(qta.icon("mdi.dots-horizontal").pixmap(QSize(16, 16)))
-        self.color_metric_min_label.setStyleSheet("""background: none;""")
-        self.color_metric_max_label.setStyleSheet("""background: none;""")
-        color_metric_dots_icon.setStyleSheet("""background: none;""")
+        self.color_metric_min_label.setStyleSheet("background: none;")
+        self.color_metric_max_label.setStyleSheet("background: none;")
+        color_metric_dots_icon.setStyleSheet("background: none;")
         self.color_metric_limits_layout.addWidget(self.color_metric_min_label, alignment=Qt.AlignVCenter)
         self.color_metric_limits_layout.addWidget(color_metric_dots_icon, alignment=Qt.AlignVCenter | Qt.AlignCenter)
         self.color_metric_limits_layout.addWidget(
@@ -101,9 +102,9 @@ class Metric_Widget(Groupbox):
         self.alpha_metric_max_label = QLabel("N/A")
         alpha_metric_dots_icon = QLabel()
         alpha_metric_dots_icon.setPixmap(qta.icon("mdi.dots-horizontal").pixmap(QSize(16, 16)))
-        self.alpha_metric_min_label.setStyleSheet("""background: none;""")
-        self.alpha_metric_max_label.setStyleSheet("""background: none;""")
-        alpha_metric_dots_icon.setStyleSheet("""background: none;""")
+        self.alpha_metric_min_label.setStyleSheet("background: none;")
+        self.alpha_metric_max_label.setStyleSheet("background: none;")
+        alpha_metric_dots_icon.setStyleSheet("background: none;")
         self.alpha_metric_limits_layout.addWidget(self.alpha_metric_min_label, alignment=Qt.AlignVCenter)
         self.alpha_metric_limits_layout.addWidget(alpha_metric_dots_icon, alignment=Qt.AlignVCenter | Qt.AlignCenter)
         self.alpha_metric_limits_layout.addWidget(
@@ -121,14 +122,9 @@ class Metric_Widget(Groupbox):
 
         energy_layout = QHBoxLayout()
         energy_label_left = QLabel("Energy:")
-        energy_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        energy_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.energy_label = QLabel("")
-        self.energy_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.energy_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         energy_layout.addWidget(energy_label_left, alignment=Qt.AlignVCenter)
         energy_layout.addWidget(self.energy_label, alignment=Qt.AlignVCenter)
@@ -138,14 +134,9 @@ class Metric_Widget(Groupbox):
 
         self_inductance_layout = QHBoxLayout()
         self_inductance_label_left = QLabel("Self-inductance:")
-        self_inductance_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        self_inductance_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.self_inductance_label = QLabel("")
-        self.self_inductance_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.self_inductance_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self_inductance_layout.addWidget(self_inductance_label_left, alignment=Qt.AlignVCenter)
         self_inductance_layout.addWidget(self.self_inductance_label, alignment=Qt.AlignVCenter)
@@ -269,15 +260,15 @@ class Metric_Widget(Groupbox):
 
             self.color_metric_min_label.setText("N/A")
             self.color_metric_max_label.setText("N/A")
-            self.color_metric_limits_widget.setStyleSheet("""""")
-            self.color_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
-            self.color_metric_max_label.setStyleSheet("""background: none; color: #000000;""")
+            self.color_metric_limits_widget.setStyleSheet("")
+            self.color_metric_min_label.setStyleSheet("background: none; color: #000000;")
+            self.color_metric_max_label.setStyleSheet("background: none; color: #000000;")
 
             self.alpha_metric_min_label.setText("N/A")
             self.alpha_metric_max_label.setText("N/A")
-            self.alpha_metric_limits_widget.setStyleSheet("""""")
-            self.alpha_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
-            self.alpha_metric_max_label.setStyleSheet("""background: none; color: #000000;""")
+            self.alpha_metric_limits_widget.setStyleSheet("")
+            self.alpha_metric_min_label.setStyleSheet("background: none; color: #000000;")
+            self.alpha_metric_max_label.setStyleSheet("background: none; color: #000000;")
 
             self.energy_label.setText("N/A")
             self.self_inductance_label.setText("N/A")

@@ -21,6 +21,7 @@ import qtawesome as qta
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
+from magneticalc.Theme import Theme
 from magneticalc.Version import Version
 
 
@@ -33,7 +34,7 @@ class About_Dialog(QDialog):
 
     # HTML content
     HTML = f"""
-        <span style="color: #2a7db0;"><b>{Version.String}</b></span><br>
+        <span style="color: {Theme.PrimaryColor};"><b>{Version.String}</b></span><br>
         <br>
         Copyright © 2020, Paul Wilhelm, M. Sc.
         &lt;<a href="mailto:anfrage@paulwilhelm.de">anfrage@paulwilhelm.de</a>&gt;<br>
@@ -54,7 +55,7 @@ class About_Dialog(QDialog):
             OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.<br>
         </small>
         <br>
-        <span style="color: #2a7db0;">
+        <span style="color: {Theme.PrimaryColor};">
             If you like this software, please consider buying me a coffee!&nbsp; ;)
         </span>
         """

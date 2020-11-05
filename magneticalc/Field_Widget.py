@@ -24,6 +24,7 @@ from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.IconLabel import IconLabel
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Theme import Theme
 
 
 class Field_Widget(Groupbox):
@@ -81,14 +82,9 @@ class Field_Widget(Groupbox):
 
         total_limited_points_layout = QHBoxLayout()
         total_limited_points_left = QLabel("Total limited points:")
-        total_limited_points_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        total_limited_points_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.total_limited_points_label = QLabel("N/A")
-        self.total_limited_points_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.total_limited_points_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.total_limited_points_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_limited_points_layout.addWidget(total_limited_points_left, alignment=Qt.AlignVCenter)
         total_limited_points_layout.addWidget(self.total_limited_points_label, alignment=Qt.AlignVCenter)

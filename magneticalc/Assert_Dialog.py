@@ -21,6 +21,7 @@ import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 from magneticalc.Version import Version
 from urllib.parse import urlencode, quote_plus
 
@@ -76,7 +77,7 @@ class Assert_Dialog:
 
         # HTML content
         html = f"""
-            <span style="color: #2a7db0;"><b>Sorry for the inconvenience!</b></span><br>
+            <span style="color: {Theme.PrimaryColor};"><b>Sorry for the inconvenience!</b></span><br>
             <br>
             You seem to have discovered a bug in MagnetiCalc.<br>
             If this error persists, please

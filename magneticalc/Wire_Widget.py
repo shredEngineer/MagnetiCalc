@@ -26,6 +26,7 @@ from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Table import Table
+from magneticalc.Theme import Theme
 from magneticalc.Wire import Wire
 
 
@@ -81,14 +82,9 @@ class Wire_Widget(Groupbox):
 
         table_total_layout = QHBoxLayout()
         table_total_label_left = QLabel("Total base points:")
-        table_total_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        table_total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.table_total_label = QLabel("")
-        self.table_total_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.table_total_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.table_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         table_total_layout.addWidget(table_total_label_left, alignment=Qt.AlignVCenter)
         table_total_layout.addWidget(self.table_total_label, alignment=Qt.AlignVCenter)
@@ -195,14 +191,9 @@ class Wire_Widget(Groupbox):
 
         total_length_layout = QHBoxLayout()
         total_length_label_left = QLabel("Total wire length:")
-        total_length_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        total_length_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.total_length_label = QLabel("")
-        self.total_length_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.total_length_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_length_layout.addWidget(
             total_length_label_left,
@@ -213,14 +204,9 @@ class Wire_Widget(Groupbox):
 
         rotational_symmetry_total_layout = QHBoxLayout()
         rotational_symmetry_total_label_left = QLabel("Total transformed points:")
-        rotational_symmetry_total_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        rotational_symmetry_total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.transformed_total_label = QLabel("")
-        self.transformed_total_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.transformed_total_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.transformed_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         rotational_symmetry_total_layout.addWidget(
             rotational_symmetry_total_label_left,
@@ -260,14 +246,9 @@ class Wire_Widget(Groupbox):
 
         sliced_total_layout = QHBoxLayout()
         sliced_total_label_left = QLabel("Total sliced points:")
-        sliced_total_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        sliced_total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.sliced_total_label = QLabel("")
-        self.sliced_total_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.sliced_total_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.sliced_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         sliced_total_layout.addWidget(sliced_total_label_left, alignment=Qt.AlignVCenter)
         sliced_total_layout.addWidget(self.sliced_total_label, alignment=Qt.AlignVCenter)

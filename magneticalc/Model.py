@@ -17,6 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class Model:
@@ -127,7 +128,7 @@ class Model:
         """
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".calculate_wire()", color=(0, 0, 255))
+        Debug(self, ".calculate_wire()", color=Theme.PrimaryColor)
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
         return self.wire.recalculate(progress_callback)
 
@@ -135,7 +136,7 @@ class Model:
         """
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".calculate_sampling_volume()", color=(0, 0, 255))
+        Debug(self, ".calculate_sampling_volume()", color=Theme.PrimaryColor)
         self.invalidate(do_field=True, do_metric=True)
         return self.sampling_volume.recalculate(progress_callback)
 
@@ -143,7 +144,7 @@ class Model:
         """
         @return: True if successful, False if interrupted
         """
-        Debug(self, f".calculate_field(num_cores={num_cores})", color=(0, 0, 255))
+        Debug(self, f".calculate_field(num_cores={num_cores})", color=Theme.PrimaryColor)
         self.invalidate(do_metric=True)
         return self.field.recalculate(self.wire, self.sampling_volume, progress_callback, num_cores)
 
@@ -151,7 +152,7 @@ class Model:
         """
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".calculate_metric()", color=(0, 0, 255))
+        Debug(self, ".calculate_metric()", color=Theme.PrimaryColor)
         return self.metric.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
 
     # ------------------------------------------------------------------------------------------------------------------

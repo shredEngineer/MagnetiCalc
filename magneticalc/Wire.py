@@ -20,6 +20,7 @@ import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class Wire:
@@ -432,7 +433,7 @@ class Wire:
                 progress_callback(100 * (i + 1) / (len(self.get_points_transformed()) - 1))
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
+                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
         # Close the loop

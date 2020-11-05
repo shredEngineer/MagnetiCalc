@@ -21,6 +21,7 @@ from functools import partial
 from PyQt5.QtCore import QThread
 from magneticalc.Debug import Debug
 from magneticalc.Metric import Metric
+from magneticalc.Theme import Theme
 
 
 class BiotSavart:
@@ -102,7 +103,7 @@ class BiotSavart:
 
         @return: (Ordered list of 3D vectors, total # of distance limited points) if successful, None if interrupted
         """
-        Debug(cls, ".get_vectors()", color=(0, 0, 255))
+        Debug(cls, ".get_vectors()", color=Theme.PrimaryColor)
 
         # Map sampling volume points to worker method, passing type, current elements & distance limit as const. args
         result = pool.imap(
@@ -124,7 +125,7 @@ class BiotSavart:
                 cls.progress_callback(100 * (i + 1) / len(cls.sampling_volume_points))
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(cls, ": Interruption requested, exiting now", color=(0, 0, 255))
+                    Debug(cls, ": Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return None
 
         # Apply Biot-Savart constant & wire current scaling

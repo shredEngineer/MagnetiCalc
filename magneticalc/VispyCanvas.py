@@ -32,7 +32,7 @@ class VispyCanvas(scene.SceneCanvas):
     DefaultFontSize = 9
 
     # Enable to additionally debug drawing of visuals
-    DebugVisuals = False
+    DebugVisuals = True
 
     # Base colors
     White = np.array([1, 1, 1, 1])
@@ -516,7 +516,7 @@ class VispyCanvas(scene.SceneCanvas):
                 text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
 
                 visual = scene.visuals.create_visual_node(visuals.TextVisual)(
-                    parent=self.view_main.scene,
+                    parent=None,
                     pos=self.gui.model.sampling_volume.get_points()[i],
                     face=self.DefaultFontFace,
                     font_size=self.DefaultFontSize,

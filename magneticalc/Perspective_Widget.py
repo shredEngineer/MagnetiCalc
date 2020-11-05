@@ -21,6 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
+from magneticalc.Theme import Theme
 from magneticalc.VispyCanvas import VispyCanvas
 
 
@@ -60,10 +61,7 @@ class Perspective_Widget(Groupbox):
         x_label = QLabel("X")
         y_label = QLabel("Y")
         z_label = QLabel("Z")
-        hint_label.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        hint_label.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         x_label.setStyleSheet("color: #cc0000; font-weight: bold;")
         y_label.setStyleSheet("color: #00cc00; font-weight: bold;")
         z_label.setStyleSheet("color: #0000cc; font-weight: bold;")

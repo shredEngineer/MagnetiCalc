@@ -25,6 +25,7 @@ from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.SamplingVolume import SamplingVolume
+from magneticalc.Theme import Theme
 
 
 class SamplingVolume_Widget(Groupbox):
@@ -96,14 +97,9 @@ class SamplingVolume_Widget(Groupbox):
 
         total_layout = QHBoxLayout()
         total_label_left = QLabel("Total constrained points:")
-        total_label_left.setStyleSheet("""
-            color: #555555;
-            font-style: italic;
-        """)
+        total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
         self.total_label = QLabel("")
-        self.total_label.setStyleSheet("""
-            color: #2a7db0;
-        """)
+        self.total_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_layout.addWidget(total_label_left, alignment=Qt.AlignVCenter)
         total_layout.addWidget(self.total_label, alignment=Qt.AlignVCenter)

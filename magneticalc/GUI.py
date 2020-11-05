@@ -30,6 +30,7 @@ from magneticalc.Model import Model
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
+from magneticalc.Theme import Theme
 from magneticalc.Version import Version
 from magneticalc.VispyCanvas import VispyCanvas
 
@@ -100,7 +101,7 @@ class GUI(QMainWindow):
         """
         if self.calculation_thread is not None:
             if self.calculation_thread.isRunning():
-                Debug(self, ".redraw(): Skipped because calculation is in progress", color=(0, 0, 255))
+                Debug(self, ".redraw(): Skipped because calculation is in progress", color=Theme.PrimaryColor)
                 return
             else:
                 Debug(self, ".redraw(): WARNING: Setting calculation thread to None", color=(255, 0, 0))
@@ -148,7 +149,10 @@ class GUI(QMainWindow):
                 self.calculation_thread = None
                 Debug(self, f".on_calculation_exited(): Success (took {calculation_time:.2f} s)", color=(0, 128, 0))
         else:
-            Debug(self, f".on_calculation_exited(): Interrupted after {calculation_time:.2f} s", color=(0, 0, 255))
+            Debug(
+                self,
+                f".on_calculation_exited(): Interrupted after {calculation_time:.2f} s", color=Theme.PrimaryColor
+            )
 
         # Note: For some reason, most of the time we need an additional ("final-final") re-draw here
         self.redraw()
@@ -164,11 +168,11 @@ class GUI(QMainWindow):
             return
 
         if self.calculation_thread.isRunning():
-            Debug(self, ".interrupt_calculation(): Requesting interruption", color=(0, 0, 255))
+            Debug(self, ".interrupt_calculation(): Requesting interruption", color=Theme.PrimaryColor)
             self.calculation_thread.requestInterruption()
 
             if self.calculation_thread.wait(1000):
-                Debug(self, ".interrupt_calculation(): Exited gracefully", color=(0, 0, 255))
+                Debug(self, ".interrupt_calculation(): Exited gracefully", color=Theme.PrimaryColor)
             else:
                 Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", color=(255, 0, 0))
                 self.calculation_thread.terminate()
@@ -187,7 +191,7 @@ class GUI(QMainWindow):
 
         # Set window title and icon
         self.setWindowTitle(Version.String)
-        self.setWindowIcon(qta.icon("ei.magnet", color="#2a7db0"))
+        self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
 
         # Adjust window dimensions to desktop dimensions
         screen = QDesktopWidget().screenGeometry()

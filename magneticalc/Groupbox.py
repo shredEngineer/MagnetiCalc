@@ -19,6 +19,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout
+from magneticalc.Theme import Theme
 
 
 class Groupbox(QGroupBox):
@@ -33,21 +34,21 @@ class Groupbox(QGroupBox):
         QGroupBox.__init__(self)
 
         self.setTitle(title)
-        self.setStyleSheet("""
-            QGroupBox {
+        self.setStyleSheet(f"""
+            QGroupBox {{
                 border: 1px solid #cccccc;
                 border-radius: 3px;
                 margin-top: 20px;
-                color: #2a7db0;
+                color: {Theme.PrimaryColor};
                 font-weight: bold;
                 background-color: #e5e5e5;
-            }
+            }}
 
-            QGroupBox::title {
+            QGroupBox::title {{
                 subcontrol-origin: margin;
                 subcontrol-position: top left;
                 background-color: palette(window);
-            }
+            }}
         """)
 
         self.layout = QVBoxLayout()

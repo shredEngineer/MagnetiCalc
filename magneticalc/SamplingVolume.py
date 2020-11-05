@@ -20,6 +20,7 @@ import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class SamplingVolume:
@@ -202,7 +203,7 @@ class SamplingVolume:
                 progress_callback(100 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=(0, 0, 255))
+                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
         self._points = np.array(points)
@@ -213,7 +214,7 @@ class SamplingVolume:
             f"Calculated {len(self.constraints)} constraints "
             f"over {n} possible points, "
             f"yielded {len(self._points)} points",
-            color=(0, 0, 255)
+            color=Theme.PrimaryColor
         )
 
         return True

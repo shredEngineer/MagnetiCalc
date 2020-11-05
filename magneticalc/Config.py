@@ -435,11 +435,17 @@ class Config:
         @param values: Key:Value (Dictionary) or None
         """
         if values is None:
+
             result = {}
+
             for _key, _type in types.items():
                 result[_key] = self.get_generic(prefix + _key, _type)
+
             return result
+
         else:
+
             for _key, _type in types.items():
                 self.set_generic(prefix + _key, _type, values[_key])
+
             return values

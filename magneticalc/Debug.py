@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from matplotlib.colors import hex2color
 from inspect import isclass, stack
 from colorit import color_front, bold
 
@@ -95,6 +96,10 @@ class Debug:
                 # Called from within another thread (it is the calculation thread)
                 func_str = "\tCalculationThread"
             hierarchy += func_str + "/"
+
+        if isinstance(color, str):
+            # Convert hex color string ("#abcdef") to RGB tuple
+            color = tuple(int(color[i:i+2], 16) for i in (1, 3, 5))
 
         if color == (0, 0, 0):
             # Allow a terminal use its own foreground color

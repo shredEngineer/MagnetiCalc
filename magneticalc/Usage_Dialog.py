@@ -19,6 +19,7 @@
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
+from magneticalc.Theme import Theme
 
 
 class Usage_Dialog(QDialog):
@@ -30,7 +31,7 @@ class Usage_Dialog(QDialog):
 
     # HTML content
     HTML = f"""
-        <h3 style="color: #2a7db0;">First Steps</h3>
+        <h3 style="color: {Theme.PrimaryColor};">First Steps</h3>
         <ul>
             <li>Go to <b>Load Wire Preset</b> to select a basic wire shape.</li>
             <li>Customize the wire's base points inside the spreadsheet.</li>
@@ -90,7 +91,7 @@ class Usage_Dialog(QDialog):
         All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file.<br>
         Deleting or renaming this file will restore the default settings.
 
-        <h3 style="color: #2a7db0;">What does MagnetiCalc do?</h3>
+        <h3 style="color: {Theme.PrimaryColor};">What does MagnetiCalc do?</h3>
 
         MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
         Inside this VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
@@ -100,13 +101,13 @@ class Usage_Dialog(QDialog):
         All parameters and presets can interactively be changed inside the GUI.
         There is also an experimental feature to calculate the coil's energy and self-inductance.
 
-        <h3 style="color: #2a7db0;">Who needs MagnetiCalc?</h3>
+        <h3 style="color: {Theme.PrimaryColor};">Who needs MagnetiCalc?</h3>
 
         MagnetiCalc does its job for hobbyists, students, engineers and researchers of magnetic phenomena.
         I designed MagnetiCalc from scratch, because I didn't want to mess around with expensive and/or
         overly complex simulation software whenever I needed to solve a magnetostatic problem.
 
-        <h3 style="color: #2a7db0;">How does it work?</h3>
+        <h3 style="color: {Theme.PrimaryColor};">How does it work?</h3>
 
         The <b>B</b>-field calculation is implemented using the Biot-Savart law [1],
         employing multiprocessing techniques. The use of easily constrainable "sampling volumes"
@@ -130,7 +131,7 @@ class Usage_Dialog(QDialog):
         [2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
         [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
 
-        <br><br><span style="color: #2a7db0;">
+        <br><br><span style="color: {Theme.PrimaryColor};">
             This and more information about MagnetiCalc can be found in the <code>README.md</code> file.
         </span><br>
         """

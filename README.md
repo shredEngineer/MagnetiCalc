@@ -29,7 +29,7 @@ whenever I needed to solve a magnetostatic problem.
 
 The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
 is implemented using the Biot-Savart law [1], employing multiprocessing techniques;
-MagnetiCalc uses just-in-time compilation (JIT/Numba), achieving high performance calculations.
+MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
 Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape.
 
@@ -78,9 +78,8 @@ The coil's energy <img src="https://render.githubusercontent.com/render/math?mat
 and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
 are calculated by summing the squared
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
-over the entire sampling volume.
-However, these values are currently not reliable, varying strongly with the other parameters;
-essentially, the sampling volume must enclose a large, non-singular portion of the field.
+over the entire sampling volume;
+ensure that the sampling volume encloses a large, non-singular portion of the field.
 
 <img src="https://render.githubusercontent.com/render/math?math=E=\frac{1}{\mu_0} \cdot \displaystyle \sum_\mathbf{x} \mathbf{B}(\mathbf{x}) \cdot \mathbf{B}(\mathbf{x})"><br>
 

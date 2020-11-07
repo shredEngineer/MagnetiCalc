@@ -108,8 +108,8 @@ class Usage_Dialog(QDialog):
         <h3 style="color: {Theme.PrimaryColor};">How does it work?</h3>
 
         The <b>B</b>-field calculation is implemented using the Biot-Savart law [1],
-        employing multiprocessing techniques.
-        MagnetiCalc uses just-in-time compilation (JIT/Numba), achieving high performance calculations.
+        employing multiprocessing techniques;
+        MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
         Additionally, the use of easily constrainable "sampling volumes"
         allows for selective calculation over grids of arbitrary shape.<br><br>
 
@@ -122,9 +122,8 @@ class Usage_Dialog(QDialog):
         field color and alpha transparency are individually mapped using one of the various available metrics.<br><br>
 
         The coil's energy [2] and self-inductance [3]
-        are calculated by summing the squared <b>B</b>-field over the entire sampling volume.
-        However, these values are currently not reliable, varying strongly with the other parameters;
-        essentially, the sampling volume must enclose a large, non-singular portion of the field.
+        are calculated by summing the squared <b>B</b>-field over the entire sampling volume;
+        ensure that the sampling volume encloses a large, non-singular portion of the field.
         <br><br>
 
         [1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>

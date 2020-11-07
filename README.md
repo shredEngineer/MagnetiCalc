@@ -193,9 +193,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Video Demo
 ----------
-Here is a very short demo of an earlier version of MagnetiCalc in action:
+Here is a very short demo of MagnetiCalc in action:
 
-[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=rsVbu5uF0eU)
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=yXiXtPrP50g)
 
 Links
 -----

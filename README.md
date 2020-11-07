@@ -9,16 +9,14 @@ MagnetiCalc
 
 **What does MagnetiCalc do?**
 
-MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
+MagnetiCalc calculates the magnetic flux density, vector potential, energy and self-inductance of arbitrary coils in vacuum, examples included.
 Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field due to DC currents,
 in units of <i>Tesla</i>) is displayed
 in interactive 3D, using multiple metrics for highlighting the field properties.
-Alternatively, the magnetic vector potential<br>
+Alternatively, the magnetic vector potential
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
 in units of <i>Tesla-meter</i>) may be displayed.
-All parameters and presets can interactively be changed inside the GUI.
-There is also an experimental feature to calculate the coil's energy and self-inductance.
 
 **Who needs MagnetiCalc?**
 
@@ -30,8 +28,9 @@ whenever I needed to solve a magnetostatic problem.
 **How does it work?**
 
 The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
-is implemented using the Biot-Savart law [1], employing multiprocessing techniques.
-The use of easily constrainable "sampling volumes" allows for selective calculation over
+is implemented using the Biot-Savart law [1], employing multiprocessing techniques;
+MagnetiCalc uses just-in-time compilation (JIT/Numba), achieving high performance calculations.
+Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape.
 
 The shape of any wire is modeled as a 3D piecewise linear curve.
@@ -48,27 +47,36 @@ summing over the positions of all current elements
 
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
 
+***Metrics***
+
 At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various available metrics:
 
 | Metric               | Symbol                                                                                       | Description                         |
 |----------------------|----------------------------------------------------------------------------------------------|-------------------------------------|
 | ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">            | Magnitude in space                  |
+| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">        | Magnitude in X-direction            |
+| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">        | Magnitude in Y-direction            |
+| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">        | Magnitude in Z-direction            |
 | ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">       | Magnitude in XY-plane               |
 | ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">       | Magnitude in XZ-plane               |
 | ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">       | Magnitude in YZ-plane               |
 | ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">         | Logarithmic Magnitude in space      |
+| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_X}\mid">       | Logarithmic Magnitude in X-direction|
+| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Y}\mid">       | Logarithmic Magnitude in Y-direction|
+| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Z}\mid">       | Logarithmic Magnitude in Z-direction|
 | ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XY}\mid">    | Logarithmic Magnitude in XY-plane   |
 | ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XZ}\mid">    | Logarithmic Magnitude in XZ-plane   |
 | ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{YZ}\mid">    | Logarithmic Magnitude in YZ-plane   |
-| ``Angle XY``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}"> | Field angle in XY-plane             |
-| ``Angle XZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}"> | Field angle in XZ-plane             |
-| ``Angle YZ``          | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}"> | Field angle in YZ-plane             |
+| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}"> | Field angle in XY-plane             |
+| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}"> | Field angle in XZ-plane             |
+| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}"> | Field angle in YZ-plane             |
 
-As an experimental feature,
-the coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
+***Coil energy & self-inductance***
+
+The coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
 and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
-are calculated by summing the squared<br>
+are calculated by summing the squared
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
 over the entire sampling volume.
 However, these values are currently not reliable, varying strongly with the other parameters;
@@ -77,6 +85,8 @@ essentially, the sampling volume must enclose a large, non-singular portion of t
 <img src="https://render.githubusercontent.com/render/math?math=E=\frac{1}{\mu_0} \cdot \displaystyle \sum_\mathbf{x} \mathbf{B}(\mathbf{x}) \cdot \mathbf{B}(\mathbf{x})"><br>
 
 <img src="https://render.githubusercontent.com/render/math?math=L=\frac{1}{\I^2} \cdot E"><br>
+
+***References***
 
 [1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
 [2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
@@ -130,7 +140,7 @@ import sys
 ### Option B: Manual download
 First, manually install all dependency packages (upgrading each to the latest version):
 ```shell
-python3 -m pip install PyQt5 qtawesome vispy matplotlib numpy colorit si-prefix --upgrade
+python3 -m pip install numpy numba PyQt5 vispy qtawesome colorit si-prefix --upgrade
 ```
 
 Clone the latest version of MagnetiCalc from GitHub and start it directly: 
@@ -149,17 +159,14 @@ python3 -m pip uninstall magneticalc -y
 
 ToDo
 ----
-* Improve the calculation of self-inductance; there seems to be a scaling error!
 * Add support for saving/loading configuration to/from other filenames.
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
 * Add support for adding, editing and removing sampling volume constraints;
   the SamplingVolume module already supports constraints, but the GUI currently doesn't.
-  This will also require changes to the way the field labels are currently distributed (relying on a *complete* grid).
 * Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
 * Add support for different media with arbitrary geometry and permeability.
 * Add support for multiple wires, study mutual induction.
-* Move the field and metric calculations directly to the OpenGL shader engines,
-  thus most likely drastically shortening overall computation time.
+* Add CUDA backend for Biot-Savart implementation.
 
 Contribute
 ----------

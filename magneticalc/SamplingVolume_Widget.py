@@ -19,6 +19,7 @@
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QSizePolicy
+from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
@@ -108,7 +109,7 @@ class SamplingVolume_Widget(Groupbox):
         # ToDo: Add some widget to add, edit and remove sampling volume constraints
 
         # Initially load sampling volume from configuration
-        self.set_sampling_volume(recalculate=False)
+        self.set_sampling_volume(recalculate=False, invalidate_self=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -138,7 +139,8 @@ class SamplingVolume_Widget(Groupbox):
             self,
             padding=None,
             resolution=None,
-            recalculate=True
+            recalculate=True,
+            invalidate_self=True
     ):
         """
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
@@ -147,20 +149,18 @@ class SamplingVolume_Widget(Groupbox):
         @param resolution: Sampling volume _resolution
         @param padding: Padding (3D point)
         @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
 
             resolution = self.gui.config.set_get_int("sampling_volume_resolution", resolution)
 
-            self.gui.model.set_sampling_volume(SamplingVolume(resolution))
+            self.gui.model.set_sampling_volume(SamplingVolume(resolution), invalidate_self=invalidate_self)
 
             self.readjust(padding)
 
             # ToDo: Add support for sampling volume constraints, e.g.:
-            # self.gui.model.sampling_volume.add_constraint(lambda p: -1.5 <= p["z"] <= 1.5)
-            # self.gui.model.sampling_volume.add_constraint(lambda p: 2 <= p["radius_xy"] <= 4.5)
-            # self.gui.model.sampling_volume.add_constraint(lambda p: p["y"] == 0)
-            # self.gui.model.sampling_volume.add_constraint(lambda p: p["radius"] <= 3)
+            # self.gui.model.sampling_volume.add_constraint(Constraint("radius", "range", _min=-2, _max=2))
 
     # ------------------------------------------------------------------------------------------------------------------
 

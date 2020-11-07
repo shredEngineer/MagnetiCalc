@@ -45,7 +45,7 @@ class Metric_Widget(Groupbox):
         self.gui = gui
 
         # Initially load metric from configuration
-        self.set_metric(recalculate=False, update_labels=False)
+        self.set_metric(recalculate=False, update_labels=False, invalidate_self=False)
 
         # --------------------------------------------------------------------------------------------------------------
 
@@ -117,13 +117,13 @@ class Metric_Widget(Groupbox):
 
         self.addWidget(HLine())
 
-        experimental_label = IconLabel("fa.flask", "Experimental")
-        self.addWidget(experimental_label)
+        parameters_label = IconLabel("fa.flask", "Parameters")
+        self.addWidget(parameters_label)
 
         energy_layout = QHBoxLayout()
         energy_label_left = QLabel("Energy:")
-        energy_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.energy_label = QLabel("")
+        energy_label_left.setStyleSheet("font-style: italic;")
+        self.energy_label = QLabel("N/A")
         self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.energy_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         energy_layout.addWidget(energy_label_left, alignment=Qt.AlignVCenter)
@@ -134,8 +134,8 @@ class Metric_Widget(Groupbox):
 
         self_inductance_layout = QHBoxLayout()
         self_inductance_label_left = QLabel("Self-inductance:")
-        self_inductance_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.self_inductance_label = QLabel("")
+        self_inductance_label_left.setStyleSheet("font-style: italic;")
+        self.self_inductance_label = QLabel("N/A")
         self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.self_inductance_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self_inductance_layout.addWidget(self_inductance_label_left, alignment=Qt.AlignVCenter)
@@ -144,7 +144,14 @@ class Metric_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_metric(self, color_preset=None, alpha_preset=None, recalculate=True, update_labels=True):
+    def set_metric(
+            self,
+            color_preset=None,
+            alpha_preset=None,
+            recalculate=True,
+            update_labels=True,
+            invalidate_self=True
+    ):
         """
         Sets the metric. This will overwrite the currently set metric in the model.
         Any parameter may be left set to None in order to load its default value.
@@ -153,6 +160,7 @@ class Metric_Widget(Groupbox):
         @param alpha_preset: Alpha metric preset (parameters, see Metric module)
         @param recalculate: Enable to trigger final re-calculation (boolean)
         @param update_labels: Enable to update metric labels
+        @param invalidate_self: Enable to invalidate the old metric before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
 
@@ -168,7 +176,10 @@ class Metric_Widget(Groupbox):
             else:
                 self.gui.config.set_str("alpha_metric", alpha_preset["id"])
 
-            self.gui.model.set_metric(Metric(color_preset, alpha_preset))
+            self.gui.model.set_metric(
+                Metric(color_preset, alpha_preset),
+                invalidate_self=invalidate_self
+            )
 
             if update_labels:
                 self.update_labels()
@@ -216,27 +227,27 @@ class Metric_Widget(Groupbox):
                 color_label_min = "N/A"
                 color_label_max = "N/A"
                 self.color_metric_limits_widget.setStyleSheet(self.HSV_Gradient_CSS)
-                self.color_metric_min_label.setStyleSheet("""background: none; color: #ffffff;""")
-                self.color_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.color_metric_min_label.setStyleSheet("background: none; color: #ffffff;")
+                self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
                 color_label_min = si_format(limits["color_min"], precision=self.ValuePrecision) + field_units
                 color_label_max = si_format(limits["color_max"], precision=self.ValuePrecision) + field_units
                 self.color_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
-                self.color_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
-                self.color_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.color_metric_min_label.setStyleSheet("background: none; color: #000000; font-weight: bold;")
+                self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff; font-weight: bold;")
 
             if self.gui.model.metric.get_alpha_preset()["is_angle"]:
                 alpha_label_min = "N/A"
                 alpha_label_max = "N/A"
                 self.alpha_metric_limits_widget.setStyleSheet(self.HSV_Gradient_CSS)
-                self.alpha_metric_min_label.setStyleSheet("""background: none; color: #ffffff;""")
-                self.alpha_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.alpha_metric_min_label.setStyleSheet("background: none; color: #ffffff;")
+                self.alpha_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
                 alpha_label_min = si_format(limits["alpha_min"], precision=self.ValuePrecision) + field_units
                 alpha_label_max = si_format(limits["alpha_max"], precision=self.ValuePrecision) + field_units
                 self.alpha_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
-                self.alpha_metric_min_label.setStyleSheet("""background: none; color: #000000;""")
-                self.alpha_metric_max_label.setStyleSheet("""background: none; color: #ffffff;""")
+                self.alpha_metric_min_label.setStyleSheet("background: none; color: #000000; font-weight: bold;")
+                self.alpha_metric_max_label.setStyleSheet("background: none; color: #ffffff; font-weight: bold;")
 
             self.color_metric_min_label.setText(color_label_min)
             self.color_metric_max_label.setText(color_label_max)
@@ -244,17 +255,23 @@ class Metric_Widget(Groupbox):
             self.alpha_metric_max_label.setText(alpha_label_max)
 
             if self.gui.model.field.get_type() == 1:
-                # Field is B-Field (flux density)
 
+                # Field is B-Field (flux density)
                 self.energy_label.setText(
                     si_format(self.gui.model.metric.get_energy(), precision=self.ValuePrecision) + "J"
                 )
                 self.self_inductance_label.setText(
                     si_format(self.gui.model.metric.get_self_inductance(), precision=self.ValuePrecision) + "H"
                 )
+                self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+                self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
             else:
+
+                # Field is A-Field (vector potential)
                 self.energy_label.setText("N/A")
                 self.self_inductance_label.setText("N/A")
+                self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+                self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
 
         else:
 
@@ -272,3 +289,5 @@ class Metric_Widget(Groupbox):
 
             self.energy_label.setText("N/A")
             self.self_inductance_label.setText("N/A")
+            self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+            self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")

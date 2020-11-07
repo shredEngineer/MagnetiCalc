@@ -42,6 +42,7 @@ class SamplingVolume:
         self._bounds_max = np.zeros(3)
 
         self._points = None
+        self._labeled_indices = None
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
 
@@ -51,7 +52,9 @@ class SamplingVolume:
 
         @return: True if data is valid for display, False otherwise
         """
-        return self._points is not None
+        return \
+            self._points is not None and \
+            self._labeled_indices is not None
 
     def invalidate(self):
         """
@@ -60,6 +63,7 @@ class SamplingVolume:
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._points = None
+        self._labeled_indices = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -88,6 +92,16 @@ class SamplingVolume:
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 
         return self._points
+
+    def get_labeled_indices(self):
+        """
+        Returns this sampling volume's labeled indices; an unordered list of tuples (sampling volume point, field index)
+
+        @return: Labeled indices
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return self._labeled_indices
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -119,35 +133,15 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_constraint(self, lambda_expression):
+    def add_constraint(self, constraint):
         """
         Adds some constraint to this volume's point generator.
 
-        @param lambda_expression: Lambda expression, evaluating to boolean (dict as argument, see L{constraint_dict})
+        @param constraint: Constraint
         """
         Debug(self, f".add_constraint()")
 
-        self.constraints.append(lambda_expression)
-
-    @staticmethod
-    def constraint_dict(x, y, z):
-        """
-        Returns a parameters for a given point, containing its coordinates, 3D radius and 2D radii in different planes.
-
-        @param x: X-coordinate
-        @param y: Y-coordinate
-        @param z: Z-coordinate
-        @return: Constraint variables parameters
-        """
-        return {
-            "x": x,
-            "y": y,
-            "z": z,
-            "radius": np.linalg.norm(np.array([x, y, z])),
-            "radius_xy": np.linalg.norm(np.array([x, y])),
-            "radius_xz": np.linalg.norm(np.array([x, z])),
-            "radius_yz": np.linalg.norm(np.array([y, z]))
-        }
+        self.constraints.append(constraint)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -159,35 +153,40 @@ class SamplingVolume:
         """
         Debug(self, ".recalculate()", color=(0, 128, 0))
 
-        # Calculate all possible grid coordinates
-        coordinates = [[], [], []]
+        # Calculate all possible grid points
+        points_axes_all = [[], [], []]
         for i in range(3):
             steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
-            coordinates[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
+            points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
-        # Calculate the total number of possible grid points
+        points_included = []
+        labeled_indices = []
 
-        points = []
-
-        # Iterate through all possible grid points
-        # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
-        span = np.array([len(axis) for axis in coordinates])
+        # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
+        span = np.array([len(axis) for axis in points_axes_all])
         n = span[0] * span[1] * span[2]
         x, y, z = 0, 0, 0
         for i in range(n):
 
-            point = np.array([coordinates[0][x], coordinates[1][y], coordinates[2][z]])
+            point = np.array([points_axes_all[0][x], points_axes_all[1][y], points_axes_all[2][z]])
 
-            # Calculate inclusion relation
+            # Calculate the inclusion relation
             inclusion = True
             for constraint in self.constraints:
-                if not constraint(SamplingVolume.constraint_dict(*point)):
+                if not constraint.evaluate(point):
                     inclusion = False
-                    break
-            if inclusion:
-                points.append(point)
+                    break  # AND-behaviour
 
-            # Move to the next "x, y, z" grid index
+            if inclusion:
+                # Include point
+                points_included.append(point)
+
+                # Provide 1 cm of orthogonal spacing between labels
+                if x % self._resolution == 0 and y % self._resolution == 0 and z % self._resolution == 0:
+                    labeled_index = (point, len(points_included) - 1)
+                    labeled_indices.append(labeled_index)
+
+            # Move to the next grid point
             if x + 1 < span[0]:
                 x += 1
             else:
@@ -206,7 +205,8 @@ class SamplingVolume:
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
-        self._points = np.array(points)
+        self._points = np.array(points_included)
+        self._labeled_indices = labeled_indices
 
         Debug(
             self,

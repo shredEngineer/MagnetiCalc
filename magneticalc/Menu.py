@@ -19,7 +19,7 @@
 import qtawesome as qta
 from functools import partial
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMenu, QAction
+from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire import Wire
@@ -62,7 +62,7 @@ class Menu:
         self.add_config_bound_checkbox("Show Wire Segments", "show_wire_segments", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox("Show Wire Points", "show_wire_points", view_menu, self.gui.redraw)
         view_menu.addSeparator()
-        self.add_config_bound_checkbox("Use Field Colors for Labels", "field_colors_labels", view_menu, self.gui.redraw)
+        self.add_config_bound_checkbox("Show Colored Labels", "show_colored_labels", view_menu, self.gui.redraw)
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox("Show Perspective Info", "show_perspective_info", view_menu, self.gui.redraw)
@@ -70,12 +70,52 @@ class Menu:
         self.add_config_bound_checkbox("Dark Background", "dark_background", view_menu, self.gui.redraw)
         self.gui.menuBar().addMenu(view_menu)
 
+        # Options menu
+        options_menu = QMenu("&Options", self.gui)
+        self.options_backend_group = QActionGroup(self.gui)
+        self.options_backend_group.setExclusive(True)
+        self.options_backend_group.blockSignals(True)
+        self.backend_actions = []
+        for i, item in enumerate({
+            "Backend: JIT/Numba": True,
+            "Backend: JIT/Numba + CUDA": False  # ToDo: Add CUDA backend (BiotSavart_CUDA)
+        }.items()):
+            name, enabled = item
+            action = QAction(name)
+            self.backend_actions.append(action)
+            action.setCheckable(True)
+            action.setEnabled(enabled)
+            action.setChecked(self.gui.config.get_int("backend") == i)
+            action.changed.connect(partial(self.on_backend_changed, i, lambda: action.isChecked()))
+            self.options_backend_group.addAction(action)
+            options_menu.addAction(action)
+        self.options_backend_group.blockSignals(False)
+        self.gui.menuBar().addMenu(options_menu)
+
         # Help menu
         help_menu = QMenu("&Help", self.gui)
         help_menu.addAction(qta.icon("fa.info"), "&Usage", lambda: Usage_Dialog().show(), Qt.Key_F1)
         help_menu.addSeparator()
         help_menu.addAction(qta.icon("fa.coffee"), "&About", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_backend_changed(self, index, is_checked):
+        """
+        Gets called when the backend changed.
+
+        @param index: Backend list index
+        @param is_checked: True if the selected backend is now active
+        """
+        if self.options_backend_group.signalsBlocked():
+            return
+
+        if is_checked:
+            self.gui.config.set_int("backend", index)
+            self.gui.sidebar_right.field_widget.set_field()
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def add_config_bound_checkbox(self, label, key, menu, callback):
         """

@@ -29,10 +29,10 @@ class Display_Widget(Groupbox):
 
     # Slider limits
     FieldArrowScaleMinimum = 0
-    FieldArrowScaleMaximum = 1
-    FieldArrowScaleStep = .1
+    FieldArrowScaleMaximum = 0.5
+    FieldArrowScaleStep = .025
     FieldPointScaleMinimum = 0
-    FieldPointScaleMaximum = 10
+    FieldPointScaleMaximum = 20
     FieldPointScaleStep = 1
     FieldBoostMinimum = 0
     FieldBoostMaximum = 1
@@ -100,12 +100,24 @@ class Display_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("fa.tags", "Field Labels"))
-        self.display_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")  # Leading space for alignment
+        self.display_magnitude_labels_checkbox = QCheckBox(" Display Magnitude (slow)")  # Leading space for alignment
         self.display_magnitude_labels_checkbox.setChecked(self.gui.config.get_bool("display_magnitude_labels"))
         self.display_magnitude_labels_checkbox.stateChanged.connect(
             lambda: self.set_display_magnitude_labels(self.display_magnitude_labels_checkbox.isChecked())
         )
         self.addWidget(self.display_magnitude_labels_checkbox)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_enabled(self, enabled):
+        """
+        Enables / disables this widget.
+
+        @param enabled: Enabled state (boolean)
+        """
+        self.setEnabled(enabled)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def set_field_arrow_scale(self, value: float):
         """

@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id45">
+        <table class="children sortable" id="id49">
   
   <tr class="method">
     
@@ -86,6 +86,11 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_labeled_indices" class="code" data-type="Method">get_labeled_indices</a></td>
+    <td><span>Returns this sampling volume's labeled indices; an unordered list of tuples (sampling volume point, field index)</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#set_bounds_nearest" class="code" data-type="Method">set_bounds_nearest</a></td>
     <td><span>Adjusts this volume's bounding box to fully enclose a 3D wire curve. This expands the bounding box to the next integer grid coordinates.</span></td>
   </tr><tr class="method">
@@ -98,11 +103,6 @@
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#add_constraint" class="code" data-type="Method">add_constraint</a></td>
     <td><span>Adds some constraint to this volume's point generator.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#constraint_dict" class="code" data-type="Static Method">constraint_dict</a></td>
-    <td><span>Returns a parameters for a given point, containing its coordinates, 3D radius and 2D radii in different planes.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -127,6 +127,11 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_points" class="code" data-type="Instance Variable">_points</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_labeled_indices" class="code" data-type="Instance Variable">_labeled_indices</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -236,6 +241,22 @@
     
     <div class="undocumented">Undocumented</div>
   </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume._labeled_indices">
+    
+  </a>
+  <a name="_labeled_indices">
+    
+  </a>
+  <div class="functionHeader">
+    _labeled_indices =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
 </div><div class="basemethod">
   
   <a name="magneticalc.SamplingVolume.SamplingVolume.is_valid">
@@ -333,6 +354,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_labeled_indices">
+    
+  </a>
+  <a name="get_labeled_indices">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_labeled_indices(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this sampling volume's labeled indices; an unordered list of tuples (sampling volume point, field index)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Labeled indices</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.SamplingVolume.SamplingVolume.set_bounds_nearest">
     
   </a>
@@ -380,32 +420,13 @@
   <div class="functionHeader">
     
     def
-    add_constraint(self, lambda_expression):
+    add_constraint(self, constraint):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Adds some constraint to this volume's point generator.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">lambda_expression</td><td>Lambda expression, evaluating to boolean (dict as argument, see <a href="magneticalc.SamplingVolume.SamplingVolume.html#constraint_dict"><code>constraint_dict</code></a>)</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod">
-  
-  <a name="magneticalc.SamplingVolume.SamplingVolume.constraint_dict">
-    
-  </a>
-  <a name="constraint_dict">
-    
-  </a>
-  <div class="functionHeader">
-    @staticmethod<br />
-    def
-    constraint_dict(x, y, z):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns a parameters for a given point, containing its coordinates, 3D radius and 2D radii in different planes.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">x</td><td>X-coordinate</td></tr><tr><td></td><td class="fieldArg">y</td><td>Y-coordinate</td></tr><tr><td></td><td class="fieldArg">z</td><td>Z-coordinate</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Constraint variables parameters</td></tr></table></div>
+    <div><p>Adds some constraint to this volume's point generator.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">constraint</td><td>Constraint</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -430,7 +451,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-04 02:54:29.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-07 08:06:16.
       </address>
 
     </div>

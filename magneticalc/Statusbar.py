@@ -17,9 +17,10 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import qtawesome as qta
+from multiprocessing import cpu_count
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QCheckBox, QComboBox, QProgressBar, QLabel
-from multiprocessing import cpu_count
+from magneticalc.Theme import Theme
 
 
 class Statusbar:
@@ -36,13 +37,13 @@ class Statusbar:
         # Start button
         self.start_button = QPushButton(qta.icon("fa.play-circle"), "", self.gui)
         self.start_button.setText(" F5 ")
-        self.start_button.setStyleSheet("padding: 3px;")
+        self.start_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.start_button.clicked.connect(self.start)
 
         # Cancel button
         self.cancel_button = QPushButton(qta.icon("fa.stop-circle"), "", self.gui)
         self.cancel_button.setText("ESC")
-        self.cancel_button.setStyleSheet("padding: 3px;")
+        self.cancel_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.cancel_button.clicked.connect(self.cancel)
 
         # Auto-calculation checkbox
@@ -120,6 +121,7 @@ class Statusbar:
         self.auto_calculation_checkbox.setEnabled(False)
         self.cores_combobox.setEnabled(False)
         self.progressbar.setValue(0)
+        self.set_progressbar_color(Theme.PrimaryColor)
 
     def disarm(self, success):
         """
@@ -132,6 +134,7 @@ class Statusbar:
         self.auto_calculation_checkbox.setEnabled(True)
         self.cores_combobox.setEnabled(True)
         self.text("Ready." if success else "Canceled!")
+        self.set_progressbar_color("#2e7d32" if success else "#c62828")
 
         if success:
             self.progressbar.setValue(100)
@@ -157,3 +160,29 @@ class Statusbar:
         @param text: Text
         """
         self.label.setText(text)
+
+    def set_progressbar_color(self, color):
+        """
+        Sets the progressbar color.
+
+        @param color: Color (string)
+        """
+        self.progressbar.setStyleSheet(
+            f"""
+            QProgressBar
+            {{
+                border: 1px solid #888888;
+                border-radius: 5px;
+                color: #ffffff;
+                text-align: center;
+                padding: 0px;
+                height: 23px;
+                background-color: #111111;
+                font-size: 13px;
+            }}
+            QProgressBar::chunk {{
+                padding: 0px;
+                background-color: {color};
+                text-align: center;
+            }}"""
+        )

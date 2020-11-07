@@ -16,9 +16,13 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from matplotlib.colors import hex2color
 from inspect import isclass, stack
 from colorit import color_front, bold
+
+
+# Enable to see JIT/Numba debug output
+# import os
+# os.environ["NUMBA_PARALLEL_DIAGNOSTICS"] = "4"
 
 
 class Debug:
@@ -28,23 +32,27 @@ class Debug:
     Whitelist = [
         "About_Dialog",
         "Assert_Dialog",
-        "BiotSavart",
+        "BiotSavart_JIT",
+        "BiotSavart_CUDA",
         "CalculationThread",
         # "Config",
+        "Constants",
+        "Constraint",
         "Display_Widget",
-        "Field",
+        # "Field",
+        "Field_Widget",
         "Groupbox",
         "GUI",
         "HLine",
         "IconLabel",
         "Menu",
-        "Metric",
+        # "Metric",
         "Metric_Widget",
-        "Model",
-        "ModelAccess",
+        # "Model",
+        # "ModelAccess",
         "Perspective_Widget",
-        "SamplingVolume",
-        "SamplingVolume_Widget",
+        # "SamplingVolume",
+        # "SamplingVolume_Widget",
         "SidebarLeft",
         "SidebarRight",
         "SliderFloat",
@@ -52,8 +60,8 @@ class Debug:
         "Table",
         "Usage_Dialog",
         "Version",
-        "VispyCanvas",
-        "Wire",
+        # "VispyCanvas",
+        # "Wire",
         "Wire_Widget"
     ]
 
@@ -67,10 +75,10 @@ class Debug:
         @param force: Enable to override whitelist
         """
         if isclass(obj):
-            # Called from within class method, i.e. Debug(cls, ...)
+            # Called from within class method, i.e. Debug(self, ...)
             name = obj.__name__
         else:
-            # Called from within instance method, i.e. Debug(self, ...)
+            # Called from within instance / static method
             name = type(obj).__name__
 
         if not force:

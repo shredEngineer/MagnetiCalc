@@ -23,6 +23,7 @@ from magneticalc.Field import Field
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.IconLabel import IconLabel
+from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
 
@@ -65,6 +66,7 @@ class Field_Widget(Groupbox):
 
         self.addWidget(IconLabel("mdi.ruler", "Distance Limit"))
         distance_limit_spinbox = QDoubleSpinBox(self.gui)
+        distance_limit_spinbox.setLocale(self.gui.locale)
         distance_limit_spinbox.setDecimals(4)
         distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
         distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
@@ -93,7 +95,7 @@ class Field_Widget(Groupbox):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Initially load field from configuration
-        self.set_field(recalculate=False)
+        self.set_field(recalculate=False, invalidate_self=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -109,7 +111,7 @@ class Field_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_field(self, _type=None, distance_limit=None, recalculate=True):
+    def set_field(self, _type=None, distance_limit=None, recalculate=True, invalidate_self=True):
         """
         Sets the field. This will overwrite the currently set field in the model.
         The parameter may be left set to None in order to load its default value.
@@ -117,13 +119,18 @@ class Field_Widget(Groupbox):
         @param _type: Field type (0: A-Field; 1: B-Field)
         @param distance_limit: Distance limit
         @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param invalidate_self: Enable to invalidate the old field before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
 
+            backend = self.gui.config.get_int("backend")
             _type = self.gui.config.set_get_int("field_type", _type)
             distance_limit = self.gui.config.set_get_float("field_distance_limit", distance_limit)
 
-            self.gui.model.set_field(Field(_type, distance_limit))
+            self.gui.model.set_field(
+                Field(backend, _type, distance_limit, Metric.LengthScale),
+                invalidate_self=invalidate_self
+            )
 
     # ------------------------------------------------------------------------------------------------------------------
 

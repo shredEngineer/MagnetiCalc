@@ -37,46 +37,47 @@ class Config:
     DebugGetters = False
 
     # Default wire preset
-    DefaultWirePreset = "Single Circular Loop (offset)"
+    DefaultWirePreset = "Solenoid: 8 circular loops"
 
     # Default perspective preset
     DefaultPerspectivePreset = "Isometric"
 
     # Formatting settings
     FloatPrecision = 4
-    CoordinatePrecision = 2
+    CoordinatePrecision = 6
 
     # Default configuration
     Default = {
         "version"                       : Version.String,
+        "backend"                       : "0",
         "auto_calculation"              : "True",
         "num_cores"                     : "0",
         "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "1.0, 1.2, 1.0",
-        "wire_slicer_limit"             : "0.1",
-        "wire_dc"                       : "1.0",
-        "rotational_symmetry_count"     : "12",
-        "rotational_symmetry_radius"    : "0.8",
+        "wire_stretch"                  : "1.0000, 1.0000, 1.0000",
+        "wire_slicer_limit"             : "0.1000",
+        "wire_dc"                       : "1.0000",
+        "rotational_symmetry_count"     : "4",
+        "rotational_symmetry_radius"    : "1.0000",
         "rotational_symmetry_axis"      : "2",
         "sampling_volume_padding"       : "0, 0, -1",
-        "sampling_volume_resolution"    : "5",
+        "sampling_volume_resolution"    : "15",
         "field_type"                    : "1",
-        "field_distance_limit"          : "0.0005",
-        "color_metric"                  : "Log Magnitude",
+        "field_distance_limit"          : "0.0003",
+        "color_metric"                  : "Magnitude X",
         "alpha_metric"                  : "Magnitude",
-        "field_point_scale"             : "1.0",
-        "field_arrow_scale"             : "0.2",
-        "field_boost"                   : "0.1",
+        "field_point_scale"             : "1.0000",
+        "field_arrow_scale"             : "0.1250",
+        "field_boost"                   : "0.1000",
         "display_magnitude_labels"      : "True",
         "show_wire_segments"            : "True",
         "show_wire_points"              : "True",
-        "field_colors_labels"           : "False",
+        "show_colored_labels"           : "False",
         "show_coordinate_system"        : "True",
         "show_perspective_info"         : "True",
         "dark_background"               : "True",
         "azimuth"                       : None,  # Will be set in __init__
         "elevation"                     : None,  # Will be set in __init__
-        "scale_factor"                  : "5.0"
+        "scale_factor"                  : "5.0000"
     }
 
     def __init__(self):

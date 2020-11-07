@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id38">
+        <table class="children sortable" id="id42">
   
   <tr class="method">
     
@@ -81,13 +81,18 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#__str__" class="code" data-type="Method">__str__</a></td>
+    <td><span>Returns the model state as a string; may be used for debugging.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#is_valid" class="code" data-type="Method">is_valid</a></td>
     <td><span>Indicates valid data for display.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#invalidate" class="code" data-type="Method">invalidate</a></td>
-    <td><span>Invalidates multiple modules at once.</span></td>
+    <td><span>Invalidates multiple modules at once, in descending order of hierarchy.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -112,22 +117,22 @@
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#calculate_wire" class="code" data-type="Method">calculate_wire</a></td>
-    <td><span></span></td>
+    <td><span>Calculates the wire.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#calculate_sampling_volume" class="code" data-type="Method">calculate_sampling_volume</a></td>
-    <td><span></span></td>
+    <td><span>Calculates the sampling volume.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#calculate_field" class="code" data-type="Method">calculate_field</a></td>
-    <td><span></span></td>
+    <td><span>Calculates the field.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#calculate_metric" class="code" data-type="Method">calculate_metric</a></td>
-    <td><span></span></td>
+    <td><span>Calculates the metric.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -278,6 +283,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Model.Model.__str__">
+    
+  </a>
+  <a name="__str__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    __str__(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the model state as a string; may be used for debugging.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">String</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Model.Model.is_valid">
     
   </a>
@@ -312,7 +336,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Invalidates multiple modules at once.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">do_wire</td><td>Enable to invalidate wire</td></tr><tr><td></td><td class="fieldArg">do_sampling_volume</td><td>Enable to invalidate sampling volume</td></tr><tr><td></td><td class="fieldArg">do_field</td><td>Enable to invalidate field</td></tr><tr><td></td><td class="fieldArg">do_metric</td><td>Enable to invalidate metric</td></tr></table></div>
+    <div><p>Invalidates multiple modules at once, in descending order of hierarchy.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">do_wire</td><td>Enable to invalidate wire</td></tr><tr><td></td><td class="fieldArg">do_sampling_volume</td><td>Enable to invalidate sampling volume</td></tr><tr><td></td><td class="fieldArg">do_field</td><td>Enable to invalidate field</td></tr><tr><td></td><td class="fieldArg">do_metric</td><td>Enable to invalidate metric</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -325,13 +349,13 @@
   <div class="functionHeader">
     
     def
-    set_wire(self, wire):
+    set_wire(self, wire, invalidate_self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the wire.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr></table></div>
+    <div><p>Sets the wire.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old wire before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -344,13 +368,13 @@
   <div class="functionHeader">
     
     def
-    set_sampling_volume(self, sampling_volume):
+    set_sampling_volume(self, sampling_volume, invalidate_self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume</td><td>Sampling volume</td></tr></table></div>
+    <div><p>Sets the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume</td><td>Sampling volume</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -363,13 +387,13 @@
   <div class="functionHeader">
     
     def
-    set_field(self, field):
+    set_field(self, field, invalidate_self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr></table></div>
+    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old field before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -382,13 +406,13 @@
   <div class="functionHeader">
     
     def
-    set_metric(self, metric):
+    set_metric(self, metric, invalidate_self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">metric</td><td>Metric</td></tr></table></div>
+    <div><p>Sets the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">metric</td><td>Metric</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old metric before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -407,7 +431,7 @@
   <div class="docstring functionBody">
     
     
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Calculates the wire.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -426,7 +450,7 @@
   <div class="docstring functionBody">
     
     
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Calculates the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -445,7 +469,7 @@
   <div class="docstring functionBody">
     
     
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Calculates the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr><td></td><td class="fieldArg">num_cores</td><td>Number of CPU cores to use</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -464,7 +488,7 @@
   <div class="docstring functionBody">
     
     
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Calculates the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -622,7 +646,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-04 02:54:29.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-07 08:06:16.
       </address>
 
     </div>

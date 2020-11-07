@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id18">
+        <table class="children sortable" id="id22">
   
   <tr class="method">
     
@@ -88,6 +88,21 @@
     <td>Method</td>
     <td><a href="magneticalc.Field.Field.html#recalculate" class="code" data-type="Method">recalculate</a></td>
     <td><span>Recalculate field vectors.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_squared" class="code" data-type="Method">get_squared</a></td>
+    <td><span>Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.</span></td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_arrows" class="code" data-type="Static Method">get_arrows</a></td>
+    <td><span>Returns the field arrow parameters needed by VispyCanvas.</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_backend" class="code" data-type="Instance Variable">_backend</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -101,6 +116,11 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_length_scale" class="code" data-type="Instance Variable">_length_scale</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.Field.Field.html#_vectors" class="code" data-type="Instance Variable">_vectors</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
@@ -108,6 +128,11 @@
     <td>Instance Variable</td>
     <td><a href="magneticalc.Field.Field.html#_total_limited" class="code" data-type="Instance Variable">_total_limited</a></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="staticmethod private">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.Field.Field.html#_get_squared_worker" class="code" data-type="Static Method">_get_squared_worker</a></td>
+    <td><span>Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.</span></td>
   </tr>
 </table>
         
@@ -128,13 +153,29 @@
   <div class="functionHeader">
     
     def
-    __init__(self, _type, distance_limit):
+    __init__(self, backend, _type, distance_limit, length_scale):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes an empty field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-Field; 1: B-Field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr></table></div>
+    <div><p>Initializes an empty field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">backend</td><td>Backend index</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Field type (0: A-Field; 1: B-Field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._backend">
+    
+  </a>
+  <a name="_backend">
+    
+  </a>
+  <div class="functionHeader">
+    _backend =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -162,6 +203,22 @@
   </a>
   <div class="functionHeader">
     _distance_limit =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._length_scale">
+    
+  </a>
+  <a name="_length_scale">
+    
+  </a>
+  <div class="functionHeader">
+    _length_scale =
     
   </div>
   <div class="functionBody">
@@ -333,11 +390,68 @@
     
     <div><p>Recalculate field vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr><tr><td></td><td class="fieldArg">sampling_volume</td><td>Sampling volume</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr><td></td><td class="fieldArg">num_cores</td><td>Number of cores to use for multiprocessing</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field.Field.get_squared">
+    
+  </a>
+  <a name="get_squared">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_squared(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Float</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod private">
+  
+  <a name="magneticalc.Field.Field._get_squared_worker">
+    
+  </a>
+  <a name="_get_squared_worker">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@jit(nopython=True, parallel=True)<br />
+    def
+    _get_squared_worker(vectors):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Float</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  <a name="magneticalc.Field.Field.get_arrows">
+    
+  </a>
+  <a name="get_arrows">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@jit(nopython=True, parallel=True)<br />
+    def
+    get_arrows(sampling_volume_points, field_vectors, line_pairs, head_points, arrow_scale, magnitude_limit):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the field arrow parameters needed by VispyCanvas.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume_points</td><td>Sampling volume points</td></tr><tr><td></td><td class="fieldArg">field_vectors</td><td>Field vectors</td></tr><tr><td></td><td class="fieldArg">line_pairs</td><td>Arrow line pairs (ordered list of arrow start/stop 3D points)</td></tr><tr><td></td><td class="fieldArg">head_points</td><td>Arrow head points (ordered list of arrow stop 3D points)</td></tr><tr><td></td><td class="fieldArg">arrow_scale</td><td>Arrow scale</td></tr><tr><td></td><td class="fieldArg">magnitude_limit</td><td>Magnitude limit (mitigating divisions by zero)</td></tr></table></div>
+  </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-04 02:54:29.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-07 08:06:16.
       </address>
 
     </div>

@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id58">
+        <table class="children sortable" id="id62">
   
   <tr class="classvariable">
     
@@ -61,8 +61,23 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#set_style" class="code" data-type="Method">set_style</a></td>
+    <td><span>Sets this widget's style.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#on_cell_changed" class="code" data-type="Method">on_cell_changed</a></td>
+    <td><span>Gets called when a table cell changed.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#on_selection_changed" class="code" data-type="Method">on_selection_changed</a></td>
     <td><span>Gets called when the table selection changed.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#focusInEvent" class="code" data-type="Method">focusInEvent</a></td>
+    <td><span>Gets called when the table lost focus, or when a cell is being edited.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -76,8 +91,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#select_first_row" class="code" data-type="Method">select_first_row</a></td>
+    <td><span>Selects the first row; used when table was initially focused.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#select_last_row" class="code" data-type="Method">select_last_row</a></td>
-    <td><span>Selects the last row. (Used after inserting a new row.)</span></td>
+    <td><span>Selects the last row; used after inserting a new row.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -249,6 +269,44 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Table.Table.set_style">
+    
+  </a>
+  <a name="set_style">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_style(self, border_color, border_width):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets this widget's style.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">border_color</td><td>Border color (string)</td></tr><tr><td></td><td class="fieldArg">border_width</td><td>Border width (integer)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.on_cell_changed">
+    
+  </a>
+  <a name="on_cell_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_cell_changed(self, row, column):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when a table cell changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Table.Table.on_selection_changed">
     
   </a>
@@ -265,6 +323,25 @@
     
     
     <div><p>Gets called when the table selection changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_selected</td><td>Currently selected QItemSelection</td></tr><tr><td></td><td class="fieldArg">_deselected</td><td>Currently deselected QItemSelection</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.focusInEvent">
+    
+  </a>
+  <a name="focusInEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    focusInEvent(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the table lost focus, or when a cell is being edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -306,6 +383,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Table.Table.select_first_row">
+    
+  </a>
+  <a name="select_first_row">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    select_first_row(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Selects the first row; used when table was initially focused.</p></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Table.Table.select_last_row">
     
   </a>
@@ -321,7 +417,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Selects the last row. (Used after inserting a new row.)</p></div>
+    <div><p>Selects the last row; used after inserting a new row.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -403,7 +499,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-04 02:54:29.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-07 08:06:16.
       </address>
 
     </div>

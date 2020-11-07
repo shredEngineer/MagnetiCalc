@@ -20,6 +20,7 @@ from functools import partial
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QPushButton, QAbstractItemView
+from magneticalc.Theme import Theme
 
 
 class Table(QTableWidget):
@@ -55,25 +56,51 @@ class Table(QTableWidget):
         if self._cell_edited_callback is not None:
             self.itemChanged.connect(self._cell_edited_callback)
 
+        self.set_style(border_color="black", border_width=1)
         self.setMinimumHeight(self.MinimumHeight)
-
-        self.setStyleSheet("""
-            QTableCornerButton::section {
-                border-width: 1px;
-                border-style: solid;
-                border-color: white silver silver white;
-            }
-
-            QTableWidget::item {
-                padding: 2;
-            }
-        """)
-
         self.setAlternatingRowColors(True)
         self.setSelectionMode(QAbstractItemView.SingleSelection)
         self.setSelectionBehavior(QAbstractItemView.SelectItems)
         self.selectionModel().selectionChanged.connect(self.on_selection_changed)
         self.setFocusPolicy(Qt.StrongFocus)
+
+        self.cellChanged.connect(self.on_cell_changed)
+
+    def set_style(self, border_color, border_width):
+        """
+        Sets this widget's style.
+
+        @param border_color: Border color (string)
+        @param border_width: Border width (integer)
+        """
+        self.setStyleSheet(f"""
+            QTableWidget {{
+                border: {border_width}px solid {border_color};
+                border-radius: 5px;
+                padding: 1px;
+                margin: {2-border_width}px;
+            }}
+
+            QTableCornerButton::section {{
+                border-width: 1px;
+                border-style: solid;
+                border-color: white silver silver white;
+            }}
+
+            QTableWidget::item {{
+                padding: 2;
+            }}
+        """)
+
+    def on_cell_changed(self, row, column):
+        """
+        Gets called when a table cell changed.
+
+        @param row: Row
+        @param column: Column
+        """
+        item = self.item(row, column)
+        item.setSelected(True)
 
     def on_selection_changed(self, _selected, _deselected):
         """
@@ -84,6 +111,21 @@ class Table(QTableWidget):
         """
         self._selection_changed_callback()
 
+    def focusInEvent(self, _event):
+        """
+        Gets called when the table lost focus, or when a cell is being edited.
+
+        @param _event: Event
+        """
+        row = self.selectionModel().currentIndex().row()
+        column = self.selectionModel().currentIndex().column()
+        item = self.item(row, column)
+        if item is None:
+            self.select_first_row()
+        else:
+            item.setSelected(True)
+        self.set_style(border_color=Theme.PrimaryColor, border_width=2)
+
     def focusOutEvent(self, _event):
         """
         Gets called when the table lost focus, or when a cell is being edited.
@@ -93,6 +135,7 @@ class Table(QTableWidget):
         """
         if self.state() != QAbstractItemView.EditingState:
             self.clearSelection()
+            self.set_style(border_color="black", border_width=1)
 
     def get_selected_row(self):
         """
@@ -105,9 +148,18 @@ class Table(QTableWidget):
         else:
             return None
 
+    def select_first_row(self):
+        """
+        Selects the first row; used when table was initially focused.
+        """
+        self.setFocus()
+        item = self.item(0, 0)
+        item.setSelected(True)
+        self.scrollToItem(item, QAbstractItemView.PositionAtTop)
+
     def select_last_row(self):
         """
-        Selects the last row. (Used after inserting a new row.)
+        Selects the last row; used after inserting a new row.
         """
         self.setFocus()
         item = self.item(self.rowCount() - 1, 0)

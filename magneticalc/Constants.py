@@ -1,4 +1,4 @@
-""" Theme module. """
+""" Constants module. """
 
 #  ISC License
 #
@@ -16,15 +16,14 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import numpy as np
 
-class Theme:
-    """ Theme class. """
 
-    PrimaryColor = "#2c82b8"
-    LightColor = "#555555"
+class Constants:
+    """ Constants class. """
 
-    def __init__(self):
-        """
-        Initialize theme.
-        """
-        pass
+    # Magnetic field constant µ0
+    mu_0 = 1.25663706212e-6     # kg · m / s² / A²
+
+    # Biot-Savart constant k
+    k = mu_0 / 4 / np.pi        # H / m

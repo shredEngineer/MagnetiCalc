@@ -27,11 +27,11 @@ setup(
     package_dir={"magneticalc": "magneticalc"},
     name="MagnetiCalc",
     version=version["__VERSION__"],
-    description="""MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
+    description="""MagnetiCalc calculates the magnetic flux density, vector potential, energy and self-inductance
+of arbitrary coils in vacuum, examples included.
 Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density (B-field due to DC currents)
 is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.
-Alternatively, the magnetic vector potential (A-field) may be displayed.
-All parameters and presets can interactively be changed inside the GUI.""".replace("\n", " "),
+Alternatively, the magnetic vector potential (A-field) may be displayed.""".replace("\n", " "),
     url="https://github.com/shredEngineer/MagnetiCalc",
     author="Paul Wilhelm",
     author_email="anfrage@paulwilhelm.de",
@@ -48,11 +48,11 @@ All parameters and presets can interactively be changed inside the GUI.""".repla
     platforms=["any"],
     python_requires=">=3.6",
     install_requires=[
-        "PyQt5",
-        "qtawesome>=1.0.0",
-        "vispy>=0.6.5",
-        "matplotlib",
         "numpy",
+        "numba>=0.50.0",
+        "PyQt5",
+        "vispy>=0.6.5",
+        "qtawesome>=1.0.0",
         "colorit>=0.1.0",
         "si-prefix>=1.2.2"
     ]

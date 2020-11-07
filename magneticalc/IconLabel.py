@@ -27,7 +27,7 @@ class IconLabel(QWidget):
     IconSize = QSize(16, 16)
     HorizontalSpacing = 1
 
-    def __init__(self, qta_id, text, icon_color="#12344a", label_color="#12344a"):
+    def __init__(self, qta_id, text, icon_color="#12344a", label_color="#12344a", final_stretch=True):
         """
         Initializes the icon label.
 
@@ -35,6 +35,7 @@ class IconLabel(QWidget):
         @param text: Label text
         @param icon_color: Icon color (string)
         @param label_color: Label color (string)
+        @param final_stretch: Enable to add a final stretch
         """
         # noinspection PyArgumentList
         QWidget.__init__(self)
@@ -56,7 +57,8 @@ class IconLabel(QWidget):
         """)
         self.layout.addWidget(label, alignment=Qt.AlignVCenter)
 
-        self.layout.addStretch()
+        if final_stretch:
+            self.layout.addStretch()
 
     # noinspection PyPep8Naming
     def addWidget(self, widget):

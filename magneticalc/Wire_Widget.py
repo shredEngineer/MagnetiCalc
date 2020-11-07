@@ -62,7 +62,11 @@ class Wire_Widget(Groupbox):
 
         Groupbox.__init__(self, "Wire")
 
-        points_icon_label = IconLabel("mdi.vector-square", "Points")
+        points_icon_label = IconLabel("mdi.vector-square", "Points", final_stretch=False)
+        table_shortcut_label = QLabel("  ⟨F2⟩   ⟨ESC⟩")
+        table_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
+        points_icon_label.addWidget(table_shortcut_label)
+        points_icon_label.addStretch()
         table_add_button = QPushButton()
         table_add_button.setIcon(qta.icon("fa.plus"))
         points_icon_label.addWidget(table_add_button)
@@ -110,6 +114,7 @@ class Wire_Widget(Groupbox):
         stretch_layout = QHBoxLayout()
         for i in range(3):
             self.stretch_spinbox[i] = QDoubleSpinBox(self.gui)
+            self.stretch_spinbox[i].setLocale(self.gui.locale)
             self.stretch_spinbox[i].setMinimum(self.StretchMin)
             self.stretch_spinbox[i].setMaximum(self.StretchMax)
             self.stretch_spinbox[i].setSingleStep(self.StretchStep)
@@ -155,7 +160,8 @@ class Wire_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.rotational_symmetry_radius_spinbox = QDoubleSpinBox()
+        self.rotational_symmetry_radius_spinbox = QDoubleSpinBox(self.gui)
+        self.rotational_symmetry_radius_spinbox.setLocale(self.gui.locale)
         self.rotational_symmetry_radius_spinbox.setMinimum(self.RotationalSymmetryRadiusMin)
         self.rotational_symmetry_radius_spinbox.setMaximum(self.RotationalSymmetryRadiusMax)
         self.rotational_symmetry_radius_spinbox.setSingleStep(self.RotationalSymmetryRadiusStep)
@@ -191,8 +197,8 @@ class Wire_Widget(Groupbox):
 
         total_length_layout = QHBoxLayout()
         total_length_label_left = QLabel("Total wire length:")
-        total_length_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.total_length_label = QLabel("")
+        total_length_label_left.setStyleSheet("font-style: italic;")
+        self.total_length_label = QLabel("N/A")
         self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
         self.total_length_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_length_layout.addWidget(
@@ -228,7 +234,8 @@ class Wire_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("mdi.box-cutter", "Slicer Limit"))
-        slicer_limit_spinbox = QDoubleSpinBox()
+        slicer_limit_spinbox = QDoubleSpinBox(self.gui)
+        slicer_limit_spinbox.setLocale(self.gui.locale)
         slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
         slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
         slicer_limit_spinbox.setSingleStep(self.SlicerLimitStep)
@@ -258,7 +265,8 @@ class Wire_Widget(Groupbox):
 
         self.addWidget(HLine())
 
-        dc_spinbox = QDoubleSpinBox()
+        dc_spinbox = QDoubleSpinBox(self.gui)
+        dc_spinbox.setLocale(self.gui.locale)
         self.addWidget(IconLabel("fa.cog", "Wire Current"))
         dc_spinbox.setMinimum(self.DcMinimum)
         dc_spinbox.setMaximum(self.DcMaximum)
@@ -274,7 +282,7 @@ class Wire_Widget(Groupbox):
         self.addLayout(dc_layout)
 
         # Initially load wire from configuration
-        self.set_wire(recalculate=False, readjust_sampling_volume=False)
+        self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate_self=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -286,7 +294,8 @@ class Wire_Widget(Groupbox):
             slicer_limit=None,
             dc=None,
             recalculate=True,
-            readjust_sampling_volume=True
+            readjust_sampling_volume=True,
+            invalidate_self=True
     ):
         """
         Sets the wire. This will overwrite the currently set wire in the model.
@@ -299,6 +308,7 @@ class Wire_Widget(Groupbox):
         @param dc: DC value (float)
         @param recalculate: Enable to trigger final re-calculation (boolean)
         @param readjust_sampling_volume: Enable to readjust sampling volume
+        @param invalidate_self: Enable to invalidate the old wire before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
 
@@ -320,7 +330,8 @@ class Wire_Widget(Groupbox):
                     rotational_symmetry=rotational_symmetry,
                     slicer_limit=slicer_limit,
                     dc=dc
-                )
+                ),
+                invalidate_self=invalidate_self
             )
 
             self.update_table()
@@ -386,7 +397,7 @@ class Wire_Widget(Groupbox):
         """
         Adds a wire base point after a row has been added to the table. (Appending to the end and focusing the row.)
         """
-        self.set_wire(points=list(self.gui.model.wire.get_points_base()) + [np.array([0, 0, 0])])
+        self.set_wire(points=list(self.gui.model.wire.get_points_base()) + [np.zeros(3)])
         self.table.select_last_row()
 
     def on_table_cell_edited(self, item):
@@ -422,6 +433,8 @@ class Wire_Widget(Groupbox):
         if self.gui.model.wire.is_valid():
             self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
             self.total_length_label.setText(f"{self.gui.model.wire.get_length():.2f} cm")
+            self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
         else:
             self.sliced_total_label.setText("N/A")
             self.total_length_label.setText("N/A")
+            self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor};")

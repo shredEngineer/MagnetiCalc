@@ -17,12 +17,86 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
-import matplotlib.cm as cm
-from matplotlib.colors import Normalize, LogNorm
-from PyQt5.QtCore import QThread
+from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
+
+
+@jit(nopython=True, parallel=False)
+def metric_norm(norm_id, vector):
+    """
+    Calculates the selected norm of some vector.
+
+    Note: This must be declared on the top level for JIT to work.
+
+    @param norm_id: Norm id
+    @param vector: 3D vector
+    """
+    if norm_id == "x":
+        value = vector[0]
+    elif norm_id == "y":
+        value = vector[1]
+    elif norm_id == "z":
+        value = vector[2]
+    elif norm_id == "radius_x":
+        value = np.abs(vector[0])
+    elif norm_id == "radius_y":
+        value = np.abs(vector[1])
+    elif norm_id == "radius_z":
+        value = np.abs(vector[2])
+    elif norm_id == "radius_xy":
+        value = np.sqrt(vector[0] ** 2 + vector[1] ** 2)
+    elif norm_id == "radius_xz":
+        value = np.sqrt(vector[1] ** 2 + vector[2] ** 2)
+    elif norm_id == "radius_yz":
+        value = np.sqrt(vector[2] ** 2 + vector[0] ** 2)
+    elif norm_id == "radius":
+        value = np.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
+    elif norm_id == "angle_xy":
+        value = (np.arctan2(vector[0], vector[1]) + np.pi) / np.pi / 2
+    elif norm_id == "angle_xz":
+        value = (np.arctan2(vector[0], vector[2]) + np.pi) / np.pi / 2
+    elif norm_id == "angle_yz":
+        value = (np.arctan2(vector[1], vector[2]) + np.pi) / np.pi / 2
+    else:
+        # Invalid norm ID
+        value = None
+
+    return value
+
+
+@jit(nopython=True, parallel=False)
+def color_map_divergent(color_normalized):
+    """
+    Maps normalized value to color, divergent.
+
+    Note: This must be declared on the top level for JIT to work.
+
+    @param color_normalized: Normalized color value
+    @return: R, G, B
+    """
+    rgb_0 = np.array([0x00, 0xff, 0xfe]) / 255
+    rgb_1 = np.array([0xff, 0x22, 0xf9]) / 255
+    return rgb_0 + (rgb_1 - rgb_0) * color_normalized
+
+
+@jit(nopython=True, parallel=False)
+def color_map_cyclic(color_normalized):
+    """
+    Maps normalized value to color, cyclic.
+
+    Note: This must be declared on the top level for JIT to work.
+
+    @param color_normalized: Normalized color value
+    @return: R, G, B
+    """
+    hue = (color_normalized + 1 / 6) % 1
+    x = hue * 6
+    r = 1 if 0 <= x <= 1 or 5 <= x <= 6 else x - 4 if 4 <= x <= 5 else 2 - x if 1 <= x <= 2 else 0
+    g = 1 if 1 <= x <= 3 else x if 0 <= x <= 1 else 4 - x if 3 <= x <= 4 else 0
+    b = 1 if 3 <= x <= 5 else x - 2 if 2 <= x <= 3 else 6 - x if 5 <= x <= 6 else 0
+    return np.array([r, g, b])
 
 
 class Metric:
@@ -39,110 +113,170 @@ class Metric:
 
     # Metric value: Magnitude in XYZ-space (linear)
     Magnitude = {
-        "id": "Magnitude",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(point),
-        "log": False,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Magnitude",
+        "norm_id"   : "radius",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in XY-plane (linear)
     MagnitudeXY = {
-        "id": "Magnitude XY",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[1]])),
-        "log": False,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Magnitude XY",
+        "norm_id"   : "radius_xy",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in X-direction (linear)
+    MagnitudeX = {
+        "id"        : "Magnitude X",
+        "norm_id"   : "radius_x",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in Y-direction (linear)
+    MagnitudeY = {
+        "id"        : "Magnitude Y",
+        "norm_id"   : "radius_y",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in Z-direction (linear)
+    MagnitudeZ = {
+        "id"        : "Magnitude Z",
+        "norm_id"   : "radius_z",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in XZ-plane (linear)
     MagnitudeXZ = {
-        "id": "Magnitude XZ",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[2]])),
-        "log": False,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Magnitude XZ",
+        "norm_id"   : "radius_xz",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in YZ-plane (linear)
     MagnitudeYZ = {
-        "id": "Magnitude YZ",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[1], point[2]])),
-        "log": False,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Magnitude YZ",
+        "norm_id"   : "radius_yz",
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in XYZ-space (logarithmic)
     LogMagnitude = {
-        "id": "Log Magnitude",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(point),
-        "log": True,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Log Magnitude",
+        "norm_id"   : "radius",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in X-direction (logarithmic)
+    LogMagnitudeX = {
+        "id"        : "Log Magnitude X",
+        "norm_id"   : "radius_x",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in Y-direction (logarithmic)
+    LogMagnitudeY = {
+        "id"        : "Log Magnitude Y",
+        "norm_id"   : "radius_y",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in Z-direction (logarithmic)
+    LogMagnitudeZ = {
+        "id"        : "Log Magnitude Z",
+        "norm_id"   : "radius_z",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in XY-plane (logarithmic)
     LogMagnitudeXY = {
-        "id": "Log Magnitude XY",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[1]])),
-        "log": True,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Log Magnitude XY",
+        "norm_id"   : "radius_xy",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric value: Magnitude in XZ-plane (logarithmic)
     LogMagnitudeXZ = {
-        "id": "Log Magnitude XZ",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[0], point[2]])),
-        "log": True,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Log Magnitude XZ",
+        "norm_id"   : "radius_xz",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric preset: Magnitude in YZ-plane (logarithmic)
     LogMagnitudeYZ = {
-        "id": "Log Magnitude YZ",
-        "func": lambda point: Metric.LengthScale * np.linalg.norm(np.array([point[1], point[2]])),
-        "log": True,
-        "is_angle": False,
-        "colormap": cm.cool  # divergent
+        "id"        : "Log Magnitude YZ",
+        "norm_id"   : "radius_yz",
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
     }
 
     # Metric preset: Angle in XY-plane
     AngleXY = {
-        "id": "Angle XY",
-        "func": lambda point: (np.arctan2(point[0], point[1]) + np.pi) / np.pi / 2,
-        "log": False,
-        "is_angle": True,
-        "colormap": cm.hsv  # cyclic
+        "id"        : "Angle XY",
+        "norm_id"   : "angle_xy",
+        "is_log"    : False,
+        "is_angle"  : True,
+        "colormap"  : 1  # cyclic
     }
 
     # Metric preset: Angle in XZ-plane
     AngleXZ = {
-        "id": "Angle XZ",
-        "func": lambda point: (np.arctan2(point[0], point[2]) + np.pi) / np.pi / 2,
-        "log": False,
-        "is_angle": True,
-        "colormap": cm.hsv  # cyclic
+        "id"        : "Angle XZ",
+        "norm_id"   : "angle_xz",
+        "is_log"    : False,
+        "is_angle"  : True,
+        "colormap"  : 1  # cyclic
     }
 
     # Metric preset: Angle in YZ-plane
     AngleYZ = {
-        "id": "Angle YZ",
-        "func": lambda point: (np.arctan2(point[1], point[2]) + np.pi) / np.pi / 2,
-        "log": False,
-        "is_angle": True,
-        "colormap": cm.hsv  # cyclic
+        "id"        : "Angle YZ",
+        "norm_id"   : "angle_yz",
+        "is_log"    : False,
+        "is_angle"  : True,
+        "colormap"  : 1  # cyclic
     }
 
     # List of all above presets
     Presets = [
         Magnitude,
+        MagnitudeX,
+        MagnitudeY,
+        MagnitudeZ,
         MagnitudeXY,
         MagnitudeXZ,
         MagnitudeYZ,
         LogMagnitude,
+        LogMagnitudeX,
+        LogMagnitudeY,
+        LogMagnitudeZ,
         LogMagnitudeXY,
         LogMagnitudeXZ,
         LogMagnitudeYZ,
@@ -252,114 +386,222 @@ class Metric:
         """
         return self._self_inductance
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def boost_colors(boost, direction, colors):
+        """
+        "Boosts" an array of color values.
+
+        @param boost: Boost value
+        @param direction: Boost direction
+        @param colors: Colors (ordered list of 4-tuples)
+        @return: Colors (ordered list of 4-tuples)
+        """
+        for i in prange(len(colors)):
+            r = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][0] + boost * direction]))]))
+            g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
+            b = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][2] + boost * direction]))]))
+            a = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][3] + boost]))]))
+            colors[i] = np.array([r, g, b, a])
+
+        return colors
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def _norm_worker(norm_color, norm_alpha, vectors):
+        """
+        Calculates color and alpha norm values.
+
+        @param norm_color: Color norm ID
+        @param norm_alpha: Alpha norm ID
+        @param vectors: Ordered list of 3D vectors
+        @return: Color norm values, alpha norm values
+        """
+        color_values = np.zeros(len(vectors))
+        alpha_values = np.zeros(len(vectors))
+
+        for i in prange(len(vectors)):
+            color_values[i] = metric_norm(norm_color, vectors[i])
+            alpha_values[i] = metric_norm(norm_alpha, vectors[i])
+
+        return color_values, alpha_values
+
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def _normalize_worker(
+            color_map_id,
+            color_is_log,
+            color_norm_values,
+            color_norm_min,
+            color_norm_max,
+            alpha_is_log,
+            alpha_norm_values,
+            alpha_norm_min,
+            alpha_norm_max,
+            colors
+    ):
+        """
+        Normalizes color and alpha norm values, populates final color values.
+
+        @param color_map_id: Color map ID
+        @param color_is_log: Selects logarithmic normalizer for color
+        @param color_norm_values: Color norm values
+        @param color_norm_min: Minimum color norm value
+        @param color_norm_max: Maximum color norm value
+        @param alpha_is_log: Selects logarithmic normalizer for alpha
+        @param alpha_norm_values: Alpha norm values
+        @param alpha_norm_min: Minimum alpha norm value
+        @param alpha_norm_max: Maximum alpha norm value
+        @param colors: Color value list to populate (list of 4D vectors)
+        @return: Color values (list of 4D vectors)
+        """
+
+        # (1) Calculate color and alpha normalization
+        # (2) Calculate colormap and assemble final color/alpha values
+        #     Note: Of course, the alpha metric colormap is ignored
+
+        for i in prange(len(color_norm_values)):
+
+            color_normalized = color_norm_values[i]
+
+            # Clip before normalizing, needed for logarithmic normalization
+            if color_normalized < color_norm_min:
+                color_normalized = color_norm_min
+            elif color_normalized < color_norm_min:
+                color_normalized = color_norm_min
+
+            color_normalized = (color_normalized - color_norm_min) / (color_norm_max - color_norm_min)
+            if color_is_log:
+                color_normalized = np.exp(color_normalized) / np.exp(1)
+
+            if color_map_id == 0:
+                # Divergent colormap
+                rgb = color_map_divergent(color_normalized)
+            else:
+                # Cyclic colormap
+                rgb = color_map_cyclic(color_normalized)
+
+            # Clip before normalizing, needed for logarithmic normalization
+            alpha_normalized = alpha_norm_values[i]
+            if alpha_normalized < alpha_norm_min:
+                alpha_normalized = alpha_norm_min
+            elif alpha_normalized > alpha_norm_max:
+                alpha_normalized = alpha_norm_max
+
+            alpha_normalized = (alpha_normalized - alpha_norm_min) / (alpha_norm_max - alpha_norm_min)
+            if alpha_is_log:
+                alpha_normalized = np.exp(alpha_normalized) / np.exp(1)
+
+            colors[i] = np.array([rgb[0], rgb[1], rgb[2], alpha_normalized])
+
+        return colors
+
     def recalculate(self, wire, sampling_volume, field, progress_callback):
         """
         Recalculate color and alpha values for field.
 
         @param wire: Wire
         @param sampling_volume: SamplingVolume
-        @param field: Field (see BiotSavart module)
+        @param field: Field
         @param progress_callback: Progress callback
-        @return: True if successful, False if interrupted
+        @return: True (currently non-interruptable)
         """
         Debug(self, ".recalculate()", color=(0, 128, 0))
 
         n = len(field.get_vectors())
 
+        progress_callback(0)
+
         # Calculate color and alpha metric values
-        color_values = np.zeros(n)
-        alpha_values = np.zeros(n)
-        for i in range(n):
+        color_norm_values, alpha_norm_values = self._norm_worker(
+            self._color_preset["norm_id"],
+            self._alpha_preset["norm_id"],
+            field.get_vectors()
+        )
 
-            field_vector = field.get_vectors()[i]
-
-            color_values[i] = self._color_preset["func"](field_vector)
-            alpha_values[i] = self._alpha_preset["func"](field_vector)
-
-            # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
-            if i & 0xf == 0:
-                progress_callback(10 * (i + 1) / n)
-
-                if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
-                    return False
+        progress_callback(33)
 
         # Select color range
         if self._color_preset["is_angle"]:
-            color_min, color_max = 0, 1
+            color_norm_min, color_norm_max = 0, 1
         else:
-            color_min, color_max = min(color_values), max(color_values)
+            color_norm_min, color_norm_max = min(color_norm_values), max(color_norm_values)
 
         # Select alpha range
         if self._alpha_preset["is_angle"]:
-            alpha_min, alpha_max = 0, 1
+            alpha_norm_min, alpha_norm_max = 0, 1
         else:
-            alpha_min, alpha_max = min(alpha_values), max(alpha_values)
+            alpha_norm_min, alpha_norm_max = min(alpha_norm_values), max(alpha_norm_values)
 
         # Select color normalizer
-        if self._color_preset["log"]:
+        if self._color_preset["is_log"]:
+            # Logarithmic normalization
+
             Assert_Dialog(not self._color_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
-            color_min_ = max(color_min, Metric.LogNormMinimum)   # avoiding "ValueError: minvalue must be positive"
-            color_max_ = max(color_min_, color_max)              # avoiding "ValueError: minvalue must be <= maxvalue"
-
-            color_normalize = LogNorm(vmin=color_min_, vmax=color_max_)
+            color_norm_min_ = max(color_norm_min, Metric.LogNormMinimum)    # avoiding ValueError: min must be positive
+            color_norm_max_ = max(color_norm_min_, color_norm_max)          # avoiding ValueError: min must be <= max
         else:
-            color_min_ = color_min
-            color_max_ = color_max
-            color_normalize = Normalize(vmin=color_min_, vmax=color_max_)
+            # Linear normalization
+            color_norm_min_ = color_norm_min
+            color_norm_max_ = color_norm_max
 
         # Select alpha normalizer
-        if self._alpha_preset["log"]:
+        if self._alpha_preset["is_log"]:
+            # Logarithmic normalization
+
             Assert_Dialog(not self._alpha_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
-            alpha_min_ = max(alpha_min, Metric.LogNormMinimum)   # avoiding "ValueError: minvalue must be positive"
-            alpha_max_ = max(alpha_min_, alpha_max)              # avoiding "ValueError: minvalue must be <= maxvalue"
-
-            alpha_normalize = LogNorm(vmin=alpha_min_, vmax=alpha_max_)
+            alpha_norm_min_ = max(alpha_norm_min, Metric.LogNormMinimum)    # avoiding ValueError: min must be positive
+            alpha_norm_max_ = max(alpha_norm_min_, alpha_norm_max)          # avoiding ValueError: min must be <= max
         else:
-            alpha_min_ = alpha_min
-            alpha_max_ = alpha_max
-            alpha_normalize = Normalize(vmin=alpha_min_, vmax=alpha_max_)
+            # Linear normalization
+            alpha_norm_min_ = alpha_norm_min
+            alpha_norm_max_ = alpha_norm_max
 
-        # (1) Calculate color and alpha normalization
-        # (2) Calculate colormap and assemble final color/alpha values
-        #     Note: Of course, the alpha metric colormap is ignored
         colors = np.zeros([n, 4])
-        for i in range(n):
 
-            # Calculate normalized color and alpha values
-            # Note: If using logarithmic scaling, out-of-range values (still exceeding [0...1] here) may be clipped
-            color_value_normalized = color_normalize(color_values[i], clip=True)
-            alpha_value_normalized = alpha_normalize(alpha_values[i], clip=True)
-
-            colors[i] = self._color_preset["colormap"](color_value_normalized)
-            colors[i][3] = alpha_value_normalized
-
-            # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
-            if i & 0xf == 0:
-                progress_callback(10 + 90 * (i + 1) / n)
-
-                if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
-                    return False
+        # Calculate final color values
+        # Note: If using logarithmic scaling, out-of-range values (still exceeding [0...1] here) may be clipped
+        colors = self._normalize_worker(
+            self._color_preset["colormap"],
+            self._color_preset["is_log"],
+            color_norm_values,
+            color_norm_min_,
+            color_norm_max_,
+            self._alpha_preset["is_log"],
+            alpha_norm_values,
+            alpha_norm_min_,
+            alpha_norm_max_,
+            colors
+        )
 
         self._colors = colors
 
         self._limits = {
-            "color_min": color_min,
-            "color_max": color_max,
-            "alpha_min": alpha_min,
-            "alpha_max": alpha_max
+            "color_min": color_norm_min,
+            "color_max": color_norm_max,
+            "alpha_min": alpha_norm_min,
+            "alpha_max": alpha_norm_max
         }
+
+        progress_callback(66)
 
         if field.get_type() == 1:
             # Field is B-Field
             self.recalculate_energy_and_self_inductance(wire, sampling_volume, field)
 
+        progress_callback(100)
+
         return True
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def recalculate_energy_and_self_inductance(self, wire, sampling_volume, field):
         """
@@ -369,19 +611,33 @@ class Metric:
 
         @param wire: Wire
         @param sampling_volume: SamplingVolume
-        @param field: Field (see BiotSavart module)
+        @param field: Field
         """
-        self._energy = 0
-        for point in field.get_vectors():
-            self._energy += np.dot(point, point)
 
         # Sampling volume element
         dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3
 
-        # Magnetic field constant µ0
-        mu_0 = 1.2566e-6
-
-        self._energy *= dV / mu_0
+        self._energy = field.get_squared() * dV / Constants.mu_0
         self._self_inductance = self._energy / np.square(wire.get_dc())
 
-        # ToDo: Find and fix the scaling error...
+    # ------------------------------------------------------------------------------------------------------------------
+
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def boost_colors(boost, direction, colors):
+        """
+        "Boosts" an array of color values.
+
+        @param boost: Boost value
+        @param direction: Boost direction
+        @param colors: Colors (ordered list of 4-tuples)
+        @return: Colors (ordered list of 4-tuples)
+        """
+        for i in prange(len(colors)):
+            r = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][0] + boost * direction]))]))
+            g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
+            b = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][2] + boost * direction]))]))
+            a = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][3] + boost]))]))
+            colors[i] = np.array([r, g, b, a])
+
+        return colors

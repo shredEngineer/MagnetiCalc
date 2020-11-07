@@ -21,7 +21,7 @@ import time
 import atexit
 import datetime
 import qtawesome as qta
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
@@ -52,6 +52,8 @@ class GUI(QMainWindow):
 
         Debug(self, ": Init")
 
+        self.locale = QLocale(QLocale.English)
+
         self.config = config
 
         self.set_window()
@@ -73,6 +75,7 @@ class GUI(QMainWindow):
 
         # Create the VisPy canvas (our 3D scene) and statusbar
         self.vispy_canvas = VispyCanvas(self)
+        self.vispy_canvas.native.setFocusPolicy(Qt.NoFocus)  # Don't let VisPy gain control -- handle all events in GUI
         self.statusbar = Statusbar(self)
 
         # Insert left sidebar, VisPy canvas and right sidebar into main layout.
@@ -106,6 +109,8 @@ class GUI(QMainWindow):
             else:
                 Debug(self, ".redraw(): WARNING: Setting calculation thread to None", color=(255, 0, 0))
                 self.calculation_thread = None
+
+        self.sidebar_right.display_widget.set_enabled(self.model.field.is_valid())
 
         self.vispy_canvas.redraw()
 
@@ -171,7 +176,7 @@ class GUI(QMainWindow):
             Debug(self, ".interrupt_calculation(): Requesting interruption", color=Theme.PrimaryColor)
             self.calculation_thread.requestInterruption()
 
-            if self.calculation_thread.wait(1000):
+            if self.calculation_thread.wait(3000):
                 Debug(self, ".interrupt_calculation(): Exited gracefully", color=Theme.PrimaryColor)
             else:
                 Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", color=(255, 0, 0))
@@ -234,7 +239,12 @@ class GUI(QMainWindow):
 
         @param event: Key press event
         """
-        if event.key() == Qt.Key_F5:
+        if event.key() == Qt.Key_F2:
+
+            # Focus the the wire base points table
+            self.sidebar_left.wire_widget.table.setFocus()
+
+        elif event.key() == Qt.Key_F5:
 
             # Focus the main window (make sure to un-focus the wire base points table)
             self.setFocus()
@@ -244,13 +254,15 @@ class GUI(QMainWindow):
 
         elif event.key() == Qt.Key_Escape:
 
-            # Focus the main window (make sure to un-focus the wire base points table)
-            self.setFocus()
-
-            if self.calculation_thread is not None:
-                if self.calculation_thread.isRunning():
-                    # Cancel the running calculation
-                    self.interrupt_calculation()
+            if self.sidebar_left.wire_widget.table.hasFocus():
+                # Focus the main window, thus un-focusing the wire base points table
+                self.setFocus()
+            else:
+                # Stop any running calculation
+                if self.calculation_thread is not None:
+                    if self.calculation_thread.isRunning():
+                        # Cancel the running calculation
+                        self.interrupt_calculation()
 
     def file_save(self):
         """

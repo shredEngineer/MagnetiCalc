@@ -122,11 +122,11 @@ class Wire:
         "id": "Solenoid: 4 circular loops",
         "points": [
             [
-                i / 64 - 1 / 2,
-                -np.cos(2 * np.pi * i / 16) / 2,
-                +np.sin(2 * np.pi * i / 16) / 2
+                i / 128 - 1 / 2,
+                -np.cos(2 * np.pi * i / 32) / 2,
+                +np.sin(2 * np.pi * i / 32) / 2
             ]
-            for i in range(64)
+            for i in range(128)
         ]
     }
 
@@ -135,11 +135,11 @@ class Wire:
         "id": "Solenoid: 8 circular loops",
         "points": [
             [
-                i / 128 - 1 / 2,
-                -np.cos(2 * np.pi * i / 16) / 2,
-                +np.sin(2 * np.pi * i / 16) / 2
+                i / 256 - 1 / 2,
+                -np.cos(2 * np.pi * i / 32) / 2,
+                +np.sin(2 * np.pi * i / 32) / 2
             ]
-            for i in range(128)
+            for i in range(256)
         ]
     }
 
@@ -148,19 +148,19 @@ class Wire:
         "id": "Compensated Solenoid: 2x 4 circular loops",
         "points": [
             [
-                i / 64 - 1 - 0.125 / 2,
-                -np.cos(+2 * np.pi * i / 16) / 2,
-                +np.sin(+2 * np.pi * i / 16) / 2
+                i / 256 - 1/2,
+                -np.cos(+2 * np.pi * i / 32) / 2,
+                +np.sin(+2 * np.pi * i / 32) / 2
             ]
-            for i in range(64)
+            for i in range(128)
         ] +
         [
             [
-                i / 64 + 0.125 / 2,
-                -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
-                +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+                i / 256,
+                -np.cos(-2 * np.pi * (i + 1) / 32) / 2,
+                +np.sin(-2 * np.pi * (i + 1) / 32) / 2
             ]
-            for i in range(64)
+            for i in range(128)
         ]
     }
 
@@ -169,19 +169,19 @@ class Wire:
         "id": "Compensated Solenoid: 2x 8 circular loops",
         "points": [
             [
-                i / 128 - 1.125,
-                -np.cos(+2 * np.pi * i / 16) / 2,
-                +np.sin(+2 * np.pi * i / 16) / 2
+                i / 512 - 1/2,
+                -np.cos(+2 * np.pi * i / 32) / 2,
+                +np.sin(+2 * np.pi * i / 32) / 2
             ]
-            for i in range(128)
+            for i in range(256)
         ] +
         [
             [
-                i / 128 + 0.125,
-                -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
-                +np.sin(-2 * np.pi * (i + 1) / 16) / 2
+                i / 512,
+                -np.cos(-2 * np.pi * (i + 1) / 32) / 2,
+                +np.sin(-2 * np.pi * (i + 1) / 32) / 2
             ]
-            for i in range(128)
+            for i in range(256)
         ]
     }
 
@@ -328,11 +328,13 @@ class Wire:
         Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
 
         result = []
+
         for i in range(len(self._points_sliced) - 1):
             element_direction = np.array(self._points_sliced[i + 1]) - np.array(self._points_sliced[i])
             element_center = self._points_sliced[i] + element_direction / 2
             result.append((element_center, element_direction))
-        return result
+
+        return np.array(result)
 
     def get_dc(self):
         """

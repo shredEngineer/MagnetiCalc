@@ -21,6 +21,7 @@ from si_prefix import si_format
 from vispy import io, scene, visuals
 from vispy.scene.cameras import TurntableCamera
 from magneticalc.Debug import Debug
+from magneticalc.Field import Field
 from magneticalc.Metric import Metric
 
 
@@ -138,7 +139,7 @@ class VispyCanvas(scene.SceneCanvas):
             font_manager=self.font_manager
         )
 
-        self.visual_field_labels = {}  # Managed by L{redraw_field_labels}
+        self.visual_field_labels = []  # Managed by L{redraw_field_labels}
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -245,6 +246,9 @@ class VispyCanvas(scene.SceneCanvas):
         self.set_visible(self.visual_coordinate_system, self.gui.config.get_bool("show_coordinate_system"))
         self.redraw_perspective_info()
 
+        # Enable to see which model state is being drawn; may be used for debugging.
+        # print(self.gui.model)
+
         self.redraw_wire_segments()
         self.redraw_wire_points_sliced()
         self.redraw_wire_points_selected()
@@ -252,13 +256,15 @@ class VispyCanvas(scene.SceneCanvas):
         # Determine which field colors to use (if at all)
         if self.gui.model.metric.is_valid():
             # Use metric colors
-            colors = [self.boost_color(color) for color in self.gui.model.metric.get_colors()]
+            boost = self.gui.config.get_float("field_boost")
+            direction = 1 if self.gui.config.get_bool("dark_background") else -1
+            colors = Metric.boost_colors(boost, direction, self.gui.model.metric.get_colors().copy())
         else:
             if self.gui.model.sampling_volume.is_valid():
                 # Use foreground color for all arrows and points
                 colors = [self.foreground] * len(self.gui.model.sampling_volume.get_points())
             else:
-                # Dummy argument (not accessed by redraw_field_arrows & redraw_field_points in this case)
+                # Dummy argument (not accessed by redraw_field_arrows/_points/_labels in this case)
                 colors = None
 
         self.redraw_field_arrows(colors)
@@ -329,8 +335,6 @@ class VispyCanvas(scene.SceneCanvas):
             self.gui.config.get_bool("show_wire_points") and \
             point_index is not None
 
-        self.set_visible(self.visual_wire_points_selected, visible)
-
         if visible:
             points_selected = np.array([
                 self.gui.model.wire.get_points_transformed()[i]
@@ -358,6 +362,8 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="disc"
             )
 
+        self.set_visible(self.visual_wire_points_selected, visible)
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def redraw_field_arrows(self, colors):
@@ -373,30 +379,19 @@ class VispyCanvas(scene.SceneCanvas):
             arrow_scale > 0 and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
-        self.set_visible(self.visual_field_arrow_lines, visible)
-        self.set_visible(self.visual_field_arrow_heads, visible)
-
         if visible:
 
             line_pairs = np.zeros([2 * len(self.gui.model.sampling_volume.get_points()), 3])
             head_points = np.zeros([len(self.gui.model.sampling_volume.get_points()), 3])
 
-            for i in range(len(self.gui.model.sampling_volume.get_points())):
-
-                # Calculate field vector magnitude (mitigating divisions by zero)
-                field_vector_length = max(self.MagnitudeLimit, np.linalg.norm(self.gui.model.field.get_vectors()[i]))
-
-                # Calculate normalized field direction
-                field_direction_norm = self.gui.model.field.get_vectors()[i] / field_vector_length
-
-                # Calculate arrow start & end coordinates
-                p_start = self.gui.model.sampling_volume.get_points()[i] + field_direction_norm / 2 / 2 * arrow_scale
-                p_end = self.gui.model.sampling_volume.get_points()[i] - field_direction_norm / 2 / 2 * arrow_scale
-
-                # Populate arrow line & head coordinates
-                line_pairs[2 * i + 0] = p_start
-                line_pairs[2 * i + 1] = p_end
-                head_points[i] = p_end
+            line_pairs, head_points = Field.get_arrows(
+                self.gui.model.sampling_volume.get_points(),
+                self.gui.model.field.get_vectors(),
+                line_pairs,
+                head_points,
+                arrow_scale,
+                VispyCanvas.MagnitudeLimit
+            )
 
             if self.DebugVisuals:
                 Debug(
@@ -430,6 +425,9 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="diamond"
             )
 
+        self.set_visible(self.visual_field_arrow_lines, visible)
+        self.set_visible(self.visual_field_arrow_heads, visible)
+
     def redraw_field_points(self, colors):
         """
         Re-draws field points.
@@ -442,8 +440,6 @@ class VispyCanvas(scene.SceneCanvas):
             self.gui.model.sampling_volume.is_valid() and \
             point_scale > 0 and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
-
-        self.set_visible(self.visual_field_points, visible)
 
         if visible:
             if self.DebugVisuals:
@@ -464,6 +460,50 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="disc"
             )
 
+        self.set_visible(self.visual_field_points, visible)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def create_field_labels(self):
+        """
+        Creates field labels.
+        """
+        field_units = self.gui.model.field.get_units()
+
+        # Iterate through the labeled sampling volume points
+        for i in range(len(self.gui.model.sampling_volume.get_labeled_indices())):
+
+            sampling_volume_point, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
+            magnitude = np.linalg.norm(self.gui.model.field.get_vectors()[field_vector_index])
+            text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
+
+            visual = scene.visuals.create_visual_node(visuals.TextVisual)(
+                parent=None,
+                pos=sampling_volume_point,
+                face=self.DefaultFontFace,
+                font_size=self.DefaultFontSize,
+                color=self.foreground,
+                text=text,
+                font_manager=self.font_manager
+            )
+
+            self.visual_field_labels.append(visual)
+
+        if self.DebugVisuals:
+            Debug(self, f".create_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+    def delete_field_labels(self):
+        """
+        Deletes the field labels.
+        """
+        for visual in self.visual_field_labels:
+            visual.parent = None
+
+        if self.DebugVisuals:
+            Debug(self, f".delete_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
+
+        self.visual_field_labels = []
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def redraw_field_labels(self, colors):
@@ -477,100 +517,26 @@ class VispyCanvas(scene.SceneCanvas):
             self.gui.config.get_bool("display_magnitude_labels") and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
-        for i, visual in self.visual_field_labels.items():
-            visual.parent = self.view_main.scene if visible else None
-
         if visible:
 
             if self.DebugVisuals:
                 Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}", color=(255, 0, 255))
 
-            if not self.gui.config.get_bool("field_colors_labels"):
-                # Use foreground color for all labels
-                colors = [self.foreground] * len(self.gui.model.sampling_volume.get_points())
-
             # Update label colors
-            for i, visual in self.visual_field_labels.items():
-                visual.color = np.append(colors[i][:3], 1.0)
+            for i in range(len(self.visual_field_labels)):
 
-    def create_field_labels(self):
-        """
-        Creates field labels.
-        """
-        field_units = self.gui.model.field.get_units()
-
-        bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
-        resolution = self.gui.model.sampling_volume.get_resolution()
-
-        # ToDo: When sampling volume constraints are implemented, adapt this to work with "incomplete grids":
-        # Iterate through the sampling volume points
-        # Note: This loop maps the linearized "i" array index onto the cuboid "x, y, z" grid index
-        span = (bounds_max - bounds_min) * resolution + np.array([1, 1, 1])
-        n = len(self.gui.model.sampling_volume.get_points())
-        x, y, z = 0, 0, 0
-        for i in range(n):
-
-            # Provide some spacing between labels
-            if x % resolution == 0 and y % resolution == 0 and z % resolution == 0:
-                magnitude = Metric.LengthScale * np.linalg.norm(self.gui.model.field.get_vectors()[i])
-                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
-
-                visual = scene.visuals.create_visual_node(visuals.TextVisual)(
-                    parent=None,
-                    pos=self.gui.model.sampling_volume.get_points()[i],
-                    face=self.DefaultFontFace,
-                    font_size=self.DefaultFontSize,
-                    color=self.foreground,
-                    text=text,
-                    font_manager=self.font_manager
-                )
-
-                self.visual_field_labels[i] = visual
-
-            # Move to the next "x, y, z" grid index
-            if x + 1 < span[0]:
-                x += 1
-            else:
-                x = 0
-                if y + 1 < span[1]:
-                    y += 1
+                if self.gui.config.get_bool("show_colored_labels"):
+                    # Use metric color at labeled sampling volume point
+                    _, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
+                    self.visual_field_labels[i].color = np.append(colors[field_vector_index][:3], 1.0)
                 else:
-                    y = 0
-                    z += 1
+                    # Use foreground color for all labels
+                    self.visual_field_labels[i].color = self.foreground
 
-        if self.DebugVisuals:
-            Debug(self, f".create_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
-
-    def delete_field_labels(self):
-        """
-        Deletes the field labels.
-        """
-        for i, visual in self.visual_field_labels.items():
-            visual.parent = None
-
-        if self.DebugVisuals:
-            Debug(self, f".delete_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
-
-        self.visual_field_labels = {}
+        for visual in self.visual_field_labels:
+            visual.parent = self.view_main.scene if visible else None
 
     # ------------------------------------------------------------------------------------------------------------------
-
-    def boost_color(self, color):
-        """
-        "Boosts" a color value.
-
-        @param color: Color (4-tuple)
-        @return: Color (4-tuple)
-        """
-        direction = 1 if self.gui.config.get_bool("dark_background") else -1
-        boost = self.gui.config.get_float("field_boost")
-
-        r = max(0, min(color[0] + direction * boost, 1))
-        g = max(0, min(color[1] + direction * boost, 1))
-        b = max(0, min(color[2] + direction * boost, 1))
-        a = max(0, min(color[3] + boost, 1))
-
-        return [r, g, b, a]
 
     def save_image(self, filename):
         """

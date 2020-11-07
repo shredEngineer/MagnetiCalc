@@ -27,7 +27,7 @@ class Usage_Dialog(QDialog):
 
     # Window dimensions
     Width = 800
-    Height = 610
+    Height = 590
 
     # HTML content
     HTML = f"""
@@ -75,9 +75,8 @@ class Usage_Dialog(QDialog):
         <ul>
             <li>Take a look at the minimum and maximum magnetic flux densities reached in each metric.</li>
             <li>
-                <i>Experimental feature:</i> Coil energy and self-inductance are also calculated.<br>
-                However, these values are currently not reliable, varying strongly with the other parameters;<br>
-                essentially, the sampling volume must enclose a large, non-singular portion of the field.
+                Coil energy and self-inductance are also calculated;<br>
+                ensure that the sampling volume encloses a large, non-singular portion of the field.
             </li>
         </ul>
 
@@ -93,13 +92,12 @@ class Usage_Dialog(QDialog):
 
         <h3 style="color: {Theme.PrimaryColor};">What does MagnetiCalc do?</h3>
 
-        MagnetiCalc calculates the magnetic field of arbitrary coils in vacuum, examples included.
-        Inside this VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
+        MagnetiCalc calculates the magnetic flux density, vector potential, energy and self-inductance
+        of arbitrary coils in vacuum, examples included.
+        Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
         (<b>B</b>-field due to a DC current, in units of <i>Tesla</i>)  is displayed in interactive 3D,
         using multiple metrics for highlighting this field's properties.
         Alternatively, the magnetic vector potential (<b>A</b>-field, in units of <i>Tesla-meter</i>) may be displayed.
-        All parameters and presets can interactively be changed inside the GUI.
-        There is also an experimental feature to calculate the coil's energy and self-inductance.
 
         <h3 style="color: {Theme.PrimaryColor};">Who needs MagnetiCalc?</h3>
 
@@ -110,7 +108,9 @@ class Usage_Dialog(QDialog):
         <h3 style="color: {Theme.PrimaryColor};">How does it work?</h3>
 
         The <b>B</b>-field calculation is implemented using the Biot-Savart law [1],
-        employing multiprocessing techniques. The use of easily constrainable "sampling volumes"
+        employing multiprocessing techniques.
+        MagnetiCalc uses just-in-time compilation (JIT/Numba), achieving high performance calculations.
+        Additionally, the use of easily constrainable "sampling volumes"
         allows for selective calculation over grids of arbitrary shape.<br><br>
 
         The shape of any wire is modeled as a 3D piecewise linear curve.
@@ -121,7 +121,7 @@ class Usage_Dialog(QDialog):
         At each grid point, the field is displayed using colored arrows and/or dots;
         field color and alpha transparency are individually mapped using one of the various available metrics.<br><br>
 
-        As an experimental feature, the coil's energy [2] and self-inductance [3]
+        The coil's energy [2] and self-inductance [3]
         are calculated by summing the squared <b>B</b>-field over the entire sampling volume.
         However, these values are currently not reliable, varying strongly with the other parameters;
         essentially, the sampling volume must enclose a large, non-singular portion of the field.

@@ -31,8 +31,8 @@ class BiotSavart_JIT:
 
     def __init__(
             self,
-            progress_callback,
             _type,
+            progress_callback,
             distance_limit,
             length_scale,
             dc,
@@ -42,16 +42,16 @@ class BiotSavart_JIT:
         """
         Populates class attributes.
 
-        @param progress_callback: Progress callback
         @param _type: Field type (0: A-Field; 1: B-Field)
+        @param progress_callback: Progress callback
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param dc: Wire current (A)
         @param current_elements: List of current elements (list of 3D vector pairs: (element center, element direction))
         @param sampling_volume_points: List of sampling volume points
         """
-        self._progress_callback = progress_callback
         self._type = _type
+        self._progress_callback = progress_callback
         self._distance_limit = distance_limit
         self._length_scale = length_scale
         self._dc = dc
@@ -64,17 +64,18 @@ class BiotSavart_JIT:
     @jit(nopython=True, parallel=True)
     def worker(_type, distance_limit, length_scale, current_elements, sampling_volume_point):
         """
-        Calculates the magnetic flux density at some sampling volume point using the Biot-Savart law.
+        Either calculates the magnetic flux density (B-Field) at some sampling volume point using the Biot-Savart law,
+        or calculates the magnetic vector potential (A-Field).
 
         @param _type: Field type (0: A-Field; 1: B-Field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param current_elements: Ordered list of current elements (3D vector pairs: (element center, element direction))
         @param sampling_volume_point: Sampling volume point (3D vector)
-        @return: Magnetic flux density vector (3D vector)
+        @return: (Total number of limited points, vector)
         """
-        vector = np.zeros(3)
         total_limited = 0
+        vector = np.zeros(3)
 
         for j in prange(len(current_elements)):
             element_center = current_elements[j][0]
@@ -91,23 +92,22 @@ class BiotSavart_JIT:
             if _type == 0:
                 # Calculate A-Field (vector potential)
                 vector += element_direction * length_scale / scalar_distance
-
             elif _type == 1:
                 # Calculate B-Field (flux density)
                 vector += np.cross(element_direction * length_scale, vector_distance) / (scalar_distance ** 3)
 
-        return vector, total_limited
+        return total_limited, vector
 
     def get_vectors(self):
         """
         Calculates the magnetic flux density at every point of the sampling volume.
 
-        @return: (Ordered list of 3D vectors, total # of distance limited points) if successful, None if interrupted
+        @return: (Total number of limited points, field) if successful, None if interrupted
         """
         Debug(self, ".get_vectors()", color=Theme.PrimaryColor)
 
-        vectors = []
         total_limited = 0
+        vectors = []
 
         # Fetch resulting vectors
         for i in range(len(self._sampling_volume_points)):
@@ -120,8 +120,8 @@ class BiotSavart_JIT:
                 self._sampling_volume_points[i]
             )
 
-            vectors.append(tup[0])
-            total_limited += tup[1]
+            total_limited += tup[0]
+            vectors.append(tup[1])
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
@@ -131,7 +131,8 @@ class BiotSavart_JIT:
                     Debug(self, ": Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return None
 
-        # Apply Biot-Savart constant & wire current scaling
-        vectors = np.array(vectors) * self._dc * Constants.k
+        if self._type == 0 or self._type == 1:
+            # Field is A-Field or B-Field
+            vectors = np.array(vectors) * self._dc * Constants.k
 
-        return vectors, total_limited
+        return total_limited, vectors

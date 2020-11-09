@@ -390,28 +390,6 @@ class Metric:
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def boost_colors(boost, direction, colors):
-        """
-        "Boosts" an array of color values.
-
-        @param boost: Boost value
-        @param direction: Boost direction
-        @param colors: Colors (ordered list of 4-tuples)
-        @return: Colors (ordered list of 4-tuples)
-        """
-        for i in prange(len(colors)):
-            r = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][0] + boost * direction]))]))
-            g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
-            b = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][2] + boost * direction]))]))
-            a = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][3] + boost]))]))
-            colors[i] = np.array([r, g, b, a])
-
-        return colors
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    @staticmethod
-    @jit(nopython=True, parallel=True)
     def _norm_worker(norm_color, norm_alpha, vectors):
         """
         Calculates color and alpha norm values.

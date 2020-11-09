@@ -30,7 +30,7 @@ class Field:
         Initializes an empty field.
 
         @param backend: Backend index
-        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param _type: Field type to display (0: A-Field; 1: B-Field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
@@ -41,8 +41,8 @@ class Field:
         self._distance_limit = distance_limit
         self._length_scale = length_scale
 
-        self._vectors = None
         self._total_limited = None
+        self._vectors = None
 
     def is_valid(self):
         """
@@ -51,8 +51,8 @@ class Field:
         @return: True if data is valid for display, False otherwise
         """
         return \
-            self._vectors is not None and \
-            self._total_limited is not None
+            self._total_limited is not None and \
+            self._vectors is not None
 
     def invalidate(self):
         """
@@ -60,8 +60,8 @@ class Field:
         """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
-        self._vectors = None
         self._total_limited = None
+        self._vectors = None
 
     def get_type(self):
         """
@@ -82,6 +82,7 @@ class Field:
     def get_vectors(self):
         """
         Gets field vectors.
+        The selected field type decides which field is returned.
 
         @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
         """
@@ -114,8 +115,8 @@ class Field:
         if use_jit:
             # Initialize Biot-Savart JIT backend
             biot_savart = BiotSavart_JIT(
-                progress_callback,
                 self._type,
+                progress_callback,
                 self._distance_limit,
                 self._length_scale,
                 wire.get_dc(),
@@ -137,8 +138,8 @@ class Field:
         if tup is None:
             return False
 
-        self._vectors = tup[0]
-        self._total_limited = tup[1]
+        self._total_limited = tup[0]
+        self._vectors = tup[1]
 
         return True
 
@@ -188,7 +189,7 @@ class Field:
         @param arrow_scale: Arrow scale
         @param magnitude_limit: Magnitude limit (mitigating divisions by zero)
         """
-        for i in prange(len(sampling_volume_points)):
+        for i in prange(len(field_vectors)):
 
             # Calculate field vector magnitude (mitigating divisions by zero)
             field_vector_length = np.sqrt(

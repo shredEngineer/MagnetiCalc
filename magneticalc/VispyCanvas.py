@@ -139,7 +139,7 @@ class VispyCanvas(scene.SceneCanvas):
             font_manager=self.font_manager
         )
 
-        self.visual_field_labels = []  # Managed by L{redraw_field_labels}
+        self.visual_field_labels = []  # See: L{create_field_labels}, L{delete_field_labels}, L{redraw_field_labels}
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -161,6 +161,20 @@ class VispyCanvas(scene.SceneCanvas):
         self.foreground = None
         self.background = None
         self.update_color_scheme()
+
+        self.initializing = True
+        self.visual_startup_info = scene.visuals.create_visual_node(visuals.TextVisual)(
+            parent=self.view_text.scene,
+            pos=(10, 10 + 2 * self.DefaultFontSize),
+            anchor_x="left",
+            anchor_y="bottom",
+            bold=True,
+            text="Performing just-in-time compilation …\nSubsequent calculations will run faster",
+            color=self.foreground,
+            face=self.DefaultFontFace,
+            font_size=self.DefaultFontSize,
+            font_manager=self.font_manager
+        )
 
         # Initially load perspective from configuration
         self.load_perspective(redraw=False)
@@ -242,6 +256,10 @@ class VispyCanvas(scene.SceneCanvas):
         Debug(self, ".redraw()", color=(0, 128, 0))
 
         self.update_color_scheme()
+
+        if self.gui.model.is_valid():
+            self.initializing = False
+        self.visual_startup_info.parent = self.view_text if self.initializing else None
 
         self.set_visible(self.visual_coordinate_system, self.gui.config.get_bool("show_coordinate_system"))
         self.redraw_perspective_info()
@@ -462,7 +480,7 @@ class VispyCanvas(scene.SceneCanvas):
 
         self.set_visible(self.visual_field_points, visible)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # ------------------------------------------------------------------------------------------------------------------
 
     def create_field_labels(self):
         """

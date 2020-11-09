@@ -39,7 +39,7 @@ class SamplingVolume_Widget(Groupbox):
     PaddingMin = -99
     PaddingMax = 99
     ResolutionMinimum = 1
-    ResolutionMaximum = 50
+    ResolutionMaximum = 100
 
     def __init__(self, gui):
         """
@@ -198,9 +198,9 @@ class SamplingVolume_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_total_label(self):
+    def update_labels(self):
         """
-        Updates the total sampling volume points label.
+        Updates the labels.
         Called from calculation thread after the sampling volume became valid.
         """
         if self.gui.model.sampling_volume.is_valid():

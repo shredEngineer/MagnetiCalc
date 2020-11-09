@@ -29,7 +29,7 @@ class Display_Widget(Groupbox):
 
     # Slider limits
     FieldArrowScaleMinimum = 0
-    FieldArrowScaleMaximum = 0.5
+    FieldArrowScaleMaximum = 1
     FieldArrowScaleStep = .025
     FieldPointScaleMinimum = 0
     FieldPointScaleMaximum = 20

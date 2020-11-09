@@ -114,7 +114,7 @@ class Field_Widget(Groupbox):
     def set_field(self, _type=None, distance_limit=None, recalculate=True, invalidate_self=True):
         """
         Sets the field. This will overwrite the currently set field in the model.
-        The parameter may be left set to None in order to load its default value.
+        Parameters may be left set to None in order to load their default value.
 
         @param _type: Field type (0: A-Field; 1: B-Field)
         @param distance_limit: Distance limit

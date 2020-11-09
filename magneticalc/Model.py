@@ -198,13 +198,13 @@ class Model:
         """
         Gets called when the wire was successfully calculated.
         """
-        self.gui.sidebar_left.wire_widget.update_sliced_total_label()
+        self.gui.sidebar_left.wire_widget.update_labels()
 
     def on_sampling_volume_valid(self):
         """
         Gets called when the sampling volume was successfully calculated.
         """
-        self.gui.sidebar_left.sampling_volume_widget.update_total_label()
+        self.gui.sidebar_left.sampling_volume_widget.update_labels()
 
     def on_field_valid(self):
         """
@@ -225,13 +225,13 @@ class Model:
         """
         Gets called when the wire was invalidated.
         """
-        self.gui.sidebar_left.wire_widget.update_sliced_total_label()
+        self.gui.sidebar_left.wire_widget.update_labels()
 
     def on_sampling_volume_invalid(self):
         """
         Gets called when the sampling volume was invalidated.
         """
-        self.gui.sidebar_left.sampling_volume_widget.update_total_label()
+        self.gui.sidebar_left.sampling_volume_widget.update_labels()
 
     def on_field_invalid(self):
         """

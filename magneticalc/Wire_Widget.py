@@ -425,9 +425,9 @@ class Wire_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_sliced_total_label(self):
+    def update_labels(self):
         """
-        Updates the total sliced points label.
+        Updates the labels.
         Called from calculation thread after the wire became valid.
         """
         if self.gui.model.wire.is_valid():

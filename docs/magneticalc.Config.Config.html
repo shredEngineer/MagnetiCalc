@@ -51,27 +51,17 @@
   <tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#Filename" class="code" data-type="Class Variable">Filename</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#DebugGetters" class="code" data-type="Class Variable">DebugGetters</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#InstantSave" class="code" data-type="Class Variable">InstantSave</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
     <td><a href="magneticalc.Config.Config.html#FloatPrecision" class="code" data-type="Class Variable">FloatPrecision</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
     <td><a href="magneticalc.Config.Config.html#CoordinatePrecision" class="code" data-type="Class Variable">CoordinatePrecision</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Config.Config.html#DebugGetters" class="code" data-type="Class Variable">DebugGetters</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
@@ -92,27 +82,27 @@
     
     <td>Method</td>
     <td><a href="magneticalc.Config.Config.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Loads configuration from file.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#absolute_filename" class="code" data-type="Instance Variable">absolute_filename</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#config" class="code" data-type="Instance Variable">config</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#synced" class="code" data-type="Instance Variable">synced</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span>Initializes the configuration.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#close" class="code" data-type="Method">close</a></td>
-    <td><span>Finally auto-saves configuration to file.</span></td>
+    <td><a href="magneticalc.Config.Config.html#set_changed_callback" class="code" data-type="Method">set_changed_callback</a></td>
+    <td><span>Sets the callback for any changes to the configuration.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Config.Config.html#get_synced" class="code" data-type="Method">get_synced</a></td>
+    <td><span>Returns the synchronization state of the current session.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Config.Config.html#set_filename" class="code" data-type="Method">set_filename</a></td>
+    <td><span>Sets the filename for the current session.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Config.Config.html#get_filename" class="code" data-type="Method">get_filename</a></td>
+    <td><span>Gets the filename of the current session.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -128,6 +118,11 @@
     <td>Method</td>
     <td><a href="magneticalc.Config.Config.html#save" class="code" data-type="Method">save</a></td>
     <td><span>Saves the configuration to file.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Config.Config.html#close" class="code" data-type="Method">close</a></td>
+    <td><span>Finally auto-saves configuration to file.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -253,6 +248,26 @@
     <td>Method</td>
     <td><a href="magneticalc.Config.Config.html#set_get_dict" class="code" data-type="Method">set_get_dict</a></td>
     <td><span>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Config.Config.html#_config" class="code" data-type="Instance Variable">_config</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Config.Config.html#_synced" class="code" data-type="Instance Variable">_synced</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Config.Config.html#_changed_callback" class="code" data-type="Instance Variable">_changed_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Config.Config.html#_filename" class="code" data-type="Instance Variable">_filename</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -263,54 +278,6 @@
       <div id="childList">
 
         <div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.Filename">
-    
-  </a>
-  <a name="Filename">
-    
-  </a>
-  <div class="functionHeader">
-    Filename =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.DebugGetters">
-    
-  </a>
-  <a name="DebugGetters">
-    
-  </a>
-  <div class="functionHeader">
-    DebugGetters =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.InstantSave">
-    
-  </a>
-  <a name="InstantSave">
-    
-  </a>
-  <div class="functionHeader">
-    InstantSave =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseclassvariable">
   
   <a name="magneticalc.Config.Config.FloatPrecision">
     
@@ -341,6 +308,22 @@
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Config.Config.DebugGetters">
+    
+  </a>
+  <a name="DebugGetters">
+    
+  </a>
+  <div class="functionHeader">
+    DebugGetters =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
   </div>
 </div><div class="baseclassvariable">
   
@@ -407,74 +390,147 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Loads configuration from file.</p></div>
+    <div><p>Initializes the configuration.</p></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Config.Config.absolute_filename">
+  <a name="magneticalc.Config.Config._config">
     
   </a>
-  <a name="absolute_filename">
+  <a name="_config">
     
   </a>
   <div class="functionHeader">
-    absolute_filename =
+    _config =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Config.Config.config">
+  <a name="magneticalc.Config.Config._synced">
     
   </a>
-  <a name="config">
+  <a name="_synced">
     
   </a>
   <div class="functionHeader">
-    config =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Config.Config.synced">
-    
-  </a>
-  <a name="synced">
-    
-  </a>
-  <div class="functionHeader">
-    synced =
+    _synced =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
   </div>
-</div><div class="basemethod">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Config.Config.close">
+  <a name="magneticalc.Config.Config._changed_callback">
     
   </a>
-  <a name="close">
+  <a name="_changed_callback">
+    
+  </a>
+  <div class="functionHeader">
+    _changed_callback =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Config.Config._filename">
+    
+  </a>
+  <a name="_filename">
+    
+  </a>
+  <div class="functionHeader">
+    _filename =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Config.Config.set_changed_callback">
+    
+  </a>
+  <a name="set_changed_callback">
     
   </a>
   <div class="functionHeader">
     
     def
-    close(self):
+    set_changed_callback(self, config_changed_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Finally auto-saves configuration to file.</p></div>
+    <div><p>Sets the callback for any changes to the configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">config_changed_callback</td><td>Gets called when the filename or the synchronization flag changed</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Config.Config.get_synced">
+    
+  </a>
+  <a name="get_synced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_synced(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns the synchronization state of the current session.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Config.Config.set_filename">
+    
+  </a>
+  <a name="set_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_filename(self, filename):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the filename for the current session.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">filename</td><td>Filename</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Config.Config.get_filename">
+    
+  </a>
+  <a name="get_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_filename(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets the filename of the current session.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Filename</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -532,6 +588,25 @@
     
     
     <div><p>Saves the configuration to file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Config.Config.close">
+    
+  </a>
+  <a name="close">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    close(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Finally auto-saves configuration to file.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -1012,7 +1087,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 21:36:06.
       </address>
 
     </div>

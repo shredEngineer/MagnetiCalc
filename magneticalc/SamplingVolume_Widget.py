@@ -72,7 +72,6 @@ class SamplingVolume_Widget(Groupbox):
             self.padding_spinbox[i] = QSpinBox(self.gui)
             self.padding_spinbox[i].setMinimum(self.PaddingMin)
             self.padding_spinbox[i].setMaximum(self.PaddingMax)
-            self.padding_spinbox[i].setValue(self.gui.config.get_point("sampling_volume_padding")[i])
             self.padding_spinbox[i].valueChanged.connect(self.update_padding)
             padding_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
             padding_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -85,15 +84,14 @@ class SamplingVolume_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("fa.th", "Resolution"))
-        resolution_spinbox = QSpinBox(self.gui)
-        resolution_spinbox.setMinimum(self.ResolutionMinimum)
-        resolution_spinbox.setMaximum(self.ResolutionMaximum)
-        resolution_spinbox.setValue(self.gui.config.get_int("sampling_volume_resolution"))
-        resolution_spinbox.valueChanged.connect(
-            lambda: self.set_sampling_volume(resolution=resolution_spinbox.value())
+        self.resolution_spinbox = QSpinBox(self.gui)
+        self.resolution_spinbox.setMinimum(self.ResolutionMinimum)
+        self.resolution_spinbox.setMaximum(self.ResolutionMaximum)
+        self.resolution_spinbox.valueChanged.connect(
+            lambda: self.set_sampling_volume(resolution=self.resolution_spinbox.value())
         )
         resolution_layout = QHBoxLayout()
-        resolution_layout.addWidget(resolution_spinbox, alignment=Qt.AlignVCenter)
+        resolution_layout.addWidget(self.resolution_spinbox, alignment=Qt.AlignVCenter)
         points_units_label = QLabel("Points / cm")
         points_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         resolution_layout.addWidget(points_units_label, alignment=Qt.AlignVCenter)
@@ -140,6 +138,23 @@ class SamplingVolume_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the widget.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.blockSignals(True)
+
+        for i in range(3):
+            self.padding_spinbox[i].setValue(self.gui.config.get_point("sampling_volume_padding")[i])
+
+        self.resolution_spinbox.setValue(self.gui.config.get_int("sampling_volume_resolution"))
+
+        self.blockSignals(False)
+
         # Initially load sampling volume from configuration
         self.set_sampling_volume(recalculate=False, invalidate_self=False)
 
@@ -183,6 +198,9 @@ class SamplingVolume_Widget(Groupbox):
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
         """
+        if self.signalsBlocked():
+            return
+
         with ModelAccess(self.gui, recalculate):
 
             resolution = self.gui.config.set_get_int("sampling_volume_resolution", resolution)

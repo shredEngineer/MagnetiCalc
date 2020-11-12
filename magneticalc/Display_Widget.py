@@ -18,6 +18,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox
+from magneticalc.Debug import Debug
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.IconLabel import IconLabel
@@ -57,7 +58,6 @@ class Display_Widget(Groupbox):
             self.FieldPointScaleMaximum,
             self.FieldPointScaleStep
         )
-        self.field_point_scale_slider.setValue(self.gui.config.get_float("field_point_scale"))
         self.field_point_scale_slider.valueChanged.connect(
             lambda: self.set_field_point_scale(self.field_point_scale_slider.get_value())
         )
@@ -74,7 +74,6 @@ class Display_Widget(Groupbox):
             self.FieldArrowScaleMaximum,
             self.FieldArrowScaleStep
         )
-        self.field_arrow_scale_slider.setValue(self.gui.config.get_float("field_arrow_scale"))
         self.field_arrow_scale_slider.valueChanged.connect(
             lambda: self.set_field_arrow_scale(self.field_arrow_scale_slider.get_value())
         )
@@ -91,7 +90,6 @@ class Display_Widget(Groupbox):
             self.FieldBoostMaximum,
             self.FieldBoostStep
         )
-        self.field_boost_slider.setValue(self.gui.config.get_float("field_boost"))
         self.field_boost_slider.valueChanged.connect(
             lambda: self.set_field_boost(self.field_boost_slider.get_value())
         )
@@ -103,11 +101,29 @@ class Display_Widget(Groupbox):
 
         self.addWidget(IconLabel("fa.tags", "Field Labels"))
         self.display_magnitude_labels_checkbox = QCheckBox(" Display Magnitude (slow)")  # Leading space for alignment
-        self.display_magnitude_labels_checkbox.setChecked(self.gui.config.get_bool("display_magnitude_labels"))
         self.display_magnitude_labels_checkbox.stateChanged.connect(
             lambda: self.set_display_magnitude_labels(self.display_magnitude_labels_checkbox.isChecked())
         )
         self.addWidget(self.display_magnitude_labels_checkbox)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the widget.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.blockSignals(True)
+
+        self.field_point_scale_slider.setValue(self.gui.config.get_float("field_point_scale"))
+        self.field_arrow_scale_slider.setValue(self.gui.config.get_float("field_arrow_scale"))
+        self.field_boost_slider.setValue(self.gui.config.get_float("field_boost"))
+        self.display_magnitude_labels_checkbox.setChecked(self.gui.config.get_bool("display_magnitude_labels"))
+
+        self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -127,6 +143,9 @@ class Display_Widget(Groupbox):
 
         @param value: Value
         """
+        if self.signalsBlocked():
+            return
+
         self.gui.config.set_float("field_arrow_scale", value)
         self.gui.redraw()
 
@@ -136,6 +155,9 @@ class Display_Widget(Groupbox):
 
         @param value: Value
         """
+        if self.signalsBlocked():
+            return
+
         self.gui.config.set_float("field_point_scale", value)
         self.gui.redraw()
 
@@ -145,6 +167,9 @@ class Display_Widget(Groupbox):
 
         @param value: Value
         """
+        if self.signalsBlocked():
+            return
+
         self.gui.config.set_float("field_boost", value)
         self.gui.redraw()
 
@@ -154,5 +179,8 @@ class Display_Widget(Groupbox):
 
         @param value: Value
         """
+        if self.signalsBlocked():
+            return
+
         self.gui.config.set_bool("display_magnitude_labels", value)
         self.gui.redraw()

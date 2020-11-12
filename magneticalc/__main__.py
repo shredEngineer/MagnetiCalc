@@ -21,7 +21,6 @@
 import sys
 from colorit import bold
 from PyQt5.QtWidgets import QApplication
-from magneticalc.Config import Config
 from magneticalc.GUI import GUI
 from magneticalc.Version import Version
 
@@ -35,11 +34,9 @@ def main():
     print(Version.License)
     print()
 
-    config = Config()
-
     app = QApplication(sys.argv)
 
-    gui = GUI(config)
+    gui = GUI()
 
     gui.show()
 

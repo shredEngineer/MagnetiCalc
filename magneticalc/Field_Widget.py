@@ -19,6 +19,7 @@
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QSizePolicy
+from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
@@ -49,15 +50,14 @@ class Field_Widget(Groupbox):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(IconLabel("mdi.tune-variant", "Type"))
-        field_type_group = QButtonGroup()
+        self.field_type_group = QButtonGroup()
         field_type_a_radiobutton = QRadioButton(" A-Field (Vector Potential)")
         field_type_b_radiobutton = QRadioButton(" B-Field (Flux Density)")
-        field_type_group.addButton(field_type_a_radiobutton)
-        field_type_group.addButton(field_type_b_radiobutton)
+        self.field_type_group.addButton(field_type_a_radiobutton)
+        self.field_type_group.addButton(field_type_b_radiobutton)
         self.addWidget(field_type_a_radiobutton)
         self.addWidget(field_type_b_radiobutton)
-        for i, button in enumerate(field_type_group.buttons()):
-            button.setChecked(i == self.gui.config.get_int("field_type"))
+        for i, button in enumerate(self.field_type_group.buttons()):
             button.toggled.connect(partial(self.on_field_type_changed, i))
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,18 +65,17 @@ class Field_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("mdi.ruler", "Distance Limit"))
-        distance_limit_spinbox = QDoubleSpinBox(self.gui)
-        distance_limit_spinbox.setLocale(self.gui.locale)
-        distance_limit_spinbox.setDecimals(4)
-        distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
-        distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
-        distance_limit_spinbox.setSingleStep(self.DistanceLimitStep)
-        distance_limit_spinbox.setValue(self.gui.config.get_float("field_distance_limit"))
-        distance_limit_spinbox.valueChanged.connect(
-            lambda: self.set_field(distance_limit=distance_limit_spinbox.value())
+        self.distance_limit_spinbox = QDoubleSpinBox(self.gui)
+        self.distance_limit_spinbox.setLocale(self.gui.locale)
+        self.distance_limit_spinbox.setDecimals(4)
+        self.distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
+        self.distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
+        self.distance_limit_spinbox.setSingleStep(self.DistanceLimitStep)
+        self.distance_limit_spinbox.valueChanged.connect(
+            lambda: self.set_field(distance_limit=self.distance_limit_spinbox.value())
         )
         distance_limit_layout = QHBoxLayout()
-        distance_limit_layout.addWidget(distance_limit_spinbox, alignment=Qt.AlignVCenter)
+        distance_limit_layout.addWidget(self.distance_limit_spinbox, alignment=Qt.AlignVCenter)
         distance_limit_units_label = QLabel("cm")
         distance_limit_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         distance_limit_layout.addWidget(distance_limit_units_label, alignment=Qt.AlignVCenter)
@@ -96,6 +95,23 @@ class Field_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the widget.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.blockSignals(True)
+
+        for i, button in enumerate(self.field_type_group.buttons()):
+            button.setChecked(i == self.gui.config.get_int("field_type"))
+
+        self.distance_limit_spinbox.setValue(self.gui.config.get_float("field_distance_limit"))
+
+        self.blockSignals(False)
+
         # Initially load field from configuration
         self.set_field(recalculate=False, invalidate_self=False)
 
@@ -108,6 +124,9 @@ class Field_Widget(Groupbox):
         @param _type: Field type (0: A-field; 1: B-field)
         @param checked: Boolean
         """
+        if self.signalsBlocked():
+            return
+
         if checked:
             self.set_field(_type=_type)
 
@@ -129,6 +148,9 @@ class Field_Widget(Groupbox):
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old field before setting a new one
         """
+        if self.signalsBlocked():
+            return
+
         with ModelAccess(self.gui, recalculate):
 
             backend = self.gui.config.get_int("backend")

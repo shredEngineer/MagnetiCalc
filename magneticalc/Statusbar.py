@@ -20,6 +20,7 @@ import qtawesome as qta
 from multiprocessing import cpu_count
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QCheckBox, QComboBox, QProgressBar, QLabel
+from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
 
@@ -50,7 +51,6 @@ class Statusbar:
 
         # Auto-calculation checkbox
         self.auto_calculation_checkbox = QCheckBox("Auto-Calculation")
-        self.auto_calculation_checkbox.setChecked(self.gui.config.get_bool("auto_calculation"))
         self.auto_calculation_checkbox.stateChanged.connect(self._auto_calculation_changed)
 
         # Number-of-cores combobox
@@ -59,16 +59,11 @@ class Statusbar:
         # "Auto" setting
         num_cores_auto = max(1, cpu_count() - 1)
 
-        if 0 > self.gui.config.get_int("num_cores") > cpu_count():
-            self.gui.config.set_int("num_cores", 0)
-
         for i in range(0, cpu_count() + 1):
             if i == 0:
                 self.cores_combobox.addItem(f"Auto ({num_cores_auto} Core" + ("s" if num_cores_auto > 1 else "") + ")")
             else:
                 self.cores_combobox.addItem(f"{i} Core" + ("s" if i > 1 else ""))
-            if i == self.gui.config.get_int("num_cores"):
-                self.cores_combobox.setCurrentIndex(i)
 
         self.cores_combobox.currentIndexChanged.connect(
             lambda: self.gui.config.set_int("num_cores", self.cores_combobox.currentIndex())
@@ -105,12 +100,35 @@ class Statusbar:
 
         gui.statusBar().setSizeGripEnabled(False)
 
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the statusbar.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.gui.blockSignals(True)
+
+        self.auto_calculation_checkbox.setChecked(self.gui.config.get_bool("auto_calculation"))
+        if 0 > self.gui.config.get_int("num_cores") > cpu_count():
+            self.gui.config.set_int("num_cores", 0)
+
+        for i in range(0, cpu_count() + 1):
+            if i == self.gui.config.get_int("num_cores"):
+                self.cores_combobox.setCurrentIndex(i)
+
+        self.gui.blockSignals(False)
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def _auto_calculation_changed(self):
         """
         Handles changed auto-calculation setting.
         """
+        if self.gui.signalsBlocked():
+            return
+
         self.gui.config.set_bool("auto_calculation", self.auto_calculation_checkbox.isChecked())
         if self.auto_calculation_checkbox.isChecked():
             if not self.gui.model.is_valid():

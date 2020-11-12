@@ -170,7 +170,6 @@ If this software has been helpful to you in some way or another, please let me a
 
 ToDo
 ----
-* Add support for saving/loading configuration to/from other filenames.
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
 * Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
 * Add support for multiple wires, study mutual induction.

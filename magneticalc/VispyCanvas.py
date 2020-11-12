@@ -165,6 +165,8 @@ class VispyCanvas(scene.SceneCanvas):
 
         @param redraw: Enable to trigger final re-draw
         """
+        Debug(self, ".load_perspective()")
+
         self.view_main.camera.azimuth = self.gui.config.get_float("azimuth")
         self.view_main.camera.elevation = self.gui.config.get_float("elevation")
         self.view_main.camera.scale_factor = self.gui.config.get_float("scale_factor")
@@ -176,12 +178,25 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Handles a change of perspective.
         """
+        Debug(self, ".on_perspective_changed()")
 
         # Limit scale factor
         if self.view_main.camera.scale_factor > self.ScaleFactorMax:
             self.view_main.camera.scale_factor = self.ScaleFactorMax
         elif self.view_main.camera.scale_factor < self.ScaleFactorMin:
             self.view_main.camera.scale_factor = self.ScaleFactorMin
+
+        if self.view_main.camera.azimuth != self.gui.config.get_float("azimuth"):
+            self.gui.config.set_float("azimuth", self.view_main.camera.azimuth)
+            Debug(self, f".on_perspective_changed(): azimuth = {self.view_main.camera.azimuth}")
+
+        if self.view_main.camera.elevation != self.gui.config.get_float("elevation"):
+            self.gui.config.set_float("elevation", self.view_main.camera.elevation)
+            Debug(self, f".on_perspective_changed(): elevation = {self.view_main.camera.elevation}")
+
+        if self.view_main.camera.scale_factor != self.gui.config.get_float("scale_factor"):
+            self.gui.config.set_float("scale_factor", self.view_main.camera.scale_factor)
+            Debug(self, f".on_perspective_changed(): scale_factor = {self.view_main.camera.scale_factor}")
 
         self.super_perspective_changed()
         self.redraw_perspective_info()

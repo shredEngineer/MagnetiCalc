@@ -21,6 +21,7 @@ import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import \
     QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy
+from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
@@ -128,7 +129,6 @@ class Wire_Widget(Groupbox):
             self.stretch_spinbox[i].setMinimum(self.StretchMin)
             self.stretch_spinbox[i].setMaximum(self.StretchMax)
             self.stretch_spinbox[i].setSingleStep(self.StretchStep)
-            self.stretch_spinbox[i].setValue(self.gui.config.get_point("wire_stretch")[i])
             self.stretch_spinbox[i].valueChanged.connect(self.set_stretch)
             stretch_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
             stretch_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -154,7 +154,6 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_count_spinbox = QSpinBox()
         self.rotational_symmetry_count_spinbox.setMinimum(self.RotationalSymmetryCountMin)
         self.rotational_symmetry_count_spinbox.setMaximum(self.RotationalSymmetryCountMax)
-        self.rotational_symmetry_count_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_count"))
         count_label = QLabel("Count:")
         count_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         rotational_symmetry_layout_left.addWidget(count_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
@@ -175,7 +174,6 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_radius_spinbox.setMinimum(self.RotationalSymmetryRadiusMin)
         self.rotational_symmetry_radius_spinbox.setMaximum(self.RotationalSymmetryRadiusMax)
         self.rotational_symmetry_radius_spinbox.setSingleStep(self.RotationalSymmetryRadiusStep)
-        self.rotational_symmetry_radius_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_radius"))
         radius_label = QLabel("Radius:")
         radius_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         rotational_symmetry_layout_left.addWidget(radius_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
@@ -191,8 +189,6 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_axis_combobox = QComboBox()
         for i, axis in enumerate(["X", "Y", "Z"]):
             self.rotational_symmetry_axis_combobox.addItem(axis)
-            if i == self.gui.config.get_int("rotational_symmetry_axis"):
-                self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
         axis_label = QLabel("Axis:")
         axis_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         rotational_symmetry_layout_left.addWidget(axis_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
@@ -210,7 +206,6 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_offset_spinbox.setMinimum(self.RotationalSymmetryOffsetMin)
         self.rotational_symmetry_offset_spinbox.setMaximum(self.RotationalSymmetryOffsetMax)
         self.rotational_symmetry_offset_spinbox.setSingleStep(self.RotationalSymmetryOffsetStep)
-        self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))
         Offset_label = QLabel("Offset Angle:")
         Offset_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         rotational_symmetry_layout_left.addWidget(Offset_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
@@ -256,20 +251,19 @@ class Wire_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("mdi.box-cutter", "Slicer Limit"))
-        slicer_limit_spinbox = QDoubleSpinBox(self.gui)
-        slicer_limit_spinbox.setLocale(self.gui.locale)
-        slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
-        slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
-        slicer_limit_spinbox.setSingleStep(self.SlicerLimitStep)
-        slicer_limit_spinbox.setValue(self.gui.config.get_float("wire_slicer_limit"))
-        slicer_limit_spinbox.valueChanged.connect(
-            lambda: self.set_wire(slicer_limit=slicer_limit_spinbox.value())
+        self.slicer_limit_spinbox = QDoubleSpinBox(self.gui)
+        self.slicer_limit_spinbox.setLocale(self.gui.locale)
+        self.slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
+        self.slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
+        self.slicer_limit_spinbox.setSingleStep(self.SlicerLimitStep)
+        self.slicer_limit_spinbox.valueChanged.connect(
+            lambda: self.set_wire(slicer_limit=self.slicer_limit_spinbox.value())
         )
         slicer_limit_units_label = QLabel("cm")
         slicer_limit_units_label.setAlignment(Qt.AlignRight)
         slicer_limit_units_label.setFixedWidth(self.UnitsLabelWidth)
         slicer_limit_layout = QHBoxLayout()
-        slicer_limit_layout.addWidget(slicer_limit_spinbox, alignment=Qt.AlignVCenter)
+        slicer_limit_layout.addWidget(self.slicer_limit_spinbox, alignment=Qt.AlignVCenter)
         slicer_limit_layout.addWidget(slicer_limit_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(slicer_limit_layout)
 
@@ -287,16 +281,15 @@ class Wire_Widget(Groupbox):
 
         self.addWidget(HLine())
 
-        dc_spinbox = QDoubleSpinBox(self.gui)
-        dc_spinbox.setLocale(self.gui.locale)
+        self.dc_spinbox = QDoubleSpinBox(self.gui)
+        self.dc_spinbox.setLocale(self.gui.locale)
         self.addWidget(IconLabel("fa.cog", "Wire Current"))
-        dc_spinbox.setMinimum(self.DcMinimum)
-        dc_spinbox.setMaximum(self.DcMaximum)
-        dc_spinbox.setSingleStep(self.DcStep)
-        dc_spinbox.setValue(self.gui.config.get_float("wire_dc"))
-        dc_spinbox.valueChanged.connect(lambda: self.set_wire(dc=dc_spinbox.value()))
+        self.dc_spinbox.setMinimum(self.DcMinimum)
+        self.dc_spinbox.setMaximum(self.DcMaximum)
+        self.dc_spinbox.setSingleStep(self.DcStep)
+        self.dc_spinbox.valueChanged.connect(lambda: self.set_wire(dc=self.dc_spinbox.value()))
         dc_layout = QHBoxLayout()
-        dc_layout.addWidget(dc_spinbox, alignment=Qt.AlignVCenter)
+        dc_layout.addWidget(self.dc_spinbox, alignment=Qt.AlignVCenter)
         dc_unit_label = QLabel("A")
         dc_unit_label.setAlignment(Qt.AlignRight)
         dc_unit_label.setFixedWidth(self.UnitsLabelWidth)
@@ -304,6 +297,32 @@ class Wire_Widget(Groupbox):
         self.addLayout(dc_layout)
 
         # --------------------------------------------------------------------------------------------------------------
+
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the widget.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.blockSignals(True)
+
+        for i in range(3):
+            self.stretch_spinbox[i].setValue(self.gui.config.get_point("wire_stretch")[i])
+
+        self.rotational_symmetry_count_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_count"))
+        self.rotational_symmetry_radius_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_radius"))
+
+        for i, axis in enumerate(["X", "Y", "Z"]):
+            if i == self.gui.config.get_int("rotational_symmetry_axis"):
+                self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
+
+        self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))
+        self.slicer_limit_spinbox.setValue(self.gui.config.get_float("wire_slicer_limit"))
+        self.dc_spinbox.setValue(self.gui.config.get_float("wire_dc"))
+
+        self.blockSignals(False)
 
         # Initially load wire from configuration
         self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate_self=False)
@@ -334,6 +353,9 @@ class Wire_Widget(Groupbox):
         @param readjust_sampling_volume: Enable to readjust sampling volume
         @param invalidate_self: Enable to invalidate the old wire before setting a new one
         """
+        if self.signalsBlocked():
+            return
+
         with ModelAccess(self.gui, recalculate):
 
             points = self.gui.config.set_get_points("wire_points_base", points)
@@ -394,6 +416,9 @@ class Wire_Widget(Groupbox):
         """
         Handles changes to rotational symmetry transform parameters.
         """
+        if self.signalsBlocked():
+            return
+
         self.set_wire(
             rotational_symmetry={
                 "count" : self.rotational_symmetry_count_spinbox.value(),

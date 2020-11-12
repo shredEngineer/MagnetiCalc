@@ -25,6 +25,7 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
+from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
 from magneticalc.Model import Model
@@ -39,15 +40,16 @@ from magneticalc.VispyCanvas import VispyCanvas
 class GUI(QMainWindow):
     """ GUI class. """
 
+    # Default configuration filename
+    DefaultFilename = "MagnetiCalc.ini"
+
     # These signals are fired from the calculation thread
     calculation_status = pyqtSignal(str)
     calculation_exited = pyqtSignal(bool)
 
-    def __init__(self, config):
+    def __init__(self):
         """
         Initializes the GUI.
-
-        @param config: Config
         """
         QMainWindow.__init__(self, flags=Qt.Window)
 
@@ -55,9 +57,12 @@ class GUI(QMainWindow):
 
         self.locale = QLocale(QLocale.English)
 
-        self.config = config
-
         self.set_window()
+
+        self.config = Config()
+        self.config.set_changed_callback(self.on_config_changed)
+        self.config.set_filename(self.DefaultFilename)
+        self.config.load()
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by self.recalculate() but is needed here for ModelAccess
@@ -241,8 +246,7 @@ class GUI(QMainWindow):
         Sets the basic window properties.
         """
 
-        # Set window title and icon
-        self.setWindowTitle(Version.String)
+        # Set window icon
         self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
 
         # Adjust window dimensions to desktop dimensions
@@ -259,10 +263,6 @@ class GUI(QMainWindow):
                 self.interrupt_calculation()
         else:
             Debug(self, ".quit(): Called from calculation thread (assertion failed)")
-
-        self.config.set_float("azimuth", self.vispy_canvas.view_main.camera.azimuth)
-        self.config.set_float("elevation", self.vispy_canvas.view_main.camera.elevation)
-        self.config.set_float("scale_factor", self.vispy_canvas.view_main.camera.scale_factor)
 
         self.config.close()
 
@@ -316,17 +316,102 @@ class GUI(QMainWindow):
                         # Cancel the running calculation
                         self.interrupt_calculation()
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_config_changed(self):
+        """
+        Gets called when the configuration changed.
+        """
+
+        # Update the window title
+        self.setWindowTitle(
+            Version.String +
+            " – " +
+            self.config.get_filename() +
+            ("" if self.config.get_synced() else " *")
+        )
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def file_open(self):
+        """
+        Opens some INI file.
+        """
+
+        # Stop any running calculation
+        if self.calculation_thread is not None:
+            if self.calculation_thread.isRunning():
+                # Cancel the running calculation
+                self.interrupt_calculation()
+
+        filename, _chosen_extension = QFileDialog.getOpenFileName(
+            parent=self,
+            caption="Open File",
+            filter="MagnetiCalc INI File (*.ini)",
+            options=QFileDialog.DontUseNativeDialog
+        )
+
+        if filename != "":
+
+            self.model.invalidate()
+
+            self.config.close()
+            self.config.set_filename(filename)
+            self.config.load()
+
+            self.sidebar_left.wire_widget.reinitialize()
+            self.sidebar_left.sampling_volume_widget.reinitialize()
+            self.sidebar_right.field_widget.reinitialize()
+            self.sidebar_right.metric_widget.reinitialize()
+            # Parameters_Widget doesn't need reinitialization as it does not access the configuration
+            # Perspective_Widget doesn't need reinitialization as it does not access the configuration
+            self.sidebar_right.display_widget.reinitialize()
+
+            self.statusbar.reinitialize()
+
+            if self.config.get_bool("auto_calculation"):
+                self.recalculate()
+            else:
+                self.redraw()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     def file_save(self):
+        """
+        Saves to the currently set INI file.
+        """
+        self.config.save()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def file_save_as(self):
+        """
+        Saves to some INI file.
+        """
+        file_dialog = QFileDialog(self)
+        file_dialog.setFileMode(QFileDialog.AnyFile)
+        file_dialog.setWindowTitle("Save As …")
+        file_dialog.setNameFilter("MagnetiCalc INI File (*.ini)")
+        file_dialog.setOptions(QFileDialog.DontUseNativeDialog)
+        if file_dialog.exec():
+            filenames = file_dialog.selectedFiles()
+            print(filenames)
+            if filenames:
+                self.config.set_filename(filenames[0])
+                self.config.save()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def file_save_image(self):
         """
         Saves the currently displayed scene to PNG file.
         """
 
-        # noinspection PyCallByClass,PyTypeChecker
         filename, _chosen_extension = QFileDialog.getSaveFileName(
-            self,
-            "Save Image",
-            datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc"),
-            "Portable Network Graphics (*.png)",
+            parent=self,
+            caption="Save Image",
+            directory=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc"),
+            filter="Portable Network Graphics (*.png)",
             options=QFileDialog.DontUseNativeDialog
         )
 

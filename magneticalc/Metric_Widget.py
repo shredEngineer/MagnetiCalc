@@ -20,6 +20,7 @@ import qtawesome as qta
 from si_prefix import si_format
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
+from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
@@ -44,21 +45,16 @@ class Metric_Widget(Groupbox):
 
         self.gui = gui
 
-        # Initially load metric from configuration
-        self.set_metric(recalculate=False, update_labels=False, invalidate_self=False)
-
         # --------------------------------------------------------------------------------------------------------------
 
         self.addWidget(IconLabel("fa.tint", "Color"))
-        color_metric_combobox = QComboBox()
+        self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
-            color_metric_combobox.addItem(preset["id"])
-            if preset["id"] == self.gui.model.metric.get_color_preset()["id"]:
-                color_metric_combobox.setCurrentIndex(i)
-        color_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(color_preset=Metric_Presets.get_by_id(color_metric_combobox.currentText()))
+            self.color_metric_combobox.addItem(preset["id"])
+        self.color_metric_combobox.currentIndexChanged.connect(
+            lambda: self.set_metric(color_preset=Metric_Presets.get_by_id(self.color_metric_combobox.currentText()))
         )
-        self.addWidget(color_metric_combobox)
+        self.addWidget(self.color_metric_combobox)
 
         self.color_metric_limits_layout = QHBoxLayout()
         self.color_metric_limits_widget = QWidget()
@@ -83,15 +79,13 @@ class Metric_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("mdi.blur", "Alpha"))
-        alpha_metric_combobox = QComboBox()
+        self.alpha_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
-            alpha_metric_combobox.addItem(preset["id"])
-            if preset["id"] == self.gui.model.metric.get_alpha_preset()["id"]:
-                alpha_metric_combobox.setCurrentIndex(i)
-        alpha_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(alpha_preset=Metric_Presets.get_by_id(alpha_metric_combobox.currentText()))
+            self.alpha_metric_combobox.addItem(preset["id"])
+        self.alpha_metric_combobox.currentIndexChanged.connect(
+            lambda: self.set_metric(alpha_preset=Metric_Presets.get_by_id(self.alpha_metric_combobox.currentText()))
         )
-        self.addWidget(alpha_metric_combobox)
+        self.addWidget(self.alpha_metric_combobox)
 
         self.alpha_metric_limits_layout = QHBoxLayout()
         self.alpha_metric_limits_widget = QWidget()
@@ -110,6 +104,29 @@ class Metric_Widget(Groupbox):
             alignment=Qt.AlignVCenter | Qt.AlignRight
         )
         self.addWidget(self.alpha_metric_limits_widget)
+
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the widget.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.blockSignals(True)
+
+        for i, preset in enumerate(Metric_Presets.List):
+            if preset["id"] == self.gui.config.get_str("color_metric"):
+                self.color_metric_combobox.setCurrentIndex(i)
+
+        for i, preset in enumerate(Metric_Presets.List):
+            if preset["id"] == self.gui.config.get_str("alpha_metric"):
+                self.alpha_metric_combobox.setCurrentIndex(i)
+
+        self.blockSignals(False)
+
+        # Initially load metric from configuration
+        self.set_metric(recalculate=False, update_labels=False, invalidate_self=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -131,6 +148,9 @@ class Metric_Widget(Groupbox):
         @param update_labels: Enable to update metric labels
         @param invalidate_self: Enable to invalidate the old metric before setting a new one
         """
+        if self.signalsBlocked():
+            return
+
         with ModelAccess(self.gui, recalculate):
 
             # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets

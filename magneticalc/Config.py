@@ -18,6 +18,7 @@
 
 import os
 import configparser
+from PyQt5.QtWidgets import QMessageBox
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Version import Version
@@ -27,18 +28,12 @@ from magneticalc.Wire_Presets import Wire_Presets
 class Config:
     """ Config class. """
 
-    # Configuration filename
-    Filename = "MagnetiCalc.ini"
-
-    # Enable to additionally debug read access to configuration
-    DebugGetters = False
-
-    # Enable to instantly save every change to file (useful for debugging)
-    InstantSave = False
-
     # Formatting settings
     FloatPrecision = 4
     CoordinatePrecision = 6
+
+    # Enable to additionally debug read access to configuration
+    DebugGetters = False
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -86,11 +81,9 @@ class Config:
 
     def __init__(self):
         """
-        Loads configuration from file.
+        Initializes the configuration.
         """
-        self.absolute_filename = os.path.join(os.path.dirname(os.path.dirname(__file__)), self.Filename)
-
-        Debug(self, ": file://" + self.absolute_filename.replace(" ", "%20"), force=True)
+        Debug(self, ": Init")
 
         # Populate defaults
         self.Default["wire_points_base"] = Config.points_to_str(
@@ -99,12 +92,93 @@ class Config:
         self.Default["azimuth"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
         self.Default["elevation"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
 
-        self.config = configparser.ConfigParser()
-        self.synced = False
+        self._config = None
 
-        self.load()
+        self._synced = False
+        self._changed_callback = None
+
+        self._filename = None
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_changed_callback(self, config_changed_callback):
+        """
+        Sets the callback for any changes to the configuration.
+
+        @param config_changed_callback: Gets called when the filename or the synchronization flag changed
+        """
+        self._changed_callback = config_changed_callback
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def get_synced(self) -> bool:
+        """
+        Returns the synchronization state of the current session.
+        """
+        return self._synced
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def set_filename(self, filename: str):
+        """
+        Sets the filename for the current session.
+
+        @param filename: Filename
+        """
+        self._filename = os.path.join(os.path.dirname(os.path.dirname(__file__)), filename)
+        Debug(self, ".set_filename: file://" + self._filename.replace(" ", "%20"), force=True)
+
+    def get_filename(self) -> str:
+        """
+        Gets the filename of the current session.
+
+        @return: Filename
+        """
+        return self._filename
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def load(self):
+        """
+        Loads the configuration from file.
+
+        """
+        Debug(self, ".load()", force=True)
+
+        self._config = configparser.ConfigParser()
+
+        self._config.read(self._filename)
+
+        self.set_defaults()
+
+        self._synced = True
+        if self._changed_callback is not None:
+            self._changed_callback()
+
+    def set_defaults(self):
+        """
+        Sets the default key-value pairs. Creates empty "User" section if not present.
+        """
+        self._config["DEFAULT"] = Config.Default
+
+        if "User" not in self._config:
+            Debug(self, ".set_defaults(): Creating empty User section")
+            self._config["User"] = {}
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def save(self):
+        """
+        Saves the configuration to file.
+        """
+        Debug(self, ".save()", force=True)
+
+        with open(self._filename, "w") as file:
+            self._config.write(file)
+
+        self._synced = True
+        if self._changed_callback is not None:
+            self._changed_callback()
 
     def close(self):
         """
@@ -112,38 +186,15 @@ class Config:
         """
         Debug(self, ".close()")
 
-        if not self.synced:
-            self.save()
-
-    def load(self):
-        """
-        Loads the configuration from file.
-        """
-        Debug(self, ".load: " + self.absolute_filename)
-
-        self.config.read(self.absolute_filename)
-        self.set_defaults()
-        self.synced = True
-
-    def set_defaults(self):
-        """
-        Sets the default key-value pairs. Creates empty "User" section if not present.
-        """
-        self.config["DEFAULT"] = Config.Default
-
-        if "User" not in self.config:
-            Debug(self, ".set_defaults(): Creating empty User section")
-            self.config["User"] = {}
-
-    def save(self):
-        """
-        Saves the configuration to file.
-        """
-        Debug(self, ".save()")
-
-        with open(self.Filename, "w") as file:
-            self.config.write(file)
-        self.synced = True
+        if not self._synced:
+            messagebox = QMessageBox()
+            messagebox.setWindowTitle("Configuration Changed")
+            messagebox.setText("Do you want to save your changes?")
+            messagebox.setIcon(QMessageBox.Question)
+            messagebox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            messagebox.setDefaultButton(QMessageBox.Yes)
+            if messagebox.exec() == QMessageBox.Yes:
+                self.save()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -202,7 +253,7 @@ class Config:
         if self.DebugGetters:
             Debug(self, f".get_str({key})")
 
-        value = self.config.get("User", key)
+        value = self._config.get("User", key)
         return value
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -261,11 +312,10 @@ class Config:
         """
         Debug(self, f".set_str({key}, {value})")
 
-        self.config.set("User", key, value)
-        self.synced = False
-
-        if self.InstantSave:
-            self.save()
+        self._config.set("User", key, value)
+        self._synced = False
+        if self._changed_callback is not None:
+            self._changed_callback()
 
     def set_get_bool(self, key: str, value: bool) -> bool:
         """

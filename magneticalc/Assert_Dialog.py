@@ -32,7 +32,7 @@ class Assert_Dialog:
     # Window dimensions
     Width = 600
 
-    def __init__(self, assertion, message):
+    def __init__(self, assertion: bool, message: str):
         """
         Shows a user dialog if an assertion failed. Intended for beta-testing.
         This allows the user to either quit or resume (possibly resulting in unstable behaviour).
@@ -47,15 +47,16 @@ class Assert_Dialog:
         if assertion:
             return
 
-        Debug(self, f": Failed: {message}", color=(255, 0, 0), force=True)
+        Debug(self, f": Failed: {message}", color=Theme.WarningColor, force=True)
 
-        # noinspection PyArgumentList
         self.dialog = QDialog()
 
         self.dialog.setWindowTitle("Assertion failed")
 
         layout = QVBoxLayout()
         self.dialog.setLayout(layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Generate Github issue URL
         issue_url = \
@@ -102,6 +103,8 @@ class Assert_Dialog:
         text_browser.setTextCursor(cursor)
         layout.addWidget(text_browser, alignment=Qt.AlignTop)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         button_box = QHBoxLayout()
 
         ok_button = QPushButton(qta.icon("fa.times-circle"), "Abort application")
@@ -114,7 +117,11 @@ class Assert_Dialog:
 
         layout.addLayout(button_box)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         self.dialog.exec()
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def reject(self):
         """

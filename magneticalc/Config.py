@@ -19,9 +19,9 @@
 import os
 import configparser
 from magneticalc.Debug import Debug
-from magneticalc.VispyCanvas import VispyCanvas
+from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Version import Version
-from magneticalc.Wire import Wire
+from magneticalc.Wire_Presets import Wire_Presets
 
 
 class Config:
@@ -30,21 +30,23 @@ class Config:
     # Configuration filename
     Filename = "MagnetiCalc.ini"
 
-    # Enable to instantly save every change to file (useful for debugging)
-    InstantSave = False
-
     # Enable to additionally debug read access to configuration
     DebugGetters = False
 
-    # Default wire preset
-    DefaultWirePreset = "Solenoid: 8 circular loops"
-
-    # Default perspective preset
-    DefaultPerspectivePreset = "Isometric"
+    # Enable to instantly save every change to file (useful for debugging)
+    InstantSave = False
 
     # Formatting settings
     FloatPrecision = 4
     CoordinatePrecision = 6
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Default wire preset
+    DefaultWirePreset = "Straight Line"
+
+    # Default perspective preset
+    DefaultPerspectivePreset = "Isometric"
 
     # Default configuration
     Default = {
@@ -53,22 +55,23 @@ class Config:
         "auto_calculation"              : "True",
         "num_cores"                     : "0",
         "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "1.0000, 1.0000, 1.0000",
-        "wire_slicer_limit"             : "0.1000",
+        "wire_stretch"                  : "0.1000, 1.0000, 1.0000",
+        "wire_slicer_limit"             : "0.0500",
         "wire_dc"                       : "1.0000",
-        "rotational_symmetry_count"     : "4",
+        "rotational_symmetry_count"     : "30",
         "rotational_symmetry_radius"    : "1.0000",
         "rotational_symmetry_axis"      : "2",
-        "sampling_volume_padding"       : "0, 0, -1",
-        "sampling_volume_resolution"    : "15",
+        "rotational_symmetry_offset"    : "0",
+        "sampling_volume_padding"       : "1, 1, 1",
+        "sampling_volume_resolution"    : "10",
         "field_type"                    : "1",
-        "field_distance_limit"          : "0.0003",
-        "color_metric"                  : "Magnitude X",
+        "field_distance_limit"          : "0.0008",
+        "color_metric"                  : "Log Magnitude",
         "alpha_metric"                  : "Magnitude",
         "field_point_scale"             : "1.0000",
         "field_arrow_scale"             : "0.1250",
-        "field_boost"                   : "0.1000",
-        "display_magnitude_labels"      : "True",
+        "field_boost"                   : "0.0000",
+        "display_magnitude_labels"      : "False",
         "show_wire_segments"            : "True",
         "show_wire_points"              : "True",
         "show_colored_labels"           : "False",
@@ -77,7 +80,8 @@ class Config:
         "dark_background"               : "True",
         "azimuth"                       : None,  # Will be set in __init__
         "elevation"                     : None,  # Will be set in __init__
-        "scale_factor"                  : "5.0000"
+        "scale_factor"                  : "3.0000",
+        "constraint_count"              : "0"
     }
 
     def __init__(self):
@@ -88,14 +92,19 @@ class Config:
 
         Debug(self, ": file://" + self.absolute_filename.replace(" ", "%20"), force=True)
 
-        self.Default["wire_points_base"] = Config.points_to_str(Wire.get_by_id(Config.DefaultWirePreset)["points"])
-        self.Default["azimuth"] = VispyCanvas.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
-        self.Default["elevation"] = VispyCanvas.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
+        # Populate defaults
+        self.Default["wire_points_base"] = Config.points_to_str(
+            Wire_Presets.get_by_id(Config.DefaultWirePreset)["points"]
+        )
+        self.Default["azimuth"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
+        self.Default["elevation"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
 
         self.config = configparser.ConfigParser()
         self.synced = False
 
         self.load()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def close(self):
         """
@@ -138,7 +147,7 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_bool(self, key):
+    def get_bool(self, key: str) -> bool:
         """
         Gets boolean value, convert from string.
 
@@ -147,7 +156,7 @@ class Config:
         """
         return self.get_str(key) == "True"
 
-    def get_float(self, key):
+    def get_float(self, key: str) -> float:
         """
         Gets float value, convert from string.
 
@@ -156,7 +165,7 @@ class Config:
         """
         return float(self.get_str(key))
 
-    def get_int(self, key):
+    def get_int(self, key: str) -> int:
         """
         Gets integer value, convert from string.
 
@@ -165,7 +174,7 @@ class Config:
         """
         return int(self.get_str(key))
 
-    def get_points(self, key):
+    def get_points(self, key: str):
         """
         Gets list of 3D points, convert from string.
 
@@ -174,7 +183,7 @@ class Config:
         """
         return Config.str_to_points(self.get_str(key))
 
-    def get_point(self, key):
+    def get_point(self, key: str):
         """
         Gets a single 3D point, convert from string.
 
@@ -183,12 +192,12 @@ class Config:
         """
         return Config.str_to_point(self.get_str(key))
 
-    def get_str(self, key):
+    def get_str(self, key: str) -> str:
         """
         Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.
 
-        @param key: Key (string)
-        @return: Value (string)
+        @param key: Key
+        @return: Value
         """
         if self.DebugGetters:
             Debug(self, f".get_str({key})")
@@ -198,7 +207,7 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_bool(self, key, value):
+    def set_bool(self, key: str, value: bool):
         """
         Sets boolean value, convert to string.
 
@@ -207,7 +216,7 @@ class Config:
         """
         self.set_str(key, "True" if value else "False")
 
-    def set_float(self, key, value):
+    def set_float(self, key: str, value: float):
         """
         Sets float value, convert to string.
 
@@ -216,7 +225,7 @@ class Config:
         """
         self.set_str(key, f"{float(value):.{Config.FloatPrecision}f}")
 
-    def set_int(self, key, value):
+    def set_int(self, key: str, value: int):
         """
         Sets integer value, convert to string.
 
@@ -225,7 +234,7 @@ class Config:
         """
         self.set_str(key, str(int(value)))
 
-    def set_points(self, key, value):
+    def set_points(self, key: str, value):
         """
         Sets list of 3D points, convert to string.
 
@@ -234,7 +243,7 @@ class Config:
         """
         self.set_str(key, Config.points_to_str(value))
 
-    def set_point(self, key, value):
+    def set_point(self, key: str, value):
         """
         Sets a single 3D point, convert to string.
 
@@ -243,12 +252,12 @@ class Config:
         """
         self.set_str(key, Config.point_to_str(value))
 
-    def set_str(self, key, value):
+    def set_str(self, key: str, value: str):
         """
         Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.
 
-        @param key: Key (string)
-        @param value: Value (string)
+        @param key: Key
+        @param value: Value
         """
         Debug(self, f".set_str({key}, {value})")
 
@@ -258,12 +267,12 @@ class Config:
         if self.InstantSave:
             self.save()
 
-    def set_get_bool(self, key, value):
+    def set_get_bool(self, key: str, value: bool) -> bool:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (bool) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_bool(key)
@@ -271,12 +280,12 @@ class Config:
             self.set_bool(key, value)
             return value
 
-    def set_get_float(self, key, value):
+    def set_get_float(self, key: str, value: float) -> float:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (float) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_float(key)
@@ -284,12 +293,12 @@ class Config:
             self.set_float(key, value)
             return value
 
-    def set_get_int(self, key, value):
+    def set_get_int(self, key: str, value: int) -> int:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (int) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_int(key)
@@ -297,12 +306,12 @@ class Config:
             self.set_int(key, value)
             return value
 
-    def set_get_points(self, key, value):
+    def set_get_points(self, key: str, value):
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (string) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_points(key)
@@ -310,12 +319,12 @@ class Config:
             self.set_points(key, value)
             return value
 
-    def set_get_point(self, key, value):
+    def set_get_point(self, key: str, value):
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (string) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_point(key)
@@ -323,12 +332,12 @@ class Config:
             self.set_point(key, value)
             return value
 
-    def set_get_str(self, key, value):
+    def set_get_str(self, key: str, value: str) -> str:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
-        @param key: Key (string)
-        @param value: Value (string) or None
+        @param key: Key
+        @param value: Value or None
         """
         if value is None:
             return self.get_str(key)
@@ -339,7 +348,7 @@ class Config:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def point_to_str(point):
+    def point_to_str(point) -> str:
         """
         Converts a single 3D point to string.
 
@@ -352,7 +361,7 @@ class Config:
             f"{point[2]:+0.0{Config.CoordinatePrecision}f}"
 
     @staticmethod
-    def points_to_str(points):
+    def points_to_str(points) -> str:
         """
         Converts list of 3D points to string.
 
@@ -362,7 +371,7 @@ class Config:
         return "; ".join([Config.point_to_str(point) for point in points])
 
     @staticmethod
-    def str_to_point(str_point):
+    def str_to_point(str_point: str):
         """
         Converts string to single 3D point.
 
@@ -372,7 +381,7 @@ class Config:
         return [float(coord) for coord in str_point.split(",")]
 
     @staticmethod
-    def str_to_points(str_points):
+    def str_to_points(str_points: str):
         """
         Converts string to list of 3D points.
 
@@ -383,11 +392,11 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_generic(self, _key, _type):
+    def get_generic(self, _key: str, _type):
         """
         Gets some "_key"-"_value" of data type "_type".
 
-        @param _key: Key (string)
+        @param _key: Key
         @param _type: Data type
         @return _value: Data (type determined by "_type")
         """
@@ -403,11 +412,11 @@ class Config:
         # noinspection PyArgumentList
         return set_func.get(_type)(_key)
 
-    def set_generic(self, _key, _type, _value):
+    def set_generic(self, _key: str, _type, _value):
         """
         Sets some "_key"-"_value" of data type "_type".
 
-        @param _key: Key (string)
+        @param _key: Key
         @param _type: Data type
         @param _value: Data (type determined by "_type")
         """
@@ -423,30 +432,25 @@ class Config:
         # noinspection PyArgumentList
         set_func.get(_type)(_key, _value)
 
-    def set_get_dict(self, prefix, types, values):
+    def set_get_dict(self, prefix: str, suffix: str, types, values):
         """
         If "values" is None, reads and returns all key-values in "types".
-        Note: The actual keys saved in the configuration file are prefixed with "prefix".
+        Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".
 
         If "values" is not None, writes and returns all key-values in "types".
         Note: In this case, "values" must have the same keys as "types.
 
-        @param prefix: Prefix (string)
+        @param prefix: Prefix
+        @param suffix: Suffix
         @param types: Key:Type (Dictionary)
         @param values: Key:Value (Dictionary) or None
         """
         if values is None:
-
             result = {}
-
             for _key, _type in types.items():
-                result[_key] = self.get_generic(prefix + _key, _type)
-
+                result[_key] = self.get_generic(prefix + _key + suffix, _type)
             return result
-
         else:
-
             for _key, _type in types.items():
-                self.set_generic(prefix + _key, _type, values[_key])
-
+                self.set_generic(prefix + _key + suffix, _type, values[_key])
             return values

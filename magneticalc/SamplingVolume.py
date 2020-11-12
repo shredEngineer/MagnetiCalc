@@ -42,11 +42,12 @@ class SamplingVolume:
         self._bounds_max = np.zeros(3)
 
         self._points = None
+        self._permeabilities = None
         self._labeled_indices = None
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Indicates valid data for display.
 
@@ -54,6 +55,7 @@ class SamplingVolume:
         """
         return \
             self._points is not None and \
+            self._permeabilities is not None and \
             self._labeled_indices is not None
 
     def invalidate(self):
@@ -63,11 +65,12 @@ class SamplingVolume:
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
         self._points = None
+        self._permeabilities = None
         self._labeled_indices = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_resolution(self):
+    def get_resolution(self) -> int:
         """
         Returns this volume's resolution.
 
@@ -92,6 +95,16 @@ class SamplingVolume:
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 
         return self._points
+
+    def get_permeabilities(self):
+        """
+        Returns this sampling volume's relative permeabilities µ_r.
+
+        @return: Ordered list of sampling volume's relative permeabilities µ_r
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return self._permeabilities
 
     def get_labeled_indices(self):
         """
@@ -122,7 +135,7 @@ class SamplingVolume:
     def set_padding_nearest(self, padding):
         """
         Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.
-        This expands the bounding box to the next integer grid coordinates.
+        This shrinks or expands the bounding box to the next integer grid coordinates.
 
         Note: This will not automatically invalidate the sampling volume
 
@@ -145,13 +158,23 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, progress_callback):
+    def recalculate(self, progress_callback) -> bool:
         """
-        Recalculates the sampling volume points.
+        Recalculates the sampling volume points and permeabilities according to the constraints.
 
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".recalculate()", color=(0, 128, 0))
+        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+
+        # Group constraints by permeability
+        constraints_precedence_dict = {}
+        for constraint in self.constraints:
+            if constraint.permeability in constraints_precedence_dict:
+                constraints_precedence_dict[constraint.permeability].append(constraint)
+            else:
+                constraints_precedence_dict[constraint.permeability] = [constraint]
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Calculate all possible grid points
         points_axes_all = [[], [], []]
@@ -159,7 +182,8 @@ class SamplingVolume:
             steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
             points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
-        points_included = []
+        points = []
+        permeabilities = []
         labeled_indices = []
 
         # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
@@ -170,20 +194,35 @@ class SamplingVolume:
 
             point = np.array([points_axes_all[0][x], points_axes_all[1][y], points_axes_all[2][z]])
 
-            # Calculate the inclusion relation
-            inclusion = True
-            for constraint in self.constraints:
-                if not constraint.evaluate(point):
-                    inclusion = False
-                    break  # AND-behaviour
+            permeability = 1.0  # Default relative permeability for unconstrained points
 
-            if inclusion:
-                # Include point
-                points_included.append(point)
+            # Iterate over constraint groups of descending permeability; higher permeabilities take precedence
+            for permeability_key in sorted(constraints_precedence_dict, reverse=True):
+
+                included = True
+
+                # Calculate the inclusion relation for the current group
+                for constraint in constraints_precedence_dict[permeability_key]:
+
+                    if not constraint.evaluate(point):
+
+                        # Exclude this point within the current group
+                        included = False
+                        break
+
+                if included:
+                    permeability = permeability_key
+                    break
+
+            if permeability != 0:
+
+                # Include this point
+                points.append(point)
+                permeabilities.append(permeability)
 
                 # Provide 1 cm of orthogonal spacing between labels
                 if x % self._resolution == 0 and y % self._resolution == 0 and z % self._resolution == 0:
-                    labeled_index = (point, len(points_included) - 1)
+                    labeled_index = (point, len(points) - 1)
                     labeled_indices.append(labeled_index)
 
             # Move to the next grid point
@@ -205,7 +244,8 @@ class SamplingVolume:
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
-        self._points = np.array(points_included)
+        self._points = np.array(points)
+        self._permeabilities = np.array(permeabilities)
         self._labeled_indices = labeled_indices
 
         Debug(
@@ -216,5 +256,19 @@ class SamplingVolume:
             f"yielded {len(self._points)} points",
             color=Theme.PrimaryColor
         )
+
+        if len(self._points) == 0:
+            Debug(
+                self,
+                ".recalculate: USER WARNING: Avoiding empty sampling volume by adding origin",
+                color=Theme.WarningColor,
+                force=True
+            )
+            origin = np.zeros(3)
+            self._points = np.array([origin])
+            self._permeabilities = np.array([0])
+            self._labeled_indices = [(origin, 0)]
+
+        progress_callback(100)
 
         return True

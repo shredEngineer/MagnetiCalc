@@ -23,6 +23,7 @@ from vispy.scene.cameras import TurntableCamera
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Metric import Metric
+from magneticalc.Theme import Theme
 
 
 class VispyCanvas(scene.SceneCanvas):
@@ -55,53 +56,7 @@ class VispyCanvas(scene.SceneCanvas):
     # Formatting settings
     MagnitudePrecision = 1
 
-    # Preset: Isometric
-    Isometric = {
-        "id": "Isometric",
-        "azimuth": 135,
-        "elevation": np.arctan(1 / np.sqrt(2)) * 180 / np.pi
-    }
-
-    # Preset: XY-plane
-    PlaneXY = {
-        "id": "Plane XY",
-        "azimuth": 0,
-        "elevation": 90
-    }
-
-    # Preset: XZ-plane
-    PlaneXZ = {
-        "id": "Plane XZ",
-        "azimuth": 0,
-        "elevation": 0
-    }
-
-    # Preset: YZ-plane
-    PlaneYZ = {
-        "id": "Plane YZ",
-        "azimuth": 90,
-        "elevation": 0
-    }
-
-    Presets = [
-        Isometric,
-        PlaneXY,
-        PlaneXZ,
-        PlaneYZ
-    ]
-
-    @staticmethod
-    def get_by_id(_id_):
-        """
-        Selects a preset by name.
-
-        @param _id_: Preset ID string
-        @return: Preset parameters (or None if ID not found)
-        """
-        for preset in VispyCanvas.Presets:
-            if _id_ == preset["id"]:
-                return preset
-        return None
+    # ------------------------------------------------------------------------------------------------------------------
 
     def __init__(self, gui):
         """
@@ -162,14 +117,15 @@ class VispyCanvas(scene.SceneCanvas):
         self.background = None
         self.update_color_scheme()
 
-        self.initializing = True
+        self.initializing = False
         self.visual_startup_info = scene.visuals.create_visual_node(visuals.TextVisual)(
             parent=self.view_text.scene,
             pos=(10, 10 + 2 * self.DefaultFontSize),
             anchor_x="left",
             anchor_y="bottom",
             bold=True,
-            text="Performing just-in-time compilation …\nSubsequent calculations will run faster",
+            text="Performing initial just-in-time compilation;\n"
+                 "subsequent calculations will execute faster!\n",
             color=self.foreground,
             face=self.DefaultFontFace,
             font_size=self.DefaultFontSize,
@@ -194,16 +150,16 @@ class VispyCanvas(scene.SceneCanvas):
         self.bgcolor = self.background
         self.visual_perspective_info.color = np.append(self.foreground[:3], 0.6)
 
-    def set_visible(self, visual, is_visible):
+    def set_visible(self, visual, is_visible: bool):
         """
         Sets some visual's visibility.
 
         @param visual: Visual
-        @param is_visible: Visibility (boolean)
+        @param is_visible: Visibility
         """
         visual.parent = self.view_main.scene if is_visible else None
 
-    def load_perspective(self, redraw=True):
+    def load_perspective(self, redraw: bool = True):
         """
         Loads perspective from configuration.
 
@@ -253,7 +209,7 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Re-draws the entire scene.
         """
-        Debug(self, ".redraw()", color=(0, 128, 0))
+        Debug(self, ".redraw()", color=Theme.SuccessColor)
 
         self.update_color_scheme()
 
@@ -556,7 +512,7 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def save_image(self, filename):
+    def save_image(self, filename: str):
         """
         Saves the currently displayed scene to PNG file.
 

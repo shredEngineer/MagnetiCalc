@@ -35,24 +35,27 @@ class Debug:
         "BiotSavart_JIT",
         "BiotSavart_CUDA",
         "CalculationThread",
-        # "Config",
+        "Config",
         "Constants",
         "Constraint",
+        "Constraint_Editor",
         "Display_Widget",
-        # "Field",
+        "Field",
         "Field_Widget",
         "Groupbox",
         "GUI",
         "HLine",
         "IconLabel",
         "Menu",
-        # "Metric",
+        "Metric",
+        "Metric_Presets",
         "Metric_Widget",
-        # "Model",
-        # "ModelAccess",
+        "Model",
+        "ModelAccess",
+        "Parameters",
         "Perspective_Widget",
-        # "SamplingVolume",
-        # "SamplingVolume_Widget",
+        "SamplingVolume",
+        "SamplingVolume_Widget",
         "SidebarLeft",
         "SidebarRight",
         "SliderFloat",
@@ -60,12 +63,13 @@ class Debug:
         "Table",
         "Usage_Dialog",
         "Version",
-        # "VispyCanvas",
-        # "Wire",
+        "VispyCanvas",
+        "Wire",
+        "Wire_Presets",
         "Wire_Widget"
     ]
 
-    def __init__(self, obj, text, color=None, force=False):
+    def __init__(self, obj, text: str, color=None, force: bool = False):
         """
         Displays a colorful debug message and the current call hierarchy.
 

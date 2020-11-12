@@ -21,8 +21,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
+from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
-from magneticalc.VispyCanvas import VispyCanvas
 
 
 class Perspective_Widget(Groupbox):
@@ -38,9 +38,11 @@ class Perspective_Widget(Groupbox):
 
         self.gui = gui
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         planar_perspective_layout = QVBoxLayout()
 
-        for preset in VispyCanvas.Presets:
+        for preset in Perspective_Presets.List:
 
             button = QPushButton()
             button.setText(preset["id"])
@@ -53,7 +55,7 @@ class Perspective_Widget(Groupbox):
 
         self.addLayout(planar_perspective_layout)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 

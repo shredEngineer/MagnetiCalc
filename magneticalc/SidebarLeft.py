@@ -26,7 +26,7 @@ class SidebarLeft(QScrollArea):
     """ SidebarLeft class. """
 
     # Display settings
-    MaximumWidth = 380
+    MaximumWidth = 370
     VerticalSpacing = 12
 
     def __init__(self, gui):
@@ -40,7 +40,6 @@ class SidebarLeft(QScrollArea):
         self.gui = gui
 
         layout = QVBoxLayout()
-        # noinspection PyArgumentList
         widget = QWidget()
         widget.setLayout(layout)
         self.setWidget(widget)
@@ -50,14 +49,14 @@ class SidebarLeft(QScrollArea):
         self.setMaximumWidth(self.MaximumWidth)
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.wire_widget = Wire_Widget(self.gui)
         layout.addWidget(self.wire_widget)
 
         layout.addSpacing(self.VerticalSpacing)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.sampling_volume_widget = SamplingVolume_Widget(self.gui)
         layout.addWidget(self.sampling_volume_widget)

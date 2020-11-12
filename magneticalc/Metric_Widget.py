@@ -24,8 +24,8 @@ from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.Metric import Metric
+from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Theme import Theme
 
 
 class Metric_Widget(Groupbox):
@@ -51,17 +51,16 @@ class Metric_Widget(Groupbox):
 
         self.addWidget(IconLabel("fa.tint", "Color"))
         color_metric_combobox = QComboBox()
-        for i, preset in enumerate(Metric.Presets):
+        for i, preset in enumerate(Metric_Presets.List):
             color_metric_combobox.addItem(preset["id"])
             if preset["id"] == self.gui.model.metric.get_color_preset()["id"]:
                 color_metric_combobox.setCurrentIndex(i)
         color_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(color_preset=Metric.get_by_id(color_metric_combobox.currentText()))
+            lambda: self.set_metric(color_preset=Metric_Presets.get_by_id(color_metric_combobox.currentText()))
         )
         self.addWidget(color_metric_combobox)
 
         self.color_metric_limits_layout = QHBoxLayout()
-        # noinspection PyArgumentList
         self.color_metric_limits_widget = QWidget()
         self.color_metric_limits_widget.setLayout(self.color_metric_limits_layout)
         self.color_metric_min_label = QLabel("N/A")
@@ -85,17 +84,16 @@ class Metric_Widget(Groupbox):
 
         self.addWidget(IconLabel("mdi.blur", "Alpha"))
         alpha_metric_combobox = QComboBox()
-        for i, preset in enumerate(Metric.Presets):
+        for i, preset in enumerate(Metric_Presets.List):
             alpha_metric_combobox.addItem(preset["id"])
             if preset["id"] == self.gui.model.metric.get_alpha_preset()["id"]:
                 alpha_metric_combobox.setCurrentIndex(i)
         alpha_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(alpha_preset=Metric.get_by_id(alpha_metric_combobox.currentText()))
+            lambda: self.set_metric(alpha_preset=Metric_Presets.get_by_id(alpha_metric_combobox.currentText()))
         )
         self.addWidget(alpha_metric_combobox)
 
         self.alpha_metric_limits_layout = QHBoxLayout()
-        # noinspection PyArgumentList
         self.alpha_metric_limits_widget = QWidget()
         self.alpha_metric_limits_widget.setLayout(self.alpha_metric_limits_layout)
         self.alpha_metric_min_label = QLabel("N/A")
@@ -113,44 +111,15 @@ class Metric_Widget(Groupbox):
         )
         self.addWidget(self.alpha_metric_limits_widget)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.addWidget(HLine())
-
-        parameters_label = IconLabel("fa.flask", "Parameters")
-        self.addWidget(parameters_label)
-
-        energy_layout = QHBoxLayout()
-        energy_label_left = QLabel("Energy:")
-        energy_label_left.setStyleSheet("font-style: italic;")
-        self.energy_label = QLabel("N/A")
-        self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.energy_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        energy_layout.addWidget(energy_label_left, alignment=Qt.AlignVCenter)
-        energy_layout.addWidget(self.energy_label, alignment=Qt.AlignVCenter)
-        self.addLayout(energy_layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self_inductance_layout = QHBoxLayout()
-        self_inductance_label_left = QLabel("Self-inductance:")
-        self_inductance_label_left.setStyleSheet("font-style: italic;")
-        self.self_inductance_label = QLabel("N/A")
-        self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.self_inductance_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self_inductance_layout.addWidget(self_inductance_label_left, alignment=Qt.AlignVCenter)
-        self_inductance_layout.addWidget(self.self_inductance_label, alignment=Qt.AlignVCenter)
-        self.addLayout(self_inductance_layout)
-
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_metric(
             self,
             color_preset=None,
             alpha_preset=None,
-            recalculate=True,
-            update_labels=True,
-            invalidate_self=True
+            recalculate: bool = True,
+            update_labels: bool = True,
+            invalidate_self: bool = True
     ):
         """
         Sets the metric. This will overwrite the currently set metric in the model.
@@ -158,7 +127,7 @@ class Metric_Widget(Groupbox):
 
         @param color_preset: Color metric preset (parameters, see Metric module)
         @param alpha_preset: Alpha metric preset (parameters, see Metric module)
-        @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param recalculate: Enable to trigger final re-calculation
         @param update_labels: Enable to update metric labels
         @param invalidate_self: Enable to invalidate the old metric before setting a new one
         """
@@ -167,12 +136,12 @@ class Metric_Widget(Groupbox):
             # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets
 
             if color_preset is None:
-                color_preset = Metric.get_by_id(self.gui.config.get_str("color_metric"))
+                color_preset = Metric_Presets.get_by_id(self.gui.config.get_str("color_metric"))
             else:
                 self.gui.config.set_str("color_metric", color_preset["id"])
 
             if alpha_preset is None:
-                alpha_preset = Metric.get_by_id(self.gui.config.get_str("alpha_metric"))
+                alpha_preset = Metric_Presets.get_by_id(self.gui.config.get_str("alpha_metric"))
             else:
                 self.gui.config.set_str("alpha_metric", alpha_preset["id"])
 
@@ -215,7 +184,7 @@ class Metric_Widget(Groupbox):
 
     def update_labels(self):
         """
-        Updates the metric limit labels.
+        Updates the labels.
         """
         if self.gui.model.metric.is_valid():
 
@@ -254,25 +223,6 @@ class Metric_Widget(Groupbox):
             self.alpha_metric_min_label.setText(alpha_label_min)
             self.alpha_metric_max_label.setText(alpha_label_max)
 
-            if self.gui.model.field.get_type() == 1:
-
-                # Field is B-Field (flux density)
-                self.energy_label.setText(
-                    si_format(self.gui.model.metric.get_energy(), precision=self.ValuePrecision) + "J"
-                )
-                self.self_inductance_label.setText(
-                    si_format(self.gui.model.metric.get_self_inductance(), precision=self.ValuePrecision) + "H"
-                )
-                self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-                self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-            else:
-
-                # Field is A-Field (vector potential)
-                self.energy_label.setText("N/A")
-                self.self_inductance_label.setText("N/A")
-                self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-                self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-
         else:
 
             self.color_metric_min_label.setText("N/A")
@@ -286,8 +236,3 @@ class Metric_Widget(Groupbox):
             self.alpha_metric_limits_widget.setStyleSheet("")
             self.alpha_metric_min_label.setStyleSheet("background: none; color: #000000;")
             self.alpha_metric_max_label.setStyleSheet("background: none; color: #000000;")
-
-            self.energy_label.setText("N/A")
-            self.self_inductance_label.setText("N/A")
-            self.energy_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-            self.self_inductance_label.setStyleSheet(f"color: {Theme.PrimaryColor};")

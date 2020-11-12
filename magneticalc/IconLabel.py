@@ -27,17 +27,23 @@ class IconLabel(QWidget):
     IconSize = QSize(16, 16)
     HorizontalSpacing = 1
 
-    def __init__(self, qta_id, text, icon_color="#12344a", label_color="#12344a", final_stretch=True):
+    def __init__(
+            self,
+            qta_id: str,
+            text: str,
+            icon_color: str = "#12344a",
+            label_color: str = "#12344a",
+            final_stretch: bool = True
+    ):
         """
         Initializes the icon label.
 
         @param qta_id: QtAwesome icon id
         @param text: Label text
-        @param icon_color: Icon color (string)
-        @param label_color: Label color (string)
+        @param icon_color: Icon color
+        @param label_color: Label color
         @param final_stretch: Enable to add a final stretch
         """
-        # noinspection PyArgumentList
         QWidget.__init__(self)
 
         self.layout = QHBoxLayout()
@@ -77,7 +83,7 @@ class IconLabel(QWidget):
         self.layout.addStretch()
 
     # noinspection PyPep8Naming
-    def addSpacing(self, value):
+    def addSpacing(self, value: float):
         """
         Adds spacing to the horizontal layout
 

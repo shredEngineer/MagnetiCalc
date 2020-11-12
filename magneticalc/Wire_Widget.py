@@ -37,14 +37,17 @@ class Wire_Widget(Groupbox):
     UnitsLabelWidth = 26
 
     # Spinbox limits
+    StretchMin = -99
+    StretchMax = 99
+    StretchStep = 0.1
     RotationalSymmetryCountMin = 1
     RotationalSymmetryCountMax = 99
     RotationalSymmetryRadiusMin = 0
     RotationalSymmetryRadiusMax = 99
     RotationalSymmetryRadiusStep = 0.1
-    StretchMin = -99
-    StretchMax = 99
-    StretchStep = 0.1
+    RotationalSymmetryOffsetMin = -360
+    RotationalSymmetryOffsetMax = 360
+    RotationalSymmetryOffsetStep = 1
     SlicerLimitMinimum = 0.01
     SlicerLimitMaximum = 2.0
     SlicerLimitStep = 0.01
@@ -62,26 +65,33 @@ class Wire_Widget(Groupbox):
 
         Groupbox.__init__(self, "Wire")
 
-        points_icon_label = IconLabel("mdi.vector-square", "Points", final_stretch=False)
-        table_shortcut_label = QLabel("  ⟨F2⟩   ⟨ESC⟩")
+        # --------------------------------------------------------------------------------------------------------------
+
+        table_icon_label = IconLabel("mdi.vector-square", "Points", final_stretch=False)
+        table_shortcut_label = QLabel("⟨F2⟩, ⟨ESC⟩")
         table_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
-        points_icon_label.addWidget(table_shortcut_label)
-        points_icon_label.addStretch()
+        table_icon_label.addWidget(table_shortcut_label)
+        table_icon_label.addStretch()
         table_add_button = QPushButton()
         table_add_button.setIcon(qta.icon("fa.plus"))
-        points_icon_label.addWidget(table_add_button)
+        table_add_button.clicked.connect(self.on_table_row_added)
+        table_icon_label.addWidget(table_add_button)
         table_units_label = QLabel("cm")
         table_units_label.setAlignment(Qt.AlignRight)
         table_units_label.setFixedWidth(self.UnitsLabelWidth)
-        points_icon_label.addWidget(table_units_label)
-        table_add_button.clicked.connect(self.on_table_row_added)
-        self.addWidget(points_icon_label)
+        table_icon_label.addWidget(table_units_label)
+        self.addWidget(table_icon_label)
         self.table = Table(
+            self.gui,
             cell_edited_callback=self.on_table_cell_edited,
+            selection_changed_callback=self.gui.redraw,
             row_deleted_callback=self.on_table_row_deleted,
-            selection_changed_callback=self.gui.redraw
+            minimum_rows=2
         )
         self.table.set_horizontal_header(["X", "Y", "Z"])
+        self.table.set_vertical_prefix("")
+        self.table.set_horizontal_types(None)
+        self.table.set_horizontal_options([None, None, None])
         self.addWidget(self.table)
 
         table_total_layout = QHBoxLayout()
@@ -153,10 +163,10 @@ class Wire_Widget(Groupbox):
             alignment=Qt.AlignVCenter
         )
         self.rotational_symmetry_count_spinbox.valueChanged.connect(self.set_rotational_symmetry)
-        rotational_symmetric_units_label = QLabel("cm")
-        rotational_symmetric_units_label.setAlignment(Qt.AlignRight)
-        rotational_symmetric_units_label.setFixedWidth(self.UnitsLabelWidth)
-        rotational_symmetry_layout_right.addWidget(rotational_symmetric_units_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_count_units_label = QLabel("cm")
+        rotational_symmetry_count_units_label.setAlignment(Qt.AlignRight)
+        rotational_symmetry_count_units_label.setFixedWidth(self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetry_count_units_label, alignment=Qt.AlignVCenter)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -173,6 +183,7 @@ class Wire_Widget(Groupbox):
             self.rotational_symmetry_radius_spinbox,
             alignment=Qt.AlignVCenter
         )
+        rotational_symmetry_layout_right.addWidget(QLabel(""))
         self.rotational_symmetry_radius_spinbox.valueChanged.connect(self.set_rotational_symmetry)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -189,24 +200,35 @@ class Wire_Widget(Groupbox):
             self.rotational_symmetry_axis_combobox,
             alignment=Qt.AlignVCenter
         )
+        rotational_symmetry_layout_right.addWidget(QLabel(""))
         self.rotational_symmetry_axis_combobox.currentIndexChanged.connect(self.set_rotational_symmetry)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addLayout(rotational_symmetry_layout)
-
-        total_length_layout = QHBoxLayout()
-        total_length_label_left = QLabel("Total wire length:")
-        total_length_label_left.setStyleSheet("font-style: italic;")
-        self.total_length_label = QLabel("N/A")
-        self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.total_length_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_length_layout.addWidget(
-            total_length_label_left,
+        self.rotational_symmetry_offset_spinbox = QDoubleSpinBox(self.gui)
+        self.rotational_symmetry_offset_spinbox.setLocale(self.gui.locale)
+        self.rotational_symmetry_offset_spinbox.setMinimum(self.RotationalSymmetryOffsetMin)
+        self.rotational_symmetry_offset_spinbox.setMaximum(self.RotationalSymmetryOffsetMax)
+        self.rotational_symmetry_offset_spinbox.setSingleStep(self.RotationalSymmetryOffsetStep)
+        self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))
+        Offset_label = QLabel("Offset Angle:")
+        Offset_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        rotational_symmetry_layout_left.addWidget(Offset_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
+        rotational_symmetry_layout_middle.addWidget(
+            self.rotational_symmetry_offset_spinbox,
             alignment=Qt.AlignVCenter
         )
-        total_length_layout.addWidget(self.total_length_label, alignment=Qt.AlignVCenter)
-        self.addLayout(total_length_layout)
+        rotational_symmetry_offset_units_label = QLabel("°")
+        rotational_symmetry_offset_units_label.setAlignment(Qt.AlignRight)
+        rotational_symmetry_offset_units_label.setFixedWidth(self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetry_offset_units_label, alignment=Qt.AlignVCenter)
+        self.rotational_symmetry_offset_spinbox.valueChanged.connect(self.set_rotational_symmetry)
+
+        self.addLayout(rotational_symmetry_layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.addWidget(HLine())
 
         rotational_symmetry_total_layout = QHBoxLayout()
         rotational_symmetry_total_label_left = QLabel("Total transformed points:")
@@ -281,6 +303,8 @@ class Wire_Widget(Groupbox):
         dc_layout.addWidget(dc_unit_label, alignment=Qt.AlignVCenter)
         self.addLayout(dc_layout)
 
+        # --------------------------------------------------------------------------------------------------------------
+
         # Initially load wire from configuration
         self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate_self=False)
 
@@ -291,11 +315,11 @@ class Wire_Widget(Groupbox):
             points=None,
             stretch=None,
             rotational_symmetry=None,
-            slicer_limit=None,
-            dc=None,
-            recalculate=True,
-            readjust_sampling_volume=True,
-            invalidate_self=True
+            slicer_limit: float = None,
+            dc: float = None,
+            recalculate: bool = True,
+            readjust_sampling_volume: bool = True,
+            invalidate_self: bool = True
     ):
         """
         Sets the wire. This will overwrite the currently set wire in the model.
@@ -304,9 +328,9 @@ class Wire_Widget(Groupbox):
         @param points: Points (List of 3D points)
         @param stretch: XYZ stretch transform factors (3D point)
         @param rotational_symmetry: Dictionary for rotational symmetry transform
-        @param slicer_limit: Slicer limit (float)
-        @param dc: DC value (float)
-        @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param slicer_limit: Slicer limit
+        @param dc: DC value
+        @param recalculate: Enable to trigger final re-calculation
         @param readjust_sampling_volume: Enable to readjust sampling volume
         @param invalidate_self: Enable to invalidate the old wire before setting a new one
         """
@@ -319,7 +343,8 @@ class Wire_Widget(Groupbox):
 
             rotational_symmetry = self.gui.config.set_get_dict(
                 prefix="rotational_symmetry_",
-                types={"count": "int", "radius": "float", "axis": "int"},
+                suffix="",
+                types={"count": "int", "radius": "float", "axis": "int", "offset": "float"},
                 values=rotational_symmetry,
             )
 
@@ -371,9 +396,10 @@ class Wire_Widget(Groupbox):
         """
         self.set_wire(
             rotational_symmetry={
-                "count": self.rotational_symmetry_count_spinbox.value(),
+                "count" : self.rotational_symmetry_count_spinbox.value(),
                 "radius": self.rotational_symmetry_radius_spinbox.value(),
-                "axis": {"X": 0, "Y": 1, "Z": 2}[self.rotational_symmetry_axis_combobox.currentText()]
+                "axis"  : {"X": 0, "Y": 1, "Z": 2}[self.rotational_symmetry_axis_combobox.currentText()],
+                "offset": self.rotational_symmetry_offset_spinbox.value()
             }
         )
 
@@ -381,46 +407,46 @@ class Wire_Widget(Groupbox):
 
     def update_table(self):
         """
-        Populates the wire base points table.
+        Populates the table.
         """
-        self.table.clear_rows()
-
-        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.get_points_base()))])
-
         points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.get_points_base()]
 
+        self.table.clear_rows()
+        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.get_points_base()))])
         self.table.set_contents(points)
+        self.table.select_last_row(focus=False)
 
         self.table_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
 
     def on_table_row_added(self):
         """
-        Adds a wire base point after a row has been added to the table. (Appending to the end and focusing the row.)
+        Gets called after a row has been added to the table.
         """
+
+        # Add a new base point (0, 0, 0) to the wire
         self.set_wire(points=list(self.gui.model.wire.get_points_base()) + [np.zeros(3)])
         self.table.select_last_row()
 
-    def on_table_cell_edited(self, item):
+    def on_table_cell_edited(self, value, row, column):
         """
-        Gets called after a wire point cell has been edited.
+        Gets called after a table cell has been edited.
 
-        @param item: QTableWidgetItem
+        @param value: Cell value
+        @param row: Row
+        @param column: Column
         """
-        try:
-            value = float(item.text().replace(",", "."))
-        except ValueError:
-            value = 0.0
-
         points = self.gui.model.wire.get_points_base()
-        points[item.row()][item.column()] = value
+        points[row][column] = value
         self.set_wire(points=points)
 
     def on_table_row_deleted(self, index):
         """
-        Deletes a wire base point after a row has been deleted from the table.
+        Gets called after a row has been deleted from the table.
 
-        @param index: Wire base point index
+        @param index: Row index
         """
+
+        # Delete the wire base point at the given index
         self.set_wire(points=np.delete(self.gui.model.wire.get_points_base(), index, axis=0))
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -428,13 +454,8 @@ class Wire_Widget(Groupbox):
     def update_labels(self):
         """
         Updates the labels.
-        Called from calculation thread after the wire became valid.
         """
         if self.gui.model.wire.is_valid():
             self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
-            self.total_length_label.setText(f"{self.gui.model.wire.get_length():.2f} cm")
-            self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
         else:
             self.sliced_total_label.setText("N/A")
-            self.total_length_label.setText("N/A")
-            self.total_length_label.setStyleSheet(f"color: {Theme.PrimaryColor};")

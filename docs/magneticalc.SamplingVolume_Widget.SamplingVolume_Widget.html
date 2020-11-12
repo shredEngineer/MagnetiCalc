@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id51">
+        <table class="children sortable" id="id62">
   
   <tr class="classvariable">
     
@@ -91,7 +91,17 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_label" class="code" data-type="Instance Variable">total_label</a></td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_points_label" class="code" data-type="Instance Variable">total_points_label</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#constraint_editor" class="code" data-type="Instance Variable">constraint_editor</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_constraints_label" class="code" data-type="Instance Variable">total_constraints_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
@@ -117,14 +127,19 @@
     
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update_labels" class="code" data-type="Method">update_labels</a></td>
-    <td><span>Updates the labels. Called from calculation thread after the sampling volume became valid.</span></td>
+    <td><span>Updates the labels.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#open_constraint_editor" class="code" data-type="Method">open_constraint_editor</a></td>
+    <td><span>Opens the constraint editor; recalculates the sampling volume afterwards.</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.Groupbox.Groupbox.html" class="code" data-type="Class">Groupbox</a>:
           </p>
-          <table class="children sortable" id="id52">
+          <table class="children sortable" id="id63">
   
   <tr class="baseinstancevariable">
     
@@ -293,14 +308,46 @@
   </div>
 </div><div class="baseinstancevariable">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_label">
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_points_label">
     
   </a>
-  <a name="total_label">
+  <a name="total_points_label">
     
   </a>
   <div class="functionHeader">
-    total_label =
+    total_points_label =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.constraint_editor">
+    
+  </a>
+  <a name="constraint_editor">
+    
+  </a>
+  <div class="functionHeader">
+    constraint_editor =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_constraints_label">
+    
+  </a>
+  <a name="total_constraints_label">
+    
+  </a>
+  <div class="functionHeader">
+    total_constraints_label =
     
   </div>
   <div class="functionBody">
@@ -362,7 +409,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Sampling volume _resolution</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation (boolean)</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
+    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Sampling volume _resolution</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -400,13 +447,32 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Updates the labels. Called from calculation thread after the sampling volume became valid.</p></div>
+    <div><p>Updates the labels.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.open_constraint_editor">
+    
+  </a>
+  <a name="open_constraint_editor">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    open_constraint_editor(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Opens the constraint editor; recalculates the sampling volume afterwards.</p></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-09 17:19:38.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
       </address>
 
     </div>

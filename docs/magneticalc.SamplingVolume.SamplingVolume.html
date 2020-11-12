@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id49">
+        <table class="children sortable" id="id60">
   
   <tr class="method">
     
@@ -86,6 +86,11 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_permeabilities" class="code" data-type="Method">get_permeabilities</a></td>
+    <td><span>Returns this sampling volume's relative permeabilities µ_r.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_labeled_indices" class="code" data-type="Method">get_labeled_indices</a></td>
     <td><span>Returns this sampling volume's labeled indices; an unordered list of tuples (sampling volume point, field index)</span></td>
   </tr><tr class="method">
@@ -97,7 +102,7 @@
     
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#set_padding_nearest" class="code" data-type="Method">set_padding_nearest</a></td>
-    <td><span>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically. This expands the bounding box to the next integer grid coordinates.</span></td>
+    <td><span>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically. This shrinks or expands the bounding box to the next integer grid coordinates.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -107,7 +112,7 @@
     
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#recalculate" class="code" data-type="Method">recalculate</a></td>
-    <td><span>Recalculates the sampling volume points.</span></td>
+    <td><span>Recalculates the sampling volume points and permeabilities according to the constraints.</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -127,6 +132,11 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_points" class="code" data-type="Instance Variable">_points</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_permeabilities" class="code" data-type="Instance Variable">_permeabilities</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -235,6 +245,22 @@
   </a>
   <div class="functionHeader">
     _points =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume._permeabilities">
+    
+  </a>
+  <a name="_permeabilities">
+    
+  </a>
+  <div class="functionHeader">
+    _permeabilities =
     
   </div>
   <div class="functionBody">
@@ -354,6 +380,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_permeabilities">
+    
+  </a>
+  <a name="get_permeabilities">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_permeabilities(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this sampling volume's relative permeabilities µ_r.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of sampling volume's relative permeabilities µ_r</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.SamplingVolume.SamplingVolume.get_labeled_indices">
     
   </a>
@@ -407,7 +452,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically. This expands the bounding box to the next integer grid coordinates.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">padding</td><td>Amount of padding (3D point)</td></tr></table></div>
+    <div><p>Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically. This shrinks or expands the bounding box to the next integer grid coordinates.</p><p>Note: This will not automatically invalidate the sampling volume</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">padding</td><td>Amount of padding (3D point)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -445,13 +490,13 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Recalculates the sampling volume points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Recalculates the sampling volume points and permeabilities according to the constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-09 17:19:38.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
       </address>
 
     </div>

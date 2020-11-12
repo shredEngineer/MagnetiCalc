@@ -22,9 +22,5 @@ class Theme:
 
     PrimaryColor = "#2c82b8"
     LightColor = "#555555"
-
-    def __init__(self):
-        """
-        Initialize theme.
-        """
-        pass
+    SuccessColor = "#2e7d32"
+    WarningColor = "#c62828"

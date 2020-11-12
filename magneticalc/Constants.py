@@ -16,14 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import numpy as np
-
 
 class Constants:
     """ Constants class. """
 
     # Magnetic field constant µ0
     mu_0 = 1.25663706212e-6     # kg · m / s² / A²
-
-    # Biot-Savart constant k
-    k = mu_0 / 4 / np.pi        # H / m

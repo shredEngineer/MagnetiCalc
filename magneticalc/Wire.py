@@ -26,195 +26,7 @@ from magneticalc.Theme import Theme
 class Wire:
     """ Wire class. """
 
-    # Preset: A straight line.
-    StraightLine = {
-        "id": "Straight Line",
-        "points": [
-            [-1/2, 0, 0],
-            [+1/2, 0, 0]
-        ]
-    }
-
-    # Preset: A single square loop with offset connections.
-    SingleSquareLoop_Offset = {
-        "id": "Single Square Loop (offset)",
-        "points": [
-            [-1/2, +1/2, +1/2],
-            [+0/2, +1/2, +1/2],
-            [+0/2, -1/2, +1/2],
-            [+0/2, -1/2, -1/2],
-            [+0/2, +1/2, -1/2],
-            [+0/2, +1/2, +1/2],
-            [+1/2, +1/2, +1/2]
-        ]
-    }
-
-    # Preset: A single square loop with centered connections.
-    SingleSquareLoop_Centered = {
-        "id": "Single Square Loop (centered)",
-        "points": [
-            [-1/2, +1/2, +0/2],
-            [+0/2, +1/2, +0/2],
-            [+0/2, +1/2, +1/2],
-            [+0/2, -1/2, +1/2],
-            [+0/2, -1/2, -1/2],
-            [+0/2, +1/2, -1/2],
-            [+0/2, +1/2, +0/2],
-            [+1/2, +1/2, +0/2]
-        ]
-    }
-
-    # Preset: A "compensated" double square loop with offset connections.
-    CompensatedDoubleSquareLoop_Offset = {
-        "id": "Compensated Double Square Loop (offset)",
-        "points": [
-            [-3/6, +1/2, +1/2],
-            [-1/6, +1/2, +1/2],
-            [-1/6, -1/2, +1/2],
-            [-1/6, -1/2, -1/2],
-            [-1/6, +1/2, -1/2],
-            [-1/6, +1/2, +1/2],
-            [+1/6, +1/2, +1/2],
-            [+1/6, +1/2, -1/2],
-            [+1/6, -1/2, -1/2],
-            [+1/6, -1/2, +1/2],
-            [+1/6, +1/2, +1/2],
-            [+3/6, +1/2, +1/2]
-        ]
-    }
-
-    # Preset: A "compensated" double square loop with centered connections.
-    CompensatedDoubleSquareLoop_Centered = {
-        "id": "Compensated Double Square Loop (centered)",
-        "points": [
-            [-3/6, +1/2, +0/2],
-            [-1/6, +1/2, +0/2],
-            [-1/6, +1/2, +1/2],
-            [-1/6, -1/2, +1/2],
-            [-1/6, -1/2, -1/2],
-            [-1/6, +1/2, -1/2],
-            [-1/6, +1/2, +0/2],
-            [+1/6, +1/2, +0/2],
-            [+1/6, +1/2, -1/2],
-            [+1/6, -1/2, -1/2],
-            [+1/6, -1/2, +1/2],
-            [+1/6, +1/2, +1/2],
-            [+1/6, +1/2, +0/2],
-            [+3/6, +1/2, +0/2]
-        ]
-    }
-
-    # Preset: A single circular loop with offset connections.
-    SingleCircularLoop_Offset = {
-        "id": "Single Circular Loop (offset)",
-        "points": [
-            [
-                0,
-                -np.cos(2 * np.pi * i / 16) / 2,
-                +np.sin(2 * np.pi * i / 16) / 2
-            ]
-            for i in range(16)
-        ]
-    }
-
-    # Preset: A solenoid of 4 circular loops.
-    SolenoidCircularLoops4 = {
-        "id": "Solenoid: 4 circular loops",
-        "points": [
-            [
-                i / 128 - 1 / 2,
-                -np.cos(2 * np.pi * i / 32) / 2,
-                +np.sin(2 * np.pi * i / 32) / 2
-            ]
-            for i in range(128)
-        ]
-    }
-
-    # Preset: A solenoid of 8 circular loops.
-    SolenoidCircularLoops8 = {
-        "id": "Solenoid: 8 circular loops",
-        "points": [
-            [
-                i / 256 - 1 / 2,
-                -np.cos(2 * np.pi * i / 32) / 2,
-                +np.sin(2 * np.pi * i / 32) / 2
-            ]
-            for i in range(256)
-        ]
-    }
-
-    # Preset: A compensated solenoid of 2x 4 circular loops.
-    CompensatedSolenoidCircularLoops4 = {
-        "id": "Compensated Solenoid: 2x 4 circular loops",
-        "points": [
-            [
-                i / 256 - 1/2,
-                -np.cos(+2 * np.pi * i / 32) / 2,
-                +np.sin(+2 * np.pi * i / 32) / 2
-            ]
-            for i in range(128)
-        ] +
-        [
-            [
-                i / 256,
-                -np.cos(-2 * np.pi * (i + 1) / 32) / 2,
-                +np.sin(-2 * np.pi * (i + 1) / 32) / 2
-            ]
-            for i in range(128)
-        ]
-    }
-
-    # Preset: A compensated solenoid of 2x 8 circular loops.
-    CompensatedSolenoidCircularLoops8 = {
-        "id": "Compensated Solenoid: 2x 8 circular loops",
-        "points": [
-            [
-                i / 512 - 1/2,
-                -np.cos(+2 * np.pi * i / 32) / 2,
-                +np.sin(+2 * np.pi * i / 32) / 2
-            ]
-            for i in range(256)
-        ] +
-        [
-            [
-                i / 512,
-                -np.cos(-2 * np.pi * (i + 1) / 32) / 2,
-                +np.sin(-2 * np.pi * (i + 1) / 32) / 2
-            ]
-            for i in range(256)
-        ]
-    }
-
-    # List of all above presets
-    Presets = [
-        StraightLine,
-        SingleSquareLoop_Offset,
-        SingleSquareLoop_Centered,
-        CompensatedDoubleSquareLoop_Offset,
-        CompensatedDoubleSquareLoop_Centered,
-        SingleCircularLoop_Offset,
-        SolenoidCircularLoops4,
-        SolenoidCircularLoops8,
-        CompensatedSolenoidCircularLoops4,
-        CompensatedSolenoidCircularLoops8
-    ]
-
-    @staticmethod
-    def get_by_id(_id_):
-        """
-        Selects a preset by name.
-
-        @param _id_: Preset ID string
-        @return: Preset parameters (or None if ID not found)
-        """
-        for preset in Wire.Presets:
-            if _id_ == preset["id"]:
-                return preset
-        return None
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def __init__(self, points, stretch, rotational_symmetry, slicer_limit, dc):
+    def __init__(self, points, stretch, rotational_symmetry, slicer_limit: float, dc: float):
         """
         A 3D piecewise linear curve with some DC current associated with it.
 
@@ -222,7 +34,7 @@ class Wire:
         @param stretch: XYZ stretch transform factors (3D point)
         @param rotational_symmetry: Dictionary for rotational symmetry transform
         @param slicer_limit: Slicer limit
-        @param dc: DC current (float)
+        @param dc: Wire current (A)
         """
         Debug(self, ": Init")
 
@@ -269,7 +81,9 @@ class Wire:
 
         @return: True if data is valid for display, False otherwise
         """
-        return self._points_sliced is not None
+        return \
+            self._points_sliced is not None and \
+            self._length is not None
 
     def invalidate(self):
         """
@@ -336,20 +150,22 @@ class Wire:
 
         return np.array(result)
 
-    def get_dc(self):
+    def get_dc(self) -> float:
         """
-        Returns DC value.
+        Returns wire current (A).
 
-        @return: DC value
+        @return: Wire current (A)
         """
         return self._dc
 
-    def get_length(self):
+    def get_length(self) -> float:
         """
         Returns this curve's length.
 
-        @return: Length (float)
+        @return: Length
         """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
+
         return self._length
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -378,7 +194,8 @@ class Wire:
 
         Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
 
-        @param parameters: Dictionary containing the transformation parameters (number of replications, radius and axis)
+        @param parameters:  Dictionary containing the transformation parameters
+                            (number of replications, radius, axis and offset angle)
         """
         Debug(self, "._set_rotational_symmetry()")
 
@@ -390,8 +207,9 @@ class Wire:
         axis_other_2 = (parameters["axis"] + 2) % 3
 
         for a in np.linspace(0, 2 * np.pi, parameters["count"], endpoint=False):
-            x = np.append(x, axes[axis_other_1] * np.sin(a) - (axes[axis_other_2] + parameters["radius"]) * np.cos(a))
-            y = np.append(y, axes[axis_other_1] * np.cos(a) + (axes[axis_other_2] + parameters["radius"]) * np.sin(a))
+            b = a + parameters["offset"] * np.pi / 180
+            x = np.append(x, axes[axis_other_1] * np.sin(b) - (axes[axis_other_2] + parameters["radius"]) * np.cos(b))
+            y = np.append(y, axes[axis_other_1] * np.cos(b) + (axes[axis_other_2] + parameters["radius"]) * np.sin(b))
             z = np.append(z, axes[parameters["axis"]])
 
         axes = [x, y, z]
@@ -406,14 +224,14 @@ class Wire:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, progress_callback):
+    def recalculate(self, progress_callback) -> bool:
         """
         Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.
 
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".recalculate()", color=(0, 128, 0))
+        Debug(self, ".recalculate()", color=Theme.SuccessColor)
 
         points_sliced = []
         length = 0
@@ -443,5 +261,7 @@ class Wire:
 
         self._points_sliced = np.array(points_sliced)
         self._length = length
+
+        progress_callback(100)
 
         return True

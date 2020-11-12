@@ -46,43 +46,53 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id62">
+        <table class="children sortable" id="id73">
   
   <tr class="classvariable">
     
     <td>Class Variable</td>
     <td><a href="magneticalc.Table.Table.html#MinimumHeight" class="code" data-type="Class Variable">MinimumHeight</a></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Table.Table.html#DebugColor" class="code" data-type="Class Variable">DebugColor</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#__init__" class="code" data-type="Method">__init__</a></td>
     <td><span>Initializes table.</span></td>
-  </tr><tr class="method">
+  </tr><tr class="instancevariable">
     
-    <td>Method</td>
-    <td><a href="magneticalc.Table.Table.html#set_style" class="code" data-type="Method">set_style</a></td>
-    <td><span>Sets this widget's style.</span></td>
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#on_cell_changed" class="code" data-type="Method">on_cell_changed</a></td>
-    <td><span>Gets called when a table cell changed.</span></td>
+    <td><span>Gets called when a cell changed. This is only used to correct the strange behaviour after editing a cell.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#on_numerical_cell_edited" class="code" data-type="Method">on_numerical_cell_edited</a></td>
+    <td><span>Gets called when a numerical cell has been edited.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#on_combobox_cell_edited" class="code" data-type="Method">on_combobox_cell_edited</a></td>
+    <td><span>Gets called when a combobox cell has been edited.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#on_selection_changed" class="code" data-type="Method">on_selection_changed</a></td>
-    <td><span>Gets called when the table selection changed.</span></td>
+    <td><span>Gets called when the selection changed.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Table.Table.html#focusInEvent" class="code" data-type="Method">focusInEvent</a></td>
-    <td><span>Gets called when the table lost focus, or when a cell is being edited.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Table.Table.html#focusOutEvent" class="code" data-type="Method">focusOutEvent</a></td>
-    <td><span>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></span></td>
+    <td><a href="magneticalc.Table.Table.html#on_row_deleted" class="code" data-type="Method">on_row_deleted</a></td>
+    <td><span>Gets called when a row was deleted.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -91,18 +101,38 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Table.Table.html#select_first_row" class="code" data-type="Method">select_first_row</a></td>
-    <td><span>Selects the first row; used when table was initially focused.</span></td>
+    <td><a href="magneticalc.Table.Table.html#is_cell_widget_selected" class="code" data-type="Method">is_cell_widget_selected</a></td>
+    <td><span>Indicates whether a cell widget is selected (as opposed to a cell item).</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#select_cell" class="code" data-type="Method">select_cell</a></td>
+    <td><span>Selects a cell. Any parameter may be left set to None in order to load its value from the selection model.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#select_last_row" class="code" data-type="Method">select_last_row</a></td>
-    <td><span>Selects the last row; used after inserting a new row.</span></td>
+    <td><span>Selects the last row.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#set_horizontal_header" class="code" data-type="Method">set_horizontal_header</a></td>
     <td><span>Sets horizontal header.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#set_vertical_prefix" class="code" data-type="Method">set_vertical_prefix</a></td>
+    <td><span>Sets the per-row table prefix. Used for mapping cells to configuration; configuration key = prefix + column key + "_" + row index.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#set_horizontal_types" class="code" data-type="Method">set_horizontal_types</a></td>
+    <td><span>Sets the per-column cell types. Used for mapping cells to configuration.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#set_horizontal_options" class="code" data-type="Method">set_horizontal_options</a></td>
+    <td><span>Sets the per-column cell options. This determines if the cell type, i.e. numerical or combobox.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -112,12 +142,27 @@
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#clear_rows" class="code" data-type="Method">clear_rows</a></td>
-    <td><span>Clears table rows.</span></td>
+    <td><span>Clears all table rows.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Table.Table.html#set_contents" class="code" data-type="Method">set_contents</a></td>
-    <td><span>Sets table contents.</span></td>
+    <td><span>Sets the table contents.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#set_style" class="code" data-type="Method">set_style</a></td>
+    <td><span>Sets this widget's style.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#focusInEvent" class="code" data-type="Method">focusInEvent</a></td>
+    <td><span>Gets called when the table gained focus. This highlights the border and selects the last-selected cell (if any).</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Table.Table.html#focusOutEvent" class="code" data-type="Method">focusOutEvent</a></td>
+    <td><span>Gets called when the table lost focus, or when a cell item is being edited, or when a cell widget is selected. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -127,6 +172,11 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.Table.Table.html#_cell_edited_callback" class="code" data-type="Instance Variable">_cell_edited_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_selection_changed_callback" class="code" data-type="Instance Variable">_selection_changed_callback</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -141,7 +191,17 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Table.Table.html#_selection_changed_callback" class="code" data-type="Instance Variable">_selection_changed_callback</a></td>
+    <td><a href="magneticalc.Table.Table.html#_prefix" class="code" data-type="Instance Variable">_prefix</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_types" class="code" data-type="Instance Variable">_types</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Table.Table.html#_options" class="code" data-type="Instance Variable">_options</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -168,6 +228,22 @@
     
     <div class="undocumented">Undocumented</div> (type: <code>int</code>)
   </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Table.Table.DebugColor">
+    
+  </a>
+  <a name="DebugColor">
+    
+  </a>
+  <div class="functionHeader">
+    DebugColor =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>Tuple[int, ...]</code>)
+  </div>
 </div><div class="basemethod">
   
   <a name="magneticalc.Table.Table.__init__">
@@ -179,13 +255,29 @@
   <div class="functionHeader">
     
     def
-    __init__(self, enabled=(True), cell_edited_callback=None, row_deleted_callback=None, minimum_rows=2, selection_changed_callback=None):
+    __init__(self, gui, enabled=(True), cell_edited_callback=None, selection_changed_callback=None, row_deleted_callback=None, minimum_rows=0):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">cell_edited_callback</td><td>Set this to make cells editable</td></tr><tr><td></td><td class="fieldArg">row_deleted_callback</td><td>Set this to make rows deletable</td></tr><tr><td></td><td class="fieldArg">minimum_rows</td><td>Minimum number of rows (no further rows can be deleted)</td></tr><tr><td></td><td class="fieldArg">selection_changed_callback</td><td>Used to inform the GUI that another row was selected</td></tr></table></div>
+    <div><p>Initializes table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr><tr><td></td><td class="fieldArg">cell_edited_callback</td><td>Set this to make cells editable</td></tr><tr><td></td><td class="fieldArg">selection_changed_callback</td><td>Used to inform the GUI that another row was selected</td></tr><tr><td></td><td class="fieldArg">row_deleted_callback</td><td>Set this to make rows deletable</td></tr><tr><td></td><td class="fieldArg">minimum_rows</td><td>Minimum number of rows (no further rows can be deleted)</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Table.Table.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    gui =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -213,6 +305,22 @@
   </a>
   <div class="functionHeader">
     _cell_edited_callback =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Table.Table._selection_changed_callback">
+    
+  </a>
+  <a name="_selection_changed_callback">
+    
+  </a>
+  <div class="functionHeader">
+    _selection_changed_callback =
     
   </div>
   <div class="functionBody">
@@ -253,38 +361,51 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table._selection_changed_callback">
+  <a name="magneticalc.Table.Table._prefix">
     
   </a>
-  <a name="_selection_changed_callback">
+  <a name="_prefix">
     
   </a>
   <div class="functionHeader">
-    _selection_changed_callback =
+    _prefix =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="basemethod">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Table.Table.set_style">
+  <a name="magneticalc.Table.Table._types">
     
   </a>
-  <a name="set_style">
+  <a name="_types">
     
   </a>
   <div class="functionHeader">
-    
-    def
-    set_style(self, border_color, border_width):
+    _types =
     
   </div>
-  <div class="docstring functionBody">
+  <div class="functionBody">
     
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Table.Table._options">
     
-    <div><p>Sets this widget's style.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">border_color</td><td>Border color (string)</td></tr><tr><td></td><td class="fieldArg">border_width</td><td>Border width (integer)</td></tr></table></div>
+  </a>
+  <a name="_options">
+    
+  </a>
+  <div class="functionHeader">
+    _options =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="basemethod">
   
@@ -303,7 +424,45 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when a table cell changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
+    <div><p>Gets called when a cell changed. This is only used to correct the strange behaviour after editing a cell.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.on_numerical_cell_edited">
+    
+  </a>
+  <a name="on_numerical_cell_edited">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_numerical_cell_edited(self, item):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when a numerical cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">item</td><td>QTableWidgetItem</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.on_combobox_cell_edited">
+    
+  </a>
+  <a name="on_combobox_cell_edited">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    on_combobox_cell_edited(self, combobox, row, column):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when a combobox cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">combobox</td><td>QCombobox</td></tr><tr><td></td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -322,45 +481,26 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the table selection changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_selected</td><td>Currently selected QItemSelection</td></tr><tr><td></td><td class="fieldArg">_deselected</td><td>Currently deselected QItemSelection</td></tr></table></div>
+    <div><p>Gets called when the selection changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_selected</td><td>Currently selected QItemSelection</td></tr><tr><td></td><td class="fieldArg">_deselected</td><td>Currently deselected QItemSelection</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Table.Table.focusInEvent">
+  <a name="magneticalc.Table.Table.on_row_deleted">
     
   </a>
-  <a name="focusInEvent">
+  <a name="on_row_deleted">
     
   </a>
   <div class="functionHeader">
     
     def
-    focusInEvent(self, _event):
+    on_row_deleted(self, row):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the table lost focus, or when a cell is being edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Table.Table.focusOutEvent">
-    
-  </a>
-  <a name="focusOutEvent">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    focusOutEvent(self, _event):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
+    <div><p>Gets called when a row was deleted.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -383,22 +523,41 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Table.Table.select_first_row">
+  <a name="magneticalc.Table.Table.is_cell_widget_selected">
     
   </a>
-  <a name="select_first_row">
+  <a name="is_cell_widget_selected">
     
   </a>
   <div class="functionHeader">
     
     def
-    select_first_row(self):
+    is_cell_widget_selected(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Selects the first row; used when table was initially focused.</p></div>
+    <div><p>Indicates whether a cell widget is selected (as opposed to a cell item).</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.select_cell">
+    
+  </a>
+  <a name="select_cell">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    select_cell(self, row=None, column=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Selects a cell. Any parameter may be left set to None in order to load its value from the selection model.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -411,13 +570,13 @@
   <div class="functionHeader">
     
     def
-    select_last_row(self):
+    select_last_row(self, focus=(True)):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Selects the last row; used after inserting a new row.</p></div>
+    <div><p>Selects the last row.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">focus</td><td>Enable to focus the table, disable to explicitly clear the visual selection</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -437,6 +596,63 @@
     
     
     <div><p>Sets horizontal header.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">header</td><td>List of row header strings</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.set_vertical_prefix">
+    
+  </a>
+  <a name="set_vertical_prefix">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_vertical_prefix(self, prefix):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the per-row table prefix. Used for mapping cells to configuration; configuration key = prefix + column key + "_" + row index.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">prefix</td><td>Prefix</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.set_horizontal_types">
+    
+  </a>
+  <a name="set_horizontal_types">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_horizontal_types(self, types):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the per-column cell types. Used for mapping cells to configuration.</p><p>Note: Currently, *only the keys* are used for mapping cells to configuration; the cell options actually determine the cell type, i.e. numerical or combobox.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">types</td><td>Ordered dictionary of key-value pairs (column key : column type), or None to disable configuration</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.set_horizontal_options">
+    
+  </a>
+  <a name="set_horizontal_options">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_horizontal_options(self, options):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the per-column cell options. This determines if the cell type, i.e. numerical or combobox.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">options</td><td>List of options for every column; items may be set to None to use numerical cells</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -474,7 +690,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Clears table rows.</p></div>
+    <div><p>Clears all table rows.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -493,13 +709,70 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets table contents.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">contents</td><td>2D array</td></tr></table></div>
+    <div><p>Sets the table contents.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">contents</td><td>2D array</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.set_style">
+    
+  </a>
+  <a name="set_style">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    set_style(self, border_color, border_width):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets this widget's style.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">border_color</td><td>Border color</td></tr><tr><td></td><td class="fieldArg">border_width</td><td>Border width</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.focusInEvent">
+    
+  </a>
+  <a name="focusInEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    focusInEvent(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the table gained focus. This highlights the border and selects the last-selected cell (if any).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Table.Table.focusOutEvent">
+    
+  </a>
+  <a name="focusOutEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    focusOutEvent(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets called when the table lost focus, or when a cell item is being edited, or when a cell widget is selected. When not editing, this clears the selection, triggering <a href="magneticalc.Table.Table.html#on_selection_changed"><code>on_selection_changed</code></a></p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_event</td><td>Event</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-09 17:19:38.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
       </address>
 
     </div>

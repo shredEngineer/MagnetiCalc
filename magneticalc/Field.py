@@ -18,19 +18,21 @@
 
 import numpy as np
 from numba import jit, prange, set_num_threads
+from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.BiotSavart_JIT import BiotSavart_JIT
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class Field:
     """ Field class. """
 
-    def __init__(self, backend, _type, distance_limit, length_scale):
+    def __init__(self, backend: int, _type: int, distance_limit: float, length_scale: float):
         """
         Initializes an empty field.
 
-        @param backend: Backend index
-        @param _type: Field type to display (0: A-Field; 1: B-Field)
+        @param backend: Backend index (0: JIT/Numba; 1: JIT/Numba + CUDA)
+        @param _type: Field type to display (0: A-field; 1: B-field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
@@ -44,7 +46,7 @@ class Field:
         self._total_limited = None
         self._vectors = None
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Indicates valid data for display.
 
@@ -63,44 +65,50 @@ class Field:
         self._total_limited = None
         self._vectors = None
 
-    def get_type(self):
+    def get_type(self) -> int:
         """
         Gets field type.
 
-        @return: Field type (0: A-Field; 1: B-Field)
+        @return: Field type (0: A-field; 1: B-field)
         """
         return self._type
 
-    def get_units(self):
+    def get_units(self) -> str:
         """
         Gets field units.
 
-        @return: Field units (string)
+        @return: Field units
         """
-        return ["Tm", "T"][self._type]
+        return [
+            "Tm",   # A-field: Tesla · meter
+            "T"     # B-field: Tesla
+        ][self._type]
 
     def get_vectors(self):
         """
-        Gets field vectors.
-        The selected field type decides which field is returned.
+        Gets field vectors. (The selected field type determined which field was calculated.)
 
         @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
         """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated field")
+
         return self._vectors
 
-    def get_total_limited(self):
+    def get_total_limited(self) -> int:
         """
         Gets total number of distance limited points.
 
         @return: Total number of distance limited points
         """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated field")
+
         return self._total_limited
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, wire, sampling_volume, progress_callback, num_cores):
+    def recalculate(self, wire, sampling_volume, progress_callback, num_cores: int) -> bool:
         """
-        Recalculate field vectors.
+        Recalculates field vectors.
 
         @param wire: Wire
         @param sampling_volume: Sampling volume
@@ -113,25 +121,31 @@ class Field:
         use_cuda = self._backend == 1
 
         if use_jit:
+
             # Initialize Biot-Savart JIT backend
             biot_savart = BiotSavart_JIT(
                 self._type,
-                progress_callback,
                 self._distance_limit,
                 self._length_scale,
                 wire.get_dc(),
                 wire.get_elements(),
-                sampling_volume.get_points()
+                sampling_volume.get_points(),
+                sampling_volume.get_permeabilities(),
+                progress_callback
             )
 
             # Fetch result using Biot-Savart JIT backend
             set_num_threads(num_cores)
-            tup = biot_savart.get_vectors()
+            tup = biot_savart.get_result()
+
         elif use_cuda:
-            Debug(self, f"Backend not supported: {self._backend}", color=(255, 0, 0))
+
+            Debug(self, f"Backend not yet supported: {self._backend}", color=Theme.WarningColor, force=True)
             return False
+
         else:
-            Debug(self, f"No such backend: {self._backend}", color=(255, 0, 0))
+
+            Debug(self, f"No such backend: {self._backend}", color=Theme.WarningColor, force=True)
             return False
 
         # Handle interrupt
@@ -145,30 +159,6 @@ class Field:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_squared(self):
-        """
-        Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.
-
-        @return: Float
-        """
-        return self._get_squared_worker(self.get_vectors())
-
-    @staticmethod
-    @jit(nopython=True, parallel=True)
-    def _get_squared_worker(vectors):
-        """
-        Returns the "squared" field scalar. Used by Metric for calculation of energy and self-inductance.
-
-        @param vectors: Ordered list of 3D vectors
-        @return: Float
-        """
-        squared = 0
-        for i in prange(len(vectors)):
-            squared += np.dot(vectors[i], vectors[i])
-        return squared
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     @staticmethod
     @jit(nopython=True, parallel=True)
     def get_arrows(
@@ -176,11 +166,11 @@ class Field:
             field_vectors,
             line_pairs,
             head_points,
-            arrow_scale,
-            magnitude_limit
+            arrow_scale: float,
+            magnitude_limit: float
     ):
         """
-        Returns the field arrow parameters needed by VispyCanvas.
+        Returns the field arrow parameters needed by L{VispyCanvas}.
 
         @param sampling_volume_points: Sampling volume points
         @param field_vectors: Field vectors

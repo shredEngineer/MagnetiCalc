@@ -27,7 +27,7 @@ class Usage_Dialog(QDialog):
 
     # Window dimensions
     Width = 800
-    Height = 590
+    Height = 610
 
     # HTML content
     HTML = f"""
@@ -48,6 +48,10 @@ class Usage_Dialog(QDialog):
             <li>
                 By default, the cuboid sampling volume covers the wire completely;<br>
                 however, you may symmetrically adjust its bounding box by adding (subtracting) some padding.
+            </li>
+            <li>
+                <i>Experimental Feature:</i>
+                Use the constraint editor to create regions of relative permeability µ<sub>r</sub> ≠ 1.
             </li>
         </ul>
 
@@ -75,7 +79,7 @@ class Usage_Dialog(QDialog):
         <ul>
             <li>Take a look at the minimum and maximum magnetic flux densities reached in each metric.</li>
             <li>
-                Coil energy and self-inductance are also calculated;<br>
+                For a more accurate coil energy and self-inductance calculation,<br>
                 ensure that the sampling volume encloses a large, non-singular portion of the field.
             </li>
         </ul>
@@ -92,12 +96,15 @@ class Usage_Dialog(QDialog):
 
         <h3 style="color: {Theme.PrimaryColor};">What does MagnetiCalc do?</h3>
 
-        MagnetiCalc calculates the magnetic flux density, vector potential, energy and self-inductance
-        of arbitrary coils in vacuum, examples included.
+        MagnetiCalc calculates the magnetic flux density, vector potential, energy, self-inductance
+        and magnetic dipole moment of arbitrary coils in vacuum.
+        As an experimental feature, different core media can be modeled as regions of variable relative permeability.
+        <br><br>
+
         Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
-        (<b>B</b>-field due to a DC current, in units of <i>Tesla</i>)  is displayed in interactive 3D,
-        using multiple metrics for highlighting this field's properties.
-        Alternatively, the magnetic vector potential (<b>A</b>-field, in units of <i>Tesla-meter</i>) may be displayed.
+        (<b>B</b>-field due to a DC current, in units of <i>Tesla</i>)
+        or the magnetic vector potential (<b>A</b>-field, in units of <i>Tesla-meter</i>)
+        is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.
 
         <h3 style="color: {Theme.PrimaryColor};">Who needs MagnetiCalc?</h3>
 
@@ -111,7 +118,7 @@ class Usage_Dialog(QDialog):
         employing multiprocessing techniques;
         MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
         Additionally, the use of easily constrainable "sampling volumes"
-        allows for selective calculation over grids of arbitrary shape.<br><br>
+        allows for selective calculation over grids of arbitrary shape and arbitrary relative permeabilities.<br><br>
 
         The shape of any wire is modeled as a 3D piecewise linear curve.
         Arbitrary loops of wire are sliced into differential current elements, each of which
@@ -123,8 +130,9 @@ class Usage_Dialog(QDialog):
 
         The coil's energy [2] and self-inductance [3]
         are calculated by summing the squared <b>B</b>-field over the entire sampling volume;
-        ensure that the sampling volume encloses a large, non-singular portion of the field.
-        <br><br>
+        ensure that the sampling volume encloses a large, non-singular portion of the field.<br><br>
+
+        Additionally, the scalar magnetic dipole moment is calculated by summing over all current elements.<br><br>
 
         [1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
         [2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
@@ -137,16 +145,17 @@ class Usage_Dialog(QDialog):
 
     def __init__(self):
         """
-        Displays "Usage" dialog.
+        Initializes "Usage" dialog.
         """
 
-        # noinspection PyArgumentList
         QDialog.__init__(self)
 
         self.setWindowTitle("Usage")
 
         layout = QVBoxLayout()
         self.setLayout(layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         text_browser = QTextBrowser()
         text_browser.setMinimumWidth(self.Width)
@@ -164,11 +173,15 @@ class Usage_Dialog(QDialog):
         text_browser.setTextCursor(cursor)
         layout.addWidget(text_browser)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         button_box = QHBoxLayout()
         ok_button = QPushButton(qta.icon("fa.check"), "OK")
         ok_button.clicked.connect(self.accept)
         button_box.addWidget(ok_button)
         layout.addLayout(button_box)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def show(self):
         """

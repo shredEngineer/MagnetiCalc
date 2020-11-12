@@ -30,13 +30,13 @@ class Display_Widget(Groupbox):
     # Slider limits
     FieldArrowScaleMinimum = 0
     FieldArrowScaleMaximum = 1
-    FieldArrowScaleStep = .025
+    FieldArrowScaleStep = 0.025
     FieldPointScaleMinimum = 0
     FieldPointScaleMaximum = 20
     FieldPointScaleStep = 1
     FieldBoostMinimum = 0
     FieldBoostMaximum = 1
-    FieldBoostStep = 0.05
+    FieldBoostStep = 0.025
 
     def __init__(self, gui):
         """
@@ -47,6 +47,8 @@ class Display_Widget(Groupbox):
         Groupbox.__init__(self, "Display")
 
         self.gui = gui
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(IconLabel("fa.circle", "Point Scale"))
         self.field_point_scale_slider = SliderFloat(Qt.Horizontal)
@@ -61,7 +63,7 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_point_scale_slider)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 
@@ -78,7 +80,7 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_arrow_scale_slider)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 
@@ -95,7 +97,7 @@ class Display_Widget(Groupbox):
         )
         self.addWidget(self.field_boost_slider)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 
@@ -109,11 +111,11 @@ class Display_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_enabled(self, enabled):
+    def set_enabled(self, enabled: bool):
         """
         Enables / disables this widget.
 
-        @param enabled: Enabled state (boolean)
+        @param enabled: Enabled state
         """
         self.setEnabled(enabled)
 

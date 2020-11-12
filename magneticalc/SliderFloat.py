@@ -24,7 +24,7 @@ class SliderFloat(QSlider):
 
     def __init__(self, orientation):
         """
-        Initializes slider, supporting float values.
+        Initializes a slider supporting float values.
 
         @param orientation: Orientation
         """
@@ -34,7 +34,7 @@ class SliderFloat(QSlider):
 
     def set_range_step(self, minimum: float, maximum: float, step: float):
         """
-        Set float step.
+        Sets the float step.
 
         @param step: Step value
         @param minimum: Minimum value

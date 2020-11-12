@@ -65,16 +65,17 @@ class About_Dialog(QDialog):
 
     def __init__(self):
         """
-        Displays "About" dialog.
+        Initializes "About" dialog.
         """
 
-        # noinspection PyArgumentList
         QDialog.__init__(self)
 
         self.setWindowTitle("About")
 
         layout = QVBoxLayout()
         self.setLayout(layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         text_browser = QTextBrowser()
         text_browser.setMinimumWidth(self.Width)
@@ -89,6 +90,8 @@ class About_Dialog(QDialog):
         text_browser.setFocusPolicy(Qt.NoFocus)
         layout.addWidget(text_browser)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         button_box = QHBoxLayout()
 
         ok_button = QPushButton(qta.icon("fa.check"), "OK")
@@ -100,6 +103,8 @@ class About_Dialog(QDialog):
         button_box.addWidget(donate_button)
 
         layout.addLayout(button_box)
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def show(self):
         """

@@ -21,43 +21,44 @@ from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 @jit(nopython=True, parallel=False)
-def metric_norm(norm_id, vector):
+def metric_norm(norm_id: str, vector):
     """
     Calculates the selected norm of some vector.
 
-    Note: This must be declared on the top level for JIT to work.
+    Note: For JIT to work, this must be declared at the top level.
 
-    @param norm_id: Norm id
+    @param norm_id: Norm ID
     @param vector: 3D vector
     """
-    if norm_id == "x":
+    if norm_id == "X":
         value = vector[0]
-    elif norm_id == "y":
+    elif norm_id == "Y":
         value = vector[1]
-    elif norm_id == "z":
+    elif norm_id == "Z":
         value = vector[2]
-    elif norm_id == "radius_x":
+    elif norm_id == "Radius X":
         value = np.abs(vector[0])
-    elif norm_id == "radius_y":
+    elif norm_id == "Radius Y":
         value = np.abs(vector[1])
-    elif norm_id == "radius_z":
+    elif norm_id == "Radius Z":
         value = np.abs(vector[2])
-    elif norm_id == "radius_xy":
+    elif norm_id == "Radius XY":
         value = np.sqrt(vector[0] ** 2 + vector[1] ** 2)
-    elif norm_id == "radius_xz":
+    elif norm_id == "Radius XZ":
         value = np.sqrt(vector[1] ** 2 + vector[2] ** 2)
-    elif norm_id == "radius_yz":
+    elif norm_id == "Radius YZ":
         value = np.sqrt(vector[2] ** 2 + vector[0] ** 2)
-    elif norm_id == "radius":
+    elif norm_id == "Radius":
         value = np.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
-    elif norm_id == "angle_xy":
+    elif norm_id == "Angle XY":
         value = (np.arctan2(vector[0], vector[1]) + np.pi) / np.pi / 2
-    elif norm_id == "angle_xz":
+    elif norm_id == "Angle XZ":
         value = (np.arctan2(vector[0], vector[2]) + np.pi) / np.pi / 2
-    elif norm_id == "angle_yz":
+    elif norm_id == "Angle YZ":
         value = (np.arctan2(vector[1], vector[2]) + np.pi) / np.pi / 2
     else:
         # Invalid norm ID
@@ -67,11 +68,11 @@ def metric_norm(norm_id, vector):
 
 
 @jit(nopython=True, parallel=False)
-def color_map_divergent(color_normalized):
+def color_map_divergent(color_normalized: float) -> (float, float, float):
     """
     Maps normalized value to color, divergent.
 
-    Note: This must be declared on the top level for JIT to work.
+    Note: For JIT to work, this must be declared at the top level.
 
     @param color_normalized: Normalized color value
     @return: R, G, B
@@ -82,11 +83,11 @@ def color_map_divergent(color_normalized):
 
 
 @jit(nopython=True, parallel=False)
-def color_map_cyclic(color_normalized):
+def color_map_cyclic(color_normalized: float) -> (float, float, float):
     """
     Maps normalized value to color, cyclic.
 
-    Note: This must be declared on the top level for JIT to work.
+    Note: For JIT to work, this must be declared at the top level.
 
     @param color_normalized: Normalized color value
     @return: R, G, B
@@ -101,202 +102,16 @@ def color_map_cyclic(color_normalized):
 
 class Metric:
     """
-    Provides different metrics, mapping some field vector properties to some color and alpha range.
-    For a list of color maps, see: https://matplotlib.org/3.1.1/gallery/color/colormap_reference.html
+    Provides different metrics, used for mapping some field vector properties to some color and alpha range.
     """
 
     # Length scale
-    LengthScale = 1e-2  # m  (== 1 cm)
+    LengthScale = 1e-2  # m  (1 cm)
 
     # Minimum argument limit for logarithmic scaling
     LogNormMinimum = 1e-12
 
-    # Metric value: Magnitude in XYZ-space (linear)
-    Magnitude = {
-        "id"        : "Magnitude",
-        "norm_id"   : "radius",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XY-plane (linear)
-    MagnitudeXY = {
-        "id"        : "Magnitude XY",
-        "norm_id"   : "radius_xy",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in X-direction (linear)
-    MagnitudeX = {
-        "id"        : "Magnitude X",
-        "norm_id"   : "radius_x",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in Y-direction (linear)
-    MagnitudeY = {
-        "id"        : "Magnitude Y",
-        "norm_id"   : "radius_y",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in Z-direction (linear)
-    MagnitudeZ = {
-        "id"        : "Magnitude Z",
-        "norm_id"   : "radius_z",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XZ-plane (linear)
-    MagnitudeXZ = {
-        "id"        : "Magnitude XZ",
-        "norm_id"   : "radius_xz",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in YZ-plane (linear)
-    MagnitudeYZ = {
-        "id"        : "Magnitude YZ",
-        "norm_id"   : "radius_yz",
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XYZ-space (logarithmic)
-    LogMagnitude = {
-        "id"        : "Log Magnitude",
-        "norm_id"   : "radius",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in X-direction (logarithmic)
-    LogMagnitudeX = {
-        "id"        : "Log Magnitude X",
-        "norm_id"   : "radius_x",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in Y-direction (logarithmic)
-    LogMagnitudeY = {
-        "id"        : "Log Magnitude Y",
-        "norm_id"   : "radius_y",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in Z-direction (logarithmic)
-    LogMagnitudeZ = {
-        "id"        : "Log Magnitude Z",
-        "norm_id"   : "radius_z",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XY-plane (logarithmic)
-    LogMagnitudeXY = {
-        "id"        : "Log Magnitude XY",
-        "norm_id"   : "radius_xy",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XZ-plane (logarithmic)
-    LogMagnitudeXZ = {
-        "id"        : "Log Magnitude XZ",
-        "norm_id"   : "radius_xz",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric preset: Magnitude in YZ-plane (logarithmic)
-    LogMagnitudeYZ = {
-        "id"        : "Log Magnitude YZ",
-        "norm_id"   : "radius_yz",
-        "is_log"    : True,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric preset: Angle in XY-plane
-    AngleXY = {
-        "id"        : "Angle XY",
-        "norm_id"   : "angle_xy",
-        "is_log"    : False,
-        "is_angle"  : True,
-        "colormap"  : 1  # cyclic
-    }
-
-    # Metric preset: Angle in XZ-plane
-    AngleXZ = {
-        "id"        : "Angle XZ",
-        "norm_id"   : "angle_xz",
-        "is_log"    : False,
-        "is_angle"  : True,
-        "colormap"  : 1  # cyclic
-    }
-
-    # Metric preset: Angle in YZ-plane
-    AngleYZ = {
-        "id"        : "Angle YZ",
-        "norm_id"   : "angle_yz",
-        "is_log"    : False,
-        "is_angle"  : True,
-        "colormap"  : 1  # cyclic
-    }
-
-    # List of all above presets
-    Presets = [
-        Magnitude,
-        MagnitudeX,
-        MagnitudeY,
-        MagnitudeZ,
-        MagnitudeXY,
-        MagnitudeXZ,
-        MagnitudeYZ,
-        LogMagnitude,
-        LogMagnitudeX,
-        LogMagnitudeY,
-        LogMagnitudeZ,
-        LogMagnitudeXY,
-        LogMagnitudeXZ,
-        LogMagnitudeYZ,
-        AngleXY,
-        AngleXZ,
-        AngleYZ
-    ]
-
-    @staticmethod
-    def get_by_id(_id_):
-        """
-        Selects a preset by name.
-
-        @param _id_: Preset ID string
-        @return: Preset parameters (or None if ID not found)
-        """
-        for preset in Metric.Presets:
-            if _id_ == preset["id"]:
-                return preset
-        return None
+    # ------------------------------------------------------------------------------------------------------------------
 
     def __init__(self, color_preset, alpha_preset):
         """
@@ -313,16 +128,13 @@ class Metric:
 
         self._colors = None
         self._limits = None
-        self._energy = None
-        self._self_inductance = None
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Indicates valid data for display.
 
         @return: True if data is valid for display, False otherwise
         """
-        # Note: Not checking _energy and _self_inductance here as these are not always calculated (only for B-field)
         return \
             self._colors is not None and \
             self._limits is not None
@@ -335,8 +147,6 @@ class Metric:
 
         self._colors = None
         self._limits = None
-        self._energy = None
-        self._self_inductance = None
 
     def get_color_preset(self):
         """
@@ -360,6 +170,8 @@ class Metric:
 
         @return: List of color values (4-tuples)
         """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated metric")
+
         return self._colors
 
     def get_limits(self):
@@ -368,29 +180,15 @@ class Metric:
 
         @return: Dictionary
         """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated metric")
+
         return self._limits
-
-    def get_energy(self):
-        """
-        Returns calculated energy.
-
-        @return: Float
-        """
-        return self._energy
-
-    def get_self_inductance(self):
-        """
-        Returns calculated self-inductance.
-
-        @return: Float
-        """
-        return self._self_inductance
 
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def _norm_worker(norm_color, norm_alpha, vectors):
+    def _norm_worker(norm_color: str, norm_alpha: str, vectors):
         """
         Calculates color and alpha norm values.
 
@@ -411,15 +209,15 @@ class Metric:
     @staticmethod
     @jit(nopython=True, parallel=True)
     def _normalize_worker(
-            color_map_id,
-            color_is_log,
+            color_map_id: str,
+            color_is_log: bool,
             color_norm_values,
-            color_norm_min,
-            color_norm_max,
-            alpha_is_log,
+            color_norm_min: float,
+            color_norm_max: float,
+            alpha_is_log: bool,
             alpha_norm_values,
-            alpha_norm_min,
-            alpha_norm_max,
+            alpha_norm_min: float,
+            alpha_norm_max: float,
             colors
     ):
         """
@@ -478,9 +276,9 @@ class Metric:
 
         return colors
 
-    def recalculate(self, wire, sampling_volume, field, progress_callback):
+    def recalculate(self, wire, sampling_volume, field, progress_callback) -> bool:
         """
-        Recalculate color and alpha values for field.
+        Recalculates color and alpha values for field.
 
         @param wire: Wire
         @param sampling_volume: SamplingVolume
@@ -488,7 +286,7 @@ class Metric:
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
         """
-        Debug(self, ".recalculate()", color=(0, 128, 0))
+        Debug(self, ".recalculate()", color=Theme.SuccessColor)
 
         n = len(field.get_vectors())
 
@@ -501,7 +299,7 @@ class Metric:
             field.get_vectors()
         )
 
-        progress_callback(33)
+        progress_callback(50)
 
         # Select color range
         if self._color_preset["is_angle"]:
@@ -569,40 +367,15 @@ class Metric:
             "alpha_max": alpha_norm_max
         }
 
-        progress_callback(66)
-
-        if field.get_type() == 1:
-            # Field is B-Field
-            self.recalculate_energy_and_self_inductance(wire, sampling_volume, field)
-
         progress_callback(100)
 
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate_energy_and_self_inductance(self, wire, sampling_volume, field):
-        """
-        Calculates the coil's energy and self-inductance.
-        See: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.
-        See: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).
-
-        @param wire: Wire
-        @param sampling_volume: SamplingVolume
-        @param field: Field
-        """
-
-        # Sampling volume element
-        dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3
-
-        self._energy = field.get_squared() * dV / Constants.mu_0
-        self._self_inductance = self._energy / np.square(wire.get_dc())
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def boost_colors(boost, direction, colors):
+    def boost_colors(boost: float, direction: float, colors):
         """
         "Boosts" an array of color values.
 
@@ -613,6 +386,7 @@ class Metric:
         """
         for i in prange(len(colors)):
             r = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][0] + boost * direction]))]))
+            g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
             g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
             b = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][2] + boost * direction]))]))
             a = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][3] + boost]))]))

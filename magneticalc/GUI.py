@@ -23,6 +23,7 @@ import datetime
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget
+from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
@@ -38,7 +39,7 @@ from magneticalc.VispyCanvas import VispyCanvas
 class GUI(QMainWindow):
     """ GUI class. """
 
-    # These signals are fired from the from calculation thread
+    # These signals are fired from the calculation thread
     calculation_status = pyqtSignal(str)
     calculation_exited = pyqtSignal(bool)
 
@@ -69,7 +70,7 @@ class GUI(QMainWindow):
         self.model = Model(self)
 
         # Create the left and right sidebar
-        # Note: These create the wire, sampling volume, field and metric widgets, each populating the model from config.
+        # Note: These create the wire, sampling volume, field and metric widgets, each populating the model from config
         self.sidebar_left = SidebarLeft(self)
         self.sidebar_right = SidebarRight(self)
 
@@ -86,15 +87,20 @@ class GUI(QMainWindow):
         self.setCentralWidget(self.splitter)
         self.splitter.setHandleWidth(8)
 
-        # Insert the menu
+        # Create the menu
         self.menu = Menu(self)
 
         # Connect the calculation thread communication signals
         self.calculation_status.connect(lambda text: self.statusbar.text(text))
         self.calculation_exited.connect(lambda success: self.on_calculation_exited(success))
 
+        self.initializing = True
+
         # Kick off the field calculation
-        self.recalculate()
+        if self.config.get_bool("auto_calculation"):
+            self.recalculate()
+        else:
+            self.redraw()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -104,10 +110,20 @@ class GUI(QMainWindow):
         """
         if self.calculation_thread is not None:
             if self.calculation_thread.isRunning():
-                Debug(self, ".redraw(): Skipped because calculation is in progress", color=Theme.PrimaryColor)
+                Debug(
+                    self,
+                    ".redraw(): Skipped because calculation is in progress",
+                    color=Theme.PrimaryColor,
+                    force=True
+                )
                 return
             else:
-                Debug(self, ".redraw(): WARNING: Setting calculation thread to None", color=(255, 0, 0))
+                Debug(
+                    self,
+                    ".redraw(): WARNING: Setting calculation thread to None",
+                    color=Theme.WarningColor,
+                    force=True
+                )
                 self.calculation_thread = None
 
         self.sidebar_right.display_widget.set_enabled(self.model.field.is_valid())
@@ -120,11 +136,20 @@ class GUI(QMainWindow):
         """
         Re-calculates the model.
         """
-        Debug(self, ".recalculate()", color=(0, 128, 0))
+        Debug(self, ".recalculate()", color=Theme.SuccessColor)
 
         if self.calculation_thread is not None:
-            Debug(self, ".recalculate(): WARNING: Killing orphaned calculation thread", color=(255, 0, 0))
+            Debug(
+                self,
+                ".recalculate(): WARNING: Killing orphaned calculation thread",
+                color=Theme.WarningColor,
+                force=True
+            )
             self.interrupt_calculation()
+
+        if self.initializing:
+            self.initializing = False
+            self.vispy_canvas.initializing = True
 
         self.redraw()
         self.statusbar.arm()
@@ -134,11 +159,11 @@ class GUI(QMainWindow):
         self.calculation_start_time = time.monotonic()
         self.calculation_thread.start()
 
-    def on_calculation_exited(self, success):
+    def on_calculation_exited(self, success: bool):
         """
         This is called after calculation thread has exited.
 
-        @param success: Reflects successful calculation
+        @param success: True if calculation was successful, False otherwise
         """
         calculation_time = time.monotonic() - self.calculation_start_time
 
@@ -150,16 +175,20 @@ class GUI(QMainWindow):
                 #       after another thread has already been started
                 return
             else:
-                # This happens when calculation finished and there
+                # This happens when calculation finished and no other thread was started
                 self.calculation_thread = None
-                Debug(self, f".on_calculation_exited(): Success (took {calculation_time:.2f} s)", color=(0, 128, 0))
+                Debug(
+                    self,
+                    f".on_calculation_exited(): Success (took {calculation_time:.2f} s)",
+                    color=Theme.SuccessColor
+                )
         else:
             Debug(
                 self,
                 f".on_calculation_exited(): Interrupted after {calculation_time:.2f} s", color=Theme.PrimaryColor
             )
 
-        # Note: For some reason, most of the time we need an additional ("final-final") re-draw here
+        # Note: For some reason, most of the time we need an additional ("final-final") re-draw here; VisPy glitch?
         self.redraw()
 
         self.statusbar.disarm(success)
@@ -169,7 +198,12 @@ class GUI(QMainWindow):
         Kills any running calculation.
         """
         if self.calculation_thread is None:
-            Debug(self, ".interrupt_calculation: WARNING: No calculation thread to interrupt", color=(255, 0, 0))
+            Debug(
+                self,
+                ".interrupt_calculation: WARNING: No calculation thread to interrupt",
+                color=Theme.WarningColor,
+                force=True
+            )
             return
 
         if self.calculation_thread.isRunning():
@@ -179,11 +213,24 @@ class GUI(QMainWindow):
             if self.calculation_thread.wait(3000):
                 Debug(self, ".interrupt_calculation(): Exited gracefully", color=Theme.PrimaryColor)
             else:
-                Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", color=(255, 0, 0))
-                self.calculation_thread.terminate()
-                self.calculation_thread.wait()
+                Assert_Dialog(False, "Failed to terminate calculation thread")
+                if self.calculation_thread is not None:
+                    if self.calculation_thread.isRunning():
+                        Debug(
+                            self,
+                            ".interrupt_calculation(): WARNING: Terminating ungracefully",
+                            color=Theme.WarningColor,
+                            force=True
+                        )
+                        self.calculation_thread.terminate()
+                        self.calculation_thread.wait()
         else:
-            Debug(self, ".interrupt_calculation: WARNING: Calculation thread should be running", color=(255, 0, 0))
+            Debug(
+                self,
+                ".interrupt_calculation: WARNING: Calculation thread should be running",
+                color=Theme.WarningColor,
+                force=True
+            )
 
         self.calculation_thread = None
 
@@ -227,9 +274,9 @@ class GUI(QMainWindow):
 
     def closeEvent(self, _event):
         """
-        Handle close _event.
+        Handles close event.
 
-        @param _event: Close _event
+        @param _event: Close event
         """
         self.quit()
 
@@ -243,6 +290,11 @@ class GUI(QMainWindow):
 
             # Focus the the wire base points table
             self.sidebar_left.wire_widget.table.setFocus()
+
+        elif event.key() == Qt.Key_F3:
+
+            # Open the the constraint editor
+            self.sidebar_left.sampling_volume_widget.open_constraint_editor()
 
         elif event.key() == Qt.Key_F5:
 

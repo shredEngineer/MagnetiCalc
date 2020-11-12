@@ -20,6 +20,7 @@ import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QSizePolicy
 from magneticalc.Constraint import Constraint
+from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
@@ -51,6 +52,8 @@ class SamplingVolume_Widget(Groupbox):
 
         self.gui = gui
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding")
         padding_clear_button = QPushButton()
         padding_clear_button.setIcon(qta.icon("fa.eraser"))
@@ -77,7 +80,7 @@ class SamplingVolume_Widget(Groupbox):
             padding_layout.addWidget(self.padding_spinbox[i], alignment=Qt.AlignVCenter)
         self.addLayout(padding_layout)
 
-        # --------------------------------------------------------------------------------------------------------------
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
 
@@ -96,17 +99,46 @@ class SamplingVolume_Widget(Groupbox):
         resolution_layout.addWidget(points_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(resolution_layout)
 
-        total_layout = QHBoxLayout()
-        total_label_left = QLabel("Total constrained points:")
-        total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.total_label = QLabel("")
-        self.total_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_layout.addWidget(total_label_left, alignment=Qt.AlignVCenter)
-        total_layout.addWidget(self.total_label, alignment=Qt.AlignVCenter)
-        self.addLayout(total_layout)
+        total_points_layout = QHBoxLayout()
+        total_points_label_left = QLabel("Total sampling points:")
+        total_points_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_points_label = QLabel("N/A")
+        self.total_points_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_points_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_points_layout.addWidget(total_points_label_left, alignment=Qt.AlignVCenter)
+        total_points_layout.addWidget(self.total_points_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_points_layout)
 
-        # ToDo: Add some widget to add, edit and remove sampling volume constraints
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.addWidget(HLine())
+
+        # Initialize constraints
+        self.constraint_editor = Constraint_Editor(self.gui)
+
+        constraints_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
+        constraint_shortcut_label = QLabel("⟨F3⟩")
+        constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
+        constraints_icon_label.addWidget(constraint_shortcut_label)
+
+        constraint_edit_button = QPushButton()
+        constraint_edit_button.setText("Edit …")
+        constraint_edit_button.clicked.connect(self.open_constraint_editor)
+        constraints_icon_label.addWidget(constraint_edit_button)
+
+        self.addWidget(constraints_icon_label)
+
+        total_constraints_layout = QHBoxLayout()
+        total_constraints_label_left = QLabel("Total constraints:")
+        total_constraints_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_constraints_label = QLabel("N/A")
+        self.total_constraints_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_constraints_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_constraints_layout.addWidget(total_constraints_label_left, alignment=Qt.AlignVCenter)
+        total_constraints_layout.addWidget(self.total_constraints_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_constraints_layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Initially load sampling volume from configuration
         self.set_sampling_volume(recalculate=False, invalidate_self=False)
@@ -138,9 +170,9 @@ class SamplingVolume_Widget(Groupbox):
     def set_sampling_volume(
             self,
             padding=None,
-            resolution=None,
-            recalculate=True,
-            invalidate_self=True
+            resolution: int = None,
+            recalculate: bool = True,
+            invalidate_self: bool = True
     ):
         """
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
@@ -148,7 +180,7 @@ class SamplingVolume_Widget(Groupbox):
 
         @param resolution: Sampling volume _resolution
         @param padding: Padding (3D point)
-        @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
@@ -159,8 +191,25 @@ class SamplingVolume_Widget(Groupbox):
 
             self.readjust(padding)
 
-            # ToDo: Add support for sampling volume constraints, e.g.:
-            # self.gui.model.sampling_volume.add_constraint(Constraint("radius", "range", _min=-2, _max=2))
+            # Load sampling volume constraints from configuration
+            for i, constraint in enumerate(self.constraint_editor.get_constraints()):
+
+                constraint = self.gui.config.set_get_dict(
+                    prefix=f"constraint_",
+                    suffix=f"_{i}",
+                    types=self.constraint_editor.Constraint_Types,
+                    values=None
+                )
+
+                self.gui.model.sampling_volume.add_constraint(
+                    Constraint(
+                        constraint["norm"],
+                        constraint["comparison"],
+                        constraint["min"],
+                        constraint["max"],
+                        constraint["permeability"]
+                    )
+                )
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -201,9 +250,20 @@ class SamplingVolume_Widget(Groupbox):
     def update_labels(self):
         """
         Updates the labels.
-        Called from calculation thread after the sampling volume became valid.
         """
         if self.gui.model.sampling_volume.is_valid():
-            self.total_label.setText(str(len(self.gui.model.sampling_volume.get_points())))
+            self.total_points_label.setText(str(len(self.gui.model.sampling_volume.get_points())))
         else:
-            self.total_label.setText("N/A")
+            self.total_points_label.setText("N/A")
+
+        self.total_constraints_label.setText(str(len(self.constraint_editor.get_constraints())))
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def open_constraint_editor(self):
+        """
+        Opens the constraint editor; recalculates the sampling volume afterwards.
+        """
+        self.gui.interrupt_calculation()
+        self.constraint_editor.show()
+        self.set_sampling_volume()

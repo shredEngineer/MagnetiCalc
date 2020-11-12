@@ -82,6 +82,8 @@ class Field_Widget(Groupbox):
         distance_limit_layout.addWidget(distance_limit_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(distance_limit_layout)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         total_limited_points_layout = QHBoxLayout()
         total_limited_points_left = QLabel("Total limited points:")
         total_limited_points_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
@@ -99,11 +101,11 @@ class Field_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_field_type_changed(self, _type, checked):
+    def on_field_type_changed(self, _type: bool, checked: bool):
         """
         Gets called when the field type changed.
 
-        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param _type: Field type (0: A-field; 1: B-field)
         @param checked: Boolean
         """
         if checked:
@@ -111,14 +113,20 @@ class Field_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_field(self, _type=None, distance_limit=None, recalculate=True, invalidate_self=True):
+    def set_field(
+            self,
+            _type: int = None,
+            distance_limit: float = None,
+            recalculate: bool = True,
+            invalidate_self: bool = True
+    ):
         """
         Sets the field. This will overwrite the currently set field in the model.
         Parameters may be left set to None in order to load their default value.
 
-        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param _type: Field type (0: A-field; 1: B-field)
         @param distance_limit: Distance limit
-        @param recalculate: Enable to trigger final re-calculation (boolean)
+        @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old field before setting a new one
         """
         with ModelAccess(self.gui, recalculate):
@@ -136,7 +144,7 @@ class Field_Widget(Groupbox):
 
     def update_labels(self):
         """
-        Updates the field labels.
+        Updates the labels.
         """
         if self.gui.model.field.is_valid():
             self.total_limited_points_label.setText(str(self.gui.model.field.get_total_limited()))

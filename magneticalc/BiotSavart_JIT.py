@@ -26,58 +26,68 @@ from magneticalc.Theme import Theme
 
 class BiotSavart_JIT:
     """
-    Implements the Biot-Savart law for calculating the magnetic flux density.
+    Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field).
     """
 
     def __init__(
             self,
-            _type,
-            progress_callback,
-            distance_limit,
-            length_scale,
-            dc,
+            _type: int,
+            distance_limit: float,
+            length_scale: float,
+            dc: float,
             current_elements,
-            sampling_volume_points
+            sampling_volume_points,
+            sampling_volume_permeabilities,
+            progress_callback
     ):
         """
-        Populates class attributes.
+        Initializes the class attributes.
 
-        @param _type: Field type (0: A-Field; 1: B-Field)
-        @param progress_callback: Progress callback
+        @param _type: Field type (0: A-field; 1: B-field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param dc: Wire current (A)
-        @param current_elements: List of current elements (list of 3D vector pairs: (element center, element direction))
-        @param sampling_volume_points: List of sampling volume points
+        @param current_elements: Ordered list of current elements (tuples: (element center, element direction))
+        @param sampling_volume_points: Ordered list of sampling volume points
+        @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
+        @param progress_callback: Progress callback
         """
         self._type = _type
-        self._progress_callback = progress_callback
         self._distance_limit = distance_limit
         self._length_scale = length_scale
         self._dc = dc
         self._current_elements = current_elements
         self._sampling_volume_points = sampling_volume_points
+        self._sampling_volume_permeabilities = sampling_volume_permeabilities
+        self._progress_callback = progress_callback
 
         self.total_limited = 0
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def worker(_type, distance_limit, length_scale, current_elements, sampling_volume_point):
+    def worker(
+            _type: int,
+            distance_limit: float,
+            length_scale: float,
+            current_elements,
+            sampling_volume_point
+    ):
         """
-        Either calculates the magnetic flux density (B-Field) at some sampling volume point using the Biot-Savart law,
-        or calculates the magnetic vector potential (A-Field).
+        Applies the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field)
+        for a single sampling volume point.
 
-        @param _type: Field type (0: A-Field; 1: B-Field)
+        @param _type: Field type (0: A-field; 1: B-field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
-        @param current_elements: Ordered list of current elements (3D vector pairs: (element center, element direction))
-        @param sampling_volume_point: Sampling volume point (3D vector)
+        @param current_elements: Ordered list of current elements (tuples: (element center, element direction))
+        @param sampling_volume_point: Sampling volume point
         @return: (Total number of limited points, vector)
         """
         total_limited = 0
         vector = np.zeros(3)
 
         for j in prange(len(current_elements)):
+
             element_center = current_elements[j][0]
             element_direction = current_elements[j][1]
 
@@ -90,21 +100,21 @@ class BiotSavart_JIT:
                 total_limited += 1
 
             if _type == 0:
-                # Calculate A-Field (vector potential)
+                # Calculate A-field (vector potential)
                 vector += element_direction * length_scale / scalar_distance
             elif _type == 1:
-                # Calculate B-Field (flux density)
+                # Calculate B-field (flux density)
                 vector += np.cross(element_direction * length_scale, vector_distance) / (scalar_distance ** 3)
 
         return total_limited, vector
 
-    def get_vectors(self):
+    def get_result(self):
         """
-        Calculates the magnetic flux density at every point of the sampling volume.
+        Calculates the field at every point of the sampling volume.
 
         @return: (Total number of limited points, field) if successful, None if interrupted
         """
-        Debug(self, ".get_vectors()", color=Theme.PrimaryColor)
+        Debug(self, ".get_result()", color=Theme.PrimaryColor)
 
         total_limited = 0
         vectors = []
@@ -121,18 +131,23 @@ class BiotSavart_JIT:
             )
 
             total_limited += tup[0]
-            vectors.append(tup[1])
+
+            vector = tup[1] * self._sampling_volume_permeabilities[i]
+
+            vectors.append(vector)
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
                 self._progress_callback(100 * (i + 1) / len(self._sampling_volume_points))
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ": Interruption requested, exiting now", color=Theme.PrimaryColor)
+                    Debug(self, ".get_result(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return None
 
         if self._type == 0 or self._type == 1:
-            # Field is A-Field or B-Field
-            vectors = np.array(vectors) * self._dc * Constants.k
+            # Field is A-field or B-field
+            vectors = np.array(vectors) * self._dc * Constants.mu_0 / 4 / np.pi
+
+        self._progress_callback(100)
 
         return total_limited, vectors

@@ -34,15 +34,17 @@ class Statusbar:
         """
         self.gui = gui
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # Start button
         self.start_button = QPushButton(qta.icon("fa.play-circle"), "", self.gui)
-        self.start_button.setText(" F5 ")
+        self.start_button.setText(" ⟨F5⟩ ")
         self.start_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.start_button.clicked.connect(self.start)
 
         # Cancel button
         self.cancel_button = QPushButton(qta.icon("fa.stop-circle"), "", self.gui)
-        self.cancel_button.setText("ESC")
+        self.cancel_button.setText("⟨ESC⟩")
         self.cancel_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.cancel_button.clicked.connect(self.cancel)
 
@@ -78,6 +80,8 @@ class Statusbar:
         # Status text
         self.label = QLabel()
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # Populate statusbar layout
         layout = QHBoxLayout()
         layout.addWidget(self.start_button, alignment=Qt.AlignVCenter)
@@ -96,6 +100,8 @@ class Statusbar:
         container_widget = QWidget()
         container_widget.setLayout(layout)
         gui.statusBar().addPermanentWidget(container_widget, stretch=10)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         gui.statusBar().setSizeGripEnabled(False)
 
@@ -123,7 +129,7 @@ class Statusbar:
         self.progressbar.setValue(0)
         self.set_progressbar_color(Theme.PrimaryColor)
 
-    def disarm(self, success):
+    def disarm(self, success: bool):
         """
         "Disarms" the statusbar after calculation.
 
@@ -134,7 +140,7 @@ class Statusbar:
         self.auto_calculation_checkbox.setEnabled(True)
         self.cores_combobox.setEnabled(True)
         self.text("Ready." if success else "Canceled!")
-        self.set_progressbar_color("#2e7d32" if success else "#c62828")
+        self.set_progressbar_color(Theme.SuccessColor if success else Theme.WarningColor)
 
         if success:
             self.progressbar.setValue(100)
@@ -153,7 +159,7 @@ class Statusbar:
         self.gui.interrupt_calculation()
         self.disarm(False)
 
-    def text(self, text):
+    def text(self, text: str):
         """
         Updates the statusbar text.
 
@@ -161,11 +167,11 @@ class Statusbar:
         """
         self.label.setText(text)
 
-    def set_progressbar_color(self, color):
+    def set_progressbar_color(self, color: str):
         """
-        Sets the progressbar color.
+        Sets the progressbar color & style.
 
-        @param color: Color (string)
+        @param color: Color
         """
         self.progressbar.setStyleSheet(
             f"""

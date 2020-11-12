@@ -16,9 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import numpy as np
 from magneticalc.Debug import Debug
 from magneticalc.Metric import metric_norm
+from magneticalc.Theme import Theme
 
 
 class Constraint:
@@ -26,38 +26,39 @@ class Constraint:
 
     # Norm IDs
     Norm_ID_List = {
-        "x"         : 0,
-        "y"         : 1,
-        "z"         : 2,
-        "radius_xy" : 3,
-        "radius_yz" : 4,
-        "radius_zx" : 5,
-        "radius"    : 6,
-        "angle_xy"  : 7,
-        "angle_xz"  : 8,
-        "angle_yz"  : 9,
+        "X"             : 0,
+        "Y"             : 1,
+        "Z"             : 2,
+        "Radius XY"     : 3,
+        "Radius XZ"     : 4,
+        "Radius YZ"     : 5,
+        "Radius"        : 6,
+        "Angle XY"      : 7,
+        "Angle XZ"      : 8,
+        "Angle YZ"      : 9,
     }
 
     # Comparison IDs
     Comparison_ID_List = {
-        "range"     : 0
+        "In Range"      : 0
     }
 
-    def __init__(self, norm_id, comparison_id, _min, _max):
+    def __init__(self, norm_id: str, comparison_id: str, _min: float, _max: float, permeability: float):
         """
         Initializes the constraint.
 
-        @param norm_id: Norm ID (string)
-        @param comparison_id: Comparison ID (string)
+        @param norm_id: Norm ID
+        @param comparison_id: Comparison ID
         @param _min: Minimum value
         @param _max: Maximum value
+        @param permeability: Relative permeability µ_r
         """
         if norm_id not in self.Norm_ID_List:
-            Debug(self, "Invalid norm ID", color=(255, 0, 0))
+            Debug(self, "Invalid norm ID", color=Theme.WarningColor, force=True)
             return
 
         if comparison_id not in self.Comparison_ID_List:
-            Debug(self, "Invalid comparison ID", color=(255, 0, 0))
+            Debug(self, "Invalid comparison ID", color=Theme.WarningColor, force=True)
             return
 
         self._norm_id = norm_id
@@ -66,7 +67,9 @@ class Constraint:
         self._min = _min
         self._max = _max
 
-    def evaluate(self, point):
+        self.permeability = permeability
+
+    def evaluate(self, point) -> bool:
         """
         Evaluate this constraint at some point.
 
@@ -75,7 +78,7 @@ class Constraint:
         norm = metric_norm(self._norm_id, point)
 
         # Perform comparison
-        if self._comparison_id == "range":
+        if self._comparison_id == "In Range":
             return self._min <= norm <= self._max
         else:
             # Invalid comparison ID

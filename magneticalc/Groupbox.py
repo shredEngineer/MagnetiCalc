@@ -16,7 +16,6 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QGroupBox, QVBoxLayout
 from magneticalc.Theme import Theme
@@ -68,7 +67,7 @@ class Groupbox(QGroupBox):
         self.layout.addWidget(widget)
 
     # noinspection PyPep8Naming
-    def addSpacing(self, spacing):
+    def addSpacing(self, spacing: float):
         """
         Adds spacing to groupbox.
 

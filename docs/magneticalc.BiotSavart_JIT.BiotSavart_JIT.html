@@ -42,7 +42,7 @@
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Implements the Biot-Savart law for calculating the magnetic flux density.</p></div>
+        <div><p>Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field).</p></div>
       </div>
 
       <div id="splitTables">
@@ -52,7 +52,7 @@
     
     <td>Method</td>
     <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Populates class attributes.</span></td>
+    <td><span>Initializes the class attributes.</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
@@ -62,21 +62,16 @@
     
     <td>Static Method</td>
     <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#worker" class="code" data-type="Static Method">worker</a></td>
-    <td><span>Either calculates the magnetic flux density (B-Field) at some sampling volume point using the Biot-Savart law, or calculates the magnetic vector potential (A-Field).</span></td>
+    <td><span>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field) for a single sampling volume point.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#get_vectors" class="code" data-type="Method">get_vectors</a></td>
-    <td><span>Calculates the magnetic flux density at every point of the sampling volume.</span></td>
+    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#get_result" class="code" data-type="Method">get_result</a></td>
+    <td><span>Calculates the field at every point of the sampling volume.</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_type" class="code" data-type="Instance Variable">_type</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_progress_callback" class="code" data-type="Instance Variable">_progress_callback</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -103,6 +98,16 @@
     <td>Instance Variable</td>
     <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_sampling_volume_points" class="code" data-type="Instance Variable">_sampling_volume_points</a></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_sampling_volume_permeabilities" class="code" data-type="Instance Variable">_sampling_volume_permeabilities</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_progress_callback" class="code" data-type="Instance Variable">_progress_callback</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -123,13 +128,13 @@
   <div class="functionHeader">
     
     def
-    __init__(self, _type, progress_callback, distance_limit, length_scale, dc, current_elements, sampling_volume_points):
+    __init__(self, _type, distance_limit, length_scale, dc, current_elements, sampling_volume_points, sampling_volume_permeabilities, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Populates class attributes.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-Field; 1: B-Field)</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">dc</td><td>Wire current (A)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>List of current elements (list of 3D vector pairs: (element center, element direction))</td></tr><tr><td></td><td class="fieldArg">sampling_volume_points</td><td>List of sampling volume points</td></tr></table></div>
+    <div><p>Initializes the class attributes.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-field; 1: B-field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">dc</td><td>Wire current (A)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>Ordered list of current elements (tuples: (element center, element direction))</td></tr><tr><td></td><td class="fieldArg">sampling_volume_points</td><td>Ordered list of sampling volume points</td></tr><tr><td></td><td class="fieldArg">sampling_volume_permeabilities</td><td>Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -141,22 +146,6 @@
   </a>
   <div class="functionHeader">
     _type =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._progress_callback">
-    
-  </a>
-  <a name="_progress_callback">
-    
-  </a>
-  <div class="functionHeader">
-    _progress_callback =
     
   </div>
   <div class="functionBody">
@@ -243,6 +232,38 @@
     
     <div class="undocumented">Undocumented</div>
   </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._sampling_volume_permeabilities">
+    
+  </a>
+  <a name="_sampling_volume_permeabilities">
+    
+  </a>
+  <div class="functionHeader">
+    _sampling_volume_permeabilities =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._progress_callback">
+    
+  </a>
+  <a name="_progress_callback">
+    
+  </a>
+  <div class="functionHeader">
+    _progress_callback =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
 </div><div class="baseinstancevariable">
   
   <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.total_limited">
@@ -276,32 +297,32 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Either calculates the magnetic flux density (B-Field) at some sampling volume point using the Biot-Savart law, or calculates the magnetic vector potential (A-Field).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-Field; 1: B-Field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>Ordered list of current elements (3D vector pairs: (element center, element direction))</td></tr><tr><td></td><td class="fieldArg">sampling_volume_point</td><td>Sampling volume point (3D vector)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total number of limited points, vector)</td></tr></table></div>
+    <div><p>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field) for a single sampling volume point.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-field; 1: B-field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>Ordered list of current elements (tuples: (element center, element direction))</td></tr><tr><td></td><td class="fieldArg">sampling_volume_point</td><td>Sampling volume point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total number of limited points, vector)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.get_vectors">
+  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.get_result">
     
   </a>
-  <a name="get_vectors">
+  <a name="get_result">
     
   </a>
   <div class="functionHeader">
     
     def
-    get_vectors(self):
+    get_result(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates the magnetic flux density at every point of the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total number of limited points, field) if successful, None if interrupted</td></tr></table></div>
+    <div><p>Calculates the field at every point of the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total number of limited points, field) if successful, None if interrupted</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-09 17:19:38.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
       </address>
 
     </div>

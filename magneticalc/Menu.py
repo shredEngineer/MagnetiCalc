@@ -22,7 +22,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
-from magneticalc.Wire import Wire
+from magneticalc.Wire_Presets import Wire_Presets
 
 
 class Menu:
@@ -39,16 +39,20 @@ class Menu:
         # List of checkboxes that are bound to configuration
         self.config_bound_checkboxes = {}
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # File menu
         file_menu = QMenu("&File", self.gui)
-        file_menu.addAction(qta.icon("fa.picture-o"), "&Save Image...", self.gui.file_save, Qt.CTRL + Qt.Key_S)
+        file_menu.addAction(qta.icon("fa.picture-o"), "&Save Image …", self.gui.file_save, Qt.CTRL + Qt.Key_S)
         file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.close, Qt.CTRL + Qt.Key_Q)
         self.gui.menuBar().addMenu(file_menu)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # Wire menu
         wire_menu = QMenu("&Load Wire Preset", self.gui)
-        for preset in Wire.Presets:
+        for preset in Wire_Presets.List:
             action = QAction(preset["id"], wire_menu)
             action.setIcon(qta.icon("mdi.vector-square"))
             action.triggered.connect(
@@ -56,6 +60,8 @@ class Menu:
             )
             wire_menu.addAction(action)
         self.gui.menuBar().addMenu(wire_menu)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # View menu
         view_menu = QMenu("&View", self.gui)
@@ -70,6 +76,8 @@ class Menu:
         self.add_config_bound_checkbox("Dark Background", "dark_background", view_menu, self.gui.redraw)
         self.gui.menuBar().addMenu(view_menu)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # Options menu
         options_menu = QMenu("&Options", self.gui)
         self.options_backend_group = QActionGroup(self.gui)
@@ -78,7 +86,7 @@ class Menu:
         self.backend_actions = []
         for i, item in enumerate({
             "Backend: JIT/Numba": True,
-            "Backend: JIT/Numba + CUDA": False  # ToDo: Add CUDA backend (BiotSavart_CUDA)
+            "Backend: JIT/Numba + CUDA": False  # ToDo: Add CUDA backend (BiotSavart_CUDA.py)
         }.items()):
             name, enabled = item
             action = QAction(name)
@@ -92,6 +100,8 @@ class Menu:
         self.options_backend_group.blockSignals(False)
         self.gui.menuBar().addMenu(options_menu)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         # Help menu
         help_menu = QMenu("&Help", self.gui)
         help_menu.addAction(qta.icon("fa.info"), "&Usage", lambda: Usage_Dialog().show(), Qt.Key_F1)
@@ -101,7 +111,7 @@ class Menu:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_backend_changed(self, index, is_checked):
+    def on_backend_changed(self, index: int, is_checked: bool):
         """
         Gets called when the backend changed.
 
@@ -117,7 +127,7 @@ class Menu:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_config_bound_checkbox(self, label, key, menu, callback):
+    def add_config_bound_checkbox(self, label: str, key: str, menu, callback):
         """
         Creates a checkbox inside some menu. Checkbox state is bound to configuration.
 
@@ -133,7 +143,7 @@ class Menu:
         checkbox.setChecked(self.gui.config.get_bool(key))
         menu.addAction(checkbox)
 
-    def config_bound_checkbox_changed(self, key):
+    def config_bound_checkbox_changed(self, key: str):
         """
         Handles change of checkbox state.
 

@@ -56,22 +56,12 @@
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#InstantSave" class="code" data-type="Class Variable">InstantSave</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
     <td><a href="magneticalc.Config.Config.html#DebugGetters" class="code" data-type="Class Variable">DebugGetters</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#DefaultWirePreset" class="code" data-type="Class Variable">DefaultWirePreset</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#DefaultPerspectivePreset" class="code" data-type="Class Variable">DefaultPerspectivePreset</a></td>
+    <td><a href="magneticalc.Config.Config.html#InstantSave" class="code" data-type="Class Variable">InstantSave</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
@@ -82,6 +72,16 @@
     
     <td>Class Variable</td>
     <td><a href="magneticalc.Config.Config.html#CoordinatePrecision" class="code" data-type="Class Variable">CoordinatePrecision</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Config.Config.html#DefaultWirePreset" class="code" data-type="Class Variable">DefaultWirePreset</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><a href="magneticalc.Config.Config.html#DefaultPerspectivePreset" class="code" data-type="Class Variable">DefaultPerspectivePreset</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
@@ -252,7 +252,7 @@
     
     <td>Method</td>
     <td><a href="magneticalc.Config.Config.html#set_get_dict" class="code" data-type="Method">set_get_dict</a></td>
-    <td><span>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix".</span></td>
+    <td><span>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</span></td>
   </tr>
 </table>
         
@@ -280,22 +280,6 @@
   </div>
 </div><div class="baseclassvariable">
   
-  <a name="magneticalc.Config.Config.InstantSave">
-    
-  </a>
-  <a name="InstantSave">
-    
-  </a>
-  <div class="functionHeader">
-    InstantSave =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
   <a name="magneticalc.Config.Config.DebugGetters">
     
   </a>
@@ -312,35 +296,19 @@
   </div>
 </div><div class="baseclassvariable">
   
-  <a name="magneticalc.Config.Config.DefaultWirePreset">
+  <a name="magneticalc.Config.Config.InstantSave">
     
   </a>
-  <a name="DefaultWirePreset">
+  <a name="InstantSave">
     
   </a>
   <div class="functionHeader">
-    DefaultWirePreset =
+    InstantSave =
     
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.DefaultPerspectivePreset">
-    
-  </a>
-  <a name="DefaultPerspectivePreset">
-    
-  </a>
-  <div class="functionHeader">
-    DefaultPerspectivePreset =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
+    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
   </div>
 </div><div class="baseclassvariable">
   
@@ -373,6 +341,38 @@
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Config.Config.DefaultWirePreset">
+    
+  </a>
+  <a name="DefaultWirePreset">
+    
+  </a>
+  <div class="functionHeader">
+    DefaultWirePreset =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
+  </div>
+</div><div class="baseclassvariable">
+  
+  <a name="magneticalc.Config.Config.DefaultPerspectivePreset">
+    
+  </a>
+  <a name="DefaultPerspectivePreset">
+    
+  </a>
+  <div class="functionHeader">
+    DefaultPerspectivePreset =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
   </div>
 </div><div class="baseclassvariable">
   
@@ -645,7 +645,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value (string)</td></tr></table></div>
+    <div><p>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -759,7 +759,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (string)</td></tr></table></div>
+    <div><p>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -778,7 +778,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (bool) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -797,7 +797,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (float) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -816,7 +816,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (int) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -835,7 +835,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (string) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -854,7 +854,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (string) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -873,7 +873,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value (string) or None</td></tr></table></div>
+    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -968,7 +968,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Data (type determined by "_type")</td></tr></table></div>
+    <div><p>Gets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Data (type determined by "_type")</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -987,7 +987,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key (string)</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr><td></td><td class="fieldArg">_value</td><td>Data (type determined by "_type")</td></tr></table></div>
+    <div><p>Sets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr><td></td><td class="fieldArg">_value</td><td>Data (type determined by "_type")</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -1000,19 +1000,19 @@
   <div class="functionHeader">
     
     def
-    set_get_dict(self, prefix, types, values):
+    set_get_dict(self, prefix, suffix, types, values):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix".</p><p>If "values" is not None, writes and returns all key-values in "types". Note: In this case, "values" must have the same keys as "types.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">prefix</td><td>Prefix (string)</td></tr><tr><td></td><td class="fieldArg">types</td><td>Key:Type (Dictionary)</td></tr><tr><td></td><td class="fieldArg">values</td><td>Key:Value (Dictionary) or None</td></tr></table></div>
+    <div><p>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</p><p>If "values" is not None, writes and returns all key-values in "types". Note: In this case, "values" must have the same keys as "types.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">prefix</td><td>Prefix</td></tr><tr><td></td><td class="fieldArg">suffix</td><td>Suffix</td></tr><tr><td></td><td class="fieldArg">types</td><td>Key:Type (Dictionary)</td></tr><tr><td></td><td class="fieldArg">values</td><td>Key:Value (Dictionary) or None</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-09 17:19:38.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-12 16:05:43.
       </address>
 
     </div>

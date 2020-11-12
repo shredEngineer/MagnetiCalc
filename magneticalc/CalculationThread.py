@@ -24,7 +24,7 @@ class CalculationThread(QThread):
     """
     CalculationThread class.
     The calculation thread implements an offloaded pipeline of subsequent calculation subtasks.
-    The pipeline may be interrupted at any time, thereby exiting this thread.
+    The pipeline may be interrupted at (almost) any time, thereby exiting this thread.
     """
 
     # Progress update signal
@@ -72,7 +72,7 @@ class CalculationThread(QThread):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         if not self.gui.model.field.is_valid():
-            self.gui.calculation_status.emit("Calculating Magnetic Flux Density...")
+            self.gui.calculation_status.emit("Calculating Field...")
 
             num_cores = self.gui.config.get_int("num_cores")
             if num_cores == 0:
@@ -100,18 +100,29 @@ class CalculationThread(QThread):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+        if not self.gui.model.parameters.is_valid():
+            self.gui.calculation_status.emit("Calculating Parameters...")
+
+            if not self.gui.model.calculate_parameters(self.progress_callback):
+                self.trigger_finished(False)
+                return
+
+            self.trigger_on_parameters_valid()
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         self.trigger_finished(True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def trigger_finished(self, success):
+    def trigger_finished(self, success: bool):
         """
         Signals that the calculation finished.
 
         @param success: True if calculation was successful, False otherwise
         """
 
-        # We cannot directly call this; we won't be able to modify the UI thread (which we'd really like to do somehow)
+        # We cannot directly call this; we won't be able to modify the UI thread (which we'd really like to do somehow):
         # self.gui.calculation_stopped(success)
 
         # Instead, we use a signal; however, this results in slightly delayed execution, even after joining this thread;
@@ -146,4 +157,11 @@ class CalculationThread(QThread):
         Gets called when the metric was successfully calculated.
         """
         self.gui.model.on_metric_valid()
+        self.gui.vispy_canvas.redraw()
+
+    def trigger_on_parameters_valid(self):
+        """
+        Gets called when the parameters were successfully calculated.
+        """
+        self.gui.model.on_parameters_valid()
         self.gui.vispy_canvas.redraw()

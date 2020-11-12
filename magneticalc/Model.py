@@ -23,7 +23,7 @@ from magneticalc.Theme import Theme
 class Model:
     """
     Model class.
-    The model maintains a strict hierarchy of dependencies:  metric > field > sampling volume > wire
+    The model maintains a strict hierarchy of dependencies:  parameters > metric > field > sampling volume > wire
     When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).
     """
 
@@ -41,8 +41,9 @@ class Model:
         self.sampling_volume = None  # Will be initialized by SamplingVolume_Widget
         self.field = None            # Will be initialized by Field_Widget
         self.metric = None           # Will be initialized by Metric_Widget
+        self.parameters = None       # Will be initialized by Parameters_Widget
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns the model state as a string; may be used for debugging.
 
@@ -52,9 +53,10 @@ class Model:
             f"Wire           : {'VALID' if self.wire.is_valid() else '------'}\n" + \
             f"SamplingVolume : {'VALID' if self.sampling_volume.is_valid() else '------'}\n" + \
             f"Field          : {'VALID' if self.field.is_valid() else '------'}\n" + \
-            f"Metric         : {'VALID' if self.metric.is_valid() else '------'}"
+            f"Metric         : {'VALID' if self.metric.is_valid() else '------'}" + \
+            f"Parameters     : {'VALID' if self.parameters.is_valid() else '------'}"
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Indicates valid data for display.
 
@@ -64,9 +66,17 @@ class Model:
             self.wire.is_valid() and \
             self.sampling_volume.is_valid() and \
             self.field.is_valid() and \
-            self.metric.is_valid()
+            self.metric.is_valid() and \
+            self.parameters.is_valid()
 
-    def invalidate(self, do_wire=False, do_sampling_volume=False, do_field=False, do_metric=False):
+    def invalidate(
+            self,
+            do_wire: bool = False,
+            do_sampling_volume: bool = False,
+            do_field: bool = False,
+            do_metric: bool = False,
+            do_parameters: bool = False
+    ):
         """
         Invalidates multiple modules at once, in descending order of hierarchy.
 
@@ -74,7 +84,14 @@ class Model:
         @param do_sampling_volume: Enable to invalidate sampling volume
         @param do_field: Enable to invalidate field
         @param do_metric: Enable to invalidate metric
+        @param do_parameters: Enable to invalidate parameters
         """
+        if do_parameters:
+            if self.parameters is not None:
+                if self.parameters.is_valid():
+                    self.parameters.invalidate()
+                    self.on_parameters_invalid()
+
         if do_metric:
             if self.metric is not None:
                 if self.metric.is_valid():
@@ -99,52 +116,64 @@ class Model:
                     self.wire.invalidate()
                     self.wire.on_wire_invalid()
 
-    def set_wire(self, wire, invalidate_self):
+    def set_wire(self, wire, invalidate_self: bool):
         """
         Sets the wire.
 
         @param wire: Wire
-        @param invalidate_self: Enable to invalidate the old wire before setting a new one
+        @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
         self.wire = wire
-        self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
+        self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True, do_parameters=True)
         if invalidate_self:
             self.on_wire_invalid()
 
-    def set_sampling_volume(self, sampling_volume, invalidate_self):
+    def set_sampling_volume(self, sampling_volume, invalidate_self: bool):
         """
         Sets the sampling volume.
 
         @param sampling_volume: Sampling volume
-        @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
+        @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
         self.sampling_volume = sampling_volume
-        self.invalidate(do_field=True, do_metric=True)
+        self.invalidate(do_field=True, do_metric=True, do_parameters=True)
         if invalidate_self:
             self.on_sampling_volume_invalid()
 
-    def set_field(self, field, invalidate_self):
+    def set_field(self, field, invalidate_self: bool):
         """
         Sets the field.
 
         @param field: Field
-        @param invalidate_self: Enable to invalidate the old field before setting a new one
+        @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
         self.field = field
-        self.invalidate(do_metric=True)
+        self.invalidate(do_metric=True, do_parameters=True)
         if invalidate_self:
             self.on_field_invalid()
 
-    def set_metric(self, metric, invalidate_self):
+    def set_metric(self, metric, invalidate_self: bool):
         """
         Sets the metric.
 
         @param metric: Metric
-        @param invalidate_self: Enable to invalidate the old metric before setting a new one
+        @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
         self.metric = metric
+        self.invalidate(do_parameters=True)
         if invalidate_self:
             self.on_metric_invalid()
+
+    def set_parameters(self, parameters, invalidate_self: bool):
+        """
+        Sets the parameters.
+
+        @param parameters: Parameters
+        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        """
+        self.parameters = parameters
+        if invalidate_self:
+            self.on_parameters_invalid()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -170,7 +199,7 @@ class Model:
         self.invalidate(do_field=True, do_metric=True)
         return self.sampling_volume.recalculate(progress_callback)
 
-    def calculate_field(self, progress_callback, num_cores):
+    def calculate_field(self, progress_callback, num_cores: int):
         """
         Calculates the field.
 
@@ -191,6 +220,16 @@ class Model:
         """
         Debug(self, ".calculate_metric()", color=Theme.PrimaryColor)
         return self.metric.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
+
+    def calculate_parameters(self, progress_callback):
+        """
+        Calculates the parameters.
+
+        @param progress_callback: Progress callback
+        @return: True (currently non-interruptable)
+        """
+        Debug(self, ".calculate_parameters()", color=Theme.PrimaryColor)
+        return self.parameters.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -219,6 +258,12 @@ class Model:
         self.gui.sidebar_right.metric_widget.update_labels()
         self.gui.vispy_canvas.create_field_labels()
 
+    def on_parameters_valid(self):
+        """
+        Gets called when the parameters were successfully calculated.
+        """
+        self.gui.sidebar_right.parameters_widget.update_labels()
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def on_wire_invalid(self):
@@ -245,3 +290,9 @@ class Model:
         """
         self.gui.sidebar_right.metric_widget.update_labels()
         self.gui.vispy_canvas.delete_field_labels()
+
+    def on_parameters_invalid(self):
+        """
+        Gets called when the parameters were invalidated.
+        """
+        self.gui.sidebar_right.parameters_widget.update_labels()

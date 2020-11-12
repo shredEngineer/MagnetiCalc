@@ -23,12 +23,13 @@ from magneticalc.Debug import Debug
 class ModelAccess:
     """ Model access class. """
 
-    # Used to detect nested accesses (bad!)
+    # Used to detect nested accesses (which would be very bad!)
     locked = False
 
+    # Used by L{Debug}
     DebugColor = (128, 128, 0)
 
-    def __init__(self, gui, recalculate):
+    def __init__(self, gui, recalculate: bool):
         """
         Initializes model access.
 

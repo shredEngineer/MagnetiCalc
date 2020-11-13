@@ -140,12 +140,17 @@ class Field:
 
         elif use_cuda:
 
-            Debug(self, f"Backend not yet supported: {self._backend}", color=Theme.WarningColor, force=True)
+            Debug(
+                self,
+                f".recalculate(): Backend not yet supported: {self._backend}",
+                color=Theme.WarningColor,
+                force=True
+            )
             return False
 
         else:
 
-            Debug(self, f"No such backend: {self._backend}", color=Theme.WarningColor, force=True)
+            Debug(self, f".recalculate(): No such backend: {self._backend}", color=Theme.WarningColor, force=True)
             return False
 
         # Handle interrupt

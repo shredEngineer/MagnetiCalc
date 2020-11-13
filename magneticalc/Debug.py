@@ -60,10 +60,10 @@ class Debug:
         "SidebarRight",
         "SliderFloat",
         "Statusbar",
-        "Table",
+        # "Table",
         "Usage_Dialog",
         "Version",
-        "VispyCanvas",
+        # "VispyCanvas",
         "Wire",
         "Wire_Presets",
         "Wire_Widget"

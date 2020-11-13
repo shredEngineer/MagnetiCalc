@@ -150,4 +150,22 @@ class BiotSavart_JIT:
 
         self._progress_callback(100)
 
+        # Prints the sampling volume points, current elements and field vectors; may be used for debugging:
+        """
+        def print_array(array):
+            return "np.array([" + ",".join([f"[{point[0]},{point[1]},{point[2]}]" for point in array]) + "])"
+
+        element_centers = [x[0] for x in self._current_elements]
+        element_directions = [x[1] for x in self._current_elements]
+
+        import sys
+        import numpy
+        numpy.set_printoptions(threshold=sys.maxsize)
+
+        print("sampling_volume_points =", print_array(self._sampling_volume_points))
+        print("element_centers        =", print_array(element_centers))
+        print("element_directions     =", print_array(element_directions))
+        print("field_vectors          =", print_array(vectors))
+        """
+
         return total_limited, vectors

@@ -21,12 +21,20 @@ from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
+from magneticalc.Debug import Debug
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
 
 
 class Menu:
     """ Menu class. """
+
+    # List of available backends
+    Backends_List = [
+        "Backend: JIT/Numba",
+        # ToDo: Add CUDA backend for Biot-Savart implementation.
+        # "Backend: JIT/Numba + CUDA"
+    ]
 
     def __init__(self, gui):
         """
@@ -91,22 +99,16 @@ class Menu:
         options_menu = QMenu("&Options", self.gui)
         self.options_backend_group = QActionGroup(self.gui)
         self.options_backend_group.setExclusive(True)
-        self.options_backend_group.blockSignals(True)
+        self.gui.blockSignals(True)
         self.backend_actions = []
-        for i, item in enumerate({
-            "Backend: JIT/Numba": True,
-            "Backend: JIT/Numba + CUDA": False  # ToDo: Add CUDA backend (BiotSavart_CUDA.py)
-        }.items()):
-            name, enabled = item
+        for i, name in enumerate(self.Backends_List):
             action = QAction(name)
             self.backend_actions.append(action)
             action.setCheckable(True)
-            action.setEnabled(enabled)
-            action.setChecked(self.gui.config.get_int("backend") == i)
-            action.changed.connect(partial(self.on_backend_changed, i, lambda: action.isChecked()))
+            action.changed.connect(partial(self.on_backend_changed, i))
             self.options_backend_group.addAction(action)
             options_menu.addAction(action)
-        self.options_backend_group.blockSignals(False)
+        self.gui.blockSignals(False)
         self.gui.menuBar().addMenu(options_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,19 +120,37 @@ class Menu:
         help_menu.addAction(qta.icon("fa.coffee"), "&About", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the menu.
+        """
+        Debug(self, ".reinitialize()")
+
+        self.gui.blockSignals(True)
+
+        for i, name in enumerate(self.Backends_List):
+            self.backend_actions[i].setChecked(self.gui.config.get_int("backend") == i)
+
+        self.reinitialize_config_bound_checkboxes()
+
+        self.gui.blockSignals(False)
+
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_backend_changed(self, index: int, is_checked: bool):
+    def on_backend_changed(self, index):
         """
         Gets called when the backend changed.
 
         @param index: Backend list index
-        @param is_checked: True if the selected backend is now active
         """
-        if self.options_backend_group.signalsBlocked():
+        if self.gui.signalsBlocked():
             return
 
-        if is_checked:
+        if self.backend_actions[index].isChecked():
             self.gui.config.set_int("backend", index)
             self.gui.sidebar_right.field_widget.set_field()
 
@@ -160,3 +180,13 @@ class Menu:
         """
         self.gui.config.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
         self.config_bound_checkboxes[key]["callback_final"]()
+
+    def reinitialize_config_bound_checkboxes(self):
+        """
+        Re-initializes the configuration bound checkboxes.
+
+        Note: This doesn't block the change signals.
+        """
+        for item in self.config_bound_checkboxes.items():
+            key, dictionary = item
+            dictionary["checkbox"].setChecked(self.gui.config.get_bool(key))

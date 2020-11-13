@@ -21,6 +21,7 @@ import configparser
 from PyQt5.QtWidgets import QMessageBox
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
+from magneticalc.Theme import Theme
 from magneticalc.Version import Version
 from magneticalc.Wire_Presets import Wire_Presets
 
@@ -155,6 +156,10 @@ class Config:
         if self._changed_callback is not None:
             self._changed_callback()
 
+        if not os.path.isfile(self._filename):
+            # Save newly created default file
+            self.save()
+
     def set_defaults(self):
         """
         Sets the default key-value pairs. Creates empty "User" section if not present.
@@ -195,6 +200,17 @@ class Config:
             messagebox.setDefaultButton(QMessageBox.Yes)
             if messagebox.exec() == QMessageBox.Yes:
                 self.save()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def remove_key(self, key):
+        """
+        Removes a key from the configuration.
+
+        @param key: Key
+        """
+        if not self._config.remove_option("User", key):
+            Debug(self, f".remove_key({key}): WARNING: No such key", color=Theme.WarningColor, force=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 

@@ -367,6 +367,7 @@ class GUI(QMainWindow):
             # Perspective_Widget doesn't need reinitialization as it does not access the configuration
             self.sidebar_right.display_widget.reinitialize()
 
+            self.menu.reinitialize()
             self.statusbar.reinitialize()
 
             if self.config.get_bool("auto_calculation"):
@@ -395,9 +396,15 @@ class GUI(QMainWindow):
         file_dialog.setOptions(QFileDialog.DontUseNativeDialog)
         if file_dialog.exec():
             filenames = file_dialog.selectedFiles()
-            print(filenames)
             if filenames:
-                self.config.set_filename(filenames[0])
+                filename = filenames[0]
+
+                _file_name, file_extension = os.path.splitext(filename)
+
+                if file_extension.lower() != ".ini":
+                    filename += ".ini"
+
+                self.config.set_filename(filename)
                 self.config.save()
 
     # ------------------------------------------------------------------------------------------------------------------

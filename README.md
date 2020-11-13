@@ -170,10 +170,11 @@ If this software has been helpful to you in some way or another, please let me a
 
 ToDo
 ----
+* Add CUDA backend for Biot-Savart implementation.
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
 * Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
+* Add support for modeling of core material saturation and hysteresis effects.
 * Add support for multiple wires, study mutual induction.
-* Add CUDA backend for Biot-Savart implementation.
 
 Video
 -----

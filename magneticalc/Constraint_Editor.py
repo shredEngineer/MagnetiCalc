@@ -20,6 +20,7 @@ import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton, QSizePolicy
 from magneticalc.Constraint import Constraint
+from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Table import Table
 from magneticalc.Theme import Theme
@@ -54,7 +55,7 @@ class Constraint_Editor(QDialog):
 
     def __init__(self, gui):
         """
-        Initializes "Constraint Editor" dialog.
+        Prepares the constraint editor, but doesn't fully initialize it yet
 
         @param gui: GUI
         """
@@ -133,6 +134,15 @@ class Constraint_Editor(QDialog):
         layout.addLayout(button_box)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        # This will be called by the SamplingVolume_Widget:
+        # self.reinitialize()
+
+    def reinitialize(self):
+        """
+        Re-initializes the constraint editor.
+        """
+        Debug(self, ".reinitialize()")
 
         # Initially load the constraints
         self.reload_constraints()
@@ -233,7 +243,7 @@ class Constraint_Editor(QDialog):
         # Remove all constraints from configuration
         for i in range(count):
             for key in self.Constraint_Types.keys():
-                assert self.gui.config.config.remove_option("User", f"constraint_{key}_{i}")
+                self.gui.config.remove_key(f"constraint_{key}_{i}")
 
         # Remove selected constraint from internal list
         del self._constraints[index]

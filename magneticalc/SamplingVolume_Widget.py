@@ -54,6 +54,11 @@ class SamplingVolume_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+        # Insert constraint editor, but don't fully initialize it yet
+        self.constraint_editor = Constraint_Editor(self.gui)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding")
         padding_clear_button = QPushButton()
         padding_clear_button.setIcon(qta.icon("fa.eraser"))
@@ -111,9 +116,6 @@ class SamplingVolume_Widget(Groupbox):
 
         self.addWidget(HLine())
 
-        # Initialize constraints
-        self.constraint_editor = Constraint_Editor(self.gui)
-
         constraints_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
         constraint_shortcut_label = QLabel("⟨F3⟩")
         constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
@@ -142,7 +144,7 @@ class SamplingVolume_Widget(Groupbox):
 
     def reinitialize(self):
         """
-        Re-initializes the widget.
+        Re-initializes the widget and the constraint editor
         """
         Debug(self, ".reinitialize()")
 
@@ -154,6 +156,9 @@ class SamplingVolume_Widget(Groupbox):
         self.resolution_spinbox.setValue(self.gui.config.get_int("sampling_volume_resolution"))
 
         self.blockSignals(False)
+
+        # Re-initialize the constraint editor
+        self.constraint_editor.reinitialize()
 
         # Initially load sampling volume from configuration
         self.set_sampling_volume(recalculate=False, invalidate_self=False)

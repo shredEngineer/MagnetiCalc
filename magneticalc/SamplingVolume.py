@@ -26,6 +26,9 @@ from magneticalc.Theme import Theme
 class SamplingVolume:
     """ Sampling volume class. """
 
+    # Enable to show additional debug info during constraint calculation
+    Debug_Constraints = False
+
     def __init__(self, resolution: int):
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
@@ -174,6 +177,14 @@ class SamplingVolume:
             else:
                 constraints_precedence_dict[constraint.permeability] = [constraint]
 
+        if self.Debug_Constraints:
+            Debug(
+                self,
+                f".recalculate(): Created {len(constraints_precedence_dict)} constraint group(s)",
+                color=Theme.PrimaryColor,
+                force=True
+            )
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Calculate all possible grid points
@@ -201,20 +212,76 @@ class SamplingVolume:
 
                 included = True
 
+                if self.Debug_Constraints:
+                    print()
+                    Debug(
+                        self,
+                        f".recalculate(): Point = {point}: "
+                        f"Calculating {len(constraints_precedence_dict[permeability_key])} constraint(s) "
+                        f"for permeability = {permeability_key} …",
+                        color=Theme.PrimaryColor,
+                        force=True
+                    )
+
                 # Calculate the inclusion relation for the current group
                 for constraint in constraints_precedence_dict[permeability_key]:
 
                     if not constraint.evaluate(point):
 
+                        if self.Debug_Constraints:
+                            Debug(
+                                self,
+                                f".recalculate(): Point = {point}: Constraint evaluated to False (breaking)",
+                                color=Theme.WarningColor,
+                                force=True
+                            )
+
                         # Exclude this point within the current group
                         included = False
                         break
 
+                    else:
+
+                        if self.Debug_Constraints:
+                            Debug(
+                                self,
+                                f".recalculate(): Point = {point}: Constraint evaluated to True",
+                                color=Theme.SuccessColor,
+                                force=True
+                            )
+
                 if included:
+
+                    if self.Debug_Constraints:
+                        Debug(
+                            self,
+                            f".recalculate(): Point = {point}: Included by precedence grouping",
+                            color=Theme.SuccessColor,
+                            force=True
+                        )
+
                     permeability = permeability_key
                     break
 
+                else:
+
+                    if self.Debug_Constraints:
+                        Debug(
+                            self,
+                            f".recalculate(): Point = {point}: Excluded by precedence grouping",
+                            color=Theme.WarningColor,
+                            force=True
+                        )
+
             if permeability != 0:
+
+                if self.Debug_Constraints:
+                    Debug(
+                        self,
+                        f".recalculate(): Point = {point}: Finally included with permeability = {permeability}",
+                        color=Theme.SuccessColor,
+                        force=True
+                    )
 
                 # Include this point
                 points.append(point)
@@ -224,6 +291,16 @@ class SamplingVolume:
                 if x % self._resolution == 0 and y % self._resolution == 0 and z % self._resolution == 0:
                     labeled_index = (point, len(points) - 1)
                     labeled_indices.append(labeled_index)
+
+            else:
+
+                if self.Debug_Constraints:
+                    Debug(
+                        self,
+                        f".recalculate(): Point = {point}: Finally excluded with permeability = 0",
+                        color=Theme.WarningColor,
+                        force=True
+                    )
 
             # Move to the next grid point
             if x + 1 < span[0]:

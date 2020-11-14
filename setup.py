@@ -28,8 +28,7 @@ setup(
     name="MagnetiCalc",
     version=version["__VERSION__"],
     description="""MagnetiCalc calculates the magnetic flux density, vector potential, energy, self-inductance
-and magnetic dipole moment of arbitrary coils in vacuum. As an experimental feature, different core media
-can be modeled as regions of variable relative permeability. Inside a VisPy/OpenGL-accelerated PyQt5 GUI,
+and magnetic dipole moment of arbitrary coils in vacuum. Inside a VisPy/OpenGL-accelerated PyQt5 GUI,
 the static magnetic flux density (B-field due to DC currents) or the magnetic vector potential (A-field)
 is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.""".replace("\n", " "),
     url="https://github.com/shredEngineer/MagnetiCalc",

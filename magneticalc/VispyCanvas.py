@@ -464,7 +464,10 @@ class VispyCanvas(scene.SceneCanvas):
 
             sampling_volume_point, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
             magnitude = np.linalg.norm(self.gui.model.field.get_vectors()[field_vector_index])
-            text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
+            if np.isnan(magnitude):
+                text = "NaN"
+            else:
+                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
 
             visual = scene.visuals.create_visual_node(visuals.TextVisual)(
                 parent=None,

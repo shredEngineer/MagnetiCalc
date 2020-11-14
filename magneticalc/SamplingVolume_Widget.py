@@ -88,6 +88,32 @@ class SamplingVolume_Widget(Groupbox):
 
         self.addWidget(HLine())
 
+        constraints_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
+        constraint_shortcut_label = QLabel("⟨F3⟩")
+        constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
+        constraints_icon_label.addWidget(constraint_shortcut_label)
+
+        constraint_edit_button = QPushButton()
+        constraint_edit_button.setText("Edit …")
+        constraint_edit_button.clicked.connect(self.open_constraint_editor)
+        constraints_icon_label.addWidget(constraint_edit_button)
+
+        self.addWidget(constraints_icon_label)
+
+        total_constraints_layout = QHBoxLayout()
+        total_constraints_label_left = QLabel("Total constraints:")
+        total_constraints_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_constraints_label = QLabel("N/A")
+        self.total_constraints_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_constraints_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_constraints_layout.addWidget(total_constraints_label_left, alignment=Qt.AlignVCenter)
+        total_constraints_layout.addWidget(self.total_constraints_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_constraints_layout)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.addWidget(HLine())
+
         self.addWidget(IconLabel("fa.th", "Resolution"))
         self.resolution_spinbox = QSpinBox(self.gui)
         self.resolution_spinbox.setMinimum(self.ResolutionMinimum)
@@ -111,32 +137,6 @@ class SamplingVolume_Widget(Groupbox):
         total_points_layout.addWidget(total_points_label_left, alignment=Qt.AlignVCenter)
         total_points_layout.addWidget(self.total_points_label, alignment=Qt.AlignVCenter)
         self.addLayout(total_points_layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.addWidget(HLine())
-
-        constraints_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
-        constraint_shortcut_label = QLabel("⟨F3⟩")
-        constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
-        constraints_icon_label.addWidget(constraint_shortcut_label)
-
-        constraint_edit_button = QPushButton()
-        constraint_edit_button.setText("Edit …")
-        constraint_edit_button.clicked.connect(self.open_constraint_editor)
-        constraints_icon_label.addWidget(constraint_edit_button)
-
-        self.addWidget(constraints_icon_label)
-
-        total_constraints_layout = QHBoxLayout()
-        total_constraints_label_left = QLabel("Total constraints:")
-        total_constraints_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.total_constraints_label = QLabel("N/A")
-        self.total_constraints_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.total_constraints_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_constraints_layout.addWidget(total_constraints_label_left, alignment=Qt.AlignVCenter)
-        total_constraints_layout.addWidget(self.total_constraints_label, alignment=Qt.AlignVCenter)
-        self.addLayout(total_constraints_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -287,6 +287,12 @@ class SamplingVolume_Widget(Groupbox):
         """
         Opens the constraint editor; recalculates the sampling volume afterwards.
         """
-        self.gui.interrupt_calculation()
+
+        # Stop any running calculation
+        if self.gui.calculation_thread is not None:
+            if self.gui.calculation_thread.isRunning():
+                # Cancel the running calculation
+                self.gui.interrupt_calculation()
+
         self.constraint_editor.show()
         self.set_sampling_volume()

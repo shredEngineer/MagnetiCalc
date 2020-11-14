@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import numpy as np
 import qtawesome as qta
 from si_prefix import si_format
 from PyQt5.QtCore import Qt, QSize
@@ -219,8 +220,14 @@ class Metric_Widget(Groupbox):
                 self.color_metric_min_label.setStyleSheet("background: none; color: #ffffff;")
                 self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
-                color_label_min = si_format(limits["color_min"], precision=self.ValuePrecision) + field_units
-                color_label_max = si_format(limits["color_max"], precision=self.ValuePrecision) + field_units
+                if np.isnan(limits["color_min"]):
+                    color_label_min = "NaN"
+                else:
+                    color_label_min = si_format(limits["color_min"], precision=self.ValuePrecision) + field_units
+                if np.isnan(limits["color_max"]):
+                    color_label_max = "NaN"
+                else:
+                    color_label_max = si_format(limits["color_max"], precision=self.ValuePrecision) + field_units
                 self.color_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
                 self.color_metric_min_label.setStyleSheet("background: none; color: #000000; font-weight: bold;")
                 self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff; font-weight: bold;")
@@ -232,8 +239,14 @@ class Metric_Widget(Groupbox):
                 self.alpha_metric_min_label.setStyleSheet("background: none; color: #ffffff;")
                 self.alpha_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
-                alpha_label_min = si_format(limits["alpha_min"], precision=self.ValuePrecision) + field_units
-                alpha_label_max = si_format(limits["alpha_max"], precision=self.ValuePrecision) + field_units
+                if np.isnan(limits["alpha_min"]):
+                    alpha_label_min = "NaN"
+                else:
+                    alpha_label_min = si_format(limits["alpha_min"], precision=self.ValuePrecision) + field_units
+                if np.isnan(limits["alpha_max"]):
+                    alpha_label_max = "NaN"
+                else:
+                    alpha_label_max = si_format(limits["alpha_max"], precision=self.ValuePrecision) + field_units
                 self.alpha_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
                 self.alpha_metric_min_label.setStyleSheet("background: none; color: #000000; font-weight: bold;")
                 self.alpha_metric_max_label.setStyleSheet("background: none; color: #ffffff; font-weight: bold;")

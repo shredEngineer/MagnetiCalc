@@ -248,7 +248,7 @@ class Constraint_Editor(QDialog):
         # Remove selected constraint from internal list
         del self._constraints[index]
 
-        # Add all remaining constraints to configuration again (ensure monotonic keys)
+        # Add all remaining constraints to configuration again (regenerate keys)
         for i, constraint in enumerate(self.get_constraints()):
             self.gui.config.set_get_dict(
                 prefix=f"constraint_",

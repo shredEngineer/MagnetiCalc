@@ -9,17 +9,19 @@ MagnetiCalc
 
 **What does MagnetiCalc do?**
 
-MagnetiCalc calculates the magnetic flux density, vector potential, energy, self-inductance
-and magnetic dipole moment of arbitrary coils in vacuum.
-As an experimental feature, different core media can be modeled as regions of variable relative permeability.
-
-Inside a VisPy/OpenGL-accelerated PyQt5 GUI, the static magnetic flux density
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field due to DC currents,
+MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
+and magnetic dipole moment of arbitrary coils. Inside a [VisPy](https://github.com/vispy/vispy) / OpenGL-accelerated
+PyQt5 GUI, the magnetic flux density
+(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field,
 in units of <i>Tesla</i>)
 or the magnetic vector potential
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
 in units of <i>Tesla-meter</i>)
 is displayed in interactive 3D, using multiple metrics for highlighting the field properties.
+
+<i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferromagnetic) materials,
+different core media can be modeled as regions of variable relative permeability;
+however, core saturation is currently not modeled, leading to excessive flux density values.
  
 **Who needs MagnetiCalc?**
 
@@ -35,7 +37,7 @@ is implemented using the Biot-Savart law [1], employing multiprocessing techniqu
 MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
 Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape and arbitrary relative permeabilities
-<img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)">.
+<img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)"> (<i>experimental</i>).
 
 The shape of any wire is modeled as a 3D piecewise linear curve.
 Arbitrary loops of wire are sliced into differential current elements
@@ -52,8 +54,8 @@ summing over the positions of all current elements
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
 
 At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
-field color and alpha transparency are individually mapped using one of the various available metrics;
-see [Appendix: Metrics](#appendix-metrics).
+field color and alpha transparency are individually mapped using one of the various
+[available metrics](#appendix-metrics).
 
 The coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
 and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
@@ -172,8 +174,8 @@ ToDo
 ----
 * Add CUDA backend for Biot-Savart implementation.
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
-* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
 * Add support for modeling of core material saturation and hysteresis effects.
+* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
 * Add support for multiple wires, study mutual induction.
 
 Video

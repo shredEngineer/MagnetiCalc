@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.8.3.2"
+__VERSION__ = "v1.8.3.3"
 
 
 class Version:

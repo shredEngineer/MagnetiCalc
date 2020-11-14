@@ -97,7 +97,7 @@ class Usage_Dialog(QDialog):
         <h3 style="color: {Theme.PrimaryColor};">What does MagnetiCalc do?</h3>
 
         MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
-        and magnetic dipole moment of arbitrary coils in vacuum.
+        and magnetic dipole moment of arbitrary coils.
         Inside a VisPy / OpenGL-accelerated PyQt5 GUI, the magnetic flux density
         (B-field, in units of <i>Tesla</i>)
         or the magnetic vector potential (A-field, in units of <i>Tesla-meter</i>)

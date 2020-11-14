@@ -46,8 +46,8 @@ class Constraint_Editor(QDialog):
 
     # Constraint options
     Constraint_Options = [
-        Constraint.Norm_ID_List.keys(),
-        Constraint.Comparison_ID_List.keys(),
+        Constraint.Norm_ID_List,
+        Constraint.Comparison_ID_List,
         None,
         None,
         None
@@ -96,16 +96,15 @@ class Constraint_Editor(QDialog):
 
         # HTML description
         html = f"""
-            <br>
+            Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br><br>
+
             <b style="color: {Theme.PrimaryColor};">Experimental Feature</b><br><br>
 
             By default, all sampling volume points have relative permeability µ<sub>r</sub> = 1.<br>
             A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
             Constraints of identical permeability are effectively intersected (logical AND).<br>
             In case of ambiguous constraints, the ones with maximum permeability take precedence.<br>
-            Setting the permeability of some region to zero locally disables the field calculation.<br><br>
-
-            <i>Note:</i> Angles are normalized within [0 … 1).<br>
+            Setting the permeability of some region to zero locally disables the field calculation.<br>
         """
 
         text_browser = QTextBrowser()
@@ -204,8 +203,8 @@ class Constraint_Editor(QDialog):
             suffix=f"_{count - 1}",
             types=self.Constraint_Types,
             values={
-                "norm"          : list(Constraint.Norm_ID_List.keys())[0],
-                "comparison"    : list(Constraint.Comparison_ID_List.keys())[0],
+                "norm"          : Constraint.Norm_ID_List[0],
+                "comparison"    : Constraint.Comparison_ID_List[0],
                 "min"           : "0.0000",
                 "max"           : "1.0000",
                 "permeability"  : "1.0000"

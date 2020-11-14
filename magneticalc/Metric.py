@@ -19,7 +19,6 @@
 import numpy as np
 from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
-from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
@@ -34,6 +33,8 @@ def metric_norm(norm_id: str, vector):
     @param norm_id: Norm ID
     @param vector: 3D vector
     """
+
+    # Note: These have to match the norm IDs defined in the Constraint class
     if norm_id == "X":
         value = vector[0]
     elif norm_id == "Y":
@@ -276,12 +277,10 @@ class Metric:
 
         return colors
 
-    def recalculate(self, wire, sampling_volume, field, progress_callback) -> bool:
+    def recalculate(self, field, progress_callback) -> bool:
         """
         Recalculates color and alpha values for field.
 
-        @param wire: Wire
-        @param sampling_volume: SamplingVolume
         @param field: Field
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
@@ -386,7 +385,6 @@ class Metric:
         """
         for i in prange(len(colors)):
             r = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][0] + boost * direction]))]))
-            g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
             g = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][1] + boost * direction]))]))
             b = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][2] + boost * direction]))]))
             a = np.max(np.array([0.0, np.min(np.array([1.0, colors[i][3] + boost]))]))

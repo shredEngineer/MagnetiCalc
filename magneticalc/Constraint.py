@@ -25,23 +25,31 @@ class Constraint:
     """ Constraint class. """
 
     # Norm IDs
-    Norm_ID_List = {
-        "X"             : 0,
-        "Y"             : 1,
-        "Z"             : 2,
-        "Radius XY"     : 3,
-        "Radius XZ"     : 4,
-        "Radius YZ"     : 5,
-        "Radius"        : 6,
-        "Angle XY"      : 7,
-        "Angle XZ"      : 8,
-        "Angle YZ"      : 9,
-    }
+    # Note: These have to match the norm IDs defined in Metric.metric_norm
+    Norm_ID_List = [
+        "X",
+        "Y",
+        "Z",
+        "Radius XY",
+        "Radius XZ",
+        "Radius YZ",
+        "Radius",
+        "Angle XY",
+        "Angle XZ",
+        "Angle YZ",
+    ]
 
     # Comparison IDs
-    Comparison_ID_List = {
-        "In Range"      : 0
-    }
+    Comparison_ID_List = [
+        "In Range"
+    ]
+
+    # Norm IDs using minimum and maximum angles in degrees
+    Norm_ID_List_Degrees = [
+        "Angle XY",
+        "Angle XZ",
+        "Angle YZ"
+    ]
 
     def __init__(self, norm_id: str, comparison_id: str, _min: float, _max: float, permeability: float):
         """
@@ -61,6 +69,8 @@ class Constraint:
             Debug(self, "Invalid comparison ID", color=Theme.WarningColor, force=True)
             return
 
+        self._is_angle = norm_id in self.Norm_ID_List_Degrees
+
         self._norm_id = norm_id
         self._comparison_id = comparison_id
 
@@ -79,6 +89,11 @@ class Constraint:
 
         # Perform comparison
         if self._comparison_id == "In Range":
+
+            if self._is_angle:
+                # Convert normalized angle to degrees
+                norm *= 360
+
             return self._min <= norm <= self._max
         else:
             # Invalid comparison ID

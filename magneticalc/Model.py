@@ -219,7 +219,7 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_metric()", color=Theme.PrimaryColor)
-        return self.metric.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
+        return self.metric.recalculate(self.field, progress_callback)
 
     def calculate_parameters(self, progress_callback):
         """

@@ -62,7 +62,7 @@ class Debug:
         "SidebarRight",
         "SliderFloat",
         "Statusbar",
-        "Table",
+        # "Table",
         "Theme",
         "Usage_Dialog",
         "Version",

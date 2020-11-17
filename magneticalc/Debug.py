@@ -20,7 +20,7 @@ from inspect import isclass, stack
 from colorit import color_front, bold
 
 
-# Enable to see JIT/Numba debug output
+# Enable to see JIT debug output
 # import os
 # os.environ["NUMBA_PARALLEL_DIAGNOSTICS"] = "4"
 
@@ -101,8 +101,8 @@ class Debug:
 
         # Format call hierarchy
         hierarchy = ""
-        for x in reversed(stack()[2:]):
-            func_str = str(x.function)
+        for f in reversed(stack()[2:]):
+            func_str = str(f.function)
             if func_str in ["<module>", "_run_module_as_main", "_run_code"]:
                 # Called from within the main module (don't display these elements)
                 continue

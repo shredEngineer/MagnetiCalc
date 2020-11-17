@@ -34,7 +34,9 @@ whenever I needed to solve a magnetostatic problem.
 
 The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
 is implemented using the Biot-Savart law [1], employing multiprocessing techniques;
-MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
+MagnetiCalc uses just-in-time compilation ([JIT](https://numba.pydata.org/))
+and, if available, GPU-acceleration ([CUDA](https://numba.pydata.org/numba-doc/dev/cuda/overview.html))
+to achieve high-performance calculations.
 Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape and arbitrary relative permeabilities
 <img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)"> (<i>experimental</i>).
@@ -146,6 +148,14 @@ python3 -m pip install .
 python3 -m pip uninstall magneticalc -y
 ``` 
 
+### Enabling CUDA Support
+
+Tested in Ubuntu 20.04, using the NVIDIA CUDA 10.1 driver and NVIDIA GeForce GTX 1650 GPU.
+
+Please refer to the
+[Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
+which includes the steps necessary to get CUDA up and running.
+
 License
 -------
 Copyright © 2020, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
@@ -172,7 +182,6 @@ If this software has been helpful to you in some way or another, please let me a
 
 ToDo
 ----
-* Add CUDA backend for Biot-Savart implementation.
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
 * Add support for modeling of core material saturation and hysteresis effects.
 * Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
@@ -182,7 +191,7 @@ Video
 -----
 A very short demo of MagnetiCalc in action:
 
-[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=B60dk3BZO0c)
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=d3QKdYfOuvQ)
 
 Links
 -----

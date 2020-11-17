@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from numba import cuda
 import qtawesome as qta
 from functools import partial
 from PyQt5.QtCore import Qt
@@ -31,10 +32,10 @@ class Menu:
 
     # List of available backends
     Backends_List = [
-        "Backend: JIT/Numba",
-        # ToDo: Add CUDA backend for Biot-Savart implementation.
-        # "Backend: JIT/Numba + CUDA"
-    ]
+        "Backend: JIT"
+    ] + [
+        "Backend: JIT + CUDA"
+    ] if cuda.is_available() else []
 
     def __init__(self, gui):
         """

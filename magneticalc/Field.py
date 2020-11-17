@@ -17,8 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
-from numba import jit, prange, set_num_threads
+from numba import jit, prange, set_num_threads, cuda
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
 from magneticalc.BiotSavart_JIT import BiotSavart_JIT
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
@@ -31,7 +32,7 @@ class Field:
         """
         Initializes an empty field.
 
-        @param backend: Backend index (0: JIT/Numba; 1: JIT/Numba + CUDA)
+        @param backend: Backend index (0: JIT; 1: JIT + CUDA)
         @param _type: Field type to display (0: A-field; 1: B-field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
@@ -114,7 +115,7 @@ class Field:
         @param sampling_volume: Sampling volume
         @param progress_callback: Progress callback
         @param num_cores: Number of cores to use for multiprocessing
-        @return: True if successful, False if interrupted
+        @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
 
         use_jit = self._backend == 0
@@ -140,13 +141,30 @@ class Field:
 
         elif use_cuda:
 
-            Debug(
-                self,
-                f".recalculate(): Backend not yet supported: {self._backend}",
-                color=Theme.WarningColor,
-                force=True
+            if not cuda.is_available():
+                Debug(
+                    self,
+                    f".recalculate(): CUDA backend not available",
+                    color=Theme.WarningColor,
+                    force=True
+                )
+                return False
+
+            # Initialize Biot-Savart CUDA backend
+            biot_savart = BiotSavart_CUDA(
+                self._type,
+                self._distance_limit,
+                self._length_scale,
+                wire.get_dc(),
+                wire.get_elements(),
+                sampling_volume.get_points(),
+                sampling_volume.get_permeabilities(),
+                progress_callback
             )
-            return False
+
+            # Fetch result using Biot-Savart JIT backend
+            set_num_threads(num_cores)
+            tup = biot_savart.get_result()
 
         else:
 
@@ -159,6 +177,24 @@ class Field:
 
         self._total_limited = tup[0]
         self._vectors = tup[1]
+
+        # Prints the sampling volume points, current elements and field vectors; may be used for debugging:
+        """
+        def print_array(array):
+            return "np.array([" + ",".join([f"[{point[0]},{point[1]},{point[2]}]" for point in array]) + "])"
+
+        element_centers = [element[0] for element in wire.get_elements()]
+        element_directions = [element[1] for element in wire.get_elements()]
+
+        import sys
+        import numpy
+        numpy.set_printoptions(threshold=sys.maxsize)
+
+        print("sampling_volume_points =", print_array(sampling_volume.get_points()))
+        print("element_centers        =", print_array(element_centers))
+        print("element_directions     =", print_array(element_directions))
+        print("field_vectors          =", print_array(self._vectors))
+        """
 
         return True
 

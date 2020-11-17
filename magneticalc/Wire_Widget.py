@@ -49,7 +49,7 @@ class Wire_Widget(Groupbox):
     RotationalSymmetryOffsetMin = -360
     RotationalSymmetryOffsetMax = 360
     RotationalSymmetryOffsetStep = 1
-    SlicerLimitMinimum = 0.01
+    SlicerLimitMinimum = 0.001
     SlicerLimitMaximum = 2.0
     SlicerLimitStep = 0.01
     DcMinimum = -999.0

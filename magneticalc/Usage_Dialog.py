@@ -117,7 +117,8 @@ class Usage_Dialog(QDialog):
 
         The B-field calculation is implemented using the Biot-Savart law [1],
         employing multiprocessing techniques;
-        MagnetiCalc uses just-in-time compilation (JIT/Numba) to achieve high-performance calculations.
+        MagnetiCalc uses just-in-time compilation (JIT) and, if available, GPU-acceleration (CUDA)
+        to achieve high-performance calculations.
         Additionally, the use of easily constrainable "sampling volumes"
         allows for selective calculation over grids of arbitrary shape and arbitrary relative permeabilities
         <i>(experimental)</i>.<br><br>

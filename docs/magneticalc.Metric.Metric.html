@@ -127,7 +127,12 @@
     
     <td>Static Method</td>
     <td><a href="magneticalc.Metric.Metric.html#_norm_worker" class="code" data-type="Static Method">_norm_worker</a></td>
-    <td><span>Calculates color and alpha norm values.</span></td>
+    <td><span>Calculates the norm values of a list of vectors.</span></td>
+  </tr><tr class="staticmethod private">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.Metric.Metric.html#_divergence_worker" class="code" data-type="Static Method">_divergence_worker</a></td>
+    <td><span>Calculates the divergence values of a list of vectors.</span></td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
@@ -350,7 +355,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns calculated colors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of color values (4-tuples)</td></tr></table></div>
+    <div><p>Returns calculated colors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of color values (4-tuples)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -382,13 +387,32 @@
   <div class="functionHeader">
     @staticmethod<br />@jit(nopython=True, parallel=True)<br />
     def
-    _norm_worker(norm_color, norm_alpha, vectors):
+    _norm_worker(norm_id, vectors):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates color and alpha norm values.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">norm_color</td><td>Color norm ID</td></tr><tr><td></td><td class="fieldArg">norm_alpha</td><td>Alpha norm ID</td></tr><tr><td></td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Color norm values, alpha norm values</td></tr></table></div>
+    <div><p>Calculates the norm values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">norm_id</td><td>Norm ID</td></tr><tr><td></td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Norm values</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod private">
+  
+  <a name="magneticalc.Metric.Metric._divergence_worker">
+    
+  </a>
+  <a name="_divergence_worker">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@jit(nopython=True, parallel=True)<br />
+    def
+    _divergence_worker(sampling_volume_neighborhood_indices, vectors, dL, polarity):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Calculates the divergence values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume_neighborhood_indices</td><td>Ordered list of sampling volume neighborhood indices</td></tr><tr><td></td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr><td></td><td class="fieldArg">dL</td><td>Length element</td></tr><tr><td></td><td class="fieldArg">polarity</td><td>Polarity filter (-1: Keep values &lt;= 0; 0: Keep all values; +1: Keep values &gt;= 0)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Norm values</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -420,13 +444,13 @@
   <div class="functionHeader">
     
     def
-    recalculate(self, field, progress_callback):
+    recalculate(self, sampling_volume, field, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Recalculates color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
+    <div><p>Recalculates color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume</td><td>SamplingVolume</td></tr><tr><td></td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -451,7 +475,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-17 02:29:47.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2020-11-17 22:21:20.
       </address>
 
     </div>

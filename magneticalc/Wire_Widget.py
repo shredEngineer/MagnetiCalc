@@ -41,20 +41,25 @@ class Wire_Widget(Groupbox):
     StretchMin = -99
     StretchMax = 99
     StretchStep = 0.1
+    StretchPrecision = 2
     RotationalSymmetryCountMin = 1
     RotationalSymmetryCountMax = 99
     RotationalSymmetryRadiusMin = 0
     RotationalSymmetryRadiusMax = 99
     RotationalSymmetryRadiusStep = 0.1
+    RotationalSymmetryRadiusPrecision = 2
     RotationalSymmetryOffsetMin = -360
     RotationalSymmetryOffsetMax = 360
     RotationalSymmetryOffsetStep = 1
+    RotationalSymmetryOffsetPrecision = 1
     SlicerLimitMinimum = 0.001
     SlicerLimitMaximum = 2.0
-    SlicerLimitStep = 0.01
+    SlicerLimitStep = 0.001
+    SlicerLimitPrecision = 3
     DcMinimum = -999.0
     DcMaximum = 999.0
     DcStep = 0.1
+    DcPrecision = 3
 
     def __init__(self, gui):
         """
@@ -129,6 +134,7 @@ class Wire_Widget(Groupbox):
             self.stretch_spinbox[i].setMinimum(self.StretchMin)
             self.stretch_spinbox[i].setMaximum(self.StretchMax)
             self.stretch_spinbox[i].setSingleStep(self.StretchStep)
+            self.stretch_spinbox[i].setDecimals(self.StretchPrecision)
             self.stretch_spinbox[i].valueChanged.connect(self.set_stretch)
             stretch_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
             stretch_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -173,6 +179,7 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_radius_spinbox.setLocale(self.gui.locale)
         self.rotational_symmetry_radius_spinbox.setMinimum(self.RotationalSymmetryRadiusMin)
         self.rotational_symmetry_radius_spinbox.setMaximum(self.RotationalSymmetryRadiusMax)
+        self.rotational_symmetry_radius_spinbox.setDecimals(self.RotationalSymmetryRadiusPrecision)
         self.rotational_symmetry_radius_spinbox.setSingleStep(self.RotationalSymmetryRadiusStep)
         radius_label = QLabel("Radius:")
         radius_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -205,6 +212,7 @@ class Wire_Widget(Groupbox):
         self.rotational_symmetry_offset_spinbox.setLocale(self.gui.locale)
         self.rotational_symmetry_offset_spinbox.setMinimum(self.RotationalSymmetryOffsetMin)
         self.rotational_symmetry_offset_spinbox.setMaximum(self.RotationalSymmetryOffsetMax)
+        self.rotational_symmetry_offset_spinbox.setDecimals(self.RotationalSymmetryOffsetPrecision)
         self.rotational_symmetry_offset_spinbox.setSingleStep(self.RotationalSymmetryOffsetStep)
         Offset_label = QLabel("Offset Angle:")
         Offset_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -255,6 +263,7 @@ class Wire_Widget(Groupbox):
         self.slicer_limit_spinbox.setLocale(self.gui.locale)
         self.slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
         self.slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
+        self.slicer_limit_spinbox.setDecimals(self.SlicerLimitPrecision)
         self.slicer_limit_spinbox.setSingleStep(self.SlicerLimitStep)
         self.slicer_limit_spinbox.valueChanged.connect(
             lambda: self.set_wire(slicer_limit=self.slicer_limit_spinbox.value())
@@ -287,6 +296,7 @@ class Wire_Widget(Groupbox):
         self.dc_spinbox.setMinimum(self.DcMinimum)
         self.dc_spinbox.setMaximum(self.DcMaximum)
         self.dc_spinbox.setSingleStep(self.DcStep)
+        self.dc_spinbox.setDecimals(self.DcPrecision)
         self.dc_spinbox.valueChanged.connect(lambda: self.set_wire(dc=self.dc_spinbox.value()))
         dc_layout = QHBoxLayout()
         dc_layout.addWidget(self.dc_spinbox, alignment=Qt.AlignVCenter)

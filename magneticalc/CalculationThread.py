@@ -63,7 +63,9 @@ class CalculationThread(QThread):
         if not self.gui.model.sampling_volume.is_valid():
             self.gui.calculation_status.emit("Calculating Sampling Volume...")
 
-            if not self.gui.model.calculate_sampling_volume(self.progress_callback):
+            label_resolution = self.gui.config.get_int("label_resolution")
+
+            if not self.gui.model.calculate_sampling_volume(label_resolution, self.progress_callback):
                 self.trigger_finished(False)
                 return
 

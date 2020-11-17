@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import numpy as np
-from numba import jit, prange, set_num_threads, cuda
+from numba import jit, prange, set_num_threads
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
 from magneticalc.BiotSavart_JIT import BiotSavart_JIT
@@ -118,10 +118,18 @@ class Field:
         @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
 
-        use_jit = self._backend == 0
-        use_cuda = self._backend == 1
+        # Default to JIT backend if CUDA backend is selected but not available
+        if self._backend == 1:
+            if not BiotSavart_CUDA.is_available():
+                Debug(
+                    self,
+                    f".recalculate(): WARNING: CUDA backend not available, defaulting to JIT backend",
+                    color=Theme.WarningColor,
+                    force=True
+                )
+                self._backend = 0
 
-        if use_jit:
+        if self._backend == 0:
 
             # Initialize Biot-Savart JIT backend
             biot_savart = BiotSavart_JIT(
@@ -139,16 +147,7 @@ class Field:
             set_num_threads(num_cores)
             tup = biot_savart.get_result()
 
-        elif use_cuda:
-
-            if not cuda.is_available():
-                Debug(
-                    self,
-                    f".recalculate(): CUDA backend not available",
-                    color=Theme.WarningColor,
-                    force=True
-                )
-                return False
+        elif self._backend == 1:
 
             # Initialize Biot-Savart CUDA backend
             biot_savart = BiotSavart_CUDA(
@@ -180,8 +179,7 @@ class Field:
 
         # Prints the sampling volume points, current elements and field vectors; may be used for debugging:
         """
-        def print_array(array):
-            return "np.array([" + ",".join([f"[{point[0]},{point[1]},{point[2]}]" for point in array]) + "])"
+        def print_array(array): return "np.array([" + ",".join([f"[{p[0]},{p[1]},{p[2]}]" for p in array]) + "])"
 
         element_centers = [element[0] for element in wire.get_elements()]
         element_directions = [element[1] for element in wire.get_elements()]
@@ -193,7 +191,7 @@ class Field:
         print("sampling_volume_points =", print_array(sampling_volume.get_points()))
         print("element_centers        =", print_array(element_centers))
         print("element_directions     =", print_array(element_directions))
-        print("field_vectors          =", print_array(self._vectors))
+        print("vectors          =", print_array(self._vectors))
         """
 
         return True

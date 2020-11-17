@@ -121,7 +121,7 @@ class Parameters:
         elements_center = np.array([element[0] for element in wire.get_elements()])
         elements_direction = np.array([element[1] for element in wire.get_elements()])
         vector = self._get_magnetic_dipole_moment_worker(elements_center, elements_direction, length_scale)
-        return np.linalg.norm(vector) / 2
+        return np.abs(wire.get_dc() * np.linalg.norm(vector) / 2)
 
     @staticmethod
     @jit(nopython=True, parallel=True)
@@ -155,7 +155,7 @@ class Parameters:
 
         progress_callback(0)
 
-        self._magnetic_dipole_moment = self._get_magnetic_dipole_moment(wire, Metric.LengthScale) * wire.get_dc()
+        self._magnetic_dipole_moment = self._get_magnetic_dipole_moment(wire, Metric.LengthScale)
 
         progress_callback(33)
 

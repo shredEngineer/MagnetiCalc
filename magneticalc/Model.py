@@ -188,16 +188,17 @@ class Model:
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
         return self.wire.recalculate(progress_callback)
 
-    def calculate_sampling_volume(self, progress_callback):
+    def calculate_sampling_volume(self, label_resolution, progress_callback):
         """
         Calculates the sampling volume.
 
+        @param label_resolution: Label resolution
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
         Debug(self, ".calculate_sampling_volume()", color=Theme.PrimaryColor)
         self.invalidate(do_field=True, do_metric=True)
-        return self.sampling_volume.recalculate(progress_callback)
+        return self.sampling_volume.recalculate(label_resolution, progress_callback)
 
     def calculate_field(self, progress_callback, num_cores: int):
         """
@@ -219,7 +220,7 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_metric()", color=Theme.PrimaryColor)
-        return self.metric.recalculate(self.field, progress_callback)
+        return self.metric.recalculate(self.sampling_volume, self.field, progress_callback)
 
     def calculate_parameters(self, progress_callback):
         """
@@ -256,7 +257,9 @@ class Model:
         Gets called when the metric was successfully calculated.
         """
         self.gui.sidebar_right.metric_widget.update_labels()
-        self.gui.vispy_canvas.create_field_labels()
+
+        # The field labels are now created on-demand inside VispyCanvas.redraw()
+        # self.gui.vispy_canvas.create_field_labels()
 
     def on_parameters_valid(self):
         """

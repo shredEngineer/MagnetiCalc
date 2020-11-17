@@ -47,6 +47,7 @@ class SamplingVolume:
         self._points = None
         self._permeabilities = None
         self._labeled_indices = None
+        self._neighbor_indices = None
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
 
@@ -59,7 +60,8 @@ class SamplingVolume:
         return \
             self._points is not None and \
             self._permeabilities is not None and \
-            self._labeled_indices is not None
+            self._labeled_indices is not None and \
+            self._neighbor_indices is not None
 
     def invalidate(self):
         """
@@ -70,6 +72,7 @@ class SamplingVolume:
         self._points = None
         self._permeabilities = None
         self._labeled_indices = None
+        self._neighbor_indices = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -111,13 +114,23 @@ class SamplingVolume:
 
     def get_labeled_indices(self):
         """
-        Returns this sampling volume's labeled indices; an unordered list of tuples (sampling volume point, field index)
+        Returns this sampling volume's labeled indices.
 
-        @return: Labeled indices
+        @return: Unordered list of pairs [sampling volume point, field index]
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 
         return self._labeled_indices
+
+    def get_neighbor_indices(self):
+        """
+        Returns this sampling volume's neighborhood indices.
+
+        @return: Ordered list of sampling volume neighborhood indices (six 3D vectors)
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return self._neighbor_indices
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -161,10 +174,12 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, progress_callback) -> bool:
+    def recalculate(self, label_resolution: int, progress_callback) -> bool:
         """
-        Recalculates the sampling volume points and permeabilities according to the constraints.
+        Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.
 
+        @param label_resolution: Label resolution
+        @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
         Debug(self, ".recalculate()", color=Theme.SuccessColor)
@@ -193,15 +208,40 @@ class SamplingVolume:
             steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
             points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
-        points = []
-        permeabilities = []
-        labeled_indices = []
-
-        # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
         span = np.array([len(axis) for axis in points_axes_all])
         n = span[0] * span[1] * span[2]
-        x, y, z = 0, 0, 0
+
+        points_all = np.zeros(shape=(n, 3))
+        permeabilities_all = np.zeros(n)
+        neighbor_indices_all = [[0, 0, 0, 0, 0, 0]] * n
+
+        labeled_indices = []
+
+        def i_to_xyz(_i: int):
+            """
+            Convert 1D index to 3D indices.
+
+            @param _i: 1D index
+            @return: 3D indices
+            """
+            _x = _i % span[0]
+            _y = (_i // span[0]) % span[1]
+            _z = _i // (span[0] * span[1])
+            return [_x, _y, _z]
+
+        def xyz_to_i(xyz) -> int:
+            """
+            Convert 3D indices to 1D index.
+
+            @param xyz: 3D indices
+            @return: 1D index
+            """
+            return xyz[0] + xyz[1] * span[0] + xyz[2] * span[0] * span[1]
+
+        # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
         for i in range(n):
+
+            x, y, z = i_to_xyz(i)
 
             point = np.array([points_axes_all[0][x], points_axes_all[1][y], points_axes_all[2][z]])
 
@@ -284,13 +324,27 @@ class SamplingVolume:
                     )
 
                 # Include this point
-                points.append(point)
-                permeabilities.append(permeability)
+                points_all[i] = point
+                permeabilities_all[i] = permeability
 
-                # Provide 1 cm of orthogonal spacing between labels
-                if x % self._resolution == 0 and y % self._resolution == 0 and z % self._resolution == 0:
-                    labeled_index = (point, len(points) - 1)
-                    labeled_indices.append(labeled_index)
+                # Generate this sampling volume point's neighborhood
+                neighborhood = [
+                    xyz_to_i([x + 1, y, z]),
+                    xyz_to_i([x, y + 1, z]),
+                    xyz_to_i([x, y, z + 1]),
+                    xyz_to_i([x - 1, y, z]),
+                    xyz_to_i([x, y - 1, z]),
+                    xyz_to_i([x, y, z - 1])
+                ]
+                neighbor_indices_all[i] = neighborhood
+
+                # Provide orthogonal spacing between labels
+                if \
+                        x % (self._resolution / label_resolution) == 0 and \
+                        y % (self._resolution / label_resolution) == 0 and \
+                        z % (self._resolution / label_resolution) == 0:
+                    # Generate a label at this point
+                    labeled_indices.append([point, i])
 
             else:
 
@@ -302,17 +356,6 @@ class SamplingVolume:
                         force=True
                     )
 
-            # Move to the next grid point
-            if x + 1 < span[0]:
-                x += 1
-            else:
-                x = 0
-                if y + 1 < span[1]:
-                    y += 1
-                else:
-                    y = 0
-                    z += 1
-
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
                 progress_callback(100 * (i + 1) / n)
@@ -321,9 +364,60 @@ class SamplingVolume:
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
-        self._points = np.array(points)
-        self._permeabilities = np.array(permeabilities)
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        index_all_to_filtered = [-1] * n
+        filtered_index = 0
+
+        # Generate mapping from "all" indices to "filtered" indices
+        for i, permeability in enumerate(permeabilities_all):
+            if permeability == 0:
+                continue
+
+            index_all_to_filtered[i] = filtered_index
+            filtered_index += 1
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        points_filtered = []
+        permeabilities_filtered = []
+        neighbor_indices_filtered = []
+
+        # Filter for included points, i.e. those with permeability != 0; translate neighborhood indices
+        for i, permeability in enumerate(permeabilities_all):
+            if permeability == 0:
+                continue
+
+            point = points_all[i]
+            permeability = permeabilities_all[i]
+
+            # Translate neighborhood indices
+            neighborhood = neighbor_indices_all[i]
+            for j in range(6):
+                if 0 <= neighborhood[j] < n:
+                    if index_all_to_filtered[neighborhood[j]] != -1:
+                        neighborhood[j] = index_all_to_filtered[neighborhood[j]]
+                    else:
+                        neighborhood[j] = -1    # Neighbor out of bounds
+                else:
+                    neighborhood[j] = -1        # Neighbor out of bounds
+
+            points_filtered.append(point)
+            permeabilities_filtered.append(permeability)
+            neighbor_indices_filtered.append(neighborhood)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        # Translate label indices
+        for i in range(len(labeled_indices)):
+            labeled_indices[i][1] = index_all_to_filtered[labeled_indices[i][1]]
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self._points = np.array(points_filtered)
+        self._permeabilities = np.array(permeabilities_filtered)
         self._labeled_indices = labeled_indices
+        self._neighbor_indices = np.array(neighbor_indices_filtered)
 
         Debug(
             self,
@@ -345,6 +439,7 @@ class SamplingVolume:
             self._points = np.array([origin])
             self._permeabilities = np.array([0])
             self._labeled_indices = [(origin, 0)]
+            self._neighbor_indices = np.array([[0, 0, 0, 0, 0, 0]])
 
         progress_callback(100)
 

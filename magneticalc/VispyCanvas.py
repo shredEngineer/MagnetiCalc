@@ -41,7 +41,8 @@ class VispyCanvas(scene.SceneCanvas):
     Black = np.array([0, 0, 0, 1])
 
     # Display settings
-    ArrowHeadSize = 6
+    ArrowHeadSizeMultiply = 1.6
+    ArrowHeadSizeExponent = 3.5
     WirePointSize = 4
     WirePointSelectedSize = 10
     WirePointSelectedColor = (1, 0, 0)
@@ -408,7 +409,7 @@ class VispyCanvas(scene.SceneCanvas):
             self.visual_field_arrow_heads.set_data(
                 pos=head_points,
                 face_color=colors,
-                size=VispyCanvas.ArrowHeadSize,
+                size=VispyCanvas.ArrowHeadSizeMultiply * VispyCanvas.ArrowHeadSizeExponent ** (1 + arrow_scale),
                 edge_width=0,
                 edge_color=None,
                 symbol="diamond"
@@ -457,10 +458,14 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Creates field labels.
         """
+        n = len(self.gui.model.sampling_volume.get_labeled_indices())
+
+        Debug(self, f".create_field_labels(): Creating {n} labels …", color=(255, 0, 255), force=self.DebugVisuals)
+
         field_units = self.gui.model.field.get_units()
 
         # Iterate through the labeled sampling volume points
-        for i in range(len(self.gui.model.sampling_volume.get_labeled_indices())):
+        for i in range(n):
 
             sampling_volume_point, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
             magnitude = np.linalg.norm(self.gui.model.field.get_vectors()[field_vector_index])
@@ -481,8 +486,7 @@ class VispyCanvas(scene.SceneCanvas):
 
             self.visual_field_labels.append(visual)
 
-        if self.DebugVisuals:
-            Debug(self, f".create_field_labels(): Created {len(self.visual_field_labels)}", color=(255, 0, 255))
+        Debug(self, f".create_field_labels(): Created {n} labels", color=(255, 0, 255), force=self.DebugVisuals)
 
     def delete_field_labels(self):
         """
@@ -491,8 +495,12 @@ class VispyCanvas(scene.SceneCanvas):
         for visual in self.visual_field_labels:
             visual.parent = None
 
-        if self.DebugVisuals:
-            Debug(self, f".delete_field_labels(): Deleted {len(self.visual_field_labels)}", color=(255, 0, 255))
+        Debug(
+            self,
+            f".delete_field_labels(): Deleted {len(self.visual_field_labels)}",
+            color=(255, 0, 255),
+            force=self.DebugVisuals
+        )
 
         self.visual_field_labels = []
 
@@ -510,6 +518,11 @@ class VispyCanvas(scene.SceneCanvas):
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         if visible:
+
+            # Create field labels if necessary
+            # noinspection PySimplifyBooleanCheck
+            if self.visual_field_labels == []:
+                self.create_field_labels()
 
             if self.DebugVisuals:
                 Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}", color=(255, 0, 255))

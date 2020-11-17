@@ -47,7 +47,7 @@ class BiotSavart_JIT:
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param dc: Wire current (A)
-        @param current_elements: Ordered list of current elements (tuples: (element center, element direction))
+        @param current_elements: Ordered list of current elements (pairs: [element center, element direction])
         @param sampling_volume_points: Ordered list of sampling volume points
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
@@ -79,7 +79,7 @@ class BiotSavart_JIT:
         @param _type: Field type (0: A-field; 1: B-field)
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
-        @param current_elements: Ordered list of current elements (tuples: (element center, element direction))
+        @param current_elements: Ordered list of current elements (pairs: [element center, element direction])
         @param sampling_volume_point: Sampling volume point
         @return: (Total number of limited points, vector)
         """

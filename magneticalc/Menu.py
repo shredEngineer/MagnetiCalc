@@ -16,12 +16,12 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from numba import cuda
 import qtawesome as qta
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
+from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
 from magneticalc.Debug import Debug
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
@@ -31,11 +31,10 @@ class Menu:
     """ Menu class. """
 
     # List of available backends
-    Backends_List = [
-        "Backend: JIT"
-    ] + [
-        "Backend: JIT + CUDA"
-    ] if cuda.is_available() else []
+    Backends_List = {
+        "Backend: JIT": True,
+        "Backend: JIT + CUDA": BiotSavart_CUDA.is_available()
+    }
 
     def __init__(self, gui):
         """
@@ -102,10 +101,12 @@ class Menu:
         self.options_backend_group.setExclusive(True)
         self.gui.blockSignals(True)
         self.backend_actions = []
-        for i, name in enumerate(self.Backends_List):
+        for i, item in enumerate(self.Backends_List.items()):
+            name, enabled = item
             action = QAction(name)
             self.backend_actions.append(action)
             action.setCheckable(True)
+            action.setEnabled(enabled)
             action.changed.connect(partial(self.on_backend_changed, i))
             self.options_backend_group.addAction(action)
             options_menu.addAction(action)
@@ -132,6 +133,11 @@ class Menu:
         Debug(self, ".reinitialize()")
 
         self.gui.blockSignals(True)
+
+        # Default to JIT backend if CUDA backend is selected but not available
+        if self.gui.config.get_int("backend") == 1:
+            if not BiotSavart_CUDA.is_available():
+                self.gui.config.set_int("backend", 0)
 
         for i, name in enumerate(self.Backends_List):
             self.backend_actions[i].setChecked(self.gui.config.get_int("backend") == i)

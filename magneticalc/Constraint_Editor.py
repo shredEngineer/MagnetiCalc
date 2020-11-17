@@ -65,7 +65,7 @@ class Constraint_Editor(QDialog):
 
         self._constraints = []
 
-        self.setWindowTitle("Constraint Editor")
+        self._changed = None
 
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -147,6 +147,8 @@ class Constraint_Editor(QDialog):
         self.reload_constraints()
         self.update_table()
 
+        self.clear_changed()
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def show(self):
@@ -155,6 +157,28 @@ class Constraint_Editor(QDialog):
         """
         self.table.setFocus()
         self.exec()
+
+    def get_changed(self) -> bool:
+        """
+        Returns the "changed" state of the current session.
+        """
+        return self._changed
+
+    def clear_changed(self):
+        """
+        Clears the "changed" state of the current session.
+        """
+        self._changed = False
+        self.update_title()
+
+    def update_title(self):
+        """
+        Updates the window title.
+        """
+        self.setWindowTitle(
+            "Constraint Editor" +
+            (" *" if self.get_changed() else "")
+        )
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -215,6 +239,9 @@ class Constraint_Editor(QDialog):
         self.update_table()
         self.table.select_last_row()
 
+        self._changed = True
+        self.update_title()
+
     def on_table_cell_edited(self, value, row, column):
         """
         Gets called after a table cell has been edited.
@@ -227,6 +254,9 @@ class Constraint_Editor(QDialog):
         _type = self.Constraint_Types.get(key)
         self.gui.config.set_generic(f"constraint_{key}_{row}", _type, value)
         self.reload_constraints()
+
+        self._changed = True
+        self.update_title()
 
     def on_table_row_deleted(self, index):
         """
@@ -259,3 +289,6 @@ class Constraint_Editor(QDialog):
         self.gui.config.set_int("constraint_count", count - 1)
 
         self.update_table()
+
+        self._changed = True
+        self.update_title()

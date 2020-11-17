@@ -24,6 +24,7 @@ class Metric_Presets:
     Magnitude = {
         "id"        : "Magnitude",
         "norm_id"   : "Radius",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -33,6 +34,7 @@ class Metric_Presets:
     MagnitudeXY = {
         "id"        : "Magnitude XY",
         "norm_id"   : "Radius XY",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -42,6 +44,7 @@ class Metric_Presets:
     MagnitudeX = {
         "id"        : "Magnitude X",
         "norm_id"   : "Radius X",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -51,6 +54,7 @@ class Metric_Presets:
     MagnitudeY = {
         "id"        : "Magnitude Y",
         "norm_id"   : "Radius Y",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -60,6 +64,7 @@ class Metric_Presets:
     MagnitudeZ = {
         "id"        : "Magnitude Z",
         "norm_id"   : "Radius Z",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -69,6 +74,7 @@ class Metric_Presets:
     MagnitudeXZ = {
         "id"        : "Magnitude XZ",
         "norm_id"   : "Radius XZ",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -78,6 +84,37 @@ class Metric_Presets:
     MagnitudeYZ = {
         "id"        : "Magnitude YZ",
         "norm_id"   : "Radius YZ",
+        "polarity"  : 0,  # currently only used for divergence
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Unipolar Divergence (linear)
+    Divergence = {
+        "id"        : "Divergence",
+        "norm_id"   : "Divergence",
+        "polarity"  : 0,
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Negative Divergence (linear)
+    NegDivergence = {
+        "id"        : "Divergence –",
+        "norm_id"   : "Divergence",
+        "polarity"  : -1,
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Positive Divergence (linear)
+    PosDivergence = {
+        "id"        : "Divergence +",
+        "norm_id"   : "Divergence",
+        "polarity"  : +1,
         "is_log"    : False,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -87,6 +124,7 @@ class Metric_Presets:
     LogMagnitude = {
         "id"        : "Log Magnitude",
         "norm_id"   : "Radius",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -96,6 +134,7 @@ class Metric_Presets:
     LogMagnitudeX = {
         "id"        : "Log Magnitude X",
         "norm_id"   : "Radius X",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -105,6 +144,7 @@ class Metric_Presets:
     LogMagnitudeY = {
         "id"        : "Log Magnitude Y",
         "norm_id"   : "Radius Y",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -114,6 +154,7 @@ class Metric_Presets:
     LogMagnitudeZ = {
         "id"        : "Log Magnitude Z",
         "norm_id"   : "Radius Z",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -123,6 +164,7 @@ class Metric_Presets:
     LogMagnitudeXY = {
         "id"        : "Log Magnitude XY",
         "norm_id"   : "Radius XY",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -132,6 +174,7 @@ class Metric_Presets:
     LogMagnitudeXZ = {
         "id"        : "Log Magnitude XZ",
         "norm_id"   : "Radius XZ",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -141,6 +184,37 @@ class Metric_Presets:
     LogMagnitudeYZ = {
         "id"        : "Log Magnitude YZ",
         "norm_id"   : "Radius YZ",
+        "polarity"  : 0,  # currently only used for divergence
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Unipolar Divergence (logarithmic)
+    LogDivergence = {
+        "id"        : "Log Divergence",
+        "norm_id"   : "Divergence",
+        "polarity"  : 0,
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Positive Divergence (logarithmic)
+    PosLogDivergence = {
+        "id"        : "Log Divergence +",
+        "norm_id"   : "Divergence",
+        "polarity"  : +1,
+        "is_log"    : True,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric preset: Negative Divergence (logarithmic)
+    NegLogDivergence = {
+        "id"        : "Log Divergence –",
+        "norm_id"   : "Divergence",
+        "polarity"  : -1,
         "is_log"    : True,
         "is_angle"  : False,
         "colormap"  : 0  # divergent
@@ -150,6 +224,7 @@ class Metric_Presets:
     AngleXY = {
         "id"        : "Angle XY",
         "norm_id"   : "Angle XY",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
         "colormap"  : 1  # cyclic
@@ -159,6 +234,7 @@ class Metric_Presets:
     AngleXZ = {
         "id"        : "Angle XZ",
         "norm_id"   : "Angle XZ",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
         "colormap"  : 1  # cyclic
@@ -168,6 +244,7 @@ class Metric_Presets:
     AngleYZ = {
         "id"        : "Angle YZ",
         "norm_id"   : "Angle YZ",
+        "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
         "colormap"  : 1  # cyclic
@@ -184,6 +261,9 @@ class Metric_Presets:
         MagnitudeXY,
         MagnitudeXZ,
         MagnitudeYZ,
+        Divergence,
+        PosDivergence,
+        NegDivergence,
         LogMagnitude,
         LogMagnitudeX,
         LogMagnitudeY,
@@ -191,9 +271,12 @@ class Metric_Presets:
         LogMagnitudeXY,
         LogMagnitudeXZ,
         LogMagnitudeYZ,
+        LogDivergence,
+        PosLogDivergence,
+        NegLogDivergence,
         AngleXY,
         AngleXZ,
-        AngleYZ
+        AngleYZ,
     ]
 
     # ------------------------------------------------------------------------------------------------------------------

@@ -68,6 +68,7 @@ class Config:
         "field_arrow_scale"             : "0.1250",
         "field_boost"                   : "0.0000",
         "display_magnitude_labels"      : "False",
+        "label_resolution"              : "1",
         "show_wire_segments"            : "True",
         "show_wire_points"              : "True",
         "show_colored_labels"           : "False",

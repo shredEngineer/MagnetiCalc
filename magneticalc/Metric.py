@@ -24,7 +24,7 @@ from magneticalc.Theme import Theme
 
 
 @jit(nopython=True, parallel=False)
-def metric_norm(norm_id: str, vector):
+def metric_norm(norm_id: str, vector) -> float:
     """
     Calculates the selected norm of some vector.
 
@@ -61,11 +61,50 @@ def metric_norm(norm_id: str, vector):
         value = (np.arctan2(vector[0], vector[2]) + np.pi) / np.pi / 2
     elif norm_id == "Angle YZ":
         value = (np.arctan2(vector[1], vector[2]) + np.pi) / np.pi / 2
+    elif norm_id == "Divergence":
+        # Invalid norm ID for metric_norm(); divergence must be calculated using metric_divergence()
+        value = None
     else:
         # Invalid norm ID
         value = None
 
     return value
+
+
+@jit(nopython=True, parallel=False)
+def metric_divergence(neighborhood_vectors, dL: float, polarity: int) -> float:
+    """
+    Calculates the divergence of a sampling volume neighborhood.
+
+    Note: For JIT to work, this must be declared at the top level.
+
+    @param neighborhood_vectors: Sampling volume neighborhood vectors (six 3D vectors)
+    @param dL: Length element
+    @param polarity: Polarity filter (-1: Keep values <= 0; 0: Keep all values; +1: Keep values >= 0)
+    """
+    dxp = neighborhood_vectors[0][0]
+    dxn = neighborhood_vectors[3][0]
+
+    dyp = neighborhood_vectors[1][1]
+    dyn = neighborhood_vectors[4][1]
+
+    dzp = neighborhood_vectors[2][2]
+    dzn = neighborhood_vectors[5][2]
+
+    value = (dxp - dxn + dyp - dyn + dzp - dzn) / 2 / dL
+
+    if polarity == -1:
+        if value > 0:
+            return np.NaN
+        else:
+            return -value   # Keep divergence positive, especially for use as alpha metric
+    elif polarity == +1:
+        if value < 0:
+            return np.NaN
+        else:
+            return value
+    else:
+        return value
 
 
 @jit(nopython=True, parallel=False)
@@ -169,7 +208,7 @@ class Metric:
         """
         Returns calculated colors.
 
-        @return: List of color values (4-tuples)
+        @return: Ordered list of color values (4-tuples)
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated metric")
 
@@ -189,23 +228,51 @@ class Metric:
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def _norm_worker(norm_color: str, norm_alpha: str, vectors):
+    def _norm_worker(norm_id: str, vectors):
         """
-        Calculates color and alpha norm values.
+        Calculates the norm values of a list of vectors.
 
-        @param norm_color: Color norm ID
-        @param norm_alpha: Alpha norm ID
+        @param norm_id: Norm ID
         @param vectors: Ordered list of 3D vectors
-        @return: Color norm values, alpha norm values
+        @return: Norm values
         """
-        color_values = np.zeros(len(vectors))
-        alpha_values = np.zeros(len(vectors))
+        values = np.zeros(len(vectors))
 
         for i in prange(len(vectors)):
-            color_values[i] = metric_norm(norm_color, vectors[i])
-            alpha_values[i] = metric_norm(norm_alpha, vectors[i])
+            values[i] = metric_norm(norm_id, vectors[i])
 
-        return color_values, alpha_values
+        return values
+
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def _divergence_worker(sampling_volume_neighborhood_indices, vectors, dL: int, polarity):
+        """
+        Calculates the divergence values of a list of vectors.
+
+        @param sampling_volume_neighborhood_indices: Ordered list of sampling volume neighborhood indices
+        @param vectors: Ordered list of 3D vectors
+        @param dL: Length element
+        @param polarity: Polarity filter (-1: Keep values <= 0; 0: Keep all values; +1: Keep values >= 0)
+        @return: Norm values
+        """
+        values = np.zeros(len(vectors))
+
+        for i in prange(len(vectors)):
+
+            neighbor_vectors = []
+            for index in sampling_volume_neighborhood_indices[i]:
+                if index != -1:
+                    neighbor_vectors.append(vectors[index])
+                else:
+                    neighbor_vectors = None
+                    break
+
+            if neighbor_vectors is None:
+                values[i] = np.nan  # At least one neighbor is out of bounds
+            else:
+                values[i] = metric_divergence(neighbor_vectors, dL, polarity)
+
+        return values
 
     @staticmethod
     @jit(nopython=True, parallel=True)
@@ -245,11 +312,15 @@ class Metric:
 
             color_normalized = color_norm_values[i]
 
-            # Clip before normalizing, needed for logarithmic normalization
-            if color_normalized < color_norm_min:
+            if np.isnan(color_normalized):
+                # Replace NaN by minimum value
                 color_normalized = color_norm_min
-            elif color_normalized < color_norm_min:
-                color_normalized = color_norm_min
+            else:
+                # Clip before normalizing, needed for logarithmic normalization
+                if color_normalized < color_norm_min:
+                    color_normalized = color_norm_min
+                elif color_normalized < color_norm_min:
+                    color_normalized = color_norm_min
 
             color_normalized = (color_normalized - color_norm_min) / (color_norm_max - color_norm_min)
             if color_is_log:
@@ -262,12 +333,19 @@ class Metric:
                 # Cyclic colormap
                 rgb = color_map_cyclic(color_normalized)
 
-            # Clip before normalizing, needed for logarithmic normalization
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
             alpha_normalized = alpha_norm_values[i]
-            if alpha_normalized < alpha_norm_min:
+
+            if np.isnan(alpha_normalized):
+                # Replace NaN by minimum value
                 alpha_normalized = alpha_norm_min
-            elif alpha_normalized > alpha_norm_max:
-                alpha_normalized = alpha_norm_max
+            else:
+                # Clip before normalizing, needed for logarithmic normalization
+                if alpha_normalized < alpha_norm_min:
+                    alpha_normalized = alpha_norm_min
+                elif alpha_normalized > alpha_norm_max:
+                    alpha_normalized = alpha_norm_max
 
             alpha_normalized = (alpha_normalized - alpha_norm_min) / (alpha_norm_max - alpha_norm_min)
             if alpha_is_log:
@@ -277,10 +355,11 @@ class Metric:
 
         return colors
 
-    def recalculate(self, field, progress_callback) -> bool:
+    def recalculate(self, sampling_volume, field, progress_callback) -> bool:
         """
         Recalculates color and alpha values for field.
 
+        @param sampling_volume: SamplingVolume
         @param field: Field
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
@@ -291,26 +370,56 @@ class Metric:
 
         progress_callback(0)
 
-        # Calculate color and alpha metric values
-        color_norm_values, alpha_norm_values = self._norm_worker(
-            self._color_preset["norm_id"],
-            self._alpha_preset["norm_id"],
-            field.get_vectors()
-        )
+        # Sampling volume length element (only needed for divergence metric)
+        dL = Metric.LengthScale / sampling_volume.get_resolution()
+
+        # Calculate color metric values
+        if self._color_preset["norm_id"] == "Divergence":
+            # Calculate divergence
+            color_norm_values = self._divergence_worker(
+                sampling_volume.get_neighbor_indices(),
+                field.get_vectors(),
+                dL,
+                self._color_preset["polarity"]
+            )
+        else:
+            # Calculate other norm
+            color_norm_values = self._norm_worker(
+                self._color_preset["norm_id"],
+                field.get_vectors()
+            )
+
+        progress_callback(25)
+
+        # Calculate alpha metric values
+        if self._alpha_preset["norm_id"] == "Divergence":
+            # Calculate divergence
+            alpha_norm_values = self._divergence_worker(
+                sampling_volume.get_neighbor_indices(),
+                field.get_vectors(),
+                dL,
+                self._alpha_preset["polarity"]
+            )
+        else:
+            # Calculate other norm
+            alpha_norm_values = self._norm_worker(
+                self._alpha_preset["norm_id"],
+                field.get_vectors()
+            )
 
         progress_callback(50)
 
         # Select color range
         if self._color_preset["is_angle"]:
-            color_norm_min, color_norm_max = 0, 1
+            color_norm_min, color_norm_max = 0.0, 1.0
         else:
-            color_norm_min, color_norm_max = min(color_norm_values), max(color_norm_values)
+            color_norm_min, color_norm_max = np.nanmin(color_norm_values), np.nanmax(color_norm_values)
 
         # Select alpha range
         if self._alpha_preset["is_angle"]:
-            alpha_norm_min, alpha_norm_max = 0, 1
+            alpha_norm_min, alpha_norm_max = 0.0, 1.0
         else:
-            alpha_norm_min, alpha_norm_max = min(alpha_norm_values), max(alpha_norm_values)
+            alpha_norm_min, alpha_norm_max = np.nanmin(alpha_norm_values), np.nanmax(alpha_norm_values)
 
         # Select color normalizer
         if self._color_preset["is_log"]:

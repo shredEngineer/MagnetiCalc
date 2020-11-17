@@ -36,6 +36,7 @@ class Field_Widget(Groupbox):
     DistanceLimitMinimum = 0.0001
     DistanceLimitMaximum = 1
     DistanceLimitStep = 0.0001
+    DistanceLimitPrecision = 4
 
     def __init__(self, gui):
         """
@@ -67,7 +68,7 @@ class Field_Widget(Groupbox):
         self.addWidget(IconLabel("mdi.ruler", "Distance Limit"))
         self.distance_limit_spinbox = QDoubleSpinBox(self.gui)
         self.distance_limit_spinbox.setLocale(self.gui.locale)
-        self.distance_limit_spinbox.setDecimals(4)
+        self.distance_limit_spinbox.setDecimals(self.DistanceLimitPrecision)
         self.distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
         self.distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
         self.distance_limit_spinbox.setSingleStep(self.DistanceLimitStep)

@@ -47,7 +47,7 @@ class BiotSavart_CUDA:
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param dc: Wire current (A)
-        @param current_elements: Ordered list of current elements (tuples: (element center, element direction))
+        @param current_elements: Ordered list of current elements (pairs: [element center, element direction])
         @param sampling_volume_points: Ordered list of sampling volume points
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
@@ -62,6 +62,15 @@ class BiotSavart_CUDA:
         self._progress_callback = progress_callback
 
         self.total_limited = 0
+
+    @staticmethod
+    def is_available():
+        """
+        Indicates the availability of this backend.
+
+        @return: True if this backend is available, False otherwise
+        """
+        return cuda.is_available()
 
     @staticmethod
     @cuda.jit

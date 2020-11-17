@@ -137,7 +137,7 @@ class Wire:
         """
         Returns this curve's elements, i.e. an ordered list of segment center points and directions.
 
-        @return: [(element_center, element_direction), ...]
+        @return: [[element_center, element_direction], ...]
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
 
@@ -146,7 +146,7 @@ class Wire:
         for i in range(len(self._points_sliced) - 1):
             element_direction = np.array(self._points_sliced[i + 1]) - np.array(self._points_sliced[i])
             element_center = self._points_sliced[i] + element_direction / 2
-            result.append((element_center, element_direction))
+            result.append([element_center, element_direction])
 
         return np.array(result)
 

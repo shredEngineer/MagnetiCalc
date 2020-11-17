@@ -74,7 +74,7 @@ Additionally, the scalar magnetic dipole moment
 <img src="https://render.githubusercontent.com/render/math?math=m" alt="m"> [4]
 is calculated by summing over all current elements:
 
-<img src="https://render.githubusercontent.com/render/math?math=m=I \cdot \frac{1}{2} \cdot \Bigl| \displaystyle \sum_\mathbf{x^'} \mathbf{x^'} \times \mathbf{\ell}(\mathbf{x^'}) \Bigr|"><br>
+<img src="https://render.githubusercontent.com/render/math?math=m=\Bigl| I \cdot \frac{1}{2} \cdot \displaystyle \sum_\mathbf{x^'} \mathbf{x^'} \times \mathbf{\ell}(\mathbf{x^'}) \Bigr|"><br>
 
 ***References***
 
@@ -201,22 +201,28 @@ https://paulwilhelm.de/magneticalc/
 *Appendix:* Metrics
 -------------------
 
-| Metric               | Symbol                                                                                       | Description                         |
-|----------------------|----------------------------------------------------------------------------------------------|-------------------------------------|
-| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">            | Magnitude in space                  |
-| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">        | Magnitude in X-direction            |
-| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">        | Magnitude in Y-direction            |
-| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">        | Magnitude in Z-direction            |
-| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">       | Magnitude in XY-plane               |
-| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">       | Magnitude in XZ-plane               |
-| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">       | Magnitude in YZ-plane               |
-| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">         | Logarithmic Magnitude in space      |
-| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_X}\mid">       | Logarithmic Magnitude in X-direction|
-| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Y}\mid">       | Logarithmic Magnitude in Y-direction|
-| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Z}\mid">       | Logarithmic Magnitude in Z-direction|
-| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XY}\mid">    | Logarithmic Magnitude in XY-plane   |
-| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XZ}\mid">    | Logarithmic Magnitude in XZ-plane   |
-| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{YZ}\mid">    | Logarithmic Magnitude in YZ-plane   |
-| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}"> | Field angle in XY-plane             |
-| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}"> | Field angle in XZ-plane             |
-| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}"> | Field angle in YZ-plane             |
+| Metric               | Symbol                                                                                                 | Description                           |
+|----------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------|
+| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                      | Magnitude in space                    |
+| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                  | Magnitude in X-direction              |
+| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                  | Magnitude in Y-direction              |
+| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                  | Magnitude in Z-direction              |
+| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                 | Magnitude in XY-plane                 |
+| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                 | Magnitude in XZ-plane                 |
+| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                 | Magnitude in YZ-plane                 |
+| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                   | Divergence                            |
+| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">       | Positive Divergence                   |
+| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">         | Negative Divergence                   |
+| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">                   | Logarithmic Magnitude in space        |
+| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_X}\mid">                 | Logarithmic Magnitude in X-direction  |
+| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Y}\mid">                 | Logarithmic Magnitude in Y-direction  |
+| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Z}\mid">                 | Logarithmic Magnitude in Z-direction  |
+| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XY}\mid">              | Logarithmic Magnitude in XY-plane     |
+| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XZ}\mid">              | Logarithmic Magnitude in XZ-plane     |
+| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{YZ}\mid">              | Logarithmic Magnitude in YZ-plane     |
+| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=ln \ \ \nabla\cdot\vec{B}">            | Logarithmic Divergence                |
+| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=ln \ %2b\{\nabla\cdot\vec{B}\}_{>0}">  | Positive Logarithmic Divergence       |
+| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=ln \ -\{\nabla\cdot\vec{B}\}_{<0}">    | Negative Logarithmic Divergence       |
+| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">           | Field angle in XY-plane               |
+| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">           | Field angle in XZ-plane               |
+| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">           | Field angle in YZ-plane               |

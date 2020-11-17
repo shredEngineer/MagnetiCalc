@@ -234,6 +234,10 @@ class SamplingVolume_Widget(Groupbox):
                     )
                 )
 
+            if recalculate:
+                # The label resolution depends on the sampling volume resolution
+                self.gui.sidebar_right.display_widget.update_label_resolution_combobox()
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def readjust(self, padding=None):
@@ -285,14 +289,14 @@ class SamplingVolume_Widget(Groupbox):
 
     def open_constraint_editor(self):
         """
-        Opens the constraint editor; recalculates the sampling volume afterwards.
+        Opens the constraint editor.
+        Recalculates the sampling volume if the constraints changed.
         """
 
-        # Stop any running calculation
-        if self.gui.calculation_thread is not None:
-            if self.gui.calculation_thread.isRunning():
-                # Cancel the running calculation
-                self.gui.interrupt_calculation()
-
         self.constraint_editor.show()
-        self.set_sampling_volume()
+
+        if self.constraint_editor.get_changed():
+
+            self.set_sampling_volume()
+
+            self.constraint_editor.clear_changed()

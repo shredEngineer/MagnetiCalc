@@ -19,6 +19,7 @@
 import math
 import numpy as np
 from numba import cuda
+from PyQt5.QtCore import QThread
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
@@ -146,7 +147,7 @@ class BiotSavart_CUDA:
         """
         Calculates the field at every point of the sampling volume.
 
-        @return: (Total number of limited points, field) (currently non-interruptable)
+        @return: (Total number of limited points, field) if successful, None if interrupted
         """
         Debug(self, ".get_result()", color=Theme.PrimaryColor)
 
@@ -156,34 +157,67 @@ class BiotSavart_CUDA:
         element_centers_global = cuda.to_device(element_centers)
         element_directions_global = cuda.to_device(element_directions)
 
-        sampling_volume_points_global = cuda.to_device(self._sampling_volume_points)
-        sampling_volume_permeabilities_global = cuda.to_device(self._sampling_volume_permeabilities)
+        field_vectors = np.zeros(shape=(0, 3))
+        total_limited = 0
 
-        field_vectors_global = cuda.device_array((len(self._sampling_volume_points), 3))
-        total_limited_global = cuda.device_array(1)
+        # Split the calculation into chunks for progress update and interruption handling
+        chunk_size_max = 1024 * 16
+        chunk_start = 0
+        remaining = len(self._sampling_volume_points)
 
-        TPB = 1024   # Maximum threads per block
-        BPG = 65536  # Maximum blocks per grid
+        while remaining > 0:
 
-        BiotSavart_CUDA.worker[BPG, TPB](
-            self._type,
-            self._distance_limit,
-            self._length_scale,
-            element_centers_global,
-            element_directions_global,
-            sampling_volume_points_global,
-            sampling_volume_permeabilities_global,
-            field_vectors_global,
-            total_limited_global
-        )
+            if remaining >= chunk_size_max:
+                chunk_size = chunk_size_max
+            else:
+                chunk_size = remaining
 
-        field_vectors_local = field_vectors_global.copy_to_host()
-        total_limited_local = total_limited_global.copy_to_host()
+            sampling_volume_points_global = cuda.to_device(
+                self._sampling_volume_points[chunk_start:chunk_start + chunk_size]
+            )
+            sampling_volume_permeabilities_global = cuda.to_device(
+                self._sampling_volume_permeabilities[chunk_start:chunk_start + chunk_size]
+            )
 
-        if self._type == 0 or self._type == 1:
-            # Field is A-field or B-field
-            field_vectors_local = field_vectors_local * self._dc * Constants.mu_0 / 4 / np.pi
+            # Signal progress update, handle interrupt
+            self._progress_callback(100 * chunk_start / len(self._sampling_volume_points))
+
+            if QThread.currentThread().isInterruptionRequested():
+                Debug(self, ".get_result(): Interruption requested, exiting now", color=Theme.PrimaryColor)
+                return None
+
+            remaining -= chunk_size
+            chunk_start += chunk_size
+
+            field_vectors_global = cuda.device_array((chunk_size, 3))
+            total_limited_global = cuda.device_array(1)
+            total_limited_global[0] = 0
+
+            TPB = 1024   # Maximum threads per block
+            BPG = 65536  # Maximum blocks per grid
+
+            BiotSavart_CUDA.worker[BPG, TPB](
+                self._type,
+                self._distance_limit,
+                self._length_scale,
+                element_centers_global,
+                element_directions_global,
+                sampling_volume_points_global,
+                sampling_volume_permeabilities_global,
+                field_vectors_global,
+                total_limited_global
+            )
+
+            field_vectors_local = field_vectors_global.copy_to_host()
+            total_limited_local = total_limited_global.copy_to_host()
+
+            if self._type == 0 or self._type == 1:
+                # Field is A-field or B-field
+                field_vectors_local = field_vectors_local * self._dc * Constants.mu_0 / 4 / np.pi
+
+            field_vectors = np.append(field_vectors, field_vectors_local, axis=0)
+            total_limited += int(total_limited_local[0])
 
         self._progress_callback(100)
 
-        return int(total_limited_local[0]), field_vectors_local
+        return total_limited, np.array(field_vectors)

@@ -215,7 +215,7 @@ class GUI(QMainWindow):
             Debug(self, ".interrupt_calculation(): Requesting interruption", color=Theme.PrimaryColor)
             self.calculation_thread.requestInterruption()
 
-            if self.calculation_thread.wait(3000):
+            if self.calculation_thread.wait(5000):
                 Debug(self, ".interrupt_calculation(): Exited gracefully", color=Theme.PrimaryColor)
             else:
                 Assert_Dialog(False, "Failed to terminate calculation thread")
@@ -370,10 +370,10 @@ class GUI(QMainWindow):
             self.menu.reinitialize()
             self.statusbar.reinitialize()
 
+            self.vispy_canvas.load_perspective()
+
             if self.config.get_bool("auto_calculation"):
                 self.recalculate()
-            else:
-                self.redraw()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

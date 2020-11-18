@@ -41,8 +41,8 @@ class VispyCanvas(scene.SceneCanvas):
     Black = np.array([0, 0, 0, 1])
 
     # Display settings
-    ArrowHeadSizeMultiply = 1.6
-    ArrowHeadSizeExponent = 3.5
+    ArrowHeadSizeMultiply = 1.2
+    ArrowHeadSizeExponent = 3.2
     WirePointSize = 4
     WirePointSelectedSize = 10
     WirePointSelectedColor = (1, 0, 0)
@@ -137,6 +137,7 @@ class VispyCanvas(scene.SceneCanvas):
         self.load_perspective(redraw=False)
 
         # Insert perspective change handler
+        self.signals_blocked = False
         self.super_perspective_changed = self.view_main.camera.view_changed
         self.view_main.camera.view_changed = self.on_perspective_changed
 
@@ -168,18 +169,25 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Debug(self, ".load_perspective()")
 
+        self.signals_blocked = True
         self.view_main.camera.azimuth = self.gui.config.get_float("azimuth")
         self.view_main.camera.elevation = self.gui.config.get_float("elevation")
         self.view_main.camera.scale_factor = self.gui.config.get_float("scale_factor")
+        self.signals_blocked = False
 
         if redraw:
+            self.on_perspective_changed()
             self.redraw()
 
     def on_perspective_changed(self):
         """
         Handles a change of perspective.
         """
-        Debug(self, ".on_perspective_changed()")
+        if self.signals_blocked:
+            Debug(self, ".on_perspective_changed(): Skipped")
+            return
+        else:
+            Debug(self, ".on_perspective_changed()")
 
         # Limit scale factor
         if self.view_main.camera.scale_factor > self.ScaleFactorMax:

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-BIN=$HOME/MagnetiCalc/venv/bin/
+BIN=/usr/local/bin/
 
 # Check code style
 "$BIN"/pycodestyle \

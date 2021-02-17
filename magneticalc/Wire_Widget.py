@@ -168,10 +168,7 @@ class Wire_Widget(Groupbox):
             alignment=Qt.AlignVCenter
         )
         self.rotational_symmetry_count_spinbox.valueChanged.connect(self.set_rotational_symmetry)
-        rotational_symmetry_count_units_label = QLabel("cm")
-        rotational_symmetry_count_units_label.setAlignment(Qt.AlignRight)
-        rotational_symmetry_count_units_label.setFixedWidth(self.UnitsLabelWidth)
-        rotational_symmetry_layout_right.addWidget(rotational_symmetry_count_units_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_layout_right.addWidget(QLabel(""))
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -188,7 +185,10 @@ class Wire_Widget(Groupbox):
             self.rotational_symmetry_radius_spinbox,
             alignment=Qt.AlignVCenter
         )
-        rotational_symmetry_layout_right.addWidget(QLabel(""))
+        rotational_symmetry_count_radius_label = QLabel("cm")
+        rotational_symmetry_count_radius_label.setAlignment(Qt.AlignRight)
+        rotational_symmetry_count_radius_label.setFixedWidth(self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetry_count_radius_label, alignment=Qt.AlignVCenter)
         self.rotational_symmetry_radius_spinbox.valueChanged.connect(self.set_rotational_symmetry)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

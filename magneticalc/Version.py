@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.8.6"
+__VERSION__ = "v1.8.7"
 
 
 class Version:
@@ -25,5 +25,5 @@ class Version:
 
     # Full application version string
     String = "MagnetiCalc " + __VERSION__
-    Copyright = "Copyright © 2020, Paul Wilhelm, M. Sc. <mailto:anfrage@paulwilhelm.de>"
+    Copyright = "Copyright © 2020–2021, Paul Wilhelm, M. Sc. <mailto:anfrage@paulwilhelm.de>"
     License = "ISC License (see README.md)"

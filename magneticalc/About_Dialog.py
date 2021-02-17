@@ -36,7 +36,7 @@ class About_Dialog(QDialog):
     HTML = f"""
         <span style="color: {Theme.PrimaryColor};"><b>{Version.String}</b></span><br>
         <br>
-        Copyright © 2020, Paul Wilhelm, M. Sc.
+        Copyright © 2020–2021, Paul Wilhelm, M. Sc.
         &lt;<a href="mailto:anfrage@paulwilhelm.de">anfrage@paulwilhelm.de</a>&gt;<br>
         <br>
         <small>

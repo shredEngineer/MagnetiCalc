@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -146,7 +146,7 @@ class Parameters_Widget(Groupbox):
 
                 energy_value = self.gui.model.parameters.get_energy()
                 if np.isnan(energy_value):
-                    energy_value = "NaN "
+                    energy_value = "NaN NaN"
                 else:
                     energy_value = si_format(energy_value, precision=self.ValuePrecision) + "J"
                 self.energy_value_label.setText(energy_value.split(" ")[0])
@@ -156,7 +156,7 @@ class Parameters_Widget(Groupbox):
 
                 self_inductance_value = self.gui.model.parameters.get_self_inductance()
                 if np.isnan(self_inductance_value):
-                    self_inductance_value = "NaN "
+                    self_inductance_value = "NaN NaN"
                 else:
                     self_inductance_value = si_format(self_inductance_value, precision=self.ValuePrecision) + "H"
                 self.self_inductance_value_label.setText(self_inductance_value.split(" ")[0])
@@ -166,11 +166,11 @@ class Parameters_Widget(Groupbox):
 
                 magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
                 if np.isnan(magnetic_dipole_moment_value):
-                    magnetic_dipole_moment_value = "NaN "
+                    magnetic_dipole_moment_value = "NaN NaN"
                 else:
                     magnetic_dipole_moment_value = si_format(
                         magnetic_dipole_moment_value, precision=self.ValuePrecision
-                    ) + "Am²"
+                    ) + "A·m²"
                 self.magnetic_dipole_moment_value_label.setText(magnetic_dipole_moment_value.split(" ")[0])
                 self.magnetic_dipole_moment_value_label.setStyleSheet(
                     f"color: {Theme.PrimaryColor}; font-weight: bold;"

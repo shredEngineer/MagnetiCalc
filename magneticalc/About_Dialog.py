@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -56,7 +56,7 @@ class About_Dialog(QDialog):
         </small>
         <br>
         <span style="color: {Theme.PrimaryColor};">
-            If you like this software, please consider buying me a coffee!&nbsp; ;)
+            If you like this software, please consider buying me a coffee!&nbsp; :)
         </span>
         """
 

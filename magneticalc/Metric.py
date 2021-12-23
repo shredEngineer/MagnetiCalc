@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -412,12 +412,16 @@ class Metric:
         # Select color range
         if self._color_preset["is_angle"]:
             color_norm_min, color_norm_max = 0.0, 1.0
+        elif all(np.isnan(color_norm_values)):
+            color_norm_min, color_norm_max = np.nan, np.nan
         else:
             color_norm_min, color_norm_max = np.nanmin(color_norm_values), np.nanmax(color_norm_values)
 
         # Select alpha range
         if self._alpha_preset["is_angle"]:
             alpha_norm_min, alpha_norm_max = 0.0, 1.0
+        elif all(np.isnan(alpha_norm_values)):
+            alpha_norm_min, alpha_norm_max = np.nan, np.nan
         else:
             alpha_norm_min, alpha_norm_max = np.nanmin(alpha_norm_values), np.nanmax(alpha_norm_values)
 

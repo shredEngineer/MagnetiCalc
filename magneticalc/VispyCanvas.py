@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,7 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import time
 import numpy as np
+from typing import Optional
 from si_prefix import si_format
 from vispy import io, scene, visuals
 from vispy.scene.cameras import TurntableCamera
@@ -36,20 +38,23 @@ class VispyCanvas(scene.SceneCanvas):
     # Enable to additionally debug drawing of visuals
     DebugVisuals = True
 
+    # Enable to additionally debug perspective changes
+    DebugPerspective = False
+
     # Base colors
     White = np.array([1, 1, 1, 1])
     Black = np.array([0, 0, 0, 1])
 
     # Display settings
-    ArrowHeadSizeMultiply = 1.2
-    ArrowHeadSizeExponent = 3.2
+    FieldArrowHeadSize = 10
+    FieldPointSize = 10
     WirePointSize = 4
     WirePointSelectedSize = 10
     WirePointSelectedColor = (1, 0, 0)
 
     # Zoom limits
-    ScaleFactorMin = 1e-2
-    ScaleFactorMax = 1e+3
+    ScaleFactorMin = 1e-3
+    ScaleFactorMax = 1e+4
 
     # Magnitude limit (mitigating divisions by zero)
     MagnitudeLimit = 1e-12
@@ -71,6 +76,8 @@ class VispyCanvas(scene.SceneCanvas):
 
         self.gui = gui
 
+        self.redraw_start_time: Optional[float] = None
+
         self.view_main = self.central_widget.add_view()
         self.view_text = self.view_main.add_view()
 
@@ -78,8 +85,6 @@ class VispyCanvas(scene.SceneCanvas):
             fov=0,  # Use orthographic projection
             translate_speed=3
         )
-
-        self.visual_coordinate_system = scene.visuals.create_visual_node(visuals.XYZAxisVisual)()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -98,6 +103,8 @@ class VispyCanvas(scene.SceneCanvas):
         self.visual_field_labels = []  # See: L{create_field_labels}, L{delete_field_labels}, L{redraw_field_labels}
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        self.visual_coordinate_system = scene.visuals.create_visual_node(visuals.XYZAxisVisual)()
 
         self.visual_wire_segments = scene.visuals.create_visual_node(visuals.LineVisual)()
         self.visual_wire_points_selected = scene.visuals.create_visual_node(visuals.MarkersVisual)()
@@ -127,7 +134,7 @@ class VispyCanvas(scene.SceneCanvas):
             bold=True,
             text="Performing initial just-in-time compilation;\n"
                  "subsequent calculations will execute faster!\n",
-            color=self.foreground,
+            color=(1, .55, 0),
             face=self.DefaultFontFace,
             font_size=self.DefaultFontSize,
             font_manager=self.font_manager
@@ -183,11 +190,12 @@ class VispyCanvas(scene.SceneCanvas):
         """
         Handles a change of perspective.
         """
-        if self.signals_blocked:
-            Debug(self, ".on_perspective_changed(): Skipped")
-            return
-        else:
-            Debug(self, ".on_perspective_changed()")
+        if self.DebugPerspective:
+            if self.signals_blocked:
+                Debug(self, ".on_perspective_changed(): Skipped")
+                return
+            else:
+                Debug(self, ".on_perspective_changed()")
 
         # Limit scale factor
         if self.view_main.camera.scale_factor > self.ScaleFactorMax:
@@ -197,15 +205,18 @@ class VispyCanvas(scene.SceneCanvas):
 
         if self.view_main.camera.azimuth != self.gui.config.get_float("azimuth"):
             self.gui.config.set_float("azimuth", self.view_main.camera.azimuth)
-            Debug(self, f".on_perspective_changed(): azimuth = {self.view_main.camera.azimuth}")
+            if self.DebugPerspective:
+                Debug(self, f".on_perspective_changed(): azimuth = {self.view_main.camera.azimuth}")
 
         if self.view_main.camera.elevation != self.gui.config.get_float("elevation"):
             self.gui.config.set_float("elevation", self.view_main.camera.elevation)
-            Debug(self, f".on_perspective_changed(): elevation = {self.view_main.camera.elevation}")
+            if self.DebugPerspective:
+                Debug(self, f".on_perspective_changed(): elevation = {self.view_main.camera.elevation}")
 
         if self.view_main.camera.scale_factor != self.gui.config.get_float("scale_factor"):
             self.gui.config.set_float("scale_factor", self.view_main.camera.scale_factor)
-            Debug(self, f".on_perspective_changed(): scale_factor = {self.view_main.camera.scale_factor}")
+            if self.DebugPerspective:
+                Debug(self, f".on_perspective_changed(): scale_factor = {self.view_main.camera.scale_factor}")
 
         self.super_perspective_changed()
         self.redraw_perspective_info()
@@ -234,6 +245,8 @@ class VispyCanvas(scene.SceneCanvas):
         Re-draws the entire scene.
         """
         Debug(self, ".redraw()", color=Theme.SuccessColor)
+
+        self.redraw_start_time = time.monotonic()
 
         self.update_color_scheme()
 
@@ -268,6 +281,13 @@ class VispyCanvas(scene.SceneCanvas):
         self.redraw_field_arrows(colors)
         self.redraw_field_points(colors)
         self.redraw_field_labels(colors)
+
+        redraw_time = time.monotonic() - self.redraw_start_time
+        Debug(
+            self,
+            f".redraw(): Finished (took {redraw_time:.2f} s)",
+            color=Theme.SuccessColor
+        )
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -370,11 +390,13 @@ class VispyCanvas(scene.SceneCanvas):
 
         @param colors: Colors
         """
-        arrow_scale = self.gui.config.get_float("field_arrow_scale")
+        sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
+        arrow_head_scale = VispyCanvas.FieldArrowHeadSize * self.gui.config.get_float("field_arrow_head_scale")
+        arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.config.get_float("field_arrow_line_scale")
 
         visible = \
             self.gui.model.field.is_valid() and \
-            arrow_scale > 0 and \
+            (arrow_head_scale > 0 or arrow_line_scale > 0) and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         if visible:
@@ -387,7 +409,7 @@ class VispyCanvas(scene.SceneCanvas):
                 self.gui.model.field.get_vectors(),
                 line_pairs,
                 head_points,
-                arrow_scale,
+                arrow_line_scale,
                 VispyCanvas.MagnitudeLimit
             )
 
@@ -417,7 +439,7 @@ class VispyCanvas(scene.SceneCanvas):
             self.visual_field_arrow_heads.set_data(
                 pos=head_points,
                 face_color=colors,
-                size=VispyCanvas.ArrowHeadSizeMultiply * VispyCanvas.ArrowHeadSizeExponent ** (1 + arrow_scale),
+                size=arrow_head_scale,
                 edge_width=0,
                 edge_color=None,
                 symbol="diamond"
@@ -432,7 +454,7 @@ class VispyCanvas(scene.SceneCanvas):
 
         @param colors: Colors
         """
-        point_scale = self.gui.config.get_float("field_point_scale")
+        point_scale = VispyCanvas.FieldPointSize * self.gui.config.get_float("field_point_scale")
 
         visible = \
             self.gui.model.sampling_volume.is_valid() and \
@@ -522,7 +544,7 @@ class VispyCanvas(scene.SceneCanvas):
         """
         visible = \
             self.gui.model.metric.is_valid() and \
-            self.gui.config.get_bool("display_magnitude_labels") and \
+            self.gui.config.get_bool("display_field_magnitude_labels") and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         if visible:

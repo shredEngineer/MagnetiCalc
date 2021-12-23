@@ -23,3 +23,6 @@ BIN=/usr/local/bin/
   --project-base-dir=. \
   --project-name=MagnetiCalc \
   --project-url=https://github.com/shredEngineer/MagnetiCalc \
+
+# Copy images for docs
+cp images_for_docs/*.png docs

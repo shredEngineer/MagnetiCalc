@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -62,7 +62,7 @@ class Menu:
         file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.picture-o"), "Save &Image …", self.gui.file_save_image, Qt.CTRL + Qt.Key_I)
         file_menu.addSeparator()
-        file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.close, Qt.CTRL + Qt.Key_Q)
+        file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.confirm_close, Qt.CTRL + Qt.Key_Q)
         self.gui.menuBar().addMenu(file_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

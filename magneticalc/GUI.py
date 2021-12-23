@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -20,9 +20,10 @@ import os
 import time
 import atexit
 import datetime
+from typing import Optional
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
-from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget
+from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget, QMessageBox
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Config import Config
@@ -253,6 +254,60 @@ class GUI(QMainWindow):
         screen = QDesktopWidget().screenGeometry()
         self.setGeometry(0, 0, screen.width(), screen.height())
 
+    # ------------------------------------------------------------------------------------------------------------------
+
+    @staticmethod
+    def confirm_saving_unsaved_work(cancelable: bool) -> Optional[bool]:
+        """
+        Confirm saving unsaved work.
+
+        @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
+        @return: None if canceled, True if saving, False if discarding
+        """
+        messagebox = QMessageBox()
+        messagebox.setWindowTitle("File Changed")
+        messagebox.setText("Do you want to save your changes?")
+        messagebox.setIcon(QMessageBox.Question)
+        messagebox.setStandardButtons(
+            (QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel) if cancelable else
+            (QMessageBox.Save | QMessageBox.Discard)
+        )
+        messagebox.setDefaultButton(QMessageBox.Save)
+        choice = messagebox.exec()
+        if choice == QMessageBox.Save:
+            return True
+        elif choice == QMessageBox.Discard:
+            return False
+        else:
+            return None
+
+    def confirm_close(self) -> None:
+        """
+        Called by menu "Quit" action.
+        Lets user choose to cancel closing or save / discard file if there is unsaved work.
+        """
+        if not self.config.get_synced():
+            choice = self.confirm_saving_unsaved_work(cancelable=True)
+            if choice is None:
+                Debug(self, ".confirm_close(): Canceled")
+                return
+            elif choice:
+                Debug(self, ".confirm_close(): Saving unsaved work")
+                self.config.save()
+            else:
+                Debug(self, ".confirm_close(): Discarding unsaved work")
+
+        self.close()
+
+    def closeEvent(self, _event):
+        """
+        Handles close event.
+
+        @param _event: Close event
+        """
+        Debug(self, ".closeEvent()")
+        self.quit()
+
     def quit(self):
         """
         Quits the application.
@@ -271,14 +326,6 @@ class GUI(QMainWindow):
 
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
         atexit.unregister(self.quit)
-
-    def closeEvent(self, _event):
-        """
-        Handles close event.
-
-        @param _event: Close event
-        """
-        self.quit()
 
     def keyPressEvent(self, event):
         """
@@ -354,6 +401,13 @@ class GUI(QMainWindow):
         if filename != "":
 
             self.model.invalidate()
+
+            if not self.config.get_synced():
+                if self.confirm_saving_unsaved_work(cancelable=False):
+                    Debug(self, ".file_open(): Saving unsaved work")
+                    self.config.save()
+                else:
+                    Debug(self, ".file_open(): Discarding unsaved work")
 
             self.config.close()
             self.config.set_filename(filename)

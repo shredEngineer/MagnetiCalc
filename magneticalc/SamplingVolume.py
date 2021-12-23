@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Tuple, List
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -29,15 +30,17 @@ class SamplingVolume:
     # Enable to show additional debug info during constraint calculation
     Debug_Constraints = False
 
-    def __init__(self, resolution: int):
+    def __init__(self, resolution: float, label_resolution: float):
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
 
         @param resolution: Resolution
+        @param label_resolution: Label resolution
         """
         Debug(self, ": Init")
 
         self._resolution = resolution
+        self._label_resolution = label_resolution
 
         self.constraints = []
 
@@ -50,6 +53,7 @@ class SamplingVolume:
         self._neighbor_indices = None
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
+        Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
 
     def is_valid(self) -> bool:
         """
@@ -76,7 +80,7 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_resolution(self) -> int:
+    def get_resolution(self) -> float:
         """
         Returns this volume's resolution.
 
@@ -84,7 +88,7 @@ class SamplingVolume:
         """
         return self._resolution
 
-    def get_bounds(self):
+    def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         """
         Returns this volume's bounding box.
 
@@ -92,7 +96,15 @@ class SamplingVolume:
         """
         return self._bounds_min, self._bounds_max
 
-    def get_points(self):
+    def get_extent(self) -> List:
+        """
+        Returns this volume's extent.
+
+        @return: 3D point
+        """
+        return self._bounds_max - self._bounds_min
+
+    def get_points(self) -> List:
         """
         Returns this sampling volume's points.
 
@@ -102,7 +114,7 @@ class SamplingVolume:
 
         return self._points
 
-    def get_permeabilities(self):
+    def get_permeabilities(self) -> List:
         """
         Returns this sampling volume's relative permeabilities µ_r.
 
@@ -112,7 +124,7 @@ class SamplingVolume:
 
         return self._permeabilities
 
-    def get_labeled_indices(self):
+    def get_labeled_indices(self) -> List:
         """
         Returns this sampling volume's labeled indices.
 
@@ -122,7 +134,17 @@ class SamplingVolume:
 
         return self._labeled_indices
 
-    def get_neighbor_indices(self):
+    def get_labels_count(self) -> int:
+        """
+        Returns this sampling volume's label count.
+
+        @return: Label count
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return len(self._labeled_indices)
+
+    def get_neighbor_indices(self) -> List:
         """
         Returns this sampling volume's neighborhood indices.
 
@@ -134,7 +156,7 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_bounds_nearest(self, bounds_min, bounds_max):
+    def set_bounds_nearest(self, bounds_min, bounds_max) -> None:
         """
         Adjusts this volume's bounding box to fully enclose a 3D wire curve.
         This expands the bounding box to the next integer grid coordinates.
@@ -148,7 +170,7 @@ class SamplingVolume:
         self._bounds_min = np.array([np.floor(x) for x in bounds_min])
         self._bounds_max = np.array([np.ceil(x) for x in bounds_max])
 
-    def set_padding_nearest(self, padding):
+    def set_padding_nearest(self, padding) -> None:
         """
         Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.
         This shrinks or expands the bounding box to the next integer grid coordinates.
@@ -162,7 +184,7 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_constraint(self, constraint):
+    def add_constraint(self, constraint) -> None:
         """
         Adds some constraint to this volume's point generator.
 
@@ -174,11 +196,10 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, label_resolution: int, progress_callback) -> bool:
+    def recalculate(self, progress_callback) -> bool:
         """
         Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.
 
-        @param label_resolution: Label resolution
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
@@ -340,9 +361,9 @@ class SamplingVolume:
 
                 # Provide orthogonal spacing between labels
                 if \
-                        x % (self._resolution / label_resolution) == 0 and \
-                        y % (self._resolution / label_resolution) == 0 and \
-                        z % (self._resolution / label_resolution) == 0:
+                        np.fmod(x, self._resolution / self._label_resolution) == 0 and \
+                        np.fmod(y, self._resolution / self._label_resolution) == 0 and \
+                        np.fmod(z, self._resolution / self._label_resolution) == 0:
                     # Generate a label at this point
                     labeled_indices.append([point, i])
 

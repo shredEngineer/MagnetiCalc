@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,9 +16,11 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, List
+import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QSizePolicy
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QComboBox, QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
@@ -37,10 +39,29 @@ class SamplingVolume_Widget(Groupbox):
     UnitsLabelWidth = 26
 
     # Spinbox limits
-    PaddingMin = -99
-    PaddingMax = 99
-    ResolutionMinimum = 1
-    ResolutionMaximum = 100
+    PaddingMin = -1e+3
+    PaddingMax = +1e+3
+
+    # Resolution options
+    ResolutionOptionsDict = {
+        "256"       : 8,
+        "128"       : 7,
+        "64"        : 6,
+        "32"        : 5,
+        "16"        : 4,
+        "8"         : 3,
+        "4"         : 2,
+        "2"         : 1,
+        "1"         : 0,
+        "1 / 2"     : -1,
+        "1 / 4"     : -2,
+        "1 / 8"     : -3,
+        "1 / 16"    : -4,
+        "1 / 32"    : -5,
+        "1 / 64"    : -6,
+        "1 / 128"   : -7,
+        "1 / 256"   : -8,
+    }
 
     def __init__(self, gui):
         """
@@ -84,6 +105,16 @@ class SamplingVolume_Widget(Groupbox):
             padding_layout.addWidget(self.padding_spinbox[i], alignment=Qt.AlignVCenter)
         self.addLayout(padding_layout)
 
+        total_extent_layout = QHBoxLayout()
+        total_extent_label_left = QLabel("Total extent:")
+        total_extent_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_extent_label = QLabel("N/A")
+        self.total_extent_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_extent_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_extent_layout.addWidget(total_extent_label_left, alignment=Qt.AlignVCenter)
+        total_extent_layout.addWidget(self.total_extent_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_extent_layout)
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(HLine())
@@ -115,18 +146,26 @@ class SamplingVolume_Widget(Groupbox):
         self.addWidget(HLine())
 
         self.addWidget(IconLabel("fa.th", "Resolution"))
-        self.resolution_spinbox = QSpinBox(self.gui)
-        self.resolution_spinbox.setMinimum(self.ResolutionMinimum)
-        self.resolution_spinbox.setMaximum(self.ResolutionMaximum)
-        self.resolution_spinbox.valueChanged.connect(
-            lambda: self.set_sampling_volume(resolution=self.resolution_spinbox.value())
-        )
+
+        self.resolution_combobox = QComboBox()
         resolution_layout = QHBoxLayout()
-        resolution_layout.addWidget(self.resolution_spinbox, alignment=Qt.AlignVCenter)
-        points_units_label = QLabel("Points / cm")
-        points_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        resolution_layout.addWidget(points_units_label, alignment=Qt.AlignVCenter)
+        resolution_layout.addWidget(self.resolution_combobox, alignment=Qt.AlignVCenter)
+        self.resolution_units_label = QLabel(" Points / cm")
+        self.resolution_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        resolution_layout.addWidget(self.resolution_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(resolution_layout)
+
+        # Populate resolution combobox
+        for i, value in enumerate(self.ResolutionOptionsDict):
+            self.resolution_combobox.addItem(str(value))
+        self.resolution_combobox.currentIndexChanged.connect(
+            lambda: self.set_sampling_volume(
+                resolution_exponent=self.ResolutionOptionsDict.get(
+                    self.resolution_combobox.currentText(),
+                    0
+                )
+            )
+        )
 
         total_points_layout = QHBoxLayout()
         total_points_label_left = QLabel("Total sampling points:")
@@ -153,7 +192,22 @@ class SamplingVolume_Widget(Groupbox):
         for i in range(3):
             self.padding_spinbox[i].setValue(self.gui.config.get_point("sampling_volume_padding")[i])
 
-        self.resolution_spinbox.setValue(self.gui.config.get_int("sampling_volume_resolution"))
+        # Set default resolution if it is not available anymore
+        target = self.gui.config.get_int("sampling_volume_resolution_exponent")
+        if target not in self.ResolutionOptionsDict.values():
+            Debug(
+                self,
+                f": Invalid: sampling_volume_resolution_exponent = {target}",
+                color=Theme.WarningColor,
+                force=True
+            )
+            self.gui.config.set_int("sampling_volume_resolution_exponent", 0)
+
+        # Select the resolution
+        target = self.gui.config.get_int("sampling_volume_resolution_exponent")
+        for i, value in enumerate(self.ResolutionOptionsDict.values()):
+            if value == target:
+                self.resolution_combobox.setCurrentIndex(i)
 
         self.blockSignals(False)
 
@@ -189,8 +243,9 @@ class SamplingVolume_Widget(Groupbox):
 
     def set_sampling_volume(
             self,
-            padding=None,
-            resolution: int = None,
+            resolution_exponent: Optional[int] = None,
+            label_resolution_exponent: Optional[int] = None,
+            padding: Optional[List] = None,
             recalculate: bool = True,
             invalidate_self: bool = True
     ):
@@ -198,7 +253,8 @@ class SamplingVolume_Widget(Groupbox):
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
         Parameters may be left set to None in order to load their default value.
 
-        @param resolution: Sampling volume _resolution
+        @param resolution_exponent: Sampling volume resolution exponent
+        @param label_resolution_exponent: Sampling volume label resolution exponent
         @param padding: Padding (3D point)
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
@@ -208,9 +264,23 @@ class SamplingVolume_Widget(Groupbox):
 
         with ModelAccess(self.gui, recalculate):
 
-            resolution = self.gui.config.set_get_int("sampling_volume_resolution", resolution)
+            resolution_exponent = self.gui.config.set_get_int(
+                "sampling_volume_resolution_exponent",
+                resolution_exponent
+            )
 
-            self.gui.model.set_sampling_volume(SamplingVolume(resolution), invalidate_self=invalidate_self)
+            label_resolution_exponent = self.gui.config.set_get_int(
+                "sampling_volume_label_resolution_exponent",
+                label_resolution_exponent
+            )
+
+            resolution = np.power(2.0, resolution_exponent)
+            label_resolution = np.power(2.0, label_resolution_exponent)
+
+            self.gui.model.set_sampling_volume(
+                SamplingVolume(resolution=resolution, label_resolution=label_resolution),
+                invalidate_self=invalidate_self
+            )
 
             self.readjust(padding)
 
@@ -235,8 +305,8 @@ class SamplingVolume_Widget(Groupbox):
                 )
 
             if recalculate:
-                # The label resolution depends on the sampling volume resolution
-                self.gui.sidebar_right.display_widget.update_label_resolution_combobox()
+                # The display widget depends on the sampling volume
+                self.gui.sidebar_right.display_widget.update()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -279,8 +349,14 @@ class SamplingVolume_Widget(Groupbox):
         Updates the labels.
         """
         if self.gui.model.sampling_volume.is_valid():
-            self.total_points_label.setText(str(len(self.gui.model.sampling_volume.get_points())))
+            self.total_extent_label.setText(
+                " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
+            )
+            self.total_points_label.setText(
+                str(len(self.gui.model.sampling_volume.get_points()))
+            )
         else:
+            self.total_extent_label.setText("N/A")
             self.total_points_label.setText("N/A")
 
         self.total_constraints_label.setText(str(len(self.constraint_editor.get_constraints())))

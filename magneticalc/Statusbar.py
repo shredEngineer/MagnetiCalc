@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -51,7 +51,7 @@ class Statusbar:
 
         # Auto-calculation checkbox
         self.auto_calculation_checkbox = QCheckBox("Auto-Calculation")
-        self.auto_calculation_checkbox.stateChanged.connect(self._auto_calculation_changed)
+        self.auto_calculation_checkbox.toggled.connect(self._auto_calculation_changed)
 
         # Number-of-cores combobox
         self.cores_combobox = QComboBox()

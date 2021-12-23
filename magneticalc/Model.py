@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -188,17 +188,16 @@ class Model:
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
         return self.wire.recalculate(progress_callback)
 
-    def calculate_sampling_volume(self, label_resolution, progress_callback):
+    def calculate_sampling_volume(self, progress_callback):
         """
         Calculates the sampling volume.
 
-        @param label_resolution: Label resolution
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
         Debug(self, ".calculate_sampling_volume()", color=Theme.PrimaryColor)
         self.invalidate(do_field=True, do_metric=True)
-        return self.sampling_volume.recalculate(label_resolution, progress_callback)
+        return self.sampling_volume.recalculate(progress_callback)
 
     def calculate_field(self, progress_callback, num_cores: int):
         """
@@ -245,6 +244,8 @@ class Model:
         Gets called when the sampling volume was successfully calculated.
         """
         self.gui.sidebar_left.sampling_volume_widget.update_labels()
+        self.gui.sidebar_right.display_widget.update()
+        self.gui.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
 
     def on_field_valid(self):
         """

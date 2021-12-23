@@ -158,7 +158,7 @@ which includes the steps necessary to get CUDA up and running.
 
 License
 -------
-Copyright © 2020, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
+Copyright © 2020–2021, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
 
 <b>ISC License</b>
 
@@ -182,10 +182,27 @@ If this software has been helpful to you in some way or another, please let me a
 
 ToDo
 ----
+
+**General**
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
-* Add support for modeling of core material saturation and hysteresis effects.
-* Add support for selective display over a portion of the metric range, in order to get a kind of iso-contour display.
+
+**Functional**
 * Add support for multiple wires, study mutual induction.
+* Add support for multiple current values and animate the resulting fields.
+* Add support for modeling of core material saturation and hysteresis effects ([Landau–Lifshitz–Gilbert equation](https://en.wikipedia.org/wiki/Landau%E2%80%93Lifshitz%E2%80%93Gilbert_equation)).
+
+**Usability**
+* Add stationary coordinate system and ruler in the bottom left corner.
+* Add support for selective display over a portion of the metric range, enabling a kind of iso-contour display.
+
+**Known Bugs**
+* Fix issue where the points of a sampling volume with *fractional* resolution are not always spaced equidistantly for some sampling volume dimensions.
+* Fix delayed GUI start-up when loading "complex" files.
+* Fix missing scaling of VisPy markers when zooming.
+* Fix unnecessary shading of VisPy markers.
+
+**Code Quality**
+* Add type hints where they are missing.
 
 Video
 -----

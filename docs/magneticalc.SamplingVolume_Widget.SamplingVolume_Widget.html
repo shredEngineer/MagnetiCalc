@@ -66,12 +66,7 @@
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionMinimum" class="code" data-type="Class Variable">ResolutionMinimum</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionMaximum" class="code" data-type="Class Variable">ResolutionMaximum</a></td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionOptionsDict" class="code" data-type="Class Variable">ResolutionOptionsDict</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
@@ -96,12 +91,22 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_extent_label" class="code" data-type="Instance Variable">total_extent_label</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_constraints_label" class="code" data-type="Instance Variable">total_constraints_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#resolution_spinbox" class="code" data-type="Instance Variable">resolution_spinbox</a></td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#resolution_combobox" class="code" data-type="Instance Variable">resolution_combobox</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#resolution_units_label" class="code" data-type="Instance Variable">resolution_units_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -215,7 +220,7 @@
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
   </div>
 </div><div class="baseclassvariable">
   
@@ -231,39 +236,23 @@
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
   </div>
 </div><div class="baseclassvariable">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionMinimum">
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionOptionsDict">
     
   </a>
-  <a name="ResolutionMinimum">
+  <a name="ResolutionOptionsDict">
     
   </a>
   <div class="functionHeader">
-    ResolutionMinimum =
+    ResolutionOptionsDict =
     
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionMaximum">
-    
-  </a>
-  <a name="ResolutionMaximum">
-    
-  </a>
-  <div class="functionHeader">
-    ResolutionMaximum =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+    <div class="undocumented">Undocumented</div> (type: <code>Dict[str, int]</code>)
   </div>
 </div><div class="basemethod">
   
@@ -334,6 +323,22 @@
   </div>
 </div><div class="baseinstancevariable">
   
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_extent_label">
+    
+  </a>
+  <a name="total_extent_label">
+    
+  </a>
+  <div class="functionHeader">
+    total_extent_label =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_constraints_label">
     
   </a>
@@ -350,14 +355,30 @@
   </div>
 </div><div class="baseinstancevariable">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_spinbox">
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_combobox">
     
   </a>
-  <a name="resolution_spinbox">
+  <a name="resolution_combobox">
     
   </a>
   <div class="functionHeader">
-    resolution_spinbox =
+    resolution_combobox =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_units_label">
+    
+  </a>
+  <a name="resolution_units_label">
+    
+  </a>
+  <div class="functionHeader">
+    resolution_units_label =
     
   </div>
   <div class="functionBody">
@@ -448,13 +469,13 @@
   <div class="functionHeader">
     
     def
-    set_sampling_volume(self, padding=None, resolution=None, recalculate=(True), invalidate_self=(True)):
+    set_sampling_volume(self, resolution_exponent=None, label_resolution_exponent=None, padding=None, recalculate=(True), invalidate_self=(True)):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Sampling volume _resolution</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
+    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution_exponent</td><td>Sampling volume resolution exponent</td></tr><tr><td></td><td class="fieldArg">label_resolution_exponent</td><td>Sampling volume label resolution exponent</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -517,7 +538,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-04-01 13:32:06.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
       </address>
 
     </div>

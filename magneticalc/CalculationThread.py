@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -30,6 +30,13 @@ class CalculationThread(QThread):
     # Progress update signal
     progress_update = pyqtSignal(int)
 
+    # Valid state signals
+    wire_valid = pyqtSignal()
+    sampling_volume_valid = pyqtSignal()
+    field_valid = pyqtSignal()
+    metric_valid = pyqtSignal()
+    parameters_valid = pyqtSignal()
+
     def __init__(self, gui):
         """
         Initializes calculation thread.
@@ -44,6 +51,13 @@ class CalculationThread(QThread):
         self.progress_update.connect(lambda x: self.gui.statusbar.progressbar.setValue(x))
         self.progress_callback = self.progress_update.emit
 
+        # Connect valid state signals to corresponding handlers
+        self.wire_valid.connect(self.on_wire_valid)
+        self.sampling_volume_valid.connect(self.on_sampling_volume_valid)
+        self.field_valid.connect(self.on_field_valid)
+        self.metric_valid.connect(self.on_metric_valid)
+        self.parameters_valid.connect(self.on_parameters_valid)
+
     def run(self):
         """
         Thread main function.
@@ -53,23 +67,21 @@ class CalculationThread(QThread):
             self.gui.calculation_status.emit("Calculating Wire Segments...")
 
             if not self.gui.model.calculate_wire(self.progress_callback):
-                self.trigger_finished(False)
+                self.on_finished(False)
                 return
 
-            self.trigger_on_wire_valid()
+            self.wire_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         if not self.gui.model.sampling_volume.is_valid():
             self.gui.calculation_status.emit("Calculating Sampling Volume...")
 
-            label_resolution = self.gui.config.get_int("label_resolution")
-
-            if not self.gui.model.calculate_sampling_volume(label_resolution, self.progress_callback):
-                self.trigger_finished(False)
+            if not self.gui.model.calculate_sampling_volume(self.progress_callback):
+                self.on_finished(False)
                 return
 
-            self.trigger_on_sampling_volume_valid()
+            self.sampling_volume_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -84,10 +96,10 @@ class CalculationThread(QThread):
             success = self.gui.model.calculate_field(self.progress_callback, num_cores)
 
             if not success:
-                self.trigger_finished(False)
+                self.on_finished(False)
                 return
 
-            self.trigger_on_field_valid()
+            self.field_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -95,10 +107,10 @@ class CalculationThread(QThread):
             self.gui.calculation_status.emit("Calculating Metric...")
 
             if not self.gui.model.calculate_metric(self.progress_callback):
-                self.trigger_finished(False)
+                self.on_finished(False)
                 return
 
-            self.trigger_on_metric_valid()
+            self.metric_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -106,18 +118,18 @@ class CalculationThread(QThread):
             self.gui.calculation_status.emit("Calculating Parameters...")
 
             if not self.gui.model.calculate_parameters(self.progress_callback):
-                self.trigger_finished(False)
+                self.on_finished(False)
                 return
 
-            self.trigger_on_parameters_valid()
+            self.parameters_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.trigger_finished(True)
+        self.on_finished(True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def trigger_finished(self, success: bool):
+    def on_finished(self, success: bool):
         """
         Signals that the calculation finished.
 
@@ -133,35 +145,35 @@ class CalculationThread(QThread):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def trigger_on_wire_valid(self):
+    def on_wire_valid(self):
         """
         Gets called when the wire was successfully calculated.
         """
         self.gui.model.on_wire_valid()
         self.gui.vispy_canvas.redraw()
 
-    def trigger_on_sampling_volume_valid(self):
+    def on_sampling_volume_valid(self):
         """
         Gets called when the sampling volume was successfully calculated.
         """
         self.gui.model.on_sampling_volume_valid()
         self.gui.vispy_canvas.redraw()
 
-    def trigger_on_field_valid(self):
+    def on_field_valid(self):
         """
         Gets called when the field was successfully calculated.
         """
         self.gui.model.on_field_valid()
         self.gui.vispy_canvas.redraw()
 
-    def trigger_on_metric_valid(self):
+    def on_metric_valid(self):
         """
         Gets called when the metric was successfully calculated.
         """
         self.gui.model.on_metric_valid()
         self.gui.vispy_canvas.redraw()
 
-    def trigger_on_parameters_valid(self):
+    def on_parameters_valid(self):
         """
         Gets called when the parameters were successfully calculated.
         """

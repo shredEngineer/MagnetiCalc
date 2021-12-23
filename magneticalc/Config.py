@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -18,7 +18,6 @@
 
 import os
 import configparser
-from PyQt5.QtWidgets import QMessageBox
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
@@ -46,39 +45,40 @@ class Config:
 
     # Default configuration
     Default = {
-        "version"                       : Version.String,
-        "backend"                       : "0",
-        "auto_calculation"              : "True",
-        "num_cores"                     : "0",
-        "wire_points_base"              : None,  # Will be set in __init__
-        "wire_stretch"                  : "0.1000, 1.0000, 1.0000",
-        "wire_slicer_limit"             : "0.0500",
-        "wire_dc"                       : "1.0000",
-        "rotational_symmetry_count"     : "30",
-        "rotational_symmetry_radius"    : "1.0000",
-        "rotational_symmetry_axis"      : "2",
-        "rotational_symmetry_offset"    : "0",
-        "sampling_volume_padding"       : "1, 1, 1",
-        "sampling_volume_resolution"    : "10",
-        "field_type"                    : "1",
-        "field_distance_limit"          : "0.0008",
-        "color_metric"                  : "Log Magnitude",
-        "alpha_metric"                  : "Magnitude",
-        "field_point_scale"             : "1.0000",
-        "field_arrow_scale"             : "0.1250",
-        "field_boost"                   : "0.0000",
-        "display_magnitude_labels"      : "False",
-        "label_resolution"              : "1",
-        "show_wire_segments"            : "True",
-        "show_wire_points"              : "True",
-        "show_colored_labels"           : "False",
-        "show_coordinate_system"        : "True",
-        "show_perspective_info"         : "True",
-        "dark_background"               : "True",
-        "azimuth"                       : None,  # Will be set in __init__
-        "elevation"                     : None,  # Will be set in __init__
-        "scale_factor"                  : "3.0000",
-        "constraint_count"              : "0"
+        "version"                                   : Version.String,
+        "backend"                                   : "0",
+        "auto_calculation"                          : "True",
+        "num_cores"                                 : "0",
+        "wire_points_base"                          : None,  # Will be set in __init__
+        "wire_stretch"                              : "0.1000, 1.0000, 1.0000",
+        "wire_slicer_limit"                         : "0.0500",
+        "wire_dc"                                   : "1.0000",
+        "rotational_symmetry_count"                 : "30",
+        "rotational_symmetry_radius"                : "1.0000",
+        "rotational_symmetry_axis"                  : "2",
+        "rotational_symmetry_offset"                : "0",
+        "sampling_volume_padding"                   : "1, 1, 1",
+        "sampling_volume_resolution_exponent"       : "3",
+        "sampling_volume_label_resolution_exponent" : "0",
+        "field_type"                                : "1",
+        "field_distance_limit"                      : "0.0008",
+        "color_metric"                              : "Log Magnitude",
+        "alpha_metric"                              : "Magnitude",
+        "field_point_scale"                         : "0.0000",
+        "field_arrow_head_scale"                    : "0.7500",
+        "field_arrow_line_scale"                    : "0.7500",
+        "field_boost"                               : "0.0000",
+        "display_field_magnitude_labels"            : "True",
+        "show_wire_segments"                        : "True",
+        "show_wire_points"                          : "True",
+        "show_colored_labels"                       : "True",
+        "show_coordinate_system"                    : "True",
+        "show_perspective_info"                     : "True",
+        "dark_background"                           : "True",
+        "azimuth"                                   : None,  # Will be set in __init__
+        "elevation"                                 : None,  # Will be set in __init__
+        "scale_factor"                              : "3.0000",
+        "constraint_count"                          : "0"
     }
 
     def __init__(self):
@@ -188,19 +188,9 @@ class Config:
 
     def close(self):
         """
-        Finally auto-saves configuration to file.
+        Close configuration.
         """
         Debug(self, ".close()")
-
-        if not self._synced:
-            messagebox = QMessageBox()
-            messagebox.setWindowTitle("Configuration Changed")
-            messagebox.setText("Do you want to save your changes?")
-            messagebox.setIcon(QMessageBox.Question)
-            messagebox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-            messagebox.setDefaultButton(QMessageBox.Yes)
-            if messagebox.exec() == QMessageBox.Yes:
-                self.save()
 
     # ------------------------------------------------------------------------------------------------------------------
 

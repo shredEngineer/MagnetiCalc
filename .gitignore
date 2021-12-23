@@ -2,3 +2,4 @@ magneticalc/__pycache__/
 venv/
 .idea/
 upload_to_TestPyPI.sh
+images_for_docs/

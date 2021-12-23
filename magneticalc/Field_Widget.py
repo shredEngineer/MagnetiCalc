@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QSizePolicy
@@ -135,8 +136,8 @@ class Field_Widget(Groupbox):
 
     def set_field(
             self,
-            _type: int = None,
-            distance_limit: float = None,
+            _type: Optional[int] = None,
+            distance_limit: Optional[float] = None,
             recalculate: bool = True,
             invalidate_self: bool = True
     ):

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Dict, List
 import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt
@@ -146,7 +147,12 @@ class Wire_Widget(Groupbox):
 
         self.addWidget(HLine())
 
-        self.addWidget(IconLabel("mdi.rotate-3d-variant", "Rotational Symmetry"))
+        rotational_symmetry_icon_label = IconLabel("mdi.rotate-3d-variant", "Rotational Symmetry")
+        rotational_symmetry_clear_button = QPushButton()
+        rotational_symmetry_clear_button.setIcon(qta.icon("fa.eraser"))
+        rotational_symmetry_clear_button.clicked.connect(self.clear_rotational_symmetry)
+        rotational_symmetry_icon_label.addWidget(rotational_symmetry_clear_button)
+        self.addWidget(rotational_symmetry_icon_label)
         rotational_symmetry_layout = QHBoxLayout()
         rotational_symmetry_layout_left = QVBoxLayout()
         rotational_symmetry_layout_middle = QVBoxLayout()
@@ -341,11 +347,11 @@ class Wire_Widget(Groupbox):
 
     def set_wire(
             self,
-            points=None,
-            stretch=None,
-            rotational_symmetry=None,
-            slicer_limit: float = None,
-            dc: float = None,
+            points: Optional[List] = None,
+            stretch: Optional[List] = None,
+            rotational_symmetry: Optional[Dict] = None,
+            slicer_limit: Optional[float] = None,
+            dc: Optional[float] = None,
             recalculate: bool = True,
             readjust_sampling_volume: bool = True,
             invalidate_self: bool = True
@@ -437,6 +443,26 @@ class Wire_Widget(Groupbox):
                 "offset": self.rotational_symmetry_offset_spinbox.value()
             }
         )
+
+    def clear_rotational_symmetry(self):
+        """
+        Clears the rotational symmetry values.
+        """
+        self.set_wire(
+            rotational_symmetry={
+                "count" : 1,
+                "radius": 0,
+                "axis"  : 2,
+                "offset": 0
+            }
+        )
+
+        self.blockSignals(True)
+        self.rotational_symmetry_count_spinbox.setValue(1)
+        self.rotational_symmetry_radius_spinbox.setValue(0)
+        self.rotational_symmetry_axis_combobox.setCurrentIndex(2)
+        self.rotational_symmetry_offset_spinbox.setValue(0)
+        self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
 

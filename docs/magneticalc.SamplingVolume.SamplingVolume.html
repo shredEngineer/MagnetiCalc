@@ -86,6 +86,11 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_extent" class="code" data-type="Method">get_extent</a></td>
+    <td><span>Returns this volume's extent.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_points" class="code" data-type="Method">get_points</a></td>
     <td><span>Returns this sampling volume's points.</span></td>
   </tr><tr class="method">
@@ -98,6 +103,11 @@
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_labeled_indices" class="code" data-type="Method">get_labeled_indices</a></td>
     <td><span>Returns this sampling volume's labeled indices.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#get_labels_count" class="code" data-type="Method">get_labels_count</a></td>
+    <td><span>Returns this sampling volume's label count.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -127,6 +137,11 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_resolution" class="code" data-type="Instance Variable">_resolution</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume.SamplingVolume.html#_label_resolution" class="code" data-type="Instance Variable">_label_resolution</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -194,13 +209,13 @@
   <div class="functionHeader">
     
     def
-    __init__(self, resolution):
+    __init__(self, resolution, label_resolution):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes an empty sampling volume, with zero bounds and no constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Resolution</td></tr></table></div>
+    <div><p>Initializes an empty sampling volume, with zero bounds and no constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution</td><td>Resolution</td></tr><tr><td></td><td class="fieldArg">label_resolution</td><td>Label resolution</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -212,6 +227,22 @@
   </a>
   <div class="functionHeader">
     _resolution =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume._label_resolution">
+    
+  </a>
+  <a name="_label_resolution">
+    
+  </a>
+  <div class="functionHeader">
+    _label_resolution =
     
   </div>
   <div class="functionBody">
@@ -408,6 +439,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_extent">
+    
+  </a>
+  <a name="get_extent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_extent(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this volume's extent.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">3D point</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.SamplingVolume.SamplingVolume.get_points">
     
   </a>
@@ -462,6 +512,25 @@
     
     
     <div><p>Returns this sampling volume's labeled indices.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Unordered list of pairs [sampling volume point, field index]</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.get_labels_count">
+    
+  </a>
+  <a name="get_labels_count">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_labels_count(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Returns this sampling volume's label count.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Label count</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -550,19 +619,19 @@
   <div class="functionHeader">
     
     def
-    recalculate(self, label_resolution, progress_callback):
+    recalculate(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">label_resolution</td><td>Label resolution</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div><p>Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-04-01 13:32:06.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
       </address>
 
     </div>

@@ -19,6 +19,7 @@
 import os
 import h5py
 import datetime
+import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QLabel, QFileDialog
 from magneticalc.Field_Types import A_FIELD, B_FIELD
@@ -183,25 +184,25 @@ class ExportContainer_Dialog:
             if export_a_field or export_b_field:
                 sampling_volume_components = self.gui.model.sampling_volume.get_points().T
                 fields.update({
-                    "x": sampling_volume_components[0],
-                    "y": sampling_volume_components[1],
-                    "z": sampling_volume_components[2]
+                    "x": np.array(sorted(list(set(sampling_volume_components[0])))),
+                    "y": np.array(sorted(list(set(sampling_volume_components[1])))),
+                    "z": np.array(sorted(list(set(sampling_volume_components[2]))))
                 })
 
             if export_a_field:
                 a_field_components = self.gui.model.get_valid_field(A_FIELD).get_vectors().T
                 fields.update({
-                    "A_x": a_field_components[0],
-                    "A_y": a_field_components[1],
-                    "A_z": a_field_components[2]
+                    "A_x": np.rehsape(a_field_components[0],(len(fields['x']),len(fields['y']),len(fields['z']))),
+                    "A_y": np.reshape(a_field_components[1],(len(fields['x']),len(fields['y']),len(fields['z']))),
+                    "A_z": np.reshape(a_field_components[2],(len(fields['x']),len(fields['y']),len(fields['z'])))
                 })
 
             if export_b_field:
                 b_field_components = self.gui.model.get_valid_field(B_FIELD).get_vectors().T
                 fields.update({
-                    "B_x": b_field_components[0],
-                    "B_y": b_field_components[1],
-                    "B_z": b_field_components[2]
+                    "B_x": np.reshape(b_field_components[0],(len(fields['x']),len(fields['y']),len(fields['z']))),
+                    "B_y": np.reshape(b_field_components[1],(len(fields['x']),len(fields['y']),len(fields['z']))),
+                    "B_z": np.reshape(b_field_components[2],(len(fields['x']),len(fields['y']),len(fields['z'])))
                 })
 
             if export_a_field or export_b_field:

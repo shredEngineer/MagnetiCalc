@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -181,7 +181,7 @@ class Wire_Presets:
         ]
     }
 
-    # Preset: A phase-jumping toroidal loop.
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @staticmethod
     def get_phase_jumping_toroidal_loop(
@@ -190,7 +190,7 @@ class Wire_Presets:
             toroidal_freq=1, poloidal_freq=32
     ):
         """
-        Generates a phase-jumping toroidal loop.
+        Generates a (phase-jumping) toroidal loop.
 
         @param n_points: Number of points
         @param n_phase_jumps: Number of phase jumps
@@ -221,9 +221,62 @@ class Wire_Presets:
             wire_points.append(p_toroidal + rotate_xy(p_poloidal, phase_toroidal + np.pi / 2))
         return np.array(wire_points)
 
-    PhaseJumpingToroidalLoop = {
-        "id": "Phase-jumping Toroidal Loop",
-        "points": get_phase_jumping_toroidal_loop.__func__()
+    # Preset: A phase-jumping toroidal loop: 8 turns.
+    PhaseJumpingToroidalLoop8 = {
+        "id": "Phase-jumping Toroidal Loop: 8 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=8,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=8
+        )
+    }
+    # Preset: A phase-jumping toroidal loop: 32 turns.
+    PhaseJumpingToroidalLoop16 = {
+        "id": "Phase-jumping Toroidal Loop: 16 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=16,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=16
+        )
+    }
+    # Preset: A phase-jumping toroidal loop: 32 turns.
+    PhaseJumpingToroidalLoop32 = {
+        "id": "Phase-jumping Toroidal Loop: 32 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=32,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32
+        )
+    }
+
+    # Preset: A toroidal loop: 8 turns.
+    ToroidalLoop8 = {
+        "id": "Toroidal Loop: 8 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=8
+        )
+    }
+
+    # Preset: A toroidal loop: 16 turns.
+    ToroidalLoop16 = {
+        "id": "Toroidal Loop: 16 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=16
+        )
+    }
+
+    # Preset: A toroidal loop: 32 turns.
+    ToroidalLoop32 = {
+        "id": "Toroidal Loop: 32 turns",
+        "points": get_phase_jumping_toroidal_loop.__func__(
+            n_points=640, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32
+        )
     }
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -240,7 +293,12 @@ class Wire_Presets:
         SolenoidCircularLoops8,
         CompensatedSolenoidCircularLoops4,
         CompensatedSolenoidCircularLoops8,
-        PhaseJumpingToroidalLoop
+        PhaseJumpingToroidalLoop8,
+        PhaseJumpingToroidalLoop16,
+        PhaseJumpingToroidalLoop32,
+        ToroidalLoop8,
+        ToroidalLoop16,
+        ToroidalLoop32,
     ]
 
     # ------------------------------------------------------------------------------------------------------------------

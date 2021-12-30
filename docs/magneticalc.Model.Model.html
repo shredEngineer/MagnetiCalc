@@ -42,11 +42,11 @@
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Model class. The model maintains a strict hierarchy of dependencies:  parameters &gt; metric &gt; field &gt; sampling volume &gt; wire When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).</p></div>
+        <div><p>Model class.</p><p>The model maintains a strict hierarchy of dependencies:  parameters &gt; metric &gt; field &gt; sampling volume &gt; wire When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).</p><p>Note: The model maintains a cache for fields of different types, with at most one selected ("active") field. Property decorators maintain coherency between the selected field type and the contents of the field cache. The currently selected field is accessed using the <a href="magneticalc.Model.Model.html#field"><code>field</code></a> property. Invalidating the currently selected field also invalidates all the other cached fields.</p></div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id48">
+        <table class="children sortable" id="id52">
   
   <tr class="method">
     
@@ -71,11 +71,6 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#field" class="code" data-type="Instance Variable">field</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
     <td><a href="magneticalc.Model.Model.html#metric" class="code" data-type="Instance Variable">metric</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
@@ -83,6 +78,16 @@
     <td>Instance Variable</td>
     <td><a href="magneticalc.Model.Model.html#parameters" class="code" data-type="Instance Variable">parameters</a></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#field" class="code" data-type="Method">field</a></td>
+    <td><span>Sets the currently selected field.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Model.Model.html#get_valid_field" class="code" data-type="Method">get_valid_field</a></td>
+    <td><span>Gets a field if it is cached and valid.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -198,6 +203,16 @@
     <td>Method</td>
     <td><a href="magneticalc.Model.Model.html#on_parameters_invalid" class="code" data-type="Method">on_parameters_invalid</a></td>
     <td><span>Gets called when the parameters were invalidated.</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Model.Model.html#_selected_field_type" class="code" data-type="Instance Variable">_selected_field_type</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Model.Model.html#_field_cache" class="code" data-type="Instance Variable">_field_cache</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -274,21 +289,37 @@
     
     <div class="undocumented">Undocumented</div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Model.Model.field">
+  <a name="magneticalc.Model.Model._selected_field_type">
     
   </a>
-  <a name="field">
+  <a name="_selected_field_type">
     
   </a>
   <div class="functionHeader">
-    field =
+    _selected_field_type =
     
   </div>
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Model.Model._field_cache">
+    
+  </a>
+  <a name="_field_cache">
+    
+  </a>
+  <div class="functionHeader">
+    _field_cache =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div> (type: <code>Dict[int, Field]</code>)
   </div>
 </div><div class="baseinstancevariable">
   
@@ -321,6 +352,44 @@
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.field">
+    
+  </a>
+  <a name="field">
+    
+  </a>
+  <div class="functionHeader">
+    @field.setter<br />
+    def
+    field(self, field):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Sets the currently selected field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Model.Model.get_valid_field">
+    
+  </a>
+  <a name="get_valid_field">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_valid_field(self, field_type):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets a field if it is cached and valid.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field if cached and valid, None otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -377,7 +446,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Invalidates multiple modules at once, in descending order of hierarchy.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">do_wire</td><td>Enable to invalidate wire</td></tr><tr><td></td><td class="fieldArg">do_sampling_volume</td><td>Enable to invalidate sampling volume</td></tr><tr><td></td><td class="fieldArg">do_field</td><td>Enable to invalidate field</td></tr><tr><td></td><td class="fieldArg">do_metric</td><td>Enable to invalidate metric</td></tr><tr><td></td><td class="fieldArg">do_parameters</td><td>Enable to invalidate parameters</td></tr></table></div>
+    <div><p>Invalidates multiple modules at once, in descending order of hierarchy.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">do_wire</td><td>Enable to invalidate wire</td></tr><tr><td></td><td class="fieldArg">do_sampling_volume</td><td>Enable to invalidate sampling volume</td></tr><tr><td></td><td class="fieldArg">do_field</td><td>Enable to invalidate all fields (the currently selected field and all the other cached fields)</td></tr><tr><td></td><td class="fieldArg">do_metric</td><td>Enable to invalidate metric</td></tr><tr><td></td><td class="fieldArg">do_parameters</td><td>Enable to invalidate parameters</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -434,7 +503,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object before setting a new one</td></tr></table></div>
+    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object (including the cache) before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -763,7 +832,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-30 03:01:53.
       </address>
 
     </div>

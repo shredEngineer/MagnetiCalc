@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,6 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from PyQt5.QtWidgets import QWidget, QStyle
+
 
 class Theme:
     """ Theme class. """
@@ -24,3 +26,14 @@ class Theme:
     LightColor = "#555555"
     SuccessColor = "#2e7d32"
     WarningColor = "#c62828"
+
+    @staticmethod
+    def get_icon(widget: QWidget, name: str):
+        """
+        Gets a PyQt5 standard icon by name.
+
+        @param widget: Base QWidget
+        @param name: Name
+        @return: PyQt5 icon
+        """
+        return widget.style().standardIcon(getattr(QStyle, name))

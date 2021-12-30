@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -19,9 +19,11 @@
 from typing import Optional
 from functools import partial
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QSizePolicy
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QSizePolicy,\
+    QCheckBox
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.IconLabel import IconLabel
@@ -52,15 +54,45 @@ class Field_Widget(Groupbox):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addWidget(IconLabel("mdi.tune-variant", "Type"))
-        self.field_type_group = QButtonGroup()
+
+        field_type_layout_left = QVBoxLayout()
+        field_type_layout_right = QVBoxLayout()
+
         field_type_a_radiobutton = QRadioButton(" A-Field (Vector Potential)")
+        field_type_a_radiobutton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        field_type_layout_left.addWidget(field_type_a_radiobutton, alignment=Qt.AlignVCenter)
+        self.field_type_a_checkbox = QCheckBox(" Cached")
+        self.field_type_a_checkbox.setEnabled(False)
+        field_type_layout_right.addWidget(self.field_type_a_checkbox, alignment=Qt.AlignVCenter | Qt.AlignRight)
+
         field_type_b_radiobutton = QRadioButton(" B-Field (Flux Density)")
+        field_type_b_radiobutton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        field_type_layout_left.addWidget(field_type_b_radiobutton, alignment=Qt.AlignVCenter)
+        self.field_type_b_checkbox = QCheckBox(" Cached")
+        self.field_type_b_checkbox.setEnabled(False)
+        field_type_layout_right.addWidget(self.field_type_b_checkbox, alignment=Qt.AlignVCenter | Qt.AlignRight)
+
+        self.field_type_group = QButtonGroup()
         self.field_type_group.addButton(field_type_a_radiobutton)
         self.field_type_group.addButton(field_type_b_radiobutton)
-        self.addWidget(field_type_a_radiobutton)
-        self.addWidget(field_type_b_radiobutton)
+
+        field_type_layout = QHBoxLayout()
+        field_type_layout.addLayout(field_type_layout_left)
+        field_type_layout.addLayout(field_type_layout_right)
+        self.addLayout(field_type_layout)
+
         for i, button in enumerate(self.field_type_group.buttons()):
             button.toggled.connect(partial(self.on_field_type_changed, i))
+
+        total_calculations_layout = QHBoxLayout()
+        total_calculations_left = QLabel("Total calculations:")
+        total_calculations_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_calculations_label = QLabel("N/A")
+        self.total_calculations_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_calculations_layout.addWidget(total_calculations_left, alignment=Qt.AlignVCenter)
+        total_calculations_layout.addWidget(self.total_calculations_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_calculations_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -83,17 +115,15 @@ class Field_Widget(Groupbox):
         distance_limit_layout.addWidget(distance_limit_units_label, alignment=Qt.AlignVCenter)
         self.addLayout(distance_limit_layout)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        total_limited_points_layout = QHBoxLayout()
-        total_limited_points_left = QLabel("Total limited points:")
-        total_limited_points_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
-        self.total_limited_points_label = QLabel("N/A")
-        self.total_limited_points_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.total_limited_points_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_limited_points_layout.addWidget(total_limited_points_left, alignment=Qt.AlignVCenter)
-        total_limited_points_layout.addWidget(self.total_limited_points_label, alignment=Qt.AlignVCenter)
-        self.addLayout(total_limited_points_layout)
+        total_skipped_calculations_layout = QHBoxLayout()
+        total_skipped_calculations_left = QLabel("Total skipped calculations:")
+        total_skipped_calculations_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        self.total_skipped_calculations_label = QLabel("N/A")
+        self.total_skipped_calculations_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_skipped_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        total_skipped_calculations_layout.addWidget(total_skipped_calculations_left, alignment=Qt.AlignVCenter)
+        total_skipped_calculations_layout.addWidget(self.total_skipped_calculations_label, alignment=Qt.AlignVCenter)
+        self.addLayout(total_skipped_calculations_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -119,58 +149,93 @@ class Field_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_field_type_changed(self, _type: bool, checked: bool):
+    def on_field_type_changed(self, field_type: bool, checked: bool):
         """
         Gets called when the field type changed.
 
-        @param _type: Field type (0: A-field; 1: B-field)
+        @param field_type: Field type
         @param checked: Boolean
         """
         if self.signalsBlocked():
             return
 
-        if checked:
-            self.set_field(_type=_type)
+        if not checked:
+            return
+
+        self.set_field(field_type=field_type, allow_cache=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_field(
             self,
-            _type: Optional[int] = None,
+            field_type: Optional[int] = None,
             distance_limit: Optional[float] = None,
             recalculate: bool = True,
-            invalidate_self: bool = True
+            invalidate_self: bool = True,
+            allow_cache: bool = False
     ):
         """
-        Sets the field. This will overwrite the currently set field in the model.
+        Sets the field. This will replace the currently set field in the model.
+
         Parameters may be left set to None in order to load their default value.
 
-        @param _type: Field type (0: A-field; 1: B-field)
+        @param field_type: Field type
         @param distance_limit: Distance limit
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old field before setting a new one
+        @param allow_cache: Enable to select a field from the cache if it is available (based on the field type)
         """
         if self.signalsBlocked():
             return
 
         with ModelAccess(self.gui, recalculate):
 
-            backend = self.gui.config.get_int("backend")
-            _type = self.gui.config.set_get_int("field_type", _type)
-            distance_limit = self.gui.config.set_get_float("field_distance_limit", distance_limit)
+            if allow_cache:
+                field = self.gui.model.get_valid_field(field_type)
+            else:
+                field = None
+
+            if field is not None:
+                Debug(self, ".on_field_type_changed(): Using cached field", color=Theme.PrimaryColor)
+            else:
+                backend_type = self.gui.config.get_int("backend_type")
+                field_type = self.gui.config.set_get_int("field_type", field_type)
+                distance_limit = self.gui.config.set_get_float("field_distance_limit", distance_limit)
+                field = Field(backend_type, field_type, distance_limit, Metric.LengthScale)
 
             self.gui.model.set_field(
-                Field(backend, _type, distance_limit, Metric.LengthScale),
-                invalidate_self=invalidate_self
+                field=field,
+                invalidate_self=invalidate_self and not allow_cache,
             )
 
     # ------------------------------------------------------------------------------------------------------------------
+
+    def update(self):
+        """
+        Updates this widget.
+        """
+        Debug(self, ".update()")
+
+        self.update_labels()
+        self.update_controls()
 
     def update_labels(self):
         """
         Updates the labels.
         """
         if self.gui.model.field.is_valid():
-            self.total_limited_points_label.setText(str(self.gui.model.field.get_total_limited()))
+            self.total_calculations_label.setText(str(self.gui.model.field.get_total_calculations()))
+            self.total_skipped_calculations_label.setText(str(self.gui.model.field.get_total_skipped_calculations()))
         else:
-            self.total_limited_points_label.setText("N/A")
+            self.total_calculations_label.setText("N/A")
+            self.total_skipped_calculations_label.setText("N/A")
+
+    def update_controls(self):
+        """
+        Updates the controls.
+        """
+        a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
+        b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None
+
+        self.field_type_a_checkbox.setChecked(a_field_available)
+        self.field_type_b_checkbox.setChecked(b_field_available)

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -21,6 +21,7 @@ from numba import jit, prange
 from PyQt5.QtCore import QThread
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
 
 
@@ -31,7 +32,7 @@ class BiotSavart_JIT:
 
     def __init__(
             self,
-            _type: int,
+            field_type: int,
             distance_limit: float,
             length_scale: float,
             dc: float,
@@ -43,7 +44,7 @@ class BiotSavart_JIT:
         """
         Initializes the class attributes.
 
-        @param _type: Field type (0: A-field; 1: B-field)
+        @param field_type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param dc: Wire current (A)
@@ -52,7 +53,7 @@ class BiotSavart_JIT:
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
         """
-        self._type = _type
+        self.field_type = field_type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
         self._dc = dc
@@ -61,12 +62,10 @@ class BiotSavart_JIT:
         self._sampling_volume_permeabilities = sampling_volume_permeabilities
         self._progress_callback = progress_callback
 
-        self.total_limited = 0
-
     @staticmethod
     @jit(nopython=True, parallel=True)
     def worker(
-            _type: int,
+            field_type: int,
             distance_limit: float,
             length_scale: float,
             current_elements,
@@ -76,14 +75,15 @@ class BiotSavart_JIT:
         Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field)
         for a single sampling volume point.
 
-        @param _type: Field type (0: A-field; 1: B-field)
+        @param field_type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         @param current_elements: Ordered list of current elements (pairs: [element center, element direction])
         @param sampling_volume_point: Sampling volume point
-        @return: (Total number of limited points, vector)
+        @return: (Total # of calculations, total # of skipped calculations, vector)
         """
-        total_limited = 0
+        total_calculations = 0
+        total_skipped_calculations = 0
         vector = np.zeros(3)
 
         for j in prange(len(current_elements)):
@@ -97,42 +97,45 @@ class BiotSavart_JIT:
             scalar_distance = np.sqrt(vector_distance[0] ** 2 + vector_distance[1] ** 2 + vector_distance[2] ** 2)
             if scalar_distance < distance_limit:
                 scalar_distance = distance_limit
-                total_limited += 1
+                total_skipped_calculations += 1
 
-            if _type == 0:
+            total_calculations += 1
+
+            if field_type == A_FIELD:
                 # Calculate A-field (vector potential)
                 vector += element_direction * length_scale / scalar_distance
-            elif _type == 1:
+            elif field_type == B_FIELD:
                 # Calculate B-field (flux density)
                 vector += np.cross(element_direction * length_scale, vector_distance) / (scalar_distance ** 3)
 
-        return total_limited, vector
+        return total_calculations, total_skipped_calculations, vector
 
     def get_result(self):
         """
         Calculates the field at every point of the sampling volume.
 
-        @return: (Total number of limited points, field) if successful, None if interrupted
+        @return: (Total # of calculations, total # of skipped calculations, field) if successful, None if interrupted
         """
         Debug(self, ".get_result()", color=Theme.PrimaryColor)
 
-        total_limited = 0
+        total_calculations = 0
+        total_skipped_calculations = 0
         vectors = []
 
         # Fetch resulting vectors
         for i in range(len(self._sampling_volume_points)):
 
             tup = BiotSavart_JIT.worker(
-                self._type,
+                self.field_type,
                 self._distance_limit,
                 self._length_scale,
                 self._current_elements,
                 self._sampling_volume_points[i]
             )
 
-            total_limited += tup[0]
-
-            vector = tup[1] * self._sampling_volume_permeabilities[i]
+            total_calculations += tup[0]
+            total_skipped_calculations += tup[1]
+            vector = tup[2] * self._sampling_volume_permeabilities[i]
 
             vectors.append(vector)
 
@@ -144,10 +147,9 @@ class BiotSavart_JIT:
                     Debug(self, ".get_result(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return None
 
-        if self._type == 0 or self._type == 1:
-            # Field is A-field or B-field
+        if self.field_type == A_FIELD or self.field_type == B_FIELD:
             vectors = np.array(vectors) * self._dc * Constants.mu_0 / 4 / np.pi
 
         self._progress_callback(100)
 
-        return total_limited, vectors
+        return total_calculations, total_skipped_calculations, vectors

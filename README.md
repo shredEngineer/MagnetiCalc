@@ -19,7 +19,7 @@ or the magnetic vector potential
 in units of <i>Tesla-meter</i>)
 is displayed in interactive 3D, using multiple metrics for highlighting the field properties.
 
-<i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferromagnetic) materials,
+<i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferrous) materials,
 different core media can be modeled as regions of variable relative permeability;
 however, core saturation is currently not modeled, leading to excessive flux density values.
  
@@ -180,29 +180,50 @@ You are invited to contribute to MagnetiCalc in any way you like! :)
 
 If this software has been helpful to you in some way or another, please let me and others know!
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
+
 ToDo
 ----
 
 **General**
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
+* Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
+* Add a global settings dialog for some selection of options currently hard-coded in various classes.
+* Provide info about viewing HDF5 format (e.g. using [Panoply](https://www.giss.nasa.gov/tools/panoply/)).
 
 **Functional**
-* Add support for multiple wires, study mutual induction.
+* Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental A- and B-fields).
+* Add a list of objects, for wires and permeability classes (constraints), with a transformation pipeline for each object; move the `Wire` widget to a dedicated dialog window instead.
+  (Add support for multiple wires, study mutual induction.)
+* Highlight permeability classes with <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
 * Add support for modeling of core material saturation and hysteresis effects ([Landau–Lifshitz–Gilbert equation](https://en.wikipedia.org/wiki/Landau%E2%80%93Lifshitz%E2%80%93Gilbert_equation)).
+* Provide a means to emulate permanent magnets.
+
+**API**
+* Add an easy-to-use API for importing and exporting data to and from custom Python scripts.
 
 **Usability**
+* Add more example files inside an `Examples` folder.
+* Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu; alternatively, provide a dialog for parametric generation.
 * Add stationary coordinate system and ruler in the bottom left corner.
 * Add support for selective display over a portion of the metric range, enabling a kind of iso-contour display.
 
 **Known Bugs**
 * Fix issue where the points of a sampling volume with *fractional* resolution are not always spaced equidistantly for some sampling volume dimensions.
+* Fix calculation of divergence right at the sampling volume boundary.
 * Fix delayed GUI start-up when loading "complex" files.
 * Fix missing scaling of VisPy markers when zooming.
 * Fix unnecessary shading of VisPy markers.
 
 **Code Quality**
+* Add debug output where it is missing.
 * Add type hints where they are missing.
+* Merge sparse `*_Types.py` modules with higher-level classes if possible.
+* Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671) for accessing data where applicable. 
+
+**Design**
+* Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 
 
 Video
 -----
@@ -218,28 +239,28 @@ https://paulwilhelm.de/magneticalc/
 *Appendix:* Metrics
 -------------------
 
-| Metric               | Symbol                                                                                                 | Description                           |
-|----------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------|
-| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                      | Magnitude in space                    |
-| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                  | Magnitude in X-direction              |
-| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                  | Magnitude in Y-direction              |
-| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                  | Magnitude in Z-direction              |
-| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                 | Magnitude in XY-plane                 |
-| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                 | Magnitude in XZ-plane                 |
-| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                 | Magnitude in YZ-plane                 |
-| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                   | Divergence                            |
-| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">       | Positive Divergence                   |
-| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">         | Negative Divergence                   |
-| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}\mid">                   | Logarithmic Magnitude in space        |
-| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_X}\mid">                 | Logarithmic Magnitude in X-direction  |
-| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Y}\mid">                 | Logarithmic Magnitude in Y-direction  |
-| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B_Z}\mid">                 | Logarithmic Magnitude in Z-direction  |
-| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XY}\mid">              | Logarithmic Magnitude in XY-plane     |
-| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{XZ}\mid">              | Logarithmic Magnitude in XZ-plane     |
-| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=ln \mid\vec{B}_{YZ}\mid">              | Logarithmic Magnitude in YZ-plane     |
-| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=ln \ \ \nabla\cdot\vec{B}">            | Logarithmic Divergence                |
-| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=ln \ %2b\{\nabla\cdot\vec{B}\}_{>0}">  | Positive Logarithmic Divergence       |
-| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=ln \ -\{\nabla\cdot\vec{B}\}_{<0}">    | Negative Logarithmic Divergence       |
-| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">           | Field angle in XY-plane               |
-| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">           | Field angle in XZ-plane               |
-| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">           | Field angle in YZ-plane               |
+| Metric               | Symbol                                                                                                     | Description                           |
+|----------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                          | Magnitude in space                    |
+| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                      | Magnitude in X-direction              |
+| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                      | Magnitude in Y-direction              |
+| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                      | Magnitude in Z-direction              |
+| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                     | Magnitude in XY-plane                 |
+| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                     | Magnitude in XZ-plane                 |
+| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                     | Magnitude in YZ-plane                 |
+| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                       | Divergence                            |
+| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">           | Positive Divergence                   |
+| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">             | Negative Divergence                   |
+| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}\mid">                     | Logarithmic Magnitude in space        |
+| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_X}\mid">                   | Logarithmic Magnitude in X-direction  |
+| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Y}\mid">                   | Logarithmic Magnitude in Y-direction  |
+| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Z}\mid">                   | Logarithmic Magnitude in Z-direction  |
+| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XY}\mid">                | Logarithmic Magnitude in XY-plane     |
+| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XZ}\mid">                | Logarithmic Magnitude in XZ-plane     |
+| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{YZ}\mid">                | Logarithmic Magnitude in YZ-plane     |
+| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ \ \nabla\cdot\vec{B}">              | Logarithmic Divergence                |
+| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ %2b\{\nabla\cdot\vec{B}\}_{>0}">    | Positive Logarithmic Divergence       |
+| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ -\{\nabla\cdot\vec{B}\}_{<0}"> | Negative Logarithmic Divergence       |
+| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">               | Field angle in XY-plane               |
+| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">               | Field angle in XZ-plane               |
+| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">               | Field angle in YZ-plane               |

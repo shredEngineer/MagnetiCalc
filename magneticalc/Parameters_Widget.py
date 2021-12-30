@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -20,6 +20,8 @@ import numpy as np
 from si_prefix import si_format
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy
+from magneticalc.Debug import Debug
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Groupbox import Groupbox
 from magneticalc.Parameters import Parameters
 from magneticalc.Theme import Theme
@@ -140,49 +142,7 @@ class Parameters_Widget(Groupbox):
             self.wire_length_units_label.setText("cm")
             self.wire_length_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
 
-            if self.gui.model.field.get_type() == 1:
-
-                # Field is B-field (flux density)
-
-                energy_value = self.gui.model.parameters.get_energy()
-                if np.isnan(energy_value):
-                    energy_value = "NaN NaN"
-                else:
-                    energy_value = si_format(energy_value, precision=self.ValuePrecision) + "J"
-                self.energy_value_label.setText(energy_value.split(" ")[0])
-                self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-                self.energy_units_label.setText(energy_value.split(" ")[1])
-                self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-
-                self_inductance_value = self.gui.model.parameters.get_self_inductance()
-                if np.isnan(self_inductance_value):
-                    self_inductance_value = "NaN NaN"
-                else:
-                    self_inductance_value = si_format(self_inductance_value, precision=self.ValuePrecision) + "H"
-                self.self_inductance_value_label.setText(self_inductance_value.split(" ")[0])
-                self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-                self.self_inductance_units_label.setText(self_inductance_value.split(" ")[1])
-                self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-
-                magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
-                if np.isnan(magnetic_dipole_moment_value):
-                    magnetic_dipole_moment_value = "NaN NaN"
-                else:
-                    magnetic_dipole_moment_value = si_format(
-                        magnetic_dipole_moment_value, precision=self.ValuePrecision
-                    ) + "A·m²"
-                self.magnetic_dipole_moment_value_label.setText(magnetic_dipole_moment_value.split(" ")[0])
-                self.magnetic_dipole_moment_value_label.setStyleSheet(
-                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
-                )
-                self.magnetic_dipole_moment_units_label.setText(magnetic_dipole_moment_value.split(" ")[1])
-                self.magnetic_dipole_moment_units_label.setStyleSheet(
-                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
-                )
-
-            else:
-
-                # Field is A-field (vector potential)
+            if self.gui.model.field.get_type() == A_FIELD:
 
                 self.energy_value_label.setText("")
                 self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
@@ -198,6 +158,58 @@ class Parameters_Widget(Groupbox):
                 self.magnetic_dipole_moment_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
                 self.magnetic_dipole_moment_units_label.setText("N/A")
                 self.magnetic_dipole_moment_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+
+            elif self.gui.model.field.get_type() == B_FIELD:
+
+                energy_value = self.gui.model.parameters.get_energy()
+                if np.isnan(energy_value):
+                    energy_value = "NaN NaN"
+                else:
+                    energy_value = si_format(
+                        energy_value,
+                        precision=self.ValuePrecision,
+                        exp_format_str="{value}e{expof10} "
+                    ) + "J"
+                self.energy_value_label.setText(energy_value.split(" ")[0])
+                self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+                self.energy_units_label.setText(energy_value.split(" ")[1])
+                self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+
+                self_inductance_value = self.gui.model.parameters.get_self_inductance()
+                if np.isnan(self_inductance_value):
+                    self_inductance_value = "NaN NaN"
+                else:
+                    self_inductance_value = si_format(
+                        self_inductance_value,
+                        precision=self.ValuePrecision,
+                        exp_format_str="{value}e{expof10} "
+                    ) + "H"
+                self.self_inductance_value_label.setText(self_inductance_value.split(" ")[0])
+                self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+                self.self_inductance_units_label.setText(self_inductance_value.split(" ")[1])
+                self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+
+                magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
+                if np.isnan(magnetic_dipole_moment_value):
+                    magnetic_dipole_moment_value = "NaN NaN"
+                else:
+                    magnetic_dipole_moment_value = si_format(
+                        magnetic_dipole_moment_value,
+                        precision=self.ValuePrecision,
+                        exp_format_str="{value}e{expof10} "
+                    ) + "A·m²"
+                self.magnetic_dipole_moment_value_label.setText(magnetic_dipole_moment_value.split(" ")[0])
+                self.magnetic_dipole_moment_value_label.setStyleSheet(
+                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
+                )
+                self.magnetic_dipole_moment_units_label.setText(magnetic_dipole_moment_value.split(" ")[1])
+                self.magnetic_dipole_moment_units_label.setStyleSheet(
+                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
+                )
+
+            else:
+
+                Debug(self, ".update_labels(): FATAL: Invalid field type", color=Theme.WarningColor, force=True)
 
         else:
 

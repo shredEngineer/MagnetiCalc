@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -26,13 +26,14 @@ from magneticalc.Theme import Theme
 class Wire:
     """ Wire class. """
 
-    def __init__(self, points, stretch, rotational_symmetry, slicer_limit: float, dc: float):
+    def __init__(self, points, stretch, rotational_symmetry, close_loop: bool, slicer_limit: float, dc: float):
         """
         A 3D piecewise linear curve with some DC current associated with it.
 
         @param points: Ordered list of 3D coordinates (see presets)
         @param stretch: XYZ stretch transform factors (3D point)
         @param rotational_symmetry: Dictionary for rotational symmetry transform
+        @param close_loop: Enable to transform the wire into a closed loop (append first point)
         @param slicer_limit: Slicer limit
         @param dc: Wire current (A)
         """
@@ -40,6 +41,7 @@ class Wire:
 
         self._points_base = np.array(points)
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Note: This is my playground for creating new wire presets!
         override_base = False
         if override_base:
@@ -61,6 +63,7 @@ class Wire:
                     for i in range(128)
                 ]
             )
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self._slicer_limit = slicer_limit
         self._dc = dc
@@ -71,7 +74,7 @@ class Wire:
         self._points_transformed = self._points_base.copy()
 
         self._set_stretch(stretch)
-        self._set_rotational_symmetry(rotational_symmetry)
+        self._set_rotational_symmetry(rotational_symmetry, close_loop=close_loop)
 
         Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
 
@@ -188,14 +191,15 @@ class Wire:
 
         self._points_transformed = axes.transpose()
 
-    def _set_rotational_symmetry(self, parameters):
+    def _set_rotational_symmetry(self, parameters, close_loop: bool):
         """
         This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
 
         Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
 
-        @param parameters:  Dictionary containing the transformation parameters
-                            (number of replications, radius, axis and offset angle)
+        @param parameters: Dictionary containing the transformation parameters
+                           (number of replications, radius, axis and offset angle)
+        @param close_loop: Enable to transform the wire into a closed loop (append first point)
         """
         Debug(self, "._set_rotational_symmetry()")
 
@@ -214,9 +218,9 @@ class Wire:
 
         axes = [x, y, z]
 
-        # Close the resulting loop
-        for i in range(3):
-            axes[i] = np.append(axes[i], axes[i][0])
+        if close_loop:
+            for i in range(3):
+                axes[i] = np.append(axes[i], axes[i][0])
 
         self._points_transformed = np.array(axes).transpose()
 
@@ -256,7 +260,7 @@ class Wire:
                     Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
                     return False
 
-        # Close the loop
+        # Append the very last point since it is not appended by the interpolation above
         points_sliced.append(self.get_points_transformed()[-1])
 
         self._points_sliced = np.array(points_sliced)

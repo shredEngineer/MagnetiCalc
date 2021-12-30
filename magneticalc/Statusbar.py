@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -38,14 +38,12 @@ class Statusbar:
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Start button
-        self.start_button = QPushButton(qta.icon("fa.play-circle"), "", self.gui)
-        self.start_button.setText(" ⟨F5⟩ ")
+        self.start_button = QPushButton(qta.icon("fa.play-circle"), " ⟨F5⟩ ", self.gui)
         self.start_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.start_button.clicked.connect(self.start)
 
         # Cancel button
-        self.cancel_button = QPushButton(qta.icon("fa.stop-circle"), "", self.gui)
-        self.cancel_button.setText("⟨ESC⟩")
+        self.cancel_button = QPushButton(qta.icon("fa.stop-circle"), "⟨ESC⟩", self.gui)
         self.cancel_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
         self.cancel_button.clicked.connect(self.cancel)
 

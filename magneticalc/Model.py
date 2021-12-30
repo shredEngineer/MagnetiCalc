@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,15 +16,23 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Dict
 from magneticalc.Debug import Debug
+from magneticalc.Field import Field
 from magneticalc.Theme import Theme
 
 
 class Model:
     """
     Model class.
+
     The model maintains a strict hierarchy of dependencies:  parameters > metric > field > sampling volume > wire
     When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).
+
+    Note: The model maintains a cache for fields of different types, with at most one selected ("active") field.
+    Property decorators maintain coherency between the selected field type and the contents of the field cache.
+    The currently selected field is accessed using the L{field} property.
+    Invalidating the currently selected field also invalidates all the other cached fields.
     """
 
     def __init__(self, gui):
@@ -37,11 +45,52 @@ class Model:
 
         self.gui = gui
 
-        self.wire = None             # Will be initialized by Wire_Widget
-        self.sampling_volume = None  # Will be initialized by SamplingVolume_Widget
-        self.field = None            # Will be initialized by Field_Widget
-        self.metric = None           # Will be initialized by Metric_Widget
-        self.parameters = None       # Will be initialized by Parameters_Widget
+        self.wire = None                                    # Set in L{set_wire}            via L{Wire_Widget}
+        self.sampling_volume = None                         # Set in L{set_sampling_volume} via L{SamplingVolume_Widget}
+
+        self._selected_field_type: Optional[int] = None     # Set in L{set_field}           via L{Field_Widget}
+        self._field_cache: Dict[int, Field] = {}            # Set in L{set_field}           via L{Field_Widget}
+
+        self.metric = None                                  # Set in L{set_metric}          via L{Metric_Widget}
+        self.parameters = None                              # Set in L{set_parameters}      via L{Parameters_Widget}
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    @property
+    def field(self) -> Optional[Field]:
+        """
+        Returns the currently selected field if it is cached.
+
+        @return: Field if cached, None otherwise
+        """
+        return self._field_cache.get(self._selected_field_type, None)
+
+    @field.setter
+    def field(self, field: Field) -> None:
+        """
+        Sets the currently selected field.
+
+        @param field: Field
+        """
+        self._selected_field_type = field.get_type()
+        self._field_cache[self._selected_field_type] = field
+
+    def get_valid_field(self, field_type: int) -> Optional[Field]:
+        """
+        Gets a field if it is cached and valid.
+
+        @param field_type: Field type
+        @return: Field if cached and valid, None otherwise
+        """
+        field = self._field_cache.get(field_type, None)
+
+        if field is not None:
+            if field.is_valid():
+                return field
+
+        return None
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def __str__(self) -> str:
         """
@@ -82,7 +131,7 @@ class Model:
 
         @param do_wire: Enable to invalidate wire
         @param do_sampling_volume: Enable to invalidate sampling volume
-        @param do_field: Enable to invalidate field
+        @param do_field: Enable to invalidate all fields (the currently selected field and all the other cached fields)
         @param do_metric: Enable to invalidate metric
         @param do_parameters: Enable to invalidate parameters
         """
@@ -99,10 +148,14 @@ class Model:
                     self.on_metric_invalid()
 
         if do_field:
-            if self.field is not None:
-                if self.field.is_valid():
-                    self.field.invalidate()
-                    self.on_field_invalid()
+            did_field_invalidation = False
+            for field_type, field in self._field_cache.items():
+                if field.is_valid():
+                    field.invalidate()
+                    Debug(self, f".invalidate(): Invalidated field of type {field_type}")
+                    did_field_invalidation = True
+            if did_field_invalidation:
+                self.on_field_invalid()
 
         if do_sampling_volume:
             if self.sampling_volume is not None:
@@ -114,7 +167,7 @@ class Model:
             if self.wire is not None:
                 if self.wire.is_valid():
                     self.wire.invalidate()
-                    self.wire.on_wire_invalid()
+                    self.on_wire_invalid()
 
     def set_wire(self, wire, invalidate_self: bool):
         """
@@ -123,10 +176,14 @@ class Model:
         @param wire: Wire
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        self.invalidate(
+            do_wire=invalidate_self,
+            do_sampling_volume=True,
+            do_field=True,
+            do_metric=True,
+            do_parameters=True
+        )
         self.wire = wire
-        self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True, do_parameters=True)
-        if invalidate_self:
-            self.on_wire_invalid()
 
     def set_sampling_volume(self, sampling_volume, invalidate_self: bool):
         """
@@ -135,22 +192,27 @@ class Model:
         @param sampling_volume: Sampling volume
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        self.invalidate(
+            do_sampling_volume=invalidate_self,
+            do_field=True,
+            do_metric=True,
+            do_parameters=True
+        )
         self.sampling_volume = sampling_volume
-        self.invalidate(do_field=True, do_metric=True, do_parameters=True)
-        if invalidate_self:
-            self.on_sampling_volume_invalid()
 
     def set_field(self, field, invalidate_self: bool):
         """
         Sets the field.
 
         @param field: Field
-        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        @param invalidate_self: Enable to invalidate the old object (including the cache) before setting a new one
         """
+        self.invalidate(
+            do_field=invalidate_self,
+            do_metric=True,
+            do_parameters=True
+        )
         self.field = field
-        self.invalidate(do_metric=True, do_parameters=True)
-        if invalidate_self:
-            self.on_field_invalid()
 
     def set_metric(self, metric, invalidate_self: bool):
         """
@@ -159,10 +221,11 @@ class Model:
         @param metric: Metric
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        self.invalidate(
+            do_metric=invalidate_self,
+            do_parameters=True
+        )
         self.metric = metric
-        self.invalidate(do_parameters=True)
-        if invalidate_self:
-            self.on_metric_invalid()
 
     def set_parameters(self, parameters, invalidate_self: bool):
         """
@@ -171,9 +234,10 @@ class Model:
         @param parameters: Parameters
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        self.invalidate(
+            do_parameters=invalidate_self
+        )
         self.parameters = parameters
-        if invalidate_self:
-            self.on_parameters_invalid()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -238,12 +302,13 @@ class Model:
         Gets called when the wire was successfully calculated.
         """
         self.gui.sidebar_left.wire_widget.update_labels()
+        self.gui.menu.update_wire_menu()
 
     def on_sampling_volume_valid(self):
         """
         Gets called when the sampling volume was successfully calculated.
         """
-        self.gui.sidebar_left.sampling_volume_widget.update_labels()
+        self.gui.sidebar_left.sampling_volume_widget.update()
         self.gui.sidebar_right.display_widget.update()
         self.gui.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
 
@@ -251,7 +316,7 @@ class Model:
         """
         Gets called when the field was successfully calculated.
         """
-        self.gui.sidebar_right.field_widget.update_labels()
+        self.gui.sidebar_right.field_widget.update()
 
     def on_metric_valid(self):
         """
@@ -275,18 +340,19 @@ class Model:
         Gets called when the wire was invalidated.
         """
         self.gui.sidebar_left.wire_widget.update_labels()
+        self.gui.menu.update_wire_menu()
 
     def on_sampling_volume_invalid(self):
         """
         Gets called when the sampling volume was invalidated.
         """
-        self.gui.sidebar_left.sampling_volume_widget.update_labels()
+        self.gui.sidebar_left.sampling_volume_widget.update()
 
     def on_field_invalid(self):
         """
         Gets called when the field was invalidated.
         """
-        self.gui.sidebar_right.field_widget.update_labels()
+        self.gui.sidebar_right.field_widget.update()
 
     def on_metric_invalid(self):
         """

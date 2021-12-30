@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -44,8 +44,7 @@ class Perspective_Widget(Groupbox):
 
         for preset in Perspective_Presets.List:
 
-            button = QPushButton()
-            button.setText(preset["id"])
+            button = QPushButton(preset["id"])
             button.setStyleSheet("background-color: lightgrey")
             button.clicked.connect(
                 partial(self.set_perspective, preset)

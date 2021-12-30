@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -33,9 +33,12 @@ class Usage_Dialog(QDialog):
     HTML = f"""
         <h3 style="color: {Theme.PrimaryColor};">First Steps</h3>
         <ul>
-            <li>Go to <b>Load Wire Preset</b> to select a basic wire shape.</li>
+            <li>
+                Go to <b>Wire › Load Preset</b> to select a basic wire shape.<br>
+                You may also import (export) wire points from (to) a TXT file created using NumPy.
+            </li>
             <li>Customize the wire's base points inside the spreadsheet.</li>
-            <li>Apply some transformations to your basic wire; rotate or stretch its shape.</li>
+            <li>Apply some transformations to your basic wire; stretch or rotate its shape.</li>
             <li>Reduce the slicer limit to improve the field calculation accuracy.</li>
             <li>Set the electrical current flowing through your wire.</li>
         </ul>
@@ -47,11 +50,13 @@ class Usage_Dialog(QDialog):
             </li>
             <li>
                 By default, the cuboid sampling volume covers the wire completely;<br>
-                however, you may symmetrically adjust its bounding box by adding (subtracting) some padding.
+                however, you may symmetrically adjust its bounding box by adding (subtracting) some padding.<br>
+                By setting <i>negative</i> padding, you may reduce the sampling volume to a plane, line or point.
             </li>
             <li>
                 <i>Experimental Feature:</i>
-                Use the constraint editor to create regions of relative permeability µ<sub>r</sub> ≠ 1.
+                Use the constraint editor to create regions of relative permeability µ<sub>r</sub> ≠ 1.<br>
+                Constraints may also be used to selectively <i>disable</i> calculation over some regions.
             </li>
         </ul>
 
@@ -64,7 +69,7 @@ class Usage_Dialog(QDialog):
             <li>
                 Current element center points may be located very close to sampling volume points;<br>
                 as this distance approaches zero, the field magnitude approaches infinity (singular behaviour).<br>
-                Therefore, some distance limit must be set to cut-off these infinities during calculation.
+                Therefore, some distance limit must be set to cut off (skip) these infinities during calculation.
             </li>
         </ul>
 
@@ -88,7 +93,8 @@ class Usage_Dialog(QDialog):
             <li>Use the scroll wheel to zoom in and out of the 3D scene.</li>
             <li>Click and drag into the 3D scene to rotate.</li>
             <li>Press SHIFT while dragging to <i>move</i> the entire 3D scene.</li>
-            <li>If you like the result, press CTRL+S to save a screenshot!</li>
+            <li>If you like the result, press CTRL+I to save a screenshot!</li>
+            <li>You may also export the fields, wire and current to a HDF5 container for use in post-processing.</li>
         </ul>
 
         All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file by default.<br>
@@ -103,7 +109,7 @@ class Usage_Dialog(QDialog):
         or the magnetic vector potential (A-field, in units of <i>Tesla-meter</i>)
         is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.<br><br>
 
-        <i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferromagnetic)
+        <i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferrous)
         materials, different core media can be modeled as regions of variable relative permeability;
         however, core saturation is currently not modeled, leading to excessive flux density values.
 
@@ -180,7 +186,7 @@ class Usage_Dialog(QDialog):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         button_box = QHBoxLayout()
-        ok_button = QPushButton(qta.icon("fa.check"), "OK")
+        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
         ok_button.clicked.connect(self.accept)
         button_box.addWidget(ok_button)
         layout.addLayout(button_box)

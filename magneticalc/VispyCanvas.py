@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -273,7 +273,7 @@ class VispyCanvas(scene.SceneCanvas):
         else:
             if self.gui.model.sampling_volume.is_valid():
                 # Use foreground color for all arrows and points
-                colors = [self.foreground] * len(self.gui.model.sampling_volume.get_points())
+                colors = [self.foreground] * self.gui.model.sampling_volume.get_points_count()
             else:
                 # Dummy argument (not accessed by redraw_field_arrows/_points/_labels in this case)
                 colors = None
@@ -401,8 +401,8 @@ class VispyCanvas(scene.SceneCanvas):
 
         if visible:
 
-            line_pairs = np.zeros([2 * len(self.gui.model.sampling_volume.get_points()), 3])
-            head_points = np.zeros([len(self.gui.model.sampling_volume.get_points()), 3])
+            line_pairs = np.zeros([2 * self.gui.model.sampling_volume.get_points_count(), 3])
+            head_points = np.zeros([self.gui.model.sampling_volume.get_points_count(), 3])
 
             line_pairs, head_points = Field.get_arrows(
                 self.gui.model.sampling_volume.get_points(),
@@ -466,7 +466,7 @@ class VispyCanvas(scene.SceneCanvas):
                 Debug(
                     self,
                     ".redraw_field_points(): "
-                    f"pos[{len(self.gui.model.sampling_volume.get_points())}] "
+                    f"pos[{self.gui.model.sampling_volume.get_points_count()}] "
                     f"face_color[{len(colors)}]",
                     color=(255, 0, 255)
                 )
@@ -502,7 +502,11 @@ class VispyCanvas(scene.SceneCanvas):
             if np.isnan(magnitude):
                 text = "NaN"
             else:
-                text = si_format(magnitude, precision=VispyCanvas.MagnitudePrecision) + field_units
+                text = si_format(
+                    magnitude,
+                    precision=VispyCanvas.MagnitudePrecision,
+                    exp_format_str="{value}e{expof10} "
+                ) + field_units
 
             visual = scene.visuals.create_visual_node(visuals.TextVisual)(
                 parent=None,

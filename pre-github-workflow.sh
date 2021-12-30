@@ -3,6 +3,9 @@ set -e
 
 BIN=/usr/local/bin/
 
+# Check type annotations
+# mypy -p magneticalc --disallow-untyped-defs
+
 # Check code style
 "$BIN"/pycodestyle \
   --max-line-length=120 \

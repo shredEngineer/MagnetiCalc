@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -107,11 +107,17 @@ class Assert_Dialog:
 
         button_box = QHBoxLayout()
 
-        ok_button = QPushButton(qta.icon("fa.times-circle"), "Abort application")
+        ok_button = QPushButton(
+            qta.icon("fa.times-circle"),
+            " Abort application"  # Leading space for alignment
+        )
         ok_button.clicked.connect(self.reject)
         button_box.addWidget(ok_button, alignment=Qt.AlignBottom)
 
-        donate_button = QPushButton(qta.icon("fa.play-circle"), "Resume (possibly unstable)")
+        donate_button = QPushButton(
+            qta.icon("fa.play-circle"),
+            " Resume (possibly unstable)"  # Leading space for alignment
+        )
         donate_button.clicked.connect(self.accept)
         button_box.addWidget(donate_button, alignment=Qt.AlignBottom)
 

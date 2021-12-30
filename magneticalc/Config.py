@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -18,7 +18,9 @@
 
 import os
 import configparser
+from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
 from magneticalc.Debug import Debug
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version
@@ -46,21 +48,24 @@ class Config:
     # Default configuration
     Default = {
         "version"                                   : Version.String,
-        "backend"                                   : "0",
+        "backend_type"                              : BACKEND_JIT,
         "auto_calculation"                          : "True",
         "num_cores"                                 : "0",
         "wire_points_base"                          : None,  # Will be set in __init__
         "wire_stretch"                              : "0.1000, 1.0000, 1.0000",
         "wire_slicer_limit"                         : "0.0500",
         "wire_dc"                                   : "1.0000",
+        "wire_close_loop"                           : "True",
         "rotational_symmetry_count"                 : "30",
         "rotational_symmetry_radius"                : "1.0000",
         "rotational_symmetry_axis"                  : "2",
         "rotational_symmetry_offset"                : "0",
         "sampling_volume_padding"                   : "1, 1, 1",
+        "sampling_volume_override_padding"          : "False",
+        "sampling_volume_bounding_box"              : "0.000000, 0.000000, 0.000000; 0.000000, 0.000000, 0.000000",
         "sampling_volume_resolution_exponent"       : "3",
         "sampling_volume_label_resolution_exponent" : "0",
-        "field_type"                                : "1",
+        "field_type"                                : B_FIELD,
         "field_distance_limit"                      : "0.0008",
         "color_metric"                              : "Log Magnitude",
         "alpha_metric"                              : "Magnitude",
@@ -91,8 +96,10 @@ class Config:
         self.Default["wire_points_base"] = Config.points_to_str(
             Wire_Presets.get_by_id(Config.DefaultWirePreset)["points"]
         )
-        self.Default["azimuth"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
-        self.Default["elevation"] = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
+        default_azimuth = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["azimuth"]
+        default_elevation = Perspective_Presets.get_by_id(Config.DefaultPerspectivePreset)["elevation"]
+        self.Default["azimuth"] = f"{float(default_azimuth):.{Config.FloatPrecision}f}"
+        self.Default["elevation"] = f"{float(default_elevation):.{Config.FloatPrecision}f}"
 
         self._config = None
 
@@ -445,7 +452,10 @@ class Config:
         @param str_points: String
         @return: List of 3D points
         """
-        return [Config.str_to_point(str_point) for str_point in str_points.split(";")]
+        return [
+            Config.str_to_point(str_point) for str_point in str_points.split(";")
+            if str_point != ""  # Ignoring stray semicolon at the end of the line
+        ]
 
     # ------------------------------------------------------------------------------------------------------------------
 

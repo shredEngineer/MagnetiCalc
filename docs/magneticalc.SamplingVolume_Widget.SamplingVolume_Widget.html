@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id64">
+        <table class="children sortable" id="id70">
   
   <tr class="classvariable">
     
@@ -82,6 +82,11 @@
     
     <td>Instance Variable</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#constraint_editor" class="code" data-type="Instance Variable">constraint_editor</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#padding_widget" class="code" data-type="Instance Variable">padding_widget</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -131,13 +136,28 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#override_padding" class="code" data-type="Method">override_padding</a></td>
+    <td><span>Override padding, setting the bounding box directly.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#set_sampling_volume" class="code" data-type="Method">set_sampling_volume</a></td>
     <td><span>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#readjust" class="code" data-type="Method">readjust</a></td>
-    <td><span>Readjusts the sampling volume to the currently set wire bounds and padding. The parameter may be left set to None in order to load its default value. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</span></td>
+    <td><span>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update" class="code" data-type="Method">update</a></td>
+    <td><span>Updates the widget.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update_controls" class="code" data-type="Method">update_controls</a></td>
+    <td><span>Updates the controls.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -154,7 +174,7 @@
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.Groupbox.Groupbox.html" class="code" data-type="Class">Groupbox</a>:
           </p>
-          <table class="children sortable" id="id65">
+          <table class="children sortable" id="id71">
   
   <tr class="baseinstancevariable">
     
@@ -299,6 +319,22 @@
   </a>
   <div class="functionHeader">
     constraint_editor =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_widget">
+    
+  </a>
+  <a name="padding_widget">
+    
+  </a>
+  <div class="functionHeader">
+    padding_widget =
     
   </div>
   <div class="functionBody">
@@ -460,6 +496,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.override_padding">
+    
+  </a>
+  <a name="override_padding">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    override_padding(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Override padding, setting the bounding box directly.</p></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.set_sampling_volume">
     
   </a>
@@ -469,13 +524,13 @@
   <div class="functionHeader">
     
     def
-    set_sampling_volume(self, resolution_exponent=None, label_resolution_exponent=None, padding=None, recalculate=(True), invalidate_self=(True)):
+    set_sampling_volume(self, resolution_exponent=None, label_resolution_exponent=None, padding=None, override_padding=None, bounding_box=None, recalculate=(True), invalidate_self=(True)):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution_exponent</td><td>Sampling volume resolution exponent</td></tr><tr><td></td><td class="fieldArg">label_resolution_exponent</td><td>Sampling volume label resolution exponent</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
+    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution_exponent</td><td>Sampling volume resolution exponent</td></tr><tr><td></td><td class="fieldArg">label_resolution_exponent</td><td>Sampling volume label resolution exponent</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">override_padding</td><td>Enable to override padding instead, setting the bounding box directly</td></tr><tr><td></td><td class="fieldArg">bounding_box</td><td>Bounding box (used in conjunction with override_padding)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -488,13 +543,51 @@
   <div class="functionHeader">
     
     def
-    readjust(self, padding=None):
+    readjust(self, padding=None, override_padding=None, bounding_box=None):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Readjusts the sampling volume to the currently set wire bounds and padding. The parameter may be left set to None in order to load its default value. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">padding</td><td>Padding (3D point), may be None to be read from configuration</td></tr></table></div>
+    <div><p>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</p><p>Padding may also be overridden instead, setting the bounding box directly.</p><p>Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">override_padding</td><td>Enable to override padding instead, setting the bounding box directly</td></tr><tr><td></td><td class="fieldArg">bounding_box</td><td>Bounding box (used in conjunction with override_padding)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update">
+    
+  </a>
+  <a name="update">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates the widget.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_controls">
+    
+  </a>
+  <a name="update_controls">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update_controls(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates the controls.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -538,7 +631,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-30 03:01:53.
       </address>
 
     </div>

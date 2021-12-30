@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -230,14 +230,22 @@ class Metric_Widget(Groupbox):
                     color_label_min = "NaN"
                 else:
                     color_label_min = color_log_prefix +\
-                        si_format(limits["color_min"], precision=self.ValuePrecision) +\
+                        si_format(
+                            limits["color_min"],
+                            precision=self.ValuePrecision,
+                            exp_format_str="{value}e{expof10} "
+                        ) +\
                         field_units +\
                         color_log_suffix
                 if np.isnan(limits["color_max"]):
                     color_label_max = "NaN"
                 else:
                     color_label_max = color_log_prefix +\
-                        si_format(limits["color_max"], precision=self.ValuePrecision) +\
+                        si_format(
+                            limits["color_max"],
+                            precision=self.ValuePrecision,
+                            exp_format_str="{value}e{expof10} "
+                        ) +\
                         field_units + \
                         color_log_suffix
                 self.color_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)
@@ -260,14 +268,22 @@ class Metric_Widget(Groupbox):
                     alpha_label_min = "NaN"
                 else:
                     alpha_label_min = alpha_log_prefix +\
-                        si_format(limits["alpha_min"], precision=self.ValuePrecision) +\
+                        si_format(
+                            limits["alpha_min"],
+                            precision=self.ValuePrecision,
+                            exp_format_str="{value}e{expof10} "
+                        ) +\
                         field_units +\
                         alpha_log_suffix
                 if np.isnan(limits["alpha_max"]):
                     alpha_label_max = "NaN"
                 else:
                     alpha_label_max = alpha_log_prefix +\
-                        si_format(limits["alpha_max"], precision=self.ValuePrecision) +\
+                        si_format(
+                            limits["alpha_max"],
+                            precision=self.ValuePrecision,
+                            exp_format_str="{value}e{expof10} "
+                        ) +\
                         field_units + \
                         alpha_log_suffix
                 self.alpha_metric_limits_widget.setStyleSheet(self.Cool_Gradient_CSS)

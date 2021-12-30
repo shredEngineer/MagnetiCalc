@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -30,7 +30,7 @@ class Constraint_Editor(QDialog):
     """ Constraint_Editor class. """
 
     # Window dimensions
-    Width = 800
+    Width = 666
 
     # Description dimensions
     DescriptionHeight = 210
@@ -55,7 +55,7 @@ class Constraint_Editor(QDialog):
 
     def __init__(self, gui):
         """
-        Prepares the constraint editor, but doesn't fully initialize it yet
+        Prepares the constraint editor, but doesn't fully initialize it yet.
 
         @param gui: GUI
         """
@@ -73,7 +73,7 @@ class Constraint_Editor(QDialog):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         table_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
-        table_add_button = QPushButton()
+        table_add_button = QPushButton(" Add constraint")  # Leading space for alignment
         table_add_button.setIcon(qta.icon("fa.plus"))
         table_add_button.clicked.connect(self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
@@ -127,7 +127,7 @@ class Constraint_Editor(QDialog):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         button_box = QHBoxLayout()
-        ok_button = QPushButton(qta.icon("fa.check"), "OK")
+        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
         ok_button.clicked.connect(self.accept)
         button_box.addWidget(ok_button, alignment=Qt.AlignBottom)
         layout.addLayout(button_box)

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -21,6 +21,8 @@ import time
 import atexit
 import datetime
 from typing import Optional
+
+import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget, QMessageBox
@@ -265,7 +267,7 @@ class GUI(QMainWindow):
         @return: None if canceled, True if saving, False if discarding
         """
         messagebox = QMessageBox()
-        messagebox.setWindowTitle("File Changed")
+        messagebox.setWindowTitle("Project Changed")
         messagebox.setText("Do you want to save your changes?")
         messagebox.setIcon(QMessageBox.Question)
         messagebox.setStandardButtons(
@@ -335,12 +337,12 @@ class GUI(QMainWindow):
         """
         if event.key() == Qt.Key_F2:
 
-            # Focus the the wire base points table
+            # Focus the  wire base points table
             self.sidebar_left.wire_widget.table.setFocus()
 
         elif event.key() == Qt.Key_F3:
 
-            # Open the the constraint editor
+            # Open the constraint editor
             self.sidebar_left.sampling_volume_widget.open_constraint_editor()
 
         elif event.key() == Qt.Key_F5:
@@ -467,7 +469,6 @@ class GUI(QMainWindow):
         """
         Saves the currently displayed scene to PNG file.
         """
-
         filename, _chosen_extension = QFileDialog.getSaveFileName(
             parent=self,
             caption="Save Image",
@@ -483,3 +484,54 @@ class GUI(QMainWindow):
                 filename += ".png"
 
             self.vispy_canvas.save_image(filename)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def import_wire(self):
+        """
+        Imports wire points from some TXT file.
+        """
+        filename, _chosen_extension = QFileDialog.getOpenFileName(
+            parent=self,
+            caption="Import Wire",
+            filter="Text File (*.txt)",
+            options=QFileDialog.DontUseNativeDialog
+        )
+
+        if filename != "":
+
+            points = np.loadtxt(filename)
+            self.sidebar_left.wire_widget.set_wire(
+                points=points,
+                stretch=[1.0, 1.0, 1.0],
+                rotational_symmetry={
+                    "count": 1,
+                    "radius": 0,
+                    "axis": 2,
+                    "offset": 0
+                }
+            )
+
+    def export_wire(self):
+        """
+        Exports wire points to some TXT file.
+        """
+        if not self.model.wire.is_valid():
+            Assert_Dialog(False, "Attempting to export invalid wire")
+            return
+
+        filename, _chosen_extension = QFileDialog.getSaveFileName(
+            parent=self,
+            caption="Export Wire",
+            directory=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc_Wire"),
+            filter="Text File (*.txt)",
+            options=QFileDialog.DontUseNativeDialog
+        )
+
+        if filename != "":
+            _file_name, file_extension = os.path.splitext(filename)
+
+            if file_extension.lower() != ".txt":
+                filename += ".txt"
+
+            np.savetxt(filename, self.model.wire.get_points_sliced())

@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id28">
+        <table class="children sortable" id="id32">
   
   <tr class="classvariable">
     
@@ -81,7 +81,22 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#field_type_a_checkbox" class="code" data-type="Instance Variable">field_type_a_checkbox</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#field_type_b_checkbox" class="code" data-type="Instance Variable">field_type_b_checkbox</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.Field_Widget.Field_Widget.html#field_type_group" class="code" data-type="Instance Variable">field_type_group</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#total_calculations_label" class="code" data-type="Instance Variable">total_calculations_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -91,7 +106,7 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Field_Widget.Field_Widget.html#total_limited_points_label" class="code" data-type="Instance Variable">total_limited_points_label</a></td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#total_skipped_calculations_label" class="code" data-type="Instance Variable">total_skipped_calculations_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
@@ -107,19 +122,29 @@
     
     <td>Method</td>
     <td><a href="magneticalc.Field_Widget.Field_Widget.html#set_field" class="code" data-type="Method">set_field</a></td>
-    <td><span>Sets the field. This will overwrite the currently set field in the model. Parameters may be left set to None in order to load their default value.</span></td>
+    <td><span>Sets the field. This will replace the currently set field in the model.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#update" class="code" data-type="Method">update</a></td>
+    <td><span>Updates this widget.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Field_Widget.Field_Widget.html#update_labels" class="code" data-type="Method">update_labels</a></td>
     <td><span>Updates the labels.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field_Widget.Field_Widget.html#update_controls" class="code" data-type="Method">update_controls</a></td>
+    <td><span>Updates the controls.</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.Groupbox.Groupbox.html" class="code" data-type="Class">Groupbox</a>:
           </p>
-          <table class="children sortable" id="id29">
+          <table class="children sortable" id="id33">
   
   <tr class="baseinstancevariable">
     
@@ -256,6 +281,38 @@
   </div>
 </div><div class="baseinstancevariable">
   
+  <a name="magneticalc.Field_Widget.Field_Widget.field_type_a_checkbox">
+    
+  </a>
+  <a name="field_type_a_checkbox">
+    
+  </a>
+  <div class="functionHeader">
+    field_type_a_checkbox =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Field_Widget.Field_Widget.field_type_b_checkbox">
+    
+  </a>
+  <a name="field_type_b_checkbox">
+    
+  </a>
+  <div class="functionHeader">
+    field_type_b_checkbox =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
   <a name="magneticalc.Field_Widget.Field_Widget.field_type_group">
     
   </a>
@@ -264,6 +321,22 @@
   </a>
   <div class="functionHeader">
     field_type_group =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  <a name="magneticalc.Field_Widget.Field_Widget.total_calculations_label">
+    
+  </a>
+  <a name="total_calculations_label">
+    
+  </a>
+  <div class="functionHeader">
+    total_calculations_label =
     
   </div>
   <div class="functionBody">
@@ -288,14 +361,14 @@
   </div>
 </div><div class="baseinstancevariable">
   
-  <a name="magneticalc.Field_Widget.Field_Widget.total_limited_points_label">
+  <a name="magneticalc.Field_Widget.Field_Widget.total_skipped_calculations_label">
     
   </a>
-  <a name="total_limited_points_label">
+  <a name="total_skipped_calculations_label">
     
   </a>
   <div class="functionHeader">
-    total_limited_points_label =
+    total_skipped_calculations_label =
     
   </div>
   <div class="functionBody">
@@ -332,13 +405,13 @@
   <div class="functionHeader">
     
     def
-    on_field_type_changed(self, _type, checked):
+    on_field_type_changed(self, field_type, checked):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the field type changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-field; 1: B-field)</td></tr><tr><td></td><td class="fieldArg">checked</td><td>Boolean</td></tr></table></div>
+    <div><p>Gets called when the field type changed.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">checked</td><td>Boolean</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -351,13 +424,32 @@
   <div class="functionHeader">
     
     def
-    set_field(self, _type=None, distance_limit=None, recalculate=(True), invalidate_self=(True)):
+    set_field(self, field_type=None, distance_limit=None, recalculate=(True), invalidate_self=(True), allow_cache=(False)):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the field. This will overwrite the currently set field in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_type</td><td>Field type (0: A-field; 1: B-field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old field before setting a new one</td></tr></table></div>
+    <div><p>Sets the field. This will replace the currently set field in the model.</p><p>Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old field before setting a new one</td></tr><tr><td></td><td class="fieldArg">allow_cache</td><td>Enable to select a field from the cache if it is available (based on the field type)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field_Widget.Field_Widget.update">
+    
+  </a>
+  <a name="update">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates this widget.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -378,11 +470,30 @@
     
     <div><p>Updates the labels.</p></div>
   </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field_Widget.Field_Widget.update_controls">
+    
+  </a>
+  <a name="update_controls">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update_controls(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates the controls.</p></div>
+  </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-30 03:01:53.
       </address>
 
     </div>

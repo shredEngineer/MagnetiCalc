@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -25,29 +25,29 @@ class Perspective_Presets:
     # Preset: Isometric
     Isometric = {
         "id": "Isometric",
-        "azimuth": 135,
-        "elevation": np.arctan(1 / np.sqrt(2)) * 180 / np.pi
+        "azimuth": 135.0,
+        "elevation": round(np.arctan(1 / np.sqrt(2)) * 180 / np.pi, 4)
     }
 
     # Preset: XY-plane
     PlaneXY = {
         "id": "Plane XY",
-        "azimuth": 0,
-        "elevation": 90
+        "azimuth": 0.0,
+        "elevation": 90.0
     }
 
     # Preset: XZ-plane
     PlaneXZ = {
         "id": "Plane XZ",
-        "azimuth": 0,
-        "elevation": 0
+        "azimuth": 0.0,
+        "elevation": 0.0
     }
 
     # Preset: YZ-plane
     PlaneYZ = {
         "id": "Plane YZ",
-        "azimuth": 90,
-        "elevation": 0
+        "azimuth": 90.0,
+        "elevation": 0.0
     }
 
     # ------------------------------------------------------------------------------------------------------------------

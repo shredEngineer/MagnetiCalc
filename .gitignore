@@ -1,5 +1,6 @@
-magneticalc/__pycache__/
-venv/
-.idea/
-upload_to_TestPyPI.sh
 images_for_docs/
+magneticalc/__pycache__/
+.idea/
+.mypy_cache/
+pre-github-workflow.sh
+upload_to_TestPyPI.sh

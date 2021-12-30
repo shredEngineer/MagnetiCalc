@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -55,7 +55,7 @@ class About_Dialog(QDialog):
             OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.<br>
         </small>
         <br>
-        <span style="color: {Theme.PrimaryColor};">
+        <span style="color: {Theme.PrimaryColor}; font-weight: bold;">
             If you like this software, please consider buying me a coffee!&nbsp; :)
         </span>
         """
@@ -94,11 +94,11 @@ class About_Dialog(QDialog):
 
         button_box = QHBoxLayout()
 
-        ok_button = QPushButton(qta.icon("fa.check"), "OK")
+        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
         ok_button.clicked.connect(self.accept)
         button_box.addWidget(ok_button)
 
-        donate_button = QPushButton(qta.icon("fa.paypal"), "Donate 3€")
+        donate_button = QPushButton(qta.icon("fa.paypal"), " Donate 3€ …")  # Leading space for alignment
         donate_button.clicked.connect(partial(webbrowser.open, About_Dialog.DonateURL))
         button_box.addWidget(donate_button)
 

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -53,6 +53,7 @@ is displayed in interactive 3D, using multiple metrics for highlighting this fie
         "vispy>=0.6.5",
         "qtawesome>=1.0.0",
         "colorit>=0.1.0",
-        "si-prefix>=1.2.2"
+        "si-prefix>=1.2.2",
+        "h5py"
     ]
 )

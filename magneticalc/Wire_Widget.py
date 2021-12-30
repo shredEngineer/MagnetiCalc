@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -21,7 +21,7 @@ import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import \
-    QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy
+    QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy, QCheckBox
 from magneticalc.Debug import Debug
 from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
@@ -57,8 +57,8 @@ class Wire_Widget(Groupbox):
     SlicerLimitMaximum = 2.0
     SlicerLimitStep = 0.001
     SlicerLimitPrecision = 3
-    DcMinimum = -999.0
-    DcMaximum = 999.0
+    DcMinimum = -1e4
+    DcMaximum = +1e4
     DcStep = 0.1
     DcPrecision = 3
 
@@ -239,6 +239,12 @@ class Wire_Widget(Groupbox):
 
         self.addWidget(HLine())
 
+        self.close_loop_checkbox = QCheckBox(" Close Loop")  # Leading space for alignment
+        self.close_loop_checkbox.toggled.connect(
+            lambda: self.set_wire(close_loop=self.close_loop_checkbox.isChecked())
+        )
+        self.addWidget(self.close_loop_checkbox)
+
         rotational_symmetry_total_layout = QHBoxLayout()
         rotational_symmetry_total_label_left = QLabel("Total transformed points:")
         rotational_symmetry_total_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
@@ -252,9 +258,8 @@ class Wire_Widget(Groupbox):
         rotational_symmetry_total_layout.addWidget(self.transformed_total_label, alignment=Qt.AlignVCenter)
         self.addLayout(rotational_symmetry_total_layout)
 
-        replace_base_points_button = QPushButton()
+        replace_base_points_button = QPushButton(" Replace base points")  # Leading space for alignment
         replace_base_points_button.setIcon(qta.icon("mdi.content-copy"))
-        replace_base_points_button.setText("Replace base points")
         replace_base_points_button.clicked.connect(
             lambda: self.set_wire(points=self.gui.model.wire.get_points_transformed())
         )
@@ -335,6 +340,9 @@ class Wire_Widget(Groupbox):
                 self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
 
         self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))
+
+        self.close_loop_checkbox.setChecked(self.gui.config.get_bool("wire_close_loop"))
+
         self.slicer_limit_spinbox.setValue(self.gui.config.get_float("wire_slicer_limit"))
         self.dc_spinbox.setValue(self.gui.config.get_float("wire_dc"))
 
@@ -350,6 +358,7 @@ class Wire_Widget(Groupbox):
             points: Optional[List] = None,
             stretch: Optional[List] = None,
             rotational_symmetry: Optional[Dict] = None,
+            close_loop: Optional[bool] = None,
             slicer_limit: Optional[float] = None,
             dc: Optional[float] = None,
             recalculate: bool = True,
@@ -360,9 +369,12 @@ class Wire_Widget(Groupbox):
         Sets the wire. This will overwrite the currently set wire in the model.
         Any parameter may be left set to None in order to load its default value.
 
+        Note: Currently, only `stretch` and `rotational symmetry` controls are automatically updated by this function.
+
         @param points: Points (List of 3D points)
         @param stretch: XYZ stretch transform factors (3D point)
         @param rotational_symmetry: Dictionary for rotational symmetry transform
+        @param close_loop: Enable to transform the wire into a closed loop (append first point)
         @param slicer_limit: Slicer limit
         @param dc: DC value
         @param recalculate: Enable to trigger final re-calculation
@@ -374,8 +386,12 @@ class Wire_Widget(Groupbox):
 
         with ModelAccess(self.gui, recalculate):
 
+            should_update_stretch_controls = stretch is not None
+            should_update_rotational_symmetry_controls = rotational_symmetry is not None
+
             points = self.gui.config.set_get_points("wire_points_base", points)
             stretch = self.gui.config.set_get_point("wire_stretch", stretch)
+            close_loop = self.gui.config.set_get_bool("wire_close_loop", close_loop)
             slicer_limit = self.gui.config.set_get_float("wire_slicer_limit", slicer_limit)
             dc = self.gui.config.set_get_float("wire_dc", dc)
 
@@ -391,6 +407,7 @@ class Wire_Widget(Groupbox):
                     points=points,
                     stretch=stretch,
                     rotational_symmetry=rotational_symmetry,
+                    close_loop=close_loop,
                     slicer_limit=slicer_limit,
                     dc=dc
                 ),
@@ -398,6 +415,12 @@ class Wire_Widget(Groupbox):
             )
 
             self.update_table()
+
+            if should_update_stretch_controls:
+                self.update_stretch(stretch=stretch)
+
+            if should_update_rotational_symmetry_controls:
+                self.update_rotational_symmetry(rotational_symmetry=rotational_symmetry)
 
             self.transformed_total_label.setText(str(len(self.gui.model.wire.get_points_transformed())))
 
@@ -419,11 +442,19 @@ class Wire_Widget(Groupbox):
         """
         Clears the stretch values.
         """
-        self.set_wire(stretch=[1.0, 1.0, 1.0])
+        stretch = [1.0, 1.0, 1.0]
+        self.set_wire(stretch=stretch)
+        self.update_stretch(stretch=stretch)
 
+    def update_stretch(self, stretch: List) -> None:
+        """
+        Updates the stretch controls.
+
+        @param stretch: 3D point
+        """
         self.blockSignals(True)
         for i in range(3):
-            self.stretch_spinbox[i].setValue(1.0)
+            self.stretch_spinbox[i].setValue(stretch[i])
         self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -448,20 +479,26 @@ class Wire_Widget(Groupbox):
         """
         Clears the rotational symmetry values.
         """
-        self.set_wire(
-            rotational_symmetry={
-                "count" : 1,
-                "radius": 0,
-                "axis"  : 2,
-                "offset": 0
-            }
-        )
+        rotational_symmetry = {
+            "count": 1,
+            "radius": 0,
+            "axis": 2,
+            "offset": 0
+        }
+        self.set_wire(rotational_symmetry=rotational_symmetry)
+        self.update_rotational_symmetry(rotational_symmetry=rotational_symmetry)
 
+    def update_rotational_symmetry(self, rotational_symmetry: Dict):
+        """
+        Updates the rotational symmetry controls.
+
+        @param rotational_symmetry: Dictionary
+        """
         self.blockSignals(True)
-        self.rotational_symmetry_count_spinbox.setValue(1)
-        self.rotational_symmetry_radius_spinbox.setValue(0)
-        self.rotational_symmetry_axis_combobox.setCurrentIndex(2)
-        self.rotational_symmetry_offset_spinbox.setValue(0)
+        self.rotational_symmetry_count_spinbox.setValue(rotational_symmetry["count"])
+        self.rotational_symmetry_radius_spinbox.setValue(rotational_symmetry["radius"])
+        self.rotational_symmetry_axis_combobox.setCurrentIndex(rotational_symmetry["axis"])
+        self.rotational_symmetry_offset_spinbox.setValue(rotational_symmetry["offset"])
         self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------

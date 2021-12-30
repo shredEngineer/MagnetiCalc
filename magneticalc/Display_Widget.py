@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -381,7 +381,7 @@ class Display_Widget(Groupbox):
         """
         Prevents displaying an excessive number of field labels.
 
-        @param choice: True lets the user choose / False disables field labels if there is an excessive number of them
+        @param choice: True lets the user choose; False disables field labels if there is an excessive number of them
         """
         Debug(self, f".prevent_excessive_field_labels(choice={choice})")
 

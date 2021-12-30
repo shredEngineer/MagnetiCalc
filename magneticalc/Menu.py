@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,19 +16,25 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import webbrowser
 import qtawesome as qta
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
+from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
 from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
 from magneticalc.Debug import Debug
+from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
 
 
 class Menu:
     """ Menu class. """
+
+    # MagnetiCalc GitHub repository URL
+    GitHubURL = "https://github.com/shredEngineer/MagnetiCalc"
 
     # List of available backends
     Backends_List = {
@@ -62,20 +68,55 @@ class Menu:
         file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.picture-o"), "Save &Image …", self.gui.file_save_image, Qt.CTRL + Qt.Key_I)
         file_menu.addSeparator()
+        file_menu.addAction(
+            qta.icon("fa.folder"),
+            "&Export Container …",
+            lambda: ExportContainer_Dialog(self.gui).show(),
+            Qt.CTRL + Qt.Key_E
+        )
+        file_menu.addSeparator()
         file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.confirm_close, Qt.CTRL + Qt.Key_Q)
         self.gui.menuBar().addMenu(file_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Wire menu
-        wire_menu = QMenu("&Load Wire Preset", self.gui)
+        wire_menu = QMenu("&Wire", self.gui)
+
+        load_preset_menu = QMenu("Load &Preset", self.gui)
+        load_preset_menu.setIcon(qta.icon("mdi.vector-square"))
         for preset in Wire_Presets.List:
             action = QAction(preset["id"], wire_menu)
             action.setIcon(qta.icon("mdi.vector-square"))
             action.triggered.connect(
-                partial(self.gui.sidebar_left.wire_widget.set_wire, points=preset["points"])
+                partial(
+                    self.gui.sidebar_left.wire_widget.set_wire,
+                    points=preset["points"],
+                    stretch=[1.0, 1.0, 1.0],
+                    rotational_symmetry={
+                        "count" : 1,
+                        "radius": 0,
+                        "axis"  : 2,
+                        "offset": 0
+                    }
+                )
             )
-            wire_menu.addAction(action)
+            load_preset_menu.addAction(action)
+
+        wire_menu.addMenu(load_preset_menu)
+        wire_menu.addSeparator()
+
+        self.import_wire_action = QAction("&Import TXT …")
+        self.import_wire_action.setIcon(qta.icon("fa.folder"))
+        self.import_wire_action.triggered.connect(self.gui.import_wire)
+        wire_menu.addAction(self.import_wire_action)
+
+        self.export_wire_action = QAction("&Export TXT …")
+        self.export_wire_action.setIcon(qta.icon("fa.save"))
+        self.export_wire_action.setEnabled(False)
+        self.export_wire_action.triggered.connect(self.gui.export_wire)
+        wire_menu.addAction(self.export_wire_action)
+
         self.gui.menuBar().addMenu(wire_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -117,9 +158,11 @@ class Menu:
 
         # Help menu
         help_menu = QMenu("&Help", self.gui)
-        help_menu.addAction(qta.icon("fa.info"), "&Usage", lambda: Usage_Dialog().show(), Qt.Key_F1)
+        help_menu.addAction(qta.icon("fa.info"), "&Usage …", lambda: Usage_Dialog().show(), Qt.Key_F1)
         help_menu.addSeparator()
-        help_menu.addAction(qta.icon("fa.coffee"), "&About", lambda: About_Dialog().show())
+        help_menu.addAction(qta.icon("fa.github"), "&GitHub Repository …", partial(webbrowser.open, Menu.GitHubURL))
+        help_menu.addSeparator()
+        help_menu.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,12 +178,12 @@ class Menu:
         self.gui.blockSignals(True)
 
         # Default to JIT backend if CUDA backend is selected but not available
-        if self.gui.config.get_int("backend") == 1:
+        if self.gui.config.get_int("backend_type") == BACKEND_CUDA:
             if not BiotSavart_CUDA.is_available():
-                self.gui.config.set_int("backend", 0)
+                self.gui.config.set_int("backend_type", BACKEND_JIT)
 
         for i, name in enumerate(self.Backends_List):
-            self.backend_actions[i].setChecked(self.gui.config.get_int("backend") == i)
+            self.backend_actions[i].setChecked(self.gui.config.get_int("backend_type") == i)
 
         self.reinitialize_config_bound_checkboxes()
 
@@ -158,7 +201,7 @@ class Menu:
             return
 
         if self.backend_actions[index].isChecked():
-            self.gui.config.set_int("backend", index)
+            self.gui.config.set_int("backend_type", index)
             self.gui.sidebar_right.field_widget.set_field()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -197,3 +240,11 @@ class Menu:
         for item in self.config_bound_checkboxes.items():
             key, dictionary = item
             dictionary["checkbox"].setChecked(self.gui.config.get_bool(key))
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def update_wire_menu(self) -> None:
+        """
+        Updates the wire menu.
+        """
+        self.export_wire_action.setEnabled(self.gui.model.wire.is_valid())

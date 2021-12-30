@@ -1,10 +1,8 @@
-#!/bin/usr/env python3
-
-""" MagnetiCalc main module. """
+""" Field_Types module. """
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -18,32 +16,6 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import sys
-from colorit import bold
-from PyQt5.QtWidgets import QApplication
-from magneticalc.GUI import GUI
-from magneticalc.Version import Version
-
-
-def main():
-    """ MagnetiCalc main function. """
-
-    print()
-    print(bold(Version.String))
-    print(Version.Copyright)
-    print(Version.License)
-    print()
-
-    app = QApplication(sys.argv)
-
-    gui = GUI()
-
-    gui.show()
-
-    rc = app.exec()
-
-    sys.exit(rc)
-
-
-if __name__ == "__main__":
-    main()
+# Field types
+A_FIELD = 0
+B_FIELD = 1

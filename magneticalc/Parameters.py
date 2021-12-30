@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -20,6 +20,7 @@ import numpy as np
 from numba import jit, prange
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
 from magneticalc.Theme import Theme
 
@@ -159,14 +160,11 @@ class Parameters:
 
         progress_callback(33)
 
-        if field.get_type == 0:
+        if field.get_type == A_FIELD:
 
-            # Field is A-field
             pass
 
-        elif field.get_type() == 1:
-
-            # Field is B-field
+        elif field.get_type() == B_FIELD:
 
             dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3  # Sampling volume element
             self._energy = self.get_squared_field(sampling_volume, field) * dV / Constants.mu_0

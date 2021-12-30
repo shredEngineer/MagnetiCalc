@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,11 +16,11 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Optional, List
+from typing import Optional, List, Tuple
 import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QComboBox, QSizePolicy
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QComboBox, QSizePolicy, QWidget
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
@@ -28,6 +28,7 @@ from magneticalc.IconLabel import IconLabel
 from magneticalc.Groupbox import Groupbox
 from magneticalc.HLine import HLine
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Theme import Theme
 
@@ -81,6 +82,10 @@ class SamplingVolume_Widget(Groupbox):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding")
+        padding_override_button = QPushButton(" Override … ")  # Leading and trailing spaces for padding
+        padding_override_button.clicked.connect(self.override_padding)
+        padding_override_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        padding_icon_label.addWidget(padding_override_button)
         padding_clear_button = QPushButton()
         padding_clear_button.setIcon(qta.icon("fa.eraser"))
         padding_clear_button.clicked.connect(self.clear_padding)
@@ -91,6 +96,7 @@ class SamplingVolume_Widget(Groupbox):
         padding_icon_label.addWidget(padding_units_label)
         self.addWidget(padding_icon_label)
 
+        self.padding_widget = QWidget()
         padding_layout = QHBoxLayout()
         padding_label = [None, None, None]
         self.padding_spinbox = [None, None, None]
@@ -103,7 +109,8 @@ class SamplingVolume_Widget(Groupbox):
             padding_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
             padding_layout.addWidget(padding_label[i], alignment=Qt.AlignVCenter)
             padding_layout.addWidget(self.padding_spinbox[i], alignment=Qt.AlignVCenter)
-        self.addLayout(padding_layout)
+        self.padding_widget.setLayout(padding_layout)
+        self.addWidget(self.padding_widget)
 
         total_extent_layout = QHBoxLayout()
         total_extent_label_left = QLabel("Total extent:")
@@ -124,8 +131,7 @@ class SamplingVolume_Widget(Groupbox):
         constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
         constraints_icon_label.addWidget(constraint_shortcut_label)
 
-        constraint_edit_button = QPushButton()
-        constraint_edit_button.setText("Edit …")
+        constraint_edit_button = QPushButton("Edit …")
         constraint_edit_button.clicked.connect(self.open_constraint_editor)
         constraints_icon_label.addWidget(constraint_edit_button)
 
@@ -232,12 +238,36 @@ class SamplingVolume_Widget(Groupbox):
         """
         Clears the padding values.
         """
+        self.gui.config.set_bool("sampling_volume_override_padding", False)
+        self.gui.config.set_points("sampling_volume_bounding_box", [np.zeros(3), np.zeros(3)])
+
         self.set_sampling_volume(padding=[0, 0, 0])
 
         self.blockSignals(True)
         for i in range(3):
             self.padding_spinbox[i].setValue(0)
         self.blockSignals(False)
+
+    def override_padding(self) -> None:
+        """
+        Override padding, setting the bounding box directly.
+        """
+        dialog = OverridePadding_Dialog(self.gui)
+        dialog.show()
+
+        if not dialog.success:
+            return
+
+        # This needlessly also clears the override padding and bounding box config, but that's acceptable.
+        self.clear_padding()
+
+        bounds_min = [dialog.bounds_min_spinbox[i].value() for i in range(3)]
+        bounds_max = [dialog.bounds_max_spinbox[i].value() for i in range(3)]
+        self.gui.config.set_bool("sampling_volume_override_padding", True)
+        self.gui.config.set_points("sampling_volume_bounding_box", [bounds_min, bounds_max])
+
+        self.set_sampling_volume()
+        self.update_controls()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -246,6 +276,8 @@ class SamplingVolume_Widget(Groupbox):
             resolution_exponent: Optional[int] = None,
             label_resolution_exponent: Optional[int] = None,
             padding: Optional[List] = None,
+            override_padding: Optional[bool] = None,
+            bounding_box: Optional[Tuple[np.ndarray, np.ndarray]] = None,
             recalculate: bool = True,
             invalidate_self: bool = True
     ):
@@ -256,6 +288,8 @@ class SamplingVolume_Widget(Groupbox):
         @param resolution_exponent: Sampling volume resolution exponent
         @param label_resolution_exponent: Sampling volume label resolution exponent
         @param padding: Padding (3D point)
+        @param override_padding: Enable to override padding instead, setting the bounding box directly
+        @param bounding_box: Bounding box (used in conjunction with override_padding)
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
         """
@@ -282,7 +316,7 @@ class SamplingVolume_Widget(Groupbox):
                 invalidate_self=invalidate_self
             )
 
-            self.readjust(padding)
+            self.readjust(padding, override_padding, bounding_box)
 
             # Load sampling volume constraints from configuration
             for i, constraint in enumerate(self.constraint_editor.get_constraints()):
@@ -310,39 +344,72 @@ class SamplingVolume_Widget(Groupbox):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def readjust(self, padding=None):
+    def readjust(
+            self,
+            padding: Optional[List] = None,
+            override_padding: Optional[bool] = None,
+            bounding_box: Optional[Tuple[np.ndarray, np.ndarray]] = None,
+    ):
         """
         Readjusts the sampling volume to the currently set wire bounds and padding.
-        The parameter may be left set to None in order to load its default value.
         This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.
 
-        @param padding: Padding (3D point), may be None to be read from configuration
+        Padding may also be overridden instead, setting the bounding box directly.
+
+        Parameters may be left set to None in order to load their default value.
+
+        @param padding: Padding (3D point)
+        @param override_padding: Enable to override padding instead, setting the bounding box directly
+        @param bounding_box: Bounding box (used in conjunction with override_padding)
         """
         Debug(self, ".readjust()")
 
-        self.gui.model.sampling_volume.set_bounds_nearest(*self.gui.model.wire.get_bounds())
+        override_padding = self.gui.config.set_get_bool("sampling_volume_override_padding", override_padding)
+        bounding_box = self.gui.config.set_get_points("sampling_volume_bounding_box", bounding_box)
 
-        bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
+        if override_padding:
 
-        # Adjust padding values if they are now outside the new minimum padding bounds
-        padding = self.gui.config.set_get_point("sampling_volume_padding", padding)
-        padding_adjusted = False
-        for i in range(3):
-            if bounds_min[i] > self.padding_spinbox[i].value():
-                padding[i] = bounds_min[i]
-                padding_adjusted = True
-        if padding_adjusted:
-            Debug(self, ".readjust(): Adjusted padding values to new minimum padding bounds")
-            self.gui.config.set_point("sampling_volume_padding", padding)
+            self.gui.model.sampling_volume.set_bounds_nearest(*bounding_box)
 
-        self.blockSignals(True)
-        for i in range(3):
-            self.padding_spinbox[i].setMinimum(bounds_min[i])
-        self.blockSignals(False)
+        else:
 
-        self.gui.model.sampling_volume.set_padding_nearest(padding)
+            self.gui.model.sampling_volume.set_bounds_nearest(*self.gui.model.wire.get_bounds())
+
+            bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
+
+            # Adjust padding values if they are now outside the new minimum padding bounds
+            padding = self.gui.config.set_get_point("sampling_volume_padding", padding)
+            padding_adjusted = False
+            for i in range(3):
+                if bounds_min[i] > self.padding_spinbox[i].value():
+                    padding[i] = bounds_min[i]
+                    padding_adjusted = True
+            if padding_adjusted:
+                Debug(self, ".readjust(): Adjusted padding values to new minimum padding bounds")
+                self.gui.config.set_point("sampling_volume_padding", padding)
+
+            self.blockSignals(True)
+            for i in range(3):
+                self.padding_spinbox[i].setMinimum(bounds_min[i])
+            self.blockSignals(False)
+
+            self.gui.model.sampling_volume.set_padding_nearest(padding)
 
     # ------------------------------------------------------------------------------------------------------------------
+
+    def update(self) -> None:
+        """
+        Updates the widget.
+        """
+        self.update_controls()
+        self.update_labels()
+
+    def update_controls(self):
+        """
+        Updates the controls.
+        """
+        override_padding = self.gui.config.get_bool("sampling_volume_override_padding")
+        self.padding_widget.setEnabled(not override_padding)
 
     def update_labels(self):
         """
@@ -353,7 +420,7 @@ class SamplingVolume_Widget(Groupbox):
                 " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
             )
             self.total_points_label.setText(
-                str(len(self.gui.model.sampling_volume.get_points()))
+                str(self.gui.model.sampling_volume.get_points_count())
             )
         else:
             self.total_extent_label.setText("N/A")

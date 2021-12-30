@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id26">
+        <table class="children sortable" id="id29">
   
   <tr class="method">
     
@@ -81,8 +81,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Field.Field.html#get_total_limited" class="code" data-type="Method">get_total_limited</a></td>
-    <td><span>Gets total number of distance limited points.</span></td>
+    <td><a href="magneticalc.Field.Field.html#get_total_calculations" class="code" data-type="Method">get_total_calculations</a></td>
+    <td><span>Gets total number of calculations.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Field.Field.html#get_total_skipped_calculations" class="code" data-type="Method">get_total_skipped_calculations</a></td>
+    <td><span>Gets total number of skipped calculations.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -96,12 +101,12 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Field.Field.html#_backend" class="code" data-type="Instance Variable">_backend</a></td>
+    <td><a href="magneticalc.Field.Field.html#_backend_type" class="code" data-type="Instance Variable">_backend_type</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Field.Field.html#_type" class="code" data-type="Instance Variable">_type</a></td>
+    <td><a href="magneticalc.Field.Field.html#_field_type" class="code" data-type="Instance Variable">_field_type</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -116,7 +121,12 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Field.Field.html#_total_limited" class="code" data-type="Instance Variable">_total_limited</a></td>
+    <td><a href="magneticalc.Field.Field.html#_total_calculations" class="code" data-type="Instance Variable">_total_calculations</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.Field.Field.html#_total_skipped_calculations" class="code" data-type="Instance Variable">_total_skipped_calculations</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -143,40 +153,40 @@
   <div class="functionHeader">
     
     def
-    __init__(self, backend, _type, distance_limit, length_scale):
+    __init__(self, backend_type, field_type, distance_limit, length_scale):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes an empty field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">backend</td><td>Backend index (0: JIT; 1: JIT + CUDA)</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Field type to display (0: A-field; 1: B-field)</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr></table></div>
+    <div><p>Initializes an empty field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">backend_type</td><td>Backend type</td></tr><tr><td></td><td class="fieldArg">field_type</td><td>Field type to display</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Field.Field._backend">
+  <a name="magneticalc.Field.Field._backend_type">
     
   </a>
-  <a name="_backend">
+  <a name="_backend_type">
     
   </a>
   <div class="functionHeader">
-    _backend =
+    _backend_type =
     
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Field.Field._type">
+  <a name="magneticalc.Field.Field._field_type">
     
   </a>
-  <a name="_type">
+  <a name="_field_type">
     
   </a>
   <div class="functionHeader">
-    _type =
+    _field_type =
     
   </div>
   <div class="functionBody">
@@ -217,14 +227,30 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Field.Field._total_limited">
+  <a name="magneticalc.Field.Field._total_calculations">
     
   </a>
-  <a name="_total_limited">
+  <a name="_total_calculations">
     
   </a>
   <div class="functionHeader">
-    _total_limited =
+    _total_calculations =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  <a name="magneticalc.Field.Field._total_skipped_calculations">
+    
+  </a>
+  <a name="_total_skipped_calculations">
+    
+  </a>
+  <div class="functionHeader">
+    _total_skipped_calculations =
     
   </div>
   <div class="functionBody">
@@ -245,7 +271,7 @@
   </div>
   <div class="functionBody">
     
-    <div><p>def print_array(array): return "np.array([" + ",".join([f"[{p[0]},{p[1]},{p[2]}]" for p in array]) + "])"</p><p>element_centers = [element[0] for element in wire.get_elements()] element_directions = [element[1] for element in wire.get_elements()]</p><p>import sys import numpy numpy.set_printoptions(threshold=sys.maxsize)</p><p>print("sampling_volume_points =", print_array(sampling_volume.get_points())) print("element_centers        =", print_array(element_centers)) print("element_directions     =", print_array(element_directions)) print("vectors          =", print_array(self._vectors))</p></div>
+    <div><p>def print_array(array): return "np.array([" + ",".join([f"[{p[0]},{p[1]},{p[2]}]" for p in array]) + "])"</p><p>element_centers = [element[0] for element in wire.get_elements()] element_directions = [element[1] for element in wire.get_elements()]</p><p>import sys import numpy numpy.set_printoptions(threshold=sys.maxsize)</p><p>print("Total calculations         =", self.get_total_calculations()) print("Total skipped calculations =", self.get_total_skipped_calculations()) print("sampling_volume_points     =", print_array(sampling_volume.get_points())) print("element_centers            =", print_array(element_centers)) print("element_directions         =", print_array(element_directions)) print("vectors                    =", print_array(self._vectors))</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -302,7 +328,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets field type.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field type (0: A-field; 1: B-field)</td></tr></table></div>
+    <div><p>Gets field type.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field type</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -344,22 +370,41 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Field.Field.get_total_limited">
+  <a name="magneticalc.Field.Field.get_total_calculations">
     
   </a>
-  <a name="get_total_limited">
+  <a name="get_total_calculations">
     
   </a>
   <div class="functionHeader">
     
     def
-    get_total_limited(self):
+    get_total_calculations(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets total number of distance limited points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Total number of distance limited points</td></tr></table></div>
+    <div><p>Gets total number of calculations.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Total number of calculations</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Field.Field.get_total_skipped_calculations">
+    
+  </a>
+  <a name="get_total_skipped_calculations">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_total_skipped_calculations(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets total number of skipped calculations.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Total number of skipped calculations</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -403,7 +448,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-30 03:01:53.
       </address>
 
     </div>

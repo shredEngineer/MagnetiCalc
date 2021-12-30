@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id89">
+        <table class="children sortable" id="id95">
   
   <tr class="classvariable">
     
@@ -211,6 +211,11 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
+    <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#close_loop_checkbox" class="code" data-type="Instance Variable">close_loop_checkbox</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
     <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#transformed_total_label" class="code" data-type="Instance Variable">transformed_total_label</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
@@ -251,6 +256,11 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#update_stretch" class="code" data-type="Method">update_stretch</a></td>
+    <td><span>Updates the stretch controls.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#set_rotational_symmetry" class="code" data-type="Method">set_rotational_symmetry</a></td>
     <td><span>Handles changes to rotational symmetry transform parameters.</span></td>
   </tr><tr class="method">
@@ -258,6 +268,11 @@
     <td>Method</td>
     <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#clear_rotational_symmetry" class="code" data-type="Method">clear_rotational_symmetry</a></td>
     <td><span>Clears the rotational symmetry values.</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.Wire_Widget.Wire_Widget.html#update_rotational_symmetry" class="code" data-type="Method">update_rotational_symmetry</a></td>
+    <td><span>Updates the rotational symmetry controls.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -289,7 +304,7 @@
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.Groupbox.Groupbox.html" class="code" data-type="Class">Groupbox</a>:
           </p>
-          <table class="children sortable" id="id90">
+          <table class="children sortable" id="id96">
   
   <tr class="baseinstancevariable">
     
@@ -842,6 +857,22 @@
   </div>
 </div><div class="baseinstancevariable">
   
+  <a name="magneticalc.Wire_Widget.Wire_Widget.close_loop_checkbox">
+    
+  </a>
+  <a name="close_loop_checkbox">
+    
+  </a>
+  <div class="functionHeader">
+    close_loop_checkbox =
+    
+  </div>
+  <div class="functionBody">
+    
+    <div class="undocumented">Undocumented</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
   <a name="magneticalc.Wire_Widget.Wire_Widget.transformed_total_label">
     
   </a>
@@ -934,13 +965,13 @@
   <div class="functionHeader">
     
     def
-    set_wire(self, points=None, stretch=None, rotational_symmetry=None, slicer_limit=None, dc=None, recalculate=(True), readjust_sampling_volume=(True), invalidate_self=(True)):
+    set_wire(self, points=None, stretch=None, rotational_symmetry=None, close_loop=None, slicer_limit=None, dc=None, recalculate=(True), readjust_sampling_volume=(True), invalidate_self=(True)):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the wire. This will overwrite the currently set wire in the model. Any parameter may be left set to None in order to load its default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>Points (List of 3D points)</td></tr><tr><td></td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr><tr><td></td><td class="fieldArg">rotational_symmetry</td><td>Dictionary for rotational symmetry transform</td></tr><tr><td></td><td class="fieldArg">slicer_limit</td><td>Slicer limit</td></tr><tr><td></td><td class="fieldArg">dc</td><td>DC value</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">readjust_sampling_volume</td><td>Enable to readjust sampling volume</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old wire before setting a new one</td></tr></table></div>
+    <div><p>Sets the wire. This will overwrite the currently set wire in the model. Any parameter may be left set to None in order to load its default value.</p><p>Note: Currently, only `stretch` and `rotational symmetry` controls are automatically updated by this function.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>Points (List of 3D points)</td></tr><tr><td></td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr><tr><td></td><td class="fieldArg">rotational_symmetry</td><td>Dictionary for rotational symmetry transform</td></tr><tr><td></td><td class="fieldArg">close_loop</td><td>Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td></td><td class="fieldArg">slicer_limit</td><td>Slicer limit</td></tr><tr><td></td><td class="fieldArg">dc</td><td>DC value</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">readjust_sampling_volume</td><td>Enable to readjust sampling volume</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old wire before setting a new one</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -982,6 +1013,25 @@
   </div>
 </div><div class="basemethod">
   
+  <a name="magneticalc.Wire_Widget.Wire_Widget.update_stretch">
+    
+  </a>
+  <a name="update_stretch">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update_stretch(self, stretch):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates the stretch controls.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">stretch</td><td>3D point</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   <a name="magneticalc.Wire_Widget.Wire_Widget.set_rotational_symmetry">
     
   </a>
@@ -1017,6 +1067,25 @@
     
     
     <div><p>Clears the rotational symmetry values.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.Wire_Widget.Wire_Widget.update_rotational_symmetry">
+    
+  </a>
+  <a name="update_rotational_symmetry">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    update_rotational_symmetry(self, rotational_symmetry):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Updates the rotational symmetry controls.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">rotational_symmetry</td><td>Dictionary</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -1117,7 +1186,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-23 04:10:23.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-30 03:01:53.
       </address>
 
     </div>

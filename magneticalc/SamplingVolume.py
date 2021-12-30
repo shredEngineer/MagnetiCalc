@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021,Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -113,6 +113,16 @@ class SamplingVolume:
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 
         return self._points
+
+    def get_points_count(self) -> int:
+        """
+        Returns this sampling volume's point count.
+
+        @return: Point count
+        """
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return len(self._points)
 
     def get_permeabilities(self) -> List:
         """

@@ -261,12 +261,14 @@ class SamplingVolume_Widget(Groupbox):
         # This needlessly also clears the override padding and bounding box config, but that's acceptable.
         self.clear_padding()
 
-        bounds_min = [dialog.bounds_min_spinbox[i].value() for i in range(3)]
-        bounds_max = [dialog.bounds_max_spinbox[i].value() for i in range(3)]
-        self.gui.config.set_bool("sampling_volume_override_padding", True)
-        self.gui.config.set_points("sampling_volume_bounding_box", [bounds_min, bounds_max])
+        self.set_sampling_volume(
+            override_padding=True,
+            bounding_box=[
+                [dialog.bounds_min_spinbox[i].value() for i in range(3)],
+                [dialog.bounds_max_spinbox[i].value() for i in range(3)]
+            ]
+        )
 
-        self.set_sampling_volume()
         self.update_controls()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -277,7 +279,7 @@ class SamplingVolume_Widget(Groupbox):
             label_resolution_exponent: Optional[int] = None,
             padding: Optional[List] = None,
             override_padding: Optional[bool] = None,
-            bounding_box: Optional[Tuple[np.ndarray, np.ndarray]] = None,
+            bounding_box: List[List] = None,
             recalculate: bool = True,
             invalidate_self: bool = True
     ):

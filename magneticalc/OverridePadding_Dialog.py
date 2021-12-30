@@ -25,7 +25,7 @@ class OverridePadding_Dialog:
     """ OverridePadding_Dialog class. """
 
     # Window dimensions
-    Width = 400
+    Width = 420
 
     # Spinbox limits
     BoundsMin = -1e+3

@@ -1,4 +1,3 @@
-
 MagnetiCalc
 ===========
 
@@ -156,6 +155,41 @@ Please refer to the
 [Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
+### Data Import/Export and Python API 🆕
+
+#### GUI
+MagnetiCalc allows the following data to be imported/exported using the GUI:
+* Import/export wire points from/to TXT file.
+* Export <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- / <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields,
+wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
+
+#### API
+There is also an [<u><code>API.py</code></u>](magneticalc/API.py) class
+which provides basic functions for importing/exporting data programmatically.
+
+For example, the following code generates a wire shape and exports it to a TXT file: 
+```python
+from magneticalc.API import API
+import numpy as np
+wire = [
+    (np.cos(a), np.sin(a), np.sin(16 * a))
+    for a in np.linspace(0, 2 * np.pi, 200)
+]
+API.export_wire("MyWire.txt", wire)
+```
+
+And this code imports an HDF5 container containing a <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field (which needs to be generated using the GUI first):
+```python
+from magneticalc.API import API
+import matplotlib.pyplot as plt
+import numpy as np
+data = API.import_hdf5("MagnetiCalc_Export_B.hdf5")
+fields = data["fields"]
+x, y, z = fields["x"], fields["y"], fields["z"]
+B_x, B_y, B_z = fields["B_x"], fields["B_y"], fields["B_z"]
+# TODO: Plot using Matplotlib
+```
+
 License
 -------
 Copyright © 2020–2021, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
@@ -189,11 +223,11 @@ ToDo
 * Add installation instructions for Windows, ensure consistent PyQt5 look and feel.
 * Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
 * Add a global settings dialog for some selection of options currently hard-coded in various classes.
-* Provide info about viewing HDF5 format (e.g. using [Panoply](https://www.giss.nasa.gov/tools/panoply/)).
-* Add "check for updates" functionality.
+* Add "Overwrite Existing File?" dialogs for "Save As" and "Export" actions.
+* Add "Check for Updates" functionality.
 
 **Functional**
-* Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental A- and B-fields).
+* Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
 * Add a list of objects, for wires and permeability classes (constraints), with a transformation pipeline for each object; move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
 * Highlight permeability classes with <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
@@ -202,10 +236,10 @@ ToDo
 * Provide a means to emulate permanent magnets.
 
 **API**
-* Add an easy-to-use API for importing and exporting data to and from custom Python scripts.
+* Increase the level of abstraction and add more functionality.
 
 **Usability**
-* Add more example files inside an `Examples` folder.
+* Add more example projects to `examples/`.
 * Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu; alternatively, provide a dialog for parametric generation.
 * Add stationary coordinate system and ruler in the bottom left corner.
 * Add support for selective display over a portion of the metric range, enabling a kind of iso-contour display.

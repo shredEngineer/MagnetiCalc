@@ -17,11 +17,11 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
-import h5py
 import datetime
 import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QLabel, QFileDialog
+from magneticalc.API import API
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
 
@@ -177,7 +177,7 @@ class ExportContainer_Dialog:
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            container_dictionary = {}
+            container_dict = {}
 
             fields = {}
 
@@ -192,21 +192,21 @@ class ExportContainer_Dialog:
             if export_a_field:
                 a_field_components = self.gui.model.get_valid_field(A_FIELD).get_vectors().T
                 fields.update({
-                    "A_x": np.rehsape(a_field_components[0],(len(fields['x']),len(fields['y']),len(fields['z']))),
-                    "A_y": np.reshape(a_field_components[1],(len(fields['x']),len(fields['y']),len(fields['z']))),
-                    "A_z": np.reshape(a_field_components[2],(len(fields['x']),len(fields['y']),len(fields['z'])))
+                    "A_x": np.rehsape(a_field_components[0], self.gui.model.sampling_volume.dimension),
+                    "A_y": np.reshape(a_field_components[1], self.gui.model.sampling_volume.dimension),
+                    "A_z": np.reshape(a_field_components[2], self.gui.model.sampling_volume.dimension)
                 })
 
             if export_b_field:
                 b_field_components = self.gui.model.get_valid_field(B_FIELD).get_vectors().T
                 fields.update({
-                    "B_x": np.reshape(b_field_components[0],(len(fields['x']),len(fields['y']),len(fields['z']))),
-                    "B_y": np.reshape(b_field_components[1],(len(fields['x']),len(fields['y']),len(fields['z']))),
-                    "B_z": np.reshape(b_field_components[2],(len(fields['x']),len(fields['y']),len(fields['z'])))
+                    "B_x": np.reshape(b_field_components[0], self.gui.model.sampling_volume.dimension),
+                    "B_y": np.reshape(b_field_components[1], self.gui.model.sampling_volume.dimension),
+                    "B_z": np.reshape(b_field_components[2], self.gui.model.sampling_volume.dimension)
                 })
 
             if export_a_field or export_b_field:
-                container_dictionary.update({"fields": fields})
+                container_dict.update({"fields": fields})
 
             if export_wire_points:
                 wire_points_components = self.gui.model.wire.get_points_sliced().T
@@ -215,29 +215,10 @@ class ExportContainer_Dialog:
                     "y": wire_points_components[1],
                     "z": wire_points_components[2]
                 }
-                container_dictionary.update({"wire_points": wire_points})
+                container_dict.update({"wire_points": wire_points})
 
             if export_wire_current:
                 wire_current = self.gui.model.wire.get_dc()
-                container_dictionary.update({"wire_current": wire_current})
+                container_dict.update({"wire_current": wire_current})
 
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-            def dict_to_hdf5_group(hdf5_group, dictionary) -> None:
-                """
-                Recursively transforms a dictionary into a HDF5 group (in-place).
-
-                @param hdf5_group: HDF5 group
-                @param dictionary: Dictionary
-                """
-                for key in dictionary.keys():
-                    if isinstance(dictionary[key], dict):
-                        group = hdf5_group.create_group(key)
-                        dict_to_hdf5_group(group, dictionary[key])
-                    else:
-                        hdf5_group[key] = dictionary[key]
-                return
-
-            hdf5_group = h5py.File(filename, "w")
-            dict_to_hdf5_group(hdf5_group, container_dictionary)
-            hdf5_group.close()
+            API.export_hdf5(filename, container_dict)

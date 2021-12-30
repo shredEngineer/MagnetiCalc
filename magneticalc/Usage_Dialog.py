@@ -94,7 +94,7 @@ class Usage_Dialog(QDialog):
             <li>Click and drag into the 3D scene to rotate.</li>
             <li>Press SHIFT while dragging to <i>move</i> the entire 3D scene.</li>
             <li>If you like the result, press CTRL+I to save a screenshot!</li>
-            <li>You may also export the fields, wire and current to a HDF5 container for use in post-processing.</li>
+            <li>You may also export the fields, wire and current to an HDF5 container for use in post-processing.</li>
         </ul>
 
         All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file by default.<br>

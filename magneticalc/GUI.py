@@ -26,6 +26,7 @@ import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget, QMessageBox
+from magneticalc import API
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Config import Config
@@ -500,7 +501,7 @@ class GUI(QMainWindow):
 
         if filename != "":
 
-            points = np.loadtxt(filename)
+            points = API.import_wire(filename)
             self.sidebar_left.wire_widget.set_wire(
                 points=points,
                 stretch=[1.0, 1.0, 1.0],
@@ -534,4 +535,4 @@ class GUI(QMainWindow):
             if file_extension.lower() != ".txt":
                 filename += ".txt"
 
-            np.savetxt(filename, self.model.wire.get_points_sliced())
+            API.export_wire(filename, self.model.wire.get_points_sliced())

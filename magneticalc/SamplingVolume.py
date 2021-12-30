@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -46,6 +46,7 @@ class SamplingVolume:
 
         self._bounds_min = np.zeros(3)
         self._bounds_max = np.zeros(3)
+        self._dimension = None
 
         self._points = None
         self._permeabilities = None
@@ -55,6 +56,15 @@ class SamplingVolume:
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
 
+    @property
+    def dimension(self) -> Optional[Tuple[int, int, int]]:
+        """
+        Gets the sampling volume dimension if it is valid, None otherwise.
+
+        @return: Sampling volume dimension if it is valid, None otherwise.
+        """
+        return self._dimension if self.is_valid() else None
+
     def is_valid(self) -> bool:
         """
         Indicates valid data for display.
@@ -62,6 +72,7 @@ class SamplingVolume:
         @return: True if data is valid for display, False otherwise
         """
         return \
+            self._dimension is not None and \
             self._points is not None and \
             self._permeabilities is not None and \
             self._labeled_indices is not None and \
@@ -73,6 +84,7 @@ class SamplingVolume:
         """
         Debug(self, ".invalidate()", color=(128, 0, 0))
 
+        self._dimension = None
         self._points = None
         self._permeabilities = None
         self._labeled_indices = None
@@ -239,8 +251,8 @@ class SamplingVolume:
             steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
             points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
-        span = np.array([len(axis) for axis in points_axes_all])
-        n = span[0] * span[1] * span[2]
+        self._dimension = np.array([len(axis) for axis in points_axes_all])
+        n = self._dimension[0] * self._dimension[1] * self._dimension[2]
 
         points_all = np.zeros(shape=(n, 3))
         permeabilities_all = np.zeros(n)
@@ -255,9 +267,9 @@ class SamplingVolume:
             @param _i: 1D index
             @return: 3D indices
             """
-            _x = _i % span[0]
-            _y = (_i // span[0]) % span[1]
-            _z = _i // (span[0] * span[1])
+            _x = _i % self._dimension[0]
+            _y = (_i // self._dimension[0]) % self._dimension[1]
+            _z = _i // (self._dimension[0] * self._dimension[1])
             return [_x, _y, _z]
 
         def xyz_to_i(xyz) -> int:
@@ -267,7 +279,7 @@ class SamplingVolume:
             @param xyz: 3D indices
             @return: 1D index
             """
-            return xyz[0] + xyz[1] * span[0] + xyz[2] * span[0] * span[1]
+            return xyz[0] + xyz[1] * self._dimension[0] + xyz[2] * self._dimension[0] * self._dimension[1]
 
         # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
         for i in range(n):

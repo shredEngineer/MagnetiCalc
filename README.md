@@ -190,6 +190,7 @@ ToDo
 * Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
 * Add a global settings dialog for some selection of options currently hard-coded in various classes.
 * Provide info about viewing HDF5 format (e.g. using [Panoply](https://www.giss.nasa.gov/tools/panoply/)).
+* Add "check for updates" functionality.
 
 **Functional**
 * Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental A- and B-fields).

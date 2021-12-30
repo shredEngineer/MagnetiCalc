@@ -54,6 +54,17 @@ class OverridePadding_Dialog:
         title_label.setStyleSheet(f"font-weight: bold; color: {Theme.PrimaryColor}")
         layout.addWidget(title_label)
 
+        layout.addSpacing(8)
+
+        hint_layout = QHBoxLayout()
+        units_label = QLabel("Units:")
+        units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        hint_layout.addWidget(units_label)
+        cm_label = QLabel("cm")
+        cm_label.setStyleSheet(f"font-weight: bold;")
+        hint_layout.addWidget(cm_label)
+        layout.addLayout(hint_layout)
+        
         layout.addSpacing(16)
 
         bounds_layout = [None, None, None]

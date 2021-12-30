@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import QWidget, QStyle
 class Theme:
     """ Theme class. """
 
+    # Theme colors
     PrimaryColor = "#2c82b8"
     LightColor = "#555555"
     SuccessColor = "#2e7d32"

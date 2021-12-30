@@ -149,7 +149,7 @@ class Usage_Dialog(QDialog):
         [4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).<br>
 
         <br><br><span style="color: {Theme.PrimaryColor};">
-            This and more information about MagnetiCalc can be found in the <code>README.md</code> file.
+            This and more information about MagnetiCalc can be found in the <code>README.md</code> file and on GitHub.
         </span><br>
         """
 

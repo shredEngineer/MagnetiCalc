@@ -1,7 +1,4 @@
-images_for_docs/
+__DEV__/
 magneticalc/__pycache__/
 .idea/
 .mypy_cache/
-NOTIZEN.md
-pre-github-workflow.sh
-upload_to_TestPyPI.sh

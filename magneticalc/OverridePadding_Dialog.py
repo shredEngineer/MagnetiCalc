@@ -17,7 +17,8 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QLabel, QSizePolicy
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton
+from magneticalc.QtWidgets2 import QSpinBox2, QLabel2, QHBoxLayout2, QPushButton2
 from magneticalc.Theme import Theme
 
 
@@ -28,8 +29,7 @@ class OverridePadding_Dialog:
     Width = 420
 
     # Spinbox limits
-    BoundsMin = -1e+3
-    BoundsMax = +1e+3
+    BoundsRange = [-1000, +1000]
 
     def __init__(self, gui) -> None:
         """
@@ -50,73 +50,31 @@ class OverridePadding_Dialog:
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        title_label = QLabel("Please specify the sampling volume bounding box")
-        title_label.setStyleSheet(f"font-weight: bold; color: {Theme.PrimaryColor}")
-        layout.addWidget(title_label)
+        layout.addWidget(
+            QLabel2("Please specify the sampling volume bounding box", bold=True, color=Theme.PrimaryColor)
+        )
 
         layout.addSpacing(8)
-
-        hint_layout = QHBoxLayout()
-        units_label = QLabel("Units:")
-        units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        hint_layout.addWidget(units_label)
-        cm_label = QLabel("cm")
-        cm_label.setStyleSheet(f"font-weight: bold;")
-        hint_layout.addWidget(cm_label)
-        layout.addLayout(hint_layout)
-        
+        layout.addLayout(QHBoxLayout2(QLabel2("Units:", fixed=True), QLabel2("cm", bold=True)))
         layout.addSpacing(16)
-
-        bounds_layout = [None, None, None]
-        bounds_label = [None, None, None]
-        self.bounds_min_spinbox = [None, None, None]
-        self.bounds_max_spinbox = [None, None, None]
 
         bounding_box = self.gui.config.get_points("sampling_volume_bounding_box")
+        self.bounds_min_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[0][i], self.validate) for i in range(3)]
+        self.bounds_max_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[1][i], self.validate) for i in range(3)]
 
         for i in range(3):
-
-            bounds_layout[i] = QHBoxLayout()
-
-            self.bounds_min_spinbox[i] = QSpinBox(self.gui)
-            self.bounds_min_spinbox[i].setMinimum(self.BoundsMin)
-            self.bounds_min_spinbox[i].setMaximum(self.BoundsMax)
-            self.bounds_min_spinbox[i].setValue(bounding_box[0][i])
-            self.bounds_min_spinbox[i].valueChanged.connect(self.validate)
-            bounds_layout[i].addWidget(self.bounds_min_spinbox[i], alignment=Qt.AlignVCenter)
-
-            bounds_label[i] = QLabel("  ≤  " + ["X", "Y", "Z"][i] + "  ≤  ")
-            bounds_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-            bounds_layout[i].addWidget(bounds_label[i], alignment=Qt.AlignVCenter)
-
-            self.bounds_max_spinbox[i] = QSpinBox(self.gui)
-            self.bounds_max_spinbox[i].setMinimum(self.BoundsMin)
-            self.bounds_max_spinbox[i].setMaximum(self.BoundsMax)
-            self.bounds_max_spinbox[i].setValue(bounding_box[1][i])
-            self.bounds_max_spinbox[i].valueChanged.connect(self.validate)
-            bounds_layout[i].addWidget(self.bounds_max_spinbox[i], alignment=Qt.AlignVCenter)
-
-            layout.addLayout(bounds_layout[i])
+            text = "  ≤  " + ["X", "Y", "Z"][i] + "  ≤  "
+            layout.addLayout(QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text), self.bounds_max_spinbox[i]))
 
         layout.addSpacing(16)
 
-        button_box = QHBoxLayout()
-
-        cancel_button = QPushButton(
-            Theme.get_icon(self.dialog, "SP_DialogCancelButton"),
-            " Cancel"  # Leading space for alignment
+        self.apply_button = QPushButton2(self.dialog, "SP_DialogApplyButton", " Apply", self.accept)
+        layout.addLayout(
+            QHBoxLayout2(
+                QPushButton2(self.dialog, "SP_DialogCancelButton", " Cancel", self.reject),
+                self.apply_button
+            )
         )
-        cancel_button.clicked.connect(self.reject)
-        button_box.addWidget(cancel_button, alignment=Qt.AlignBottom)
-
-        self.apply_button = QPushButton(
-            Theme.get_icon(self.dialog, "SP_DialogApplyButton"),
-            " Apply"  # Leading space for alignment
-        )
-        self.apply_button.clicked.connect(self.accept)
-        button_box.addWidget(self.apply_button, alignment=Qt.AlignBottom)
-
-        layout.addLayout(button_box)
 
         self.apply_button.setFocus()
         self.validate()
@@ -147,10 +105,5 @@ class OverridePadding_Dialog:
         """
         Validates the bounding box values and enables/disables the "Apply" button accordingly.
         """
-        valid = True
-        for i in range(3):
-            if self.bounds_min_spinbox[i].value() > self.bounds_max_spinbox[i].value():
-                valid = False
-                break
-
+        valid = all([self.bounds_min_spinbox[i].value() <= self.bounds_max_spinbox[i].value() for i in range(3)])
         self.apply_button.setEnabled(valid)

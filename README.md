@@ -182,12 +182,13 @@ And this code imports an HDF5 container containing a <img src="https://render.gi
 ```python
 from magneticalc.API import API
 import matplotlib.pyplot as plt
-import numpy as np
-data = API.import_hdf5("MagnetiCalc_Export_B.hdf5")
+data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
 fields = data["fields"]
 x, y, z = fields["x"], fields["y"], fields["z"]
-B_x, B_y, B_z = fields["B_x"], fields["B_y"], fields["B_z"]
-# TODO: Plot using Matplotlib
+A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
+ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
+ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
+plt.show()
 ```
 
 License
@@ -254,8 +255,9 @@ ToDo
 **Code Quality**
 * Add debug output where it is missing.
 * Add type hints where they are missing.
-* Merge sparse `*_Types.py` modules with higher-level classes if possible.
+* Use my `QtWidgets2` wrapper everywhere.
 * Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671) for accessing data where applicable. 
+* Merge sparse `*_Types.py` modules with higher-level classes if possible.
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 

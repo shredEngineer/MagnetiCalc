@@ -17,12 +17,11 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
-import datetime
-import numpy as np
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QLabel, QFileDialog
+from datetime import datetime
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QCheckBox, QFileDialog
 from magneticalc.API import API
 from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.QtWidgets2 import QLabel2, QHBoxLayout2, QPushButton2
 from magneticalc.Theme import Theme
 
 
@@ -49,15 +48,14 @@ class ExportContainer_Dialog:
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        title_label = QLabel("Please select items for export")
-        title_label.setStyleSheet(f"font-weight: bold; color: {Theme.PrimaryColor}")
-        layout.addWidget(title_label)
-
+        layout.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.PrimaryColor))
         layout.addSpacing(8)
-
-        hint_label = QLabel("Fields must have been calculated before they can be exported.")
-        hint_label.setStyleSheet(f"font-style: italic; color: {Theme.LightColor}")
-        layout.addWidget(hint_label)
+        layout.addWidget(
+            QLabel2(
+                "Fields must have been calculated before they can be exported.",
+                italic=True, color=Theme.LightColor
+            )
+        )
 
         layout.addSpacing(16)
 
@@ -96,24 +94,14 @@ class ExportContainer_Dialog:
 
         layout.addSpacing(16)
 
-        button_box = QHBoxLayout()
-
-        cancel_button = QPushButton(
-            Theme.get_icon(self.dialog, "SP_DialogCancelButton"),
-            " Cancel"  # Leading space for alignment
+        cancel_button = QPushButton2(self.dialog, "SP_DialogCancelButton", " Cancel", self.reject)
+        save_button = QPushButton2(self.dialog, "SP_DialogSaveButton", " Save Container …", self.accept)
+        layout.addLayout(
+            QHBoxLayout2(
+                cancel_button,
+                save_button
+            )
         )
-        cancel_button.clicked.connect(self.reject)
-        button_box.addWidget(cancel_button, alignment=Qt.AlignBottom)
-
-        save_button = QPushButton(
-            Theme.get_icon(self.dialog, "SP_DialogSaveButton"),
-            " Save Container …"  # Leading space for alignment
-        )
-        save_button.clicked.connect(self.accept)
-        button_box.addWidget(save_button, alignment=Qt.AlignBottom)
-
-        layout.addLayout(button_box)
-
         save_button.setFocus()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -148,23 +136,18 @@ class ExportContainer_Dialog:
         export_wire_points = self.wire_points_checkbox.isChecked()
         export_wire_current = self.wire_current_checkbox.isChecked()
 
-        export_types = []
-
-        if export_a_field:
-            export_types.append("A")
-        if export_b_field:
-            export_types.append("B")
-        if export_wire_points:
-            export_types.append("Wire")
-        if export_wire_current:
-            export_types.append("Current")
-
-        export_types_str = "-".join(export_types)
+        export_types_map = {
+            "A": export_a_field,
+            "B": export_b_field,
+            "Wire": export_wire_points,
+            "Current": export_wire_current
+        }
+        export_types_str = "-".join([string for string, condition in export_types_map.items() if condition])
 
         filename, _chosen_extension = QFileDialog.getSaveFileName(
             parent=self.gui,
             caption="Export Container",
-            directory=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc_Export_" + export_types_str),
+            directory=datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc_Export_" + export_types_str),
             filter="HDF5 Container (*.hdf5)",
             options=QFileDialog.DontUseNativeDialog
         )
@@ -177,48 +160,28 @@ class ExportContainer_Dialog:
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            container_dict = {}
+            container_dictionary = {}
 
             fields = {}
-
             if export_a_field or export_b_field:
                 sampling_volume_components = self.gui.model.sampling_volume.get_points().T
-                fields.update({
-                    "x": np.array(sorted(list(set(sampling_volume_components[0])))),
-                    "y": np.array(sorted(list(set(sampling_volume_components[1])))),
-                    "z": np.array(sorted(list(set(sampling_volume_components[2]))))
-                })
-
+                fields.update(dict(zip(["x", "y", "z"], sampling_volume_components)))
             if export_a_field:
                 a_field_components = self.gui.model.get_valid_field(A_FIELD).get_vectors().T
-                fields.update({
-                    "A_x": np.rehsape(a_field_components[0], self.gui.model.sampling_volume.dimension),
-                    "A_y": np.reshape(a_field_components[1], self.gui.model.sampling_volume.dimension),
-                    "A_z": np.reshape(a_field_components[2], self.gui.model.sampling_volume.dimension)
-                })
-
+                fields.update(dict(zip(["A_x", "A_y", "A_z"], a_field_components)))
             if export_b_field:
                 b_field_components = self.gui.model.get_valid_field(B_FIELD).get_vectors().T
-                fields.update({
-                    "B_x": np.reshape(b_field_components[0], self.gui.model.sampling_volume.dimension),
-                    "B_y": np.reshape(b_field_components[1], self.gui.model.sampling_volume.dimension),
-                    "B_z": np.reshape(b_field_components[2], self.gui.model.sampling_volume.dimension)
-                })
-
+                fields.update(dict(zip(["B_x", "B_y", "B_z"], b_field_components)))
             if export_a_field or export_b_field:
-                container_dict.update({"fields": fields})
+                container_dictionary.update({"fields": fields})
 
             if export_wire_points:
                 wire_points_components = self.gui.model.wire.get_points_sliced().T
-                wire_points = {
-                    "x": wire_points_components[0],
-                    "y": wire_points_components[1],
-                    "z": wire_points_components[2]
-                }
-                container_dict.update({"wire_points": wire_points})
+                wire_points = dict(zip(["x", "y", "z"], wire_points_components))
+                container_dictionary.update({"wire_points": wire_points})
 
             if export_wire_current:
                 wire_current = self.gui.model.wire.get_dc()
-                container_dict.update({"wire_current": wire_current})
+                container_dictionary.update({"wire_current": wire_current})
 
-            API.export_hdf5(filename, container_dict)
+            API.export_hdf5(filename, container_dictionary)

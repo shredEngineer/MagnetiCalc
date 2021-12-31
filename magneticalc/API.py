@@ -78,7 +78,7 @@ class API:
         Exports data to an HDF5 container.
 
         Takes a dictionary and writes an HDF5 file using keys as keys,
-        and items as groups if they are dictionaries or datasets otherwise.
+        and items as groups if they are dictionaries or as datasets otherwise.
         """
         hdf5_group = h5py.File(filename, "w")
         API.dict_to_hdf5_group(hdf5_group, dictionary)

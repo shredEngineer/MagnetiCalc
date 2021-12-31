@@ -117,7 +117,7 @@ class API:
                 API.hdf5_group_to_dict(hdf5_group[key], dictionary[key])
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
     @staticmethod
     def reshape_fields(dictionary: Dict) -> Dict:
         """
@@ -125,7 +125,7 @@ class API:
         by minimal one-dimensional arrays rather than raveled three-dimensional
         meshes. The fields are unraveled so that they are represented by
         three-dimensional arrays with Axis0 ➔ x, Axis1 ➔ y, and Axis2 ➔ z.
-        
+
         @param dictionary: Dictionary
         @return: Dictionary
         """

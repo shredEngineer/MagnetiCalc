@@ -225,17 +225,20 @@ provides basic functions for importing/exporting data programmatically:
     plt.show()
     ```
 
-The default format for exported data is one-dimensional raveled arrays such that a list of tuple representing points in cartesian space is given by
-```python
-points = [(x, y, z) for x, y, z in zip(data['fields']['x'], data['fields']['y'], data['fields']['z'])]
-```
-This is the native format of `MagnetiCalc` and is ammenable to use with `quiver`.
-However, for visualising a slice of the magnitude of a field or a field component in a plane and for integrating over the axes it may be preferrable to have
-minimal one-dimensional representations of the axes and the field components arranged in three-dimensional arrays with `axis0 -> x`,  `axis1 -> y`, and  `axis2 -> z`.
-This reformatting if facilitated by
-```python
-data_reshape = API.reshape_fields(data)
-```
+  Data is always exported as 1D raveled arrays, which is the native format of MagnetiCalc. 
+  If required, a list of 3D points can be obtained like this:
+  ```python
+  points = list(zip(*[data["fields"][i] for i in ["x", "y", "z"]]))
+  ```
+  
+  However, for visualising a slice of the magnitude of a field or a field component in a plane,
+  and for integrating over the axes, it may be preferable to have
+  minimal 1D representations of the axes and the field components arranged in 3D arrays,
+  with `Axis0`➔`x`, `Axis1`➔`y`, and `Axis2`➔`z`.
+  The reshaped data can be obtained like this:
+  ```python
+  data_reshape = API.reshape_fields(data)
+  ```
 
 License
 -------

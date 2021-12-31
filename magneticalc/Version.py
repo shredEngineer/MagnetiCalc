@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+points = [(x, y, z) for x, y, z in zip([data["fields"][i] for i in ["x", "y", "z"]])]
 
 __VERSION__ = "v1.11.0"  # MAJ.MIN.REV
 

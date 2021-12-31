@@ -32,7 +32,7 @@ and magnetic dipole moment of arbitrary coils. Inside a VisPy / OpenGL-accelerat
 the static magnetic flux density (B-field) or the magnetic vector potential (A-field)
 is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.""".replace("\n", " "),
     url="https://github.com/shredEngineer/MagnetiCalc",
-    author="Paul Wilhelm",
+    author="Paul Wilhelm, M. Sc.",
     author_email="anfrage@paulwilhelm.de",
     license="ISC License",
     classifiers=[

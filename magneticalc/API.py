@@ -115,3 +115,25 @@ class API:
             else:
                 dictionary[key] = {}
                 API.hdf5_group_to_dict(hdf5_group[key], dictionary[key])
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    @staticmethod
+    def reshape_fields(dictionary) -> Dict:
+        """
+        Reshapes arrays obtained from import_hdf5() so that the axes are given
+        by minimal one-dimensional arrays rather than raveled three-dimensional
+        meshes. The fields are unraveled so that they are represented by
+        three-dimensional arrays with axis0 -> x, axis1 -> y, and axis2 -> z.
+        
+        @param dictionary: Dictionary
+        """
+        axes = ['x','y','z']
+        dictionary2 = dictionary.copy()
+        for key in axes:
+            dictionary2['fields'][key] = np.array(sorted(list(set(dictionary2['fields'][key]))))
+        newShape = (len(dictionary2['fields']['x']),len(dictionary2['fields']['y']),len(dictionary2['fields']['z']))
+        for key in dictionary2['fields']:
+            if not(key in axes):
+                dictionary2['fields'][key] = np.reshape(dictionary2['fields'][key],newShape,order='F')
+        return dictionary2

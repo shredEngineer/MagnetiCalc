@@ -198,6 +198,18 @@ ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
 plt.show()
 ```
 
+The default format for exported data is one-dimensional raveled arrays such that a list of tuple representing points in cartesian space is given by
+```
+points = [(x, y, z) for x, y, z in zip(data['fields']['x'], data['fields']['y'], data['fields']['z'])]
+```
+This is the native format of `MagnetiCalc` and is ammenable to use with `quiver`.
+However, for visualising a slice of the magnitude of a field or a field component in a plane and for integrating over the axes it may be preferrable to have
+minimal one-dimensional representations of the axes and the field components arranged in three-dimensional arrays with `axis0 -> x`,  `axis0 -> y`, and  `axis0 -> z`.
+This reformatting if facilitated by
+```
+data_reshape = API.reshape_fields(data)
+```
+
 License
 -------
 Copyright © 2020–2021, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>

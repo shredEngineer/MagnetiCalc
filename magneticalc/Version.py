@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.10.2"
+__VERSION__ = "v1.10.3"
 
 
 __URL__ = "https://github.com/shredEngineer/MagnetiCalc"

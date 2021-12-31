@@ -161,7 +161,7 @@ class Menu:
         help_menu.addSeparator()
         help_menu.addAction(
             qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show(),
-            Qt.Key_F2
+            Qt.Key_F4
         )
         help_menu.addAction(qta.icon("fa.github"), "&GitHub Repository …", partial(webbrowser.open, __URL__))
         help_menu.addSeparator()

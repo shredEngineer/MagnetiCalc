@@ -180,7 +180,10 @@ wire = [
 API.export_wire("MyWire.txt", wire)
 ```
 
-And this code imports an HDF5 container containing an <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field (which needs to be generated using the GUI first):
+As another example, this code imports an HDF5 file containing an
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
+(which needs to be generated using the GUI first)
+which is then plotted using [Matplotlib](https://matplotlib.org/stable/users/index.html):
 ```python
 from magneticalc import API
 import matplotlib.pyplot as plt

@@ -48,7 +48,7 @@ class Config:
     # Default configuration
     Default = {
         "version"                                   : Version.String,
-        "backend_type"                              : BACKEND_JIT,
+        "backend_type"                              : BACKEND_CUDA,
         "auto_calculation"                          : "True",
         "num_cores"                                 : "0",
         "wire_points_base"                          : None,  # Will be set in __init__

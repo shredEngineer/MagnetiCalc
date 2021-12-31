@@ -92,55 +92,69 @@ Screenshot
 
 Installation
 ------------
-Tested with Python 3.8 in Ubuntu 20.04 and Python 3.7 in Linux Mint 19.3.
 
 If you have trouble installing MagnetiCalc,
 make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
 so I can help you get it up and running!
 
+Tested with:
+* Python 3.8 in Ubuntu 20.04
+* Python 3.7 in Linux Mint 19.3
+* Python 3.8 in Windows 10
+
 ### Prerequisites
 
-The following dependency packages have to be installed first (Ubuntu 20.04):
+#### Linux
+The following dependency packages must be installed first (Ubuntu 20.04):
 ```shell
 sudo apt install python3-dev
 sudo apt install libxcb-xinerama0 --reinstall
 ```
 
-### Option A: Automatic install via pip
-**Note:** On some systems, it may be necessary to upgrade pip first:
+#### Windows
+On some systems, it may be necessary to install [Visual C++ Redistributable Packages for Visual Studio 2017](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
+
+#### All platforms
+On some systems, it may be necessary to upgrade pip first:
 ```shell
 python3 -m pip install pip --upgrade
 ```
 
+### Option A: Automatic install via pip
+
+#### Linux
 Install (or upgrade) MagnetiCalc to the user site-packages directory and start it from there: 
 ```shell
 python3 -m pip install magneticalc --upgrade
 python3 -m magneticalc
 ```
-
 This will automatically install all dependency packages.
 
-**Note:** From within a *Jupyter Notebook*, MagnetiCalc must be installed and run like this:
+#### Windows
+Install (or upgrade) MagnetiCalc to the user site-packages directory and start it from there:
+
+```shell
+python -m pip install --upgrade scipy
+python -m install --upgrade magneticaclc
+python -m magneticalc
+```
+This will automatically install SciPy and all dependency packages.
+
+*Note:* Although installation would succeed without installing SciPy first, MagnetiCalc would crash upon calling the `np.dot` function due to missing dependencies.
+
+*Note:* Installation will fail for Python >= 3.9 because there is no official wheel for `llvmlite` available currently
+(it might be possible to find an unofficial wheel, but this is not recommended).
+
+#### Juptyer Notebook
+From within a Jupyter Notebook, MagnetiCalc must be installed and run like this (Ubuntu 20.04):
 ```python
 import sys
 !{sys.executable} -m pip install magneticalc --upgrade
 !{sys.executable} -m magneticalc
 ```
 
-### A-2: Automatic install via pip (Windows 10)
-Tested with Python 3.8.10 (may require [Visual C++ Redistributable Packages for Visual Studio 2017](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) but try without first)
-```shell
-python -m pip install --upgrade pip
-python -m pip install --upgrade scipy
-python -m install --upgrade magneticaclc
-python -m magneticalc
-```
-**Note:** Installation will succeed without `scipy` installed but the program will crash on `np.dot` due to a dependency for linear algebra.
-
-**Note:** For Python >=3.9 installation will fail because there is not currently an official wheel for `llvmlite` but it might be possible to find an unofficial wheel. This is not recommended.
-
 ### Option B: Manual download
-First, manually install all dependency packages (upgrading each to the latest version):
+First, manually install all dependency packages, upgrading each to the latest version (Ubuntu 20.04):
 ```shell
 python3 -m pip install numpy numba PyQt5 vispy qtawesome colorit si-prefix h5py --upgrade
 ```
@@ -176,10 +190,11 @@ MagnetiCalc allows the following data to be imported/exported using the GUI:
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
 #### API
-There is also an [<code>API.py</code>](magneticalc/API.py) class
-which provides basic functions for importing/exporting data programmatically.
+The [<code>API.py</code>](magneticalc/API.py) class
+provides basic functions for importing/exporting data programmatically:
+[API class documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html).
 
-For example, the following code generates a wire shape and exports it to a TXT file: 
+* Generate a wire shape using [NumPy](https://numpy.org/) and export it to a TXT file: 
 ```python
 from magneticalc import API
 import numpy as np
@@ -192,23 +207,23 @@ wire = [
 API.export_wire("MyWire.txt", wire)
 ```
 
-As another example, this code imports an HDF5 file containing an
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
-(which needs to be generated using the GUI first)
-which is then plotted using [Matplotlib](https://matplotlib.org/stable/users/index.html):
-```python
-from magneticalc import API
-import matplotlib.pyplot as plt
+* Import an HDF5 file containing an
+  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
+  (which needs to be generated using the GUI first)
+  and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
+    ```python
+    from magneticalc import API
+    import matplotlib.pyplot as plt
 
-data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
-fields = data["fields"]
-x, y, z = fields["x"], fields["y"], fields["z"]
-A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
-
-ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
-ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
-plt.show()
-```
+    data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
+    fields = data["fields"]
+    x, y, z = fields["x"], fields["y"], fields["z"]
+    A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
+  
+    ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
+    ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
+    plt.show()
+    ```
 
 The default format for exported data is one-dimensional raveled arrays such that a list of tuple representing points in cartesian space is given by
 ```python

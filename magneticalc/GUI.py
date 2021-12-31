@@ -48,7 +48,7 @@ class GUI(QMainWindow):
     DebugColor = Theme.SuccessColor
 
     # Default configuration filename
-    DefaultFilename = "MagnetiCalc.ini"
+    DefaultFilename = "MagnetiCalc-DefaultProject.ini"
 
     # These signals are fired from the calculation thread
     calculation_status = pyqtSignal(str)

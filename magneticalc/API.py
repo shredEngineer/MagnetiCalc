@@ -119,7 +119,7 @@ class API:
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     @staticmethod
-    def reshape_fields(dictionary) -> Dict:
+    def reshape_fields(dictionary: Dict) -> Dict:
         """
         Reshapes arrays obtained from import_hdf5() so that the axes are given
         by minimal one-dimensional arrays rather than raveled three-dimensional
@@ -127,13 +127,14 @@ class API:
         three-dimensional arrays with axis0 -> x, axis1 -> y, and axis2 -> z.
         
         @param dictionary: Dictionary
+        @return: Dictionary
         """
-        axes = ['x','y','z']
-        dictionary2 = dictionary.copy()
+        axes = ["x", "y", "z"]
+        new_dictionary = dictionary.copy()
         for key in axes:
-            dictionary2['fields'][key] = np.array(sorted(list(set(dictionary2['fields'][key]))))
-        newShape = (len(dictionary2['fields']['x']),len(dictionary2['fields']['y']),len(dictionary2['fields']['z']))
-        for key in dictionary2['fields']:
+            new_dictionary["fields"][key] = np.array(sorted(list(set(new_dictionary["fields"][key]))))
+        new_shape = [len(new_dictionary["fields"][i]) for i in axes]
+        for key in new_dictionary["fields"]:
             if not(key in axes):
-                dictionary2['fields'][key] = np.reshape(dictionary2['fields'][key],newShape,order='F')
-        return dictionary2
+                new_dictionary["fields"][key] = np.reshape(new_dictionary["fields"][key], new_shape, order="F")
+        return new_dictionary

@@ -164,7 +164,7 @@ MagnetiCalc allows the following data to be imported/exported using the GUI:
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
 #### API
-There is also an [<u><code>API.py</code></u>](magneticalc/API.py) class
+There is also an [<code>API.py</code>](magneticalc/API.py) class
 which provides basic functions for importing/exporting data programmatically.
 
 For example, the following code generates a wire shape and exports it to a TXT file: 

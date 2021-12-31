@@ -52,7 +52,7 @@ class Parameters:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=(128, 0, 0))
+        Debug(self, ".invalidate()", color=Theme.InvalidColor)
 
         self._energy = None
         self._self_inductance = None
@@ -152,7 +152,7 @@ class Parameters:
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
         """
-        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+        Debug(self, ".recalculate()")
 
         progress_callback(0)
 

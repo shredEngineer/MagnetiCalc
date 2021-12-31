@@ -82,7 +82,7 @@ class SamplingVolume:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=(128, 0, 0))
+        Debug(self, ".invalidate()", color=Theme.InvalidColor)
 
         self._dimension = None
         self._points = None
@@ -225,7 +225,7 @@ class SamplingVolume:
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+        Debug(self, ".recalculate()")
 
         # Group constraints by permeability
         constraints_precedence_dict = {}
@@ -465,10 +465,7 @@ class SamplingVolume:
         Debug(
             self,
             ".recalculate(): "
-            f"Calculated {len(self.constraints)} constraints "
-            f"over {n} possible points, "
-            f"yielded {len(self._points)} points",
-            color=Theme.PrimaryColor
+            f"{len(self.constraints)} constraints left {n} of {len(self._points)} possible points"
         )
 
         if len(self._points) == 0:

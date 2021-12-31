@@ -65,7 +65,7 @@ class Field:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=(128, 0, 0))
+        Debug(self, ".invalidate()", color=Theme.InvalidColor)
 
         self._total_calculations = None
         self._total_skipped_calculations = None

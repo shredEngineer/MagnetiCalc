@@ -18,16 +18,14 @@
 
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
 
 
 class ModelAccess:
     """ Model access class. """
 
-    # Used to detect nested accesses (which would be very bad!)
-    locked = False
-
     # Used by L{Debug}
-    DebugColor = (128, 128, 0)
+    DebugColor = "#0000e5"
 
     def __init__(self, gui, recalculate: bool):
         """
@@ -45,10 +43,6 @@ class ModelAccess:
         """
         Debug(self, ".enter()")
 
-        Assert_Dialog(not self.locked, "Invalid model access")
-
-        self.locked = True
-
         if self.recalculate:
             if self.gui.calculation_thread is not None:
                 self.gui.interrupt_calculation()
@@ -57,14 +51,11 @@ class ModelAccess:
         """
         Leaving the context starts recalculation if enabled; otherwise, just redraw.
         """
-        Debug(self, ".exit()")
-
-        Assert_Dialog(self.locked, "Invalid model access")
+        Debug(self, f".exit()")
+        Debug(self, f":  NOW VALID:  {'None' if str(self.gui.model) == '' else self.gui.model}")
 
         if self.recalculate:
             if self.gui.config.get_bool("auto_calculation"):
                 self.gui.recalculate()
             else:
                 self.gui.redraw()
-
-        self.locked = False

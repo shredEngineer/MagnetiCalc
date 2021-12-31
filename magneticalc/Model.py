@@ -19,6 +19,8 @@
 from typing import Optional, Dict
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
+from magneticalc.Field_Types import FIELD_TYPES_STR
+from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
 
 
@@ -48,13 +50,12 @@ class Model:
         self.wire = None                                    # Set in L{set_wire}            via L{Wire_Widget}
         self.sampling_volume = None                         # Set in L{set_sampling_volume} via L{SamplingVolume_Widget}
 
-        self._selected_field_type: Optional[int] = None     # Set in L{set_field}           via L{Field_Widget}
-        self._field_cache: Dict[int, Field] = {}            # Set in L{set_field}           via L{Field_Widget}
-
         self.metric = None                                  # Set in L{set_metric}          via L{Metric_Widget}
         self.parameters = None                              # Set in L{set_parameters}      via L{Parameters_Widget}
 
-    # ------------------------------------------------------------------------------------------------------------------
+        # Field cache and currently selected field
+        self._selected_field_type: Optional[int] = None     # Set in L{set_field}           via L{Field_Widget}
+        self._field_cache: Dict[int, Field] = {}            # Set in L{set_field}           via L{Field_Widget}
 
     @property
     def field(self) -> Optional[Field]:
@@ -83,27 +84,31 @@ class Model:
         @return: Field if cached and valid, None otherwise
         """
         field = self._field_cache.get(field_type, None)
-
-        if field is not None:
-            if field.is_valid():
-                return field
-
-        return None
+        return field.is_valid() if field else None
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    @staticmethod
+    def safe_valid(obj) -> bool:
+        """
+        Safely checks the validity state of a possibly uninitialized object within the model.
+        """
+        return obj.is_valid() if obj is not None else False
+
     def __str__(self) -> str:
         """
-        Returns the model state as a string; may be used for debugging.
+        Returns the model validity state as a string.
 
         @return: String
         """
-        return \
-            f"Wire           : {'VALID' if self.wire.is_valid() else '------'}\n" + \
-            f"SamplingVolume : {'VALID' if self.sampling_volume.is_valid() else '------'}\n" + \
-            f"Field          : {'VALID' if self.field.is_valid() else '------'}\n" + \
-            f"Metric         : {'VALID' if self.metric.is_valid() else '------'}" + \
-            f"Parameters     : {'VALID' if self.parameters.is_valid() else '------'}"
+        name_obj_map = {
+            "Wire": self.wire,
+            "SamplingVolume": self.sampling_volume,
+            "Field": self.field,
+            "Metric": self.metric,
+            "Parameters": self.parameters
+        }
+        return ", ".join([name for name, obj in name_obj_map.items() if self.safe_valid(obj)])
 
     def is_valid(self) -> bool:
         """
@@ -112,11 +117,11 @@ class Model:
         @return: True if data is valid for display, False otherwise
         """
         return \
-            self.wire.is_valid() and \
-            self.sampling_volume.is_valid() and \
-            self.field.is_valid() and \
-            self.metric.is_valid() and \
-            self.parameters.is_valid()
+            self.safe_valid(self.wire) and \
+            self.safe_valid(self.sampling_volume) and \
+            self.safe_valid(self.field) and \
+            self.safe_valid(self.metric) and \
+            self.safe_valid(self.parameters)
 
     def invalidate(
             self,
@@ -152,7 +157,7 @@ class Model:
             for field_type, field in self._field_cache.items():
                 if field.is_valid():
                     field.invalidate()
-                    Debug(self, f".invalidate(): Invalidated field of type {field_type}")
+                    Debug(self, f".invalidate(): Invalidated {FIELD_TYPES_STR[field_type]}", color=Theme.InvalidColor)
                     did_field_invalidation = True
             if did_field_invalidation:
                 self.on_field_invalid()
@@ -176,14 +181,16 @@ class Model:
         @param wire: Wire
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
-        self.invalidate(
-            do_wire=invalidate_self,
-            do_sampling_volume=True,
-            do_field=True,
-            do_metric=True,
-            do_parameters=True
-        )
-        self.wire = wire
+        with ModelAccess(self.gui, recalculate=False):
+
+            self.invalidate(
+                do_wire=invalidate_self,
+                do_sampling_volume=True,
+                do_field=True,
+                do_metric=True,
+                do_parameters=True
+            )
+            self.wire = wire
 
     def set_sampling_volume(self, sampling_volume, invalidate_self: bool):
         """
@@ -192,13 +199,15 @@ class Model:
         @param sampling_volume: Sampling volume
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
-        self.invalidate(
-            do_sampling_volume=invalidate_self,
-            do_field=True,
-            do_metric=True,
-            do_parameters=True
-        )
-        self.sampling_volume = sampling_volume
+        with ModelAccess(self.gui, recalculate=False):
+
+            self.invalidate(
+                do_sampling_volume=invalidate_self,
+                do_field=True,
+                do_metric=True,
+                do_parameters=True
+            )
+            self.sampling_volume = sampling_volume
 
     def set_field(self, field, invalidate_self: bool):
         """
@@ -207,12 +216,14 @@ class Model:
         @param field: Field
         @param invalidate_self: Enable to invalidate the old object (including the cache) before setting a new one
         """
-        self.invalidate(
-            do_field=invalidate_self,
-            do_metric=True,
-            do_parameters=True
-        )
-        self.field = field
+        with ModelAccess(self.gui, recalculate=False):
+
+            self.invalidate(
+                do_field=invalidate_self,
+                do_metric=True,
+                do_parameters=True
+            )
+            self.field = field
 
     def set_metric(self, metric, invalidate_self: bool):
         """
@@ -221,11 +232,13 @@ class Model:
         @param metric: Metric
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
-        self.invalidate(
-            do_metric=invalidate_self,
-            do_parameters=True
-        )
-        self.metric = metric
+        with ModelAccess(self.gui, recalculate=False):
+
+            self.invalidate(
+                do_metric=invalidate_self,
+                do_parameters=True
+            )
+            self.metric = metric
 
     def set_parameters(self, parameters, invalidate_self: bool):
         """
@@ -234,10 +247,12 @@ class Model:
         @param parameters: Parameters
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
-        self.invalidate(
-            do_parameters=invalidate_self
-        )
-        self.parameters = parameters
+        with ModelAccess(self.gui, recalculate=False):
+
+            self.invalidate(
+                do_parameters=invalidate_self
+            )
+            self.parameters = parameters
 
     # ------------------------------------------------------------------------------------------------------------------
 

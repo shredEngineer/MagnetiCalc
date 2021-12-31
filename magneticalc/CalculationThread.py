@@ -18,6 +18,7 @@
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from multiprocessing import cpu_count
+from magneticalc.ModelAccess import ModelAccess
 
 
 class CalculationThread(QThread):
@@ -62,66 +63,67 @@ class CalculationThread(QThread):
         """
         Thread main function.
         """
+        with ModelAccess(self.gui, recalculate=False):
 
-        if not self.gui.model.wire.is_valid():
-            self.gui.calculation_status.emit("Calculating Wire Segments...")
+            if not self.gui.model.wire.is_valid():
+                self.gui.calculation_status.emit("Calculating Wire Segments...")
 
-            if not self.gui.model.calculate_wire(self.progress_callback):
-                self.on_finished(False)
-                return
+                if not self.gui.model.calculate_wire(self.progress_callback):
+                    self.on_finished(False)
+                    return
 
-            self.wire_valid.emit()
+                self.wire_valid.emit()
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        if not self.gui.model.sampling_volume.is_valid():
-            self.gui.calculation_status.emit("Calculating Sampling Volume...")
+            if not self.gui.model.sampling_volume.is_valid():
+                self.gui.calculation_status.emit("Calculating Sampling Volume...")
 
-            if not self.gui.model.calculate_sampling_volume(self.progress_callback):
-                self.on_finished(False)
-                return
+                if not self.gui.model.calculate_sampling_volume(self.progress_callback):
+                    self.on_finished(False)
+                    return
 
-            self.sampling_volume_valid.emit()
+                self.sampling_volume_valid.emit()
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        if not self.gui.model.field.is_valid():
-            self.gui.calculation_status.emit("Calculating Field...")
+            if not self.gui.model.field.is_valid():
+                self.gui.calculation_status.emit("Calculating Field...")
 
-            num_cores = self.gui.config.get_int("num_cores")
-            if num_cores == 0:
-                # "Auto" setting
-                num_cores = max(1, cpu_count() - 1)
+                num_cores = self.gui.config.get_int("num_cores")
+                if num_cores == 0:
+                    # "Auto" setting
+                    num_cores = max(1, cpu_count() - 1)
 
-            success = self.gui.model.calculate_field(self.progress_callback, num_cores)
+                success = self.gui.model.calculate_field(self.progress_callback, num_cores)
 
-            if not success:
-                self.on_finished(False)
-                return
+                if not success:
+                    self.on_finished(False)
+                    return
 
-            self.field_valid.emit()
+                self.field_valid.emit()
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        if not self.gui.model.metric.is_valid():
-            self.gui.calculation_status.emit("Calculating Metric...")
+            if not self.gui.model.metric.is_valid():
+                self.gui.calculation_status.emit("Calculating Metric...")
 
-            if not self.gui.model.calculate_metric(self.progress_callback):
-                self.on_finished(False)
-                return
+                if not self.gui.model.calculate_metric(self.progress_callback):
+                    self.on_finished(False)
+                    return
 
-            self.metric_valid.emit()
+                self.metric_valid.emit()
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        if not self.gui.model.parameters.is_valid():
-            self.gui.calculation_status.emit("Calculating Parameters...")
+            if not self.gui.model.parameters.is_valid():
+                self.gui.calculation_status.emit("Calculating Parameters...")
 
-            if not self.gui.model.calculate_parameters(self.progress_callback):
-                self.on_finished(False)
-                return
+                if not self.gui.model.calculate_parameters(self.progress_callback):
+                    self.on_finished(False)
+                    return
 
-            self.parameters_valid.emit()
+                self.parameters_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

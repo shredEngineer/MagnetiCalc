@@ -22,7 +22,6 @@ import atexit
 import datetime
 from typing import Optional
 
-import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget, QMessageBox
@@ -33,6 +32,7 @@ from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
 from magneticalc.Model import Model
+from magneticalc.ModelAccess import ModelAccess
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
@@ -43,6 +43,9 @@ from magneticalc.VispyCanvas import VispyCanvas
 
 class GUI(QMainWindow):
     """ GUI class. """
+
+    # Used by L{Debug}
+    DebugColor = Theme.SuccessColor
 
     # Default configuration filename
     DefaultFilename = "MagnetiCalc.ini"
@@ -145,7 +148,7 @@ class GUI(QMainWindow):
         """
         Re-calculates the model.
         """
-        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+        Debug(self, ".recalculate()")
 
         if self.calculation_thread is not None:
             Debug(
@@ -403,7 +406,8 @@ class GUI(QMainWindow):
 
         if filename != "":
 
-            self.model.invalidate()
+            with ModelAccess(self.gui, recalculate=False):
+                self.model.invalidate()
 
             if not self.config.get_synced():
                 if self.confirm_saving_unsaved_work(cancelable=False):

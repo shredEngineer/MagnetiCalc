@@ -26,11 +26,11 @@ class Theme:
 
     PrimaryColor = "#2c82b8"
     LightColor = "#555555"
+    DarkColor = "#12344a"
 
     SuccessColor = "#2e7d32"
     WarningColor = "#c62828"
-
-    GroupHeaderColor = "#12344a"
+    InvalidColor = "#a00000"
 
     @staticmethod
     def get_icon(widget: QWidget, name: str):

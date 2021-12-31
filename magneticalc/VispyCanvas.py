@@ -36,7 +36,7 @@ class VispyCanvas(scene.SceneCanvas):
     DefaultFontSize = 9
 
     # Enable to additionally debug drawing of visuals
-    DebugVisuals = True
+    DebugVisuals = False
 
     # Enable to additionally debug perspective changes
     DebugPerspective = False
@@ -490,7 +490,8 @@ class VispyCanvas(scene.SceneCanvas):
         """
         n = len(self.gui.model.sampling_volume.get_labeled_indices())
 
-        Debug(self, f".create_field_labels(): Creating {n} labels …", color=(255, 0, 255), force=self.DebugVisuals)
+        if self.DebugVisuals:
+            Debug(self, f".create_field_labels(): Creating {n} labels …", color=(255, 0, 255), force=self.DebugVisuals)
 
         field_units = self.gui.model.field.get_units()
 
@@ -520,7 +521,8 @@ class VispyCanvas(scene.SceneCanvas):
 
             self.visual_field_labels.append(visual)
 
-        Debug(self, f".create_field_labels(): Created {n} labels", color=(255, 0, 255), force=self.DebugVisuals)
+        if self.DebugVisuals:
+            Debug(self, f".create_field_labels(): Created {n} labels", color=(255, 0, 255), force=self.DebugVisuals)
 
     def delete_field_labels(self):
         """
@@ -529,12 +531,13 @@ class VispyCanvas(scene.SceneCanvas):
         for visual in self.visual_field_labels:
             visual.parent = None
 
-        Debug(
-            self,
-            f".delete_field_labels(): Deleted {len(self.visual_field_labels)}",
-            color=(255, 0, 255),
-            force=self.DebugVisuals
-        )
+        if self.DebugVisuals:
+            Debug(
+                self,
+                f".delete_field_labels(): Deleted {len(self.visual_field_labels)}",
+                color=(255, 0, 255),
+                force=self.DebugVisuals
+            )
 
         self.visual_field_labels = []
 

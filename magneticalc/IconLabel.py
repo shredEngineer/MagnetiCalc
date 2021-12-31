@@ -34,8 +34,8 @@ class IconLabel(QWidget):
             self,
             qta_id: str,
             text: str,
-            icon_color: str = Theme.GroupHeaderColor,
-            label_color: str = Theme.GroupHeaderColor,
+            icon_color: str = Theme.DarkColor,
+            label_color: str = Theme.DarkColor,
             final_stretch: bool = True,
             font: Optional[QFont] = None,
             size: Optional[QSize] = None

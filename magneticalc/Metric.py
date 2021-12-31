@@ -183,7 +183,7 @@ class Metric:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=(128, 0, 0))
+        Debug(self, ".invalidate()", color=Theme.InvalidColor)
 
         self._colors = None
         self._limits = None
@@ -364,7 +364,7 @@ class Metric:
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
         """
-        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+        Debug(self, ".recalculate()")
 
         n = len(field.get_vectors())
 

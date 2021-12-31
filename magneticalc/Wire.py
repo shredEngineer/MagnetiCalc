@@ -92,7 +92,7 @@ class Wire:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=(128, 0, 0))
+        Debug(self, ".invalidate()", color=Theme.InvalidColor)
 
         self._points_sliced = None
         self._length = None
@@ -235,7 +235,7 @@ class Wire:
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".recalculate()", color=Theme.SuccessColor)
+        Debug(self, ".recalculate()")
 
         points_sliced = []
         length = 0

@@ -22,7 +22,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
-from magneticalc.Version import Version
+from magneticalc.Version import Version, __URL__
 from urllib.parse import urlencode, quote_plus
 
 
@@ -60,7 +60,7 @@ class Assert_Dialog:
 
         # Generate Github issue URL
         issue_url = \
-            f"https://github.com/shredEngineer/MagnetiCalc/issues/new?" + \
+            f"{__URL__}/issues/new?" + \
             urlencode(
                 {
                     "title": f"Assertion failed: {self.message}",

@@ -16,24 +16,29 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional
 import qtawesome as qta
+from PyQt5.Qt import QFont
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel
+from magneticalc.Theme import Theme
 
 
 class IconLabel(QWidget):
     """ IconLabel class. """
 
-    IconSize = QSize(16, 16)
+    Size = QSize(16, 16)
     HorizontalSpacing = 1
 
     def __init__(
             self,
             qta_id: str,
             text: str,
-            icon_color: str = "#12344a",
-            label_color: str = "#12344a",
-            final_stretch: bool = True
+            icon_color: str = Theme.GroupHeaderColor,
+            label_color: str = Theme.GroupHeaderColor,
+            final_stretch: bool = True,
+            font: Optional[QFont] = None,
+            size: Optional[QSize] = None
     ):
         """
         Initializes the icon label.
@@ -43,6 +48,8 @@ class IconLabel(QWidget):
         @param icon_color: Icon color
         @param label_color: Label color
         @param final_stretch: Enable to add a final stretch
+        @param font: QFont
+        @param size: Icon size
         """
         QWidget.__init__(self)
 
@@ -52,7 +59,7 @@ class IconLabel(QWidget):
 
         if qta_id is not None:
             icon = QLabel()
-            icon.setPixmap(qta.icon(qta_id, color=icon_color).pixmap(self.IconSize))
+            icon.setPixmap(qta.icon(qta_id, color=icon_color).pixmap(size if size else self.Size))
             self.layout.addWidget(icon, alignment=Qt.AlignVCenter)
             self.layout.addSpacing(self.HorizontalSpacing)
 
@@ -61,6 +68,8 @@ class IconLabel(QWidget):
             color: {label_color};
             font-weight: bold;
         """)
+        if font:
+            label.setFont(font)
         self.layout.addWidget(label, alignment=Qt.AlignVCenter)
 
         if final_stretch:

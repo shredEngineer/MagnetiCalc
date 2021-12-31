@@ -24,17 +24,16 @@ from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
 from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
+from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
 from magneticalc.Debug import Debug
 from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
+from magneticalc.Version import __URL__
 
 
 class Menu:
     """ Menu class. """
-
-    # MagnetiCalc GitHub repository URL
-    GitHubURL = "https://github.com/shredEngineer/MagnetiCalc"
 
     # List of available backends
     Backends_List = {
@@ -160,7 +159,11 @@ class Menu:
         help_menu = QMenu("&Help", self.gui)
         help_menu.addAction(qta.icon("fa.info"), "&Usage …", lambda: Usage_Dialog().show(), Qt.Key_F1)
         help_menu.addSeparator()
-        help_menu.addAction(qta.icon("fa.github"), "&GitHub Repository …", partial(webbrowser.open, Menu.GitHubURL))
+        help_menu.addAction(
+            qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show(),
+            Qt.Key_F2
+        )
+        help_menu.addAction(qta.icon("fa.github"), "&GitHub Repository …", partial(webbrowser.open, __URL__))
         help_menu.addSeparator()
         help_menu.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)

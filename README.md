@@ -229,7 +229,6 @@ ToDo
 * Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
 * Add a global settings dialog for some selection of options currently hard-coded in various classes.
 * Add "Overwrite Existing File?" dialogs for "Save As" and "Export" actions.
-* Add "Check for Updates" functionality.
 
 **Functional**
 * Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).

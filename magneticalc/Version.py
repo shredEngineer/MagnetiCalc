@@ -20,6 +20,10 @@
 __VERSION__ = "v1.10.1"
 
 
+__URL__ = "https://github.com/shredEngineer/MagnetiCalc"
+__VERSION__URL__ = "https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/magneticalc/Version.py"
+
+
 class Version:
     """ Version class. """
 

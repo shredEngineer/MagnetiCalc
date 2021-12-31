@@ -128,7 +128,7 @@ import sys
 ```
 
 ### A-2: Automatic install via pip (Windows 10)
-Tested with Python 3.8.10 (may require [Visual C++ Redistributable Packages for Visual Studio 2017.](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) but try without first)
+Tested with Python 3.8.10 (may require [Visual C++ Redistributable Packages for Visual Studio 2017](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) but try without first)
 ```shell
 python -m pip install --upgrade pip
 python -m pip install --upgrade scipy
@@ -136,6 +136,7 @@ python -m install --upgrade magneticaclc
 python -m magneticalc
 ```
 **Note:** Installation will succeed without `scipy` installed but the program will crash on `np.dot` due to a dependency for linear algebra.
+
 **Note:** For Python >=3.9 installation will fail because there is not currently an official wheel for `llvmlite` but it might be possible to find an unofficial wheel. This is not recommended.
 
 ### Option B: Manual download

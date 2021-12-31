@@ -169,23 +169,27 @@ which provides basic functions for importing/exporting data programmatically.
 
 For example, the following code generates a wire shape and exports it to a TXT file: 
 ```python
-from magneticalc.API import API
+from magneticalc import API
 import numpy as np
+
 wire = [
     (np.cos(a), np.sin(a), np.sin(16 * a))
     for a in np.linspace(0, 2 * np.pi, 200)
 ]
+
 API.export_wire("MyWire.txt", wire)
 ```
 
 And this code imports an HDF5 container containing a <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field (which needs to be generated using the GUI first):
 ```python
-from magneticalc.API import API
+from magneticalc import API
 import matplotlib.pyplot as plt
+
 data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
 fields = data["fields"]
 x, y, z = fields["x"], fields["y"], fields["z"]
 A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
+
 ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
 ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
 plt.show()

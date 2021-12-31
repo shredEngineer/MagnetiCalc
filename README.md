@@ -130,7 +130,7 @@ import sys
 ### Option B: Manual download
 First, manually install all dependency packages (upgrading each to the latest version):
 ```shell
-python3 -m pip install numpy numba PyQt5 vispy qtawesome colorit si-prefix --upgrade
+python3 -m pip install numpy numba PyQt5 vispy qtawesome colorit si-prefix h5py --upgrade
 ```
 
 Clone the latest version of MagnetiCalc from GitHub and start it directly: 

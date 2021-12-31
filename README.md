@@ -226,7 +226,7 @@ provides basic functions for importing/exporting data programmatically:
     ```
 
   Data is always exported as 1D raveled arrays, which is the native format of MagnetiCalc. 
-  If required, a list of 3D points can be obtained like this:
+  If required, a list of 3D points (tuples) can be obtained like this:
   ```python
   points = list(zip(*[data["fields"][i] for i in ["x", "y", "z"]]))
   ```

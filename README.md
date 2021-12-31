@@ -204,7 +204,7 @@ points = [(x, y, z) for x, y, z in zip(data['fields']['x'], data['fields']['y'],
 ```
 This is the native format of `MagnetiCalc` and is ammenable to use with `quiver`.
 However, for visualising a slice of the magnitude of a field or a field component in a plane and for integrating over the axes it may be preferrable to have
-minimal one-dimensional representations of the axes and the field components arranged in three-dimensional arrays with `axis0 -> x`,  `axis0 -> y`, and  `axis0 -> z`.
+minimal one-dimensional representations of the axes and the field components arranged in three-dimensional arrays with `axis0 -> x`,  `axis1 -> y`, and  `axis2 -> z`.
 This reformatting if facilitated by
 ```
 data_reshape = API.reshape_fields(data)

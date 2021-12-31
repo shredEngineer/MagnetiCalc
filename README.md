@@ -195,17 +195,17 @@ provides basic functions for importing/exporting data programmatically:
 [API class documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html).
 
 * Generate a wire shape using [NumPy](https://numpy.org/) and export it to a TXT file: 
-```python
-from magneticalc import API
-import numpy as np
-
-wire = [
-    (np.cos(a), np.sin(a), np.sin(16 * a))
-    for a in np.linspace(0, 2 * np.pi, 200)
-]
-
-API.export_wire("MyWire.txt", wire)
-```
+  ```python
+  from magneticalc import API
+  import numpy as np
+  
+  wire = [
+      (np.cos(a), np.sin(a), np.sin(16 * a))
+      for a in np.linspace(0, 2 * np.pi, 200)
+  ]
+  
+  API.export_wire("MyWire.txt", wire)
+  ```
 
 * Import an HDF5 file containing an
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field

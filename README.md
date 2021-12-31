@@ -92,7 +92,7 @@ Screenshot
 
 Installation
 ------------
-Tested with Python 3.8 in Ubuntu 20.04.
+Tested with Python 3.8 in Ubuntu 20.04 and Python 3.7 in Linux Mint 19.3.
 
 If you have trouble installing MagnetiCalc,
 make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
@@ -126,6 +126,18 @@ import sys
 !{sys.executable} -m pip install magneticalc --upgrade
 !{sys.executable} -m magneticalc
 ```
+
+### A-2: Automatic install via pip (Windows 10)
+Tested with Python 3.8.10 (may require [Visual C++ Redistributable Packages for Visual Studio 2017](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) but try without first)
+```shell
+python -m pip install --upgrade pip
+python -m pip install --upgrade scipy
+python -m install --upgrade magneticaclc
+python -m magneticalc
+```
+**Note:** Installation will succeed without `scipy` installed but the program will crash on `np.dot` due to a dependency for linear algebra.
+
+**Note:** For Python >=3.9 installation will fail because there is not currently an official wheel for `llvmlite` but it might be possible to find an unofficial wheel. This is not recommended.
 
 ### Option B: Manual download
 First, manually install all dependency packages (upgrading each to the latest version):
@@ -196,6 +208,18 @@ A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
 ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
 ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
 plt.show()
+```
+
+The default format for exported data is one-dimensional raveled arrays such that a list of tuple representing points in cartesian space is given by
+```python
+points = [(x, y, z) for x, y, z in zip(data['fields']['x'], data['fields']['y'], data['fields']['z'])]
+```
+This is the native format of `MagnetiCalc` and is ammenable to use with `quiver`.
+However, for visualising a slice of the magnitude of a field or a field component in a plane and for integrating over the axes it may be preferrable to have
+minimal one-dimensional representations of the axes and the field components arranged in three-dimensional arrays with `axis0 -> x`,  `axis1 -> y`, and  `axis2 -> z`.
+This reformatting if facilitated by
+```python
+data_reshape = API.reshape_fields(data)
 ```
 
 License

@@ -84,7 +84,7 @@ class Model:
         @return: Field if cached and valid, None otherwise
         """
         field = self._field_cache.get(field_type, None)
-        return field.is_valid() if field else None
+        return (field if field.is_valid() else None) if field is not None else None
 
     # ------------------------------------------------------------------------------------------------------------------
 

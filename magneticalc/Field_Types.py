@@ -21,6 +21,6 @@ A_FIELD = 0
 B_FIELD = 1
 
 FIELD_TYPES_STR = {
-    A_FIELD: "A_FIELD",
-    B_FIELD: "B_FIELD"
+    A_FIELD: "A-Field",
+    B_FIELD: "B-Field"
 }

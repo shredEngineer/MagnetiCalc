@@ -122,28 +122,27 @@ python3 -m pip install pip --upgrade
 
 ### Option A: Automatic install via pip
 
+This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
+
 #### Linux
-Install (or upgrade) MagnetiCalc to the user site-packages directory and start it from there: 
 ```shell
 python3 -m pip install magneticalc --upgrade
 python3 -m magneticalc
 ```
-This will automatically install all dependency packages.
 
 #### Windows
-Install (or upgrade) MagnetiCalc to the user site-packages directory and start it from there:
 
 ```shell
 python -m pip install --upgrade scipy
 python -m install --upgrade magneticaclc
 python -m magneticalc
 ```
-This will automatically install SciPy and all dependency packages.
 
-*Note:* Although installation would succeed without installing SciPy first, MagnetiCalc would crash upon calling the `np.dot` function due to missing dependencies.
+*Note:*
+* Although installation would succeed without installing SciPy first, MagnetiCalc would crash upon calling the `np.dot` function due to missing dependencies.
 
-*Note:* Installation will fail for Python >= 3.9 because there is no official wheel for `llvmlite` available currently
-(it might be possible to find an unofficial wheel, but this is not recommended).
+* Installation will currently fail for Python >= 3.9, because there is no official wheel available for the `llvmlite` package dependency.
+(It might be possible to find an unofficial wheel, but this is not recommended).
 
 #### Juptyer Notebook
 From within a Jupyter Notebook, MagnetiCalc must be installed and run like this (Ubuntu 20.04):
@@ -166,12 +165,13 @@ cd MagnetiCalc
 python3 -m magneticalc
 ```
 
-For debugging, you may now also install (uninstall) the package in a virtual environment:
-```shell
-python3 -m pip install .
-…
-python3 -m pip uninstall magneticalc -y
-``` 
+*Note:*
+* For debugging, you may also install (uninstall) the package in a virtual environment:
+  ```shell
+  python3 -m pip install .
+  …
+  python3 -m pip uninstall magneticalc -y
+  ``` 
 
 ### Enabling CUDA Support
 

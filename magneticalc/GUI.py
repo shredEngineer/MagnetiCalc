@@ -44,8 +44,11 @@ from magneticalc.VispyCanvas import VispyCanvas
 class GUI(QMainWindow):
     """ GUI class. """
 
+    # Minimum window size
+    MinimumWindowSize = (800, 600)
+
     # Used by L{Debug}
-    DebugColor = Theme.SuccessColor
+    DebugColor = Theme.PrimaryColor
 
     # Default configuration filename
     DefaultFilename = "MagnetiCalc-DefaultProject.ini"
@@ -65,6 +68,7 @@ class GUI(QMainWindow):
         self.locale = QLocale(QLocale.English)
 
         self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
+        self.setMinimumSize(*self.MinimumWindowSize)
         self.showMaximized()
 
         self.config = Config()

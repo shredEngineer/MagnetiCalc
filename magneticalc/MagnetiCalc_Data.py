@@ -92,7 +92,9 @@ class MagnetiCalc_Data(MutableMapping):
 
         if as_3d:
             shape_3d = self.get_dimension()
-            field_x, field_y, field_z = np.reshape(field_x, shape_3d, order="F"), np.reshape(field_z, shape_3d, order="F"), np.reshape(field_x, shape_3d, order="F")
+            field_x = np.reshape(field_x, shape_3d, order="F")
+            field_y = np.reshape(field_y, shape_3d, order="F")
+            field_z = np.reshape(field_z, shape_3d, order="F")
 
         return field_x, field_y, field_z
 

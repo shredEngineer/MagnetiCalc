@@ -104,6 +104,7 @@ Tested with:
 * Python 3.8 in Ubuntu 20.04
 * Python 3.7 in Linux Mint 19.3
 * Python 3.8.10 in Windows 10 (21H2)
+* Python 3.8.2 in macOS 11.6, Apple M1 (2020)
 
 ### Prerequisites
 On some systems, it may be necessary to upgrade pip first:
@@ -124,10 +125,16 @@ Installation will currently fail for Python 3.9+ due to missing dependencies.
 
 On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
 
+#### macOS
+On Apple Silicon, make sure to enable [Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/) for the Terminal app
+before installing and starting MagnetiCalc.
+
+*Note:* Might be unstable.
+
 ### Option A: Automatic install via pip
 This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
 
-#### Linux
+#### Linux & macOS
 ```shell
 python3 -m pip install magneticalc --upgrade
 python3 -m magneticalc

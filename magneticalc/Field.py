@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Tuple
 import numpy as np
 from numba import jit, prange, set_num_threads
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -79,16 +80,23 @@ class Field:
         """
         return self._field_type
 
-    def get_units(self) -> str:
+    def get_units(self, show_gauss=False) -> Tuple[str, float]:
         """
         Gets field units.
 
-        @return: Field units
+        @param show_gauss: Enable to show Gauss instead of Tesla
+        @return: Field units, field factor
         """
-        return {
-            A_FIELD: "Tm",  # Tesla · meter
-            B_FIELD: "T"    # Tesla
-        }.get(self._field_type, None)
+        if show_gauss:
+            return {
+                A_FIELD: "Gs·m",    # Gauss · meter
+                B_FIELD: "Gs"       # Gauss
+            }.get(self._field_type, None), 1e4
+        else:
+            return {
+                A_FIELD: "T·m",     # Tesla · meter
+                B_FIELD: "T"        # Tesla
+            }.get(self._field_type, None), 1e0
 
     def get_vectors(self):
         """

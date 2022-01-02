@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from inspect import isclass, stack
-from sty import fg, ef
+from sty import fg, ef, rs
 
 
 # Enable to see JIT debug output
@@ -138,4 +138,4 @@ class Debug:
         else:
             color_text = fg(*color) + ef.bold + name + ef.rs + text + fg.rs
 
-        print(fg(128, 128, 128) + hierarchy + fg.rs + color_text + "\n", end="")
+        print(fg(128, 128, 128) + hierarchy + fg.rs + color_text + rs.all + "\n", end="")

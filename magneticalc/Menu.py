@@ -126,6 +126,12 @@ class Menu:
         self.add_config_bound_checkbox("Show Wire Points", "show_wire_points", view_menu, self.gui.redraw)
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Colored Labels", "show_colored_labels", view_menu, self.gui.redraw)
+        self.add_config_bound_checkbox(
+            "Show Gauss (Gs) instead of Tesla (T)",
+            "show_gauss",
+            view_menu,
+            self.on_show_gauss_changed
+        )
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox("Show Perspective Info", "show_perspective_info", view_menu, self.gui.redraw)
@@ -194,7 +200,17 @@ class Menu:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_backend_changed(self, index):
+    def on_show_gauss_changed(self) -> None:
+        """
+        Gets called when the "Show Gauss instead of Tesla" option changed.
+        """
+        self.gui.sidebar_right.metric_widget.update_labels()
+        self.gui.vispy_canvas.delete_field_labels()
+        self.gui.redraw()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_backend_changed(self, index) -> None:
         """
         Gets called when the backend changed.
 

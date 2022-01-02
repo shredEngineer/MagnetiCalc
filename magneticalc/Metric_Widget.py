@@ -214,7 +214,8 @@ class Metric_Widget(QGroupBox2):
 
             limits = self.gui.model.metric.get_limits()
 
-            field_units = self.gui.model.field.get_units()
+            show_gauss = self.gui.config.get_bool("show_gauss")
+            field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
 
             if self.gui.model.metric.get_color_preset()["is_angle"]:
                 color_label_min = "0°"
@@ -231,7 +232,7 @@ class Metric_Widget(QGroupBox2):
                 else:
                     color_label_min = color_log_prefix +\
                         si_format(
-                            limits["color_min"],
+                            limits["color_min"] * field_factor,
                             precision=self.ValuePrecision,
                             exp_format_str="{value}e{expof10} "
                         ) +\
@@ -242,7 +243,7 @@ class Metric_Widget(QGroupBox2):
                 else:
                     color_label_max = color_log_prefix +\
                         si_format(
-                            limits["color_max"],
+                            limits["color_max"] * field_factor,
                             precision=self.ValuePrecision,
                             exp_format_str="{value}e{expof10} "
                         ) +\
@@ -269,7 +270,7 @@ class Metric_Widget(QGroupBox2):
                 else:
                     alpha_label_min = alpha_log_prefix +\
                         si_format(
-                            limits["alpha_min"],
+                            limits["alpha_min"] * field_factor,
                             precision=self.ValuePrecision,
                             exp_format_str="{value}e{expof10} "
                         ) +\
@@ -280,7 +281,7 @@ class Metric_Widget(QGroupBox2):
                 else:
                     alpha_label_max = alpha_log_prefix +\
                         si_format(
-                            limits["alpha_max"],
+                            limits["alpha_max"] * field_factor,
                             precision=self.ValuePrecision,
                             exp_format_str="{value}e{expof10} "
                         ) +\

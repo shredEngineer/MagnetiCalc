@@ -77,6 +77,7 @@ class Config:
         "show_wire_segments"                        : "True",
         "show_wire_points"                          : "True",
         "show_colored_labels"                       : "True",
+        "show_gauss"                                : "False",
         "show_coordinate_system"                    : "True",
         "show_perspective_info"                     : "True",
         "dark_background"                           : "True",

@@ -493,7 +493,8 @@ class VispyCanvas(scene.SceneCanvas):
         if self.DebugVisuals:
             Debug(self, f".create_field_labels(): Creating {n} labels …", color=(255, 0, 255), force=self.DebugVisuals)
 
-        field_units = self.gui.model.field.get_units()
+        show_gauss = self.gui.config.get_bool("show_gauss")
+        field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
 
         # Iterate through the labeled sampling volume points
         for i in range(n):
@@ -504,7 +505,7 @@ class VispyCanvas(scene.SceneCanvas):
                 text = "NaN"
             else:
                 text = si_format(
-                    magnitude,
+                    magnitude * field_factor,
                     precision=VispyCanvas.MagnitudePrecision,
                     exp_format_str="{value}e{expof10} "
                 ) + field_units

@@ -1,6 +1,4 @@
-#!/bin/usr/env python3
-
-""" MagnetiCalc main module. """
+""" QMessageBox2 module. """
 
 #  ISC License
 #
@@ -18,36 +16,34 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import os
-import sys
-from sty import ef
-from PyQt5.QtWidgets import QApplication
-from magneticalc.GUI import GUI
-from magneticalc.Version import Version
+from PyQt5.QtWidgets import QMessageBox
 
 
-def main():
-    """ MagnetiCalc main function. """
+class QMessageBox2(QMessageBox):
+    """ QMessageBox2 class. """
 
-    if sys.platform == "win32":
-        os.system("color")
+    # noinspection PyShadowingBuiltins
+    def __init__(
+            self,
+            title: str,
+            text: str,
+            icon,
+            buttons,
+            default_button
+    ) -> None:
+        """
+        Initializes a message box.
 
-    print()
-    print(ef.bold + Version.String + ef.rs)
-    print(Version.Copyright)
-    print(Version.License)
-    print()
-
-    app = QApplication(sys.argv)
-
-    gui = GUI()
-
-    gui.show()
-
-    rc = app.exec()
-
-    sys.exit(rc)
-
-
-if __name__ == "__main__":
-    main()
+        @param title: Title
+        @param text: Text
+        @param icon: Icon
+        @param buttons: Buttons
+        @param default_button: Default button
+        """
+        QMessageBox.__init__(self)
+        self.setWindowTitle(title)
+        self.setText(text)
+        self.setIcon(icon)
+        self.setStandardButtons(buttons)
+        self.setDefaultButton(default_button)
+        self.choice = self.exec()

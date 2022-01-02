@@ -1,4 +1,4 @@
-""" BiotSavart_JIT module. """
+""" Backend_JIT module. """
 
 #  ISC License
 #
@@ -25,9 +25,10 @@ from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
 
 
-class BiotSavart_JIT:
+class Backend_JIT:
     """
     Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field).
+    Backend: JIT.
     """
 
     def __init__(
@@ -125,7 +126,7 @@ class BiotSavart_JIT:
         # Fetch resulting vectors
         for i in range(len(self._sampling_volume_points)):
 
-            tup = BiotSavart_JIT.worker(
+            tup = Backend_JIT.worker(
                 self.field_type,
                 self._distance_limit,
                 self._length_scale,

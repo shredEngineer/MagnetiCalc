@@ -18,22 +18,18 @@
 
 import qtawesome as qta
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton, QSizePolicy
+from PyQt5.QtWidgets import QPushButton, QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
-from magneticalc.IconLabel import IconLabel
-from magneticalc.Table import Table
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.Theme import Theme
+from magneticalc.QDialog2 import QDialog2
+from magneticalc.QTextBrowser2 import QTextBrowser2
 
 
-class Constraint_Editor(QDialog):
+class Constraint_Editor(QDialog2):
     """ Constraint_Editor class. """
-
-    # Window dimensions
-    Width = 666
-
-    # Description dimensions
-    DescriptionHeight = 210
 
     # Constraint types
     Constraint_Types = {
@@ -59,7 +55,7 @@ class Constraint_Editor(QDialog):
 
         @param gui: GUI
         """
-        QDialog.__init__(self)
+        QDialog2.__init__(self, title="Constraint Editor", width=700)
 
         self.gui = gui
 
@@ -67,36 +63,32 @@ class Constraint_Editor(QDialog):
 
         self._changed = None
 
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        table_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
-        table_add_button = QPushButton(" Add constraint")  # Leading space for alignment
+        table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
+        table_add_button = QPushButton(" Add constraint")
         table_add_button.setIcon(qta.icon("fa.plus"))
         table_add_button.clicked.connect(self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
-        layout.addWidget(table_icon_label, alignment=Qt.AlignTop)
+        self.layout.addLayout(table_icon_label)
 
-        self.table = Table(
+        self.table = QTableWidget2(
             self.gui,
             cell_edited_callback=self.on_table_cell_edited,
             row_deleted_callback=self.on_table_row_deleted
         )
-        self.table.setMinimumWidth(self.Width)
         self.table.set_horizontal_header(["Norm", "Comparison", "Min.", "Max.", "µ (relative)"])
         self.table.set_vertical_prefix("constraint_")
         self.table.set_horizontal_types(self.Constraint_Types)
         self.table.set_horizontal_options(self.Constraint_Options)
-        layout.addWidget(self.table)
+        self.layout.addWidget(self.table)
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        # HTML description
+        # HTML content
         html = f"""
-            Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br><br>
+            Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br>
 
             <b style="color: {Theme.PrimaryColor};">Experimental Feature</b><br><br>
 
@@ -104,33 +96,16 @@ class Constraint_Editor(QDialog):
             A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
             Constraints of identical permeability are effectively intersected (logical AND).<br>
             In case of ambiguous constraints, the ones with maximum permeability take precedence.<br>
-            Setting the permeability of some region to zero locally disables the field calculation.<br>
+            Setting the permeability of some region to zero locally disables the field calculation.
         """
 
-        text_browser = QTextBrowser()
-        text_browser.setMinimumWidth(self.Width)
-        text_browser.setMinimumHeight(self.DescriptionHeight)
-        text_browser.setMaximumHeight(self.DescriptionHeight)
-        text_browser.setStyleSheet("""
-            background: palette(window);
-            border: none;
-            line-height: 20px;
-        """)
-        text_browser.setOpenExternalLinks(True)
-        text_browser.insertHtml(html)
-        text_browser.setFocusPolicy(Qt.NoFocus)
-        cursor = text_browser.textCursor()
-        cursor.setPosition(0)
-        text_browser.setTextCursor(cursor)
-        layout.addWidget(text_browser, alignment=Qt.AlignBottom)
+        text_browser = QTextBrowser2(html=html)
+        self.dialog_shown.connect(text_browser.fit_to_contents)
+        self.addWidget(text_browser)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        button_box = QHBoxLayout()
-        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
-        ok_button.clicked.connect(self.accept)
-        button_box.addWidget(ok_button, alignment=Qt.AlignBottom)
-        layout.addLayout(button_box)
+        self.addButtons({
+            "OK": ("fa.check", self.accept)
+        })
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

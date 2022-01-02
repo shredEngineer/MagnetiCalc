@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from inspect import isclass, stack
-from colorit import color_front, bold
+from sty import fg, ef
 
 
 # Enable to see JIT debug output
@@ -34,23 +34,21 @@ class Debug:
         "API",
         "Assert_Dialog",
         "Backend_Types",
-        "BiotSavart_CUDA",
-        "BiotSavart_JIT",
+        "Backend_CUDA",
+        "Backend_JIT",
         "CalculationThread",
         "CheckForUpdates_Dialog",
         # "Config",
         "Constants",
         "Constraint",
         "Constraint_Editor",
+
         "Display_Widget",
         "ExportContainer_Dialog",
         "Field",
         "Field_Types",
         "Field_Widget",
-        "Groupbox",
         "GUI",
-        "HLine",
-        "IconLabel",
         "Menu",
         "Metric",
         "Metric_Presets",
@@ -62,14 +60,25 @@ class Debug:
         "Parameters_Widget",
         "Perspective_Presets",
         "Perspective_Widget",
-        "QtWidgets2",
+        "QButtons",
+        "QDialog2",
+        "QGroupBox2",
+        "QHBoxLayout2",
+        "QHLine",
+        "QIconLabel",
+        "QLabel2",
+        "QLayouted",
+        "QMessageBox2",
+        "QSaveAction",
+        "QSliderFloat",
+        "QSpinBox2",
+        # "QTableWidget2",
+        "QTextBrowser2",
         "SamplingVolume",
         # "SamplingVolume_Widget",
         "SidebarLeft",
         "SidebarRight",
-        "SliderFloat",
         "Statusbar",
-        # "Table",
         "Theme",
         "Usage_Dialog",
         "Version",
@@ -125,8 +134,8 @@ class Debug:
 
         if color == (0, 0, 0):
             # Allow a terminal use its own foreground color
-            color_text = bold(name) + text
+            color_text = ef.bold + name + ef.rs + text
         else:
-            color_text = color_front(bold(name), *color) + color_front(text, *color)
+            color_text = fg(*color) + ef.bold + name + ef.rs + text + fg.rs
 
-        print(color_front(hierarchy, 128, 128, 128) + color_text + "\n", end="")
+        print(fg(128, 128, 128) + hierarchy + fg.rs + color_text + "\n", end="")

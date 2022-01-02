@@ -17,20 +17,18 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import webbrowser
-import qtawesome as qta
 from functools import partial
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version
+from magneticalc.QDialog2 import QDialog2
+from magneticalc.QTextBrowser2 import QTextBrowser2
 
 
-class About_Dialog(QDialog):
+class About_Dialog(QDialog2):
     """ About_Dialog class. """
 
-    # Window dimensions
-    Width = 550
-    Height = 340
+    # Donation URL
+    DonationURL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url"
 
     # HTML content
     HTML = f"""
@@ -58,56 +56,21 @@ class About_Dialog(QDialog):
         <span style="color: {Theme.PrimaryColor}; font-weight: bold;">
             If you like this software, please consider buying me a coffee!&nbsp; :)
         </span>
+        <br>
         """
-
-    # Donation URL
-    DonateURL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url"
 
     def __init__(self):
         """
         Initializes "About" dialog.
         """
+        QDialog2.__init__(self, title="About", width=640)
 
-        QDialog.__init__(self)
+        text_browser = QTextBrowser2(html=self.HTML)
+        self.dialog_shown.connect(text_browser.fit_to_contents)
+        self.addWidget(text_browser)
 
-        self.setWindowTitle("About")
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        text_browser = QTextBrowser()
-        text_browser.setMinimumWidth(self.Width)
-        text_browser.setMinimumHeight(self.Height)
-        text_browser.setStyleSheet("""
-            background: palette(window);
-            border: none;
-            line-height: 20px;
-        """)
-        text_browser.setOpenExternalLinks(True)
-        text_browser.insertHtml(About_Dialog.HTML)
-        text_browser.setFocusPolicy(Qt.NoFocus)
-        layout.addWidget(text_browser)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        button_box = QHBoxLayout()
-
-        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
-        ok_button.clicked.connect(self.accept)
-        button_box.addWidget(ok_button)
-
-        donate_button = QPushButton(qta.icon("fa.paypal"), " Donate 3€ …")  # Leading space for alignment
-        donate_button.clicked.connect(partial(webbrowser.open, About_Dialog.DonateURL))
-        button_box.addWidget(donate_button)
-
-        layout.addLayout(button_box)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self):
-        """
-        Shows this dialog.
-        """
-        self.exec()
+        buttons = self.addButtons({
+            "OK": ("fa.check", self.accept),
+            "Donate 3€ …": ("fa.paypal", partial(webbrowser.open, About_Dialog.DonationURL))
+        })
+        buttons[0].setFocus()

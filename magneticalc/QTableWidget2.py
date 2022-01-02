@@ -1,4 +1,4 @@
-""" Table module. """
+""" QTableWidget2 module. """
 
 #  ISC License
 #
@@ -25,8 +25,8 @@ from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
 
-class Table(QTableWidget):
-    """ Table class. """
+class QTableWidget2(QTableWidget):
+    """ QTableWidget2 class. """
 
     # Display settings
     MinimumHeight = 150
@@ -44,7 +44,7 @@ class Table(QTableWidget):
             minimum_rows: int = 0,
     ):
         """
-        Initializes table.
+        Initializes a table.
 
         @param gui: GUI
         @param cell_edited_callback: Set this to make cells editable
@@ -69,10 +69,13 @@ class Table(QTableWidget):
         self._options = None
 
         if self._cell_edited_callback is not None:
+            # noinspection PyUnresolvedReferences
             self.itemChanged.connect(self.on_numerical_cell_edited)
+            # noinspection PyUnresolvedReferences
             self.cellChanged.connect(self.on_cell_changed)
 
         if self._selection_changed_callback is not None:
+            # noinspection PyUnresolvedReferences
             self.selectionModel().selectionChanged.connect(self.on_selection_changed)
 
         self.set_style(border_color="black", border_width=1)
@@ -377,6 +380,7 @@ class Table(QTableWidget):
                             if text == self.gui.config.get_str(self._prefix + key + "_" + str(row_index)):
                                 combobox.setCurrentIndex(i)
 
+                    # noinspection PyUnresolvedReferences
                     combobox.currentIndexChanged.connect(
                         partial(self.on_combobox_cell_edited, combobox, row_index, col_index)
                     )
@@ -414,6 +418,8 @@ class Table(QTableWidget):
                 """)
 
                 if self.rowCount() > self._minimum_rows:
+                    # noinspection PyUnresolvedReferences
+
                     # Allow this row to be deleted
                     delete_button.clicked.connect(partial(self.on_row_deleted, row_index))
                 else:

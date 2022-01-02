@@ -22,12 +22,12 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Groupbox import Groupbox
+from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.Parameters import Parameters
 from magneticalc.Theme import Theme
 
 
-class Parameters_Widget(Groupbox):
+class Parameters_Widget(QGroupBox2):
     """ Parameters_Widget class. """
 
     # Formatting settings
@@ -39,7 +39,7 @@ class Parameters_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Parameters")
+        QGroupBox2.__init__(self, "Parameters")
 
         self.gui = gui
 

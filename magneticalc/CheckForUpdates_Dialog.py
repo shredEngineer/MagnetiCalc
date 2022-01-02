@@ -19,74 +19,72 @@
 import re
 from urllib.request import urlopen
 from PyQt5.Qt import QFont, QSize
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit
-from magneticalc.QtWidgets2 import QPushButton2, QLabel2
+from PyQt5.QtWidgets import QTextEdit
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.QDialog2 import QDialog2
 from magneticalc.Debug import Debug
-from magneticalc.IconLabel import IconLabel
+from magneticalc.QIconLabel import QIconLabel
 from magneticalc.Theme import Theme
 from magneticalc.Version import __VERSION__, __VERSION__URL__
 
 
-class CheckForUpdates_Dialog(QDialog):
+class CheckForUpdates_Dialog(QDialog2):
     """ CheckForUpdates_Dialog class. """
-
-    # Window dimensions
-    Width = 500
 
     def __init__(self) -> None:
         """
         Prepares the 'Check for Updates' dialog.
         """
-        QDialog.__init__(self)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.setWindowTitle("Check for Updates")
-        self.setMinimumWidth(self.Width)
+        QDialog2.__init__(self, title="Check for Updates", width=500)
 
         update_hint = False
 
+        # noinspection PyBroadException
         try:
             version_py = urlopen(__VERSION__URL__, timeout=2).read().decode("utf-8")
-        except:
+        except Exception:
             icon, string, color = "fa.exclamation-circle", f"Network Error", Theme.WarningColor
         else:
-
+            # noinspection RegExpAnonymousGroup
             pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
+            # noinspection PyBroadException
             try:
                 version = "v" + ".".join(pattern.search(version_py).groups())
-            except:
+            except Exception:
                 icon, string, color = "fa.exclamation-circle", f"Invalid Format", Theme.WarningColor
             else:
-
                 if version > __VERSION__:
                     icon, string, color = "fa.info-circle", f"Newer version available: {version}", Theme.SuccessColor
                     update_hint = True
                 elif version == __VERSION__:
                     icon, string, color = "fa.check-circle", f"Up-to-date: {version}", Theme.PrimaryColor
                 else:
-                    icon, string, color = "fa.exclamation-circle", f"Ahead of Release {version}", Theme.WarningColor
+                    icon, string, color = \
+                        "fa.exclamation-circle", f"Ahead of current release {version}", Theme.WarningColor
 
         Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", color=color, force=True)
-        icon_label = IconLabel(icon, string, color, color, font=QFont("DejaVu Sans Mono", 14), size=QSize(32, 32))
-        layout.addWidget(icon_label)
+        icon_label = QIconLabel(
+            text=string,
+            icon=icon,
+            text_color=color,
+            icon_color=color,
+            icon_size=QSize(32, 32),
+            font=QFont("DejaVu Sans Mono", 14)
+        )
+        self.addLayout(icon_label)
 
         if update_hint:
-            layout.addSpacing(8)
-            layout.addWidget(QLabel2("Please update now:", italic=True))
-            layout.addSpacing(8)
+            self.addSpacing(8)
+            self.addWidget(QLabel2("Please update now:", italic=True))
+            self.addSpacing(8)
             cmd = QTextEdit("python3 -m pip install magneticalc --upgrade")
             cmd.setFont(QFont("DejaVu Sans Mono", 12))
             cmd.setMaximumHeight(64)
             cmd.setReadOnly(True)
-            layout.addWidget(cmd)
+            self.add_element(cmd)
 
-        layout.addSpacing(8)
-        layout.addWidget(QPushButton2(self, "SP_DialogCloseButton", " Close", self.accept))
+        self.addSpacing(8)
 
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self) -> None:
-        """
-        Shows this dialog.
-        """
-        self.exec()
+        self.addButtons({
+            "Close": ("fa.check", self.accept)
+        })

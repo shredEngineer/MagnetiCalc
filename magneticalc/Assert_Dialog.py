@@ -17,20 +17,16 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import sys
-import qtawesome as qta
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
+from magneticalc.QDialog2 import QDialog2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version, __URL__
 from urllib.parse import urlencode, quote_plus
+from magneticalc.QTextBrowser2 import QTextBrowser2
 
 
 class Assert_Dialog:
     """ Assert_Dialog class. """
-
-    # Window dimensions
-    Width = 600
 
     def __init__(self, assertion: bool, message: str):
         """
@@ -49,14 +45,7 @@ class Assert_Dialog:
 
         Debug(self, f": Failed: {message}", color=Theme.WarningColor, force=True)
 
-        self.dialog = QDialog()
-
-        self.dialog.setWindowTitle("Assertion failed")
-
-        layout = QVBoxLayout()
-        self.dialog.setLayout(layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        self.dialog = QDialog2(title="Assertion failed", width=600)
 
         # Generate Github issue URL
         issue_url = \
@@ -88,57 +77,14 @@ class Assert_Dialog:
             <pre>{self.message}</pre>
             """
 
-        text_browser = QTextBrowser()
-        text_browser.setMinimumWidth(self.Width)
-        text_browser.setStyleSheet("""
-            background: palette(window);
-            border: none;
-            line-height: 20px;
-        """)
-        text_browser.setOpenExternalLinks(True)
-        text_browser.insertHtml(html)
-        text_browser.setFocusPolicy(Qt.NoFocus)
-        cursor = text_browser.textCursor()
-        cursor.setPosition(0)
-        text_browser.setTextCursor(cursor)
-        layout.addWidget(text_browser, alignment=Qt.AlignTop)
+        text_browser = QTextBrowser2(html=html)
+        self.dialog.addWidget(text_browser)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        self.dialog.addButtons({
+            "Abort application": ("fa.times-circle", self.dialog.reject),
+            "Resume (possibly unstable)": ("fa.play-circle", self.dialog.accept)
+        })
 
-        button_box = QHBoxLayout()
-
-        ok_button = QPushButton(
-            qta.icon("fa.times-circle"),
-            " Abort application"  # Leading space for alignment
-        )
-        ok_button.clicked.connect(self.reject)
-        button_box.addWidget(ok_button, alignment=Qt.AlignBottom)
-
-        donate_button = QPushButton(
-            qta.icon("fa.play-circle"),
-            " Resume (possibly unstable)"  # Leading space for alignment
-        )
-        donate_button.clicked.connect(self.accept)
-        button_box.addWidget(donate_button, alignment=Qt.AlignBottom)
-
-        layout.addLayout(button_box)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.dialog.exec()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def reject(self):
-        """
-        User chose to abort.
-        """
-        self.dialog.reject()
-
-        sys.exit()
-
-    def accept(self):
-        """
-        User chose to resume.
-        """
-        self.dialog.accept()
+        self.dialog.show()
+        if not self.dialog.success:
+            sys.exit()

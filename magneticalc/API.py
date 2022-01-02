@@ -124,7 +124,7 @@ class API:
         Reshapes arrays obtained from import_hdf5() so that the axes are given
         by minimal one-dimensional arrays rather than raveled three-dimensional
         meshes. The fields are unraveled so that they are represented by
-        three-dimensional arrays with Axis0 ➔ x, Axis1 ➔ y, and Axis2 ➔ z.
+        three-dimensional arrays with Axis 0 ➔ x, Axis 1 ➔ y, and Axis 2 ➔ z.
 
         @param dictionary: Dictionary
         @return: Dictionary

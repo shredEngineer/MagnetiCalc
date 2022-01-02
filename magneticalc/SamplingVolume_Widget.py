@@ -24,16 +24,16 @@ from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QComboBo
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
-from magneticalc.IconLabel import IconLabel
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Theme import Theme
 
 
-class SamplingVolume_Widget(Groupbox):
+class SamplingVolume_Widget(QGroupBox2):
     """ SamplingVolume_Widget class. """
 
     # Display settings
@@ -70,7 +70,7 @@ class SamplingVolume_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Sampling Volume")
+        QGroupBox2.__init__(self, "Sampling Volume")
 
         self.gui = gui
 
@@ -81,10 +81,10 @@ class SamplingVolume_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        padding_icon_label = IconLabel("mdi.arrow-expand-all", "Padding")
-        padding_override_button = QPushButton(" Override … ")  # Leading and trailing spaces for padding
+        padding_icon_label = QIconLabel("Padding", "mdi.arrow-expand-all")
+        padding_override_button = QPushButton(" Override … ")
         padding_override_button.clicked.connect(self.override_padding)
-        padding_override_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        padding_override_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         padding_icon_label.addWidget(padding_override_button)
         padding_clear_button = QPushButton()
         padding_clear_button.setIcon(qta.icon("fa.eraser"))
@@ -94,7 +94,7 @@ class SamplingVolume_Widget(Groupbox):
         padding_units_label.setAlignment(Qt.AlignRight)
         padding_units_label.setFixedWidth(self.UnitsLabelWidth)
         padding_icon_label.addWidget(padding_units_label)
-        self.addWidget(padding_icon_label)
+        self.addLayout(padding_icon_label)
 
         self.padding_widget = QWidget()
         padding_layout = QHBoxLayout()
@@ -124,9 +124,9 @@ class SamplingVolume_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        constraints_icon_label = IconLabel("mdi.playlist-edit", "Constraints")
+        constraints_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
         constraint_shortcut_label = QLabel("⟨F3⟩")
         constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
         constraints_icon_label.addWidget(constraint_shortcut_label)
@@ -135,7 +135,7 @@ class SamplingVolume_Widget(Groupbox):
         constraint_edit_button.clicked.connect(self.open_constraint_editor)
         constraints_icon_label.addWidget(constraint_edit_button)
 
-        self.addWidget(constraints_icon_label)
+        self.addLayout(constraints_icon_label)
 
         total_constraints_layout = QHBoxLayout()
         total_constraints_label_left = QLabel("Total constraints:")
@@ -149,9 +149,9 @@ class SamplingVolume_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("fa.th", "Resolution"))
+        self.addLayout(QIconLabel("Resolution", "fa.th"))
 
         self.resolution_combobox = QComboBox()
         resolution_layout = QHBoxLayout()

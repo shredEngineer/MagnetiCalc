@@ -49,10 +49,11 @@ is displayed in interactive 3D, using multiple metrics for highlighting this fie
     install_requires=[
         "numpy",
         "numba>=0.50.0",
+        "scipy",
         "PyQt5",
         "vispy>=0.6.5",
         "qtawesome>=1.0.0",
-        "colorit>=0.1.0",
+        "sty",
         "si-prefix>=1.2.2",
         "h5py"
     ]

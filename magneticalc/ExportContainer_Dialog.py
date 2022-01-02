@@ -16,20 +16,17 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import os
-from datetime import datetime
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QCheckBox, QFileDialog
+from PyQt5.QtWidgets import QCheckBox
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.QDialog2 import QDialog2
+from magneticalc.QSaveAction import QSaveAction
 from magneticalc.API import API
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.QtWidgets2 import QLabel2, QHBoxLayout2, QPushButton2
 from magneticalc.Theme import Theme
 
 
-class ExportContainer_Dialog:
+class ExportContainer_Dialog(QDialog2):
     """ ExportContainer_Dialog class. """
-
-    # Window dimensions
-    Width = 500
 
     def __init__(self, gui) -> None:
         """
@@ -37,27 +34,15 @@ class ExportContainer_Dialog:
 
         @param gui: GUI
         """
+        QDialog2.__init__(self, title="Export Container", width=500)
         self.gui = gui
 
-        self.dialog = QDialog()
-        self.dialog.setWindowTitle("Export Container")
-
-        layout = QVBoxLayout()
-        self.dialog.setMinimumWidth(self.Width)
-        self.dialog.setLayout(layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        layout.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.PrimaryColor))
-        layout.addSpacing(8)
-        layout.addWidget(
-            QLabel2(
-                "Fields must have been calculated before they can be exported.",
-                italic=True, color=Theme.LightColor
-            )
-        )
-
-        layout.addSpacing(16)
+        self.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.PrimaryColor))
+        self.addSpacing(8)
+        self.addWidget(QLabel2(
+            "Fields must have been calculated before they can be exported.", italic=True, color=Theme.LightColor
+        ))
+        self.addSpacing(16)
 
         wire_points_available = self.gui.model.wire.is_valid()
         wire_current_available = self.gui.model.wire.is_valid()
@@ -72,10 +57,10 @@ class ExportContainer_Dialog:
         a_field_hint = "" if a_field_available else calculate_hint
         b_field_hint = "" if b_field_available else calculate_hint
 
-        self.wire_points_checkbox = QCheckBox(" Wire Points" + wire_points_hint)  # Leading space for alignment
-        self.wire_current_checkbox = QCheckBox(" Wire Current" + wire_current_hint)  # Leading space for alignment
-        self.a_field_checkbox = QCheckBox(" A-Field" + a_field_hint)  # Leading space for alignment
-        self.b_field_checkbox = QCheckBox(" B-Field" + b_field_hint)  # Leading space for alignment
+        self.wire_points_checkbox = QCheckBox(" Wire Points" + wire_points_hint)
+        self.wire_current_checkbox = QCheckBox(" Wire Current" + wire_current_hint)
+        self.a_field_checkbox = QCheckBox(" A-Field" + a_field_hint)
+        self.b_field_checkbox = QCheckBox(" B-Field" + b_field_hint)
 
         self.wire_points_checkbox.setEnabled(wire_points_available)
         self.wire_current_checkbox.setEnabled(wire_current_available)
@@ -87,45 +72,18 @@ class ExportContainer_Dialog:
         self.a_field_checkbox.setChecked(a_field_available)
         self.b_field_checkbox.setChecked(b_field_available)
 
-        layout.addWidget(self.a_field_checkbox)
-        layout.addWidget(self.b_field_checkbox)
-        layout.addWidget(self.wire_points_checkbox)
-        layout.addWidget(self.wire_current_checkbox)
+        self.addWidget(self.a_field_checkbox)
+        self.addWidget(self.b_field_checkbox)
+        self.addWidget(self.wire_points_checkbox)
+        self.addWidget(self.wire_current_checkbox)
 
-        layout.addSpacing(16)
+        self.addSpacing(16)
 
-        cancel_button = QPushButton2(self.dialog, "SP_DialogCancelButton", " Cancel", self.reject)
-        save_button = QPushButton2(self.dialog, "SP_DialogSaveButton", " Save Container …", self.accept)
-        layout.addLayout(
-            QHBoxLayout2(
-                cancel_button,
-                save_button
-            )
-        )
-        save_button.setFocus()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self) -> None:
-        """
-        Shows this dialog.
-        """
-        if self.dialog.exec() == 1:
-            self.export()
-
-    def reject(self) -> None:
-        """
-        User chose to abort.
-        """
-        self.dialog.reject()
-
-    def accept(self) -> None:
-        """
-        User chose to resume.
-        """
-        self.dialog.accept()
-
-    # ------------------------------------------------------------------------------------------------------------------
+        buttons = self.addButtons({
+            "Cancel": ("fa.close", self.reject),
+            "Save Container …": ("fa.save", self.export)
+        })
+        buttons[1].setFocus()
 
     def export(self) -> None:
         """
@@ -144,21 +102,16 @@ class ExportContainer_Dialog:
         }
         export_types_str = "-".join([string for string, condition in export_types_map.items() if condition])
 
-        filename, _chosen_extension = QFileDialog.getSaveFileName(
-            parent=self.gui,
-            caption="Export Container",
-            directory=datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc_Export_" + export_types_str),
+        action = QSaveAction(
+            self.gui,
+            title="Export Container",
+            date=True,
+            filename="MagnetiCalc_Export" + (("_" + export_types_str) if export_types_str else ""),
+            extension=".hdf5",
             filter="HDF5 Container (*.hdf5)",
-            options=QFileDialog.DontUseNativeDialog
+            warn_overwrite=True
         )
-
-        if filename != "":
-            _file_name, file_extension = os.path.splitext(filename)
-
-            if file_extension.lower() != ".hdf5":
-                filename += ".hdf5"
-
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if action.filename:
 
             container_dictionary = {}
 
@@ -184,4 +137,10 @@ class ExportContainer_Dialog:
                 wire_current = self.gui.model.wire.get_dc()
                 container_dictionary.update({"wire_current": wire_current})
 
-            API.export_hdf5(filename, container_dictionary)
+            API.export_hdf5(action.filename, container_dictionary)
+
+            self.accept()
+
+        else:
+
+            self.reject()

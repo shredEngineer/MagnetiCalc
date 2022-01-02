@@ -24,15 +24,15 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QButtonGroup, QRadioButton
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
-from magneticalc.IconLabel import IconLabel
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
+from magneticalc.QIconLabel import QIconLabel
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
 
 
-class Field_Widget(Groupbox):
+class Field_Widget(QGroupBox2):
     """ Field_Widget class. """
 
     # Spinbox limits
@@ -47,13 +47,13 @@ class Field_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Field")
+        QGroupBox2.__init__(self, "Field")
 
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(IconLabel("mdi.tune-variant", "Type"))
+        self.addLayout(QIconLabel("Type", "mdi.tune-variant"))
 
         field_type_layout_left = QVBoxLayout()
         field_type_layout_right = QVBoxLayout()
@@ -96,9 +96,9 @@ class Field_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("mdi.ruler", "Distance Limit"))
+        self.addLayout(QIconLabel("Distance Limit", "mdi.ruler"))
         self.distance_limit_spinbox = QDoubleSpinBox(self.gui)
         self.distance_limit_spinbox.setLocale(self.gui.locale)
         self.distance_limit_spinbox.setDecimals(self.DistanceLimitPrecision)

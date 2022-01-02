@@ -20,7 +20,7 @@ is displayed in interactive 3D, using multiple metrics for highlighting the fiel
 
 <i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferrous) materials,
 different core media can be modeled as regions of variable relative permeability;
-however, core saturation is currently not modeled, leading to excessive flux density values.
+however, core saturation is currently not modeled, resulting in excessive flux density values.
  
 **Who needs MagnetiCalc?**
 
@@ -97,31 +97,34 @@ If you have trouble installing MagnetiCalc,
 make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
 so I can help you get it up and running!
 
+Requirements:
+* Python 3.6+
+
 Tested with:
 * Python 3.8 in Ubuntu 20.04
 * Python 3.7 in Linux Mint 19.3
-* Python 3.8 in Windows 10
+* Python 3.8.10 in Windows 10 (21H2)
 
 ### Prerequisites
 
 #### Linux
-The following dependency packages must be installed first (Ubuntu 20.04):
+The following dependencies must be installed first (Ubuntu 20.04):
 ```shell
 sudo apt install python3-dev
 sudo apt install libxcb-xinerama0 --reinstall
 ```
+On some systems, it may be necessary to upgrade pip first:
+`python3 -m pip install pip --upgrade`
 
 #### Windows
-On some systems, it may be necessary to install [Visual C++ Redistributable Packages for Visual Studio 2017](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
+It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
+Installation will currently fail for Python 3.9+ due to missing dependencies.
+On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
 
-#### All platforms
 On some systems, it may be necessary to upgrade pip first:
-```shell
-python3 -m pip install pip --upgrade
-```
+`python -m pip install pip --upgrade`
 
 ### Option A: Automatic install via pip
-
 This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
 
 #### Linux
@@ -131,21 +134,14 @@ python3 -m magneticalc
 ```
 
 #### Windows
-
 ```shell
-python -m pip install --upgrade scipy
-python -m install --upgrade magneticaclc
+python -m pip install --upgrade magneticalc
 python -m magneticalc
 ```
 
-*Note:*
-* Although installation would succeed without installing SciPy first, MagnetiCalc would crash upon calling the `np.dot` function due to missing dependencies.
-
-* Installation will currently fail for Python >= 3.9, because there is no official wheel available for the `llvmlite` package dependency.
-(It might be possible to find an unofficial wheel, but this is not recommended).
-
-#### Juptyer Notebook
-From within a Jupyter Notebook, MagnetiCalc must be installed and run like this (Ubuntu 20.04):
+#### Juptyer Notebook & Jupyter Lab
+From within a [Jupyter](https://jupyter.org/) Notebook,
+MagnetiCalc can be installed (upgraded) and run like this:
 ```python
 import sys
 !{sys.executable} -m pip install magneticalc --upgrade
@@ -153,28 +149,25 @@ import sys
 ```
 
 ### Option B: Manual download
-First, manually install all dependency packages, upgrading each to the latest version (Ubuntu 20.04):
+**Note:** Instructions for Linux; Windows users need to type `python` instead of `python3`.
+
+Install (upgrade) all dependencies to the user site-packages directory:
 ```shell
-python3 -m pip install numpy numba PyQt5 vispy qtawesome colorit si-prefix h5py --upgrade
+python3 -m pip install numpy numba scipy PyQt5 vispy qtawesome sty si-prefix h5py --upgrade
 ```
 
-Clone the latest version of MagnetiCalc from GitHub and start it directly: 
+Use [Git](https://git-scm.com/) to clone the latest version of MagnetiCalc from GitHub: 
 ```shell
 git clone https://github.com/shredEngineer/MagnetiCalc
+```
+
+Enter the cloned directory and start MagnetiCalc:
+```shell
 cd MagnetiCalc
 python3 -m magneticalc
 ```
 
-*Note:*
-* For debugging, you may also install (uninstall) the package in a virtual environment:
-  ```shell
-  python3 -m pip install .
-  …
-  python3 -m pip uninstall magneticalc -y
-  ``` 
-
 ### Enabling CUDA Support
-
 Tested in Ubuntu 20.04, using the NVIDIA CUDA 10.1 driver and NVIDIA GeForce GTX 1650 GPU.
 
 Please refer to the
@@ -225,16 +218,15 @@ provides basic functions for importing/exporting data programmatically:
     plt.show()
     ```
 
-  Data is always exported as 1D raveled arrays, which is the native format of MagnetiCalc. 
-  If required, a list of 3D points (tuples) can be obtained like this:
+  Data is natively exported as 1D raveled arrays, 
+  and the list of 3D points can be obtained like this:
   ```python
-  points = list(zip(*[data["fields"][i] for i in ["x", "y", "z"]]))
+  points = np.array(list(zip(*[data["fields"][i] for i in ["x", "y", "z"]])))
   ```
   
   However, for visualising a slice of the magnitude of a field or a field component in a plane,
-  and for integrating over the axes, it may be preferable to have
-  minimal 1D representations of the axes and the field components arranged in 3D arrays,
-  with `Axis0`➔`x`, `Axis1`➔`y`, and `Axis2`➔`z`.
+  and for integrating over the axes, it may be preferable to have minimal 1D representations of the axes,
+  and to have the field components arranged in 3D arrays with `Axis 0`➔`x`, `Axis 1`➔`y`, and `Axis 2`➔`z`.
   The reshaped data can be obtained like this:
   ```python
   data_reshape = API.reshape_fields(data)
@@ -270,10 +262,9 @@ ToDo
 ----
 
 **General**
-* Ensure consistent PyQt5 look and feel in Windows and Linux.
+* Ensure consistent PyQt5 look and feel in Windows and Linux. (Dynamically adjust dialogs.)
 * Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
 * Add a global settings dialog for some selection of options currently hard-coded in various classes.
-* Add "Overwrite Existing File?" dialogs for "Save As" and "Export" actions.
 
 **Functional**
 * Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).

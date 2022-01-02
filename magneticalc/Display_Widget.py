@@ -19,17 +19,18 @@
 import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox, QComboBox, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QMessageBox
+from magneticalc.QMessageBox2 import QMessageBox2
 from magneticalc.Debug import Debug
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
-from magneticalc.IconLabel import IconLabel
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
+from magneticalc.QIconLabel import QIconLabel
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
-from magneticalc.SliderFloat import SliderFloat
+from magneticalc.QSliderFloat import QSliderFloat
 from magneticalc.Theme import Theme
 from magneticalc.VispyCanvas import VispyCanvas
 
 
-class Display_Widget(Groupbox):
+class Display_Widget(QGroupBox2):
     """ Display_Widget class. """
 
     # Slider limits
@@ -55,19 +56,20 @@ class Display_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Display")
+        QGroupBox2.__init__(self, "Display")
 
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(IconLabel("fa.circle", "Point Scale"))
-        self.field_point_scale_slider = SliderFloat(Qt.Horizontal)
+        self.addLayout(QIconLabel("Point Scale", "fa.circle"))
+        self.field_point_scale_slider = QSliderFloat(Qt.Horizontal)
         self.field_point_scale_slider.set_range_step(
             self.FieldPointScaleMinimum,
             self.FieldPointScaleMaximum,
             self.FieldPointScaleStep
         )
+        # noinspection PyUnresolvedReferences
         self.field_point_scale_slider.valueChanged.connect(
             lambda: self.set_field_point_scale(self.field_point_scale_slider.get_value())
         )
@@ -75,9 +77,9 @@ class Display_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("fa.arrow-right", "Arrow Scale"))
+        self.addLayout(QIconLabel("Arrow Scale", "fa.arrow-right"))
 
         field_arrow_scale_layout_left = QVBoxLayout()
         field_arrow_scale_layout_right = QVBoxLayout()
@@ -85,12 +87,13 @@ class Display_Widget(Groupbox):
         field_arrow_head_scale_label = QLabel("Head:")
         field_arrow_head_scale_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         field_arrow_scale_layout_left.addWidget(field_arrow_head_scale_label, alignment=Qt.AlignVCenter)
-        self.field_arrow_head_scale_slider = SliderFloat(Qt.Horizontal)
+        self.field_arrow_head_scale_slider = QSliderFloat(Qt.Horizontal)
         self.field_arrow_head_scale_slider.set_range_step(
             self.FieldArrowHeadScaleMinimum,
             self.FieldArrowHeadScaleMaximum,
             self.FieldArrowHeadScaleStep
         )
+        # noinspection PyUnresolvedReferences
         self.field_arrow_head_scale_slider.valueChanged.connect(
             lambda: self.set_field_arrow_head_scale(self.field_arrow_head_scale_slider.get_value())
         )
@@ -99,12 +102,13 @@ class Display_Widget(Groupbox):
         field_arrow_line_scale_label = QLabel("Line:")
         field_arrow_line_scale_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         field_arrow_scale_layout_left.addWidget(field_arrow_line_scale_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-        self.field_arrow_line_scale_slider = SliderFloat(Qt.Horizontal)
+        self.field_arrow_line_scale_slider = QSliderFloat(Qt.Horizontal)
         self.field_arrow_line_scale_slider.set_range_step(
             self.FieldArrowLineScaleMinimum,
             self.FieldArrowLineScaleMaximum,
             self.FieldArrowLineScaleStep
         )
+        # noinspection PyUnresolvedReferences
         self.field_arrow_line_scale_slider.valueChanged.connect(
             lambda: self.set_field_arrow_line_scale(self.field_arrow_line_scale_slider.get_value())
         )
@@ -117,15 +121,16 @@ class Display_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("fa.adjust", "Field Boost"))
-        self.field_boost_slider = SliderFloat(Qt.Horizontal)
+        self.addLayout(QIconLabel("Field Boost", "fa.adjust"))
+        self.field_boost_slider = QSliderFloat(Qt.Horizontal)
         self.field_boost_slider.set_range_step(
             self.FieldBoostMinimum,
             self.FieldBoostMaximum,
             self.FieldBoostStep
         )
+        # noinspection PyUnresolvedReferences
         self.field_boost_slider.valueChanged.connect(
             lambda: self.set_field_boost(self.field_boost_slider.get_value())
         )
@@ -133,10 +138,11 @@ class Display_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("fa.tags", "Field Labels"))
-        self.display_field_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")  # Leading space for alignment
+        self.addLayout(QIconLabel("Field Labels", "fa.tags"))
+        self.display_field_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")
+        # noinspection PyUnresolvedReferences
         self.display_field_magnitude_labels_checkbox.toggled.connect(
             lambda: self.set_display_field_magnitude_labels(self.display_field_magnitude_labels_checkbox.isChecked())
         )
@@ -320,6 +326,7 @@ class Display_Widget(Groupbox):
 
         # Re-populate field label resolution combobox
         if self.field_label_resolution_combobox_connection is not None:
+            # noinspection PyUnresolvedReferences
             self.field_label_resolution_combobox.currentIndexChanged.disconnect(
                 self.field_label_resolution_combobox_connection
             )
@@ -336,6 +343,7 @@ class Display_Widget(Groupbox):
                 )
             )
         self.field_label_resolution_combobox_connection = connection
+        # noinspection PyUnresolvedReferences
         self.field_label_resolution_combobox.currentIndexChanged.connect(connection)
 
         # Set default field label resolution if it is not available anymore
@@ -395,13 +403,7 @@ class Display_Widget(Groupbox):
             return
 
         if choice:
-
-            messagebox = QMessageBox()
-            messagebox.setWindowTitle("Excessive Number Of Field Labels")
-            messagebox.setIcon(QMessageBox.Question)
-            messagebox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-            messagebox.setDefaultButton(QMessageBox.No)
-            messagebox.setText(
+            text = (
                 "You are about to display an excessive number of field labels. "
                 "This will be very slow and cannot be interrupted.\n\n"
                 "DO YOU WANT TO DISPLAY FIELD LABELS ANYWAY?\n\n"
@@ -411,21 +413,29 @@ class Display_Widget(Groupbox):
                 "– Decrease sampling volume resolution.\n"
                 "– Decrease field label resolution."
             )
-            if messagebox.exec() == QMessageBox.No:
+            messagebox = QMessageBox2(
+                title="Excessive Number Of Field Labels",
+                text=text,
+                icon=QMessageBox.Question,
+                buttons=QMessageBox.Yes | QMessageBox.No,
+                default_button=QMessageBox.No
+            )
+            if messagebox.choice == QMessageBox.No:
                 self.disable_field_labels()
 
         else:
 
             self.disable_field_labels()
 
-            messagebox = QMessageBox()
-            messagebox.setWindowTitle("Excessive Number Of Field Labels")
-            messagebox.setIcon(QMessageBox.Information)
-            messagebox.setStandardButtons(QMessageBox.Ok)
-            messagebox.setDefaultButton(QMessageBox.Ok)
-            messagebox.setText(
+            text = (
                 "Field labels were disabled automatically because\n"
                 "an excessive number of field labels was detected.\n\n"
                 "You may manually re-enable field labels after all calculations have finished."
             )
-            messagebox.exec()
+            QMessageBox2(
+                title="Excessive Number Of Field Labels",
+                text=text,
+                icon=QMessageBox.Information,
+                buttons=QMessageBox.Ok,
+                default_button=QMessageBox.Ok
+            )

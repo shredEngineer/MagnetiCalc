@@ -1,6 +1,4 @@
-#!/bin/usr/env python3
-
-""" MagnetiCalc main module. """
+""" QSpinBox2 module. """
 
 #  ISC License
 #
@@ -18,36 +16,31 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import os
-import sys
-from sty import ef
-from PyQt5.QtWidgets import QApplication
-from magneticalc.GUI import GUI
-from magneticalc.Version import Version
+from typing import Callable
+from PyQt5.QtWidgets import QSpinBox
 
 
-def main():
-    """ MagnetiCalc main function. """
+class QSpinBox2(QSpinBox):
+    """ QSpinBox2 class. """
 
-    if sys.platform == "win32":
-        os.system("color")
+    def __init__(
+            self,
+            minimum: int,
+            maximum: int,
+            value: int,
+            value_changed: Callable
+    ) -> None:
+        """
+        Initializes a spinbox.
 
-    print()
-    print(ef.bold + Version.String + ef.rs)
-    print(Version.Copyright)
-    print(Version.License)
-    print()
-
-    app = QApplication(sys.argv)
-
-    gui = GUI()
-
-    gui.show()
-
-    rc = app.exec()
-
-    sys.exit(rc)
-
-
-if __name__ == "__main__":
-    main()
+        @param minimum: Minimum value
+        @param maximum: Maximum value
+        @param value: Initial value
+        @param value_changed: Value changed callback
+        """
+        QSpinBox.__init__(self)
+        self.setMinimum(minimum)
+        self.setMaximum(maximum)
+        self.setValue(value)
+        # noinspection PyUnresolvedReferences
+        self.valueChanged.connect(value_changed)

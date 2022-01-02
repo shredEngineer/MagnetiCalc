@@ -20,8 +20,8 @@ import numpy as np
 from numba import jit, prange, set_num_threads
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
-from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
-from magneticalc.BiotSavart_JIT import BiotSavart_JIT
+from magneticalc.Backend_CUDA import Backend_CUDA
+from magneticalc.Backend_JIT import Backend_JIT
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
@@ -35,7 +35,7 @@ class Field:
         Initializes an empty field.
 
         @param backend_type: Backend type
-        @param field_type: Field type to display
+        @param field_type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
@@ -138,7 +138,7 @@ class Field:
 
         # Default to JIT backend if CUDA backend is selected but not available.
         if self._backend_type == BACKEND_CUDA:
-            if not BiotSavart_CUDA.is_available():
+            if not Backend_CUDA.is_available():
                 Debug(
                     self,
                     f".recalculate(): WARNING: CUDA backend not available, defaulting to JIT backend",
@@ -150,7 +150,7 @@ class Field:
         if self._backend_type == BACKEND_JIT:
 
             # Initialize Biot-Savart JIT backend
-            biot_savart = BiotSavart_JIT(
+            biot_savart = Backend_JIT(
                 self._field_type,
                 self._distance_limit,
                 self._length_scale,
@@ -168,7 +168,7 @@ class Field:
         elif self._backend_type == BACKEND_CUDA:
 
             # Initialize Biot-Savart CUDA backend
-            biot_savart = BiotSavart_CUDA(
+            biot_savart = Backend_CUDA(
                 self._field_type,
                 self._distance_limit,
                 self._length_scale,

@@ -16,18 +16,14 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import qtawesome as qta
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QTextBrowser, QPushButton
+from magneticalc.QDialog2 import QDialog2
+from magneticalc.QTextBrowser2 import QTextBrowser2
+
 from magneticalc.Theme import Theme
 
 
-class Usage_Dialog(QDialog):
+class Usage_Dialog(QDialog2):
     """ Usage_Dialog class. """
-
-    # Window dimensions
-    Width = 800
-    Height = 610
 
     # HTML content
     HTML = f"""
@@ -111,7 +107,7 @@ class Usage_Dialog(QDialog):
 
         <i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferrous)
         materials, different core media can be modeled as regions of variable relative permeability;
-        however, core saturation is currently not modeled, leading to excessive flux density values.
+        however, core saturation is currently not modeled, resulting in excessive flux density values.
 
         <h3 style="color: {Theme.PrimaryColor};">Who needs MagnetiCalc?</h3>
 
@@ -157,44 +153,10 @@ class Usage_Dialog(QDialog):
         """
         Initializes "Usage" dialog.
         """
-
-        QDialog.__init__(self)
-
-        self.setWindowTitle("Usage")
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        text_browser = QTextBrowser()
-        text_browser.setMinimumWidth(self.Width)
-        text_browser.setMinimumHeight(self.Height)
-        text_browser.setStyleSheet("""
-            background: palette(window);
-            border: none;
-            line-height: 20px;
-        """)
-        text_browser.setOpenExternalLinks(True)
-        text_browser.insertHtml(Usage_Dialog.HTML)
-        text_browser.setFocusPolicy(Qt.NoFocus)
-        cursor = text_browser.textCursor()
-        cursor.setPosition(0)
-        text_browser.setTextCursor(cursor)
-        layout.addWidget(text_browser)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        button_box = QHBoxLayout()
-        ok_button = QPushButton(qta.icon("fa.check"), " OK")  # Leading space for alignment
-        ok_button.clicked.connect(self.accept)
-        button_box.addWidget(ok_button)
-        layout.addLayout(button_box)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self):
-        """
-        Shows this dialog.
-        """
-        self.exec()
+        QDialog2.__init__(self, title="Usage", width=850)
+        text_browser = QTextBrowser2(html=self.HTML)
+        text_browser.setMinimumHeight(600)
+        self.addWidget(text_browser)
+        self.addButtons({
+            "OK": ("fa.check", self.accept)
+        })

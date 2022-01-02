@@ -1,4 +1,4 @@
-""" BiotSavart_CUDA module. """
+""" Backend_CUDA module. """
 
 #  ISC License
 #
@@ -26,9 +26,10 @@ from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
 
 
-class BiotSavart_CUDA:
+class Backend_CUDA:
     """
     Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field).
+    Backend: JIT + CUDA.
     """
 
     def __init__(
@@ -203,7 +204,7 @@ class BiotSavart_CUDA:
             TPB = 1024   # Maximum threads per block
             BPG = 65536  # Maximum blocks per grid
 
-            BiotSavart_CUDA.worker[BPG, TPB](
+            Backend_CUDA.worker[BPG, TPB](
                 self.field_type,
                 self._distance_limit,
                 self._length_scale,

@@ -16,94 +16,58 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton
-from magneticalc.QtWidgets2 import QSpinBox2, QLabel2, QHBoxLayout2, QPushButton2
+from magneticalc.QDialog2 import QDialog2
+from magneticalc.QHBoxLayout2 import QHBoxLayout2
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.QSpinBox2 import QSpinBox2
 from magneticalc.Theme import Theme
 
 
-class OverridePadding_Dialog:
+class OverridePadding_Dialog(QDialog2):
     """ OverridePadding_Dialog class. """
-
-    # Window dimensions
-    Width = 420
 
     # Spinbox limits
     BoundsRange = [-1000, +1000]
 
     def __init__(self, gui) -> None:
         """
-        Prepares the 'Override Padding' dialog.
+        Initializes "Override Padding" dialog.
 
         @param gui: GUI
         """
+        QDialog2.__init__(self, title="Override Padding", width=420)
         self.gui = gui
 
-        self.success = None
-
-        self.dialog = QDialog()
-        self.dialog.setWindowTitle("Override Padding")
-
-        layout = QVBoxLayout()
-        self.dialog.setMinimumWidth(self.Width)
-        self.dialog.setLayout(layout)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        layout.addWidget(
+        self.addWidget(
             QLabel2("Please specify the sampling volume bounding box", bold=True, color=Theme.PrimaryColor)
         )
-
-        layout.addSpacing(8)
-        layout.addLayout(QHBoxLayout2(QLabel2("Units:", fixed=True), QLabel2("cm", bold=True)))
-        layout.addSpacing(16)
+        self.addSpacing(8)
+        self.addLayout(QHBoxLayout2(QLabel2("Units:", fixed=True), QLabel2("cm", bold=True)))
+        self.addSpacing(16)
 
         bounding_box = self.gui.config.get_points("sampling_volume_bounding_box")
+        # noinspection PyTypeChecker
         self.bounds_min_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[0][i], self.validate) for i in range(3)]
+        # noinspection PyTypeChecker
         self.bounds_max_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[1][i], self.validate) for i in range(3)]
 
         for i in range(3):
             text = "  ≤  " + ["X", "Y", "Z"][i] + "  ≤  "
-            layout.addLayout(QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text), self.bounds_max_spinbox[i]))
+            self.addLayout(QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text), self.bounds_max_spinbox[i]))
 
-        layout.addSpacing(16)
+        self.addSpacing(16)
 
-        self.apply_button = QPushButton2(self.dialog, "SP_DialogApplyButton", " Apply", self.accept)
-        layout.addLayout(
-            QHBoxLayout2(
-                QPushButton2(self.dialog, "SP_DialogCancelButton", " Cancel", self.reject),
-                self.apply_button
-            )
-        )
-
-        self.apply_button.setFocus()
+        self.buttons = self.addButtons({
+            "Cancel": ("fa.close", self.reject),
+            "Apply": ("fa.save", self.accept),
+        })
+        self.buttons[1].setFocus()
         self.validate()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self) -> None:
-        """
-        Shows this dialog.
-        """
-        self.success = self.dialog.exec() == 1
-
-    def reject(self) -> None:
-        """
-        User chose to abort.
-        """
-        self.dialog.reject()
-
-    def accept(self) -> None:
-        """
-        User chose to resume.
-        """
-        self.dialog.accept()
-
-    # ------------------------------------------------------------------------------------------------------------------
 
     def validate(self) -> None:
         """
         Validates the bounding box values and enables/disables the "Apply" button accordingly.
         """
-        valid = all([self.bounds_min_spinbox[i].value() <= self.bounds_max_spinbox[i].value() for i in range(3)])
-        self.apply_button.setEnabled(valid)
+        self.buttons["Apply"].setEnabled(
+            all([self.bounds_min_spinbox[i].value() <= self.bounds_max_spinbox[i].value() for i in range(3)])
+        )

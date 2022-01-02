@@ -1,6 +1,4 @@
-#!/bin/usr/env python3
-
-""" MagnetiCalc main module. """
+""" QHBoxLayout2 module. """
 
 #  ISC License
 #
@@ -18,36 +16,26 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import os
-import sys
-from sty import ef
-from PyQt5.QtWidgets import QApplication
-from magneticalc.GUI import GUI
-from magneticalc.Version import Version
+from typing import Union
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHBoxLayout, QWidget, QLayout
 
 
-def main():
-    """ MagnetiCalc main function. """
+class QHBoxLayout2(QHBoxLayout):
+    """ QHBoxLayout2 class. """
 
-    if sys.platform == "win32":
-        os.system("color")
+    def __init__(
+            self,
+            *elements: Union[QWidget, QLayout]
+    ) -> None:
+        """
+        Initializes a horizontal layout with multiple elements at once.
 
-    print()
-    print(ef.bold + Version.String + ef.rs)
-    print(Version.Copyright)
-    print(Version.License)
-    print()
-
-    app = QApplication(sys.argv)
-
-    gui = GUI()
-
-    gui.show()
-
-    rc = app.exec()
-
-    sys.exit(rc)
-
-
-if __name__ == "__main__":
-    main()
+        @param elements: Arbitrary arguments of QWidget and QLayout
+        """
+        QHBoxLayout.__init__(self)
+        for element in elements:
+            if isinstance(element, QWidget):
+                self.addWidget(element, alignment=Qt.AlignVCenter)
+            elif isinstance(element, QLayout):
+                self.addLayout(element)

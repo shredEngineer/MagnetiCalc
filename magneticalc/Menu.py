@@ -23,7 +23,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
-from magneticalc.BiotSavart_CUDA import BiotSavart_CUDA
+from magneticalc.Backend_CUDA import Backend_CUDA
 from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
 from magneticalc.Debug import Debug
 from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
@@ -38,7 +38,7 @@ class Menu:
     # List of available backends
     Backends_List = {
         "Backend: JIT": True,
-        "Backend: JIT + CUDA": BiotSavart_CUDA.is_available()
+        "Backend: JIT + CUDA": Backend_CUDA.is_available()
     }
 
     def __init__(self, gui):
@@ -182,7 +182,7 @@ class Menu:
 
         # Default to JIT backend if CUDA backend is selected but not available
         if self.gui.config.get_int("backend_type") == BACKEND_CUDA:
-            if not BiotSavart_CUDA.is_available():
+            if not Backend_CUDA.is_available():
                 self.gui.config.set_int("backend_type", BACKEND_JIT)
 
         for i, name in enumerate(self.Backends_List):

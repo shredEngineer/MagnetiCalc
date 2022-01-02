@@ -23,16 +23,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import \
     QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy, QCheckBox
 from magneticalc.Debug import Debug
-from magneticalc.IconLabel import IconLabel
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Table import Table
+from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.Theme import Theme
 from magneticalc.Wire import Wire
 
 
-class Wire_Widget(Groupbox):
+class Wire_Widget(QGroupBox2):
     """ Wire_Widget class. """
 
     # Display settings
@@ -70,11 +70,11 @@ class Wire_Widget(Groupbox):
         """
         self.gui = gui
 
-        Groupbox.__init__(self, "Wire")
+        QGroupBox2.__init__(self, "Wire")
 
         # --------------------------------------------------------------------------------------------------------------
 
-        table_icon_label = IconLabel("mdi.vector-square", "Points", final_stretch=False)
+        table_icon_label = QIconLabel("Points", "mdi.vector-square", final_stretch=False)
         table_shortcut_label = QLabel("⟨F2⟩, ⟨ESC⟩")
         table_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
         table_icon_label.addWidget(table_shortcut_label)
@@ -87,8 +87,8 @@ class Wire_Widget(Groupbox):
         table_units_label.setAlignment(Qt.AlignRight)
         table_units_label.setFixedWidth(self.UnitsLabelWidth)
         table_icon_label.addWidget(table_units_label)
-        self.addWidget(table_icon_label)
-        self.table = Table(
+        self.addLayout(table_icon_label)
+        self.table = QTableWidget2(
             self.gui,
             cell_edited_callback=self.on_table_cell_edited,
             selection_changed_callback=self.gui.redraw,
@@ -113,9 +113,9 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        stretch_icon_label = IconLabel("mdi.arrow-all", "Stretch")
+        stretch_icon_label = QIconLabel("Stretch", "mdi.arrow-all")
         stretch_clear_button = QPushButton()
         stretch_clear_button.setIcon(qta.icon("fa.eraser"))
         stretch_clear_button.clicked.connect(self.clear_stretch)
@@ -124,7 +124,7 @@ class Wire_Widget(Groupbox):
         stretch_units_label.setAlignment(Qt.AlignRight)
         stretch_units_label.setFixedWidth(self.UnitsLabelWidth)
         stretch_icon_label.addWidget(stretch_units_label)
-        self.addWidget(stretch_icon_label)
+        self.addLayout(stretch_icon_label)
 
         self.stretch_spinbox = [None, None, None]
         stretch_label = [None, None, None]
@@ -145,14 +145,14 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        rotational_symmetry_icon_label = IconLabel("mdi.rotate-3d-variant", "Rotational Symmetry")
+        rotational_symmetry_icon_label = QIconLabel("Rotational Symmetry", "mdi.rotate-3d-variant")
         rotational_symmetry_clear_button = QPushButton()
         rotational_symmetry_clear_button.setIcon(qta.icon("fa.eraser"))
         rotational_symmetry_clear_button.clicked.connect(self.clear_rotational_symmetry)
         rotational_symmetry_icon_label.addWidget(rotational_symmetry_clear_button)
-        self.addWidget(rotational_symmetry_icon_label)
+        self.addLayout(rotational_symmetry_icon_label)
         rotational_symmetry_layout = QHBoxLayout()
         rotational_symmetry_layout_left = QVBoxLayout()
         rotational_symmetry_layout_middle = QVBoxLayout()
@@ -237,9 +237,9 @@ class Wire_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.close_loop_checkbox = QCheckBox(" Close Loop")  # Leading space for alignment
+        self.close_loop_checkbox = QCheckBox(" Close Loop")
         self.close_loop_checkbox.toggled.connect(
             lambda: self.set_wire(close_loop=self.close_loop_checkbox.isChecked())
         )
@@ -258,7 +258,7 @@ class Wire_Widget(Groupbox):
         rotational_symmetry_total_layout.addWidget(self.transformed_total_label, alignment=Qt.AlignVCenter)
         self.addLayout(rotational_symmetry_total_layout)
 
-        replace_base_points_button = QPushButton(" Replace base points")  # Leading space for alignment
+        replace_base_points_button = QPushButton(" Replace base points")
         replace_base_points_button.setIcon(qta.icon("mdi.content-copy"))
         replace_base_points_button.clicked.connect(
             lambda: self.set_wire(points=self.gui.model.wire.get_points_transformed())
@@ -267,9 +267,9 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("mdi.box-cutter", "Slicer Limit"))
+        self.addLayout(QIconLabel("Slicer Limit", "mdi.box-cutter"))
         self.slicer_limit_spinbox = QDoubleSpinBox(self.gui)
         self.slicer_limit_spinbox.setLocale(self.gui.locale)
         self.slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
@@ -299,11 +299,11 @@ class Wire_Widget(Groupbox):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
         self.dc_spinbox = QDoubleSpinBox(self.gui)
         self.dc_spinbox.setLocale(self.gui.locale)
-        self.addWidget(IconLabel("fa.cog", "Wire Current"))
+        self.addLayout(QIconLabel("Wire Current", "fa.cog"))
         self.dc_spinbox.setMinimum(self.DcMinimum)
         self.dc_spinbox.setMaximum(self.DcMaximum)
         self.dc_spinbox.setSingleStep(self.DcStep)

@@ -19,13 +19,13 @@
 from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
 
 
-class Perspective_Widget(Groupbox):
+class Perspective_Widget(QGroupBox2):
     """ Perspective_Widget class. """
 
     def __init__(self, gui):
@@ -34,7 +34,7 @@ class Perspective_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Perspective")
+        QGroupBox2.__init__(self, "Perspective")
 
         self.gui = gui
 
@@ -56,7 +56,7 @@ class Perspective_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
         hint_label = QLabel("Axis Colors:")
         x_label = QLabel("X")

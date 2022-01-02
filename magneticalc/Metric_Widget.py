@@ -22,15 +22,15 @@ from si_prefix import si_format
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
 from magneticalc.Debug import Debug
-from magneticalc.IconLabel import IconLabel
-from magneticalc.Groupbox import Groupbox
-from magneticalc.HLine import HLine
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
 from magneticalc.Metric import Metric
 from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
 
 
-class Metric_Widget(Groupbox):
+class Metric_Widget(QGroupBox2):
     """ Metric_Widget class. """
 
     # Formatting settings
@@ -42,13 +42,13 @@ class Metric_Widget(Groupbox):
 
         @param gui: GUI
         """
-        Groupbox.__init__(self, "Metric")
+        QGroupBox2.__init__(self, "Metric")
 
         self.gui = gui
 
         # --------------------------------------------------------------------------------------------------------------
 
-        self.addWidget(IconLabel("fa.tint", "Color"))
+        self.addLayout(QIconLabel("Color", "fa.tint"))
         self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             self.color_metric_combobox.addItem(preset["id"])
@@ -77,9 +77,9 @@ class Metric_Widget(Groupbox):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addWidget(HLine())
+        self.addWidget(QHLine())
 
-        self.addWidget(IconLabel("mdi.blur", "Alpha"))
+        self.addLayout(QIconLabel("Alpha", "mdi.blur"))
         self.alpha_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             # Note: (v1.9)

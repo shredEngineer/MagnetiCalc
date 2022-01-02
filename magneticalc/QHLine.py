@@ -1,4 +1,4 @@
-""" HLine module. """
+""" QHLine module. """
 
 #  ISC License
 #
@@ -19,10 +19,10 @@
 from PyQt5.QtWidgets import QFrame
 
 
-class HLine(QFrame):
-    """ HLine class. """
+class QHLine(QFrame):
+    """ QHLine class. """
 
-    # Display settings
+    # Default spacing
     VerticalSpacing = 12
 
     def __init__(self):

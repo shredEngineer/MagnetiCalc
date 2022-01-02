@@ -16,15 +16,15 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import os
 import time
 import atexit
-import datetime
 from typing import Optional
 
 import qtawesome as qta
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
-from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QDesktopWidget, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QMessageBox
+from magneticalc.QMessageBox2 import QMessageBox2
+from magneticalc.QSaveAction import QSaveAction
 from magneticalc import API
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
@@ -64,7 +64,8 @@ class GUI(QMainWindow):
 
         self.locale = QLocale(QLocale.English)
 
-        self.set_window()
+        self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
+        self.showMaximized()
 
         self.config = Config()
         self.config.set_changed_callback(self.on_config_changed)
@@ -103,7 +104,9 @@ class GUI(QMainWindow):
         self.menu = Menu(self)
 
         # Connect the calculation thread communication signals
+        # noinspection PyUnresolvedReferences
         self.calculation_status.connect(lambda text: self.statusbar.text(text))
+        # noinspection PyUnresolvedReferences
         self.calculation_exited.connect(lambda success: self.on_calculation_exited(success))
 
         self.initializing = True
@@ -248,20 +251,6 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_window(self):
-        """
-        Sets the basic window properties.
-        """
-
-        # Set window icon
-        self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
-
-        # Adjust window dimensions to desktop dimensions
-        screen = QDesktopWidget().screenGeometry()
-        self.setGeometry(0, 0, screen.width(), screen.height())
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     @staticmethod
     def confirm_saving_unsaved_work(cancelable: bool) -> Optional[bool]:
         """
@@ -270,19 +259,17 @@ class GUI(QMainWindow):
         @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
         @return: None if canceled, True if saving, False if discarding
         """
-        messagebox = QMessageBox()
-        messagebox.setWindowTitle("Project Changed")
-        messagebox.setText("Do you want to save your changes?")
-        messagebox.setIcon(QMessageBox.Question)
-        messagebox.setStandardButtons(
-            (QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel) if cancelable else
-            (QMessageBox.Save | QMessageBox.Discard)
+        buttons = QMessageBox.Save | QMessageBox.Discard | (QMessageBox.Cancel if cancelable else 0)
+        messagebox = QMessageBox2(
+            title="Project Changed",
+            text="Do you want to save your changes?",
+            icon=QMessageBox.Question,
+            buttons=buttons,
+            default_button=QMessageBox.Save
         )
-        messagebox.setDefaultButton(QMessageBox.Save)
-        choice = messagebox.exec()
-        if choice == QMessageBox.Save:
+        if messagebox.choice == QMessageBox.Save:
             return True
-        elif choice == QMessageBox.Discard:
+        elif messagebox.choice == QMessageBox.Discard:
             return False
         else:
             return None
@@ -388,7 +375,7 @@ class GUI(QMainWindow):
 
     def file_open(self):
         """
-        Opens some INI file.
+        Opens a project from an INI file.
         """
 
         # Stop any running calculation
@@ -399,7 +386,7 @@ class GUI(QMainWindow):
 
         filename, _chosen_extension = QFileDialog.getOpenFileName(
             parent=self,
-            caption="Open File",
+            caption="Open Project",
             filter="MagnetiCalc INI File (*.ini)",
             options=QFileDialog.DontUseNativeDialog
         )
@@ -440,7 +427,7 @@ class GUI(QMainWindow):
 
     def file_save(self):
         """
-        Saves to the currently set INI file.
+        Saves the project to the currently set INI file.
         """
         self.config.save()
 
@@ -448,53 +435,44 @@ class GUI(QMainWindow):
 
     def file_save_as(self):
         """
-        Saves to some INI file.
+        Saves the project to an INI file.
         """
-        file_dialog = QFileDialog(self)
-        file_dialog.setFileMode(QFileDialog.AnyFile)
-        file_dialog.setWindowTitle("Save As …")
-        file_dialog.setNameFilter("MagnetiCalc INI File (*.ini)")
-        file_dialog.setOptions(QFileDialog.DontUseNativeDialog)
-        if file_dialog.exec():
-            filenames = file_dialog.selectedFiles()
-            if filenames:
-                filename = filenames[0]
-
-                _file_name, file_extension = os.path.splitext(filename)
-
-                if file_extension.lower() != ".ini":
-                    filename += ".ini"
-
-                self.config.set_filename(filename)
-                self.config.save()
+        action = QSaveAction(
+            self,
+            title="Save Project",
+            date=True,
+            filename="MagnetiCalc_Project",
+            extension=".ini",
+            filter="MagnetiCalc INI File (*.ini)",
+            warn_overwrite=True
+        )
+        if action.filename:
+            self.config.set_filename(action.filename)
+            self.config.save()
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def file_save_image(self):
         """
-        Saves the currently displayed scene to PNG file.
+        Saves the currently displayed scene to a PNG file.
         """
-        filename, _chosen_extension = QFileDialog.getSaveFileName(
-            parent=self,
-            caption="Save Image",
-            directory=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc"),
-            filter="Portable Network Graphics (*.png)",
-            options=QFileDialog.DontUseNativeDialog
+        action = QSaveAction(
+            self,
+            title="Save Image",
+            date=True,
+            filename="MagnetiCalc_Screenshot",
+            extension=".png",
+            filter="PNG (*.png)",
+            warn_overwrite=True
         )
-
-        if filename != "":
-            _file_name, file_extension = os.path.splitext(filename)
-
-            if file_extension.lower() != ".png":
-                filename += ".png"
-
-            self.vispy_canvas.save_image(filename)
+        if action.filename:
+            self.vispy_canvas.save_image(action.filename)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def import_wire(self):
         """
-        Imports wire points from some TXT file.
+        Imports wire points from a TXT file.
         """
         filename, _chosen_extension = QFileDialog.getOpenFileName(
             parent=self,
@@ -519,24 +497,20 @@ class GUI(QMainWindow):
 
     def export_wire(self):
         """
-        Exports wire points to some TXT file.
+        Exports wire points to a TXT file.
         """
         if not self.model.wire.is_valid():
             Assert_Dialog(False, "Attempting to export invalid wire")
             return
 
-        filename, _chosen_extension = QFileDialog.getSaveFileName(
-            parent=self,
-            caption="Export Wire",
-            directory=datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S_MagnetiCalc_Wire"),
+        action = QSaveAction(
+            self,
+            title="Export Wire",
+            date=True,
+            filename="MagnetiCalc_Wire",
+            extension=".txt",
             filter="Text File (*.txt)",
-            options=QFileDialog.DontUseNativeDialog
+            warn_overwrite=True
         )
-
-        if filename != "":
-            _file_name, file_extension = os.path.splitext(filename)
-
-            if file_extension.lower() != ".txt":
-                filename += ".txt"
-
-            API.export_wire(filename, self.model.wire.get_points_sliced())
+        if action.filename:
+            API.export_wire(action.filename, self.model.wire.get_points_sliced())

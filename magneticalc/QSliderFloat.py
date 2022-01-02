@@ -1,4 +1,4 @@
-""" SliderFloat module. """
+""" QSliderFloat module. """
 
 #  ISC License
 #
@@ -19,8 +19,8 @@
 from PyQt5.QtWidgets import QSlider
 
 
-class SliderFloat(QSlider):
-    """ SliderFloat class. """
+class QSliderFloat(QSlider):
+    """ QSliderFloat class. """
 
     def __init__(self, orientation):
         """

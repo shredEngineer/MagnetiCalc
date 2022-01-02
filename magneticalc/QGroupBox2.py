@@ -1,4 +1,4 @@
-""" Groupbox module. """
+""" QGroupBox2 module. """
 
 #  ISC License
 #
@@ -16,23 +16,26 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QGroupBox, QVBoxLayout
+from PyQt5.QtWidgets import QGroupBox
+from magneticalc.QLayouted import QLayouted
 from magneticalc.Theme import Theme
 
 
-class Groupbox(QGroupBox):
-    """ Groupbox class. """
+class QGroupBox2(QGroupBox, QLayouted):
+    """ QGroupBox2 class. """
 
     def __init__(self, title):
         """
-        Initializes the groupbox.
+        Initializes a groupbox.
 
         @param title: Title
         """
         QGroupBox.__init__(self)
+        QLayouted.__init__(self)
+        self.install_layout(self)
 
         self.setTitle(title)
+
         self.setStyleSheet(f"""
             QGroupBox {{
                 border: 1px solid #cccccc;
@@ -49,37 +52,3 @@ class Groupbox(QGroupBox):
                 background-color: palette(window);
             }}
         """)
-
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
-
-        self.palette = self.palette()
-        self.palette.setColor(QPalette.Button, QColor(3, 18, 14))
-        self.setPalette(self.palette)
-
-    # noinspection PyPep8Naming
-    def addWidget(self, widget):
-        """
-        Adds widget to groupbox.
-
-        @param widget: QWidget
-        """
-        self.layout.addWidget(widget)
-
-    # noinspection PyPep8Naming
-    def addSpacing(self, spacing: float):
-        """
-        Adds spacing to groupbox.
-
-        @param spacing: Spacing value
-        """
-        self.layout.addSpacing(spacing)
-
-    # noinspection PyPep8Naming
-    def addLayout(self, layout):
-        """
-        Adds layout to groupbox.
-
-        @param layout: QLayout
-        """
-        self.layout.addLayout(layout)

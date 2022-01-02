@@ -53,7 +53,9 @@ class OverridePadding_Dialog(QDialog2):
 
         for i in range(3):
             text = "  ≤  " + ["X", "Y", "Z"][i] + "  ≤  "
-            self.addLayout(QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text), self.bounds_max_spinbox[i]))
+            self.addLayout(
+                QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text, fixed=True), self.bounds_max_spinbox[i])
+            )
 
         self.addSpacing(16)
 

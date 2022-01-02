@@ -68,9 +68,10 @@ class Constraint_Editor(QDialog2):
         table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
         table_add_button = QPushButton(" Add constraint")
         table_add_button.setIcon(qta.icon("fa.plus"))
+        # noinspection PyUnresolvedReferences
         table_add_button.clicked.connect(self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
-        self.layout.addLayout(table_icon_label)
+        self.addLayout(table_icon_label)
 
         self.table = QTableWidget2(
             self.gui,
@@ -81,8 +82,8 @@ class Constraint_Editor(QDialog2):
         self.table.set_vertical_prefix("constraint_")
         self.table.set_horizontal_types(self.Constraint_Types)
         self.table.set_horizontal_options(self.Constraint_Options)
-        self.layout.addWidget(self.table)
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.addWidget(self.table)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -101,7 +102,7 @@ class Constraint_Editor(QDialog2):
 
         text_browser = QTextBrowser2(html=html)
         self.dialog_shown.connect(text_browser.fit_to_contents)
-        self.addWidget(text_browser)
+        self.addWidget(text_browser, alignment=Qt.AlignBottom)
 
         self.addButtons({
             "OK": ("fa.check", self.accept)

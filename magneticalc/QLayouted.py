@@ -16,7 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Dict, Tuple, Callable, Union
+from PyQt5.QtCore import Qt
+from typing import Dict, Tuple, Callable, Union, Optional
 from magneticalc.QButtons import QButtons
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLayout, QWidget, QPushButton
 
@@ -37,13 +38,17 @@ class QLayouted:
         parent.setLayout(self.layout)
 
     # noinspection PyPep8Naming
-    def addWidget(self, widget):
+    def addWidget(self, widget, alignment: Optional[Union[Qt.Alignment, Qt.AlignmentFlag]] = None):
         """
         Adds widget.
 
         @param widget: QWidget
+        @param alignment: Alignment
         """
-        self.layout.addWidget(widget)
+        if alignment:
+            self.layout.addWidget(widget, alignment=alignment)
+        else:
+            self.layout.addWidget(widget)
 
     # noinspection PyPep8Naming
     def addLayout(self, layout: QLayout) -> None:

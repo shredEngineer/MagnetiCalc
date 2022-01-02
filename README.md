@@ -174,7 +174,7 @@ Please refer to the
 [Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
-## Data Import/Export and Python API 🆕
+## Data Import/Export and Python API
 
 ### GUI
 MagnetiCalc allows the following data to be imported/exported using the GUI:
@@ -184,8 +184,8 @@ MagnetiCalc allows the following data to be imported/exported using the GUI:
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
 ### API
-Documentation: [**API**](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html) |
-[**MagnetiCalc_Data**](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
+Documentation: [API](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html),
+[MagnetiCalc_Data](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
 
 The [`API`](magneticalc/API.py) class
 provides basic functions for importing/exporting data programmatically:

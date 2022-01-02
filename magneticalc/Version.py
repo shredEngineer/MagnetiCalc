@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.11.2"  # MAJ.MIN.REV
+__VERSION__ = "v1.12.0"  # MAJ.MIN.REV
 
 
 __URL__ = "https://github.com/shredEngineer/MagnetiCalc"

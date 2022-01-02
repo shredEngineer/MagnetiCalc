@@ -48,12 +48,7 @@
       <div id="splitTables">
         <table class="children sortable" id="id3">
   
-  <tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.API.API.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initializes the API.</span></td>
-  </tr><tr class="staticmethod">
+  <tr class="staticmethod">
     
     <td>Static Method</td>
     <td><a href="magneticalc.API.API.html#import_wire" class="code" data-type="Static Method">import_wire</a></td>
@@ -73,21 +68,16 @@
     <td>Static Method</td>
     <td><a href="magneticalc.API.API.html#export_hdf5" class="code" data-type="Static Method">export_hdf5</a></td>
     <td><span>Exports data to an HDF5 container.</span></td>
-  </tr><tr class="staticmethod">
+  </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.API.API.html#dict_to_hdf5_group" class="code" data-type="Static Method">dict_to_hdf5_group</a></td>
+    <td><a href="magneticalc.API.API.html#_dict_to_hdf5_group" class="code" data-type="Static Method">_dict_to_hdf5_group</a></td>
     <td><span>Recursively transforms a dictionary into an HDF5 group (in-place).</span></td>
-  </tr><tr class="staticmethod">
+  </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.API.API.html#hdf5_group_to_dict" class="code" data-type="Static Method">hdf5_group_to_dict</a></td>
+    <td><a href="magneticalc.API.API.html#_hdf5_group_to_dict" class="code" data-type="Static Method">_hdf5_group_to_dict</a></td>
     <td><span>Recursively transforms an HDF5 group into a dictionary (in-place).</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.API.API.html#reshape_fields" class="code" data-type="Static Method">reshape_fields</a></td>
-    <td><span class="undocumented">No summary</span></td>
   </tr>
 </table>
         
@@ -97,26 +87,7 @@
 
       <div id="childList">
 
-        <div class="basemethod">
-  
-  <a name="magneticalc.API.API.__init__">
-    
-  </a>
-  <a name="__init__">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    __init__(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Initializes the API.</p></div>
-  </div>
-</div><div class="basestaticmethod">
+        <div class="basestaticmethod">
   
   <a name="magneticalc.API.API.import_wire">
     
@@ -171,7 +142,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Imports data from an HDF5 container.</p><p>Opens an HDF5 file and converts every group and subgroup into a dictionary where the keys are the group keys and the items are the datasets.</p></div>
+    <div><p>Imports data from an HDF5 container.</p><p>Opens an HDF5 file and converts every group and subgroup into a dictionary where the keys are the group keys and the items are the datasets.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">filename</td><td>Filename</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">MagnetiCalc_Data object (can be accessed like a dictionary)</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -184,26 +155,26 @@
   <div class="functionHeader">
     @staticmethod<br />
     def
-    export_hdf5(filename, dictionary):
+    export_hdf5(filename, data):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Exports data to an HDF5 container.</p><p>Takes a dictionary and writes an HDF5 file using keys as keys, and items as groups if they are dictionaries or as datasets otherwise.</p></div>
+    <div><p>Exports data to an HDF5 container.</p><p>Takes a dictionary and writes an HDF5 file using keys as keys, and items as groups if they are dictionaries or as datasets otherwise.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">filename</td><td>Filename</td></tr><tr><td></td><td class="fieldArg">data</td><td>Dictionary or MagnetiCalc_Data object</td></tr></table></div>
   </div>
-</div><div class="basestaticmethod">
+</div><div class="basestaticmethod private">
   
-  <a name="magneticalc.API.API.dict_to_hdf5_group">
+  <a name="magneticalc.API.API._dict_to_hdf5_group">
     
   </a>
-  <a name="dict_to_hdf5_group">
+  <a name="_dict_to_hdf5_group">
     
   </a>
   <div class="functionHeader">
     @staticmethod<br />
     def
-    dict_to_hdf5_group(hdf5_group, dictionary):
+    _dict_to_hdf5_group(hdf5_group, dictionary):
     
   </div>
   <div class="docstring functionBody">
@@ -211,18 +182,18 @@
     
     <div><p>Recursively transforms a dictionary into an HDF5 group (in-place).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">hdf5_group</td><td>HDF5 group</td></tr><tr><td></td><td class="fieldArg">dictionary</td><td>Dictionary</td></tr></table></div>
   </div>
-</div><div class="basestaticmethod">
+</div><div class="basestaticmethod private">
   
-  <a name="magneticalc.API.API.hdf5_group_to_dict">
+  <a name="magneticalc.API.API._hdf5_group_to_dict">
     
   </a>
-  <a name="hdf5_group_to_dict">
+  <a name="_hdf5_group_to_dict">
     
   </a>
   <div class="functionHeader">
     @staticmethod<br />
     def
-    hdf5_group_to_dict(hdf5_group, dictionary):
+    _hdf5_group_to_dict(hdf5_group, dictionary):
     
   </div>
   <div class="docstring functionBody">
@@ -230,30 +201,11 @@
     
     <div><p>Recursively transforms an HDF5 group into a dictionary (in-place).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">hdf5_group</td><td>HDF5 group</td></tr><tr><td></td><td class="fieldArg">dictionary</td><td>Dictionary</td></tr></table></div>
   </div>
-</div><div class="basestaticmethod">
-  
-  <a name="magneticalc.API.API.reshape_fields">
-    
-  </a>
-  <a name="reshape_fields">
-    
-  </a>
-  <div class="functionHeader">
-    @staticmethod<br />
-    def
-    reshape_fields(dictionary):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Reshapes arrays obtained from import_hdf5() so that the axes are given by minimal one-dimensional arrays rather than raveled three-dimensional meshes. The fields are unraveled so that they are represented by three-dimensional arrays with Axis 0 ➔ x, Axis 1 ➔ y, and Axis 2 ➔ z.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">dictionary</td><td>Dictionary</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Dictionary</td></tr></table></div>
-  </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-02 06:18:46.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-02 09:06:24.
       </address>
 
     </div>

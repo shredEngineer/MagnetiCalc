@@ -290,7 +290,7 @@ ToDo
 **Code Quality**
 * Add debug output where it is missing.
 * Add type hints where they are missing.
-* Use my `QtWidgets2` wrapper everywhere.
+* Add unit tests.
 * Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671) for accessing data where applicable. 
 * Merge sparse `*_Types.py` modules with higher-level classes if possible.
 

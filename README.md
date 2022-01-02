@@ -106,6 +106,10 @@ Tested with:
 * Python 3.8.10 in Windows 10 (21H2)
 
 ### Prerequisites
+On some systems, it may be necessary to upgrade pip first:
+ `python3 -m pip install pip --upgrade`
+
+*Note:* Windows users need to type `python` instead of `python3`
 
 #### Linux
 The following dependencies must be installed first (Ubuntu 20.04):
@@ -113,16 +117,12 @@ The following dependencies must be installed first (Ubuntu 20.04):
 sudo apt install python3-dev
 sudo apt install libxcb-xinerama0 --reinstall
 ```
-On some systems, it may be necessary to upgrade pip first:
-`python3 -m pip install pip --upgrade`
 
 #### Windows
 It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
 Installation will currently fail for Python 3.9+ due to missing dependencies.
-On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
 
-On some systems, it may be necessary to upgrade pip first:
-`python -m pip install pip --upgrade`
+On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
 
 ### Option A: Automatic install via pip
 This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
@@ -149,7 +149,7 @@ import sys
 ```
 
 ### Option B: Manual download
-**Note:** Instructions for Linux; Windows users need to type `python` instead of `python3`.
+*Note:* Windows users need to type `python` instead of `python3`.
 
 Install (upgrade) all dependencies to the user site-packages directory:
 ```shell

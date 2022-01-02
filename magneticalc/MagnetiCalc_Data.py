@@ -80,7 +80,7 @@ class MagnetiCalc_Data(MutableMapping):
             as_3d: bool = False
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
-        Gets the sampling volume axes as three separate 1D arrays (raveled).
+        Gets the field as three separate 1D arrays (raveled).
 
         @param field_type: Field type ("A" or "B")
         @param as_3d: Enable to transform each raveled 1D array into an unraveled 3D mesh (indexed by the minimal axes)
@@ -91,7 +91,8 @@ class MagnetiCalc_Data(MutableMapping):
         field_x, field_y, field_z = fields[field_type + "_x"], fields[field_type + "_y"], fields[field_type + "_z"]
 
         if as_3d:
-            field_x = np.reshape(field_x, self.get_dimension(), order="F")
+            shape_3d = self.get_dimension()
+            field_x, field_y, field_z = np.reshape(field_x, shape_3d, order="F"), np.reshape(field_z, shape_3d, order="F"), np.reshape(field_x, shape_3d, order="F")
 
         return field_x, field_y, field_z
 

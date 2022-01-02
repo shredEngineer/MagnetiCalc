@@ -3,7 +3,7 @@
           "DTD/xhtml1-strict.dtd">
 <html>
   <head>
-    <title>magneticalc.BiotSavart_JIT.BiotSavart_JIT : API documentation</title>
+    <title>magneticalc.Backend_CUDA.Backend_CUDA : API documentation</title>
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
@@ -28,12 +28,12 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.BiotSavart_JIT.BiotSavart_JIT</code> <small>class documentation</small></h1>
+        <h1 class="class"><code>magneticalc.Backend_CUDA.Backend_CUDA</code> <small>class documentation</small></h1>
 
         <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.BiotSavart_JIT.html" class="code" data-type="Module">BiotSavart_JIT</a></code>
+          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Backend_CUDA.html" class="code" data-type="Module">Backend_CUDA</a></code>
           
-          <a href="classIndex.html#magneticalc.BiotSavart_JIT.BiotSavart_JIT">(View In Hierarchy)</a>
+          <a href="classIndex.html#magneticalc.Backend_CUDA.Backend_CUDA">(View In Hierarchy)</a>
         </span>
       </div>
 
@@ -42,66 +42,71 @@
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field).</p></div>
+        <div><p>Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field). Backend: JIT + CUDA.</p></div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id12">
+        <table class="children sortable" id="id11">
   
   <tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#__init__" class="code" data-type="Method">__init__</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#__init__" class="code" data-type="Method">__init__</a></td>
     <td><span>Initializes the class attributes.</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#field_type" class="code" data-type="Instance Variable">field_type</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#field_type" class="code" data-type="Instance Variable">field_type</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#worker" class="code" data-type="Static Method">worker</a></td>
-    <td><span>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for a single sampling volume point.</span></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#is_available" class="code" data-type="Static Method">is_available</a></td>
+    <td><span>Indicates the availability of this backend.</span></td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#worker" class="code" data-type="Static Method">worker</a></td>
+    <td><span>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#get_result" class="code" data-type="Method">get_result</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#get_result" class="code" data-type="Method">get_result</a></td>
     <td><span>Calculates the field at every point of the sampling volume.</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_distance_limit" class="code" data-type="Instance Variable">_distance_limit</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_distance_limit" class="code" data-type="Instance Variable">_distance_limit</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_length_scale" class="code" data-type="Instance Variable">_length_scale</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_length_scale" class="code" data-type="Instance Variable">_length_scale</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_dc" class="code" data-type="Instance Variable">_dc</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_dc" class="code" data-type="Instance Variable">_dc</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_current_elements" class="code" data-type="Instance Variable">_current_elements</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_current_elements" class="code" data-type="Instance Variable">_current_elements</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_sampling_volume_points" class="code" data-type="Instance Variable">_sampling_volume_points</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_sampling_volume_points" class="code" data-type="Instance Variable">_sampling_volume_points</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_sampling_volume_permeabilities" class="code" data-type="Instance Variable">_sampling_volume_permeabilities</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_sampling_volume_permeabilities" class="code" data-type="Instance Variable">_sampling_volume_permeabilities</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.BiotSavart_JIT.BiotSavart_JIT.html#_progress_callback" class="code" data-type="Instance Variable">_progress_callback</a></td>
+    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_progress_callback" class="code" data-type="Instance Variable">_progress_callback</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -114,7 +119,7 @@
 
         <div class="basemethod">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.__init__">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.__init__">
     
   </a>
   <a name="__init__">
@@ -133,7 +138,7 @@
   </div>
 </div><div class="baseinstancevariable">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.field_type">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.field_type">
     
   </a>
   <a name="field_type">
@@ -149,7 +154,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._distance_limit">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._distance_limit">
     
   </a>
   <a name="_distance_limit">
@@ -165,7 +170,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._length_scale">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._length_scale">
     
   </a>
   <a name="_length_scale">
@@ -181,7 +186,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._dc">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._dc">
     
   </a>
   <a name="_dc">
@@ -197,7 +202,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._current_elements">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._current_elements">
     
   </a>
   <a name="_current_elements">
@@ -213,7 +218,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._sampling_volume_points">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_points">
     
   </a>
   <a name="_sampling_volume_points">
@@ -229,7 +234,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._sampling_volume_permeabilities">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_permeabilities">
     
   </a>
   <a name="_sampling_volume_permeabilities">
@@ -245,7 +250,7 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT._progress_callback">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._progress_callback">
     
   </a>
   <a name="_progress_callback">
@@ -261,26 +266,45 @@
   </div>
 </div><div class="basestaticmethod">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.worker">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.is_available">
+    
+  </a>
+  <a name="is_available">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />
+    def
+    is_available():
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Indicates the availability of this backend.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if this backend is available, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.worker">
     
   </a>
   <a name="worker">
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@jit(nopython=True, parallel=True)<br />
+    @staticmethod<br />@cuda.jit<br />
     def
-    worker(field_type, distance_limit, length_scale, current_elements, sampling_volume_point):
+    worker(field_type, distance_limit, length_scale, element_centers, element_directions, sampling_volume_points, sampling_volume_permeabilities, field_vectors, total_calculations, total_skipped_calculations):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for a single sampling volume point.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>Ordered list of current elements (pairs: [element center, element direction])</td></tr><tr><td></td><td class="fieldArg">sampling_volume_point</td><td>Sampling volume point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total # of calculations, total # of skipped calculations, vector)</td></tr></table></div>
+    <div><p>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">element_centers</td><td>Ordered list of current elements centers</td></tr><tr><td></td><td class="fieldArg">element_directions</td><td>Ordered list of current elements directions</td></tr><tr><td></td><td class="fieldArg">sampling_volume_points</td><td>Sampling volume points</td></tr><tr><td></td><td class="fieldArg">sampling_volume_permeabilities</td><td>Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td></td><td class="fieldArg">field_vectors</td><td>Field vectors (output array)</td></tr><tr><td></td><td class="fieldArg">total_calculations</td><td>Total number of calculations (output array)</td></tr><tr><td></td><td class="fieldArg">total_skipped_calculations</td><td>Total number of skipped calculations (output array)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.BiotSavart_JIT.BiotSavart_JIT.get_result">
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.get_result">
     
   </a>
   <a name="get_result">
@@ -301,7 +325,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2021-12-31 18:48:40.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-02 06:18:46.
       </address>
 
     </div>

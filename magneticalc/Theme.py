@@ -16,8 +16,6 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.QtWidgets import QWidget, QStyle
-
 
 class Theme:
     """ Theme class. """
@@ -31,14 +29,3 @@ class Theme:
     SuccessColor = "#2e7d32"
     WarningColor = "#c62828"
     InvalidColor = "#a00000"
-
-    @staticmethod
-    def get_icon(widget: QWidget, name: str):
-        """
-        Gets a PyQt5 standard icon by name.
-
-        @param widget: Base QWidget
-        @param name: Name
-        @return: PyQt5 icon
-        """
-        return widget.style().standardIcon(getattr(QStyle, name))

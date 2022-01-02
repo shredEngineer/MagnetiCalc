@@ -174,18 +174,21 @@ Please refer to the
 [Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
-### Data Import/Export and Python API 🆕
+## Data Import/Export and Python API 🆕
 
-#### GUI
+### GUI
 MagnetiCalc allows the following data to be imported/exported using the GUI:
 * Import/export wire points from/to TXT file.
-* Export <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- / <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields,
+* Export <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-/
+  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields,
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
-#### API
-The [<code>API.py</code>](magneticalc/API.py) class
+### API
+Documentation: [**API**](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html) |
+[**MagnetiCalc_Data**](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
+
+The [`API`](magneticalc/API.py) class
 provides basic functions for importing/exporting data programmatically:
-[API class documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html).
 
 * Generate a wire shape using [NumPy](https://numpy.org/) and export it to a TXT file: 
   ```python
@@ -203,34 +206,30 @@ provides basic functions for importing/exporting data programmatically:
 * Import an HDF5 file containing an
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
   (which needs to be generated using the GUI first)
-  and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
-    ```python
-    from magneticalc import API
-    import matplotlib.pyplot as plt
-
-    data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
-    fields = data["fields"]
-    x, y, z = fields["x"], fields["y"], fields["z"]
-    A_x, A_y, A_z = fields["A_x"], fields["A_y"], fields["A_z"]
-  
-    ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
-    ax.quiver(x, y, z, A_x, A_y, A_z, length=5e5, normalize=False, linewidth=2)
-    plt.show()
-    ```
-
-  Data is natively exported as 1D raveled arrays, 
-  and the list of 3D points can be obtained like this:
+  and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html).
   ```python
-  points = np.array(list(zip(*[data["fields"][i] for i in ["x", "y", "z"]])))
+  from magneticalc import API
+  import matplotlib.pyplot as plt
+
+  data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
+  axes = data.get_axes()
+  a_field = data.get_a_field()
+
+  ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
+  ax.quiver(*axes, *a_field, length=5e5, normalize=False, linewidth=2)
+  plt.show()
   ```
-  
-  However, for visualising a slice of the magnitude of a field or a field component in a plane,
-  and for integrating over the axes, it may be preferable to have minimal 1D representations of the axes,
-  and to have the field components arranged in 3D arrays with `Axis 0`➔`x`, `Axis 1`➔`y`, and `Axis 2`➔`z`.
-  The reshaped data can be obtained like this:
-  ```python
-  data_reshape = API.reshape_fields(data)
-  ```
+
+  The data is wrapped in a [`MagnetiCalc_Data`](magneticalc/MagnetiCalc_Data.py) object
+  which provides convenience functions for accessing, transforming and reshaping the data:
+  * `.get_dimension()` returns the sampling volume dimension as a 3-tuple.
+  * `.get_axes(reduce=True)` returns the axis ticks of the sampling volume.
+  * `.get_axes_list()` returns a list of all 3D points of the sampling volume.
+  * `.get_a_field_list()` returns a list of all 3D vectors of the
+    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-Field.
+  * `.get_a_field(as_3d=True)` returns a 3D field for each component of the
+    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-Field,
+    indexed over the reduced axes.
 
 License
 -------
@@ -274,9 +273,6 @@ ToDo
 * Add support for multiple current values and animate the resulting fields.
 * Add support for modeling of core material saturation and hysteresis effects ([Landau–Lifshitz–Gilbert equation](https://en.wikipedia.org/wiki/Landau%E2%80%93Lifshitz%E2%80%93Gilbert_equation)).
 * Provide a means to emulate permanent magnets.
-
-**API**
-* Increase the level of abstraction and add more functionality.
 
 **Usability**
 * Add more example projects to `examples/`.

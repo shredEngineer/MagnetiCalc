@@ -108,8 +108,7 @@ class ExportContainer_Dialog(QDialog2):
             date=True,
             filename="MagnetiCalc_Export" + (("_" + export_types_str) if export_types_str else ""),
             extension=".hdf5",
-            filter="HDF5 Container (*.hdf5)",
-            warn_overwrite=True
+            filter="HDF5 Container (*.hdf5)"
         )
         if action.filename:
 
@@ -118,6 +117,7 @@ class ExportContainer_Dialog(QDialog2):
             fields = {}
             if export_a_field or export_b_field:
                 sampling_volume_components = self.gui.model.sampling_volume.get_points().T
+                fields.update(dict(zip(["nx", "ny", "nz"], self.gui.model.sampling_volume.dimension)))
                 fields.update(dict(zip(["x", "y", "z"], sampling_volume_components)))
             if export_a_field:
                 a_field_components = self.gui.model.get_valid_field(A_FIELD).get_vectors().T

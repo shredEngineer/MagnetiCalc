@@ -19,17 +19,11 @@
 import h5py
 import numpy as np
 from typing import Dict, List, Union
+from magneticalc.MagnetiCalc_Data import MagnetiCalc_Data
 
 
 class API:
     """ API class. """
-
-    def __init__(self) -> None:
-        """
-        Initializes the API.
-        """
-
-    # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     def import_wire(filename: str) -> np.ndarray:
@@ -56,38 +50,44 @@ class API:
         # noinspection PyTypeChecker
         np.savetxt(filename, data)
 
-    # ------------------------------------------------------------------------------------------------------------------
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @staticmethod
-    def import_hdf5(filename: str) -> Dict:
+    def import_hdf5(filename: str) -> MagnetiCalc_Data:
         """
         Imports data from an HDF5 container.
 
         Opens an HDF5 file and converts every group and subgroup into a dictionary
         where the keys are the group keys and the items are the datasets.
+
+        @param filename: Filename
+        @return: MagnetiCalc_Data object (can be accessed like a dictionary)
         """
         hdf5_group = h5py.File(filename, "r")
-        dictionary = {}
-        API.hdf5_group_to_dict(hdf5_group, dictionary)
+        data = {}
+        API._hdf5_group_to_dict(hdf5_group, data)
         hdf5_group.close()
-        return dictionary
+        return MagnetiCalc_Data(data)
 
     @staticmethod
-    def export_hdf5(filename: str, dictionary: Dict) -> None:
+    def export_hdf5(filename: str, data: Union[Dict, MagnetiCalc_Data]) -> None:
         """
         Exports data to an HDF5 container.
 
         Takes a dictionary and writes an HDF5 file using keys as keys,
         and items as groups if they are dictionaries or as datasets otherwise.
+
+        @param filename: Filename
+        @param data: Dictionary or MagnetiCalc_Data object
         """
         hdf5_group = h5py.File(filename, "w")
-        API.dict_to_hdf5_group(hdf5_group, dictionary)
+        API._dict_to_hdf5_group(hdf5_group, data)
         hdf5_group.close()
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def dict_to_hdf5_group(hdf5_group, dictionary) -> None:
+    def _dict_to_hdf5_group(hdf5_group, dictionary) -> None:
         """
         Recursively transforms a dictionary into an HDF5 group (in-place).
 
@@ -97,12 +97,12 @@ class API:
         for key in dictionary.keys():
             if isinstance(dictionary[key], dict):
                 group = hdf5_group.create_group(key)
-                API.dict_to_hdf5_group(group, dictionary[key])
+                API._dict_to_hdf5_group(group, dictionary[key])
             else:
                 hdf5_group[key] = dictionary[key]
 
     @staticmethod
-    def hdf5_group_to_dict(hdf5_group, dictionary) -> None:
+    def _hdf5_group_to_dict(hdf5_group, dictionary) -> None:
         """
         Recursively transforms an HDF5 group into a dictionary (in-place).
 
@@ -114,27 +114,4 @@ class API:
                 dictionary[key] = hdf5_group[key][()]
             else:
                 dictionary[key] = {}
-                API.hdf5_group_to_dict(hdf5_group[key], dictionary[key])
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    @staticmethod
-    def reshape_fields(dictionary: Dict) -> Dict:
-        """
-        Reshapes arrays obtained from import_hdf5() so that the axes are given
-        by minimal one-dimensional arrays rather than raveled three-dimensional
-        meshes. The fields are unraveled so that they are represented by
-        three-dimensional arrays with Axis 0 ➔ x, Axis 1 ➔ y, and Axis 2 ➔ z.
-
-        @param dictionary: Dictionary
-        @return: Dictionary
-        """
-        axes = ["x", "y", "z"]
-        new_dictionary = dictionary.copy()
-        for key in axes:
-            new_dictionary["fields"][key] = np.array(sorted(list(set(new_dictionary["fields"][key]))))
-        new_shape = [len(new_dictionary["fields"][i]) for i in axes]
-        for key in new_dictionary["fields"]:
-            if not(key in axes):
-                new_dictionary["fields"][key] = np.reshape(new_dictionary["fields"][key], new_shape, order="F")
-        return new_dictionary
+                API._hdf5_group_to_dict(hdf5_group[key], dictionary[key])

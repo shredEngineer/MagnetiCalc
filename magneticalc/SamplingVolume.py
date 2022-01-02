@@ -296,7 +296,6 @@ class SamplingVolume:
                 included = True
 
                 if self.Debug_Constraints:
-                    print()
                     Debug(
                         self,
                         f".recalculate(): Point = {point}: "

@@ -443,8 +443,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Project",
             extension=".ini",
-            filter="MagnetiCalc INI File (*.ini)",
-            warn_overwrite=True
+            filter="MagnetiCalc INI File (*.ini)"
         )
         if action.filename:
             self.config.set_filename(action.filename)
@@ -462,8 +461,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Screenshot",
             extension=".png",
-            filter="PNG (*.png)",
-            warn_overwrite=True
+            filter="PNG (*.png)"
         )
         if action.filename:
             self.vispy_canvas.save_image(action.filename)
@@ -509,8 +507,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Wire",
             extension=".txt",
-            filter="Text File (*.txt)",
-            warn_overwrite=True
+            filter="Text File (*.txt)"
         )
         if action.filename:
             API.export_wire(action.filename, self.model.wire.get_points_sliced())

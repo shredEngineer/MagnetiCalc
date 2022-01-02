@@ -17,3 +17,4 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from magneticalc.API import API
+from magneticalc.MagnetiCalc_Data import MagnetiCalc_Data

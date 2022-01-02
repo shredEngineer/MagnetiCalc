@@ -33,8 +33,7 @@ class QSaveAction:
             date: bool,
             filename: str,
             extension: str,
-            filter: str,
-            warn_overwrite: bool
+            filter: str
     ) -> None:
         """
         Initializes a save dialog.
@@ -45,7 +44,6 @@ class QSaveAction:
         @param filename: Filename
         @param extension: Extension
         @param filter: Filename filters
-        @param warn_overwrite: Enable to warn about overwriting an existing file
         """
         self.filename, _chosen_extension = QFileDialog.getSaveFileName(
             parent=gui,
@@ -59,20 +57,6 @@ class QSaveAction:
             self.filename = None
             return
 
-        _file_name, file_extension = os.path.splitext(filename)
+        _file_name, file_extension = os.path.splitext(self.filename)
         if file_extension.lower() != extension:
             self.filename += extension
-
-        if warn_overwrite:
-            print(filename, os.path.exists(self.filename))
-            if os.path.exists(self.filename):
-                messagebox = QMessageBox2(
-                    title="Overwrite Existing File",
-                    text="Do you want to overwrite the file?",
-                    icon=QMessageBox.Question,
-                    buttons=QMessageBox.Yes | QMessageBox.No,
-                    default_button=QMessageBox.No
-                )
-                if messagebox.choice == QMessageBox.No:
-                    self.filename = None
-                    return

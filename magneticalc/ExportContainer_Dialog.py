@@ -16,31 +16,39 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from PyQt5.QtWidgets import QCheckBox
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QSaveAction import QSaveAction
 from magneticalc.API import API
+from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class ExportContainer_Dialog(QDialog2):
     """ ExportContainer_Dialog class. """
 
-    def __init__(self, gui) -> None:
+    def __init__(self, gui: GUI) -> None:
         """
         Prepares the 'Export Container' dialog.
 
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Export Container", width=500)
+        Debug(self, ": Init")
         self.gui = gui
 
-        self.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.PrimaryColor))
+        self.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.MainColor))
         self.addSpacing(8)
         self.addWidget(QLabel2(
-            "Fields must have been calculated before they can be exported.", italic=True, color=Theme.LightColor
+            "Fields must have been calculated before they can be exported.", italic=True, color=Theme.LiteColor
         ))
         self.addSpacing(16)
 
@@ -89,6 +97,8 @@ class ExportContainer_Dialog(QDialog2):
         """
         Exports wire points, current and fields to some HDF5 container file.
         """
+        Debug(self, ".export()")
+
         export_a_field = self.a_field_checkbox.isChecked()
         export_b_field = self.b_field_checkbox.isChecked()
         export_wire_points = self.wire_points_checkbox.isChecked()

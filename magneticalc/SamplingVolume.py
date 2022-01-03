@@ -16,12 +16,12 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, Callable, Dict
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
 
 
 class SamplingVolume:
@@ -30,7 +30,7 @@ class SamplingVolume:
     # Enable to show additional debug info during constraint calculation
     Debug_Constraints = False
 
-    def __init__(self, resolution: float, label_resolution: float):
+    def __init__(self, resolution: float, label_resolution: float) -> None:
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
 
@@ -78,11 +78,11 @@ class SamplingVolume:
             self._labeled_indices is not None and \
             self._neighbor_indices is not None
 
-    def invalidate(self):
+    def invalidate(self) -> None:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=Theme.InvalidColor)
+        Debug(self, ".invalidate()")
 
         self._dimension = None
         self._points = None
@@ -116,11 +116,11 @@ class SamplingVolume:
         """
         return self._bounds_max - self._bounds_min
 
-    def get_points(self) -> List:
+    def get_points(self) -> np.array:
         """
         Returns this sampling volume's points.
 
-        @return: Ordered list of 3D points
+        @return: Array of 3D points
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
 
@@ -136,7 +136,7 @@ class SamplingVolume:
 
         return len(self._points)
 
-    def get_permeabilities(self) -> List:
+    def get_permeabilities(self) -> np.ndarray:
         """
         Returns this sampling volume's relative permeabilities µ_r.
 
@@ -166,7 +166,7 @@ class SamplingVolume:
 
         return len(self._labeled_indices)
 
-    def get_neighbor_indices(self) -> List:
+    def get_neighbor_indices(self) -> List[np.ndarray]:
         """
         Returns this sampling volume's neighborhood indices.
 
@@ -178,7 +178,7 @@ class SamplingVolume:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_bounds_nearest(self, bounds_min, bounds_max) -> None:
+    def set_bounds_nearest(self, bounds_min: np.ndarray, bounds_max: np.ndarray) -> None:
         """
         Adjusts this volume's bounding box to fully enclose a 3D wire curve.
         This expands the bounding box to the next integer grid coordinates.
@@ -189,10 +189,12 @@ class SamplingVolume:
         @param bounds_max: Maximum bounding box point
         @return: Rounded (_bounds_min, _bounds_max)
         """
+        Debug(self, ".set_bounds_nearest()")
+
         self._bounds_min = np.array([np.floor(x) for x in bounds_min])
         self._bounds_max = np.array([np.ceil(x) for x in bounds_max])
 
-    def set_padding_nearest(self, padding) -> None:
+    def set_padding_nearest(self, padding: np.ndarray) -> None:
         """
         Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.
         This shrinks or expands the bounding box to the next integer grid coordinates.
@@ -201,24 +203,26 @@ class SamplingVolume:
 
         @param padding: Amount of padding (3D point)
         """
+        Debug(self, ".set_padding_nearest()")
+
         self._bounds_min -= np.array([np.floor(x) for x in padding])
         self._bounds_max += np.array([np.ceil(x) for x in padding])
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_constraint(self, constraint) -> None:
+    def add_constraint(self, constraint: Constraint) -> None:
         """
         Adds some constraint to this volume's point generator.
 
         @param constraint: Constraint
         """
-        Debug(self, f".add_constraint()")
+        Debug(self, ".add_constraint()")
 
         self.constraints.append(constraint)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, progress_callback) -> bool:
+    def recalculate(self, progress_callback: Callable) -> bool:
         """
         Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.
 
@@ -228,7 +232,7 @@ class SamplingVolume:
         Debug(self, ".recalculate()")
 
         # Group constraints by permeability
-        constraints_precedence_dict = {}
+        constraints_precedence_dict: Dict = {}
         for constraint in self.constraints:
             if constraint.permeability in constraints_precedence_dict:
                 constraints_precedence_dict[constraint.permeability].append(constraint)
@@ -236,12 +240,7 @@ class SamplingVolume:
                 constraints_precedence_dict[constraint.permeability] = [constraint]
 
         if self.Debug_Constraints:
-            Debug(
-                self,
-                f".recalculate(): Created {len(constraints_precedence_dict)} constraint group(s)",
-                color=Theme.PrimaryColor,
-                force=True
-            )
+            Debug(self, f".recalculate(): Created {len(constraints_precedence_dict)} constraint group(s)")
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -260,7 +259,7 @@ class SamplingVolume:
 
         labeled_indices = []
 
-        def i_to_xyz(_i: int):
+        def i_to_xyz(_i: int) -> List:
             """
             Convert 1D index to 3D indices.
 
@@ -272,7 +271,7 @@ class SamplingVolume:
             _z = _i // (self._dimension[0] * self._dimension[1])
             return [_x, _y, _z]
 
-        def xyz_to_i(xyz) -> int:
+        def xyz_to_i(xyz: List) -> int:
             """
             Convert 3D indices to 1D index.
 
@@ -300,9 +299,7 @@ class SamplingVolume:
                         self,
                         f".recalculate(): Point = {point}: "
                         f"Calculating {len(constraints_precedence_dict[permeability_key])} constraint(s) "
-                        f"for permeability = {permeability_key} …",
-                        color=Theme.PrimaryColor,
-                        force=True
+                        f"for permeability = {permeability_key} …"
                     )
 
                 # Calculate the inclusion relation for the current group
@@ -311,12 +308,7 @@ class SamplingVolume:
                     if not constraint.evaluate(point):
 
                         if self.Debug_Constraints:
-                            Debug(
-                                self,
-                                f".recalculate(): Point = {point}: Constraint evaluated to False (breaking)",
-                                color=Theme.WarningColor,
-                                force=True
-                            )
+                            Debug(self, f".recalculate(): Point = {point}: Constraint evaluated to False (breaking)")
 
                         # Exclude this point within the current group
                         included = False
@@ -325,22 +317,12 @@ class SamplingVolume:
                     else:
 
                         if self.Debug_Constraints:
-                            Debug(
-                                self,
-                                f".recalculate(): Point = {point}: Constraint evaluated to True",
-                                color=Theme.SuccessColor,
-                                force=True
-                            )
+                            Debug(self, f".recalculate(): Point = {point}: Constraint evaluated to True", success=True)
 
                 if included:
 
                     if self.Debug_Constraints:
-                        Debug(
-                            self,
-                            f".recalculate(): Point = {point}: Included by precedence grouping",
-                            color=Theme.SuccessColor,
-                            force=True
-                        )
+                        Debug(self, f".recalculate(): Point = {point}: Included by precedence grouping", success=True)
 
                     permeability = permeability_key
                     break
@@ -348,22 +330,12 @@ class SamplingVolume:
                 else:
 
                     if self.Debug_Constraints:
-                        Debug(
-                            self,
-                            f".recalculate(): Point = {point}: Excluded by precedence grouping",
-                            color=Theme.WarningColor,
-                            force=True
-                        )
+                        Debug(self, f".recalculate(): Point = {point}: Excluded by precedence grouping")
 
             if permeability != 0:
 
                 if self.Debug_Constraints:
-                    Debug(
-                        self,
-                        f".recalculate(): Point = {point}: Finally included with permeability = {permeability}",
-                        color=Theme.SuccessColor,
-                        force=True
-                    )
+                    Debug(self, f".recalculate(): Point = {point}: Finally included with permeability = {permeability}")
 
                 # Include this point
                 points_all[i] = point
@@ -391,19 +363,14 @@ class SamplingVolume:
             else:
 
                 if self.Debug_Constraints:
-                    Debug(
-                        self,
-                        f".recalculate(): Point = {point}: Finally excluded with permeability = 0",
-                        color=Theme.WarningColor,
-                        force=True
-                    )
+                    Debug(self, f".recalculate(): Point = {point}: Finally excluded with permeability = 0")
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
                 progress_callback(100 * (i + 1) / n)
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
+                    Debug(self, ".recalculate(): WARNING: Interruption requested, exiting now", warning=True)
                     return False
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -468,12 +435,7 @@ class SamplingVolume:
         )
 
         if len(self._points) == 0:
-            Debug(
-                self,
-                ".recalculate: USER WARNING: Avoiding empty sampling volume by adding origin",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, ".recalculate: USER WARNING: Avoiding empty sampling volume by adding origin", warning=True)
             origin = np.zeros(3)
             self._points = np.array([origin])
             self._permeabilities = np.array([0])

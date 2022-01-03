@@ -16,13 +16,14 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSlider
 
 
 class QSliderFloat(QSlider):
     """ QSliderFloat class. """
 
-    def __init__(self, orientation):
+    def __init__(self, orientation: Qt.Orientation) -> None:
         """
         Initializes a slider supporting float values.
 
@@ -32,7 +33,7 @@ class QSliderFloat(QSlider):
 
         self._step = 0
 
-    def set_range_step(self, minimum: float, maximum: float, step: float):
+    def set_range_step(self, minimum: float, maximum: float, step: float) -> None:
         """
         Sets the float step.
 
@@ -46,7 +47,7 @@ class QSliderFloat(QSlider):
         super().setMaximum(round(maximum / self._step))
         super().setSingleStep(1)
 
-    def setValue(self, value: float):
+    def setValue(self, value: float) -> None:
         """
         Sets the slider value.
 

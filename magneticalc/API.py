@@ -87,7 +87,7 @@ class API:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def _dict_to_hdf5_group(hdf5_group, dictionary) -> None:
+    def _dict_to_hdf5_group(hdf5_group: h5py.Group, dictionary: Dict) -> None:
         """
         Recursively transforms a dictionary into an HDF5 group (in-place).
 
@@ -102,7 +102,7 @@ class API:
                 hdf5_group[key] = dictionary[key]
 
     @staticmethod
-    def _hdf5_group_to_dict(hdf5_group, dictionary) -> None:
+    def _hdf5_group_to_dict(hdf5_group: h5py.Group, dictionary: Dict) -> None:
         """
         Recursively transforms an HDF5 group into a dictionary (in-place).
 

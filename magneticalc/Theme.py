@@ -21,11 +21,11 @@ class Theme:
     """ Theme class. """
 
     # Theme colors
-
-    PrimaryColor = "#2c82b8"
-    LightColor = "#555555"
+    MainColor = "#2c82b8"
+    LiteColor = "#555555"
     DarkColor = "#12344a"
-
     SuccessColor = "#2e7d32"
-    WarningColor = "#c62828"
-    InvalidColor = "#a00000"
+    FailureColor = "#c62828"
+
+    # Default font
+    DefaultFontFace = "DejaVu Sans Mono"

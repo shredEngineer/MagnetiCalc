@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox, QComboBox, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QMessageBox
@@ -28,6 +29,11 @@ from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
 from magneticalc.QSliderFloat import QSliderFloat
 from magneticalc.Theme import Theme
 from magneticalc.VispyCanvas import VispyCanvas
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class Display_Widget(QGroupBox2):
@@ -50,14 +56,14 @@ class Display_Widget(QGroupBox2):
     # Warn about displaying an excessive number of field labels
     ExcessiveFieldLabelThreshold = 250
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the widget.
 
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Display")
-
+        Debug(self, ": Init")
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -159,9 +165,9 @@ class Display_Widget(QGroupBox2):
 
         total_labels_layout = QHBoxLayout()
         total_labels_left = QLabel("Total labels:")
-        total_labels_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_labels_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_labels_label = QLabel("N/A")
-        self.total_labels_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_labels_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_labels_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_labels_layout.addWidget(total_labels_left, alignment=Qt.AlignVCenter)
         total_labels_layout.addWidget(self.total_labels_label, alignment=Qt.AlignVCenter)
@@ -171,7 +177,7 @@ class Display_Widget(QGroupBox2):
 
         self.reinitialize()
 
-    def reinitialize(self):
+    def reinitialize(self) -> None:
         """
         Re-initializes the widget.
         """
@@ -193,7 +199,7 @@ class Display_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_enabled(self, enabled: bool):
+    def set_enabled(self, enabled: bool) -> None:
         """
         Enables / disables this widget.
 
@@ -203,7 +209,7 @@ class Display_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_field_point_scale(self, value: float):
+    def set_field_point_scale(self, value: float) -> None:
         """
         Sets field point scale.
 
@@ -215,7 +221,7 @@ class Display_Widget(QGroupBox2):
         self.gui.config.set_float("field_point_scale", value)
         self.gui.redraw()
 
-    def set_field_arrow_head_scale(self, value: float):
+    def set_field_arrow_head_scale(self, value: float) -> None:
         """
         Sets field arrow head scale.
 
@@ -227,7 +233,7 @@ class Display_Widget(QGroupBox2):
         self.gui.config.set_float("field_arrow_head_scale", value)
         self.gui.redraw()
 
-    def set_field_arrow_line_scale(self, value: float):
+    def set_field_arrow_line_scale(self, value: float) -> None:
         """
         Sets field arrow line scale.
 
@@ -239,7 +245,7 @@ class Display_Widget(QGroupBox2):
         self.gui.config.set_float("field_arrow_line_scale", value)
         self.gui.redraw()
 
-    def set_field_boost(self, value: float):
+    def set_field_boost(self, value: float) -> None:
         """
         Sets field boost value.
 
@@ -251,7 +257,7 @@ class Display_Widget(QGroupBox2):
         self.gui.config.set_float("field_boost", value)
         self.gui.redraw()
 
-    def set_display_field_magnitude_labels(self, value: bool):
+    def set_display_field_magnitude_labels(self, value: bool) -> None:
         """
         Sets field label "Display Magnitude" value.
 
@@ -268,7 +274,7 @@ class Display_Widget(QGroupBox2):
 
         self.gui.redraw()
 
-    def set_field_label_resolution(self, value: int):
+    def set_field_label_resolution(self, value: int) -> None:
         """
         Sets field label resolution exponent.
 
@@ -285,7 +291,7 @@ class Display_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update(self):
+    def update(self) -> None:
         """
         Updates this widget.
         """
@@ -294,7 +300,7 @@ class Display_Widget(QGroupBox2):
         self.update_labels()
         self.update_controls()
 
-    def update_labels(self):
+    def update_labels(self) -> None:
         """
         Updates the labels.
         """
@@ -302,14 +308,14 @@ class Display_Widget(QGroupBox2):
 
         if self.gui.model.sampling_volume.is_valid():
             n = self.gui.model.sampling_volume.get_labels_count()
-            color = Theme.WarningColor if n > self.ExcessiveFieldLabelThreshold else Theme.LightColor
+            color = Theme.FailureColor if n > self.ExcessiveFieldLabelThreshold else Theme.LiteColor
             self.total_labels_label.setText(str(n))
             self.total_labels_label.setStyleSheet(f"color: {color}; font-style: italic;")
         else:
             self.total_labels_label.setText("N/A")
-            self.total_labels_label.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+            self.total_labels_label.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
 
-    def update_controls(self):
+    def update_controls(self) -> None:
         """
         Updates the field label resolution combobox.
         """
@@ -349,12 +355,7 @@ class Display_Widget(QGroupBox2):
         # Set default field label resolution if it is not available anymore
         target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
         if target not in label_resolution_options_dict.values():
-            Debug(
-                self,
-                f": Invalid: sampling_volume_label_resolution_exponent = {target}",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, f": WARNING: Invalid: sampling_volume_label_resolution_exponent = {target}", warning=True)
             self.gui.config.set_int(
                 "sampling_volume_label_resolution_exponent",
                 next(iter(label_resolution_options_dict.items()))[1]  # First value from combobox

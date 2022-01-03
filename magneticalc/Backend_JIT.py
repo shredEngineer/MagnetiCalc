@@ -16,13 +16,15 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Callable, Tuple, Optional
 import numpy as np
 from numba import jit, prange
 from PyQt5.QtCore import QThread
+from magneticalc.ConditionalDecorator import ConditionalDecorator
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Theme import Theme
 
 
 class Backend_JIT:
@@ -37,11 +39,11 @@ class Backend_JIT:
             distance_limit: float,
             length_scale: float,
             dc: float,
-            current_elements,
-            sampling_volume_points,
-            sampling_volume_permeabilities,
-            progress_callback
-    ):
+            current_elements: np.ndarray,
+            sampling_volume_points: np.ndarray,
+            sampling_volume_permeabilities: np.ndarray,
+            progress_callback: Callable
+    ) -> None:
         """
         Initializes the class attributes.
 
@@ -54,7 +56,9 @@ class Backend_JIT:
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
         """
-        self.field_type = field_type
+        Debug(self, ": Init")
+
+        self._field_type = field_type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
         self._dc = dc
@@ -64,14 +68,14 @@ class Backend_JIT:
         self._progress_callback = progress_callback
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
     def worker(
             field_type: int,
             distance_limit: float,
             length_scale: float,
-            current_elements,
-            sampling_volume_point
-    ):
+            current_elements: np.ndarray,
+            sampling_volume_point: np.ndarray
+    ) -> Optional[Tuple[int, int, np.ndarray]]:
         """
         Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field)
         for a single sampling volume point.
@@ -111,13 +115,13 @@ class Backend_JIT:
 
         return total_calculations, total_skipped_calculations, vector
 
-    def get_result(self):
+    def get_result(self) -> Optional[Tuple[int, int, np.ndarray]]:
         """
         Calculates the field at every point of the sampling volume.
 
         @return: (Total # of calculations, total # of skipped calculations, field) if successful, None if interrupted
         """
-        Debug(self, ".get_result()", color=Theme.PrimaryColor)
+        Debug(self, ".get_result()")
 
         total_calculations = 0
         total_skipped_calculations = 0
@@ -127,7 +131,7 @@ class Backend_JIT:
         for i in range(len(self._sampling_volume_points)):
 
             tup = Backend_JIT.worker(
-                self.field_type,
+                self._field_type,
                 self._distance_limit,
                 self._length_scale,
                 self._current_elements,
@@ -145,10 +149,10 @@ class Backend_JIT:
                 self._progress_callback(100 * (i + 1) / len(self._sampling_volume_points))
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".get_result(): Interruption requested, exiting now", color=Theme.PrimaryColor)
+                    Debug(self, ".get_result(): WARNING: Interruption requested, exiting now", warning=True)
                     return None
 
-        if self.field_type == A_FIELD or self.field_type == B_FIELD:
+        if self._field_type == A_FIELD or self._field_type == B_FIELD:
             vectors = np.array(vectors) * self._dc * Constants.mu_0 / 4 / np.pi
 
         self._progress_callback(100)

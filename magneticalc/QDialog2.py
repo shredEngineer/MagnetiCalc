@@ -20,6 +20,7 @@ from typing import Optional
 from PyQt5.QtCore import QEvent, pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from magneticalc.QLayouted import QLayouted
+from magneticalc.Debug import Debug
 
 
 class QDialog2(QDialog, QLayouted):
@@ -43,6 +44,8 @@ class QDialog2(QDialog, QLayouted):
         QLayouted.__init__(self)
         self.install_layout(self)
 
+        Debug(self, f": Init: {title}")
+
         if title:
             self.setWindowTitle(title)
 
@@ -55,7 +58,11 @@ class QDialog2(QDialog, QLayouted):
         """
         Shows this dialog.
         """
+        Debug(self, ".show()")
+
         self.success = self.exec() == 1
+
+        Debug(self, f".show(): Dialog closed: success={self.success}")
 
     def showEvent(self, event: QEvent) -> None:
         """
@@ -63,6 +70,8 @@ class QDialog2(QDialog, QLayouted):
 
         @param event: QEvent
         """
+        Debug(self, ".showEvent(): Dialog opened")
+
         # noinspection PyTypeChecker
         super(QDialog, self).showEvent(event)
         # noinspection PyUnresolvedReferences

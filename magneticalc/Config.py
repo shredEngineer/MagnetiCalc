@@ -16,15 +16,25 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Dict, Callable, List, Union, Any
 import os
 import configparser
-from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
+import numpy as np
+from magneticalc.Backend_Types import BACKEND_CUDA
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import B_FIELD
 from magneticalc.Perspective_Presets import Perspective_Presets
-from magneticalc.Theme import Theme
 from magneticalc.Version import Version
 from magneticalc.Wire_Presets import Wire_Presets
+
+
+def get_jit_enabled() -> bool:
+    """
+    Checks if JIT is enabled (or at least not explicitly disabled).
+
+    @return: Boolean
+    """
+    return (os.environ["NUMBA_DISABLE_JIT"] == "0") if "NUMBA_DISABLE_JIT" in os.environ else True
 
 
 class Config:
@@ -33,9 +43,6 @@ class Config:
     # Formatting settings
     FloatPrecision = 4
     CoordinatePrecision = 6
-
-    # Enable to additionally debug read access to configuration
-    DebugGetters = False
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -87,7 +94,7 @@ class Config:
         "constraint_count"                          : "0"
     }
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the configuration.
         """
@@ -111,7 +118,7 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_changed_callback(self, config_changed_callback):
+    def set_changed_callback(self, config_changed_callback: Callable) -> None:
         """
         Sets the callback for any changes to the configuration.
 
@@ -129,14 +136,15 @@ class Config:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def set_filename(self, filename: str):
+    def set_filename(self, filename: str) -> None:
         """
         Sets the filename for the current session.
 
         @param filename: Filename
         """
         self._filename = os.path.join(os.path.dirname(os.path.dirname(__file__)), filename)
-        Debug(self, ".set_filename: file://" + self._filename.replace(" ", "%20"), force=True)
+
+        Debug(self, ".set_filename: file://" + self._filename.replace(" ", "%20"))
 
     def get_filename(self) -> str:
         """
@@ -148,12 +156,12 @@ class Config:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def load(self):
+    def load(self) -> None:
         """
         Loads the configuration from file.
 
         """
-        Debug(self, ".load()", force=True)
+        Debug(self, ".load()")
 
         self._config = configparser.ConfigParser()
 
@@ -169,7 +177,7 @@ class Config:
             # Save newly created default file
             self.save()
 
-    def set_defaults(self):
+    def set_defaults(self) -> None:
         """
         Sets the default key-value pairs. Creates empty "User" section if not present.
         """
@@ -181,11 +189,11 @@ class Config:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def save(self):
+    def save(self) -> None:
         """
         Saves the configuration to file.
         """
-        Debug(self, ".save()", force=True)
+        Debug(self, ".save()")
 
         with open(self._filename, "w") as file:
             self._config.write(file)
@@ -194,7 +202,7 @@ class Config:
         if self._changed_callback is not None:
             self._changed_callback()
 
-    def close(self):
+    def close(self) -> None:
         """
         Close configuration.
         """
@@ -202,14 +210,14 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def remove_key(self, key):
+    def remove_key(self, key: str) -> None:
         """
         Removes a key from the configuration.
 
         @param key: Key
         """
         if not self._config.remove_option("User", key):
-            Debug(self, f".remove_key({key}): WARNING: No such key", color=Theme.WarningColor, force=True)
+            Debug(self, f".remove_key({key}): ERROR: No such key", error=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -240,7 +248,7 @@ class Config:
         """
         return int(self.get_str(key))
 
-    def get_points(self, key: str):
+    def get_points(self, key: str) -> List[List[float]]:
         """
         Gets list of 3D points, convert from string.
 
@@ -249,7 +257,7 @@ class Config:
         """
         return Config.str_to_points(self.get_str(key))
 
-    def get_point(self, key: str):
+    def get_point(self, key: str) -> List[float]:
         """
         Gets a single 3D point, convert from string.
 
@@ -265,15 +273,12 @@ class Config:
         @param key: Key
         @return: Value
         """
-        if self.DebugGetters:
-            Debug(self, f".get_str({key})")
-
         value = self._config.get("User", key)
         return value
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_bool(self, key: str, value: bool):
+    def set_bool(self, key: str, value: bool) -> None:
         """
         Sets boolean value, convert to string.
 
@@ -282,7 +287,7 @@ class Config:
         """
         self.set_str(key, "True" if value else "False")
 
-    def set_float(self, key: str, value: float):
+    def set_float(self, key: str, value: float) -> None:
         """
         Sets float value, convert to string.
 
@@ -291,7 +296,7 @@ class Config:
         """
         self.set_str(key, f"{float(value):.{Config.FloatPrecision}f}")
 
-    def set_int(self, key: str, value: int):
+    def set_int(self, key: str, value: int) -> None:
         """
         Sets integer value, convert to string.
 
@@ -300,7 +305,7 @@ class Config:
         """
         self.set_str(key, str(int(value)))
 
-    def set_points(self, key: str, value):
+    def set_points(self, key: str, value: Union[np.ndarray, List[List[float]]]) -> None:
         """
         Sets list of 3D points, convert to string.
 
@@ -309,7 +314,7 @@ class Config:
         """
         self.set_str(key, Config.points_to_str(value))
 
-    def set_point(self, key: str, value):
+    def set_point(self, key: str, value: Union[np.ndarray, List[float]]) -> None:
         """
         Sets a single 3D point, convert to string.
 
@@ -318,21 +323,19 @@ class Config:
         """
         self.set_str(key, Config.point_to_str(value))
 
-    def set_str(self, key: str, value: str):
+    def set_str(self, key: str, value: str) -> None:
         """
         Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.
 
         @param key: Key
         @param value: Value
         """
-        Debug(self, f".set_str({key}, {value})")
-
         self._config.set("User", key, value)
         self._synced = False
         if self._changed_callback is not None:
             self._changed_callback()
 
-    def set_get_bool(self, key: str, value: bool) -> bool:
+    def set_get_bool(self, key: str, value: bool) -> Optional[bool]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -345,7 +348,7 @@ class Config:
             self.set_bool(key, value)
             return value
 
-    def set_get_float(self, key: str, value: float) -> float:
+    def set_get_float(self, key: str, value: float) -> Optional[float]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -358,7 +361,7 @@ class Config:
             self.set_float(key, value)
             return value
 
-    def set_get_int(self, key: str, value: int) -> int:
+    def set_get_int(self, key: str, value: int) -> Optional[int]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -371,7 +374,11 @@ class Config:
             self.set_int(key, value)
             return value
 
-    def set_get_points(self, key: str, value):
+    def set_get_points(
+            self,
+            key: str,
+            value: Union[np.ndarray, List[List[float]]]
+    ) -> Optional[Union[np.ndarray, List[List[float]]]]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -384,7 +391,11 @@ class Config:
             self.set_points(key, value)
             return value
 
-    def set_get_point(self, key: str, value):
+    def set_get_point(
+            self,
+            key: str,
+            value: Union[np.ndarray, List[float]]
+    ) -> Optional[Union[np.ndarray, List[float]]]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -397,7 +408,7 @@ class Config:
             self.set_point(key, value)
             return value
 
-    def set_get_str(self, key: str, value: str) -> str:
+    def set_get_str(self, key: str, value: str) -> Optional[str]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
@@ -413,7 +424,7 @@ class Config:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def point_to_str(point) -> str:
+    def point_to_str(point: Union[np.ndarray, List[float]]) -> str:
         """
         Converts a single 3D point to string.
 
@@ -426,7 +437,7 @@ class Config:
             f"{point[2]:+0.0{Config.CoordinatePrecision}f}"
 
     @staticmethod
-    def points_to_str(points) -> str:
+    def points_to_str(points: Union[np.ndarray, List[List[float]]]) -> str:
         """
         Converts list of 3D points to string.
 
@@ -436,7 +447,7 @@ class Config:
         return "; ".join([Config.point_to_str(point) for point in points])
 
     @staticmethod
-    def str_to_point(str_point: str):
+    def str_to_point(str_point: str) -> Union[np.ndarray, List[float]]:
         """
         Converts string to single 3D point.
 
@@ -446,7 +457,7 @@ class Config:
         return [float(coord) for coord in str_point.split(",")]
 
     @staticmethod
-    def str_to_points(str_points: str):
+    def str_to_points(str_points: str) -> Union[np.ndarray, List[List[float]]]:
         """
         Converts string to list of 3D points.
 
@@ -460,7 +471,7 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_generic(self, _key: str, _type):
+    def get_generic(self, _key: str, _type) -> Any:
         """
         Gets some "_key"-"_value" of data type "_type".
 
@@ -480,7 +491,7 @@ class Config:
         # noinspection PyArgumentList
         return set_func.get(_type)(_key)
 
-    def set_generic(self, _key: str, _type, _value):
+    def set_generic(self, _key: str, _type, _value: Any) -> None:
         """
         Sets some "_key"-"_value" of data type "_type".
 
@@ -500,13 +511,13 @@ class Config:
         # noinspection PyArgumentList
         set_func.get(_type)(_key, _value)
 
-    def set_get_dict(self, prefix: str, suffix: str, types, values):
+    def set_get_dict(self, prefix: str, suffix: str, types: Dict, values: Optional[Dict]) -> Optional[Dict]:
         """
         If "values" is None, reads and returns all key-values in "types".
         Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".
 
         If "values" is not None, writes and returns all key-values in "types".
-        Note: In this case, "values" must have the same keys as "types.
+        Note: In this case, "values" must have the same keys as "types".
 
         @param prefix: Prefix
         @param suffix: Suffix

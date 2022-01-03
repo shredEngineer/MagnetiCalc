@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Dict
 import numpy as np
 
 
@@ -185,10 +186,10 @@ class Wire_Presets:
 
     @staticmethod
     def get_phase_jumping_toroidal_loop(
-            n_points=1000, n_phase_jumps=32,
-            toroidal_radius=1, poloidal_radius=.5,
-            toroidal_freq=1, poloidal_freq=32
-    ):
+            n_points: int, n_phase_jumps: int,
+            toroidal_radius: float, poloidal_radius: float,
+            toroidal_freq: float, poloidal_freq: float
+    ) -> np.ndarray:
         """
         Generates a (phase-jumping) toroidal loop.
 
@@ -199,7 +200,7 @@ class Wire_Presets:
         @param toroidal_freq: Toroidal frequency
         @param poloidal_freq: Poloidal frequency
         """
-        def rotate_xy(V, A):
+        def rotate_xy(V: np.ndarray, A: float) -> np.ndarray:
             """
             Rotates a 3D vector some angle in the XY-plane.
 
@@ -222,6 +223,7 @@ class Wire_Presets:
         return np.array(wire_points)
 
     # Preset: A phase-jumping toroidal loop: 8 turns.
+    # noinspection PyUnresolvedReferences
     PhaseJumpingToroidalLoop8 = {
         "id": "Phase-jumping Toroidal Loop: 8 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -231,6 +233,7 @@ class Wire_Presets:
         )
     }
     # Preset: A phase-jumping toroidal loop: 32 turns.
+    # noinspection PyUnresolvedReferences
     PhaseJumpingToroidalLoop16 = {
         "id": "Phase-jumping Toroidal Loop: 16 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -240,6 +243,7 @@ class Wire_Presets:
         )
     }
     # Preset: A phase-jumping toroidal loop: 32 turns.
+    # noinspection PyUnresolvedReferences
     PhaseJumpingToroidalLoop32 = {
         "id": "Phase-jumping Toroidal Loop: 32 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -250,6 +254,7 @@ class Wire_Presets:
     }
 
     # Preset: A toroidal loop: 8 turns.
+    # noinspection PyUnresolvedReferences
     ToroidalLoop8 = {
         "id": "Toroidal Loop: 8 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -260,6 +265,7 @@ class Wire_Presets:
     }
 
     # Preset: A toroidal loop: 16 turns.
+    # noinspection PyUnresolvedReferences
     ToroidalLoop16 = {
         "id": "Toroidal Loop: 16 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -270,6 +276,7 @@ class Wire_Presets:
     }
 
     # Preset: A toroidal loop: 32 turns.
+    # noinspection PyUnresolvedReferences
     ToroidalLoop32 = {
         "id": "Toroidal Loop: 32 turns",
         "points": get_phase_jumping_toroidal_loop.__func__(
@@ -304,7 +311,7 @@ class Wire_Presets:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def get_by_id(_id_: str):
+    def get_by_id(_id_: str) -> Optional[Dict]:
         """
         Selects a preset by name.
 

@@ -25,11 +25,11 @@ class QHLine(QFrame):
     # Default spacing
     VerticalSpacing = 12
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Creates a horizontal line.
         """
-        super().__init__()
+        QFrame.__init__(self)
 
         self.setFixedHeight(self.VerticalSpacing)
         self.setFrameShape(QFrame.HLine)

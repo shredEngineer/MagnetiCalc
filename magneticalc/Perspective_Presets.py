@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Dict
 import numpy as np
 
 
@@ -63,7 +64,7 @@ class Perspective_Presets:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def get_by_id(_id_: str):
+    def get_by_id(_id_: str) -> Optional[Dict]:
         """
         Selects a preset by name.
 

@@ -16,22 +16,25 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple
+from typing import Tuple, Callable
 import numpy as np
 from numba import jit, prange, set_num_threads
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
 from magneticalc.Backend_CUDA import Backend_CUDA
 from magneticalc.Backend_JIT import Backend_JIT
+from magneticalc.ConditionalDecorator import ConditionalDecorator
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Theme import Theme
+from magneticalc.SamplingVolume import SamplingVolume
+from magneticalc.Wire import Wire
 
 
 class Field:
     """ Field class. """
 
-    def __init__(self, backend_type: int, field_type: int, distance_limit: float, length_scale: float):
+    def __init__(self, backend_type: int, field_type: int, distance_limit: float, length_scale: float) -> None:
         """
         Initializes an empty field.
 
@@ -62,11 +65,11 @@ class Field:
             self._total_skipped_calculations is not None and \
             self._vectors is not None
 
-    def invalidate(self):
+    def invalidate(self) -> None:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=Theme.InvalidColor)
+        Debug(self, ".invalidate()")
 
         self._total_calculations = None
         self._total_skipped_calculations = None
@@ -98,7 +101,7 @@ class Field:
                 B_FIELD: "T"        # Tesla
             }.get(self._field_type, None), 1e0
 
-    def get_vectors(self):
+    def get_vectors(self) -> np.ndarray:
         """
         Gets field vectors. (The selected field type determined which field was calculated.)
 
@@ -130,7 +133,13 @@ class Field:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, wire, sampling_volume, progress_callback, num_cores: int) -> bool:
+    def recalculate(
+            self,
+            wire: Wire,
+            sampling_volume: SamplingVolume,
+            progress_callback: Callable,
+            num_cores: int
+    ) -> bool:
         """
         Recalculates field vectors.
 
@@ -140,6 +149,7 @@ class Field:
         @param num_cores: Number of cores to use for multiprocessing
         @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
+        Debug(self, ".recalculate()")
 
         # Compute the current elements.
         current_elements = wire.get_elements()
@@ -148,17 +158,15 @@ class Field:
         if self._backend_type == BACKEND_CUDA:
             if not Backend_CUDA.is_available():
                 Debug(
-                    self,
-                    f".recalculate(): WARNING: CUDA backend not available, defaulting to JIT backend",
-                    color=Theme.WarningColor,
-                    force=True
+                    self, f".recalculate(): WARNING: CUDA backend not available, defaulting to JIT backend",
+                    warning=True
                 )
                 self._backend_type = BACKEND_JIT
 
         if self._backend_type == BACKEND_JIT:
 
             # Initialize Biot-Savart JIT backend
-            biot_savart = Backend_JIT(
+            backend = Backend_JIT(
                 self._field_type,
                 self._distance_limit,
                 self._length_scale,
@@ -171,12 +179,12 @@ class Field:
 
             # Fetch result using Biot-Savart JIT backend
             set_num_threads(num_cores)
-            tup = biot_savart.get_result()
+            backend_result = backend.get_result()
 
         elif self._backend_type == BACKEND_CUDA:
 
             # Initialize Biot-Savart CUDA backend
-            biot_savart = Backend_CUDA(
+            backend = Backend_CUDA(
                 self._field_type,
                 self._distance_limit,
                 self._length_scale,
@@ -189,44 +197,25 @@ class Field:
 
             # Fetch result using Biot-Savart CUDA backend
             set_num_threads(num_cores)
-            tup = biot_savart.get_result()
+            backend_result = backend.get_result()
 
         else:
 
-            Debug(self, f".recalculate(): No such backend: {self._backend_type}", color=Theme.WarningColor, force=True)
+            Debug(self, f".recalculate(): ERROR: No such backend: {self._backend_type}", error=True)
             return False
 
         # Handle interrupt
-        if tup is None:
+        if backend_result is None:
             return False
 
-        self._total_calculations = tup[0]
-        self._total_skipped_calculations = tup[1]
-        self._vectors = tup[2]
-
-        # Prints the sampling volume points, current elements and field vectors; may be used for debugging:
-        """
-        def print_array(array): return "np.array([" + ",".join([f"[{p[0]},{p[1]},{p[2]}]" for p in array]) + "])"
-
-        element_centers = [element[0] for element in wire.get_elements()]
-        element_directions = [element[1] for element in wire.get_elements()]
-
-        import sys
-        import numpy
-        numpy.set_printoptions(threshold=sys.maxsize)
-
-        print("Total calculations         =", self.get_total_calculations())
-        print("Total skipped calculations =", self.get_total_skipped_calculations())
-        print("sampling_volume_points     =", print_array(sampling_volume.get_points()))
-        print("element_centers            =", print_array(element_centers))
-        print("element_directions         =", print_array(element_directions))
-        print("vectors                    =", print_array(self._vectors))
-        """
+        self._total_calculations = backend_result[0]
+        self._total_skipped_calculations = backend_result[1]
+        self._vectors = backend_result[2]
 
         # Sanity check
         expected_total_calculations = len(current_elements) * sampling_volume.get_points_count()
         if expected_total_calculations != self._total_calculations:
-            Assert_Dialog(False, "FATAL: Unexpected number of calculations – Backend seems to be buggy")
+            Assert_Dialog(False, "ERROR: Unexpected number of calculations – Backend seems to be buggy")
             return False
 
         return True
@@ -234,15 +223,15 @@ class Field:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
     def get_arrows(
-            sampling_volume_points,
-            field_vectors,
-            line_pairs,
-            head_points,
+            sampling_volume_points: np.ndarray,
+            field_vectors: np.ndarray,
+            line_pairs: np.ndarray,
+            head_points: np.ndarray,
             arrow_scale: float,
             magnitude_limit: float
-    ):
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Returns the field arrow parameters needed by L{VispyCanvas}.
 
@@ -252,6 +241,7 @@ class Field:
         @param head_points: Arrow head points (ordered list of arrow stop 3D points)
         @param arrow_scale: Arrow scale
         @param magnitude_limit: Magnitude limit (mitigating divisions by zero)
+        @return: Line pairs, head points
         """
         for i in prange(len(field_vectors)):
 

@@ -20,10 +20,10 @@ import re
 from urllib.request import urlopen
 from PyQt5.Qt import QFont, QSize
 from PyQt5.QtWidgets import QTextEdit
-from magneticalc.QLabel2 import QLabel2
 from magneticalc.QDialog2 import QDialog2
-from magneticalc.Debug import Debug
 from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 from magneticalc.Version import __VERSION__, __VERSION__URL__
 
@@ -36,6 +36,7 @@ class CheckForUpdates_Dialog(QDialog2):
         Prepares the 'Check for Updates' dialog.
         """
         QDialog2.__init__(self, title="Check for Updates", width=500)
+        Debug(self, ": Init")
 
         update_hint = False
 
@@ -43,7 +44,7 @@ class CheckForUpdates_Dialog(QDialog2):
         try:
             version_py = urlopen(__VERSION__URL__, timeout=2).read().decode("utf-8")
         except Exception:
-            icon, string, color = "fa.exclamation-circle", f"Network Error", Theme.WarningColor
+            icon, string, color = "fa.exclamation-circle", f"Network Error", Theme.FailureColor
         else:
             # noinspection RegExpAnonymousGroup
             pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
@@ -51,25 +52,25 @@ class CheckForUpdates_Dialog(QDialog2):
             try:
                 version = "v" + ".".join(pattern.search(version_py).groups())
             except Exception:
-                icon, string, color = "fa.exclamation-circle", f"Invalid Format", Theme.WarningColor
+                icon, string, color = "fa.exclamation-circle", f"Invalid Format", Theme.FailureColor
             else:
                 if version > __VERSION__:
                     icon, string, color = "fa.info-circle", f"Newer version available: {version}", Theme.SuccessColor
                     update_hint = True
                 elif version == __VERSION__:
-                    icon, string, color = "fa.check-circle", f"Up-to-date: {version}", Theme.PrimaryColor
+                    icon, string, color = "fa.check-circle", f"Up-to-date: {version}", Theme.MainColor
                 else:
                     icon, string, color = \
-                        "fa.exclamation-circle", f"Ahead of current release {version}", Theme.WarningColor
+                        "fa.exclamation-circle", f"Ahead of current release {version}", Theme.FailureColor
 
-        Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", color=color, force=True)
+        Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", color=color)
         icon_label = QIconLabel(
             text=string,
             icon=icon,
             text_color=color,
             icon_color=color,
             icon_size=QSize(32, 32),
-            font=QFont("DejaVu Sans Mono", 14)
+            font=QFont(Theme.DefaultFontFace, 14)
         )
         self.addLayout(icon_label)
 
@@ -78,7 +79,7 @@ class CheckForUpdates_Dialog(QDialog2):
             self.addWidget(QLabel2("Please update now:", italic=True))
             self.addSpacing(8)
             cmd = QTextEdit("python3 -m pip install magneticalc --upgrade")
-            cmd.setFont(QFont("DejaVu Sans Mono", 12))
+            cmd.setFont(QFont(Theme.DefaultFontFace, 12))
             cmd.setMaximumHeight(64)
             cmd.setReadOnly(True)
             self.add_element(cmd)

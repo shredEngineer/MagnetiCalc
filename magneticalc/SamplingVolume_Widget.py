@@ -16,21 +16,29 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from typing import Optional, List, Tuple
 import numpy as np
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QSpinBox, QComboBox, QSizePolicy, QWidget
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QHLine import QHLine
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.Comparison_Types import comparison_type_from_str
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Norm_Types import norm_type_from_str
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class SamplingVolume_Widget(QGroupBox2):
@@ -64,14 +72,14 @@ class SamplingVolume_Widget(QGroupBox2):
         "1 / 256"   : -8,
     }
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the widget.
 
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Sampling Volume")
-
+        Debug(self, ": Init")
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,11 +91,13 @@ class SamplingVolume_Widget(QGroupBox2):
 
         padding_icon_label = QIconLabel("Padding", "mdi.arrow-expand-all")
         padding_override_button = QPushButton(" Override … ")
+        # noinspection PyUnresolvedReferences
         padding_override_button.clicked.connect(self.override_padding)
         padding_override_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         padding_icon_label.addWidget(padding_override_button)
         padding_clear_button = QPushButton()
         padding_clear_button.setIcon(qta.icon("fa.eraser"))
+        # noinspection PyUnresolvedReferences
         padding_clear_button.clicked.connect(self.clear_padding)
         padding_icon_label.addWidget(padding_clear_button)
         padding_units_label = QLabel("cm")
@@ -104,6 +114,7 @@ class SamplingVolume_Widget(QGroupBox2):
             self.padding_spinbox[i] = QSpinBox(self.gui)
             self.padding_spinbox[i].setMinimum(self.PaddingMin)
             self.padding_spinbox[i].setMaximum(self.PaddingMax)
+            # noinspection PyUnresolvedReferences
             self.padding_spinbox[i].valueChanged.connect(self.update_padding)
             padding_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
             padding_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
@@ -114,9 +125,9 @@ class SamplingVolume_Widget(QGroupBox2):
 
         total_extent_layout = QHBoxLayout()
         total_extent_label_left = QLabel("Total extent:")
-        total_extent_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_extent_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_extent_label = QLabel("N/A")
-        self.total_extent_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_extent_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_extent_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_extent_layout.addWidget(total_extent_label_left, alignment=Qt.AlignVCenter)
         total_extent_layout.addWidget(self.total_extent_label, alignment=Qt.AlignVCenter)
@@ -128,10 +139,11 @@ class SamplingVolume_Widget(QGroupBox2):
 
         constraints_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
         constraint_shortcut_label = QLabel("⟨F3⟩")
-        constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LightColor}")
+        constraint_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LiteColor}")
         constraints_icon_label.addWidget(constraint_shortcut_label)
 
         constraint_edit_button = QPushButton("Edit …")
+        # noinspection PyUnresolvedReferences
         constraint_edit_button.clicked.connect(self.open_constraint_editor)
         constraints_icon_label.addWidget(constraint_edit_button)
 
@@ -139,9 +151,9 @@ class SamplingVolume_Widget(QGroupBox2):
 
         total_constraints_layout = QHBoxLayout()
         total_constraints_label_left = QLabel("Total constraints:")
-        total_constraints_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_constraints_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_constraints_label = QLabel("N/A")
-        self.total_constraints_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_constraints_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_constraints_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_constraints_layout.addWidget(total_constraints_label_left, alignment=Qt.AlignVCenter)
         total_constraints_layout.addWidget(self.total_constraints_label, alignment=Qt.AlignVCenter)
@@ -164,6 +176,7 @@ class SamplingVolume_Widget(QGroupBox2):
         # Populate resolution combobox
         for i, value in enumerate(self.ResolutionOptionsDict):
             self.resolution_combobox.addItem(str(value))
+        # noinspection PyUnresolvedReferences
         self.resolution_combobox.currentIndexChanged.connect(
             lambda: self.set_sampling_volume(
                 resolution_exponent=self.ResolutionOptionsDict.get(
@@ -175,9 +188,9 @@ class SamplingVolume_Widget(QGroupBox2):
 
         total_points_layout = QHBoxLayout()
         total_points_label_left = QLabel("Total sampling points:")
-        total_points_label_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_points_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_points_label = QLabel("N/A")
-        self.total_points_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_points_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_points_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_points_layout.addWidget(total_points_label_left, alignment=Qt.AlignVCenter)
         total_points_layout.addWidget(self.total_points_label, alignment=Qt.AlignVCenter)
@@ -187,7 +200,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.reinitialize()
 
-    def reinitialize(self):
+    def reinitialize(self) -> None:
         """
         Re-initializes the widget and the constraint editor
         """
@@ -201,12 +214,7 @@ class SamplingVolume_Widget(QGroupBox2):
         # Set default resolution if it is not available anymore
         target = self.gui.config.get_int("sampling_volume_resolution_exponent")
         if target not in self.ResolutionOptionsDict.values():
-            Debug(
-                self,
-                f": Invalid: sampling_volume_resolution_exponent = {target}",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, f": WARNING: Invalid: sampling_volume_resolution_exponent = {target}", warning=True)
             self.gui.config.set_int("sampling_volume_resolution_exponent", 0)
 
         # Select the resolution
@@ -225,19 +233,23 @@ class SamplingVolume_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_padding(self):
+    def update_padding(self) -> None:
         """
         Updates padding.
         """
         if self.signalsBlocked():
             return
 
+        Debug(self, ".update_padding()")
+
         self.set_sampling_volume(padding=[self.padding_spinbox[i].value() for i in range(3)])
 
-    def clear_padding(self):
+    def clear_padding(self) -> None:
         """
         Clears the padding values.
         """
+        Debug(self, ".clear_padding()")
+
         self.gui.config.set_bool("sampling_volume_override_padding", False)
         self.gui.config.set_points("sampling_volume_bounding_box", [np.zeros(3), np.zeros(3)])
 
@@ -252,6 +264,8 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Override padding, setting the bounding box directly.
         """
+        Debug(self, ".override_padding()")
+
         dialog = OverridePadding_Dialog(self.gui)
         dialog.show()
 
@@ -282,7 +296,7 @@ class SamplingVolume_Widget(QGroupBox2):
             bounding_box: List[List] = None,
             recalculate: bool = True,
             invalidate_self: bool = True
-    ):
+    ) -> None:
         """
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
         Parameters may be left set to None in order to load their default value.
@@ -297,6 +311,8 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         if self.signalsBlocked():
             return
+
+        Debug(self, ".set_sampling_volume()")
 
         with ModelAccess(self.gui, recalculate):
 
@@ -321,19 +337,12 @@ class SamplingVolume_Widget(QGroupBox2):
             self.readjust(padding, override_padding, bounding_box)
 
             # Load sampling volume constraints from configuration
-            for i, constraint in enumerate(self.constraint_editor.get_constraints()):
-
-                constraint = self.gui.config.set_get_dict(
-                    prefix=f"constraint_",
-                    suffix=f"_{i}",
-                    types=self.constraint_editor.Constraint_Types,
-                    values=None
-                )
-
+            for constraint in self.constraint_editor.get_constraints():
+                Debug(self, f".set_sampling_volume(): Loading Constraint: {constraint}")
                 self.gui.model.sampling_volume.add_constraint(
                     Constraint(
-                        constraint["norm"],
-                        constraint["comparison"],
+                        norm_type_from_str(constraint["norm"]),
+                        comparison_type_from_str(constraint["comparison"]),
                         constraint["min"],
                         constraint["max"],
                         constraint["permeability"]
@@ -351,7 +360,7 @@ class SamplingVolume_Widget(QGroupBox2):
             padding: Optional[List] = None,
             override_padding: Optional[bool] = None,
             bounding_box: Optional[Tuple[np.ndarray, np.ndarray]] = None,
-    ):
+    ) -> None:
         """
         Readjusts the sampling volume to the currently set wire bounds and padding.
         This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.
@@ -403,20 +412,26 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Updates the widget.
         """
+        Debug(self, ".update()")
+
         self.update_controls()
         self.update_labels()
 
-    def update_controls(self):
+    def update_controls(self) -> None:
         """
         Updates the controls.
         """
+        Debug(self, ".update_controls()")
+
         override_padding = self.gui.config.get_bool("sampling_volume_override_padding")
         self.padding_widget.setEnabled(not override_padding)
 
-    def update_labels(self):
+    def update_labels(self) -> None:
         """
         Updates the labels.
         """
+        Debug(self, ".update_labels()")
+
         if self.gui.model.sampling_volume.is_valid():
             self.total_extent_label.setText(
                 " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
@@ -428,15 +443,16 @@ class SamplingVolume_Widget(QGroupBox2):
             self.total_extent_label.setText("N/A")
             self.total_points_label.setText("N/A")
 
-        self.total_constraints_label.setText(str(len(self.constraint_editor.get_constraints())))
+        self.total_constraints_label.setText(str(self.constraint_editor.get_count()))
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def open_constraint_editor(self):
+    def open_constraint_editor(self) -> None:
         """
         Opens the constraint editor.
         Recalculates the sampling volume if the constraints changed.
         """
+        Debug(self, ".open_constraint_editor()")
 
         self.constraint_editor.show()
 

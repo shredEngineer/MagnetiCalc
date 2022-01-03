@@ -24,7 +24,7 @@ from magneticalc.Theme import Theme
 class QGroupBox2(QGroupBox, QLayouted):
     """ QGroupBox2 class. """
 
-    def __init__(self, title):
+    def __init__(self, title: str) -> None:
         """
         Initializes a groupbox.
 
@@ -41,7 +41,7 @@ class QGroupBox2(QGroupBox, QLayouted):
                 border: 1px solid #cccccc;
                 border-radius: 3px;
                 margin-top: 20px;
-                color: {Theme.PrimaryColor};
+                color: {Theme.MainColor};
                 font-weight: bold;
                 background-color: #e5e5e5;
             }}

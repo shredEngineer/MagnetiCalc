@@ -16,12 +16,22 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Optional, Dict
+from __future__ import annotations
+from typing import Optional, Dict, Any, Callable
+from sty import fg
 from magneticalc.Debug import Debug
-from magneticalc.Field import Field
-from magneticalc.Field_Types import FIELD_TYPES_STR
+from magneticalc.Field_Types import field_type_to_str
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.Field import Field
+    from magneticalc.GUI import GUI
+    from magneticalc.Metric import Metric
+    from magneticalc.Parameters import Parameters
+    from magneticalc.SamplingVolume import SamplingVolume
+    from magneticalc.Wire import Wire
 
 
 class Model:
@@ -37,14 +47,16 @@ class Model:
     Invalidating the currently selected field also invalidates all the other cached fields.
     """
 
-    def __init__(self, gui):
+    # Used by L{Debug}
+    DebugColor = fg.yellow
+
+    def __init__(self, gui: GUI) -> None:
         """
         Initializes the model.
 
         @param gui: GUI
         """
         Debug(self, ": Init")
-
         self.gui = gui
 
         self.wire = None                                    # Set in L{set_wire}            via L{Wire_Widget}
@@ -89,7 +101,7 @@ class Model:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def safe_valid(obj) -> bool:
+    def safe_valid(obj: Any) -> bool:
         """
         Safely checks the validity state of a possibly uninitialized object within the model.
         """
@@ -130,7 +142,7 @@ class Model:
             do_field: bool = False,
             do_metric: bool = False,
             do_parameters: bool = False
-    ):
+    ) -> None:
         """
         Invalidates multiple modules at once, in descending order of hierarchy.
 
@@ -140,6 +152,8 @@ class Model:
         @param do_metric: Enable to invalidate metric
         @param do_parameters: Enable to invalidate parameters
         """
+        Debug(self, ".invalidate()")
+
         if do_parameters:
             if self.parameters is not None:
                 if self.parameters.is_valid():
@@ -157,7 +171,7 @@ class Model:
             for field_type, field in self._field_cache.items():
                 if field.is_valid():
                     field.invalidate()
-                    Debug(self, f".invalidate(): Invalidated {FIELD_TYPES_STR[field_type]}", color=Theme.InvalidColor)
+                    Debug(self, f".invalidate(): Invalidated {field_type_to_str(field_type)}")
                     did_field_invalidation = True
             if did_field_invalidation:
                 self.on_field_invalid()
@@ -174,13 +188,15 @@ class Model:
                     self.wire.invalidate()
                     self.on_wire_invalid()
 
-    def set_wire(self, wire, invalidate_self: bool):
+    def set_wire(self, wire: Wire, invalidate_self: bool) -> None:
         """
         Sets the wire.
 
         @param wire: Wire
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        Debug(self, ".set_wire()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
@@ -192,13 +208,15 @@ class Model:
             )
             self.wire = wire
 
-    def set_sampling_volume(self, sampling_volume, invalidate_self: bool):
+    def set_sampling_volume(self, sampling_volume: SamplingVolume, invalidate_self: bool) -> None:
         """
         Sets the sampling volume.
 
         @param sampling_volume: Sampling volume
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        Debug(self, ".set_sampling_volume()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
@@ -209,13 +227,15 @@ class Model:
             )
             self.sampling_volume = sampling_volume
 
-    def set_field(self, field, invalidate_self: bool):
+    def set_field(self, field: Field, invalidate_self: bool) -> None:
         """
         Sets the field.
 
         @param field: Field
         @param invalidate_self: Enable to invalidate the old object (including the cache) before setting a new one
         """
+        Debug(self, ".set_field()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
@@ -225,13 +245,15 @@ class Model:
             )
             self.field = field
 
-    def set_metric(self, metric, invalidate_self: bool):
+    def set_metric(self, metric: Metric, invalidate_self: bool) -> None:
         """
         Sets the metric.
 
         @param metric: Metric
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        Debug(self, ".set_metric()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
@@ -240,13 +262,15 @@ class Model:
             )
             self.metric = metric
 
-    def set_parameters(self, parameters, invalidate_self: bool):
+    def set_parameters(self, parameters: Parameters, invalidate_self: bool) -> None:
         """
         Sets the parameters.
 
         @param parameters: Parameters
         @param invalidate_self: Enable to invalidate the old object before setting a new one
         """
+        Debug(self, ".set_parameters()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
@@ -256,29 +280,31 @@ class Model:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def calculate_wire(self, progress_callback):
+    def calculate_wire(self, progress_callback: Callable) -> None:
         """
         Calculates the wire.
 
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".calculate_wire()", color=Theme.PrimaryColor)
+        Debug(self, ".calculate_wire()")
+
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
         return self.wire.recalculate(progress_callback)
 
-    def calculate_sampling_volume(self, progress_callback):
+    def calculate_sampling_volume(self, progress_callback: Callable) -> bool:
         """
         Calculates the sampling volume.
 
         @param progress_callback: Progress callback
         @return: True if successful, False if interrupted
         """
-        Debug(self, ".calculate_sampling_volume()", color=Theme.PrimaryColor)
+        Debug(self, ".calculate_sampling_volume()")
+
         self.invalidate(do_field=True, do_metric=True)
         return self.sampling_volume.recalculate(progress_callback)
 
-    def calculate_field(self, progress_callback, num_cores: int):
+    def calculate_field(self, progress_callback: Callable, num_cores: int) -> bool:
         """
         Calculates the field.
 
@@ -286,98 +312,121 @@ class Model:
         @param num_cores: Number of CPU cores to use
         @return: True if successful, False if interrupted
         """
-        Debug(self, f".calculate_field(num_cores={num_cores})", color=Theme.PrimaryColor)
+        Debug(self, f".calculate_field(num_cores={num_cores})")
+
         self.invalidate(do_metric=True)
         return self.field.recalculate(self.wire, self.sampling_volume, progress_callback, num_cores)
 
-    def calculate_metric(self, progress_callback):
+    def calculate_metric(self, progress_callback: Callable) -> bool:
         """
         Calculates the metric.
 
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
         """
-        Debug(self, ".calculate_metric()", color=Theme.PrimaryColor)
+        Debug(self, ".calculate_metric()")
+
         return self.metric.recalculate(self.sampling_volume, self.field, progress_callback)
 
-    def calculate_parameters(self, progress_callback):
+    def calculate_parameters(self, progress_callback: Callable) -> bool:
         """
         Calculates the parameters.
 
         @param progress_callback: Progress callback
         @return: True (currently non-interruptable)
         """
-        Debug(self, ".calculate_parameters()", color=Theme.PrimaryColor)
+        Debug(self, ".calculate_parameters()")
+
         return self.parameters.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_wire_valid(self):
+    def on_wire_valid(self) -> None:
         """
         Gets called when the wire was successfully calculated.
         """
+        Debug(self, ".on_wire_valid()")
+
         self.gui.sidebar_left.wire_widget.update_labels()
         self.gui.menu.update_wire_menu()
 
-    def on_sampling_volume_valid(self):
+    def on_sampling_volume_valid(self) -> None:
         """
         Gets called when the sampling volume was successfully calculated.
         """
+        Debug(self, ".on_sampling_volume_valid()")
+
         self.gui.sidebar_left.sampling_volume_widget.update()
         self.gui.sidebar_right.display_widget.update()
         self.gui.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
 
-    def on_field_valid(self):
+    def on_field_valid(self) -> None:
         """
         Gets called when the field was successfully calculated.
         """
+        Debug(self, ".on_field_valid()")
+
         self.gui.sidebar_right.field_widget.update()
 
-    def on_metric_valid(self):
+    def on_metric_valid(self) -> None:
         """
         Gets called when the metric was successfully calculated.
         """
+        Debug(self, ".on_metric_valid()")
+
         self.gui.sidebar_right.metric_widget.update_labels()
 
         # The field labels are now created on-demand inside VispyCanvas.redraw()
         # self.gui.vispy_canvas.create_field_labels()
 
-    def on_parameters_valid(self):
+    def on_parameters_valid(self) -> None:
         """
         Gets called when the parameters were successfully calculated.
         """
+        Debug(self, ".on_parameters_valid()")
+
         self.gui.sidebar_right.parameters_widget.update_labels()
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_wire_invalid(self):
+    def on_wire_invalid(self) -> None:
         """
         Gets called when the wire was invalidated.
         """
+        Debug(self, ".on_wire_invalid()")
+
         self.gui.sidebar_left.wire_widget.update_labels()
         self.gui.menu.update_wire_menu()
 
-    def on_sampling_volume_invalid(self):
+    def on_sampling_volume_invalid(self) -> None:
         """
         Gets called when the sampling volume was invalidated.
         """
+        Debug(self, ".on_sampling_volume_invalid()")
+
         self.gui.sidebar_left.sampling_volume_widget.update()
 
-    def on_field_invalid(self):
+    def on_field_invalid(self) -> None:
         """
         Gets called when the field was invalidated.
         """
+        Debug(self, ".on_field_invalid()")
+
         self.gui.sidebar_right.field_widget.update()
 
-    def on_metric_invalid(self):
+    def on_metric_invalid(self) -> None:
         """
         Gets called when the metric was invalidated.
         """
+        Debug(self, ".on_metric_invalid()")
+
         self.gui.sidebar_right.metric_widget.update_labels()
         self.gui.vispy_canvas.delete_field_labels()
 
-    def on_parameters_invalid(self):
+    def on_parameters_invalid(self) -> None:
         """
         Gets called when the parameters were invalidated.
         """
+        Debug(self, ".on_parameters_invalid()")
+
         self.gui.sidebar_right.parameters_widget.update_labels()

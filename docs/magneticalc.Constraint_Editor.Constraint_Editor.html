@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id28">
+        <table class="children sortable" id="id33">
   
   <tr class="classvariable">
     
@@ -81,11 +81,6 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#show" class="code" data-type="Method">show</a></td>
-    <td><span>Shows this dialog.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_changed" class="code" data-type="Method">get_changed</a></td>
     <td><span>Returns the "changed" state of the current session.</span></td>
   </tr><tr class="method">
@@ -101,13 +96,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#reload_constraints" class="code" data-type="Method">reload_constraints</a></td>
-    <td><span>Re-loads the list of constraints.</span></td>
+    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_count" class="code" data-type="Method">get_count</a></td>
+    <td><span>Gets the number of constraints.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_constraints" class="code" data-type="Method">get_constraints</a></td>
-    <td><span>Returns the list of constraints.</span></td>
+    <td><span>Gets the list of constraints.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -131,7 +126,7 @@
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#_constraints" class="code" data-type="Instance Variable">_constraints</a></td>
+    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#_constraint_collection" class="code" data-type="Instance Variable">_constraint_collection</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -144,7 +139,7 @@
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.QDialog2.QDialog2.html" class="code" data-type="Class">QDialog2</a>:
           </p>
-          <table class="children sortable" id="id29">
+          <table class="children sortable" id="id34">
   
   <tr class="baseclassvariable">
     
@@ -159,6 +154,11 @@
   </tr><tr class="basemethod">
     
     <td>Method</td>
+    <td><a href="magneticalc.QDialog2.QDialog2.html#show" class="code" data-type="Method">show</a></td>
+    <td><span>Shows this dialog.</span></td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
     <td><a href="magneticalc.QDialog2.QDialog2.html#showEvent" class="code" data-type="Method">showEvent</a></td>
     <td><span>Overrides the showEvent method.</span></td>
   </tr>
@@ -167,14 +167,9 @@
           <p class="inheritedFrom">
             Inherited from <a href="magneticalc.QLayouted.QLayouted.html" class="code" data-type="Class">QLayouted</a> (via <a href="magneticalc.QDialog2.QDialog2.html" class="code" data-type="Class">QDialog2</a>):
           </p>
-          <table class="children sortable" id="id30">
+          <table class="children sortable" id="id35">
   
-  <tr class="baseinstancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#layout" class="code" data-type="Instance Variable">layout</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="basemethod">
+  <tr class="basemethod">
     
     <td>Method</td>
     <td><a href="magneticalc.QLayouted.QLayouted.html#install_layout" class="code" data-type="Method">install_layout</a></td>
@@ -199,6 +194,11 @@
     <td>Method</td>
     <td><a href="magneticalc.QLayouted.QLayouted.html#addButtons" class="code" data-type="Method">addButtons</a></td>
     <td><span>Adds buttons.</span></td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><a href="magneticalc.QLayouted.QLayouted.html#_layout" class="code" data-type="Instance Variable">_layout</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
           
@@ -277,19 +277,19 @@
   </div>
 </div><div class="baseinstancevariable private">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor._constraints">
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">
     
   </a>
-  <a name="_constraints">
+  <a name="_constraint_collection">
     
   </a>
   <div class="functionHeader">
-    _constraints =
+    _constraint_collection =
     
   </div>
   <div class="functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>List</code>)
+    <div class="undocumented">Undocumented</div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -341,25 +341,6 @@
     
     
     <div><p>Re-initializes the constraint editor.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.show">
-    
-  </a>
-  <a name="show">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    show(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <a href="magneticalc.QDialog2.QDialog2.html#show" class="code" data-type="Method">magneticalc.QDialog2.QDialog2.show</a></div>
-    
-    <div><p>Shows this dialog.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -420,22 +401,22 @@
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.reload_constraints">
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_count">
     
   </a>
-  <a name="reload_constraints">
+  <a name="get_count">
     
   </a>
   <div class="functionHeader">
     
     def
-    reload_constraints(self):
+    get_count(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Re-loads the list of constraints.</p></div>
+    <div><p>Gets the number of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Number of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -454,7 +435,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Returns the list of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td colspan="2">List of constraints</td></tr></table></div>
+    <div><p>Gets the list of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td colspan="2">List of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -511,7 +492,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called after a table cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">value</td><td>Cell value</td></tr><tr><td></td><td class="fieldArg">row</td><td>Row</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column</td></tr></table></div>
+    <div><p>Gets called after a table cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">value</td><td>Cell value</td></tr><tr><td></td><td class="fieldArg">row</td><td>Row index</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column index</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -524,19 +505,19 @@
   <div class="functionHeader">
     
     def
-    on_table_row_deleted(self, index):
+    on_table_row_deleted(self, row):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called after a row has been deleted from the table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">index</td><td>Row index</td></tr></table></div>
+    <div><p>Gets called after a row has been deleted from the table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row index</td></tr></table></div>
   </div>
 </div>
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-02 09:06:24.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
       </address>
 
     </div>

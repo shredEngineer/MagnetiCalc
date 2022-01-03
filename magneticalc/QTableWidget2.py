@@ -16,13 +16,21 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
+from typing import Optional, List, Dict, Union
 from functools import partial
 import qtawesome as qta
-from PyQt5.QtCore import Qt, QItemSelectionModel
+from PyQt5.Qt import QFocusEvent
+from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QPushButton, QAbstractItemView, QComboBox
 from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class QTableWidget2(QTableWidget):
@@ -31,18 +39,15 @@ class QTableWidget2(QTableWidget):
     # Display settings
     MinimumHeight = 150
 
-    # Used by L{Debug}
-    DebugColor = (128, 0, 128)
-
     def __init__(
             self,
-            gui,
+            gui: GUI,
             enabled=True,
             cell_edited_callback=None,
             selection_changed_callback=None,
             row_deleted_callback=None,
             minimum_rows: int = 0,
-    ):
+    ) -> None:
         """
         Initializes a table.
 
@@ -53,9 +58,7 @@ class QTableWidget2(QTableWidget):
         @param minimum_rows: Minimum number of rows (no further rows can be deleted)
         """
         QTableWidget.__init__(self)
-
         Debug(self, ": Init")
-
         self.gui = gui
 
         self._enabled = enabled
@@ -89,7 +92,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_cell_changed(self, row: int, column: int):
+    def on_cell_changed(self, row: int, column: int) -> None:
         """
         Gets called when a cell changed.
         This is only used to correct the strange behaviour after editing a cell.
@@ -104,7 +107,7 @@ class QTableWidget2(QTableWidget):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def on_numerical_cell_edited(self, item):
+    def on_numerical_cell_edited(self, item: QTableWidgetItem) -> None:
         """
         Gets called when a numerical cell has been edited.
 
@@ -125,13 +128,13 @@ class QTableWidget2(QTableWidget):
 
         self._cell_edited_callback(value, row, column)
 
-    def on_combobox_cell_edited(self, combobox, row, column):
+    def on_combobox_cell_edited(self, combobox: QComboBox, row: int, column: int) -> None:
         """
         Gets called when a combobox cell has been edited.
 
         @param combobox: QCombobox
-        @param row: Row
-        @param column: Column
+        @param row: Row index
+        @param column: Column index
         """
         Debug(self, f".on_combobox_cell_edited()")
 
@@ -139,7 +142,7 @@ class QTableWidget2(QTableWidget):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def on_selection_changed(self, _selected, _deselected):
+    def on_selection_changed(self, _selected: QItemSelection, _deselected: QItemSelection) -> None:
         """
         Gets called when the selection changed.
 
@@ -153,7 +156,7 @@ class QTableWidget2(QTableWidget):
         Debug(self, f".on_selection_changed()")
         self._selection_changed_callback()
 
-    def on_row_deleted(self, row: int):
+    def on_row_deleted(self, row: int) -> None:
         """
         Gets called when a row was deleted.
 
@@ -166,7 +169,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_selected_row(self):
+    def get_selected_row(self) -> Optional[int]:
         """
         Returns the currently selected row index.
 
@@ -177,7 +180,7 @@ class QTableWidget2(QTableWidget):
         else:
             return None
 
-    def is_cell_widget_selected(self):
+    def is_cell_widget_selected(self) -> bool:
         """
         Indicates whether a cell widget is selected (as opposed to a cell item).
         """
@@ -195,7 +198,7 @@ class QTableWidget2(QTableWidget):
         item = self.item(row, column)
         return item is None
 
-    def select_cell(self, row=None, column=None):
+    def select_cell(self, row: Optional[int] = None, column: Optional[int] = None) -> None:
         """
         Selects a cell.
         Any parameter may be left set to None in order to load its value from the selection model.
@@ -210,7 +213,7 @@ class QTableWidget2(QTableWidget):
             column = self.selectionModel().currentIndex().column()
 
         if row == -1 or column == -1:
-            Debug(self, f".select_cell({row}, {column}): WARNING: Skipped", color=Theme.WarningColor, force=True)
+            Debug(self, f".select_cell({row}, {column}): WARNING: Skipped", warning=True)
             return
 
         item = self.item(row, column)
@@ -235,7 +238,7 @@ class QTableWidget2(QTableWidget):
             self.scrollToItem(item, QAbstractItemView.PositionAtCenter)
             self.selectionModel().setCurrentIndex(self.selectedIndexes()[0], QItemSelectionModel.SelectCurrent)
 
-    def select_last_row(self, focus: bool = True):
+    def select_last_row(self, focus: bool = True) -> None:
         """
         Selects the last row.
 
@@ -261,7 +264,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_horizontal_header(self, header):
+    def set_horizontal_header(self, header: List[str]) -> None:
         """
         Sets horizontal header.
 
@@ -282,7 +285,7 @@ class QTableWidget2(QTableWidget):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def set_vertical_prefix(self, prefix: str):
+    def set_vertical_prefix(self, prefix: str) -> None:
         """
         Sets the per-row table prefix.
         Used for mapping cells to configuration; configuration key = prefix + column key + "_" + row index.
@@ -291,7 +294,7 @@ class QTableWidget2(QTableWidget):
         """
         self._prefix = prefix
 
-    def set_horizontal_types(self, types):
+    def set_horizontal_types(self, types: Optional[Dict]) -> None:
         """
         Sets the per-column cell types.
         Used for mapping cells to configuration.
@@ -303,7 +306,7 @@ class QTableWidget2(QTableWidget):
         """
         self._types = types
 
-    def set_horizontal_options(self, options):
+    def set_horizontal_options(self, options: List) -> None:
         """
         Sets the per-column cell options.
         This determines if the cell type, i.e. numerical or combobox.
@@ -314,7 +317,7 @@ class QTableWidget2(QTableWidget):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def set_vertical_header(self, header):
+    def set_vertical_header(self, header: List) -> None:
         """
         Sets vertical header.
 
@@ -338,7 +341,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def clear_rows(self):
+    def clear_rows(self) -> None:
         """
         Clears all table rows.
         """
@@ -348,7 +351,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_contents(self, contents):
+    def set_contents(self, contents: Union[List[List[str]], List[Dict]]) -> None:
         """
         Sets the table contents.
 
@@ -434,7 +437,7 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_style(self, border_color: str, border_width: int):
+    def set_style(self, border_color: str, border_width: int) -> None:
         """
         Sets this widget's style.
 
@@ -462,26 +465,26 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def focusInEvent(self, _event):
+    def focusInEvent(self, _event: QFocusEvent) -> None:
         """
         Gets called when the table gained focus.
         This highlights the border and selects the last-selected cell (if any).
 
-        @param _event: Event
+        @param _event: QFocusEvent
         """
         Debug(self, f".focusInEvent()")
 
         if self.rowCount() > 0:
             self.select_cell()
 
-        self.set_style(border_color=Theme.PrimaryColor, border_width=2)
+        self.set_style(border_color=Theme.MainColor, border_width=2)
 
-    def focusOutEvent(self, _event):
+    def focusOutEvent(self, _event: QFocusEvent) -> None:
         """
         Gets called when the table lost focus, or when a cell item is being edited, or when a cell widget is selected.
         When not editing, this clears the selection, triggering L{on_selection_changed}
 
-        @param _event: Event
+        @param _event: QFocusEvent
         """
         if self.state() == QAbstractItemView.EditingState:
             Debug(self, f".focusOutEvent(): Ignored in editing mode")

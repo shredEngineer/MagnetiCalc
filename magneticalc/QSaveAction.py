@@ -18,8 +18,7 @@
 
 import os
 from datetime import datetime
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from magneticalc.QMessageBox2 import QMessageBox2
+from PyQt5.QtWidgets import QFileDialog
 
 
 class QSaveAction:

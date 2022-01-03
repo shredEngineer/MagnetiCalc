@@ -19,8 +19,9 @@
 import time
 import atexit
 from typing import Optional
-
+from sty import fg
 import qtawesome as qta
+from PyQt5.Qt import QCloseEvent, QKeyEvent
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QMessageBox
 from magneticalc.QMessageBox2 import QMessageBox2
@@ -48,7 +49,7 @@ class GUI(QMainWindow):
     MinimumWindowSize = (800, 600)
 
     # Used by L{Debug}
-    DebugColor = Theme.PrimaryColor
+    DebugColor = fg.blue
 
     # Default configuration filename
     DefaultFilename = "MagnetiCalc-DefaultProject.ini"
@@ -57,17 +58,16 @@ class GUI(QMainWindow):
     calculation_status = pyqtSignal(str)
     calculation_exited = pyqtSignal(bool)
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the GUI.
         """
         QMainWindow.__init__(self, flags=Qt.Window)
-
         Debug(self, ": Init")
 
         self.locale = QLocale(QLocale.English)
 
-        self.setWindowIcon(qta.icon("ei.magnet", color=Theme.PrimaryColor))
+        self.setWindowIcon(qta.icon("ei.magnet", color=Theme.MainColor))
         self.setMinimumSize(*self.MinimumWindowSize)
         self.showMaximized()
 
@@ -109,7 +109,7 @@ class GUI(QMainWindow):
 
         # Connect the calculation thread communication signals
         # noinspection PyUnresolvedReferences
-        self.calculation_status.connect(lambda text: self.statusbar.text(text))
+        self.calculation_status.connect(lambda text: self.statusbar.set_text(text))
         # noinspection PyUnresolvedReferences
         self.calculation_exited.connect(lambda success: self.on_calculation_exited(success))
 
@@ -123,26 +123,18 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def redraw(self):
+    def redraw(self) -> None:
         """
         Re-draws the scene.
         """
+        Debug(self, ".redraw()")
+
         if self.calculation_thread is not None:
             if self.calculation_thread.isRunning():
-                Debug(
-                    self,
-                    ".redraw(): Skipped because calculation is in progress",
-                    color=Theme.PrimaryColor,
-                    force=True
-                )
+                Debug(self, ".redraw(): WARNING: Skipped because calculation is in progress", warning=True)
                 return
             else:
-                Debug(
-                    self,
-                    ".redraw(): WARNING: Setting calculation thread to None",
-                    color=Theme.WarningColor,
-                    force=True
-                )
+                Debug(self, ".redraw(): WARNING: Setting calculation thread to None", warning=True)
                 self.calculation_thread = None
 
         self.sidebar_right.display_widget.set_enabled(self.model.field.is_valid())
@@ -151,19 +143,14 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self):
+    def recalculate(self) -> None:
         """
         Re-calculates the model.
         """
         Debug(self, ".recalculate()")
 
         if self.calculation_thread is not None:
-            Debug(
-                self,
-                ".recalculate(): WARNING: Killing orphaned calculation thread",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, ".recalculate(): WARNING: Killing orphaned calculation thread", warning=True)
             self.interrupt_calculation()
 
         if self.initializing:
@@ -178,12 +165,14 @@ class GUI(QMainWindow):
         self.calculation_start_time = time.monotonic()
         self.calculation_thread.start()
 
-    def on_calculation_exited(self, success: bool):
+    def on_calculation_exited(self, success: bool) -> None:
         """
         This is called after calculation thread has exited.
 
         @param success: True if calculation was successful, False otherwise
         """
+        Debug(self, f".on_calculation_exited(success={success})")
+
         calculation_time = time.monotonic() - self.calculation_start_time
 
         if self.calculation_thread is not None:
@@ -196,73 +185,55 @@ class GUI(QMainWindow):
             else:
                 # This happens when calculation finished and no other thread was started
                 self.calculation_thread = None
-                Debug(
-                    self,
-                    f".on_calculation_exited(): Success (took {calculation_time:.2f} s)",
-                    color=Theme.SuccessColor
-                )
+                Debug(self, f".on_calculation_exited(): Success (took {calculation_time:.2f} s)", success=True)
         else:
             Debug(
-                self,
-                f".on_calculation_exited(): Interrupted after {calculation_time:.2f} s", color=Theme.PrimaryColor
-            )
+                self, f".on_calculation_exited(): WARNING: Interrupted after {calculation_time:.2f} s", warning=True)
 
         # Note: For some reason, most of the time we need an additional ("final-final") re-draw here; VisPy glitch?
         self.redraw()
 
         self.statusbar.disarm(success)
 
-    def interrupt_calculation(self):
+    def interrupt_calculation(self) -> None:
         """
         Kills any running calculation.
         """
+        Debug(self, ".interrupt_calculation()")
+
         if self.calculation_thread is None:
-            Debug(
-                self,
-                ".interrupt_calculation: WARNING: No calculation thread to interrupt",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
             return
 
         if self.calculation_thread.isRunning():
-            Debug(self, ".interrupt_calculation(): Requesting interruption", color=Theme.PrimaryColor)
+            Debug(self, ".interrupt_calculation(): WARNING: Requesting interruption", warning=True)
             self.calculation_thread.requestInterruption()
 
             if self.calculation_thread.wait(5000):
-                Debug(self, ".interrupt_calculation(): Exited gracefully", color=Theme.PrimaryColor)
+                Debug(self, ".interrupt_calculation(): Exited gracefully", success=True)
             else:
                 Assert_Dialog(False, "Failed to terminate calculation thread")
                 if self.calculation_thread is not None:
                     if self.calculation_thread.isRunning():
-                        Debug(
-                            self,
-                            ".interrupt_calculation(): WARNING: Terminating ungracefully",
-                            color=Theme.WarningColor,
-                            force=True
-                        )
+                        Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", warning=True)
                         self.calculation_thread.terminate()
                         self.calculation_thread.wait()
         else:
-            Debug(
-                self,
-                ".interrupt_calculation: WARNING: Calculation thread should be running",
-                color=Theme.WarningColor,
-                force=True
-            )
+            Debug(self, ".interrupt_calculation(): WARNING: Calculation thread should be running", warning=True)
 
         self.calculation_thread = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    @staticmethod
-    def confirm_saving_unsaved_work(cancelable: bool) -> Optional[bool]:
+    def confirm_saving_unsaved_work(self, cancelable: bool) -> Optional[bool]:
         """
         Confirm saving unsaved work.
 
         @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
         @return: None if canceled, True if saving, False if discarding
         """
+        Debug(self, f".confirm_saving_unsaved_work(cancelable={cancelable})")
+
         buttons = QMessageBox.Save | QMessageBox.Discard | (QMessageBox.Cancel if cancelable else 0)
         messagebox = QMessageBox2(
             title="Project Changed",
@@ -283,6 +254,8 @@ class GUI(QMainWindow):
         Called by menu "Quit" action.
         Lets user choose to cancel closing or save / discard file if there is unsaved work.
         """
+        Debug(self, ".confirm_close()")
+
         if not self.config.get_synced():
             choice = self.confirm_saving_unsaved_work(cancelable=True)
             if choice is None:
@@ -296,19 +269,22 @@ class GUI(QMainWindow):
 
         self.close()
 
-    def closeEvent(self, _event):
+    def closeEvent(self, _event: QCloseEvent) -> None:
         """
         Handles close event.
 
         @param _event: Close event
         """
         Debug(self, ".closeEvent()")
+
         self.quit()
 
     def quit(self):
         """
         Quits the application.
         """
+        Debug(self, ".quit()")
+
         if self.calculation_thread != QThread.currentThread():
             Debug(self, ".quit()")
             if self.calculation_thread is not None:
@@ -324,7 +300,7 @@ class GUI(QMainWindow):
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
         atexit.unregister(self.quit)
 
-    def keyPressEvent(self, event):
+    def keyPressEvent(self, event: QKeyEvent) -> None:
         """
         Handles key press event.
 
@@ -362,7 +338,7 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_config_changed(self):
+    def on_config_changed(self) -> None:
         """
         Gets called when the configuration changed.
         """
@@ -377,10 +353,11 @@ class GUI(QMainWindow):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def file_open(self):
+    def file_open(self) -> None:
         """
         Opens a project from an INI file.
         """
+        Debug(self, ".file_open()")
 
         # Stop any running calculation
         if self.calculation_thread is not None:
@@ -397,7 +374,7 @@ class GUI(QMainWindow):
 
         if filename != "":
 
-            with ModelAccess(self.gui, recalculate=False):
+            with ModelAccess(self, recalculate=False):
                 self.model.invalidate()
 
             if not self.config.get_synced():
@@ -429,18 +406,22 @@ class GUI(QMainWindow):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def file_save(self):
+    def file_save(self) -> None:
         """
         Saves the project to the currently set INI file.
         """
+        Debug(self, ".file_save()")
+
         self.config.save()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def file_save_as(self):
+    def file_save_as(self) -> None:
         """
         Saves the project to an INI file.
         """
+        Debug(self, ".file_save_as()")
+
         action = QSaveAction(
             self,
             title="Save Project",
@@ -455,10 +436,12 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def file_save_image(self):
+    def file_save_image(self) -> None:
         """
         Saves the currently displayed scene to a PNG file.
         """
+        Debug(self, ".file_save_image()")
+
         action = QSaveAction(
             self,
             title="Save Image",
@@ -472,10 +455,12 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def import_wire(self):
+    def import_wire(self) -> None:
         """
         Imports wire points from a TXT file.
         """
+        Debug(self, ".import_wire()")
+
         filename, _chosen_extension = QFileDialog.getOpenFileName(
             parent=self,
             caption="Import Wire",
@@ -497,10 +482,12 @@ class GUI(QMainWindow):
                 }
             )
 
-    def export_wire(self):
+    def export_wire(self) -> None:
         """
         Exports wire points to a TXT file.
         """
+        Debug(self, ".export_wire()")
+
         if not self.model.wire.is_valid():
             Assert_Dialog(False, "Attempting to export invalid wire")
             return

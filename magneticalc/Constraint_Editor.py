@@ -16,16 +16,24 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
+from typing import List, Dict, Any
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QPushButton, QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
+from magneticalc.Config_Group import Config_Collection
 from magneticalc.QIconLabel import QIconLabel
 from magneticalc.QTableWidget2 import QTableWidget2
-from magneticalc.Theme import Theme
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QTextBrowser2 import QTextBrowser2
+from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class Constraint_Editor(QDialog2):
@@ -42,24 +50,29 @@ class Constraint_Editor(QDialog2):
 
     # Constraint options
     Constraint_Options = [
-        Constraint.Norm_ID_List,
-        Constraint.Comparison_ID_List,
+        Constraint.Norm_Types_List_Str,
+        Constraint.Comparison_Types_List_Str,
         None,
         None,
         None
     ]
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Prepares the constraint editor, but doesn't fully initialize it yet.
 
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Constraint Editor", width=700)
-
+        Debug(self, ": Init")
         self.gui = gui
 
-        self._constraints = []
+        self._constraint_collection = Config_Collection(
+            gui=gui,
+            prefix="constraint_",
+            types=self.Constraint_Types,
+            first_without_suffix=False
+        )
 
         self._changed = None
 
@@ -91,7 +104,7 @@ class Constraint_Editor(QDialog2):
         html = f"""
             Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br>
 
-            <b style="color: {Theme.PrimaryColor};">Experimental Feature</b><br><br>
+            <b style="color: {Theme.MainColor};">Experimental Feature</b><br><br>
 
             By default, all sampling volume points have relative permeability µ<sub>r</sub> = 1.<br>
             A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
@@ -113,26 +126,19 @@ class Constraint_Editor(QDialog2):
         # This will be called by the SamplingVolume_Widget:
         # self.reinitialize()
 
-    def reinitialize(self):
+        self.dialog_shown.connect(self.table.setFocus)
+
+    def reinitialize(self) -> None:
         """
         Re-initializes the constraint editor.
         """
         Debug(self, ".reinitialize()")
 
-        # Initially load the constraints
-        self.reload_constraints()
         self.update_table()
 
         self.clear_changed()
 
     # ------------------------------------------------------------------------------------------------------------------
-
-    def show(self):
-        """
-        Shows this dialog.
-        """
-        self.table.setFocus()
-        self.exec()
 
     def get_changed(self) -> bool:
         """
@@ -140,14 +146,14 @@ class Constraint_Editor(QDialog2):
         """
         return self._changed
 
-    def clear_changed(self):
+    def clear_changed(self) -> None:
         """
         Clears the "changed" state of the current session.
         """
         self._changed = False
         self.update_title()
 
-    def update_title(self):
+    def update_title(self) -> None:
         """
         Updates the window title.
         """
@@ -158,112 +164,71 @@ class Constraint_Editor(QDialog2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def reload_constraints(self):
+    def get_count(self) -> int:
         """
-        Re-loads the list of constraints.
-        """
-        self._constraints = []
+        Gets the number of constraints.
 
-        for i in range(self.gui.config.get_int("constraint_count")):
-            self._constraints.append(self.gui.config.set_get_dict(
-                prefix=f"constraint_",
-                suffix=f"_{i}",
-                types=self.Constraint_Types,
-                values=None
-            ))
-
-    def get_constraints(self):
+        @return: Number of constraints
         """
-        Returns the list of constraints.
+        return self._constraint_collection.get_count()
+
+    def get_constraints(self) -> List[Dict]:
+        """
+        Gets the list of constraints.
 
         @param: List of constraints
         """
-        return self._constraints
+        return self._constraint_collection.get_all_groups()
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_table(self):
+    def update_table(self) -> None:
         """
         Populates the table.
         """
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(len(self.get_constraints()))])
+        self.table.set_vertical_header([str(i + 1) for i in range(self.get_count())])
         self.table.set_contents(self.get_constraints())
         self.table.select_last_row(focus=False)
 
-    def on_table_row_added(self):
+    def on_table_row_added(self) -> None:
         """
         Gets called after a row has been added to the table.
         """
-        count = self.gui.config.get_int("constraint_count") + 1
-        self.gui.config.set_int("constraint_count", count)
+        self._constraint_collection.add_group(values={
+            "norm"          : Constraint.Norm_Types_List_Str[0],
+            "comparison"    : Constraint.Comparison_Types_List_Str[0],
+            "min"           : "0.0000",
+            "max"           : "1.0000",
+            "permeability"  : "1.0000"
+        })
 
-        self.gui.config.set_get_dict(
-            prefix=f"constraint_",
-            suffix=f"_{count - 1}",
-            types=self.Constraint_Types,
-            values={
-                "norm"          : Constraint.Norm_ID_List[0],
-                "comparison"    : Constraint.Comparison_ID_List[0],
-                "min"           : "0.0000",
-                "max"           : "1.0000",
-                "permeability"  : "1.0000"
-            },
-        )
-
-        self.reload_constraints()
         self.update_table()
         self.table.select_last_row()
 
         self._changed = True
         self.update_title()
 
-    def on_table_cell_edited(self, value, row, column):
+    def on_table_cell_edited(self, value: Any, row: int, column: int):
         """
         Gets called after a table cell has been edited.
 
         @param value: Cell value
-        @param row: Row
-        @param column: Column
+        @param row: Row index
+        @param column: Column index
         """
-        key = list(self.Constraint_Types.keys())[column]
-        _type = self.Constraint_Types.get(key)
-        self.gui.config.set_generic(f"constraint_{key}_{row}", _type, value)
-        self.reload_constraints()
+        self._constraint_collection.set(group_index=row, key=list(self.Constraint_Types.keys())[column], value=value)
 
         self._changed = True
         self.update_title()
 
-    def on_table_row_deleted(self, index):
+    def on_table_row_deleted(self, row: int) -> None:
         """
         Gets called after a row has been deleted from the table.
 
-        @param index: Row index
+        @param row: Row index
         """
-        count = self.gui.config.get_int("constraint_count")
-
-        assert count > 0
-        assert index < count
-
-        # Remove all constraints from configuration
-        for i in range(count):
-            for key in self.Constraint_Types.keys():
-                self.gui.config.remove_key(f"constraint_{key}_{i}")
-
-        # Remove selected constraint from internal list
-        del self._constraints[index]
-
-        # Add all remaining constraints to configuration again (regenerate keys)
-        for i, constraint in enumerate(self.get_constraints()):
-            self.gui.config.set_get_dict(
-                prefix=f"constraint_",
-                suffix=f"_{i}",
-                types=self.Constraint_Types,
-                values=constraint
-            )
-
-        self.gui.config.set_int("constraint_count", count - 1)
-
+        self._constraint_collection.del_group(row)
         self.update_table()
 
         self._changed = True

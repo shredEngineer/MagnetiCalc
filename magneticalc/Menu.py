@@ -16,9 +16,10 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
+from functools import partial
 import webbrowser
 import qtawesome as qta
-from functools import partial
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
@@ -31,22 +32,28 @@ from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
 from magneticalc.Version import __URL__
 
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
+
 
 class Menu:
     """ Menu class. """
 
     # List of available backends
-    Backends_List = {
-        "Backend: JIT": True,
-        "Backend: JIT + CUDA": Backend_CUDA.is_available()
+    Backends_Available_List = {
+        "Backend: JIT"          : True,
+        "Backend: JIT + CUDA"   : Backend_CUDA.is_available()
     }
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Creates the menu bar.
 
         @param gui: GUI
         """
+        Debug(self, ": Init")
         self.gui = gui
 
         # List of checkboxes that are bound to configuration
@@ -87,6 +94,7 @@ class Menu:
         for preset in Wire_Presets.List:
             action = QAction(preset["id"], wire_menu)
             action.setIcon(qta.icon("mdi.vector-square"))
+            # noinspection PyUnresolvedReferences
             action.triggered.connect(
                 partial(
                     self.gui.sidebar_left.wire_widget.set_wire,
@@ -107,12 +115,14 @@ class Menu:
 
         self.import_wire_action = QAction("&Import TXT …")
         self.import_wire_action.setIcon(qta.icon("fa.folder"))
+        # noinspection PyUnresolvedReferences
         self.import_wire_action.triggered.connect(self.gui.import_wire)
         wire_menu.addAction(self.import_wire_action)
 
         self.export_wire_action = QAction("&Export TXT …")
         self.export_wire_action.setIcon(qta.icon("fa.save"))
         self.export_wire_action.setEnabled(False)
+        # noinspection PyUnresolvedReferences
         self.export_wire_action.triggered.connect(self.gui.export_wire)
         wire_menu.addAction(self.export_wire_action)
 
@@ -127,10 +137,7 @@ class Menu:
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Colored Labels", "show_colored_labels", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox(
-            "Show Gauss (Gs) instead of Tesla (T)",
-            "show_gauss",
-            view_menu,
-            self.on_show_gauss_changed
+            "Show Gauss (Gs) instead of Tesla (T)", "show_gauss", view_menu, self.on_show_gauss_changed
         )
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
@@ -147,12 +154,13 @@ class Menu:
         self.options_backend_group.setExclusive(True)
         self.gui.blockSignals(True)
         self.backend_actions = []
-        for i, item in enumerate(self.Backends_List.items()):
+        for i, item in enumerate(self.Backends_Available_List.items()):
             name, enabled = item
             action = QAction(name)
             self.backend_actions.append(action)
             action.setCheckable(True)
             action.setEnabled(enabled)
+            # noinspection PyUnresolvedReferences
             action.changed.connect(partial(self.on_backend_changed, i))
             self.options_backend_group.addAction(action)
             options_menu.addAction(action)
@@ -178,7 +186,7 @@ class Menu:
 
         self.reinitialize()
 
-    def reinitialize(self):
+    def reinitialize(self) -> None:
         """
         Re-initializes the menu.
         """
@@ -191,7 +199,7 @@ class Menu:
             if not Backend_CUDA.is_available():
                 self.gui.config.set_int("backend_type", BACKEND_JIT)
 
-        for i, name in enumerate(self.Backends_List):
+        for i, name in enumerate(self.Backends_Available_List):
             self.backend_actions[i].setChecked(self.gui.config.get_int("backend_type") == i)
 
         self.reinitialize_config_bound_checkboxes()
@@ -225,7 +233,7 @@ class Menu:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_config_bound_checkbox(self, label: str, key: str, menu, callback):
+    def add_config_bound_checkbox(self, label: str, key: str, menu, callback) -> None:
         """
         Creates a checkbox inside some menu. Checkbox state is bound to configuration.
 
@@ -236,12 +244,13 @@ class Menu:
         """
         checkbox = QAction(label, menu)
         checkbox.setCheckable(True)
+        # noinspection PyUnresolvedReferences
         checkbox.triggered.connect(partial(self.config_bound_checkbox_changed, key))
         self.config_bound_checkboxes[key] = {"checkbox": checkbox, "callback_final": callback}
         checkbox.setChecked(self.gui.config.get_bool(key))
         menu.addAction(checkbox)
 
-    def config_bound_checkbox_changed(self, key: str):
+    def config_bound_checkbox_changed(self, key: str) -> None:
         """
         Handles change of checkbox state.
 
@@ -250,7 +259,7 @@ class Menu:
         self.gui.config.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
         self.config_bound_checkboxes[key]["callback_final"]()
 
-    def reinitialize_config_bound_checkboxes(self):
+    def reinitialize_config_bound_checkboxes(self) -> None:
         """
         Re-initializes the configuration bound checkboxes.
 
@@ -266,4 +275,6 @@ class Menu:
         """
         Updates the wire menu.
         """
+        Debug(self, ".update_wire_menu()")
+
         self.export_wire_action.setEnabled(self.gui.model.wire.is_valid())

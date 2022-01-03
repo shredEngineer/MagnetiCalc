@@ -39,13 +39,44 @@ class MagnetiCalc_Data(MutableMapping):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    def get_wire(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """
+        Gets the wire points as three separate 1D arrays (raveled).
+
+        @return: x, y, z
+        """
+        assert "wire_points" in self, "Sorry, there are no wire points in this data."
+        wire_points = self["wire_points"]
+        x, y, z = wire_points["x"], wire_points["y"], wire_points["z"]
+        return x, y, z
+
+    def get_wire_list(self) -> List:
+        """
+        Gets the wire points as a single list of 3D points (raveled).
+
+        @return: List
+        """
+        return list(zip(self.get_wire()))
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def get_current(self) -> float:
+        """
+        Gets the wire current.
+        """
+        assert "wire_current" in self, "Sorry, there is no wire current in this data."
+        return self["wire_current"]
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     def get_dimension(self) -> Tuple[int, int, int]:
         """
         Gets the sampling volume dimension.
 
         @return: nx, ny, nz
         """
-        return self.data["fields"]["nx"], self.data["fields"]["ny"], self.data["fields"]["nz"]
+        fields = self._get_fields()
+        return fields["nx"], fields["ny"], fields["nz"]
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -56,7 +87,7 @@ class MagnetiCalc_Data(MutableMapping):
         @param reduce: Enable to reduce each raveled array to its minimal representation (axis ticks)
         @return: x, y, z
         """
-        fields = self.data["fields"]
+        fields = self._get_fields()
         x, y, z = fields["x"], fields["y"], fields["z"]
 
         if reduce:
@@ -74,11 +105,7 @@ class MagnetiCalc_Data(MutableMapping):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def get_field(
-            self,
-            field_type: str,
-            as_3d: bool = False
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def get_field(self, field_type: str, as_3d: bool = False) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Gets the field as three separate 1D arrays (raveled).
 
@@ -87,8 +114,10 @@ class MagnetiCalc_Data(MutableMapping):
         """
         assert field_type in ["A", "B"], "Invalid field type"
 
-        fields = self.data["fields"]
-        field_x, field_y, field_z = fields[field_type + "_x"], fields[field_type + "_y"], fields[field_type + "_z"]
+        fields = self._get_fields()
+        keys = [field_type + "_x", field_type + "_y", field_type + "_z"]
+        assert all([key in fields for key in keys]), f"Sorry, there is no {field_type}-field in this data."
+        field_x, field_y, field_z = [fields[key] for key in keys]
 
         if as_3d:
             shape_3d = self.get_dimension()
@@ -129,6 +158,17 @@ class MagnetiCalc_Data(MutableMapping):
         @param: List
         """
         return list(zip(self.get_b_field(**kwargs)))
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def _get_fields(self) -> Dict:
+        """
+        Gets the raw "fields" dictionary from the data.
+
+        @return: Dictionary
+        """
+        assert "fields" in self, "Sorry, there are no fields in this data."
+        return self["fields"]
 
     # ------------------------------------------------------------------------------------------------------------------
 

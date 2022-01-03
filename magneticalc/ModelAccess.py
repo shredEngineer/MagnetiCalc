@@ -16,18 +16,25 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from magneticalc.Assert_Dialog import Assert_Dialog
+from __future__ import annotations
+from types import TracebackType
+from typing import Optional, Type
+from sty import fg
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class ModelAccess:
     """ Model access class. """
 
     # Used by L{Debug}
-    DebugColor = "#0000e5"
+    DebugColor = fg.yellow
 
-    def __init__(self, gui, recalculate: bool):
+    def __init__(self, gui: GUI, recalculate: bool) -> None:
         """
         Initializes model access.
 
@@ -35,26 +42,32 @@ class ModelAccess:
         @param recalculate: Enable to recalculate upon exiting the context
         """
         self.gui = gui
-        self.recalculate = recalculate
+        self._recalculate = recalculate
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         """
         Entering the context kills possibly running calculation if recalculation is enabled.
         """
         Debug(self, ".enter()")
 
-        if self.recalculate:
+        if self._recalculate:
             if self.gui.calculation_thread is not None:
                 self.gui.interrupt_calculation()
 
-    def __exit__(self, _exc_type, _exc_val, _exc_tb):
+    def __exit__(
+            self,
+            _exc_type: Optional[Type[BaseException]],
+            _exc_val: Optional[BaseException],
+            _exc_tb: Optional[TracebackType]
+    ) -> None:
         """
         Leaving the context starts recalculation if enabled; otherwise, just redraw.
         """
-        Debug(self, f".exit()")
-        Debug(self, f":  NOW VALID:  {'None' if str(self.gui.model) == '' else self.gui.model}")
+        Debug(self, ".exit()")
 
-        if self.recalculate:
+        Debug(self, f": Valid: {'None' if str(self.gui.model) == '' else self.gui.model}")
+
+        if self._recalculate:
             if self.gui.config.get_bool("auto_calculation"):
                 self.gui.recalculate()
             else:

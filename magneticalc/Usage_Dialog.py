@@ -18,7 +18,7 @@
 
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QTextBrowser2 import QTextBrowser2
-
+from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
 
@@ -27,7 +27,7 @@ class Usage_Dialog(QDialog2):
 
     # HTML content
     HTML = f"""
-        <h3 style="color: {Theme.PrimaryColor};">First Steps</h3>
+        <h3 style="color: {Theme.MainColor};">First Steps</h3>
         <ul>
             <li>
                 Go to <b>Wire › Load Preset</b> to select a basic wire shape.<br>
@@ -96,7 +96,7 @@ class Usage_Dialog(QDialog2):
         All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file by default.<br>
         Deleting or renaming this file will restore the default settings.
 
-        <h3 style="color: {Theme.PrimaryColor};">What does MagnetiCalc do?</h3>
+        <h3 style="color: {Theme.MainColor};">What does MagnetiCalc do?</h3>
 
         MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
         and magnetic dipole moment of arbitrary coils.
@@ -109,13 +109,13 @@ class Usage_Dialog(QDialog2):
         materials, different core media can be modeled as regions of variable relative permeability;
         however, core saturation is currently not modeled, resulting in excessive flux density values.
 
-        <h3 style="color: {Theme.PrimaryColor};">Who needs MagnetiCalc?</h3>
+        <h3 style="color: {Theme.MainColor};">Who needs MagnetiCalc?</h3>
 
         MagnetiCalc does its job for hobbyists, students, engineers and researchers of magnetic phenomena.
         I designed MagnetiCalc from scratch, because I didn't want to mess around with expensive and/or
         overly complex simulation software whenever I needed to solve a magnetostatic problem.
 
-        <h3 style="color: {Theme.PrimaryColor};">How does it work?</h3>
+        <h3 style="color: {Theme.MainColor};">How does it work?</h3>
 
         The B-field calculation is implemented using the Biot-Savart law [1],
         employing multiprocessing techniques;
@@ -144,16 +144,18 @@ class Usage_Dialog(QDialog2):
         [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
         [4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).<br>
 
-        <br><br><span style="color: {Theme.PrimaryColor};">
+        <br><br><span style="color: {Theme.MainColor};">
             This and more information about MagnetiCalc can be found in the <code>README.md</code> file and on GitHub.
         </span><br>
         """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes "Usage" dialog.
         """
         QDialog2.__init__(self, title="Usage", width=850)
+        Debug(self, ": Init")
+
         text_browser = QTextBrowser2(html=self.HTML)
         text_browser.setMinimumHeight(600)
         self.addWidget(text_browser)

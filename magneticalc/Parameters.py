@@ -16,19 +16,29 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
+from typing import Callable
 import numpy as np
 from numba import jit, prange
+from magneticalc.ConditionalDecorator import ConditionalDecorator
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
-from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.Field import Field
+    from magneticalc.SamplingVolume import SamplingVolume
+    from magneticalc.Wire import Wire
 
 
 class Parameters:
     """ Parameters class. """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes parameters class.
         """
@@ -48,11 +58,11 @@ class Parameters:
         return \
             self._magnetic_dipole_moment is not None
 
-    def invalidate(self):
+    def invalidate(self) -> None:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=Theme.InvalidColor)
+        Debug(self, ".invalidate()")
 
         self._energy = None
         self._self_inductance = None
@@ -84,7 +94,7 @@ class Parameters:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_squared_field(self, sampling_volume, field) -> float:
+    def get_squared_field(self, sampling_volume: SamplingVolume, field: Field) -> float:
         """
         Returns the "squared" field scalar.
 
@@ -95,8 +105,8 @@ class Parameters:
         return self._get_squared_field_worker(sampling_volume.get_permeabilities(), field.get_vectors())
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def _get_squared_field_worker(sampling_volume_permeabilities, field_vectors) -> float:
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
+    def _get_squared_field_worker(sampling_volume_permeabilities: np.ndarray, field_vectors: np.ndarray) -> float:
         """
         Returns the "squared" field scalar.
 
@@ -111,7 +121,7 @@ class Parameters:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def _get_magnetic_dipole_moment(self, wire, length_scale: float) -> float:
+    def _get_magnetic_dipole_moment(self, wire: Wire, length_scale: float) -> float:
         """
         Returns the magnetic dipole moment scalar.
 
@@ -125,8 +135,12 @@ class Parameters:
         return np.abs(wire.get_dc() * np.linalg.norm(vector) / 2)
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def _get_magnetic_dipole_moment_worker(elements_center, elements_direction, length_scale: float):
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
+    def _get_magnetic_dipole_moment_worker(
+            elements_center: np.ndarray,
+            elements_direction: np.ndarray,
+            length_scale: float
+    ):
         """
         Returns the (unscaled) magnetic dipole moment vector.
 
@@ -142,7 +156,13 @@ class Parameters:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def recalculate(self, wire, sampling_volume, field, progress_callback) -> bool:
+    def recalculate(
+            self,
+            wire: Wire,
+            sampling_volume: SamplingVolume,
+            field: Field,
+            progress_callback: Callable
+    ) -> bool:
         """
         Recalculates parameters.
 

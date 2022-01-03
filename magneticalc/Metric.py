@@ -16,52 +16,61 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
+from magneticalc.Norm_Types import *
+from typing import Dict, List, Callable
 import numpy as np
 from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.ConditionalDecorator import ConditionalDecorator
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.Field import Field
+    from magneticalc.SamplingVolume import SamplingVolume
 
 
-@jit(nopython=True, parallel=False)
-def metric_norm(norm_id: str, vector) -> float:
+@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
+def metric_norm(norm_type: int, vector: np.ndarray) -> float:
     """
     Calculates the selected norm of some vector.
 
     Note: For JIT to work, this must be declared at the top level.
 
-    @param norm_id: Norm ID
+    @param norm_type: Norm type
     @param vector: 3D vector
     """
 
-    # Note: These have to match the norm IDs defined in the Constraint class
-    if norm_id == "X":
+    if norm_type == NORM_TYPE_X:
         value = vector[0]
-    elif norm_id == "Y":
+    elif norm_type == NORM_TYPE_Y:
         value = vector[1]
-    elif norm_id == "Z":
+    elif norm_type == NORM_TYPE_Z:
         value = vector[2]
-    elif norm_id == "Radius X":
-        value = np.abs(vector[0])
-    elif norm_id == "Radius Y":
-        value = np.abs(vector[1])
-    elif norm_id == "Radius Z":
-        value = np.abs(vector[2])
-    elif norm_id == "Radius XY":
-        value = np.sqrt(vector[0] ** 2 + vector[1] ** 2)
-    elif norm_id == "Radius XZ":
-        value = np.sqrt(vector[1] ** 2 + vector[2] ** 2)
-    elif norm_id == "Radius YZ":
-        value = np.sqrt(vector[2] ** 2 + vector[0] ** 2)
-    elif norm_id == "Radius":
+    elif norm_type == NORM_TYPE_RADIUS:
         value = np.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
-    elif norm_id == "Angle XY":
+    elif norm_type == NORM_TYPE_RADIUS_X:
+        value = np.abs(vector[0])
+    elif norm_type == NORM_TYPE_RADIUS_Y:
+        value = np.abs(vector[1])
+    elif norm_type == NORM_TYPE_RADIUS_Z:
+        value = np.abs(vector[2])
+    elif norm_type == NORM_TYPE_RADIUS_XY:
+        value = np.sqrt(vector[0] ** 2 + vector[1] ** 2)
+    elif norm_type == NORM_TYPE_RADIUS_XZ:
+        value = np.sqrt(vector[1] ** 2 + vector[2] ** 2)
+    elif norm_type == NORM_TYPE_RADIUS_YZ:
+        value = np.sqrt(vector[2] ** 2 + vector[0] ** 2)
+    elif norm_type == NORM_TYPE_ANGLE_XY:
         value = (np.arctan2(vector[0], vector[1]) + np.pi) / np.pi / 2
-    elif norm_id == "Angle XZ":
+    elif norm_type == NORM_TYPE_ANGLE_XZ:
         value = (np.arctan2(vector[0], vector[2]) + np.pi) / np.pi / 2
-    elif norm_id == "Angle YZ":
+    elif norm_type == NORM_TYPE_ANGLE_YZ:
         value = (np.arctan2(vector[1], vector[2]) + np.pi) / np.pi / 2
-    elif norm_id == "Divergence":
+    elif norm_type == NORM_TYPE_DIVERGENCE:
         # Invalid norm ID for metric_norm(); divergence must be calculated using metric_divergence()
         value = None
     else:
@@ -71,8 +80,8 @@ def metric_norm(norm_id: str, vector) -> float:
     return value
 
 
-@jit(nopython=True, parallel=False)
-def metric_divergence(neighborhood_vectors, dL: float, polarity: int) -> float:
+@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
+def metric_divergence(neighborhood_vectors: np.ndarray, dL: float, polarity: int) -> float:
     """
     Calculates the divergence of a sampling volume neighborhood.
 
@@ -107,7 +116,7 @@ def metric_divergence(neighborhood_vectors, dL: float, polarity: int) -> float:
         return value
 
 
-@jit(nopython=True, parallel=False)
+@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
 def color_map_divergent(color_normalized: float) -> (float, float, float):
     """
     Maps normalized value to color, divergent.
@@ -122,7 +131,7 @@ def color_map_divergent(color_normalized: float) -> (float, float, float):
     return rgb_0 + (rgb_1 - rgb_0) * color_normalized
 
 
-@jit(nopython=True, parallel=False)
+@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
 def color_map_cyclic(color_normalized: float) -> (float, float, float):
     """
     Maps normalized value to color, cyclic.
@@ -153,7 +162,7 @@ class Metric:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, color_preset, alpha_preset):
+    def __init__(self, color_preset: Dict, alpha_preset: Dict) -> None:
         """
         This class holds a pair of metric presets.
         Using these metric presets, colors (including alpha channel) and field limits are calculated.
@@ -179,16 +188,16 @@ class Metric:
             self._colors is not None and \
             self._limits is not None
 
-    def invalidate(self):
+    def invalidate(self) -> None:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=Theme.InvalidColor)
+        Debug(self, ".invalidate()")
 
         self._colors = None
         self._limits = None
 
-    def get_color_preset(self):
+    def get_color_preset(self) -> Dict:
         """
         Returns color metric preset.
 
@@ -196,7 +205,7 @@ class Metric:
         """
         return self._color_preset
 
-    def get_alpha_preset(self):
+    def get_alpha_preset(self) -> Dict:
         """
         Returns alpha metric preset.
 
@@ -204,7 +213,7 @@ class Metric:
         """
         return self._alpha_preset
 
-    def get_colors(self):
+    def get_colors(self) -> np.ndarray:
         """
         Returns calculated colors.
 
@@ -214,7 +223,7 @@ class Metric:
 
         return self._colors
 
-    def get_limits(self):
+    def get_limits(self) -> Dict:
         """
         Returns calculated limits.
 
@@ -227,25 +236,30 @@ class Metric:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def _norm_worker(norm_id: str, vectors):
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
+    def _norm_worker(norm_type: int, vectors: np.ndarray) -> np.ndarray:
         """
         Calculates the norm values of a list of vectors.
 
-        @param norm_id: Norm ID
+        @param norm_type: Norm type
         @param vectors: Ordered list of 3D vectors
         @return: Norm values
         """
         values = np.zeros(len(vectors))
 
         for i in prange(len(vectors)):
-            values[i] = metric_norm(norm_id, vectors[i])
+            values[i] = metric_norm(norm_type, vectors[i])
 
         return values
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def _divergence_worker(sampling_volume_neighborhood_indices, vectors, dL: int, polarity):
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
+    def _divergence_worker(
+            sampling_volume_neighborhood_indices: List[np.ndarray],
+            vectors: np.ndarray,
+            dL: int,
+            polarity: int
+    ) -> np.ndarray:
         """
         Calculates the divergence values of a list of vectors.
 
@@ -275,7 +289,7 @@ class Metric:
         return values
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
     def _normalize_worker(
             color_map_id: str,
             color_is_log: bool,
@@ -283,11 +297,11 @@ class Metric:
             color_norm_min: float,
             color_norm_max: float,
             alpha_is_log: bool,
-            alpha_norm_values,
+            alpha_norm_values: np.ndarray,
             alpha_norm_min: float,
             alpha_norm_max: float,
-            colors
-    ):
+            colors: np.ndarray
+    ) -> np.ndarray:
         """
         Normalizes color and alpha norm values, populates final color values.
 
@@ -355,7 +369,7 @@ class Metric:
 
         return colors
 
-    def recalculate(self, sampling_volume, field, progress_callback) -> bool:
+    def recalculate(self, sampling_volume: SamplingVolume, field: Field, progress_callback: Callable) -> bool:
         """
         Recalculates color and alpha values for field.
 
@@ -374,7 +388,7 @@ class Metric:
         dL = Metric.LengthScale / sampling_volume.get_resolution()
 
         # Calculate color metric values
-        if self._color_preset["norm_id"] == "Divergence":
+        if self._color_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
             # Calculate divergence
             color_norm_values = self._divergence_worker(
                 sampling_volume.get_neighbor_indices(),
@@ -385,14 +399,14 @@ class Metric:
         else:
             # Calculate other norm
             color_norm_values = self._norm_worker(
-                self._color_preset["norm_id"],
+                self._color_preset["norm_type"],
                 field.get_vectors()
             )
 
         progress_callback(25)
 
         # Calculate alpha metric values
-        if self._alpha_preset["norm_id"] == "Divergence":
+        if self._alpha_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
             # Calculate divergence
             alpha_norm_values = self._divergence_worker(
                 sampling_volume.get_neighbor_indices(),
@@ -403,7 +417,7 @@ class Metric:
         else:
             # Calculate other norm
             alpha_norm_values = self._norm_worker(
-                self._alpha_preset["norm_id"],
+                self._alpha_preset["norm_type"],
                 field.get_vectors()
             )
 
@@ -486,8 +500,8 @@ class Metric:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def boost_colors(boost: float, direction: float, colors):
+    @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
+    def boost_colors(boost: float, direction: float, colors: np.ndarray) -> np.ndarray:
         """
         "Boosts" an array of color values.
 

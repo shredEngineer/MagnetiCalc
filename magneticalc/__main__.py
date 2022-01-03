@@ -22,11 +22,12 @@ import os
 import sys
 from sty import ef
 from PyQt5.QtWidgets import QApplication
+from magneticalc.Config import get_jit_enabled
 from magneticalc.GUI import GUI
 from magneticalc.Version import Version
 
 
-def main():
+def main() -> None:
     """ MagnetiCalc main function. """
 
     if sys.platform == "win32":
@@ -36,6 +37,8 @@ def main():
     print(ef.bold + Version.String + ef.rs)
     print(Version.Copyright)
     print(Version.License)
+    print()
+    print("JIT is " + ("enabled" if get_jit_enabled() else "disabled"))
     print()
 
     app = QApplication(sys.argv)

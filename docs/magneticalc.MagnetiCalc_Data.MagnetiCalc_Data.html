@@ -46,7 +46,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id49">
+        <table class="children sortable" id="id54">
   
   <tr class="method">
     
@@ -58,6 +58,21 @@
     <td>Instance Variable</td>
     <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#data" class="code" data-type="Instance Variable">data</a></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#get_wire" class="code" data-type="Method">get_wire</a></td>
+    <td><span>Gets the wire points as three separate 1D arrays (raveled).</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#get_wire_list" class="code" data-type="Method">get_wire_list</a></td>
+    <td><span>Gets the wire points as a single list of 3D points (raveled).</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#get_current" class="code" data-type="Method">get_current</a></td>
+    <td><span>Gets the wire current.</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -77,7 +92,7 @@
     
     <td>Method</td>
     <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#get_field" class="code" data-type="Method">get_field</a></td>
-    <td><span>Gets the sampling volume axes as three separate 1D arrays (raveled).</span></td>
+    <td><span>Gets the field as three separate 1D arrays (raveled).</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -126,6 +141,11 @@
   </tr><tr class="method private">
     
     <td>Method</td>
+    <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#_get_fields" class="code" data-type="Method">_get_fields</a></td>
+    <td><span>Gets the raw "fields" dictionary from the data.</span></td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
     <td><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html#_keytransform" class="code" data-type="Method">_keytransform</a></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
@@ -171,6 +191,63 @@
   <div class="functionBody">
     
     <div class="undocumented">Undocumented</div> (type: <code>Dict</code>)
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.get_wire">
+    
+  </a>
+  <a name="get_wire">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_wire(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets the wire points as three separate 1D arrays (raveled).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">x, y, z</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.get_wire_list">
+    
+  </a>
+  <a name="get_wire_list">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_wire_list(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets the wire points as a single list of 3D points (raveled).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  <a name="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.get_current">
+    
+  </a>
+  <a name="get_current">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    get_current(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets the wire current.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -246,7 +323,7 @@
   <div class="docstring functionBody">
     
     
-    <div><p>Gets the sampling volume axes as three separate 1D arrays (raveled).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type ("A" or "B")</td></tr><tr><td></td><td class="fieldArg">as_3d</td><td>Enable to transform each raveled 1D array into an unraveled 3D mesh (indexed by the minimal axes)</td></tr></table></div>
+    <div><p>Gets the field as three separate 1D arrays (raveled).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type ("A" or "B")</td></tr><tr><td></td><td class="fieldArg">as_3d</td><td>Enable to transform each raveled 1D array into an unraveled 3D mesh (indexed by the minimal axes)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -323,6 +400,25 @@
     
     
     <div><p>Gets the B-field components as a single list of 3D points (raveled).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td colspan="2">List</td></tr></table></div>
+  </div>
+</div><div class="basemethod private">
+  
+  <a name="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data._get_fields">
+    
+  </a>
+  <a name="_get_fields">
+    
+  </a>
+  <div class="functionHeader">
+    
+    def
+    _get_fields(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Gets the raw "fields" dictionary from the data.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Dictionary</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -442,7 +538,7 @@
 
       </div>
       <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-02 09:06:24.
+        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
       </address>
 
     </div>

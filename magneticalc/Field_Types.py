@@ -16,11 +16,24 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-# Field types
+from typing import Optional
+
+
 A_FIELD = 0
 B_FIELD = 1
 
-FIELD_TYPES_STR = {
+
+Field_Types_Str_Map = {
     A_FIELD: "A-Field",
     B_FIELD: "B-Field"
 }
+
+
+def field_type_to_str(field_type: int) -> Optional[str]:
+    """
+    Converts a field type to a field string.
+
+    @param field_type: Field type
+    @return: Field string, or None if field type is invalid
+    """
+    return Field_Types_Str_Map.get(field_type, None)

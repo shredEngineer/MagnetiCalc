@@ -18,10 +18,11 @@
 
 import webbrowser
 from functools import partial
-from magneticalc.Theme import Theme
-from magneticalc.Version import Version
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QTextBrowser2 import QTextBrowser2
+from magneticalc.Debug import Debug
+from magneticalc.Theme import Theme
+from magneticalc.Version import Version
 
 
 class About_Dialog(QDialog2):
@@ -32,7 +33,7 @@ class About_Dialog(QDialog2):
 
     # HTML content
     HTML = f"""
-        <span style="color: {Theme.PrimaryColor};"><b>{Version.String}</b></span><br>
+        <span style="color: {Theme.MainColor};"><b>{Version.String}</b></span><br>
         <br>
         Copyright © 2020–2021, Paul Wilhelm, M. Sc.
         &lt;<a href="mailto:anfrage@paulwilhelm.de">anfrage@paulwilhelm.de</a>&gt;<br>
@@ -53,24 +54,25 @@ class About_Dialog(QDialog2):
             OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.<br>
         </small>
         <br>
-        <span style="color: {Theme.PrimaryColor}; font-weight: bold;">
+        <span style="color: {Theme.MainColor}; font-weight: bold;">
             If you like this software, please consider buying me a coffee!&nbsp; :)
         </span>
         <br>
         """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes "About" dialog.
         """
         QDialog2.__init__(self, title="About", width=640)
+        Debug(self, ": Init")
 
         text_browser = QTextBrowser2(html=self.HTML)
         self.dialog_shown.connect(text_browser.fit_to_contents)
         self.addWidget(text_browser)
 
         buttons = self.addButtons({
-            "OK": ("fa.check", self.accept),
-            "Donate 3€ …": ("fa.paypal", partial(webbrowser.open, About_Dialog.DonationURL))
+            "OK"            : ("fa.check", self.accept),
+            "Donate 3€ …"   : ("fa.paypal", partial(webbrowser.open, About_Dialog.DonationURL))
         })
         buttons[0].setFocus()

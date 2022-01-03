@@ -16,20 +16,26 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from typing import Optional
 from functools import partial
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QSizePolicy,\
-    QCheckBox
-from magneticalc.Debug import Debug
-from magneticalc.Field import Field
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QCheckBox
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
 from magneticalc.QIconLabel import QIconLabel
+from magneticalc.Debug import Debug
+from magneticalc.Field import Field
+from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class Field_Widget(QGroupBox2):
@@ -41,14 +47,14 @@ class Field_Widget(QGroupBox2):
     DistanceLimitStep = 0.0001
     DistanceLimitPrecision = 4
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the widget.
 
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Field")
-
+        Debug(self, ": Init")
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,9 +92,9 @@ class Field_Widget(QGroupBox2):
 
         total_calculations_layout = QHBoxLayout()
         total_calculations_left = QLabel("Total calculations:")
-        total_calculations_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_calculations_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_calculations_label = QLabel("N/A")
-        self.total_calculations_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_calculations_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_calculations_layout.addWidget(total_calculations_left, alignment=Qt.AlignVCenter)
         total_calculations_layout.addWidget(self.total_calculations_label, alignment=Qt.AlignVCenter)
@@ -105,6 +111,7 @@ class Field_Widget(QGroupBox2):
         self.distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
         self.distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
         self.distance_limit_spinbox.setSingleStep(self.DistanceLimitStep)
+        # noinspection PyUnresolvedReferences
         self.distance_limit_spinbox.valueChanged.connect(
             lambda: self.set_field(distance_limit=self.distance_limit_spinbox.value())
         )
@@ -117,9 +124,9 @@ class Field_Widget(QGroupBox2):
 
         total_skipped_calculations_layout = QHBoxLayout()
         total_skipped_calculations_left = QLabel("Total skipped calculations:")
-        total_skipped_calculations_left.setStyleSheet(f"color: {Theme.LightColor}; font-style: italic;")
+        total_skipped_calculations_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
         self.total_skipped_calculations_label = QLabel("N/A")
-        self.total_skipped_calculations_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+        self.total_skipped_calculations_label.setStyleSheet(f"color: {Theme.MainColor};")
         self.total_skipped_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         total_skipped_calculations_layout.addWidget(total_skipped_calculations_left, alignment=Qt.AlignVCenter)
         total_skipped_calculations_layout.addWidget(self.total_skipped_calculations_label, alignment=Qt.AlignVCenter)
@@ -129,7 +136,7 @@ class Field_Widget(QGroupBox2):
 
         self.reinitialize()
 
-    def reinitialize(self):
+    def reinitialize(self) -> None:
         """
         Re-initializes the widget.
         """
@@ -149,7 +156,7 @@ class Field_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_field_type_changed(self, field_type: bool, checked: bool):
+    def on_field_type_changed(self, field_type: bool, checked: bool) -> None:
         """
         Gets called when the field type changed.
 
@@ -173,7 +180,7 @@ class Field_Widget(QGroupBox2):
             recalculate: bool = True,
             invalidate_self: bool = True,
             allow_cache: bool = False
-    ):
+    ) -> None:
         """
         Sets the field. This will replace the currently set field in the model.
 
@@ -188,6 +195,8 @@ class Field_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
+        Debug(self, ".set_field()")
+
         with ModelAccess(self.gui, recalculate):
 
             if allow_cache:
@@ -196,7 +205,7 @@ class Field_Widget(QGroupBox2):
                 field = None
 
             if field is not None:
-                Debug(self, ".on_field_type_changed(): Using cached field", color=Theme.PrimaryColor)
+                Debug(self, ".set_field(): Using cached field")
             else:
                 backend_type = self.gui.config.get_int("backend_type")
                 field_type = self.gui.config.set_get_int("field_type", field_type)
@@ -210,7 +219,7 @@ class Field_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update(self):
+    def update(self) -> None:
         """
         Updates this widget.
         """
@@ -219,7 +228,7 @@ class Field_Widget(QGroupBox2):
         self.update_labels()
         self.update_controls()
 
-    def update_labels(self):
+    def update_labels(self) -> None:
         """
         Updates the labels.
         """
@@ -230,7 +239,7 @@ class Field_Widget(QGroupBox2):
             self.total_calculations_label.setText("N/A")
             self.total_skipped_calculations_label.setText("N/A")
 
-    def update_controls(self):
+    def update_controls(self) -> None:
         """
         Updates the controls.
         """

@@ -125,16 +125,14 @@ Installation will currently fail for Python 3.9+ due to missing dependencies.
 
 On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
 
-#### macOS
+#### macOS with Apple Silicon (M1)
 On Apple Silicon, make sure to enable [Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/) for the Terminal app
 before installing and starting MagnetiCalc.
-
-*Note:* Might be unstable.
 
 ### Option A: Automatic install via pip
 This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
 
-#### Linux & macOS
+#### Linux & macOS (Intel)
 ```shell
 python3 -m pip install magneticalc --upgrade
 python3 -m magneticalc
@@ -144,6 +142,13 @@ python3 -m magneticalc
 ```shell
 python -m pip install --upgrade magneticalc
 python -m magneticalc
+```
+
+#### macOS with Apple Silicon (M1)
+*Note:* On Apple Silicon, JIT must be disabled due to incomplete support, resulting in slow calculations. 
+```shell
+python3 -m pip install magneticalc --upgrade
+export NUMBA_DISABLE_JIT=1 && python3 -m magneticalc
 ```
 
 #### Juptyer Notebook & Jupyter Lab
@@ -229,14 +234,24 @@ provides basic functions for importing/exporting data programmatically:
 
   The data is wrapped in a [`MagnetiCalc_Data`](magneticalc/MagnetiCalc_Data.py) object
   which provides convenience functions for accessing, transforming and reshaping the data:
+  * `.get_wire_list()` returns a list of all 3D points of the wire.
+  * `.get_wire()` returns the raveled wire points as three arrays.
+  * `.get_current()` returns the wire current.
   * `.get_dimension()` returns the sampling volume dimension as a 3-tuple.
-  * `.get_axes(reduce=True)` returns the axis ticks of the sampling volume.
   * `.get_axes_list()` returns a list of all 3D points of the sampling volume.
+  * `.get_axes()` returns the raveled sampling volume coordinates as three arrays.
+  * `.get_axes(reduce=True)` returns the axis ticks of the sampling volume.
   * `.get_a_field_list()` returns a list of all 3D vectors of the
-    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-Field.
+    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field.
+  * `.get_a_field()` returns the raveled
+    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
+    coordinates as three arrays.
   * `.get_a_field(as_3d=True)` returns a 3D field for each component of the
-    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-Field,
+    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
     indexed over the reduced axes.
+  
+  Analogously, use the `.get_b_field_list()` and `.get_b_field()` functions
+  to get the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field.
 
 License
 -------
@@ -295,11 +310,8 @@ ToDo
 * Fix unnecessary shading of VisPy markers.
 
 **Code Quality**
-* Add debug output where it is missing.
-* Add type hints where they are missing.
 * Add unit tests.
 * Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671) for accessing data where applicable. 
-* Merge sparse `*_Types.py` modules with higher-level classes if possible.
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 

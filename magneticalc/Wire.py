@@ -16,17 +16,25 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Dict, Tuple, List, Callable
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
 
 
 class Wire:
     """ Wire class. """
 
-    def __init__(self, points, stretch, rotational_symmetry, close_loop: bool, slicer_limit: float, dc: float):
+    def __init__(
+            self,
+            points: np.ndarray,
+            stretch: np.ndarray,
+            rotational_symmetry: Dict,
+            close_loop: bool,
+            slicer_limit: float,
+            dc: float
+    ) -> None:
         """
         A 3D piecewise linear curve with some DC current associated with it.
 
@@ -78,7 +86,7 @@ class Wire:
 
         Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         """
         Indicates valid data for display.
 
@@ -88,18 +96,18 @@ class Wire:
             self._points_sliced is not None and \
             self._length is not None
 
-    def invalidate(self):
+    def invalidate(self) -> None:
         """
         Resets data, hiding from display.
         """
-        Debug(self, ".invalidate()", color=Theme.InvalidColor)
+        Debug(self, ".invalidate()")
 
         self._points_sliced = None
         self._length = None
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_bounds(self):
+    def get_bounds(self) -> Tuple[List, List]:
         """
         Returns this curve's bounding box.
 
@@ -110,7 +118,7 @@ class Wire:
         bounds_max = [max(axes[0]), max(axes[1]), max(axes[2])]
         return bounds_min, bounds_max
 
-    def get_points_base(self):
+    def get_points_base(self) -> np.ndarray:
         """
         Returns this wire's base points.
 
@@ -118,7 +126,7 @@ class Wire:
         """
         return self._points_base
 
-    def get_points_transformed(self):
+    def get_points_transformed(self) -> np.ndarray:
         """
         Returns this wire's transformed points.
 
@@ -126,7 +134,7 @@ class Wire:
         """
         return self._points_transformed
 
-    def get_points_sliced(self):
+    def get_points_sliced(self) -> np.ndarray:
         """
         Returns this wire's points after slicing.
 
@@ -136,7 +144,7 @@ class Wire:
 
         return self._points_sliced
 
-    def get_elements(self):
+    def get_elements(self) -> np.ndarray:
         """
         Returns this curve's elements, i.e. an ordered list of segment center points and directions.
 
@@ -173,7 +181,7 @@ class Wire:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def _set_stretch(self, stretch):
+    def _set_stretch(self, stretch: np.ndarray) -> None:
         """
         This transformation stretches (and/or mirrors) this curve by some factor in any direction.
         Use the factor +1 / -1 to retain / mirror the curve in that direction.
@@ -182,7 +190,7 @@ class Wire:
 
         @param stretch: XYZ stretch transform factors (3D point)
         """
-        Debug(self, ".stretch()")
+        Debug(self, "._set_stretch()")
 
         axes = self.get_points_transformed().transpose()
 
@@ -191,7 +199,7 @@ class Wire:
 
         self._points_transformed = axes.transpose()
 
-    def _set_rotational_symmetry(self, parameters, close_loop: bool):
+    def _set_rotational_symmetry(self, parameters: Dict, close_loop: bool) -> None:
         """
         This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
 
@@ -224,11 +232,9 @@ class Wire:
 
         self._points_transformed = np.array(axes).transpose()
 
-        return self
-
     # ------------------------------------------------------------------------------------------------------------------
 
-    def recalculate(self, progress_callback) -> bool:
+    def recalculate(self, progress_callback: Callable) -> bool:
         """
         Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.
 
@@ -257,7 +263,7 @@ class Wire:
                 progress_callback(100 * (i + 1) / (len(self.get_points_transformed()) - 1))
 
                 if QThread.currentThread().isInterruptionRequested():
-                    Debug(self, ".recalculate(): Interruption requested, exiting now", color=Theme.PrimaryColor)
+                    Debug(self, ".recalculate(): WARNING: Interruption requested, exiting now", warning=True)
                     return False
 
         # Append the very last point since it is not appended by the interpolation above

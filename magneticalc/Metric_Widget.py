@@ -16,18 +16,24 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 import numpy as np
 import qtawesome as qta
 from si_prefix import si_format
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
-from magneticalc.Debug import Debug
-from magneticalc.QIconLabel import QIconLabel
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.Debug import Debug
 from magneticalc.Metric import Metric
 from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class Metric_Widget(QGroupBox2):
@@ -36,14 +42,14 @@ class Metric_Widget(QGroupBox2):
     # Formatting settings
     ValuePrecision = 1
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the widget.
 
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Metric")
-
+        Debug(self, ": Init")
         self.gui = gui
 
         # --------------------------------------------------------------------------------------------------------------
@@ -52,6 +58,7 @@ class Metric_Widget(QGroupBox2):
         self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             self.color_metric_combobox.addItem(preset["id"])
+        # noinspection PyUnresolvedReferences
         self.color_metric_combobox.currentIndexChanged.connect(
             lambda: self.set_metric(color_preset=Metric_Presets.get_by_id(self.color_metric_combobox.currentText()))
         )
@@ -86,6 +93,7 @@ class Metric_Widget(QGroupBox2):
             # Using angle metric for alpha transparency is discouraged and is not available in the combobox anymore.
             if not preset["is_angle"]:
                 self.alpha_metric_combobox.addItem(preset["id"])
+        # noinspection PyUnresolvedReferences
         self.alpha_metric_combobox.currentIndexChanged.connect(
             lambda: self.set_metric(alpha_preset=Metric_Presets.get_by_id(self.alpha_metric_combobox.currentText()))
         )
@@ -111,7 +119,7 @@ class Metric_Widget(QGroupBox2):
 
         self.reinitialize()
 
-    def reinitialize(self):
+    def reinitialize(self) -> None:
         """
         Re-initializes the widget.
         """
@@ -141,7 +149,7 @@ class Metric_Widget(QGroupBox2):
             recalculate: bool = True,
             update_labels: bool = True,
             invalidate_self: bool = True
-    ):
+    ) -> None:
         """
         Sets the metric. This will overwrite the currently set metric in the model.
         Any parameter may be left set to None in order to load its default value.
@@ -154,6 +162,8 @@ class Metric_Widget(QGroupBox2):
         """
         if self.signalsBlocked():
             return
+
+        Debug(self, ".set_metric()")
 
         with ModelAccess(self.gui, recalculate):
 
@@ -206,10 +216,12 @@ class Metric_Widget(QGroupBox2):
         );
     """
 
-    def update_labels(self):
+    def update_labels(self) -> None:
         """
         Updates the labels.
         """
+        Debug(self, ".update_labels()")
+
         if self.gui.model.metric.is_valid():
 
             limits = self.gui.model.metric.get_limits()

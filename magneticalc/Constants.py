@@ -20,5 +20,5 @@
 class Constants:
     """ Constants class. """
 
-    # Magnetic field constant µ0
+    # Magnetic field constant µ_0
     mu_0 = 1.25663706212e-6     # kg · m / s² / A²

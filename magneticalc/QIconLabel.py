@@ -40,7 +40,7 @@ class QIconLabel(QHBoxLayout):
             icon_size: QSize = QSize(16, 16),
             final_stretch: bool = True,
             font: Optional[QFont] = None
-    ):
+    ) -> None:
         """
         Initializes the icon label.
 

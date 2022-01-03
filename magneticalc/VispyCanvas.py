@@ -16,23 +16,30 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 import time
 import numpy as np
 from typing import Optional
 from si_prefix import si_format
 from vispy import io, scene, visuals
 from vispy.scene.cameras import TurntableCamera
+from vispy.visuals.visual import Visual
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Metric import Metric
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class VispyCanvas(scene.SceneCanvas):
     """ VispyCanvas class. """
 
     # Font
-    DefaultFontFace = "DejaVu Sans Mono"
+    DefaultFontFace = Theme.DefaultFontFace
     DefaultFontSize = 9
 
     # Enable to additionally debug drawing of visuals
@@ -64,13 +71,14 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Initialize VisPy canvas.
 
         @param gui: GUI
         """
         scene.SceneCanvas.__init__(self)
+        Debug(self, ": Init")
 
         self.unfreeze()
 
@@ -114,12 +122,12 @@ class VispyCanvas(scene.SceneCanvas):
         self.visual_field_arrow_heads = scene.visuals.create_visual_node(visuals.MarkersVisual)()
 
         if self.DebugVisuals:
-            Debug(self, f": visual_wire_segments        =    {self.visual_wire_segments}", color=(255, 0, 255))
-            Debug(self, f": visual_wire_points_selected = {self.visual_wire_points_selected}", color=(255, 0, 255))
-            Debug(self, f": visual_wire_points_sliced   = {self.visual_wire_points_sliced}", color=(255, 0, 255))
-            Debug(self, f": visual_field_points         = {self.visual_field_points}", color=(255, 0, 255))
-            Debug(self, f": visual_field_arrow_lines    =    {self.visual_field_arrow_lines}", color=(255, 0, 255))
-            Debug(self, f": visual_field_arrow_heads    = {self.visual_field_arrow_heads}", color=(255, 0, 255))
+            Debug(self, f": visual_wire_segments        =    {self.visual_wire_segments}")
+            Debug(self, f": visual_wire_points_selected = {self.visual_wire_points_selected}")
+            Debug(self, f": visual_wire_points_sliced   = {self.visual_wire_points_sliced}")
+            Debug(self, f": visual_field_points         = {self.visual_field_points}")
+            Debug(self, f": visual_field_arrow_lines    =    {self.visual_field_arrow_lines}")
+            Debug(self, f": visual_field_arrow_heads    = {self.visual_field_arrow_heads}")
 
         self.foreground = None
         self.background = None
@@ -134,7 +142,7 @@ class VispyCanvas(scene.SceneCanvas):
             bold=True,
             text="Performing initial just-in-time compilation;\n"
                  "subsequent calculations will execute faster!\n",
-            color=(1, .55, 0),
+            color=(1, .55, 0),  # Orange
             face=self.DefaultFontFace,
             font_size=self.DefaultFontSize,
             font_manager=self.font_manager
@@ -150,16 +158,18 @@ class VispyCanvas(scene.SceneCanvas):
 
         self.freeze()
 
-    def update_color_scheme(self):
+    def update_color_scheme(self) -> None:
         """
         Updates the color scheme.
         """
+        Debug(self, ".update_color_scheme()")
+
         self.foreground = self.White if self.gui.config.get_bool("dark_background") else self.Black
         self.background = self.Black if self.gui.config.get_bool("dark_background") else self.White
         self.bgcolor = self.background
         self.visual_perspective_info.color = np.append(self.foreground[:3], 0.6)
 
-    def set_visible(self, visual, is_visible: bool):
+    def set_visible(self, visual: Visual, is_visible: bool) -> None:
         """
         Sets some visual's visibility.
 
@@ -168,7 +178,7 @@ class VispyCanvas(scene.SceneCanvas):
         """
         visual.parent = self.view_main.scene if is_visible else None
 
-    def load_perspective(self, redraw: bool = True):
+    def load_perspective(self, redraw: bool = True) -> None:
         """
         Loads perspective from configuration.
 
@@ -186,7 +196,7 @@ class VispyCanvas(scene.SceneCanvas):
             self.on_perspective_changed()
             self.redraw()
 
-    def on_perspective_changed(self):
+    def on_perspective_changed(self) -> None:
         """
         Handles a change of perspective.
         """
@@ -221,7 +231,7 @@ class VispyCanvas(scene.SceneCanvas):
         self.super_perspective_changed()
         self.redraw_perspective_info()
 
-    def redraw_perspective_info(self):
+    def redraw_perspective_info(self) -> None:
         """
         Re-draws the perspective info text.
         """
@@ -240,11 +250,11 @@ class VispyCanvas(scene.SceneCanvas):
                 f"Elevation: {self.view_main.camera.elevation:+3.0f} °   " + \
                 f"Zoom: {zoom:4.0f}"
 
-    def redraw(self):
+    def redraw(self) -> None:
         """
         Re-draws the entire scene.
         """
-        Debug(self, ".redraw()", color=Theme.SuccessColor)
+        Debug(self, ".redraw()")
 
         self.redraw_start_time = time.monotonic()
 
@@ -283,15 +293,11 @@ class VispyCanvas(scene.SceneCanvas):
         self.redraw_field_labels(colors)
 
         redraw_time = time.monotonic() - self.redraw_start_time
-        Debug(
-            self,
-            f".redraw(): Finished (took {redraw_time:.2f} s)",
-            color=Theme.SuccessColor
-        )
+        Debug(self, f".redraw(): Finished (took {redraw_time:.2f} s)", success=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def redraw_wire_segments(self):
+    def redraw_wire_segments(self) -> None:
         """
         Re-draws wire segments.
         """
@@ -301,12 +307,7 @@ class VispyCanvas(scene.SceneCanvas):
 
         if visible:
             if self.DebugVisuals:
-                Debug(
-                    self,
-                    ".redraw_wire_segments(): "
-                    f"pos[{len(self.gui.model.wire.get_points_sliced())}]",
-                    color=(255, 0, 255)
-                )
+                Debug(self, ".redraw_wire_segments(): pos[{len(self.gui.model.wire.get_points_sliced())}]")
 
             self.visual_wire_segments.set_data(
                 pos=self.gui.model.wire.get_points_sliced(),
@@ -314,7 +315,7 @@ class VispyCanvas(scene.SceneCanvas):
                 color=self.foreground
             )
 
-    def redraw_wire_points_sliced(self):
+    def redraw_wire_points_sliced(self) -> None:
         """
         Re-draws sliced wire points.
         """
@@ -326,12 +327,7 @@ class VispyCanvas(scene.SceneCanvas):
 
         if visible:
             if self.DebugVisuals:
-                Debug(
-                    self,
-                    ".redraw_wire_points_sliced(): "
-                    f"pos[{len(self.gui.model.wire.get_points_sliced())}]",
-                    color=(255, 0, 255)
-                )
+                Debug(self, ".redraw_wire_points_sliced(): pos[{len(self.gui.model.wire.get_points_sliced())}]")
 
             self.visual_wire_points_sliced.set_data(
                 pos=self.gui.model.wire.get_points_sliced(),
@@ -342,7 +338,7 @@ class VispyCanvas(scene.SceneCanvas):
                 symbol="disc"
             )
 
-    def redraw_wire_points_selected(self):
+    def redraw_wire_points_selected(self) -> None:
         """
         Re-draws selected wire base points.
         """
@@ -364,12 +360,7 @@ class VispyCanvas(scene.SceneCanvas):
             ])
 
             if self.DebugVisuals:
-                Debug(
-                    self,
-                    ".redraw_wire_points_selected(): "
-                    f"pos[{len(points_selected)}]",
-                    color=(255, 0, 255)
-                )
+                Debug(self, ".redraw_wire_points_selected(): pos[{len(points_selected)}]")
 
             self.visual_wire_points_selected.set_data(
                 pos=points_selected,
@@ -384,7 +375,7 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def redraw_field_arrows(self, colors):
+    def redraw_field_arrows(self, colors: np.ndarray) -> None:
         """
         Re-draws field arrows.
 
@@ -414,12 +405,7 @@ class VispyCanvas(scene.SceneCanvas):
             )
 
             if self.DebugVisuals:
-                Debug(
-                    self,
-                    ".redraw_field_arrows(): arrow lines: "
-                    f"pos[{len(line_pairs)}] "
-                    f"color[{len(colors)}]",
-                    color=(255, 0, 255))
+                Debug(self, ".redraw_field_arrows(): arrow lines: pos[{len(line_pairs)}] color[{len(colors)}]")
 
             self.visual_field_arrow_lines.set_data(
                 pos=line_pairs,
@@ -428,13 +414,7 @@ class VispyCanvas(scene.SceneCanvas):
             )
 
             if self.DebugVisuals:
-                Debug(
-                    self,
-                    ".redraw_field_arrows(): arrow heads: "
-                    f"pos[{len(head_points)}] "
-                    f"face_color[{len(colors)}]",
-                    color=(255, 0, 255)
-                )
+                Debug(self, ".redraw_field_arrows(): arrow heads: pos[{len(head_points)}] face_color[{len(colors)}]")
 
             self.visual_field_arrow_heads.set_data(
                 pos=head_points,
@@ -448,7 +428,7 @@ class VispyCanvas(scene.SceneCanvas):
         self.set_visible(self.visual_field_arrow_lines, visible)
         self.set_visible(self.visual_field_arrow_heads, visible)
 
-    def redraw_field_points(self, colors):
+    def redraw_field_points(self, colors: np.ndarray) -> None:
         """
         Re-draws field points.
 
@@ -466,9 +446,7 @@ class VispyCanvas(scene.SceneCanvas):
                 Debug(
                     self,
                     ".redraw_field_points(): "
-                    f"pos[{self.gui.model.sampling_volume.get_points_count()}] "
-                    f"face_color[{len(colors)}]",
-                    color=(255, 0, 255)
+                    "pos[{self.gui.model.sampling_volume.get_points_count()}] face_color[{len(colors)}]"
                 )
 
             self.visual_field_points.set_data(
@@ -484,14 +462,14 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def create_field_labels(self):
+    def create_field_labels(self) -> None:
         """
         Creates field labels.
         """
         n = len(self.gui.model.sampling_volume.get_labeled_indices())
 
         if self.DebugVisuals:
-            Debug(self, f".create_field_labels(): Creating {n} labels …", color=(255, 0, 255), force=self.DebugVisuals)
+            Debug(self, f".create_field_labels(): Creating {n} labels …")
 
         show_gauss = self.gui.config.get_bool("show_gauss")
         field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
@@ -523,9 +501,9 @@ class VispyCanvas(scene.SceneCanvas):
             self.visual_field_labels.append(visual)
 
         if self.DebugVisuals:
-            Debug(self, f".create_field_labels(): Created {n} labels", color=(255, 0, 255), force=self.DebugVisuals)
+            Debug(self, f".create_field_labels(): Created {n} labels")
 
-    def delete_field_labels(self):
+    def delete_field_labels(self) -> None:
         """
         Deletes the field labels.
         """
@@ -533,18 +511,13 @@ class VispyCanvas(scene.SceneCanvas):
             visual.parent = None
 
         if self.DebugVisuals:
-            Debug(
-                self,
-                f".delete_field_labels(): Deleted {len(self.visual_field_labels)}",
-                color=(255, 0, 255),
-                force=self.DebugVisuals
-            )
+            Debug(self, f".delete_field_labels(): Deleted {len(self.visual_field_labels)}")
 
         self.visual_field_labels = []
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def redraw_field_labels(self, colors):
+    def redraw_field_labels(self, colors) -> None:
         """
         Re-draws field labels.
 
@@ -563,7 +536,7 @@ class VispyCanvas(scene.SceneCanvas):
                 self.create_field_labels()
 
             if self.DebugVisuals:
-                Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}", color=(255, 0, 255))
+                Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}")
 
             # Update label colors
             for i in range(len(self.visual_field_labels)):
@@ -581,10 +554,12 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def save_image(self, filename: str):
+    def save_image(self, filename: str) -> None:
         """
         Saves the currently displayed scene to PNG file.
 
         @param filename: Filename
         """
+        Debug(self, f".save_image({filename})")
+
         io.write_png(filename, self.render())

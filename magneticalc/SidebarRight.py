@@ -16,13 +16,20 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QScrollArea, QVBoxLayout, QSizePolicy
+from magneticalc.Debug import Debug
 from magneticalc.Display_Widget import Display_Widget
 from magneticalc.Field_Widget import Field_Widget
 from magneticalc.Metric_Widget import Metric_Widget
 from magneticalc.Parameters_Widget import Parameters_Widget
 from magneticalc.Perspective_Widget import Perspective_Widget
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class SidebarRight(QScrollArea):
@@ -32,14 +39,14 @@ class SidebarRight(QScrollArea):
     MaximumWidth = 370
     VerticalSpacing = 12
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the right sidebar.
 
         @param gui: GUI
         """
         QScrollArea.__init__(self)
-
+        Debug(self, ": Init")
         self.gui = gui
 
         layout = QVBoxLayout()

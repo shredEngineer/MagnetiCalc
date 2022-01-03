@@ -16,11 +16,18 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QHBoxLayout2 import QHBoxLayout2
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.QSpinBox2 import QSpinBox2
+from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class OverridePadding_Dialog(QDialog2):
@@ -29,20 +36,21 @@ class OverridePadding_Dialog(QDialog2):
     # Spinbox limits
     BoundsRange = [-1000, +1000]
 
-    def __init__(self, gui) -> None:
+    def __init__(self, gui: GUI) -> None:
         """
         Initializes "Override Padding" dialog.
 
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Override Padding", width=420)
+        Debug(self, ": Init")
         self.gui = gui
 
         self.addWidget(
-            QLabel2("Please specify the sampling volume bounding box", bold=True, color=Theme.PrimaryColor)
+            QLabel2("Please specify the sampling volume bounding box", bold=True, color=Theme.MainColor)
         )
         self.addSpacing(8)
-        self.addLayout(QHBoxLayout2(QLabel2("Units:", fixed=True), QLabel2("cm", bold=True)))
+        self.addLayout(QHBoxLayout2(QLabel2("Units:", expand=False), QLabel2("cm", bold=True)))
         self.addSpacing(16)
 
         bounding_box = self.gui.config.get_points("sampling_volume_bounding_box")
@@ -54,7 +62,7 @@ class OverridePadding_Dialog(QDialog2):
         for i in range(3):
             text = "  ≤  " + ["X", "Y", "Z"][i] + "  ≤  "
             self.addLayout(
-                QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text, fixed=True), self.bounds_max_spinbox[i])
+                QHBoxLayout2(self.bounds_min_spinbox[i], QLabel2(text, expand=False), self.bounds_max_spinbox[i])
             )
 
         self.addSpacing(16)

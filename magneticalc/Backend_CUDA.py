@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Callable, Tuple, Optional
 import math
 import numpy as np
 from numba import cuda
@@ -23,7 +24,6 @@ from PyQt5.QtCore import QThread
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Theme import Theme
 
 
 class Backend_CUDA:
@@ -38,11 +38,11 @@ class Backend_CUDA:
             distance_limit: float,
             length_scale: float,
             dc: float,
-            current_elements,
-            sampling_volume_points,
-            sampling_volume_permeabilities,
-            progress_callback
-    ):
+            current_elements: np.ndarray,
+            sampling_volume_points: np.ndarray,
+            sampling_volume_permeabilities: np.ndarray,
+            progress_callback: Callable
+    ) -> None:
         """
         Initializes the class attributes.
 
@@ -55,7 +55,9 @@ class Backend_CUDA:
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
         """
-        self.field_type = field_type
+        Debug(self, ": Init")
+
+        self._field_type = field_type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
         self._dc = dc
@@ -65,7 +67,7 @@ class Backend_CUDA:
         self._progress_callback = progress_callback
 
     @staticmethod
-    def is_available():
+    def is_available() -> bool:
         """
         Indicates the availability of this backend.
 
@@ -76,17 +78,17 @@ class Backend_CUDA:
     @staticmethod
     @cuda.jit
     def worker(
-            field_type,
-            distance_limit,
-            length_scale,
-            element_centers,
-            element_directions,
-            sampling_volume_points,
-            sampling_volume_permeabilities,
-            field_vectors,
-            total_calculations,
-            total_skipped_calculations
-    ):
+            field_type: int,
+            distance_limit: float,
+            length_scale: float,
+            element_centers: np.ndarray,
+            element_directions: np.ndarray,
+            sampling_volume_points: np.ndarray,
+            sampling_volume_permeabilities: np.ndarray,
+            field_vectors: np.ndarray,
+            total_calculations: np.ndarray,
+            total_skipped_calculations: np.ndarray
+    ) -> None:
         """
         Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field)
         for all sampling volume points.
@@ -133,11 +135,14 @@ class Backend_CUDA:
             total_calculations[sampling_volume_index] += 1
 
             if field_type == A_FIELD:
+
                 # Calculate A-field (vector potential)
                 vector_x += element_directions[current_element_index][0] * length_scale / scalar_distance
                 vector_y += element_directions[current_element_index][1] * length_scale / scalar_distance
                 vector_z += element_directions[current_element_index][2] * length_scale / scalar_distance
+
             elif field_type == B_FIELD:
+
                 # Calculate B-field (flux density)
                 a_1 = element_directions[current_element_index][0] * length_scale
                 a_2 = element_directions[current_element_index][1] * length_scale
@@ -150,13 +155,13 @@ class Backend_CUDA:
         field_vectors[sampling_volume_index, 1] = vector_y * sampling_volume_permeabilities[sampling_volume_index]
         field_vectors[sampling_volume_index, 2] = vector_z * sampling_volume_permeabilities[sampling_volume_index]
 
-    def get_result(self):
+    def get_result(self) -> Optional[Tuple[int, int, np.ndarray]]:
         """
         Calculates the field at every point of the sampling volume.
 
         @return: (Total # of calculations, total # of skipped calculations, field) if successful, None if interrupted
         """
-        Debug(self, ".get_result()", color=Theme.PrimaryColor)
+        Debug(self, ".get_result()")
 
         element_centers = [element[0] for element in self._current_elements]
         element_directions = [element[1] for element in self._current_elements]
@@ -191,7 +196,7 @@ class Backend_CUDA:
             self._progress_callback(100 * chunk_start / len(self._sampling_volume_points))
 
             if QThread.currentThread().isInterruptionRequested():
-                Debug(self, ".get_result(): Interruption requested, exiting now", color=Theme.PrimaryColor)
+                Debug(self, ".get_result(): WARNING: Interruption requested, exiting now", warning=True)
                 return None
 
             remaining -= chunk_size
@@ -205,7 +210,7 @@ class Backend_CUDA:
             BPG = 65536  # Maximum blocks per grid
 
             Backend_CUDA.worker[BPG, TPB](
-                self.field_type,
+                self._field_type,
                 self._distance_limit,
                 self._length_scale,
                 element_centers_global,
@@ -221,7 +226,7 @@ class Backend_CUDA:
             total_skipped_calculations_local = total_skipped_calculations_global.copy_to_host()
             field_vectors_local = field_vectors_global.copy_to_host()
 
-            if self.field_type == A_FIELD or self.field_type == B_FIELD:
+            if self._field_type == A_FIELD or self._field_type == B_FIELD:
                 # Field is A-field or B-field
                 field_vectors_local = field_vectors_local * self._dc * Constants.mu_0 / 4 / np.pi
 

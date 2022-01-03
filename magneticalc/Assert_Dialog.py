@@ -17,18 +17,18 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import sys
+from urllib.parse import urlencode, quote_plus
 from magneticalc.QDialog2 import QDialog2
+from magneticalc.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version, __URL__
-from urllib.parse import urlencode, quote_plus
-from magneticalc.QTextBrowser2 import QTextBrowser2
 
 
 class Assert_Dialog:
     """ Assert_Dialog class. """
 
-    def __init__(self, assertion: bool, message: str):
+    def __init__(self, assertion: bool, message: str) -> None:
         """
         Shows a user dialog if an assertion failed. Intended for beta-testing.
         This allows the user to either quit or resume (possibly resulting in unstable behaviour).
@@ -37,27 +37,24 @@ class Assert_Dialog:
         @param assertion: Boolean
         @param message: Error message
         """
-        self.assertion = assertion
-        self.message = message
-
         if assertion:
             return
 
-        Debug(self, f": Failed: {message}", color=Theme.WarningColor, force=True)
+        Debug(self, f": ERROR: Assertion failed: {message}", error=True)
 
-        self.dialog = QDialog2(title="Assertion failed", width=600)
+        self._dialog = QDialog2(title="Assertion failed", width=600)
 
         # Generate Github issue URL
         issue_url = \
             f"{__URL__}/issues/new?" + \
             urlencode(
                 {
-                    "title": f"Assertion failed: {self.message}",
+                    "title": f"Assertion failed: {message}",
                     "labels": "bug",
                     "body":
                         f"**I discovered a bug in {Version.String}:**\n"
                         "```\n"
-                        f"{self.message}\n"
+                        f"{message}\n"
                         "```\n\n"
                         f"**Steps to reproduce the problem:**\n\n"
                         "[_Please make sure to fill this in!_]"
@@ -67,24 +64,25 @@ class Assert_Dialog:
 
         # HTML content
         html = f"""
-            <span style="color: {Theme.PrimaryColor};"><b>Sorry for the inconvenience!</b></span><br>
+            <span style="color: {Theme.MainColor};"><b>Sorry for the inconvenience!</b></span><br>
             <br>
             You seem to have discovered a bug in MagnetiCalc.<br>
             If this error persists, please
             <a href="{issue_url}">file an issue on GitHub</a>!<br>
             <br>
             <b>Error message:</b><br>
-            <pre>{self.message}</pre>
+            <pre>{message}</pre>
             """
 
         text_browser = QTextBrowser2(html=html)
-        self.dialog.addWidget(text_browser)
+        self._dialog.addWidget(text_browser)
 
-        self.dialog.addButtons({
-            "Abort application": ("fa.times-circle", self.dialog.reject),
-            "Resume (possibly unstable)": ("fa.play-circle", self.dialog.accept)
+        self._dialog.addButtons({
+            "Abort application"         : ("fa.times-circle", self._dialog.reject),
+            "Resume (possibly unstable)": ("fa.play-circle", self._dialog.accept)
         })
 
-        self.dialog.show()
-        if not self.dialog.success:
+        self._dialog.show()
+
+        if not self._dialog.success:
             sys.exit()

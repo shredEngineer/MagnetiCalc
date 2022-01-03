@@ -16,9 +16,16 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 from PyQt5.QtCore import QThread, pyqtSignal
 from multiprocessing import cpu_count
+from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class CalculationThread(QThread):
@@ -29,40 +36,51 @@ class CalculationThread(QThread):
     """
 
     # Progress update signal
-    progress_update = pyqtSignal(int)
+    _progress_update = pyqtSignal(int)
 
     # Valid state signals
-    wire_valid = pyqtSignal()
-    sampling_volume_valid = pyqtSignal()
-    field_valid = pyqtSignal()
-    metric_valid = pyqtSignal()
-    parameters_valid = pyqtSignal()
+    _wire_valid = pyqtSignal()
+    _sampling_volume_valid = pyqtSignal()
+    _field_valid = pyqtSignal()
+    _metric_valid = pyqtSignal()
+    _parameters_valid = pyqtSignal()
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Initializes calculation thread.
 
         @param gui: GUI
         """
         QThread.__init__(self)
-
+        Debug(self, ": Init")
         self.gui = gui
 
-        # Connect progress update signal and create callback
-        self.progress_update.connect(lambda x: self.gui.statusbar.progressbar.setValue(x))
-        self.progress_callback = self.progress_update.emit
+        # Connect progress update signal and create callback:
 
-        # Connect valid state signals to corresponding handlers
-        self.wire_valid.connect(self.on_wire_valid)
-        self.sampling_volume_valid.connect(self.on_sampling_volume_valid)
-        self.field_valid.connect(self.on_field_valid)
-        self.metric_valid.connect(self.on_metric_valid)
-        self.parameters_valid.connect(self.on_parameters_valid)
+        # noinspection PyUnresolvedReferences
+        self._progress_update.connect(lambda x: self.gui.statusbar.set_progress(x))
+        # noinspection PyUnresolvedReferences
+        self.progress_callback = self._progress_update.emit
 
-    def run(self):
+        # Connect valid state signals to corresponding handlers:
+
+        # noinspection PyUnresolvedReferences
+        self._wire_valid.connect(self.on_wire_valid)
+        # noinspection PyUnresolvedReferences
+        self._sampling_volume_valid.connect(self.on_sampling_volume_valid)
+        # noinspection PyUnresolvedReferences
+        self._field_valid.connect(self.on_field_valid)
+        # noinspection PyUnresolvedReferences
+        self._metric_valid.connect(self.on_metric_valid)
+        # noinspection PyUnresolvedReferences
+        self._parameters_valid.connect(self.on_parameters_valid)
+
+    def run(self) -> None:
         """
         Thread main function.
         """
+        Debug(self, ".run()")
+
         with ModelAccess(self.gui, recalculate=False):
 
             if not self.gui.model.wire.is_valid():
@@ -72,7 +90,8 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                self.wire_valid.emit()
+                # noinspection PyUnresolvedReferences
+                self._wire_valid.emit()
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -83,7 +102,8 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                self.sampling_volume_valid.emit()
+                # noinspection PyUnresolvedReferences
+                self._sampling_volume_valid.emit()
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -101,7 +121,8 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                self.field_valid.emit()
+                # noinspection PyUnresolvedReferences
+                self._field_valid.emit()
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -112,7 +133,8 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                self.metric_valid.emit()
+                # noinspection PyUnresolvedReferences
+                self._metric_valid.emit()
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -123,7 +145,8 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                self.parameters_valid.emit()
+                # noinspection PyUnresolvedReferences
+                self._parameters_valid.emit()
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -131,12 +154,13 @@ class CalculationThread(QThread):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_finished(self, success: bool):
+    def on_finished(self, success: bool) -> None:
         """
         Signals that the calculation finished.
 
         @param success: True if calculation was successful, False otherwise
         """
+        Debug(self, f".on_finished(success={success})")
 
         # We cannot directly call this; we won't be able to modify the UI thread (which we'd really like to do somehow):
         # self.gui.calculation_stopped(success)
@@ -147,37 +171,42 @@ class CalculationThread(QThread):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_wire_valid(self):
+    def on_wire_valid(self) -> None:
         """
         Gets called when the wire was successfully calculated.
         """
+        Debug(self, ".on_wire_valid()")
         self.gui.model.on_wire_valid()
         self.gui.vispy_canvas.redraw()
 
-    def on_sampling_volume_valid(self):
+    def on_sampling_volume_valid(self) -> None:
         """
         Gets called when the sampling volume was successfully calculated.
         """
+        Debug(self, ".on_sampling_volume_valid()")
         self.gui.model.on_sampling_volume_valid()
         self.gui.vispy_canvas.redraw()
 
-    def on_field_valid(self):
+    def on_field_valid(self) -> None:
         """
         Gets called when the field was successfully calculated.
         """
+        Debug(self, ".on_field_valid()")
         self.gui.model.on_field_valid()
         self.gui.vispy_canvas.redraw()
 
-    def on_metric_valid(self):
+    def on_metric_valid(self) -> None:
         """
         Gets called when the metric was successfully calculated.
         """
+        Debug(self, ".on_metric_valid()")
         self.gui.model.on_metric_valid()
         self.gui.vispy_canvas.redraw()
 
-    def on_parameters_valid(self):
+    def on_parameters_valid(self) -> None:
         """
         Gets called when the parameters were successfully calculated.
         """
+        Debug(self, ".on_parameters_valid()")
         self.gui.model.on_parameters_valid()
         self.gui.vispy_canvas.redraw()

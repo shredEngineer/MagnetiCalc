@@ -16,11 +16,12 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional
 from inspect import isclass, stack
-from sty import fg, ef, rs
+from sty import Style, fg, ef
 
 
-# Enable to see JIT debug output
+# Enable to see JIT debug output:
 # import os
 # os.environ["NUMBA_PARALLEL_DIAGNOSTICS"] = "4"
 
@@ -28,67 +29,26 @@ from sty import fg, ef, rs
 class Debug:
     """ Debug class. """
 
-    # Enable debug output from specific classes only
-    Whitelist = [
-        "About_Dialog",
-        "API",
-        "Assert_Dialog",
-        "Backend_Types",
-        "Backend_CUDA",
-        "Backend_JIT",
-        "CalculationThread",
-        "CheckForUpdates_Dialog",
-        # "Config",
-        "Constants",
-        "Constraint",
-        "Constraint_Editor",
+    # Colors
+    LightColor = fg.grey
+    SuccessColor = fg.green
+    WarningColor = fg.magenta
+    ErrorColor = fg.red
 
-        "Display_Widget",
-        "ExportContainer_Dialog",
-        "Field",
-        "Field_Types",
-        "Field_Widget",
-        "GUI",
-        "Menu",
-        "Metric",
-        "Metric_Presets",
-        "Metric_Widget",
-        "Model",
-        # "ModelAccess",
-        "OverridePadding_Dialog",
-        "Parameters",
-        "Parameters_Widget",
-        "Perspective_Presets",
-        "Perspective_Widget",
-        "QButtons",
-        "QDialog2",
-        "QGroupBox2",
-        "QHBoxLayout2",
-        "QHLine",
-        "QIconLabel",
-        "QLabel2",
-        "QLayouted",
-        "QMessageBox2",
-        "QSaveAction",
-        "QSliderFloat",
-        "QSpinBox2",
-        # "QTableWidget2",
-        "QTextBrowser2",
-        "SamplingVolume",
-        # "SamplingVolume_Widget",
-        "SidebarLeft",
-        "SidebarRight",
-        "Statusbar",
-        "Theme",
-        "Usage_Dialog",
-        "Version",
-        # "VispyCanvas",
-        "Wire",
-        "Wire_Presets",
-        "Wire_Widget"
+    # Block debug output from specific classes
+    Blacklist = [
     ]
 
-    def __init__(self, obj, text: str, color=None, force: bool = False):
+    def __init__(
+            self,
+            obj: object,
+            text: str,
+            color: Optional[Style] = None,
+            force: bool = False,
+            success: bool = False,
+            warning: bool = False,
+            error: bool = False
+    ) -> None:
         """
         Displays a colorful debug message and the current call hierarchy.
 
@@ -96,6 +56,9 @@ class Debug:
         @param text: Debug message
         @param color: Color (may be None)
         @param force: Enable to override whitelist
+        @param success: Enable to set color=SuccessColor
+        @param warning: Enable to set color=WarningColor and force=True
+        @param error: Enable to set color=ErrorColor and force=True
         """
         if isclass(obj):
             # Called from within class method, i.e. Debug(self, ...)
@@ -104,9 +67,12 @@ class Debug:
             # Called from within instance / static method
             name = type(obj).__name__
 
+        if warning or error:
+            force = True
+
         if not force:
-            # Skip non-whitelisted class names
-            if name not in self.Whitelist:
+            # Skip blacklisted class names
+            if name in self.Blacklist:
                 return
 
         # A class may specify its own default color
@@ -114,7 +80,7 @@ class Debug:
             if hasattr(obj, "DebugColor"):
                 color = obj.DebugColor
             else:
-                color = (0, 0, 0)
+                color = ""
 
         # Format call hierarchy
         hierarchy = ""
@@ -128,14 +94,13 @@ class Debug:
                 func_str = "\tCalculationThread"
             hierarchy += func_str + "/"
 
-        if isinstance(color, str):
-            # Convert hex color string ("#abcdef") to RGB tuple
-            color = tuple(int(color[i:i+2], 16) for i in (1, 3, 5))
+        if success:
+            color = self.SuccessColor
 
-        if color == (0, 0, 0):
-            # Allow a terminal use its own foreground color
-            color_text = ef.bold + name + ef.rs + text
-        else:
-            color_text = fg(*color) + ef.bold + name + ef.rs + text + fg.rs
+        if warning:
+            color = self.WarningColor
 
-        print(fg(128, 128, 128) + hierarchy + fg.rs + color_text + rs.all + "\n", end="")
+        if error:
+            color = self.ErrorColor
+
+        print(self.LightColor + hierarchy + fg.rs + color + ef.bold + name + ef.rs + text + fg.rs + "\n", end="")

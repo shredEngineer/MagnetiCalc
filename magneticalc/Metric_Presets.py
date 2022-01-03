@@ -16,6 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from magneticalc.Norm_Types import *
+from typing import Optional, Dict
+
 
 class Metric_Presets:
     """ Metric_Presets class. """
@@ -23,17 +26,7 @@ class Metric_Presets:
     # Metric value: Magnitude in XYZ-space (linear)
     Magnitude = {
         "id"        : "Magnitude",
-        "norm_id"   : "Radius",
-        "polarity"  : 0,  # currently only used for divergence
-        "is_log"    : False,
-        "is_angle"  : False,
-        "colormap"  : 0  # divergent
-    }
-
-    # Metric value: Magnitude in XY-plane (linear)
-    MagnitudeXY = {
-        "id"        : "Magnitude XY",
-        "norm_id"   : "Radius XY",
+        "norm_type" : NORM_TYPE_RADIUS,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -43,7 +36,7 @@ class Metric_Presets:
     # Metric value: Magnitude in X-direction (linear)
     MagnitudeX = {
         "id"        : "Magnitude X",
-        "norm_id"   : "Radius X",
+        "norm_type" : NORM_TYPE_RADIUS_X,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -53,7 +46,7 @@ class Metric_Presets:
     # Metric value: Magnitude in Y-direction (linear)
     MagnitudeY = {
         "id"        : "Magnitude Y",
-        "norm_id"   : "Radius Y",
+        "norm_type" : NORM_TYPE_RADIUS_Y,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -63,7 +56,17 @@ class Metric_Presets:
     # Metric value: Magnitude in Z-direction (linear)
     MagnitudeZ = {
         "id"        : "Magnitude Z",
-        "norm_id"   : "Radius Z",
+        "norm_type" : NORM_TYPE_RADIUS_Z,
+        "polarity"  : 0,  # currently only used for divergence
+        "is_log"    : False,
+        "is_angle"  : False,
+        "colormap"  : 0  # divergent
+    }
+
+    # Metric value: Magnitude in XY-plane (linear)
+    MagnitudeXY = {
+        "id"        : "Magnitude XY",
+        "norm_type" : NORM_TYPE_RADIUS_XY,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -73,7 +76,7 @@ class Metric_Presets:
     # Metric value: Magnitude in XZ-plane (linear)
     MagnitudeXZ = {
         "id"        : "Magnitude XZ",
-        "norm_id"   : "Radius XZ",
+        "norm_type" : NORM_TYPE_RADIUS_XZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -83,7 +86,7 @@ class Metric_Presets:
     # Metric value: Magnitude in YZ-plane (linear)
     MagnitudeYZ = {
         "id"        : "Magnitude YZ",
-        "norm_id"   : "Radius YZ",
+        "norm_type" : NORM_TYPE_RADIUS_YZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : False,
@@ -93,7 +96,7 @@ class Metric_Presets:
     # Metric preset: Unipolar Divergence (linear)
     Divergence = {
         "id"        : "Divergence",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : 0,
         "is_log"    : False,
         "is_angle"  : False,
@@ -103,7 +106,7 @@ class Metric_Presets:
     # Metric preset: Negative Divergence (linear)
     NegDivergence = {
         "id"        : "Divergence –",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : -1,
         "is_log"    : False,
         "is_angle"  : False,
@@ -113,7 +116,7 @@ class Metric_Presets:
     # Metric preset: Positive Divergence (linear)
     PosDivergence = {
         "id"        : "Divergence +",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : +1,
         "is_log"    : False,
         "is_angle"  : False,
@@ -123,7 +126,7 @@ class Metric_Presets:
     # Metric value: Magnitude in XYZ-space (logarithmic)
     LogMagnitude = {
         "id"        : "Log Magnitude",
-        "norm_id"   : "Radius",
+        "norm_type" : NORM_TYPE_RADIUS,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -133,7 +136,7 @@ class Metric_Presets:
     # Metric value: Magnitude in X-direction (logarithmic)
     LogMagnitudeX = {
         "id"        : "Log Magnitude X",
-        "norm_id"   : "Radius X",
+        "norm_type" : NORM_TYPE_RADIUS_X,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -143,7 +146,7 @@ class Metric_Presets:
     # Metric value: Magnitude in Y-direction (logarithmic)
     LogMagnitudeY = {
         "id"        : "Log Magnitude Y",
-        "norm_id"   : "Radius Y",
+        "norm_type" : NORM_TYPE_RADIUS_Y,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -153,7 +156,7 @@ class Metric_Presets:
     # Metric value: Magnitude in Z-direction (logarithmic)
     LogMagnitudeZ = {
         "id"        : "Log Magnitude Z",
-        "norm_id"   : "Radius Z",
+        "norm_type" : NORM_TYPE_RADIUS_Z,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -163,7 +166,7 @@ class Metric_Presets:
     # Metric value: Magnitude in XY-plane (logarithmic)
     LogMagnitudeXY = {
         "id"        : "Log Magnitude XY",
-        "norm_id"   : "Radius XY",
+        "norm_type" : NORM_TYPE_RADIUS_XY,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -173,7 +176,7 @@ class Metric_Presets:
     # Metric value: Magnitude in XZ-plane (logarithmic)
     LogMagnitudeXZ = {
         "id"        : "Log Magnitude XZ",
-        "norm_id"   : "Radius XZ",
+        "norm_type" : NORM_TYPE_RADIUS_XZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -183,7 +186,7 @@ class Metric_Presets:
     # Metric preset: Magnitude in YZ-plane (logarithmic)
     LogMagnitudeYZ = {
         "id"        : "Log Magnitude YZ",
-        "norm_id"   : "Radius YZ",
+        "norm_type" : NORM_TYPE_RADIUS_YZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : True,
         "is_angle"  : False,
@@ -193,7 +196,7 @@ class Metric_Presets:
     # Metric preset: Unipolar Divergence (logarithmic)
     LogDivergence = {
         "id"        : "Log Divergence",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : 0,
         "is_log"    : True,
         "is_angle"  : False,
@@ -203,7 +206,7 @@ class Metric_Presets:
     # Metric preset: Positive Divergence (logarithmic)
     PosLogDivergence = {
         "id"        : "Log Divergence +",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : +1,
         "is_log"    : True,
         "is_angle"  : False,
@@ -213,7 +216,7 @@ class Metric_Presets:
     # Metric preset: Negative Divergence (logarithmic)
     NegLogDivergence = {
         "id"        : "Log Divergence –",
-        "norm_id"   : "Divergence",
+        "norm_type" : NORM_TYPE_DIVERGENCE,
         "polarity"  : -1,
         "is_log"    : True,
         "is_angle"  : False,
@@ -223,7 +226,7 @@ class Metric_Presets:
     # Metric preset: Angle in XY-plane
     AngleXY = {
         "id"        : "Angle XY",
-        "norm_id"   : "Angle XY",
+        "norm_type" : NORM_TYPE_ANGLE_XY,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
@@ -233,7 +236,7 @@ class Metric_Presets:
     # Metric preset: Angle in XZ-plane
     AngleXZ = {
         "id"        : "Angle XZ",
-        "norm_id"   : "Angle XZ",
+        "norm_type" : NORM_TYPE_ANGLE_XZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
@@ -243,7 +246,7 @@ class Metric_Presets:
     # Metric preset: Angle in YZ-plane
     AngleYZ = {
         "id"        : "Angle YZ",
-        "norm_id"   : "Angle YZ",
+        "norm_type" : NORM_TYPE_ANGLE_YZ,
         "polarity"  : 0,  # currently only used for divergence
         "is_log"    : False,
         "is_angle"  : True,
@@ -282,7 +285,7 @@ class Metric_Presets:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def get_by_id(_id_: str):
+    def get_by_id(_id_: str) -> Optional[Dict]:
         """
         Selects a preset by name.
 

@@ -16,15 +16,21 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from __future__ import annotations
 import numpy as np
 from si_prefix import si_format
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
+from magneticalc.QGroupBox2 import QGroupBox2
+from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.Parameters import Parameters
 from magneticalc.Theme import Theme
+
+# Note: Workaround for type hinting
+# noinspection PyUnreachableCode
+if False:
+    from magneticalc.GUI import GUI
 
 
 class Parameters_Widget(QGroupBox2):
@@ -33,20 +39,18 @@ class Parameters_Widget(QGroupBox2):
     # Formatting settings
     ValuePrecision = 1
 
-    def __init__(self, gui):
+    def __init__(self, gui: GUI) -> None:
         """
         Populates the widget.
 
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Parameters")
-
+        Debug(self, ": Init")
         self.gui = gui
 
-        # Assign the Parameters container class
+        # Assign the "Parameters" container class
         self.gui.model.set_parameters(Parameters(), invalidate_self=False)
-
-        # --------------------------------------------------------------------------------------------------------------
 
         results_layout = QHBoxLayout()
         results_left = QVBoxLayout()
@@ -57,107 +61,55 @@ class Parameters_Widget(QGroupBox2):
         results_layout.addLayout(results_right)
         self.addLayout(results_layout)
 
-        # --------------------------------------------------------------------------------------------------------------
+        results_left.addWidget(QLabel2("Wire length:"))
+        self.wire_length_value_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        results_middle.addWidget(self.wire_length_value_label)
+        self.wire_length_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
+        results_right.addWidget(self.wire_length_units_label)
 
-        wire_length_label = QLabel("Wire length:")
-        wire_length_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_left.addWidget(wire_length_label)
+        results_left.addWidget(QLabel2("Magnetic Dipole Moment:"))
+        self.magnetic_dipole_moment_value_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        results_middle.addWidget(self.magnetic_dipole_moment_value_label)
+        self.magnetic_dipole_moment_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
+        results_right.addWidget(self.magnetic_dipole_moment_units_label)
 
-        self.wire_length_value_label = QLabel("")
-        self.wire_length_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.wire_length_value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.wire_length_value_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_middle.addWidget(self.wire_length_value_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
+        results_left.addWidget(QLabel2("Energy:"))
+        self.energy_value_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        results_middle.addWidget(self.energy_value_label)
+        self.energy_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
+        results_right.addWidget(self.energy_units_label)
 
-        self.wire_length_units_label = QLabel("N/A")
-        self.wire_length_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.wire_length_units_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.wire_length_units_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-        results_right.addWidget(self.wire_length_units_label, alignment=Qt.AlignVCenter)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        magnetic_dipole_moment_label = QLabel("Magnetic Dipole Moment:")
-        magnetic_dipole_moment_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_left.addWidget(magnetic_dipole_moment_label)
-
-        self.magnetic_dipole_moment_value_label = QLabel("")
-        self.magnetic_dipole_moment_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.magnetic_dipole_moment_value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.magnetic_dipole_moment_value_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_middle.addWidget(self.magnetic_dipole_moment_value_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-
-        self.magnetic_dipole_moment_units_label = QLabel("N/A")
-        self.magnetic_dipole_moment_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.magnetic_dipole_moment_units_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.magnetic_dipole_moment_units_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-        results_right.addWidget(self.magnetic_dipole_moment_units_label, alignment=Qt.AlignVCenter)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        energy_label = QLabel("Energy:")
-        energy_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_left.addWidget(energy_label)
-
-        self.energy_value_label = QLabel("")
-        self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.energy_value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.energy_value_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_middle.addWidget(self.energy_value_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-
-        self.energy_units_label = QLabel("N/A")
-        self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.energy_units_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.energy_units_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-        results_right.addWidget(self.energy_units_label, alignment=Qt.AlignVCenter)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self_inductance_label = QLabel("Self-inductance:")
-        self_inductance_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_left.addWidget(self_inductance_label)
-
-        self.self_inductance_value_label = QLabel("")
-        self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.self_inductance_value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.self_inductance_value_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        results_middle.addWidget(self.self_inductance_value_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-
-        self.self_inductance_units_label = QLabel("N/A")
-        self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-        self.self_inductance_units_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.self_inductance_units_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-        results_right.addWidget(self.self_inductance_units_label, alignment=Qt.AlignVCenter)
+        results_left.addWidget(QLabel2("Self-inductance:"))
+        self.self_inductance_value_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        results_middle.addWidget(self.self_inductance_value_label)
+        self.self_inductance_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
+        results_right.addWidget(self.self_inductance_units_label)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_labels(self):
+    def update_labels(self) -> None:
         """
         Updates the labels.
         """
+        Debug(self, ".update_labels()")
+
         if self.gui.model.parameters.is_valid():
 
-            self.wire_length_value_label.setText(f"{self.gui.model.wire.get_length():.2f}")
-            self.wire_length_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-            self.wire_length_units_label.setText("cm")
-            self.wire_length_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+            self.wire_length_value_label.set(
+                f"{self.gui.model.wire.get_length():.2f}", color=Theme.MainColor, bold=True
+            )
+            self.wire_length_units_label.set("cm", color=Theme.MainColor, bold=True)
 
             if self.gui.model.field.get_type() == A_FIELD:
 
-                self.energy_value_label.setText("")
-                self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-                self.energy_units_label.setText("N/A")
-                self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+                self.energy_value_label.set("", color=Theme.MainColor)
+                self.energy_units_label.set("N/A", color=Theme.MainColor)
 
-                self.self_inductance_value_label.setText("")
-                self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-                self.self_inductance_units_label.setText("N/A")
-                self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+                self.self_inductance_value_label.set("", color=Theme.MainColor)
+                self.self_inductance_units_label.set("N/A", color=Theme.MainColor)
 
-                self.magnetic_dipole_moment_value_label.setText("")
-                self.magnetic_dipole_moment_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-                self.magnetic_dipole_moment_units_label.setText("N/A")
-                self.magnetic_dipole_moment_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+                self.magnetic_dipole_moment_value_label.set("", color=Theme.MainColor)
+                self.magnetic_dipole_moment_units_label.set("N/A", color=Theme.MainColor)
 
             elif self.gui.model.field.get_type() == B_FIELD:
 
@@ -170,10 +122,8 @@ class Parameters_Widget(QGroupBox2):
                         precision=self.ValuePrecision,
                         exp_format_str="{value}e{expof10} "
                     ) + "J"
-                self.energy_value_label.setText(energy_value.split(" ")[0])
-                self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-                self.energy_units_label.setText(energy_value.split(" ")[1])
-                self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+                self.energy_value_label.set(energy_value.split(" ")[0], color=Theme.MainColor, bold=True)
+                self.energy_units_label.set(energy_value.split(" ")[1], color=Theme.MainColor, bold=True)
 
                 self_inductance_value = self.gui.model.parameters.get_self_inductance()
                 if np.isnan(self_inductance_value):
@@ -184,10 +134,11 @@ class Parameters_Widget(QGroupBox2):
                         precision=self.ValuePrecision,
                         exp_format_str="{value}e{expof10} "
                     ) + "H"
-                self.self_inductance_value_label.setText(self_inductance_value.split(" ")[0])
-                self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
-                self.self_inductance_units_label.setText(self_inductance_value.split(" ")[1])
-                self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor}; font-weight: bold;")
+                self.self_inductance_value_label.set(
+                    self_inductance_value.split(" ")[0], color=Theme.MainColor, bold=True
+                )
+                self.self_inductance_units_label.set(
+                    self_inductance_value.split(" ")[1], color=Theme.MainColor, bold=True)
 
                 magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
                 if np.isnan(magnetic_dipole_moment_value):
@@ -198,37 +149,23 @@ class Parameters_Widget(QGroupBox2):
                         precision=self.ValuePrecision,
                         exp_format_str="{value}e{expof10} "
                     ) + "A·m²"
-                self.magnetic_dipole_moment_value_label.setText(magnetic_dipole_moment_value.split(" ")[0])
-                self.magnetic_dipole_moment_value_label.setStyleSheet(
-                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
+                self.magnetic_dipole_moment_value_label.set(
+                    magnetic_dipole_moment_value.split(" ")[0], color=Theme.MainColor, bold=True
                 )
-                self.magnetic_dipole_moment_units_label.setText(magnetic_dipole_moment_value.split(" ")[1])
-                self.magnetic_dipole_moment_units_label.setStyleSheet(
-                    f"color: {Theme.PrimaryColor}; font-weight: bold;"
+                self.magnetic_dipole_moment_units_label.set(
+                    magnetic_dipole_moment_value.split(" ")[1], color=Theme.MainColor, bold=True
                 )
-
-            else:
-
-                Debug(self, ".update_labels(): FATAL: Invalid field type", color=Theme.WarningColor, force=True)
 
         else:
 
-            self.wire_length_value_label.setText("")
-            self.wire_length_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-            self.wire_length_units_label.setText("N/A")
-            self.wire_length_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+            self.wire_length_value_label.set("", color=Theme.MainColor)
+            self.wire_length_units_label.set("N/A", color=Theme.MainColor)
 
-            self.energy_value_label.setText("")
-            self.energy_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-            self.energy_units_label.setText("N/A")
-            self.energy_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+            self.energy_value_label.set("", color=Theme.MainColor)
+            self.energy_units_label.set("N/A", color=Theme.MainColor)
 
-            self.self_inductance_value_label.setText("")
-            self.self_inductance_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-            self.self_inductance_units_label.setText("N/A")
-            self.self_inductance_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+            self.self_inductance_value_label.set("", color=Theme.MainColor)
+            self.self_inductance_units_label.set("N/A", color=Theme.MainColor)
 
-            self.magnetic_dipole_moment_value_label.setText("")
-            self.magnetic_dipole_moment_value_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
-            self.magnetic_dipole_moment_units_label.setText("N/A")
-            self.magnetic_dipole_moment_units_label.setStyleSheet(f"color: {Theme.PrimaryColor};")
+            self.magnetic_dipole_moment_value_label.set("", color=Theme.MainColor)
+            self.magnetic_dipole_moment_units_label.set("N/A", color=Theme.MainColor)

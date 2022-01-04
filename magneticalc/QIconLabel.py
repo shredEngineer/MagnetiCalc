@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,10 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from typing import Optional
-import qtawesome as qta
 from PyQt5.Qt import QFont
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QHBoxLayout, QLabel
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QHBoxLayout
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.Theme import Theme
 
@@ -38,8 +37,8 @@ class QIconLabel(QHBoxLayout):
             text_color: str = Theme.DarkColor,
             icon_color: str = Theme.DarkColor,
             icon_size: QSize = QSize(16, 16),
-            final_stretch: bool = True,
-            font: Optional[QFont] = None
+            font: Optional[QFont] = None,
+            expand: bool = True
     ) -> None:
         """
         Initializes the icon label.
@@ -49,19 +48,14 @@ class QIconLabel(QHBoxLayout):
         @param text_color: Text color
         @param icon_color: Icon color
         @param icon_size: Icon size
-        @param final_stretch: Enable to add a final stretch
         @param font: QFont
+        @param expand: Enable to expand label
         """
         QHBoxLayout.__init__(self)
         self.setContentsMargins(0, 0, 0, 0)
 
-        if icon is not None:
-            icon_label = QLabel()
-            icon_label.setPixmap(qta.icon(icon, color=icon_color).pixmap(icon_size))
-            self.addWidget(icon_label, alignment=Qt.AlignVCenter)
+        if icon != "":
+            self.addWidget(QLabel2("", icon=icon, icon_color=icon_color, icon_size=icon_size, expand=False))
             self.addSpacing(self.HorizontalSpacing)
 
-        self.addWidget(QLabel2(text, font=font, bold=True, color=text_color))
-
-        if final_stretch:
-            self.addStretch()
+        self.addWidget(QLabel2(text, font=font, bold=True, color=text_color, expand=expand))

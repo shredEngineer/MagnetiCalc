@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -24,19 +24,17 @@ from magneticalc.QSpinBox2 import QSpinBox2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class OverridePadding_Dialog(QDialog2):
     """ OverridePadding_Dialog class. """
 
     # Spinbox limits
-    BoundsRange = [-1000, +1000]
+    BoundsRange = (-1000, +1000)
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Initializes "Override Padding" dialog.
 
@@ -54,10 +52,14 @@ class OverridePadding_Dialog(QDialog2):
         self.addSpacing(16)
 
         bounding_box = self.gui.config.get_points("sampling_volume_bounding_box")
-        # noinspection PyTypeChecker
-        self.bounds_min_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[0][i], self.validate) for i in range(3)]
-        # noinspection PyTypeChecker
-        self.bounds_max_spinbox = [QSpinBox2(*self.BoundsRange, bounding_box[1][i], self.validate) for i in range(3)]
+        self.bounds_min_spinbox = [
+            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], bounding_box[0][i], self.validate)
+            for i in range(3)
+        ]
+        self.bounds_max_spinbox = [
+            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], bounding_box[1][i], self.validate)
+            for i in range(3)
+        ]
 
         for i in range(3):
             text = "  ≤  " + ["X", "Y", "Z"][i] + "  ≤  "

@@ -2,111 +2,140 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Backend_CUDA.Backend_CUDA : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Backend_CUDA.Backend_CUDA</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Backend_CUDA.Backend_CUDA</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Backend_CUDA.html">Backend_CUDA</a></code><wbr></wbr>.<code><a href="magneticalc.Backend_CUDA.Backend_CUDA.html">Backend_CUDA</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Backend_CUDA.html" class="code" data-type="Module">Backend_CUDA</a></code>
-          
-          <a href="classIndex.html#magneticalc.Backend_CUDA.Backend_CUDA">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Backend_CUDA</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Backend_CUDA.Backend_CUDA">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field). Backend: JIT + CUDA.</p></div>
+        <div>Implements the Biot-Savart law for calculating the magnetic flux density (B-field) and vector potential (A-field). Backend: JIT + CUDA.</div>
       </div>
 
       <div id="splitTables">
         <table class="children sortable" id="id11">
   
-  <tr class="method">
+  
+  <tr class="staticmethod">
     
-    <td>Method</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initializes the class attributes.</span></td>
+    <td>Static Method</td>
+    <td><code><a href="#is_available">is_available</a></code></td>
+    <td>Indicates the availability of this backend.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#is_available" class="code" data-type="Static Method">is_available</a></td>
-    <td><span>Indicates the availability of this backend.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#worker" class="code" data-type="Static Method">worker</a></td>
-    <td><span>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.</span></td>
+    <td><code><a href="#worker">worker</a></code></td>
+    <td>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#get_result" class="code" data-type="Method">get_result</a></td>
-    <td><span>Calculates the field at every point of the sampling volume.</span></td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes the class attributes.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_result">get_result</a></code></td>
+    <td>Calculates the field at every point of the sampling volume.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_field_type" class="code" data-type="Instance Variable">_field_type</a></td>
+    <td><code><a href="#_current_elements">_current_elements</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_distance_limit" class="code" data-type="Instance Variable">_distance_limit</a></td>
+    <td><code><a href="#_dc">_dc</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_length_scale" class="code" data-type="Instance Variable">_length_scale</a></td>
+    <td><code><a href="#_distance_limit">_distance_limit</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_dc" class="code" data-type="Instance Variable">_dc</a></td>
+    <td><code><a href="#_field_type">_field_type</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_current_elements" class="code" data-type="Instance Variable">_current_elements</a></td>
+    <td><code><a href="#_length_scale">_length_scale</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_sampling_volume_points" class="code" data-type="Instance Variable">_sampling_volume_points</a></td>
+    <td><code><a href="#_progress_callback">_progress_callback</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_sampling_volume_permeabilities" class="code" data-type="Instance Variable">_sampling_volume_permeabilities</a></td>
+    <td><code><a href="#_sampling_volume_permeabilities">_sampling_volume_permeabilities</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Backend_CUDA.Backend_CUDA.html#_progress_callback" class="code" data-type="Instance Variable">_progress_callback</a></td>
+    <td><code><a href="#_sampling_volume_points">_sampling_volume_points</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -117,154 +146,8 @@
 
       <div id="childList">
 
-        <div class="basemethod">
+        <div class="basestaticmethod">
   
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA.__init__">
-    
-  </a>
-  <a name="__init__">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    __init__(self, field_type, distance_limit, length_scale, dc, current_elements, sampling_volume_points, sampling_volume_permeabilities, progress_callback):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Initializes the class attributes.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">dc</td><td>Wire current (A)</td></tr><tr><td></td><td class="fieldArg">current_elements</td><td>Ordered list of current elements (pairs: [element center, element direction])</td></tr><tr><td></td><td class="fieldArg">sampling_volume_points</td><td>Ordered list of sampling volume points</td></tr><tr><td></td><td class="fieldArg">sampling_volume_permeabilities</td><td>Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._field_type">
-    
-  </a>
-  <a name="_field_type">
-    
-  </a>
-  <div class="functionHeader">
-    _field_type =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._distance_limit">
-    
-  </a>
-  <a name="_distance_limit">
-    
-  </a>
-  <div class="functionHeader">
-    _distance_limit =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._length_scale">
-    
-  </a>
-  <a name="_length_scale">
-    
-  </a>
-  <div class="functionHeader">
-    _length_scale =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._dc">
-    
-  </a>
-  <a name="_dc">
-    
-  </a>
-  <div class="functionHeader">
-    _dc =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._current_elements">
-    
-  </a>
-  <a name="_current_elements">
-    
-  </a>
-  <div class="functionHeader">
-    _current_elements =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_points">
-    
-  </a>
-  <a name="_sampling_volume_points">
-    
-  </a>
-  <div class="functionHeader">
-    _sampling_volume_points =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_permeabilities">
-    
-  </a>
-  <a name="_sampling_volume_permeabilities">
-    
-  </a>
-  <div class="functionHeader">
-    _sampling_volume_permeabilities =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Backend_CUDA.Backend_CUDA._progress_callback">
-    
-  </a>
-  <a name="_progress_callback">
-    
-  </a>
-  <div class="functionHeader">
-    _progress_callback =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basestaticmethod">
   
   <a name="magneticalc.Backend_CUDA.Backend_CUDA.is_available">
     
@@ -274,16 +157,16 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    is_available():
+    <span class="py-keyword">def</span> <span class="py-defname">is_available</span>():
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Indicates the availability of this backend.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if this backend is available, False otherwise</td></tr></table></div>
+    <div>Indicates the availability of this backend.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if this backend is available, False otherwise</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
+  
   
   <a name="magneticalc.Backend_CUDA.Backend_CUDA.worker">
     
@@ -293,16 +176,35 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />@cuda.jit<br />
-    def
-    worker(field_type, distance_limit, length_scale, element_centers, element_directions, sampling_volume_points, sampling_volume_permeabilities, field_vectors, total_calculations, total_skipped_calculations):
+    <span class="py-keyword">def</span> <span class="py-defname">worker</span>(field_type, distance_limit, length_scale, element_centers, element_directions, sampling_volume_points, sampling_volume_permeabilities, field_vectors, total_calculations, total_skipped_calculations):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr><td></td><td class="fieldArg">distance_limit</td><td>Distance limit (mitigating divisions by zero)</td></tr><tr><td></td><td class="fieldArg">length_scale</td><td>Length scale (m)</td></tr><tr><td></td><td class="fieldArg">element_centers</td><td>Ordered list of current elements centers</td></tr><tr><td></td><td class="fieldArg">element_directions</td><td>Ordered list of current elements directions</td></tr><tr><td></td><td class="fieldArg">sampling_volume_points</td><td>Sampling volume points</td></tr><tr><td></td><td class="fieldArg">sampling_volume_permeabilities</td><td>Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td></td><td class="fieldArg">field_vectors</td><td>Field vectors (output array)</td></tr><tr><td></td><td class="fieldArg">total_calculations</td><td>Total number of calculations (output array)</td></tr><tr><td></td><td class="fieldArg">total_skipped_calculations</td><td>Total number of skipped calculations (output array)</td></tr></table></div>
+    <div>Applies the Biot-Savart law for calculating the magnetic flux density (B-field) or vector potential (A-field) for all sampling volume points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field_type:</span><code>int</code></td><td class="fieldArgDesc">Field type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">distance_limit:</span><code>float</code></td><td class="fieldArgDesc">Distance limit (mitigating divisions by zero)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">length_scale:</span><code>float</code></td><td class="fieldArgDesc">Length scale (m)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">element_centers:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of current elements centers</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">element_directions:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of current elements directions</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_points:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Sampling volume points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_permeabilities:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field_vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Field vectors (output array)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">total_calculations:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Total number of calculations (output array)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">total_skipped_calculations:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Total number of skipped calculations (output array)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, field_type, distance_limit, length_scale, dc, current_elements, sampling_volume_points, sampling_volume_permeabilities, progress_callback):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Initializes the class attributes.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field_type:</span><code>int</code></td><td class="fieldArgDesc">Field type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">distance_limit:</span><code>float</code></td><td class="fieldArgDesc">Distance limit (mitigating divisions by zero)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">length_scale:</span><code>float</code></td><td class="fieldArgDesc">Length scale (m)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dc:</span><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">current_elements:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of current elements (pairs: [element center, element direction])</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_points:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of sampling volume points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_permeabilities:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of sampling volume's relative permeabilities µ_r</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Backend_CUDA.Backend_CUDA.get_result">
     
@@ -312,23 +214,187 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_result(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_result</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates the field at every point of the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">(Total # of calculations, total # of skipped calculations, field) if successful, None if interrupted</td></tr></table></div>
+    <div>Calculates the field at every point of the sampling volume.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Optional[<wbr></wbr>Tuple[<wbr></wbr>int, <wbr></wbr>int, <wbr></wbr>np.ndarray]]</code></td><td class="fieldArgDesc">(Total # of calculations, total # of skipped calculations, field) if successful, None if interrupted</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._current_elements">
+    
+  </a>
+  <a name="_current_elements">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_current_elements</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._dc">
+    
+  </a>
+  <a name="_dc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_dc</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._distance_limit">
+    
+  </a>
+  <a name="_distance_limit">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_distance_limit</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._field_type">
+    
+  </a>
+  <a name="_field_type">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_field_type</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._length_scale">
+    
+  </a>
+  <a name="_length_scale">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_length_scale</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._progress_callback">
+    
+  </a>
+  <a name="_progress_callback">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_progress_callback</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_permeabilities">
+    
+  </a>
+  <a name="_sampling_volume_permeabilities">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_sampling_volume_permeabilities</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Backend_CUDA.Backend_CUDA._sampling_volume_points">
+    
+  </a>
+  <a name="_sampling_volume_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_sampling_volume_points</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

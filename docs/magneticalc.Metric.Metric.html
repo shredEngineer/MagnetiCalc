@@ -2,142 +2,176 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Metric.Metric : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Metric.Metric</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Metric.Metric</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.html">Metric</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.Metric.html">Metric</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Metric.html" class="code" data-type="Module">Metric</a></code>
-          
-          <a href="classIndex.html#magneticalc.Metric.Metric">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Metric</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Metric.Metric">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Provides different metrics, used for mapping some field vector properties to some color and alpha range.</p></div>
+        <div>Provides different metrics, used for mapping some field vector properties to some color and alpha range.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id58">
+        <table class="children sortable" id="id60">
   
-  <tr class="classvariable">
+  
+  <tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#boost_colors">boost_colors</a></code></td>
+    <td>"Boosts" an array of color values.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_alpha_preset">get_alpha_preset</a></code></td>
+    <td>Returns alpha metric preset.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_color_preset">get_color_preset</a></code></td>
+    <td>Returns color metric preset.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_colors">get_colors</a></code></td>
+    <td>Returns calculated colors.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_limits">get_limits</a></code></td>
+    <td>Returns calculated limits.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#invalidate">invalidate</a></code></td>
+    <td>Resets data, hiding from display.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#is_valid">is_valid</a></code></td>
+    <td>Indicates valid data for display.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#recalculate">recalculate</a></code></td>
+    <td>Recalculates color and alpha values for field.</td>
+  </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#LengthScale" class="code" data-type="Class Variable">LengthScale</a></td>
+    <td><code><a href="#LengthScale">LengthScale</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#LogNormMinimum" class="code" data-type="Class Variable">LogNormMinimum</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#is_valid" class="code" data-type="Method">is_valid</a></td>
-    <td><span>Indicates valid data for display.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#invalidate" class="code" data-type="Method">invalidate</a></td>
-    <td><span>Resets data, hiding from display.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#get_color_preset" class="code" data-type="Method">get_color_preset</a></td>
-    <td><span>Returns color metric preset.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#get_alpha_preset" class="code" data-type="Method">get_alpha_preset</a></td>
-    <td><span>Returns alpha metric preset.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#get_colors" class="code" data-type="Method">get_colors</a></td>
-    <td><span>Returns calculated colors.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#get_limits" class="code" data-type="Method">get_limits</a></td>
-    <td><span>Returns calculated limits.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#recalculate" class="code" data-type="Method">recalculate</a></td>
-    <td><span>Recalculates color and alpha values for field.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#boost_colors" class="code" data-type="Static Method">boost_colors</a></td>
-    <td><span>"Boosts" an array of color values.</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#_color_preset" class="code" data-type="Instance Variable">_color_preset</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#_alpha_preset" class="code" data-type="Instance Variable">_alpha_preset</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#_colors" class="code" data-type="Instance Variable">_colors</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Metric.Metric.html#_limits" class="code" data-type="Instance Variable">_limits</a></td>
+    <td><code><a href="#LogNormMinimum">LogNormMinimum</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#_norm_worker" class="code" data-type="Static Method">_norm_worker</a></td>
-    <td><span>Calculates the norm values of a list of vectors.</span></td>
+    <td><code><a href="#_divergence_worker">_divergence_worker</a></code></td>
+    <td>Calculates the divergence values of a list of vectors.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#_divergence_worker" class="code" data-type="Static Method">_divergence_worker</a></td>
-    <td><span>Calculates the divergence values of a list of vectors.</span></td>
+    <td><code><a href="#_norm_worker">_norm_worker</a></code></td>
+    <td>Calculates the norm values of a list of vectors.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.Metric.Metric.html#_normalize_worker" class="code" data-type="Static Method">_normalize_worker</a></td>
-    <td><span>Normalizes color and alpha norm values, populates final color values.</span></td>
+    <td><code><a href="#_normalize_worker">_normalize_worker</a></code></td>
+    <td>Normalizes color and alpha norm values, populates final color values.</td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_alpha_preset">_alpha_preset</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_color_preset">_color_preset</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_colors">_colors</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_limits">_limits</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_valid">_valid</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -147,39 +181,27 @@
 
       <div id="childList">
 
-        <div class="baseclassvariable">
+        <div class="basestaticmethod">
   
-  <a name="magneticalc.Metric.Metric.LengthScale">
+  
+  <a name="magneticalc.Metric.Metric.boost_colors">
     
   </a>
-  <a name="LengthScale">
+  <a name="boost_colors">
     
   </a>
   <div class="functionHeader">
-    LengthScale =
+    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Config.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
+    <span class="py-keyword">def</span> <span class="py-defname">boost_colors</span>(boost, direction, colors):
     
   </div>
-  <div class="functionBody">
+  <div class="docstring functionBody">
     
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Metric.Metric.LogNormMinimum">
     
-  </a>
-  <a name="LogNormMinimum">
-    
-  </a>
-  <div class="functionHeader">
-    LogNormMinimum =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
+    <div>"Boosts" an array of color values.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">boost:</span><code>float</code></td><td class="fieldArgDesc">Boost value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">direction:</span><code>float</code></td><td class="fieldArgDesc">Boost direction</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.Metric.Metric.__init__">
     
@@ -189,137 +211,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, color_preset, alpha_preset):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, color_preset, alpha_preset):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">color_preset</td><td>Color metric preset (dictionary)</td></tr><tr><td></td><td class="fieldArg">alpha_preset</td><td>Alpha metric preset (dictionary)</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Metric.Metric._color_preset">
-    
-  </a>
-  <a name="_color_preset">
-    
-  </a>
-  <div class="functionHeader">
-    _color_preset =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Metric.Metric._alpha_preset">
-    
-  </a>
-  <a name="_alpha_preset">
-    
-  </a>
-  <div class="functionHeader">
-    _alpha_preset =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Metric.Metric._colors">
-    
-  </a>
-  <a name="_colors">
-    
-  </a>
-  <div class="functionHeader">
-    _colors =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Metric.Metric._limits">
-    
-  </a>
-  <a name="_limits">
-    
-  </a>
-  <div class="functionHeader">
-    _limits =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Metric.Metric.is_valid">
-    
-  </a>
-  <a name="is_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    is_valid(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Indicates valid data for display.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if data is valid for display, False otherwise</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Metric.Metric.invalidate">
-    
-  </a>
-  <a name="invalidate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    invalidate(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Resets data, hiding from display.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Metric.Metric.get_color_preset">
-    
-  </a>
-  <a name="get_color_preset">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_color_preset(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns color metric preset.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Color metric preset (dictionary)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Metric.Metric.get_alpha_preset">
     
@@ -329,16 +230,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_alpha_preset(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_alpha_preset</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns alpha metric preset.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Alpha metric preset (dictionary)</td></tr></table></div>
+    <div>Returns alpha metric preset.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Metric.Metric.get_color_preset">
+    
+  </a>
+  <a name="get_color_preset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_color_preset</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns color metric preset.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Metric.Metric.get_colors">
     
@@ -348,16 +268,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_colors(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_colors</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns calculated colors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of color values (4-tuples)</td></tr></table></div>
+    <div>Returns calculated colors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of color values (4-tuples)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.Metric.Metric.get_limits">
     
@@ -367,73 +287,54 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_limits(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_limits</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns calculated limits.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Dictionary</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod private">
-  
-  <a name="magneticalc.Metric.Metric._norm_worker">
-    
-  </a>
-  <a name="_norm_worker">
-    
-  </a>
-  <div class="functionHeader">
-    @staticmethod<br />@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)<br />
-    def
-    _norm_worker(norm_type, vectors):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Calculates the norm values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">norm_type</td><td>Norm type</td></tr><tr><td></td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Norm values</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod private">
-  
-  <a name="magneticalc.Metric.Metric._divergence_worker">
-    
-  </a>
-  <a name="_divergence_worker">
-    
-  </a>
-  <div class="functionHeader">
-    @staticmethod<br />@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)<br />
-    def
-    _divergence_worker(sampling_volume_neighborhood_indices, vectors, dL, polarity):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Calculates the divergence values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume_neighborhood_indices</td><td>Ordered list of sampling volume neighborhood indices</td></tr><tr><td></td><td class="fieldArg">vectors</td><td>Ordered list of 3D vectors</td></tr><tr><td></td><td class="fieldArg">dL</td><td>Length element</td></tr><tr><td></td><td class="fieldArg">polarity</td><td>Polarity filter (-1: Keep values &lt;= 0; 0: Keep all values; +1: Keep values &gt;= 0)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Norm values</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod private">
-  
-  <a name="magneticalc.Metric.Metric._normalize_worker">
-    
-  </a>
-  <a name="_normalize_worker">
-    
-  </a>
-  <div class="functionHeader">
-    @staticmethod<br />@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)<br />
-    def
-    _normalize_worker(color_map_id, color_is_log, color_norm_values, color_norm_min, color_norm_max, alpha_is_log, alpha_norm_values, alpha_norm_min, alpha_norm_max, colors):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Normalizes color and alpha norm values, populates final color values.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">color_map_id</td><td>Color map ID</td></tr><tr><td></td><td class="fieldArg">color_is_log</td><td>Selects logarithmic normalizer for color</td></tr><tr><td></td><td class="fieldArg">color_norm_values</td><td>Color norm values</td></tr><tr><td></td><td class="fieldArg">color_norm_min</td><td>Minimum color norm value</td></tr><tr><td></td><td class="fieldArg">color_norm_max</td><td>Maximum color norm value</td></tr><tr><td></td><td class="fieldArg">alpha_is_log</td><td>Selects logarithmic normalizer for alpha</td></tr><tr><td></td><td class="fieldArg">alpha_norm_values</td><td>Alpha norm values</td></tr><tr><td></td><td class="fieldArg">alpha_norm_min</td><td>Minimum alpha norm value</td></tr><tr><td></td><td class="fieldArg">alpha_norm_max</td><td>Maximum alpha norm value</td></tr><tr><td></td><td class="fieldArg">colors</td><td>Color value list to populate (list of 4D vectors)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Color values (list of 4D vectors)</td></tr></table></div>
+    <div>Returns calculated limits.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Metric.Metric.invalidate">
+    
+  </a>
+  <a name="invalidate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Resets data, hiding from display.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Metric.Metric.is_valid">
+    
+  </a>
+  <a name="is_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">is_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Indicates valid data for display.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if data is valid for display, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Metric.Metric.recalculate">
     
@@ -443,42 +344,224 @@
   </a>
   <div class="functionHeader">
     
-    def
-    recalculate(self, sampling_volume, field, progress_callback):
+    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, sampling_volume, field, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Recalculates color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume</td><td>SamplingVolume</td></tr><tr><td></td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
+    <div>Recalculates color and alpha values for field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
   </div>
-</div><div class="basestaticmethod">
+</div><div class="baseclassvariable">
   
-  <a name="magneticalc.Metric.Metric.boost_colors">
+  
+  <a name="magneticalc.Metric.Metric.LengthScale">
     
   </a>
-  <a name="boost_colors">
+  <a name="LengthScale">
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)<br />
-    def
-    boost_colors(boost, direction, colors):
+    
+    <span class="py-defname">LengthScale</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Metric.Metric.LogNormMinimum">
+    
+  </a>
+  <a name="LogNormMinimum">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">LogNormMinimum</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basestaticmethod private">
+  
+  
+  <a name="magneticalc.Metric.Metric._divergence_worker">
+    
+  </a>
+  <a name="_divergence_worker">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Config.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_divergence_worker</span>(sampling_volume_neighborhood_indices, vectors, dL, polarity):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>"Boosts" an array of color values.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">boost</td><td>Boost value</td></tr><tr><td></td><td class="fieldArg">direction</td><td>Boost direction</td></tr><tr><td></td><td class="fieldArg">colors</td><td>Colors (ordered list of 4-tuples)</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Colors (ordered list of 4-tuples)</td></tr></table></div>
+    <div>Calculates the divergence values of a list of vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_neighborhood_indices:</span><code>List[<wbr></wbr>np.ndarray]</code></td><td class="fieldArgDesc">Ordered list of sampling volume neighborhood indices</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dL:</span><code>int</code></td><td class="fieldArgDesc">Length element</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">polarity:</span><code>int</code></td><td class="fieldArgDesc">Polarity filter (-1: Keep values &lt;= 0; 0: Keep all values; +1: Keep values &gt;= 0)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod private">
+  
+  
+  <a name="magneticalc.Metric.Metric._norm_worker">
+    
+  </a>
+  <a name="_norm_worker">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Config.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_norm_worker</span>(norm_type, vectors):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Calculates the norm values of a list of vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod private">
+  
+  
+  <a name="magneticalc.Metric.Metric._normalize_worker">
+    
+  </a>
+  <a name="_normalize_worker">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Config.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_normalize_worker</span>(color_map_id, color_is_log, color_norm_values, color_norm_min, color_norm_max, alpha_is_log, alpha_norm_values, alpha_norm_min, alpha_norm_max, colors):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Normalizes color and alpha norm values, populates final color values.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_map_id:</span><code>str</code></td><td class="fieldArgDesc">Color map ID</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_is_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for color</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_values</span></td><td class="fieldArgDesc">Color norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_is_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for alpha</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_values:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Alpha norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Color value list to populate (list of 4D vectors)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Color values (list of 4D vectors)</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Metric.Metric._alpha_preset">
+    
+  </a>
+  <a name="_alpha_preset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_alpha_preset</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Metric.Metric._color_preset">
+    
+  </a>
+  <a name="_color_preset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_color_preset</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Metric.Metric._colors">
+    
+  </a>
+  <a name="_colors">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_colors</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Metric.Metric._limits">
+    
+  </a>
+  <a name="_limits">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_limits</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Metric.Metric._valid">
+    
+  </a>
+  <a name="_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_valid</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -18,19 +18,13 @@
 
 from __future__ import annotations
 from magneticalc.Norm_Types import *
-from typing import Dict, List, Callable
+from typing import Dict, List, Callable, Tuple
 import numpy as np
 from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.Field import Field
-    from magneticalc.SamplingVolume import SamplingVolume
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
@@ -42,6 +36,7 @@ def metric_norm(norm_type: int, vector: np.ndarray) -> float:
 
     @param norm_type: Norm type
     @param vector: 3D vector
+    @return: Scalar if successful, np.inf on error
     """
 
     if norm_type == NORM_TYPE_X:
@@ -72,10 +67,10 @@ def metric_norm(norm_type: int, vector: np.ndarray) -> float:
         value = (np.arctan2(vector[1], vector[2]) + np.pi) / np.pi / 2
     elif norm_type == NORM_TYPE_DIVERGENCE:
         # Invalid norm ID for metric_norm(); divergence must be calculated using metric_divergence()
-        value = None
+        value = np.inf
     else:
         # Invalid norm ID
-        value = None
+        value = np.inf
 
     return value
 
@@ -117,7 +112,7 @@ def metric_divergence(neighborhood_vectors: np.ndarray, dL: float, polarity: int
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
-def color_map_divergent(color_normalized: float) -> (float, float, float):
+def color_map_divergent(color_normalized: float) -> Tuple[float, float, float]:
     """
     Maps normalized value to color, divergent.
 
@@ -132,7 +127,7 @@ def color_map_divergent(color_normalized: float) -> (float, float, float):
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
-def color_map_cyclic(color_normalized: float) -> (float, float, float):
+def color_map_cyclic(color_normalized: float) -> Tuple[float, float, float]:
     """
     Maps normalized value to color, cyclic.
 
@@ -175,8 +170,10 @@ class Metric:
         self._color_preset = color_preset
         self._alpha_preset = alpha_preset
 
-        self._colors = None
-        self._limits = None
+        self._colors: np.ndarray = np.array([])
+        self._limits: Dict = {}
+
+        self._valid = False
 
     def is_valid(self) -> bool:
         """
@@ -184,9 +181,7 @@ class Metric:
 
         @return: True if data is valid for display, False otherwise
         """
-        return \
-            self._colors is not None and \
-            self._limits is not None
+        return self._valid
 
     def invalidate(self) -> None:
         """
@@ -194,8 +189,7 @@ class Metric:
         """
         Debug(self, ".invalidate()")
 
-        self._colors = None
-        self._limits = None
+        self._valid = False
 
     def get_color_preset(self) -> Dict:
         """
@@ -369,7 +363,12 @@ class Metric:
 
         return colors
 
-    def recalculate(self, sampling_volume: SamplingVolume, field: Field, progress_callback: Callable) -> bool:
+    def recalculate(
+            self,
+            sampling_volume: SamplingVolume,  # type: ignore
+            field: Field,  # type: ignore
+            progress_callback: Callable
+    ) -> bool:
         """
         Recalculates color and alpha values for field.
 
@@ -379,6 +378,8 @@ class Metric:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".recalculate()")
+
+        self._valid = False
 
         n = len(field.get_vectors())
 
@@ -470,7 +471,7 @@ class Metric:
         colors = np.zeros([n, 4])
 
         # Calculate final color values
-        # Note: If using logarithmic scaling, out-of-range values (still exceeding [0...1] here) may be clipped
+        # Note: If using logarithmic scaling, out-of-range values (still exceeding [0…1] here) may be clipped
         colors = self._normalize_worker(
             self._color_preset["colormap"],
             self._color_preset["is_log"],
@@ -494,6 +495,8 @@ class Metric:
         }
 
         progress_callback(100)
+
+        self._valid = True
 
         return True
 

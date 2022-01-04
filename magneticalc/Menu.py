@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -26,16 +26,12 @@ from magneticalc.About_Dialog import About_Dialog
 from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
 from magneticalc.Backend_CUDA import Backend_CUDA
 from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
 from magneticalc.Usage_Dialog import Usage_Dialog
 from magneticalc.Wire_Presets import Wire_Presets
 from magneticalc.Version import __URL__
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Menu:
@@ -47,7 +43,10 @@ class Menu:
         "Backend: JIT + CUDA"   : Backend_CUDA.is_available()
     }
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Creates the menu bar.
 
@@ -81,7 +80,7 @@ class Menu:
             Qt.CTRL + Qt.Key_E
         )
         file_menu.addSeparator()
-        file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.confirm_close, Qt.CTRL + Qt.Key_Q)
+        file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.close, Qt.CTRL + Qt.Key_Q)
         self.gui.menuBar().addMenu(file_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,9 +97,9 @@ class Menu:
             action.triggered.connect(
                 partial(
                     self.gui.sidebar_left.wire_widget.set_wire,
-                    points=preset["points"],
-                    stretch=[1.0, 1.0, 1.0],
-                    rotational_symmetry={
+                    _points_=preset["points"],
+                    _stretch_=[1.0, 1.0, 1.0],
+                    _rotational_symmetry_={
                         "count" : 1,
                         "radius": 0,
                         "axis"  : 2,
@@ -137,7 +136,7 @@ class Menu:
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Colored Labels", "show_colored_labels", view_menu, self.gui.redraw)
         self.add_config_bound_checkbox(
-            "Show Gauss (Gs) instead of Tesla (T)", "show_gauss", view_menu, self.on_show_gauss_changed
+            "Show Gauss instead of Tesla", "show_gauss", view_menu, self.on_show_gauss_changed
         )
         view_menu.addSeparator()
         self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
@@ -159,7 +158,7 @@ class Menu:
             action = QAction(name)
             self.backend_actions.append(action)
             action.setCheckable(True)
-            action.setEnabled(enabled)
+            action.setEnabled(enabled and get_jit_enabled())
             # noinspection PyUnresolvedReferences
             action.changed.connect(partial(self.on_backend_changed, i))
             self.options_backend_group.addAction(action)
@@ -177,7 +176,11 @@ class Menu:
             qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show(),
             Qt.Key_F4
         )
-        help_menu.addAction(qta.icon("fa.github"), "&GitHub Repository …", partial(webbrowser.open, __URL__))
+        help_menu.addAction(
+            qta.icon("fa.github"),
+            "&GitHub Repository …",
+            partial(webbrowser.open, __URL__)  # type: ignore
+        )
         help_menu.addSeparator()
         help_menu.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)
@@ -199,8 +202,10 @@ class Menu:
             if not Backend_CUDA.is_available():
                 self.gui.config.set_int("backend_type", BACKEND_JIT)
 
-        for i, name in enumerate(self.Backends_Available_List):
+        for i, item in enumerate(self.Backends_Available_List.items()):
+            name, enabled = item
             self.backend_actions[i].setChecked(self.gui.config.get_int("backend_type") == i)
+            self.backend_actions[i].setEnabled(enabled and get_jit_enabled())
 
         self.reinitialize_config_bound_checkboxes()
 
@@ -212,7 +217,7 @@ class Menu:
         """
         Gets called when the "Show Gauss instead of Tesla" option changed.
         """
-        self.gui.sidebar_right.metric_widget.update_labels()
+        self.gui.sidebar_right.metric_widget.update()
         self.gui.vispy_canvas.delete_field_labels()
         self.gui.redraw()
 

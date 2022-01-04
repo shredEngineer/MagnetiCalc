@@ -2,137 +2,181 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Statusbar.Statusbar : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Statusbar.Statusbar</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Statusbar.Statusbar</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Statusbar.html">Statusbar</a></code><wbr></wbr>.<code><a href="magneticalc.Statusbar.Statusbar.html">Statusbar</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Statusbar.html" class="code" data-type="Module">Statusbar</a></code>
-          
-          <a href="classIndex.html#magneticalc.Statusbar.Statusbar">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Statusbar</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Statusbar.Statusbar">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Statusbar class.</p></div>
+        <div>Statusbar class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id123">
+        <table class="children sortable" id="id133">
+  
   
   <tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initializes statusbar.</span></td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes statusbar.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#arm">arm</a></code></td>
+    <td>"Arms" the statusbar before calculation.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#cancel">cancel</a></code></td>
+    <td>Cancels the ongoing calculation.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#disarm">disarm</a></code></td>
+    <td>"Disarms" the statusbar after calculation.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#invalidate">invalidate</a></code></td>
+    <td>"Invalidates" the statusbar.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#reinitialize">reinitialize</a></code></td>
+    <td>Re-initializes the statusbar.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_progress">set_progress</a></code></td>
+    <td>Updates the progress percentage.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_progressbar_color">set_progressbar_color</a></code></td>
+    <td>Sets the progressbar color &amp; style.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_text">set_text</a></code></td>
+    <td>Updates the statusbar text.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#start">start</a></code></td>
+    <td>Starts the calculation.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#reinitialize" class="code" data-type="Method">reinitialize</a></td>
-    <td><span>Re-initializes the statusbar.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#arm" class="code" data-type="Method">arm</a></td>
-    <td><span>"Arms" the statusbar before calculation.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#disarm" class="code" data-type="Method">disarm</a></td>
-    <td><span>"Disarms" the statusbar after calculation.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#start" class="code" data-type="Method">start</a></td>
-    <td><span>Starts the calculation.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#cancel" class="code" data-type="Method">cancel</a></td>
-    <td><span>Cancels the ongoing calculation.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#set_text" class="code" data-type="Method">set_text</a></td>
-    <td><span>Updates the statusbar text.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#set_progress" class="code" data-type="Method">set_progress</a></td>
-    <td><span>Updates the progress percentage.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#set_progressbar_color" class="code" data-type="Method">set_progressbar_color</a></td>
-    <td><span>Sets the progressbar color &amp; style.</span></td>
-  </tr><tr class="instancevariable private">
+  </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_start_button" class="code" data-type="Instance Variable">_start_button</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_cancel_button" class="code" data-type="Instance Variable">_cancel_button</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_auto_calculation_checkbox" class="code" data-type="Instance Variable">_auto_calculation_checkbox</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_cores_combobox" class="code" data-type="Instance Variable">_cores_combobox</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_progressbar" class="code" data-type="Instance Variable">_progressbar</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_label" class="code" data-type="Instance Variable">_label</a></td>
+    <td><code><a href="#layout">layout</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method private">
     
     <td>Method</td>
-    <td><a href="magneticalc.Statusbar.Statusbar.html#_auto_calculation_changed" class="code" data-type="Method">_auto_calculation_changed</a></td>
-    <td><span>Handles changed auto-calculation setting.</span></td>
+    <td><code><a href="#_auto_calculation_changed">_auto_calculation_changed</a></code></td>
+    <td>Handles changed auto-calculation setting.</td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_auto_calculation_checkbox">_auto_calculation_checkbox</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_cancel_button">_cancel_button</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_canceled">_canceled</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_cores_combobox">_cores_combobox</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_label">_label</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_progressbar">_progressbar</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_start_button">_start_button</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -144,6 +188,7 @@
 
         <div class="basemethod">
   
+  
   <a name="magneticalc.Statusbar.Statusbar.__init__">
     
   </a>
@@ -152,166 +197,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, gui):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initializes statusbar.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Statusbar.Statusbar.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._start_button">
-    
-  </a>
-  <a name="_start_button">
-    
-  </a>
-  <div class="functionHeader">
-    _start_button =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._cancel_button">
-    
-  </a>
-  <a name="_cancel_button">
-    
-  </a>
-  <div class="functionHeader">
-    _cancel_button =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._auto_calculation_checkbox">
-    
-  </a>
-  <a name="_auto_calculation_checkbox">
-    
-  </a>
-  <div class="functionHeader">
-    _auto_calculation_checkbox =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._cores_combobox">
-    
-  </a>
-  <a name="_cores_combobox">
-    
-  </a>
-  <div class="functionHeader">
-    _cores_combobox =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._progressbar">
-    
-  </a>
-  <a name="_progressbar">
-    
-  </a>
-  <div class="functionHeader">
-    _progressbar =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._label">
-    
-  </a>
-  <a name="_label">
-    
-  </a>
-  <div class="functionHeader">
-    _label =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>Initializes statusbar.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Statusbar.Statusbar.reinitialize">
-    
-  </a>
-  <a name="reinitialize">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    reinitialize(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-initializes the statusbar.</p></div>
-  </div>
-</div><div class="basemethod private">
-  
-  <a name="magneticalc.Statusbar.Statusbar._auto_calculation_changed">
-    
-  </a>
-  <a name="_auto_calculation_changed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    _auto_calculation_changed(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Handles changed auto-calculation setting.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Statusbar.Statusbar.arm">
     
@@ -321,54 +216,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    arm(self):
+    <span class="py-keyword">def</span> <span class="py-defname">arm</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>"Arms" the statusbar before calculation.</p></div>
+    <div>"Arms" the statusbar before calculation.</div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Statusbar.Statusbar.disarm">
-    
-  </a>
-  <a name="disarm">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    disarm(self, success):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>"Disarms" the statusbar after calculation.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">success</td><td>Reflects calculation success or failure</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Statusbar.Statusbar.start">
-    
-  </a>
-  <a name="start">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    start(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Starts the calculation.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Statusbar.Statusbar.cancel">
     
@@ -378,35 +235,73 @@
   </a>
   <div class="functionHeader">
     
-    def
-    cancel(self):
+    <span class="py-keyword">def</span> <span class="py-defname">cancel</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Cancels the ongoing calculation.</p></div>
+    <div>Cancels the ongoing calculation.</div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Statusbar.Statusbar.set_text">
+  
+  <a name="magneticalc.Statusbar.Statusbar.disarm">
     
   </a>
-  <a name="set_text">
+  <a name="disarm">
     
   </a>
   <div class="functionHeader">
     
-    def
-    set_text(self, text):
+    <span class="py-keyword">def</span> <span class="py-defname">disarm</span>(self, success):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Updates the statusbar text.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">text</td><td>Text</td></tr></table></div>
+    <div>"Disarms" the statusbar after calculation.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">Reflects calculation success or failure</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.invalidate">
+    
+  </a>
+  <a name="invalidate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>"Invalidates" the statusbar.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.reinitialize">
+    
+  </a>
+  <a name="reinitialize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">reinitialize</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-initializes the statusbar.</div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Statusbar.Statusbar.set_progress">
     
@@ -416,16 +311,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    set_progress(self, percentage):
+    <span class="py-keyword">def</span> <span class="py-defname">set_progress</span>(self, percentage):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Updates the progress percentage.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">percentage</td><td>Percentage</td></tr></table></div>
+    <div>Updates the progress percentage.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">percentage:</span><code>int</code></td><td class="fieldArgDesc">Percentage</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.Statusbar.Statusbar.set_progressbar_color">
     
@@ -435,23 +330,264 @@
   </a>
   <div class="functionHeader">
     
-    def
-    set_progressbar_color(self, color):
+    <span class="py-keyword">def</span> <span class="py-defname">set_progressbar_color</span>(self, fg_color, bg_color=None):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets the progressbar color &amp; style.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">color</td><td>Color</td></tr></table></div>
+    <div>Sets the progressbar color &amp; style.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">fg_color:</span><code>str</code></td><td class="fieldArgDesc">Foreground color</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">bg_color:</span><code>Optional[<wbr></wbr>str]</code></td><td class="fieldArgDesc">Background color (optional)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.set_text">
+    
+  </a>
+  <a name="set_text">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_text</span>(self, text):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the statusbar text.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">text:</span><code>str</code></td><td class="fieldArgDesc">Text</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.start">
+    
+  </a>
+  <a name="start">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">start</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Starts the calculation.</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar.layout">
+    
+  </a>
+  <a name="layout">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">layout</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._auto_calculation_changed">
+    
+  </a>
+  <a name="_auto_calculation_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_auto_calculation_changed</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Handles changed auto-calculation setting.</div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._auto_calculation_checkbox">
+    
+  </a>
+  <a name="_auto_calculation_checkbox">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_auto_calculation_checkbox</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._cancel_button">
+    
+  </a>
+  <a name="_cancel_button">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_cancel_button</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._canceled">
+    
+  </a>
+  <a name="_canceled">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_canceled</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._cores_combobox">
+    
+  </a>
+  <a name="_cores_combobox">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_cores_combobox</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._label">
+    
+  </a>
+  <a name="_label">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_label</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._progressbar">
+    
+  </a>
+  <a name="_progressbar">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_progressbar</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Statusbar.Statusbar._start_button">
+    
+  </a>
+  <a name="_start_button">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_start_button</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

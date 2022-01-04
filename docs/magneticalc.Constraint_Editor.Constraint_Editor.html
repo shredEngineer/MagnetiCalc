@@ -2,202 +2,233 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Constraint_Editor.Constraint_Editor : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Constraint_Editor.Constraint_Editor</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Constraint_Editor.Constraint_Editor(<a href="magneticalc.QDialog2.QDialog2.html" class="code" data-type="Class">QDialog2</a>)</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.html">Constraint_Editor</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.Constraint_Editor.html">Constraint_Editor</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Constraint_Editor.html" class="code" data-type="Module">Constraint_Editor</a></code>
-          
-          <a href="classIndex.html#magneticalc.Constraint_Editor.Constraint_Editor">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Constraint_Editor</span>(<a href="magneticalc.QDialog2.QDialog2.html" title="magneticalc.QDialog2.QDialog2">QDialog2</a>):</code></p>
+        <p><a href="classIndex.html#magneticalc.Constraint_Editor.Constraint_Editor">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Constraint_Editor class.</p></div>
+        <div>Constraint_Editor class.</div>
       </div>
 
       <div id="splitTables">
         <table class="children sortable" id="id33">
   
-  <tr class="classvariable">
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Prepares the constraint editor, but doesn't fully initialize it yet.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#clear_changed">clear_changed</a></code></td>
+    <td>Clears the "changed" state of the current session.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_changed">get_changed</a></code></td>
+    <td>Returns the "changed" state of the current session.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_constraints">get_constraints</a></code></td>
+    <td>Gets the list of constraints.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_count">get_count</a></code></td>
+    <td>Gets the number of constraints.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_table_cell_edited">on_table_cell_edited</a></code></td>
+    <td>Gets called after a table cell has been edited.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_table_row_added">on_table_row_added</a></code></td>
+    <td>Gets called after a row has been added to the table.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_table_row_deleted">on_table_row_deleted</a></code></td>
+    <td>Gets called after a row has been deleted from the table.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#reinitialize">reinitialize</a></code></td>
+    <td>Re-initializes the constraint editor.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_table">update_table</a></code></td>
+    <td>Populates the table.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_title">update_title</a></code></td>
+    <td>Updates the window title.</td>
+  </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#Constraint_Types" class="code" data-type="Class Variable">Constraint_Types</a></td>
+    <td><code><a href="#Constraint_Options">Constraint_Options</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#Constraint_Options" class="code" data-type="Class Variable">Constraint_Options</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Prepares the constraint editor, but doesn't fully initialize it yet.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><code><a href="#Constraint_Types">Constraint_Types</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#table" class="code" data-type="Instance Variable">table</a></td>
+    <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#reinitialize" class="code" data-type="Method">reinitialize</a></td>
-    <td><span>Re-initializes the constraint editor.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_changed" class="code" data-type="Method">get_changed</a></td>
-    <td><span>Returns the "changed" state of the current session.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#clear_changed" class="code" data-type="Method">clear_changed</a></td>
-    <td><span>Clears the "changed" state of the current session.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#update_title" class="code" data-type="Method">update_title</a></td>
-    <td><span>Updates the window title.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_count" class="code" data-type="Method">get_count</a></td>
-    <td><span>Gets the number of constraints.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#get_constraints" class="code" data-type="Method">get_constraints</a></td>
-    <td><span>Gets the list of constraints.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#update_table" class="code" data-type="Method">update_table</a></td>
-    <td><span>Populates the table.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#on_table_row_added" class="code" data-type="Method">on_table_row_added</a></td>
-    <td><span>Gets called after a row has been added to the table.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#on_table_cell_edited" class="code" data-type="Method">on_table_cell_edited</a></td>
-    <td><span>Gets called after a table cell has been edited.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#on_table_row_deleted" class="code" data-type="Method">on_table_row_deleted</a></td>
-    <td><span>Gets called after a row has been deleted from the table.</span></td>
-  </tr><tr class="instancevariable private">
+  </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#_constraint_collection" class="code" data-type="Instance Variable">_constraint_collection</a></td>
+    <td><code><a href="#table">table</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Constraint_Editor.Constraint_Editor.html#_changed" class="code" data-type="Instance Variable">_changed</a></td>
+    <td><code><a href="#_changed">_changed</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_constraint_collection">_constraint_collection</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
-            Inherited from <a href="magneticalc.QDialog2.QDialog2.html" class="code" data-type="Class">QDialog2</a>:
+            Inherited from <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>:
           </p>
           <table class="children sortable" id="id34">
   
-  <tr class="baseclassvariable">
-    
-    <td>Class Variable</td>
-    <td><a href="magneticalc.QDialog2.QDialog2.html#dialog_shown" class="code" data-type="Class Variable">dialog_shown</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="baseinstancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.QDialog2.QDialog2.html#success" class="code" data-type="Instance Variable">success</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="basemethod">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.QDialog2.QDialog2.html#show" class="code" data-type="Method">show</a></td>
-    <td><span>Shows this dialog.</span></td>
-  </tr><tr class="basemethod">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.QDialog2.QDialog2.html#showEvent" class="code" data-type="Method">showEvent</a></td>
-    <td><span>Overrides the showEvent method.</span></td>
-  </tr>
-</table>
-          
-          <p class="inheritedFrom">
-            Inherited from <a href="magneticalc.QLayouted.QLayouted.html" class="code" data-type="Class">QLayouted</a> (via <a href="magneticalc.QDialog2.QDialog2.html" class="code" data-type="Class">QDialog2</a>):
-          </p>
-          <table class="children sortable" id="id35">
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#install_layout" class="code" data-type="Method">install_layout</a></td>
-    <td><span>Installs this layout in the parent.</span></td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#show">show</a></code></td>
+    <td>Shows this dialog.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addWidget" class="code" data-type="Method">addWidget</a></td>
-    <td><span>Adds widget.</span></td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#showEvent">showEvent</a></code></td>
+    <td>Overrides the showEvent method.</td>
+  </tr><tr class="baseclassvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#dialog_shown">dialog_shown</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="baseinstancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#success">success</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>):
+          </p>
+          <table class="children sortable" id="id35">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addLayout" class="code" data-type="Method">addLayout</a></td>
-    <td><span>Adds layout.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addSpacing" class="code" data-type="Method">addSpacing</a></td>
-    <td><span>Adds spacing.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addButtons" class="code" data-type="Method">addButtons</a></td>
-    <td><span>Adds buttons.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td>Adds widget.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#_layout" class="code" data-type="Instance Variable">_layout</a></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -208,39 +239,8 @@
 
       <div id="childList">
 
-        <div class="baseclassvariable">
+        <div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Types">
-    
-  </a>
-  <a name="Constraint_Types">
-    
-  </a>
-  <div class="functionHeader">
-    Constraint_Types =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>Dict[str, str]</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Options">
-    
-  </a>
-  <a name="Constraint_Options">
-    
-  </a>
-  <div class="functionHeader">
-    Constraint_Options =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.__init__">
     
@@ -250,118 +250,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, gui):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <a href="magneticalc.QDialog2.QDialog2.html#__init__" class="code" data-type="Method">magneticalc.QDialog2.QDialog2.__init__</a></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QDialog2.QDialog2.html#__init__">magneticalc.QDialog2.QDialog2.__init__</a></code></div>
     
-    <div><p>Prepares the constraint editor, but doesn't fully initialize it yet.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">
-    
-  </a>
-  <a name="_constraint_collection">
-    
-  </a>
-  <div class="functionHeader">
-    _constraint_collection =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor._changed">
-    
-  </a>
-  <a name="_changed">
-    
-  </a>
-  <div class="functionHeader">
-    _changed =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.table">
-    
-  </a>
-  <a name="table">
-    
-  </a>
-  <div class="functionHeader">
-    table =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>Prepares the constraint editor, but doesn't fully initialize it yet.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.reinitialize">
-    
-  </a>
-  <a name="reinitialize">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    reinitialize(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-initializes the constraint editor.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_changed">
-    
-  </a>
-  <a name="get_changed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_changed(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns the "changed" state of the current session.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.clear_changed">
     
@@ -371,54 +269,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    clear_changed(self):
+    <span class="py-keyword">def</span> <span class="py-defname">clear_changed</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Clears the "changed" state of the current session.</p></div>
+    <div>Clears the "changed" state of the current session.</div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.update_title">
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_changed">
     
   </a>
-  <a name="update_title">
+  <a name="get_changed">
     
   </a>
   <div class="functionHeader">
     
-    def
-    update_title(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_changed</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Updates the window title.</p></div>
+    <div>Returns the "changed" state of the current session.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_count">
-    
-  </a>
-  <a name="get_count">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_count(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets the number of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Number of constraints</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_constraints">
     
@@ -428,54 +307,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_constraints(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_constraints</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets the list of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td colspan="2">List of constraints</td></tr></table></div>
+    <div>Gets the list of constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr>Dict]</code></td><td class="fieldArgDesc">List of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.update_table">
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_count">
     
   </a>
-  <a name="update_table">
+  <a name="get_count">
     
   </a>
   <div class="functionHeader">
     
-    def
-    update_table(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_count</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Populates the table.</p></div>
+    <div>Gets the number of constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Number of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_added">
-    
-  </a>
-  <a name="on_table_row_added">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    on_table_row_added(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets called after a row has been added to the table.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.on_table_cell_edited">
     
@@ -485,16 +345,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    on_table_cell_edited(self, value, row, column):
+    <span class="py-keyword">def</span> <span class="py-defname">on_table_cell_edited</span>(self, value, row, column):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called after a table cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">value</td><td>Cell value</td></tr><tr><td></td><td class="fieldArg">row</td><td>Row index</td></tr><tr><td></td><td class="fieldArg">column</td><td>Column index</td></tr></table></div>
+    <div>Gets called after a table cell has been edited.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>str</code></td><td class="fieldArgDesc">Cell value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">column:</span><code>int</code></td><td class="fieldArgDesc">Column index</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_added">
+    
+  </a>
+  <a name="on_table_row_added">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_table_row_added</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called after a row has been added to the table.</div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_deleted">
     
@@ -504,23 +383,204 @@
   </a>
   <div class="functionHeader">
     
-    def
-    on_table_row_deleted(self, row):
+    <span class="py-keyword">def</span> <span class="py-defname">on_table_row_deleted</span>(self, row):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called after a row has been deleted from the table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">row</td><td>Row index</td></tr></table></div>
+    <div>Gets called after a row has been deleted from the table.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.reinitialize">
+    
+  </a>
+  <a name="reinitialize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">reinitialize</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-initializes the constraint editor.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.update_table">
+    
+  </a>
+  <a name="update_table">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_table</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Populates the table.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.update_title">
+    
+  </a>
+  <a name="update_title">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_title</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the window title.</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Options">
+    
+  </a>
+  <a name="Constraint_Options">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Constraint_Options</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Types">
+    
+  </a>
+  <a name="Constraint_Types">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Constraint_Types</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>str]</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.table">
+    
+  </a>
+  <a name="table">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">table</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor._changed">
+    
+  </a>
+  <a name="_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_changed</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">
+    
+  </a>
+  <a name="_constraint_collection">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_constraint_collection</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

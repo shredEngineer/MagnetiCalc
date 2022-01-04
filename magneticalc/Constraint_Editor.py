@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,23 +17,17 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import List, Dict, Any
-import qtawesome as qta
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QPushButton, QSizePolicy
+from typing import List, Dict
+from PyQt5.QtWidgets import QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
 from magneticalc.Config_Group import Config_Collection
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.QDialog2 import QDialog2
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.QTextBrowser2 import QTextBrowser2
 from magneticalc.Theme import Theme
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Constraint_Editor(QDialog2):
@@ -57,7 +51,10 @@ class Constraint_Editor(QDialog2):
         None
     ]
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Prepares the constraint editor, but doesn't fully initialize it yet.
 
@@ -74,22 +71,19 @@ class Constraint_Editor(QDialog2):
             first_without_suffix=False
         )
 
-        self._changed = None
+        self._changed = False
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
-        table_add_button = QPushButton(" Add constraint")
-        table_add_button.setIcon(qta.icon("fa.plus"))
-        # noinspection PyUnresolvedReferences
-        table_add_button.clicked.connect(self.on_table_row_added)
+        table_add_button = QPushButton2("Add constraint", "fa.plus", self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
         self.addLayout(table_icon_label)
 
         self.table = QTableWidget2(
             self.gui,
-            cell_edited_callback=self.on_table_cell_edited,
-            row_deleted_callback=self.on_table_row_deleted
+            _cell_edited_callback_=self.on_table_cell_edited,
+            _row_deleted_callback_=self.on_table_row_deleted
         )
         self.table.set_horizontal_header(["Norm", "Comparison", "Min.", "Max.", "µ (relative)"])
         self.table.set_vertical_prefix("constraint_")
@@ -115,7 +109,7 @@ class Constraint_Editor(QDialog2):
 
         text_browser = QTextBrowser2(html=html)
         self.dialog_shown.connect(text_browser.fit_to_contents)
-        self.addWidget(text_browser, alignment=Qt.AlignBottom)
+        self.addWidget(text_browser)
 
         self.addButtons({
             "OK": ("fa.check", self.accept)
@@ -176,7 +170,7 @@ class Constraint_Editor(QDialog2):
         """
         Gets the list of constraints.
 
-        @param: List of constraints
+        @return: List of constraints
         """
         return self._constraint_collection.get_all_groups()
 
@@ -209,7 +203,7 @@ class Constraint_Editor(QDialog2):
         self._changed = True
         self.update_title()
 
-    def on_table_cell_edited(self, value: Any, row: int, column: int):
+    def on_table_cell_edited(self, value: str, row: int, column: int):
         """
         Gets called after a table cell has been edited.
 

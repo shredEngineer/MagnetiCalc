@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.12.1"  # MAJ.MIN.REV
+__VERSION__ = "v1.12.2"  # MAJ.MIN.REV
 
 
 __URL__ = "https://github.com/shredEngineer/MagnetiCalc"
@@ -29,5 +29,5 @@ class Version:
 
     # Full application version string
     String = "MagnetiCalc " + __VERSION__
-    Copyright = "Copyright © 2020–2021, Paul Wilhelm, M. Sc. <mailto:anfrage@paulwilhelm.de>"
+    Copyright = "Copyright © 2020–2022, Paul Wilhelm, M. Sc. <mailto:anfrage@paulwilhelm.de>"
     License = "ISC License (see README.md)"

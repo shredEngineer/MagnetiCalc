@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -19,12 +19,13 @@
 from __future__ import annotations
 from typing import Optional
 from functools import partial
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSizePolicy
-from PyQt5.QtWidgets import QButtonGroup, QRadioButton, QDoubleSpinBox, QLabel, QCheckBox
+from PyQt5.QtWidgets import QButtonGroup, QRadioButton, QCheckBox
+from magneticalc.QDoubleSpinBox2 import QDoubleSpinBox2
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
 from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Field_Types import A_FIELD, B_FIELD
@@ -32,22 +33,20 @@ from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class Field_Widget(QGroupBox2):
     """ Field_Widget class. """
 
     # Spinbox limits
-    DistanceLimitMinimum = 0.0001
-    DistanceLimitMaximum = 1
+    DistanceLimitMin = 0.0001
+    DistanceLimitMax = 1
     DistanceLimitStep = 0.0001
     DistanceLimitPrecision = 4
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -65,18 +64,18 @@ class Field_Widget(QGroupBox2):
         field_type_layout_right = QVBoxLayout()
 
         field_type_a_radiobutton = QRadioButton(" A-Field (Vector Potential)")
-        field_type_a_radiobutton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        field_type_layout_left.addWidget(field_type_a_radiobutton, alignment=Qt.AlignVCenter)
+        field_type_layout_left.addWidget(field_type_a_radiobutton)
         self.field_type_a_checkbox = QCheckBox(" Cached")
+        self.field_type_a_checkbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.field_type_a_checkbox.setEnabled(False)
-        field_type_layout_right.addWidget(self.field_type_a_checkbox, alignment=Qt.AlignVCenter | Qt.AlignRight)
+        field_type_layout_right.addWidget(self.field_type_a_checkbox)
 
         field_type_b_radiobutton = QRadioButton(" B-Field (Flux Density)")
-        field_type_b_radiobutton.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        field_type_layout_left.addWidget(field_type_b_radiobutton, alignment=Qt.AlignVCenter)
+        field_type_layout_left.addWidget(field_type_b_radiobutton)
         self.field_type_b_checkbox = QCheckBox(" Cached")
+        self.field_type_b_checkbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.field_type_b_checkbox.setEnabled(False)
-        field_type_layout_right.addWidget(self.field_type_b_checkbox, alignment=Qt.AlignVCenter | Qt.AlignRight)
+        field_type_layout_right.addWidget(self.field_type_b_checkbox)
 
         self.field_type_group = QButtonGroup()
         self.field_type_group.addButton(field_type_a_radiobutton)
@@ -91,13 +90,9 @@ class Field_Widget(QGroupBox2):
             button.toggled.connect(partial(self.on_field_type_changed, i))
 
         total_calculations_layout = QHBoxLayout()
-        total_calculations_left = QLabel("Total calculations:")
-        total_calculations_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.total_calculations_label = QLabel("N/A")
-        self.total_calculations_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.total_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_calculations_layout.addWidget(total_calculations_left, alignment=Qt.AlignVCenter)
-        total_calculations_layout.addWidget(self.total_calculations_label, alignment=Qt.AlignVCenter)
+        self.total_calculations_label = QLabel2("N/A", color=Theme.MainColor, align_right=True)
+        total_calculations_layout.addWidget(QLabel2("Total calculations:", italic=True, color=Theme.LiteColor))
+        total_calculations_layout.addWidget(self.total_calculations_label)
         self.addLayout(total_calculations_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -105,31 +100,26 @@ class Field_Widget(QGroupBox2):
         self.addWidget(QHLine())
 
         self.addLayout(QIconLabel("Distance Limit", "mdi.ruler"))
-        self.distance_limit_spinbox = QDoubleSpinBox(self.gui)
-        self.distance_limit_spinbox.setLocale(self.gui.locale)
-        self.distance_limit_spinbox.setDecimals(self.DistanceLimitPrecision)
-        self.distance_limit_spinbox.setMinimum(self.DistanceLimitMinimum)
-        self.distance_limit_spinbox.setMaximum(self.DistanceLimitMaximum)
-        self.distance_limit_spinbox.setSingleStep(self.DistanceLimitStep)
-        # noinspection PyUnresolvedReferences
-        self.distance_limit_spinbox.valueChanged.connect(
-            lambda: self.set_field(distance_limit=self.distance_limit_spinbox.value())
+        self.distance_limit_spinbox = QDoubleSpinBox2(
+            gui=self.gui,
+            minimum=self.DistanceLimitMin,
+            maximum=self.DistanceLimitMax,
+            step=self.DistanceLimitStep,
+            precision=self.DistanceLimitPrecision,
+            value=0,
+            value_changed=lambda: self.set_field(_distance_limit_=self.distance_limit_spinbox.value())
         )
         distance_limit_layout = QHBoxLayout()
-        distance_limit_layout.addWidget(self.distance_limit_spinbox, alignment=Qt.AlignVCenter)
-        distance_limit_units_label = QLabel("cm")
-        distance_limit_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        distance_limit_layout.addWidget(distance_limit_units_label, alignment=Qt.AlignVCenter)
+        distance_limit_layout.addWidget(self.distance_limit_spinbox)
+        distance_limit_layout.addWidget(QLabel2("cm", expand=False))
         self.addLayout(distance_limit_layout)
 
         total_skipped_calculations_layout = QHBoxLayout()
-        total_skipped_calculations_left = QLabel("Total skipped calculations:")
-        total_skipped_calculations_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.total_skipped_calculations_label = QLabel("N/A")
-        self.total_skipped_calculations_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.total_skipped_calculations_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_skipped_calculations_layout.addWidget(total_skipped_calculations_left, alignment=Qt.AlignVCenter)
-        total_skipped_calculations_layout.addWidget(self.total_skipped_calculations_label, alignment=Qt.AlignVCenter)
+        self.total_skipped_calculations_label = QLabel2("N/A", color=Theme.MainColor, align_right=True)
+        total_skipped_calculations_layout.addWidget(
+            QLabel2("Total skipped calculations:", italic=True, color=Theme.LiteColor)
+        )
+        total_skipped_calculations_layout.addWidget(self.total_skipped_calculations_label)
         self.addLayout(total_skipped_calculations_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,9 +144,11 @@ class Field_Widget(QGroupBox2):
         # Initially load field from configuration
         self.set_field(recalculate=False, invalidate_self=False)
 
+        self.update()
+
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_field_type_changed(self, field_type: bool, checked: bool) -> None:
+    def on_field_type_changed(self, field_type: int, checked: bool) -> None:
         """
         Gets called when the field type changed.
 
@@ -169,25 +161,24 @@ class Field_Widget(QGroupBox2):
         if not checked:
             return
 
-        self.set_field(field_type=field_type, allow_cache=True)
+        self.set_field(_field_type_=field_type, allow_cache=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_field(
             self,
-            field_type: Optional[int] = None,
-            distance_limit: Optional[float] = None,
+            _field_type_: Optional[int] = None,
+            _distance_limit_: Optional[float] = None,
             recalculate: bool = True,
             invalidate_self: bool = True,
             allow_cache: bool = False
     ) -> None:
         """
         Sets the field. This will replace the currently set field in the model.
+        Any underscored parameter may be left set to None in order to load its default value.
 
-        Parameters may be left set to None in order to load their default value.
-
-        @param field_type: Field type
-        @param distance_limit: Distance limit
+        @param _field_type_: Field type
+        @param _distance_limit_: Distance limit
         @param recalculate: Enable to trigger final re-calculation
         @param invalidate_self: Enable to invalidate the old field before setting a new one
         @param allow_cache: Enable to select a field from the cache if it is available (based on the field type)
@@ -199,6 +190,8 @@ class Field_Widget(QGroupBox2):
 
         with ModelAccess(self.gui, recalculate):
 
+            field_type = self.gui.config.set_get_int("field_type", _field_type_)
+
             if allow_cache:
                 field = self.gui.model.get_valid_field(field_type)
             else:
@@ -208,8 +201,7 @@ class Field_Widget(QGroupBox2):
                 Debug(self, ".set_field(): Using cached field")
             else:
                 backend_type = self.gui.config.get_int("backend_type")
-                field_type = self.gui.config.set_get_int("field_type", field_type)
-                distance_limit = self.gui.config.set_get_float("field_distance_limit", distance_limit)
+                distance_limit = self.gui.config.set_get_float("field_distance_limit", _distance_limit_)
                 field = Field(backend_type, field_type, distance_limit, Metric.LengthScale)
 
             self.gui.model.set_field(
@@ -248,3 +240,5 @@ class Field_Widget(QGroupBox2):
 
         self.field_type_a_checkbox.setChecked(a_field_available)
         self.field_type_b_checkbox.setChecked(b_field_available)
+
+        self.indicate_valid(self.gui.model.field is not None and self.gui.model.field.is_valid())

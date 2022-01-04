@@ -2,221 +2,263 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Model.Model : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Model.Model</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Model.Model</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Model.html">Model</a></code><wbr></wbr>.<code><a href="magneticalc.Model.Model.html">Model</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Model.html" class="code" data-type="Module">Model</a></code>
-          
-          <a href="classIndex.html#magneticalc.Model.Model">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Model</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Model.Model">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Model class.</p><p>The model maintains a strict hierarchy of dependencies:  parameters &gt; metric &gt; field &gt; sampling volume &gt; wire When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).</p><p>Note: The model maintains a cache for fields of different types, with at most one selected ("active") field. Property decorators maintain coherency between the selected field type and the contents of the field cache. The currently selected field is accessed using the <a href="magneticalc.Model.Model.html#field"><code>field</code></a> property. Invalidating the currently selected field also invalidates all the other cached fields.</p></div>
+        <div><p>Model class.</p>
+<p>The model maintains a strict hierarchy of dependencies:  parameters &gt; metric &gt; field &gt; sampling volume &gt; wire When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).</p>
+<p>Note: The model maintains a cache for fields of different types, with at most one selected ("active") field. Property decorators maintain coherency between the selected field type and the contents of the field cache. The currently selected field is accessed using the <code><a href="#field">field</a></code> property. Invalidating the currently selected field also invalidates all the other cached fields.</p>
+</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id65">
+        <table class="children sortable" id="id68">
   
-  <tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initializes the model.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#gui" class="code" data-type="Instance Variable">gui</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#wire" class="code" data-type="Instance Variable">wire</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#sampling_volume" class="code" data-type="Instance Variable">sampling_volume</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#metric" class="code" data-type="Instance Variable">metric</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#parameters" class="code" data-type="Instance Variable">parameters</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#field" class="code" data-type="Method">field</a></td>
-    <td><span>Sets the currently selected field.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#get_valid_field" class="code" data-type="Method">get_valid_field</a></td>
-    <td><span>Gets a field if it is cached and valid.</span></td>
-  </tr><tr class="staticmethod">
+  
+  <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><a href="magneticalc.Model.Model.html#safe_valid" class="code" data-type="Static Method">safe_valid</a></td>
-    <td><span>Safely checks the validity state of a possibly uninitialized object within the model.</span></td>
+    <td><code><a href="#safe_valid">safe_valid</a></code></td>
+    <td>Safely checks the validity state of a possibly uninitialized object within the model.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#__str__" class="code" data-type="Method">__str__</a></td>
-    <td><span>Returns the model validity state as a string.</span></td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes the model.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#is_valid" class="code" data-type="Method">is_valid</a></td>
-    <td><span>Indicates valid data for display.</span></td>
+    <td><code><a href="#__str__">__str__</a></code></td>
+    <td>Returns the model validity state as a string.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#invalidate" class="code" data-type="Method">invalidate</a></td>
-    <td><span>Invalidates multiple modules at once, in descending order of hierarchy.</span></td>
+    <td><code><a href="#calculate_field">calculate_field</a></code></td>
+    <td>Calculates the field.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#set_wire" class="code" data-type="Method">set_wire</a></td>
-    <td><span>Sets the wire.</span></td>
+    <td><code><a href="#calculate_metric">calculate_metric</a></code></td>
+    <td>Calculates the metric.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#set_sampling_volume" class="code" data-type="Method">set_sampling_volume</a></td>
-    <td><span>Sets the sampling volume.</span></td>
+    <td><code><a href="#calculate_parameters">calculate_parameters</a></code></td>
+    <td>Calculates the parameters.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#set_field" class="code" data-type="Method">set_field</a></td>
-    <td><span>Sets the field.</span></td>
+    <td><code><a href="#calculate_sampling_volume">calculate_sampling_volume</a></code></td>
+    <td>Calculates the sampling volume.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#set_metric" class="code" data-type="Method">set_metric</a></td>
-    <td><span>Sets the metric.</span></td>
+    <td><code><a href="#calculate_wire">calculate_wire</a></code></td>
+    <td>Calculates the wire.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#set_parameters" class="code" data-type="Method">set_parameters</a></td>
-    <td><span>Sets the parameters.</span></td>
+    <td><code><a href="#field.setter">field.setter</a></code></td>
+    <td>Sets the currently selected field.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#calculate_wire" class="code" data-type="Method">calculate_wire</a></td>
-    <td><span>Calculates the wire.</span></td>
+    <td><code><a href="#get_summary">get_summary</a></code></td>
+    <td>Gets a list of (in)valid object names.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#calculate_sampling_volume" class="code" data-type="Method">calculate_sampling_volume</a></td>
-    <td><span>Calculates the sampling volume.</span></td>
+    <td><code><a href="#get_valid_field">get_valid_field</a></code></td>
+    <td>Gets a field if it is cached and valid.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#calculate_field" class="code" data-type="Method">calculate_field</a></td>
-    <td><span>Calculates the field.</span></td>
+    <td><code><a href="#invalidate">invalidate</a></code></td>
+    <td>Invalidates multiple modules at once, in descending order of hierarchy.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#calculate_metric" class="code" data-type="Method">calculate_metric</a></td>
-    <td><span>Calculates the metric.</span></td>
+    <td><code><a href="#is_valid">is_valid</a></code></td>
+    <td>Indicates valid data for display.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#calculate_parameters" class="code" data-type="Method">calculate_parameters</a></td>
-    <td><span>Calculates the parameters.</span></td>
+    <td><code><a href="#on_field_invalid">on_field_invalid</a></code></td>
+    <td>Gets called when the field was invalidated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_wire_valid" class="code" data-type="Method">on_wire_valid</a></td>
-    <td><span>Gets called when the wire was successfully calculated.</span></td>
+    <td><code><a href="#on_field_valid">on_field_valid</a></code></td>
+    <td>Gets called when the field was successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_sampling_volume_valid" class="code" data-type="Method">on_sampling_volume_valid</a></td>
-    <td><span>Gets called when the sampling volume was successfully calculated.</span></td>
+    <td><code><a href="#on_metric_invalid">on_metric_invalid</a></code></td>
+    <td>Gets called when the metric was invalidated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_field_valid" class="code" data-type="Method">on_field_valid</a></td>
-    <td><span>Gets called when the field was successfully calculated.</span></td>
+    <td><code><a href="#on_metric_valid">on_metric_valid</a></code></td>
+    <td>Gets called when the metric was successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_metric_valid" class="code" data-type="Method">on_metric_valid</a></td>
-    <td><span>Gets called when the metric was successfully calculated.</span></td>
+    <td><code><a href="#on_parameters_invalid">on_parameters_invalid</a></code></td>
+    <td>Gets called when the parameters were invalidated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_parameters_valid" class="code" data-type="Method">on_parameters_valid</a></td>
-    <td><span>Gets called when the parameters were successfully calculated.</span></td>
+    <td><code><a href="#on_parameters_valid">on_parameters_valid</a></code></td>
+    <td>Gets called when the parameters were successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_wire_invalid" class="code" data-type="Method">on_wire_invalid</a></td>
-    <td><span>Gets called when the wire was invalidated.</span></td>
+    <td><code><a href="#on_sampling_volume_invalid">on_sampling_volume_invalid</a></code></td>
+    <td>Gets called when the sampling volume was invalidated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_sampling_volume_invalid" class="code" data-type="Method">on_sampling_volume_invalid</a></td>
-    <td><span>Gets called when the sampling volume was invalidated.</span></td>
+    <td><code><a href="#on_sampling_volume_valid">on_sampling_volume_valid</a></code></td>
+    <td>Gets called when the sampling volume was successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_field_invalid" class="code" data-type="Method">on_field_invalid</a></td>
-    <td><span>Gets called when the field was invalidated.</span></td>
+    <td><code><a href="#on_wire_invalid">on_wire_invalid</a></code></td>
+    <td>Gets called when the wire was invalidated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_metric_invalid" class="code" data-type="Method">on_metric_invalid</a></td>
-    <td><span>Gets called when the metric was invalidated.</span></td>
+    <td><code><a href="#on_wire_valid">on_wire_valid</a></code></td>
+    <td>Gets called when the wire was successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Model.Model.html#on_parameters_invalid" class="code" data-type="Method">on_parameters_invalid</a></td>
-    <td><span>Gets called when the parameters were invalidated.</span></td>
-  </tr><tr class="instancevariable private">
+    <td><code><a href="#set_field">set_field</a></code></td>
+    <td>Sets the field.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_metric">set_metric</a></code></td>
+    <td>Sets the metric.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_parameters">set_parameters</a></code></td>
+    <td>Sets the parameters.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_sampling_volume">set_sampling_volume</a></code></td>
+    <td>Sets the sampling volume.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_wire">set_wire</a></code></td>
+    <td>Sets the wire.</td>
+  </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#_selected_field_type" class="code" data-type="Instance Variable">_selected_field_type</a></td>
+    <td><code><a href="#field">field</a></code></td>
+    <td>Returns the currently selected field if it is cached.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#gui">gui</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#metric">metric</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#parameters">parameters</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#sampling_volume">sampling_volume</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#wire">wire</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Model.Model.html#_field_cache" class="code" data-type="Instance Variable">_field_cache</a></td>
+    <td><code><a href="#_field_cache">_field_cache</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_selected_field_type">_selected_field_type</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -227,176 +269,8 @@
 
       <div id="childList">
 
-        <div class="basemethod">
+        <div class="basestaticmethod">
   
-  <a name="magneticalc.Model.Model.__init__">
-    
-  </a>
-  <a name="__init__">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    __init__(self, gui):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Initializes the model.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.wire">
-    
-  </a>
-  <a name="wire">
-    
-  </a>
-  <div class="functionHeader">
-    wire =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.sampling_volume">
-    
-  </a>
-  <a name="sampling_volume">
-    
-  </a>
-  <div class="functionHeader">
-    sampling_volume =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.metric">
-    
-  </a>
-  <a name="metric">
-    
-  </a>
-  <div class="functionHeader">
-    metric =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.Model.Model.parameters">
-    
-  </a>
-  <a name="parameters">
-    
-  </a>
-  <div class="functionHeader">
-    parameters =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Model.Model._selected_field_type">
-    
-  </a>
-  <a name="_selected_field_type">
-    
-  </a>
-  <div class="functionHeader">
-    _selected_field_type =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Model.Model._field_cache">
-    
-  </a>
-  <a name="_field_cache">
-    
-  </a>
-  <div class="functionHeader">
-    _field_cache =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>Dict[int, Field]</code>)
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.field">
-    
-  </a>
-  <a name="field">
-    
-  </a>
-  <div class="functionHeader">
-    @field.setter<br />
-    def
-    field(self, field):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the currently selected field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.get_valid_field">
-    
-  </a>
-  <a name="get_valid_field">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_valid_field(self, field_type):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets a field if it is cached and valid.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field_type</td><td>Field type</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Field if cached and valid, None otherwise</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod">
   
   <a name="magneticalc.Model.Model.safe_valid">
     
@@ -406,16 +280,35 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    safe_valid(obj):
+    <span class="py-keyword">def</span> <span class="py-defname">safe_valid</span>(obj):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Safely checks the validity state of a possibly uninitialized object within the model.</p></div>
+    <div>Safely checks the validity state of a possibly uninitialized object within the model.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">obj:</span><code>Any</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Initializes the model.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Model.Model.__str__">
     
@@ -425,187 +318,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __str__(self):
+    <span class="py-keyword">def</span> <span class="py-defname">__str__</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns the model validity state as a string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">String</td></tr></table></div>
+    <div>Returns the model validity state as a string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.is_valid">
-    
-  </a>
-  <a name="is_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    is_valid(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Indicates valid data for display.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if data is valid for display, False otherwise</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.invalidate">
-    
-  </a>
-  <a name="invalidate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    invalidate(self, do_wire=(False), do_sampling_volume=(False), do_field=(False), do_metric=(False), do_parameters=(False)):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Invalidates multiple modules at once, in descending order of hierarchy.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">do_wire</td><td>Enable to invalidate wire</td></tr><tr><td></td><td class="fieldArg">do_sampling_volume</td><td>Enable to invalidate sampling volume</td></tr><tr><td></td><td class="fieldArg">do_field</td><td>Enable to invalidate all fields (the currently selected field and all the other cached fields)</td></tr><tr><td></td><td class="fieldArg">do_metric</td><td>Enable to invalidate metric</td></tr><tr><td></td><td class="fieldArg">do_parameters</td><td>Enable to invalidate parameters</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.set_wire">
-    
-  </a>
-  <a name="set_wire">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_wire(self, wire, invalidate_self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the wire.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">wire</td><td>Wire</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.set_sampling_volume">
-    
-  </a>
-  <a name="set_sampling_volume">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_sampling_volume(self, sampling_volume, invalidate_self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">sampling_volume</td><td>Sampling volume</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.set_field">
-    
-  </a>
-  <a name="set_field">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_field(self, field, invalidate_self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">field</td><td>Field</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object (including the cache) before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.set_metric">
-    
-  </a>
-  <a name="set_metric">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_metric(self, metric, invalidate_self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">metric</td><td>Metric</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.set_parameters">
-    
-  </a>
-  <a name="set_parameters">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_parameters(self, parameters, invalidate_self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the parameters.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">parameters</td><td>Parameters</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old object before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.calculate_wire">
-    
-  </a>
-  <a name="calculate_wire">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    calculate_wire(self, progress_callback):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Calculates the wire.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Model.Model.calculate_sampling_volume">
-    
-  </a>
-  <a name="calculate_sampling_volume">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    calculate_sampling_volume(self, progress_callback):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Calculates the sampling volume.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Model.Model.calculate_field">
     
@@ -615,16 +337,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    calculate_field(self, progress_callback, num_cores):
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_field</span>(self, progress_callback, num_cores):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates the field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr><td></td><td class="fieldArg">num_cores</td><td>Number of CPU cores to use</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div>Calculates the field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">num_cores:</span><code>int</code></td><td class="fieldArgDesc">Number of CPU cores to use</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.Model.Model.calculate_metric">
     
@@ -634,16 +356,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    calculate_metric(self, progress_callback):
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_metric</span>(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates the metric.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
+    <div>Calculates the metric.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.Model.Model.calculate_parameters">
     
@@ -653,149 +375,149 @@
   </a>
   <div class="functionHeader">
     
-    def
-    calculate_parameters(self, progress_callback):
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_parameters</span>(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Calculates the parameters.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True (currently non-interruptable)</td></tr></table></div>
+    <div>Calculates the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_wire_valid">
+  
+  <a name="magneticalc.Model.Model.calculate_sampling_volume">
     
   </a>
-  <a name="on_wire_valid">
+  <a name="calculate_sampling_volume">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_wire_valid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_sampling_volume</span>(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the wire was successfully calculated.</p></div>
+    <div>Calculates the sampling volume.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_sampling_volume_valid">
+  
+  <a name="magneticalc.Model.Model.calculate_wire">
     
   </a>
-  <a name="on_sampling_volume_valid">
+  <a name="calculate_wire">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_sampling_volume_valid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_wire</span>(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the sampling volume was successfully calculated.</p></div>
+    <div>Calculates the wire.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_field_valid">
+  
+  <a name="magneticalc.Model.Model.field.setter">
     
   </a>
-  <a name="on_field_valid">
+  <a name="field.setter">
+    
+  </a>
+  <div class="functionHeader">
+    @<a href="#field.setter">field.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">field</span>(self, field):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the currently selected field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.get_summary">
+    
+  </a>
+  <a name="get_summary">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_field_valid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_summary</span>(self, valid):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the field was successfully calculated.</p></div>
+    <div>Gets a list of (in)valid object names.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">True returns names of valid objects, False returns names of invalid objects</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr>str]</code></td><td class="fieldArgDesc">List of strings</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_metric_valid">
+  
+  <a name="magneticalc.Model.Model.get_valid_field">
     
   </a>
-  <a name="on_metric_valid">
+  <a name="get_valid_field">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_metric_valid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_valid_field</span>(self, field_type):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the metric was successfully calculated.</p></div>
+    <div>Gets a field if it is cached and valid.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field_type:</span><code>int</code></td><td class="fieldArgDesc">Field type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Optional[<wbr></wbr>Field]</code></td><td class="fieldArgDesc">Field if cached and valid, None otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_parameters_valid">
+  
+  <a name="magneticalc.Model.Model.invalidate">
     
   </a>
-  <a name="on_parameters_valid">
+  <a name="invalidate">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_parameters_valid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self, do_wire=False, do_sampling_volume=False, do_field=False, do_metric=False, do_parameters=False):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the parameters were successfully calculated.</p></div>
+    <div>Invalidates multiple modules at once, in descending order of hierarchy.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">do_wire:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate wire</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">do_sampling_volume:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate sampling volume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">do_field:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate all fields (the currently selected field and all the other cached fields)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">do_metric:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate metric</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">do_parameters:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate parameters</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_wire_invalid">
+  
+  <a name="magneticalc.Model.Model.is_valid">
     
   </a>
-  <a name="on_wire_invalid">
+  <a name="is_valid">
     
   </a>
   <div class="functionHeader">
     
-    def
-    on_wire_invalid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">is_valid</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the wire was invalidated.</p></div>
+    <div>Indicates valid data for display.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if data is valid for display, False otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Model.Model.on_sampling_volume_invalid">
-    
-  </a>
-  <a name="on_sampling_volume_invalid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    on_sampling_volume_invalid(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets called when the sampling volume was invalidated.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Model.Model.on_field_invalid">
     
@@ -805,16 +527,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    on_field_invalid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">on_field_invalid</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the field was invalidated.</p></div>
+    <div>Gets called when the field was invalidated.</div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_field_valid">
+    
+  </a>
+  <a name="on_field_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_field_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the field was successfully calculated.</div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Model.Model.on_metric_invalid">
     
@@ -824,16 +565,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    on_metric_invalid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">on_metric_invalid</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the metric was invalidated.</p></div>
+    <div>Gets called when the metric was invalidated.</div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_metric_valid">
+    
+  </a>
+  <a name="on_metric_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_metric_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the metric was successfully calculated.</div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Model.Model.on_parameters_invalid">
     
@@ -843,23 +603,377 @@
   </a>
   <div class="functionHeader">
     
-    def
-    on_parameters_invalid(self):
+    <span class="py-keyword">def</span> <span class="py-defname">on_parameters_invalid</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets called when the parameters were invalidated.</p></div>
+    <div>Gets called when the parameters were invalidated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_parameters_valid">
+    
+  </a>
+  <a name="on_parameters_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_parameters_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the parameters were successfully calculated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_sampling_volume_invalid">
+    
+  </a>
+  <a name="on_sampling_volume_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_sampling_volume_invalid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the sampling volume was invalidated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_sampling_volume_valid">
+    
+  </a>
+  <a name="on_sampling_volume_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_sampling_volume_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the sampling volume was successfully calculated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_wire_invalid">
+    
+  </a>
+  <a name="on_wire_invalid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_wire_invalid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the wire was invalidated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.on_wire_valid">
+    
+  </a>
+  <a name="on_wire_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_wire_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the wire was successfully calculated.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.set_field">
+    
+  </a>
+  <a name="set_field">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_field</span>(self, field, invalidate_self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old object (including the cache) before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.set_metric">
+    
+  </a>
+  <a name="set_metric">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_metric</span>(self, metric, invalidate_self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the metric.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">metric:</span><code>Metric</code></td><td class="fieldArgDesc">Metric</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old object before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.set_parameters">
+    
+  </a>
+  <a name="set_parameters">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_parameters</span>(self, parameters, invalidate_self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parameters:</span><code>Parameters</code></td><td class="fieldArgDesc">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old object before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.set_sampling_volume">
+    
+  </a>
+  <a name="set_sampling_volume">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_sampling_volume</span>(self, sampling_volume, invalidate_self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the sampling volume.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">Sampling volume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old object before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Model.Model.set_wire">
+    
+  </a>
+  <a name="set_wire">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_wire</span>(self, wire, invalidate_self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the wire.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">wire:</span><code>Wire</code></td><td class="fieldArgDesc">Wire</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old object before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.field">
+    
+  </a>
+  <a name="field">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">field</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns the currently selected field if it is cached.</div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.metric">
+    
+  </a>
+  <a name="metric">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">metric</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.parameters">
+    
+  </a>
+  <a name="parameters">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">parameters</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.sampling_volume">
+    
+  </a>
+  <a name="sampling_volume">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">sampling_volume</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Model.Model.wire">
+    
+  </a>
+  <a name="wire">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">wire</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Model.Model._field_cache">
+    
+  </a>
+  <a name="_field_cache">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_field_cache</span>: <code>Dict[<wbr></wbr>int, <wbr></wbr>Field]</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Model.Model._selected_field_type">
+    
+  </a>
+  <a name="_selected_field_type">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_selected_field_type</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

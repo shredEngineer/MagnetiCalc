@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -19,21 +19,17 @@
 from __future__ import annotations
 import numpy as np
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QCheckBox, QComboBox, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QCheckBox, QComboBox, QHBoxLayout, QVBoxLayout, QMessageBox, QSizePolicy
 from magneticalc.QMessageBox2 import QMessageBox2
 from magneticalc.Debug import Debug
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
 from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QLabel2 import QLabel2
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
 from magneticalc.QSliderFloat import QSliderFloat
 from magneticalc.Theme import Theme
 from magneticalc.VispyCanvas import VispyCanvas
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Display_Widget(QGroupBox2):
@@ -56,7 +52,10 @@ class Display_Widget(QGroupBox2):
     # Warn about displaying an excessive number of field labels
     ExcessiveFieldLabelThreshold = 250
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -90,9 +89,7 @@ class Display_Widget(QGroupBox2):
         field_arrow_scale_layout_left = QVBoxLayout()
         field_arrow_scale_layout_right = QVBoxLayout()
 
-        field_arrow_head_scale_label = QLabel("Head:")
-        field_arrow_head_scale_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        field_arrow_scale_layout_left.addWidget(field_arrow_head_scale_label, alignment=Qt.AlignVCenter)
+        field_arrow_scale_layout_left.addWidget(QLabel2("Head:", expand=False))
         self.field_arrow_head_scale_slider = QSliderFloat(Qt.Horizontal)
         self.field_arrow_head_scale_slider.set_range_step(
             self.FieldArrowHeadScaleMinimum,
@@ -103,11 +100,9 @@ class Display_Widget(QGroupBox2):
         self.field_arrow_head_scale_slider.valueChanged.connect(
             lambda: self.set_field_arrow_head_scale(self.field_arrow_head_scale_slider.get_value())
         )
-        field_arrow_scale_layout_right.addWidget(self.field_arrow_head_scale_slider, alignment=Qt.AlignVCenter)
+        field_arrow_scale_layout_right.addWidget(self.field_arrow_head_scale_slider)
 
-        field_arrow_line_scale_label = QLabel("Line:")
-        field_arrow_line_scale_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        field_arrow_scale_layout_left.addWidget(field_arrow_line_scale_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
+        field_arrow_scale_layout_left.addWidget(QLabel2("Line:", expand=False))
         self.field_arrow_line_scale_slider = QSliderFloat(Qt.Horizontal)
         self.field_arrow_line_scale_slider.set_range_step(
             self.FieldArrowLineScaleMinimum,
@@ -118,7 +113,7 @@ class Display_Widget(QGroupBox2):
         self.field_arrow_line_scale_slider.valueChanged.connect(
             lambda: self.set_field_arrow_line_scale(self.field_arrow_line_scale_slider.get_value())
         )
-        field_arrow_scale_layout_right.addWidget(self.field_arrow_line_scale_slider, alignment=Qt.AlignVCenter)
+        field_arrow_scale_layout_right.addWidget(self.field_arrow_line_scale_slider)
 
         field_arrow_scale_layout = QHBoxLayout()
         field_arrow_scale_layout.addLayout(field_arrow_scale_layout_left)
@@ -155,22 +150,17 @@ class Display_Widget(QGroupBox2):
         self.addWidget(self.display_field_magnitude_labels_checkbox)
 
         self.field_label_resolution_combobox = QComboBox()
+        self.field_label_resolution_combobox.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.field_label_resolution_combobox_connection = None
         field_label_resolution_layout = QHBoxLayout()
-        field_label_resolution_layout.addWidget(self.field_label_resolution_combobox, alignment=Qt.AlignVCenter)
-        field_label_resolution_units_label = QLabel(" Labels / cm")
-        field_label_resolution_units_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        field_label_resolution_layout.addWidget(field_label_resolution_units_label, alignment=Qt.AlignVCenter)
+        field_label_resolution_layout.addWidget(self.field_label_resolution_combobox)
+        field_label_resolution_layout.addWidget(QLabel2(" Labels / cm", expand=False))
         self.addLayout(field_label_resolution_layout)
 
         total_labels_layout = QHBoxLayout()
-        total_labels_left = QLabel("Total labels:")
-        total_labels_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.total_labels_label = QLabel("N/A")
-        self.total_labels_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.total_labels_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        total_labels_layout.addWidget(total_labels_left, alignment=Qt.AlignVCenter)
-        total_labels_layout.addWidget(self.total_labels_label, alignment=Qt.AlignVCenter)
+        self.total_labels_label = QLabel2("N/A", color=Theme.MainColor, align_right=True)
+        total_labels_layout.addWidget(QLabel2("Total labels:", italic=True, color=Theme.LiteColor))
+        total_labels_layout.addWidget(self.total_labels_label)
         self.addLayout(total_labels_layout)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -197,11 +187,9 @@ class Display_Widget(QGroupBox2):
 
         self.update()
 
-    # ------------------------------------------------------------------------------------------------------------------
-
     def set_enabled(self, enabled: bool) -> None:
         """
-        Enables / disables this widget.
+        Enables/disables this widget.
 
         @param enabled: Enabled state
         """
@@ -257,6 +245,8 @@ class Display_Widget(QGroupBox2):
         self.gui.config.set_float("field_boost", value)
         self.gui.redraw()
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def set_display_field_magnitude_labels(self, value: bool) -> None:
         """
         Sets field label "Display Magnitude" value.
@@ -283,11 +273,79 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.sidebar_left.sampling_volume_widget.set_sampling_volume(label_resolution_exponent=value)
+        self.gui.sidebar_left.sampling_volume_widget.set_sampling_volume(_label_resolution_exponent_=value)
 
         # Note: L{prevent_excessive_field_labels(choice=False)} will be called by L{Model.on_sampling_volume_valid()}.
 
         self.gui.redraw()
+
+    def disable_field_labels(self) -> None:
+        """
+        Disables field labels.
+        """
+        Debug(self, ".disable_field_labels()")
+
+        self.gui.config.set_bool("display_field_magnitude_labels", False)
+
+        previous_signals_blocked = self.signalsBlocked()
+        self.blockSignals(True)
+        self.display_field_magnitude_labels_checkbox.setChecked(False)
+        self.blockSignals(previous_signals_blocked)
+
+    def prevent_excessive_field_labels(self, choice: bool) -> None:
+        """
+        Prevents displaying an excessive number of field labels.
+
+        @param choice: True lets the user choose; False disables field labels if there is an excessive number of them
+        """
+        Debug(self, f".prevent_excessive_field_labels(choice={choice})")
+
+        if not self.gui.config.get_bool("display_field_magnitude_labels"):
+            return
+
+        if not self.gui.model.sampling_volume.is_valid():
+            return
+
+        if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelThreshold:
+            return
+
+        if choice:
+            text = (
+                "You are about to display an excessive number of field labels. "
+                "This will be very slow and cannot be interrupted.\n\n"
+                "DO YOU WANT TO DISPLAY FIELD LABELS ANYWAY?\n\n"
+                "Choosing 'No' will disable field labels immediately.\n\n"
+                "Please consider the following before choosing 'Yes':\n"
+                "– Save your work first.\n"
+                "– Decrease sampling volume resolution.\n"
+                "– Decrease field label resolution."
+            )
+            messagebox = QMessageBox2(
+                title="Excessive Number Of Field Labels",
+                text=text,
+                icon=QMessageBox.Question,
+                buttons=QMessageBox.Yes | QMessageBox.No,
+                default_button=QMessageBox.No
+            )
+            if messagebox.choice == QMessageBox.No:
+                self.disable_field_labels()
+
+        else:
+
+            self.disable_field_labels()
+
+            text = (
+                "Field labels were disabled automatically because\n"
+                "an excessive number of field labels was detected.\n\n"
+                "You may manually re-enable field labels after all calculations have finished."
+            )
+            QMessageBox2(
+                title="Excessive Number Of Field Labels",
+                text=text,
+                icon=QMessageBox.Information,
+                buttons=QMessageBox.Ok,
+                default_button=QMessageBox.Ok
+            )
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -368,75 +426,3 @@ class Display_Widget(QGroupBox2):
                 self.field_label_resolution_combobox.setCurrentIndex(i)
 
         self.blockSignals(False)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def disable_field_labels(self) -> None:
-        """
-        Disables field labels.
-        """
-        Debug(self, ".disable_field_labels()")
-
-        self.gui.config.set_bool("display_field_magnitude_labels", False)
-
-        previous_signals_blocked = self.signalsBlocked()
-        self.blockSignals(True)
-        self.display_field_magnitude_labels_checkbox.setChecked(False)
-        self.blockSignals(previous_signals_blocked)
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def prevent_excessive_field_labels(self, choice: bool) -> None:
-        """
-        Prevents displaying an excessive number of field labels.
-
-        @param choice: True lets the user choose; False disables field labels if there is an excessive number of them
-        """
-        Debug(self, f".prevent_excessive_field_labels(choice={choice})")
-
-        if not self.gui.config.get_bool("display_field_magnitude_labels"):
-            return
-
-        if not self.gui.model.sampling_volume.is_valid():
-            return
-
-        if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelThreshold:
-            return
-
-        if choice:
-            text = (
-                "You are about to display an excessive number of field labels. "
-                "This will be very slow and cannot be interrupted.\n\n"
-                "DO YOU WANT TO DISPLAY FIELD LABELS ANYWAY?\n\n"
-                "Choosing 'No' will disable field labels immediately.\n\n"
-                "Please consider the following before choosing 'Yes':\n"
-                "– Save your work first.\n"
-                "– Decrease sampling volume resolution.\n"
-                "– Decrease field label resolution."
-            )
-            messagebox = QMessageBox2(
-                title="Excessive Number Of Field Labels",
-                text=text,
-                icon=QMessageBox.Question,
-                buttons=QMessageBox.Yes | QMessageBox.No,
-                default_button=QMessageBox.No
-            )
-            if messagebox.choice == QMessageBox.No:
-                self.disable_field_labels()
-
-        else:
-
-            self.disable_field_labels()
-
-            text = (
-                "Field labels were disabled automatically because\n"
-                "an excessive number of field labels was detected.\n\n"
-                "You may manually re-enable field labels after all calculations have finished."
-            )
-            QMessageBox2(
-                title="Excessive Number Of Field Labels",
-                text=text,
-                icon=QMessageBox.Information,
-                buttons=QMessageBox.Ok,
-                default_button=QMessageBox.Ok
-            )

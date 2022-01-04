@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -22,11 +22,6 @@ from multiprocessing import cpu_count
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class CalculationThread(QThread):
     """
@@ -45,7 +40,10 @@ class CalculationThread(QThread):
     _metric_valid = pyqtSignal()
     _parameters_valid = pyqtSignal()
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Initializes calculation thread.
 
@@ -84,7 +82,7 @@ class CalculationThread(QThread):
         with ModelAccess(self.gui, recalculate=False):
 
             if not self.gui.model.wire.is_valid():
-                self.gui.calculation_status.emit("Calculating Wire Segments...")
+                self.gui.calculation_status.emit("Calculating Wire Segments … (1/5)")
 
                 if not self.gui.model.calculate_wire(self.progress_callback):
                     self.on_finished(False)
@@ -96,7 +94,7 @@ class CalculationThread(QThread):
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
             if not self.gui.model.sampling_volume.is_valid():
-                self.gui.calculation_status.emit("Calculating Sampling Volume...")
+                self.gui.calculation_status.emit("Calculating Sampling Volume … (2/5)")
 
                 if not self.gui.model.calculate_sampling_volume(self.progress_callback):
                     self.on_finished(False)
@@ -108,7 +106,7 @@ class CalculationThread(QThread):
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
             if not self.gui.model.field.is_valid():
-                self.gui.calculation_status.emit("Calculating Field...")
+                self.gui.calculation_status.emit("Calculating Field … (3/5)")
 
                 num_cores = self.gui.config.get_int("num_cores")
                 if num_cores == 0:
@@ -127,7 +125,7 @@ class CalculationThread(QThread):
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
             if not self.gui.model.metric.is_valid():
-                self.gui.calculation_status.emit("Calculating Metric...")
+                self.gui.calculation_status.emit("Calculating Metric … (4/5)")
 
                 if not self.gui.model.calculate_metric(self.progress_callback):
                     self.on_finished(False)
@@ -139,7 +137,7 @@ class CalculationThread(QThread):
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
             if not self.gui.model.parameters.is_valid():
-                self.gui.calculation_status.emit("Calculating Parameters...")
+                self.gui.calculation_status.emit("Calculating Parameters … (5/5)")
 
                 if not self.gui.model.calculate_parameters(self.progress_callback):
                     self.on_finished(False)

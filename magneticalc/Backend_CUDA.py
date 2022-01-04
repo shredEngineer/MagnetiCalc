@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -209,7 +209,7 @@ class Backend_CUDA:
             TPB = 1024   # Maximum threads per block
             BPG = 65536  # Maximum blocks per grid
 
-            Backend_CUDA.worker[BPG, TPB](
+            Backend_CUDA.worker[BPG, TPB](  # type: ignore
                 self._field_type,
                 self._distance_limit,
                 self._length_scale,

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Optional
+from magneticalc.Assert_Dialog import Assert_Dialog
 
 
 NORM_TYPE_X = 0
@@ -53,22 +53,33 @@ Norm_Types_Str_Map = {
 }
 
 
-def norm_type_to_str(norm_type: int) -> Optional[str]:
+Norm_Types_Fallback = NORM_TYPE_X
+
+
+def norm_type_to_str(norm_type: int) -> str:
     """
     Converts a norm type to a norm string.
 
     @param norm_type: Norm type
-    @return: Norm string, or None if norm type is invalid
+    @return: Norm string
     """
-    return Norm_Types_Str_Map.get(norm_type, None)
+    if norm_type in Norm_Types_Str_Map:
+        return Norm_Types_Str_Map.get(norm_type, "")
+    else:
+        Assert_Dialog(False, f"Invalid norm type: Defaulting to \"{Norm_Types_Str_Map[Norm_Types_Fallback]}\"")
+        return Norm_Types_Str_Map[Norm_Types_Fallback]
 
 
-def norm_type_from_str(norm_str: str) -> Optional[int]:
+def norm_type_from_str(norm_str: str) -> int:
     """
     Converts a norm string to a norm type.
 
     @param norm_str: Norm string
-    @return Norm type, or None if norm string is invalid
+    @return Norm type
     """
     result = [_norm_type for _norm_type, _norm_str in Norm_Types_Str_Map.items() if _norm_str == norm_str]
-    return result[0] if len(result) == 1 else None
+    if len(result) == 1:
+        return result[0]
+    else:
+        Assert_Dialog(False, f"Invalid norm string: Defaulting to \"{Norm_Types_Str_Map[Norm_Types_Fallback]}\"")
+        return Norm_Types_Fallback

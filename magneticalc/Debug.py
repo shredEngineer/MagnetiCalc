@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -37,6 +37,22 @@ class Debug:
 
     # Block debug output from specific classes
     Blacklist = [
+        "About_Dialog",
+        "CheckForUpdates_Dialog",
+        "Constraint_Editor",
+        "Display_Widget",
+        "ExportContainer_Dialog",
+        "Field_Widget",
+        "Metric_Widget",
+        "ModelAccess",
+        "OverridePadding_Dialog",
+        "Parameters_Widget",
+        "Perspective_Widget",
+        "QTableWidget2",
+        "SamplingVolume_Widget",
+        "Usage_Dialog",
+        "VispyCanvas",
+        "Wire_Widget",
     ]
 
     def __init__(
@@ -61,7 +77,7 @@ class Debug:
         @param error: Enable to set color=ErrorColor and force=True
         """
         if isclass(obj):
-            # Called from within class method, i.e. Debug(self, ...)
+            # Called from within class method, i.e. Debug(self, …)
             name = obj.__name__
         else:
             # Called from within instance / static method
@@ -78,7 +94,7 @@ class Debug:
         # A class may specify its own default color
         if color is None:
             if hasattr(obj, "DebugColor"):
-                color = obj.DebugColor
+                color = obj.DebugColor  # type: ignore
             else:
                 color = ""
 

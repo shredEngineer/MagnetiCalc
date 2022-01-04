@@ -4,7 +4,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -38,7 +38,7 @@ def main() -> None:
     print(Version.Copyright)
     print(Version.License)
     print()
-    print("JIT is " + ("enabled" if get_jit_enabled() else "disabled"))
+    print("JIT " + ("Enabled" if get_jit_enabled() else "Disabled"))
     print()
 
     app = QApplication(sys.argv)

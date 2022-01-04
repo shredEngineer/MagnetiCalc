@@ -2,307 +2,336 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.VispyCanvas.VispyCanvas : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.VispyCanvas.VispyCanvas</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.VispyCanvas.VispyCanvas(<span title="vispy.scene.SceneCanvas">scene.SceneCanvas</span>)</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.VispyCanvas.html">VispyCanvas</a></code><wbr></wbr>.<code><a href="magneticalc.VispyCanvas.VispyCanvas.html">VispyCanvas</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.VispyCanvas.html" class="code" data-type="Module">VispyCanvas</a></code>
-          
-          <a href="classIndex.html#magneticalc.VispyCanvas.VispyCanvas">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">VispyCanvas</span>(<span title="vispy.scene.SceneCanvas">scene.SceneCanvas</span>):</code></p>
+        <p><a href="classIndex.html#magneticalc.VispyCanvas.VispyCanvas">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>VispyCanvas class.</p></div>
+        <div>VispyCanvas class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id133">
+        <table class="children sortable" id="id143">
   
-  <tr class="classvariable">
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initialize VisPy canvas.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#create_field_labels">create_field_labels</a></code></td>
+    <td>Creates field labels.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#delete_field_labels">delete_field_labels</a></code></td>
+    <td>Deletes the field labels.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#load_perspective">load_perspective</a></code></td>
+    <td>Loads perspective from configuration.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_perspective_changed">on_perspective_changed</a></code></td>
+    <td>Handles a change of perspective.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw">redraw</a></code></td>
+    <td>Re-draws the entire scene.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_field_arrows">redraw_field_arrows</a></code></td>
+    <td>Re-draws field arrows.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_field_labels">redraw_field_labels</a></code></td>
+    <td>Re-draws field labels.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_field_points">redraw_field_points</a></code></td>
+    <td>Re-draws field points.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_perspective_info">redraw_perspective_info</a></code></td>
+    <td>Re-draws the perspective info text.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_wire_points_selected">redraw_wire_points_selected</a></code></td>
+    <td>Re-draws selected wire base points.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_wire_points_sliced">redraw_wire_points_sliced</a></code></td>
+    <td>Re-draws sliced wire points.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#redraw_wire_segments">redraw_wire_segments</a></code></td>
+    <td>Re-draws wire segments.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#save_image">save_image</a></code></td>
+    <td>Saves the currently displayed scene to PNG file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_visible">set_visible</a></code></td>
+    <td>Sets some visual's visibility.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_color_scheme">update_color_scheme</a></code></td>
+    <td>Updates the color scheme.</td>
+  </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#DefaultFontSize" class="code" data-type="Class Variable">DefaultFontSize</a></td>
+    <td><code><a href="#Black">Black</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#DebugVisuals" class="code" data-type="Class Variable">DebugVisuals</a></td>
+    <td><code><a href="#DebugPerspective">DebugPerspective</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#DebugPerspective" class="code" data-type="Class Variable">DebugPerspective</a></td>
+    <td><code><a href="#DebugVisuals">DebugVisuals</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#White" class="code" data-type="Class Variable">White</a></td>
+    <td><code><a href="#DefaultFontSize">DefaultFontSize</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#Black" class="code" data-type="Class Variable">Black</a></td>
+    <td><code><a href="#FieldArrowHeadSize">FieldArrowHeadSize</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#FieldArrowHeadSize" class="code" data-type="Class Variable">FieldArrowHeadSize</a></td>
+    <td><code><a href="#FieldPointSize">FieldPointSize</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#FieldPointSize" class="code" data-type="Class Variable">FieldPointSize</a></td>
+    <td><code><a href="#MagnitudeLimit">MagnitudeLimit</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#WirePointSize" class="code" data-type="Class Variable">WirePointSize</a></td>
+    <td><code><a href="#MagnitudePrecision">MagnitudePrecision</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#WirePointSelectedSize" class="code" data-type="Class Variable">WirePointSelectedSize</a></td>
+    <td><code><a href="#ScaleFactorMax">ScaleFactorMax</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#WirePointSelectedColor" class="code" data-type="Class Variable">WirePointSelectedColor</a></td>
+    <td><code><a href="#ScaleFactorMin">ScaleFactorMin</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#ScaleFactorMin" class="code" data-type="Class Variable">ScaleFactorMin</a></td>
+    <td><code><a href="#White">White</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#ScaleFactorMax" class="code" data-type="Class Variable">ScaleFactorMax</a></td>
+    <td><code><a href="#WirePointSelectedColor">WirePointSelectedColor</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#MagnitudeLimit" class="code" data-type="Class Variable">MagnitudeLimit</a></td>
+    <td><code><a href="#WirePointSelectedSize">WirePointSelectedSize</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#MagnitudePrecision" class="code" data-type="Class Variable">MagnitudePrecision</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initialize VisPy canvas.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><code><a href="#WirePointSize">WirePointSize</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_start_time" class="code" data-type="Instance Variable">redraw_start_time</a></td>
+    <td><code><a href="#background">background</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#view_main" class="code" data-type="Instance Variable">view_main</a></td>
+    <td><code><a href="#bgcolor">bgcolor</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#view_text" class="code" data-type="Instance Variable">view_text</a></td>
+    <td><code><a href="#font_manager">font_manager</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#font_manager" class="code" data-type="Instance Variable">font_manager</a></td>
+    <td><code><a href="#foreground">foreground</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_perspective_info" class="code" data-type="Instance Variable">visual_perspective_info</a></td>
+    <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_field_labels" class="code" data-type="Instance Variable">visual_field_labels</a></td>
+    <td><code><a href="#initializing">initializing</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_coordinate_system" class="code" data-type="Instance Variable">visual_coordinate_system</a></td>
+    <td><code><a href="#redraw_start_time">redraw_start_time</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_wire_segments" class="code" data-type="Instance Variable">visual_wire_segments</a></td>
+    <td><code><a href="#signals_blocked">signals_blocked</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_wire_points_selected" class="code" data-type="Instance Variable">visual_wire_points_selected</a></td>
+    <td><code><a href="#super_perspective_changed">super_perspective_changed</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_wire_points_sliced" class="code" data-type="Instance Variable">visual_wire_points_sliced</a></td>
+    <td><code><a href="#view_main">view_main</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_field_points" class="code" data-type="Instance Variable">visual_field_points</a></td>
+    <td><code><a href="#view_text">view_text</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_field_arrow_lines" class="code" data-type="Instance Variable">visual_field_arrow_lines</a></td>
+    <td><code><a href="#visual_coordinate_system">visual_coordinate_system</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_field_arrow_heads" class="code" data-type="Instance Variable">visual_field_arrow_heads</a></td>
+    <td><code><a href="#visual_field_arrow_heads">visual_field_arrow_heads</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#foreground" class="code" data-type="Instance Variable">foreground</a></td>
+    <td><code><a href="#visual_field_arrow_lines">visual_field_arrow_lines</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#background" class="code" data-type="Instance Variable">background</a></td>
+    <td><code><a href="#visual_field_labels">visual_field_labels</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#initializing" class="code" data-type="Instance Variable">initializing</a></td>
+    <td><code><a href="#visual_field_points">visual_field_points</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#visual_startup_info" class="code" data-type="Instance Variable">visual_startup_info</a></td>
+    <td><code><a href="#visual_perspective_info">visual_perspective_info</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#signals_blocked" class="code" data-type="Instance Variable">signals_blocked</a></td>
+    <td><code><a href="#visual_startup_info">visual_startup_info</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#super_perspective_changed" class="code" data-type="Instance Variable">super_perspective_changed</a></td>
+    <td><code><a href="#visual_wire_points_selected">visual_wire_points_selected</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#update_color_scheme" class="code" data-type="Method">update_color_scheme</a></td>
-    <td><span>Updates the color scheme.</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#bgcolor" class="code" data-type="Instance Variable">bgcolor</a></td>
+    <td><code><a href="#visual_wire_points_sliced">visual_wire_points_sliced</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
+  </tr><tr class="instancevariable">
     
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#set_visible" class="code" data-type="Method">set_visible</a></td>
-    <td><span>Sets some visual's visibility.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#load_perspective" class="code" data-type="Method">load_perspective</a></td>
-    <td><span>Loads perspective from configuration.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#on_perspective_changed" class="code" data-type="Method">on_perspective_changed</a></td>
-    <td><span>Handles a change of perspective.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_perspective_info" class="code" data-type="Method">redraw_perspective_info</a></td>
-    <td><span>Re-draws the perspective info text.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw" class="code" data-type="Method">redraw</a></td>
-    <td><span>Re-draws the entire scene.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_segments" class="code" data-type="Method">redraw_wire_segments</a></td>
-    <td><span>Re-draws wire segments.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_points_sliced" class="code" data-type="Method">redraw_wire_points_sliced</a></td>
-    <td><span>Re-draws sliced wire points.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_wire_points_selected" class="code" data-type="Method">redraw_wire_points_selected</a></td>
-    <td><span>Re-draws selected wire base points.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_field_arrows" class="code" data-type="Method">redraw_field_arrows</a></td>
-    <td><span>Re-draws field arrows.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_field_points" class="code" data-type="Method">redraw_field_points</a></td>
-    <td><span>Re-draws field points.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#create_field_labels" class="code" data-type="Method">create_field_labels</a></td>
-    <td><span>Creates field labels.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#delete_field_labels" class="code" data-type="Method">delete_field_labels</a></td>
-    <td><span>Deletes the field labels.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#redraw_field_labels" class="code" data-type="Method">redraw_field_labels</a></td>
-    <td><span>Re-draws field labels.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.VispyCanvas.VispyCanvas.html#save_image" class="code" data-type="Method">save_image</a></td>
-    <td><span>Saves the currently displayed scene to PNG file.</span></td>
+    <td>Instance Variable</td>
+    <td><code><a href="#visual_wire_segments">visual_wire_segments</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -312,231 +341,8 @@
 
       <div id="childList">
 
-        <div class="baseclassvariable">
+        <div class="basemethod">
   
-  <a name="magneticalc.VispyCanvas.VispyCanvas.DefaultFontSize">
-    
-  </a>
-  <a name="DefaultFontSize">
-    
-  </a>
-  <div class="functionHeader">
-    DefaultFontSize =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.DebugVisuals">
-    
-  </a>
-  <a name="DebugVisuals">
-    
-  </a>
-  <div class="functionHeader">
-    DebugVisuals =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.DebugPerspective">
-    
-  </a>
-  <a name="DebugPerspective">
-    
-  </a>
-  <div class="functionHeader">
-    DebugPerspective =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.White">
-    
-  </a>
-  <a name="White">
-    
-  </a>
-  <div class="functionHeader">
-    White =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.Black">
-    
-  </a>
-  <a name="Black">
-    
-  </a>
-  <div class="functionHeader">
-    Black =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.FieldArrowHeadSize">
-    
-  </a>
-  <a name="FieldArrowHeadSize">
-    
-  </a>
-  <div class="functionHeader">
-    FieldArrowHeadSize =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.FieldPointSize">
-    
-  </a>
-  <a name="FieldPointSize">
-    
-  </a>
-  <div class="functionHeader">
-    FieldPointSize =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSize">
-    
-  </a>
-  <a name="WirePointSize">
-    
-  </a>
-  <div class="functionHeader">
-    WirePointSize =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedSize">
-    
-  </a>
-  <a name="WirePointSelectedSize">
-    
-  </a>
-  <div class="functionHeader">
-    WirePointSelectedSize =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedColor">
-    
-  </a>
-  <a name="WirePointSelectedColor">
-    
-  </a>
-  <div class="functionHeader">
-    WirePointSelectedColor =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>Tuple[int, ...]</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.ScaleFactorMin">
-    
-  </a>
-  <a name="ScaleFactorMin">
-    
-  </a>
-  <div class="functionHeader">
-    ScaleFactorMin =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.ScaleFactorMax">
-    
-  </a>
-  <a name="ScaleFactorMax">
-    
-  </a>
-  <div class="functionHeader">
-    ScaleFactorMax =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.MagnitudeLimit">
-    
-  </a>
-  <a name="MagnitudeLimit">
-    
-  </a>
-  <div class="functionHeader">
-    MagnitudeLimit =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.MagnitudePrecision">
-    
-  </a>
-  <a name="MagnitudePrecision">
-    
-  </a>
-  <div class="functionHeader">
-    MagnitudePrecision =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.VispyCanvas.VispyCanvas.__init__">
     
@@ -546,561 +352,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, gui):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Initialize VisPy canvas.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_start_time">
-    
-  </a>
-  <a name="redraw_start_time">
-    
-  </a>
-  <div class="functionHeader">
-    redraw_start_time =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.view_main">
-    
-  </a>
-  <a name="view_main">
-    
-  </a>
-  <div class="functionHeader">
-    view_main =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.view_text">
-    
-  </a>
-  <a name="view_text">
-    
-  </a>
-  <div class="functionHeader">
-    view_text =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.font_manager">
-    
-  </a>
-  <a name="font_manager">
-    
-  </a>
-  <div class="functionHeader">
-    font_manager =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_perspective_info">
-    
-  </a>
-  <a name="visual_perspective_info">
-    
-  </a>
-  <div class="functionHeader">
-    visual_perspective_info =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_labels">
-    
-  </a>
-  <a name="visual_field_labels">
-    
-  </a>
-  <div class="functionHeader">
-    visual_field_labels =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>List</code>)
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_coordinate_system">
-    
-  </a>
-  <a name="visual_coordinate_system">
-    
-  </a>
-  <div class="functionHeader">
-    visual_coordinate_system =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_segments">
-    
-  </a>
-  <a name="visual_wire_segments">
-    
-  </a>
-  <div class="functionHeader">
-    visual_wire_segments =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_selected">
-    
-  </a>
-  <a name="visual_wire_points_selected">
-    
-  </a>
-  <div class="functionHeader">
-    visual_wire_points_selected =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_sliced">
-    
-  </a>
-  <a name="visual_wire_points_sliced">
-    
-  </a>
-  <div class="functionHeader">
-    visual_wire_points_sliced =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_points">
-    
-  </a>
-  <a name="visual_field_points">
-    
-  </a>
-  <div class="functionHeader">
-    visual_field_points =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_arrow_lines">
-    
-  </a>
-  <a name="visual_field_arrow_lines">
-    
-  </a>
-  <div class="functionHeader">
-    visual_field_arrow_lines =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_arrow_heads">
-    
-  </a>
-  <a name="visual_field_arrow_heads">
-    
-  </a>
-  <div class="functionHeader">
-    visual_field_arrow_heads =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.foreground">
-    
-  </a>
-  <a name="foreground">
-    
-  </a>
-  <div class="functionHeader">
-    foreground =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.background">
-    
-  </a>
-  <a name="background">
-    
-  </a>
-  <div class="functionHeader">
-    background =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.initializing">
-    
-  </a>
-  <a name="initializing">
-    
-  </a>
-  <div class="functionHeader">
-    initializing =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_startup_info">
-    
-  </a>
-  <a name="visual_startup_info">
-    
-  </a>
-  <div class="functionHeader">
-    visual_startup_info =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.signals_blocked">
-    
-  </a>
-  <a name="signals_blocked">
-    
-  </a>
-  <div class="functionHeader">
-    signals_blocked =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.super_perspective_changed">
-    
-  </a>
-  <a name="super_perspective_changed">
-    
-  </a>
-  <div class="functionHeader">
-    super_perspective_changed =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>Initialize VisPy canvas.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.VispyCanvas.VispyCanvas.update_color_scheme">
-    
-  </a>
-  <a name="update_color_scheme">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    update_color_scheme(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Updates the color scheme.</p></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.bgcolor">
-    
-  </a>
-  <a name="bgcolor">
-    
-  </a>
-  <div class="functionHeader">
-    bgcolor =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.set_visible">
-    
-  </a>
-  <a name="set_visible">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_visible(self, visual, is_visible):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets some visual's visibility.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">visual</td><td>Visual</td></tr><tr><td></td><td class="fieldArg">is_visible</td><td>Visibility</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.load_perspective">
-    
-  </a>
-  <a name="load_perspective">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    load_perspective(self, redraw=(True)):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Loads perspective from configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">redraw</td><td>Enable to trigger final re-draw</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.on_perspective_changed">
-    
-  </a>
-  <a name="on_perspective_changed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    on_perspective_changed(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Handles a change of perspective.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_perspective_info">
-    
-  </a>
-  <a name="redraw_perspective_info">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_perspective_info(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws the perspective info text.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw">
-    
-  </a>
-  <a name="redraw">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws the entire scene.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_segments">
-    
-  </a>
-  <a name="redraw_wire_segments">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_wire_segments(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws wire segments.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_sliced">
-    
-  </a>
-  <a name="redraw_wire_points_sliced">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_wire_points_sliced(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws sliced wire points.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_selected">
-    
-  </a>
-  <a name="redraw_wire_points_selected">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_wire_points_selected(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws selected wire base points.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_field_arrows">
-    
-  </a>
-  <a name="redraw_field_arrows">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_field_arrows(self, colors):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws field arrows.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">colors</td><td>Colors</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_field_points">
-    
-  </a>
-  <a name="redraw_field_points">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    redraw_field_points(self, colors):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-draws field points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">colors</td><td>Colors</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.VispyCanvas.VispyCanvas.create_field_labels">
     
@@ -1110,16 +371,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    create_field_labels(self):
+    <span class="py-keyword">def</span> <span class="py-defname">create_field_labels</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Creates field labels.</p></div>
+    <div>Creates field labels.</div>
   </div>
 </div><div class="basemethod">
+  
   
   <a name="magneticalc.VispyCanvas.VispyCanvas.delete_field_labels">
     
@@ -1129,16 +390,92 @@
   </a>
   <div class="functionHeader">
     
-    def
-    delete_field_labels(self):
+    <span class="py-keyword">def</span> <span class="py-defname">delete_field_labels</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Deletes the field labels.</p></div>
+    <div>Deletes the field labels.</div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.load_perspective">
+    
+  </a>
+  <a name="load_perspective">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">load_perspective</span>(self, redraw=True):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Loads perspective from configuration.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">redraw:</span><code>bool</code></td><td class="fieldArgDesc">Enable to trigger final re-draw</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.on_perspective_changed">
+    
+  </a>
+  <a name="on_perspective_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_perspective_changed</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Handles a change of perspective.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw">
+    
+  </a>
+  <a name="redraw">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws the entire scene.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_field_arrows">
+    
+  </a>
+  <a name="redraw_field_arrows">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_arrows</span>(self, colors):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws field arrows.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_field_labels">
     
@@ -1148,16 +485,111 @@
   </a>
   <div class="functionHeader">
     
-    def
-    redraw_field_labels(self, colors):
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_labels</span>(self, colors):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Re-draws field labels.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">colors</td><td>Colors</td></tr></table></div>
+    <div>Re-draws field labels.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors</span></td><td class="fieldArgDesc">Colors</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_field_points">
+    
+  </a>
+  <a name="redraw_field_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_points</span>(self, colors):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws field points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_perspective_info">
+    
+  </a>
+  <a name="redraw_perspective_info">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_perspective_info</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws the perspective info text.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_selected">
+    
+  </a>
+  <a name="redraw_wire_points_selected">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_points_selected</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws selected wire base points.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_points_sliced">
+    
+  </a>
+  <a name="redraw_wire_points_sliced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_points_sliced</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws sliced wire points.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_wire_segments">
+    
+  </a>
+  <a name="redraw_wire_segments">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_segments</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-draws wire segments.</div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.VispyCanvas.VispyCanvas.save_image">
     
@@ -1167,23 +599,765 @@
   </a>
   <div class="functionHeader">
     
-    def
-    save_image(self, filename):
+    <span class="py-keyword">def</span> <span class="py-defname">save_image</span>(self, filename):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Saves the currently displayed scene to PNG file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">filename</td><td>Filename</td></tr></table></div>
+    <div>Saves the currently displayed scene to PNG file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.set_visible">
+    
+  </a>
+  <a name="set_visible">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_visible</span>(self, visual, is_visible):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets some visual's visibility.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">visual:</span><code>Visual</code></td><td class="fieldArgDesc">Visual</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">is_visible:</span><code>bool</code></td><td class="fieldArgDesc">Visibility</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.update_color_scheme">
+    
+  </a>
+  <a name="update_color_scheme">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_color_scheme</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the color scheme.</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.Black">
+    
+  </a>
+  <a name="Black">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Black</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.DebugPerspective">
+    
+  </a>
+  <a name="DebugPerspective">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DebugPerspective</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.DebugVisuals">
+    
+  </a>
+  <a name="DebugVisuals">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DebugVisuals</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.DefaultFontSize">
+    
+  </a>
+  <a name="DefaultFontSize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DefaultFontSize</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.FieldArrowHeadSize">
+    
+  </a>
+  <a name="FieldArrowHeadSize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">FieldArrowHeadSize</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.FieldPointSize">
+    
+  </a>
+  <a name="FieldPointSize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">FieldPointSize</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.MagnitudeLimit">
+    
+  </a>
+  <a name="MagnitudeLimit">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">MagnitudeLimit</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.MagnitudePrecision">
+    
+  </a>
+  <a name="MagnitudePrecision">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">MagnitudePrecision</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.ScaleFactorMax">
+    
+  </a>
+  <a name="ScaleFactorMax">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ScaleFactorMax</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.ScaleFactorMin">
+    
+  </a>
+  <a name="ScaleFactorMin">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ScaleFactorMin</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.White">
+    
+  </a>
+  <a name="White">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">White</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedColor">
+    
+  </a>
+  <a name="WirePointSelectedColor">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">WirePointSelectedColor</span>: <code>tuple[<wbr></wbr>int, <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSelectedSize">
+    
+  </a>
+  <a name="WirePointSelectedSize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">WirePointSelectedSize</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.WirePointSize">
+    
+  </a>
+  <a name="WirePointSize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">WirePointSize</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.background">
+    
+  </a>
+  <a name="background">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">background</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.bgcolor">
+    
+  </a>
+  <a name="bgcolor">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">bgcolor</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.font_manager">
+    
+  </a>
+  <a name="font_manager">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">font_manager</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.foreground">
+    
+  </a>
+  <a name="foreground">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">foreground</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.initializing">
+    
+  </a>
+  <a name="initializing">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">initializing</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.redraw_start_time">
+    
+  </a>
+  <a name="redraw_start_time">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">redraw_start_time</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.signals_blocked">
+    
+  </a>
+  <a name="signals_blocked">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">signals_blocked</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.super_perspective_changed">
+    
+  </a>
+  <a name="super_perspective_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">super_perspective_changed</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.view_main">
+    
+  </a>
+  <a name="view_main">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">view_main</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.view_text">
+    
+  </a>
+  <a name="view_text">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">view_text</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_coordinate_system">
+    
+  </a>
+  <a name="visual_coordinate_system">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_coordinate_system</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_arrow_heads">
+    
+  </a>
+  <a name="visual_field_arrow_heads">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_field_arrow_heads</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_arrow_lines">
+    
+  </a>
+  <a name="visual_field_arrow_lines">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_field_arrow_lines</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_labels">
+    
+  </a>
+  <a name="visual_field_labels">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_field_labels</span>: <code>list</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_field_points">
+    
+  </a>
+  <a name="visual_field_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_field_points</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_perspective_info">
+    
+  </a>
+  <a name="visual_perspective_info">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_perspective_info</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_startup_info">
+    
+  </a>
+  <a name="visual_startup_info">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_startup_info</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_selected">
+    
+  </a>
+  <a name="visual_wire_points_selected">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_wire_points_selected</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_points_sliced">
+    
+  </a>
+  <a name="visual_wire_points_sliced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_wire_points_sliced</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.VispyCanvas.VispyCanvas.visual_wire_segments">
+    
+  </a>
+  <a name="visual_wire_segments">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">visual_wire_segments</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

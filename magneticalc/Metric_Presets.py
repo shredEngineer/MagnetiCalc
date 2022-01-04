@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,8 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from magneticalc.Norm_Types import *
-from typing import Optional, Dict
+from typing import Dict
+from magneticalc.Assert_Dialog import Assert_Dialog
 
 
 class Metric_Presets:
@@ -284,15 +285,19 @@ class Metric_Presets:
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    Fallback = Magnitude
+
     @staticmethod
-    def get_by_id(_id_: str) -> Optional[Dict]:
+    def get_by_id(_id_: str) -> Dict:
         """
         Selects a preset by name.
 
         @param _id_: Preset ID
-        @return: Preset parameters (or None if ID not found)
+        @return: Preset parameters
         """
         for preset in Metric_Presets.List:
             if _id_ == preset["id"]:
                 return preset
-        return None
+
+        Assert_Dialog(False, f"Invalid metric preset ID: Defaulting to \"{Metric_Presets.Fallback['id']}\"")
+        return Metric_Presets.Fallback

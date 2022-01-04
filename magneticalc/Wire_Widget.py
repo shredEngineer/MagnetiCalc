@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -19,23 +19,20 @@
 from __future__ import annotations
 from typing import Optional, Dict, List, Union
 import numpy as np
-import qtawesome as qta
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import \
-    QVBoxLayout, QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QComboBox, QLabel, QSizePolicy, QCheckBox
-from magneticalc.Debug import Debug
-from magneticalc.QIconLabel import QIconLabel
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QCheckBox
+from magneticalc.QDoubleSpinBox2 import QDoubleSpinBox2
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
-from magneticalc.ModelAccess import ModelAccess
+from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QSpinBox2 import QSpinBox2
 from magneticalc.QTableWidget2 import QTableWidget2
+from magneticalc.Debug import Debug
+from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
 from magneticalc.Wire import Wire
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Wire_Widget(QGroupBox2):
@@ -59,16 +56,19 @@ class Wire_Widget(QGroupBox2):
     RotationalSymmetryOffsetMax = 360
     RotationalSymmetryOffsetStep = 1
     RotationalSymmetryOffsetPrecision = 1
-    SlicerLimitMinimum = 0.001
-    SlicerLimitMaximum = 2.0
+    SlicerLimitMin = 0.001
+    SlicerLimitMax = 2.0
     SlicerLimitStep = 0.001
     SlicerLimitPrecision = 3
-    DcMinimum = -1e4
-    DcMaximum = +1e4
+    DcMin = -1e4
+    DcMax = +1e4
     DcStep = 0.1
     DcPrecision = 3
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -80,26 +80,17 @@ class Wire_Widget(QGroupBox2):
 
         # --------------------------------------------------------------------------------------------------------------
 
-        table_icon_label = QIconLabel("Points", "mdi.vector-square", final_stretch=False)
-        table_shortcut_label = QLabel("⟨F2⟩, ⟨ESC⟩")
-        table_shortcut_label.setStyleSheet(f"font-size: 13px; color: {Theme.LiteColor}")
-        table_icon_label.addWidget(table_shortcut_label)
+        table_icon_label = QIconLabel("Points", "mdi.vector-square", expand=False)
+        table_icon_label.addWidget(QLabel2("⟨F2⟩, ⟨ESC⟩", font_size="13px", color=Theme.LiteColor, expand=False))
         table_icon_label.addStretch()
-        table_add_button = QPushButton()
-        table_add_button.setIcon(qta.icon("fa.plus"))
-        # noinspection PyUnresolvedReferences
-        table_add_button.clicked.connect(self.on_table_row_added)
-        table_icon_label.addWidget(table_add_button)
-        table_units_label = QLabel("cm")
-        table_units_label.setAlignment(Qt.AlignRight)
-        table_units_label.setFixedWidth(self.UnitsLabelWidth)
-        table_icon_label.addWidget(table_units_label)
+        table_icon_label.addWidget(QPushButton2("", "fa.plus", self.on_table_row_added))
+        table_icon_label.addWidget(QLabel2("cm", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(table_icon_label)
         self.table = QTableWidget2(
             self.gui,
-            cell_edited_callback=self.on_table_cell_edited,
-            selection_changed_callback=self.gui.redraw,
-            row_deleted_callback=self.on_table_row_deleted,
+            _cell_edited_callback_=self.on_table_cell_edited,
+            _selection_changed_callback_=self.gui.redraw,
+            _row_deleted_callback_=self.on_table_row_deleted,
             minimum_rows=2
         )
         self.table.set_horizontal_header(["X", "Y", "Z"])
@@ -109,13 +100,9 @@ class Wire_Widget(QGroupBox2):
         self.addWidget(self.table)
 
         table_total_layout = QHBoxLayout()
-        table_total_label_left = QLabel("Total base points:")
-        table_total_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.table_total_label = QLabel("")
-        self.table_total_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.table_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        table_total_layout.addWidget(table_total_label_left, alignment=Qt.AlignVCenter)
-        table_total_layout.addWidget(self.table_total_label, alignment=Qt.AlignVCenter)
+        self.table_total_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        table_total_layout.addWidget(QLabel2("Total base points:", italic=True, color=Theme.LiteColor))
+        table_total_layout.addWidget(self.table_total_label)
         self.addLayout(table_total_layout)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -123,33 +110,25 @@ class Wire_Widget(QGroupBox2):
         self.addWidget(QHLine())
 
         stretch_icon_label = QIconLabel("Stretch", "mdi.arrow-all")
-        stretch_clear_button = QPushButton()
-        stretch_clear_button.setIcon(qta.icon("fa.eraser"))
-        # noinspection PyUnresolvedReferences
-        stretch_clear_button.clicked.connect(self.clear_stretch)
-        stretch_icon_label.addWidget(stretch_clear_button)
-        stretch_units_label = QLabel("cm")
-        stretch_units_label.setAlignment(Qt.AlignRight)
-        stretch_units_label.setFixedWidth(self.UnitsLabelWidth)
-        stretch_icon_label.addWidget(stretch_units_label)
+        stretch_icon_label.addWidget(QPushButton2("", "fa.eraser", self.clear_stretch))
+        stretch_icon_label.addWidget(QLabel2("cm", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(stretch_icon_label)
 
-        self.stretch_spinbox = [None, None, None]
-        stretch_label = [None, None, None]
+        self.stretch_spinbox = []
         stretch_layout = QHBoxLayout()
         for i in range(3):
-            self.stretch_spinbox[i] = QDoubleSpinBox(self.gui)
-            self.stretch_spinbox[i].setLocale(self.gui.locale)
-            self.stretch_spinbox[i].setMinimum(self.StretchMin)
-            self.stretch_spinbox[i].setMaximum(self.StretchMax)
-            self.stretch_spinbox[i].setSingleStep(self.StretchStep)
-            self.stretch_spinbox[i].setDecimals(self.StretchPrecision)
-            # noinspection PyUnresolvedReferences
-            self.stretch_spinbox[i].valueChanged.connect(self.set_stretch)
-            stretch_label[i] = QLabel(["X", "Y", "Z"][i] + ":")
-            stretch_label[i].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-            stretch_layout.addWidget(stretch_label[i], alignment=Qt.AlignVCenter)
-            stretch_layout.addWidget(self.stretch_spinbox[i], alignment=Qt.AlignVCenter)
+            stretch_spinbox = QDoubleSpinBox2(
+                gui=self.gui,
+                minimum=self.StretchMin,
+                maximum=self.StretchMax,
+                step=self.StretchStep,
+                precision=self.StretchPrecision,
+                value=0,
+                value_changed=self.set_stretch
+            )
+            self.stretch_spinbox.append(stretch_spinbox)
+            stretch_layout.addWidget(QLabel2(["X", "Y", "Z"][i] + ":", expand=False))
+            stretch_layout.addWidget(stretch_spinbox)
         self.addLayout(stretch_layout)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -157,11 +136,7 @@ class Wire_Widget(QGroupBox2):
         self.addWidget(QHLine())
 
         rotational_symmetry_icon_label = QIconLabel("Rotational Symmetry", "mdi.rotate-3d-variant")
-        rotational_symmetry_clear_button = QPushButton()
-        rotational_symmetry_clear_button.setIcon(qta.icon("fa.eraser"))
-        # noinspection PyUnresolvedReferences
-        rotational_symmetry_clear_button.clicked.connect(self.clear_rotational_symmetry)
-        rotational_symmetry_icon_label.addWidget(rotational_symmetry_clear_button)
+        rotational_symmetry_icon_label.addWidget(QPushButton2("", "fa.eraser", self.clear_rotational_symmetry))
         self.addLayout(rotational_symmetry_icon_label)
         rotational_symmetry_layout = QHBoxLayout()
         rotational_symmetry_layout_left = QVBoxLayout()
@@ -173,79 +148,58 @@ class Wire_Widget(QGroupBox2):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.rotational_symmetry_count_spinbox = QSpinBox()
-        self.rotational_symmetry_count_spinbox.setMinimum(self.RotationalSymmetryCountMin)
-        self.rotational_symmetry_count_spinbox.setMaximum(self.RotationalSymmetryCountMax)
-        count_label = QLabel("Count:")
-        count_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(count_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-        rotational_symmetry_layout_middle.addWidget(
-            self.rotational_symmetry_count_spinbox,
-            alignment=Qt.AlignVCenter
+        rotational_symmetry_layout_left.addWidget(QLabel2("Count:"))
+        self.rotational_symmetry_count_spinbox = QSpinBox2(
+            minimum=self.RotationalSymmetryCountMin,
+            maximum=self.RotationalSymmetryCountMax,
+            value=0,
+            value_changed=self.set_rotational_symmetry
         )
-        # noinspection PyUnresolvedReferences
-        self.rotational_symmetry_count_spinbox.valueChanged.connect(self.set_rotational_symmetry)
-        rotational_symmetry_layout_right.addWidget(QLabel(""))
+        rotational_symmetry_layout_middle.addWidget(self.rotational_symmetry_count_spinbox)
+        rotational_symmetry_layout_right.addWidget(QLabel2("", width=self.UnitsLabelWidth))
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.rotational_symmetry_radius_spinbox = QDoubleSpinBox(self.gui)
-        self.rotational_symmetry_radius_spinbox.setLocale(self.gui.locale)
-        self.rotational_symmetry_radius_spinbox.setMinimum(self.RotationalSymmetryRadiusMin)
-        self.rotational_symmetry_radius_spinbox.setMaximum(self.RotationalSymmetryRadiusMax)
-        self.rotational_symmetry_radius_spinbox.setDecimals(self.RotationalSymmetryRadiusPrecision)
-        self.rotational_symmetry_radius_spinbox.setSingleStep(self.RotationalSymmetryRadiusStep)
-        radius_label = QLabel("Radius:")
-        radius_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(radius_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-        rotational_symmetry_layout_middle.addWidget(
-            self.rotational_symmetry_radius_spinbox,
-            alignment=Qt.AlignVCenter
+        self.rotational_symmetry_radius_spinbox = QDoubleSpinBox2(
+            gui=self.gui,
+            minimum=self.RotationalSymmetryRadiusMin,
+            maximum=self.RotationalSymmetryRadiusMax,
+            step=self.RotationalSymmetryRadiusStep,
+            precision=self.RotationalSymmetryRadiusPrecision,
+            value=0,
+            value_changed=self.set_rotational_symmetry
         )
-        rotational_symmetry_count_radius_label = QLabel("cm")
-        rotational_symmetry_count_radius_label.setAlignment(Qt.AlignRight)
-        rotational_symmetry_count_radius_label.setFixedWidth(self.UnitsLabelWidth)
-        rotational_symmetry_layout_right.addWidget(rotational_symmetry_count_radius_label, alignment=Qt.AlignVCenter)
-        # noinspection PyUnresolvedReferences
-        self.rotational_symmetry_radius_spinbox.valueChanged.connect(self.set_rotational_symmetry)
+        rotational_symmetry_layout_left.addWidget(QLabel2("Radius:"))
+        rotational_symmetry_layout_middle.addWidget(self.rotational_symmetry_radius_spinbox)
+        rotational_symmetry_count_radius_label = QLabel2("cm", align_right=True, width=self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetry_count_radius_label)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.rotational_symmetry_axis_combobox = QComboBox()
         for i, axis in enumerate(["X", "Y", "Z"]):
             self.rotational_symmetry_axis_combobox.addItem(axis)
-        axis_label = QLabel("Axis:")
-        axis_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(axis_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-        rotational_symmetry_layout_middle.addWidget(
-            self.rotational_symmetry_axis_combobox,
-            alignment=Qt.AlignVCenter
-        )
-        rotational_symmetry_layout_right.addWidget(QLabel(""))
+        rotational_symmetry_layout_left.addWidget(QLabel2("Axis:"))
+        rotational_symmetry_layout_middle.addWidget(self.rotational_symmetry_axis_combobox)
+        rotational_symmetry_layout_right.addWidget(QLabel2("", width=self.UnitsLabelWidth))
         # noinspection PyUnresolvedReferences
         self.rotational_symmetry_axis_combobox.currentIndexChanged.connect(self.set_rotational_symmetry)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.rotational_symmetry_offset_spinbox = QDoubleSpinBox(self.gui)
-        self.rotational_symmetry_offset_spinbox.setLocale(self.gui.locale)
-        self.rotational_symmetry_offset_spinbox.setMinimum(self.RotationalSymmetryOffsetMin)
-        self.rotational_symmetry_offset_spinbox.setMaximum(self.RotationalSymmetryOffsetMax)
-        self.rotational_symmetry_offset_spinbox.setDecimals(self.RotationalSymmetryOffsetPrecision)
-        self.rotational_symmetry_offset_spinbox.setSingleStep(self.RotationalSymmetryOffsetStep)
-        Offset_label = QLabel("Offset Angle:")
-        Offset_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        rotational_symmetry_layout_left.addWidget(Offset_label, alignment=Qt.AlignVCenter | Qt.AlignRight)
-        rotational_symmetry_layout_middle.addWidget(
-            self.rotational_symmetry_offset_spinbox,
-            alignment=Qt.AlignVCenter
+        self.rotational_symmetry_offset_spinbox = QDoubleSpinBox2(
+            gui=self.gui,
+            minimum=self.RotationalSymmetryOffsetMin,
+            maximum=self.RotationalSymmetryOffsetMax,
+            step=self.RotationalSymmetryOffsetStep,
+            precision=self.RotationalSymmetryOffsetPrecision,
+            value=0,
+            value_changed=self.set_rotational_symmetry
         )
-        rotational_symmetry_offset_units_label = QLabel("°")
-        rotational_symmetry_offset_units_label.setAlignment(Qt.AlignRight)
-        rotational_symmetry_offset_units_label.setFixedWidth(self.UnitsLabelWidth)
-        rotational_symmetry_layout_right.addWidget(rotational_symmetry_offset_units_label, alignment=Qt.AlignVCenter)
-        # noinspection PyUnresolvedReferences
-        self.rotational_symmetry_offset_spinbox.valueChanged.connect(self.set_rotational_symmetry)
+        rotational_symmetry_layout_left.addWidget(QLabel2("Offset Angle:"))
+        rotational_symmetry_layout_middle.addWidget(self.rotational_symmetry_offset_spinbox)
+        rotational_symmetry_offset_units_label = QLabel2("°", align_right=True, width=self.UnitsLabelWidth)
+        rotational_symmetry_layout_right.addWidget(rotational_symmetry_offset_units_label)
 
         self.addLayout(rotational_symmetry_layout)
 
@@ -256,83 +210,68 @@ class Wire_Widget(QGroupBox2):
         self.close_loop_checkbox = QCheckBox(" Close Loop")
         # noinspection PyUnresolvedReferences
         self.close_loop_checkbox.toggled.connect(
-            lambda: self.set_wire(close_loop=self.close_loop_checkbox.isChecked())
+            lambda: self.set_wire(_close_loop_=self.close_loop_checkbox.isChecked())
         )
         self.addWidget(self.close_loop_checkbox)
 
         rotational_symmetry_total_layout = QHBoxLayout()
-        rotational_symmetry_total_label_left = QLabel("Total transformed points:")
-        rotational_symmetry_total_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.transformed_total_label = QLabel("")
-        self.transformed_total_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.transformed_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.transformed_total_label = QLabel2("", color=Theme.MainColor, align_right=True)
         rotational_symmetry_total_layout.addWidget(
-            rotational_symmetry_total_label_left,
-            alignment=Qt.AlignVCenter
+            QLabel2("Total transformed points:", italic=True, color=Theme.LiteColor)
         )
-        rotational_symmetry_total_layout.addWidget(self.transformed_total_label, alignment=Qt.AlignVCenter)
+        rotational_symmetry_total_layout.addWidget(self.transformed_total_label)
         self.addLayout(rotational_symmetry_total_layout)
-
-        replace_base_points_button = QPushButton(" Replace base points")
-        replace_base_points_button.setIcon(qta.icon("mdi.content-copy"))
-        # noinspection PyUnresolvedReferences
-        replace_base_points_button.clicked.connect(
-            lambda: self.set_wire(points=self.gui.model.wire.get_points_transformed())
+        self.addWidget(
+            QPushButton2(
+                " Replace base points",
+                "mdi.content-copy",
+                lambda: self.set_wire(_points_=self.gui.model.wire.get_points_transformed())
+            )
         )
-        self.addWidget(replace_base_points_button)
 
         # --------------------------------------------------------------------------------------------------------------
 
         self.addWidget(QHLine())
 
         self.addLayout(QIconLabel("Slicer Limit", "mdi.box-cutter"))
-        self.slicer_limit_spinbox = QDoubleSpinBox(self.gui)
-        self.slicer_limit_spinbox.setLocale(self.gui.locale)
-        self.slicer_limit_spinbox.setMinimum(self.SlicerLimitMinimum)
-        self.slicer_limit_spinbox.setMaximum(self.SlicerLimitMaximum)
-        self.slicer_limit_spinbox.setDecimals(self.SlicerLimitPrecision)
-        self.slicer_limit_spinbox.setSingleStep(self.SlicerLimitStep)
-        # noinspection PyUnresolvedReferences
-        self.slicer_limit_spinbox.valueChanged.connect(
-            lambda: self.set_wire(slicer_limit=self.slicer_limit_spinbox.value())
+        self.slicer_limit_spinbox = QDoubleSpinBox2(
+            gui=self.gui,
+            minimum=self.SlicerLimitMin,
+            maximum=self.SlicerLimitMax,
+            step=self.SlicerLimitStep,
+            precision=self.SlicerLimitPrecision,
+            value=0,
+            value_changed=lambda: self.set_wire(_slicer_limit_=self.slicer_limit_spinbox.value())
         )
-        slicer_limit_units_label = QLabel("cm")
-        slicer_limit_units_label.setAlignment(Qt.AlignRight)
-        slicer_limit_units_label.setFixedWidth(self.UnitsLabelWidth)
+        slicer_limit_units_label = QLabel2("cm", align_right=True, width=self.UnitsLabelWidth)
         slicer_limit_layout = QHBoxLayout()
-        slicer_limit_layout.addWidget(self.slicer_limit_spinbox, alignment=Qt.AlignVCenter)
-        slicer_limit_layout.addWidget(slicer_limit_units_label, alignment=Qt.AlignVCenter)
+        slicer_limit_layout.addWidget(self.slicer_limit_spinbox)
+        slicer_limit_layout.addWidget(slicer_limit_units_label)
         self.addLayout(slicer_limit_layout)
 
         sliced_total_layout = QHBoxLayout()
-        sliced_total_label_left = QLabel("Total sliced points:")
-        sliced_total_label_left.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        self.sliced_total_label = QLabel("")
-        self.sliced_total_label.setStyleSheet(f"color: {Theme.MainColor};")
-        self.sliced_total_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        sliced_total_layout.addWidget(sliced_total_label_left, alignment=Qt.AlignVCenter)
-        sliced_total_layout.addWidget(self.sliced_total_label, alignment=Qt.AlignVCenter)
+        self.sliced_total_label = QLabel2("", color=Theme.MainColor, align_right=True)
+        sliced_total_layout.addWidget(QLabel2("Total sliced points:", italic=True, color=Theme.LiteColor))
+        sliced_total_layout.addWidget(self.sliced_total_label)
         self.addLayout(sliced_total_layout)
 
         # --------------------------------------------------------------------------------------------------------------
 
         self.addWidget(QHLine())
 
-        self.dc_spinbox = QDoubleSpinBox(self.gui)
-        self.dc_spinbox.setLocale(self.gui.locale)
         self.addLayout(QIconLabel("Wire Current", "fa.cog"))
-        self.dc_spinbox.setMinimum(self.DcMinimum)
-        self.dc_spinbox.setMaximum(self.DcMaximum)
-        self.dc_spinbox.setSingleStep(self.DcStep)
-        self.dc_spinbox.setDecimals(self.DcPrecision)
-        # noinspection PyUnresolvedReferences
-        self.dc_spinbox.valueChanged.connect(lambda: self.set_wire(dc=self.dc_spinbox.value()))
+        self.dc_spinbox = QDoubleSpinBox2(
+            gui=self.gui,
+            minimum=self.DcMin,
+            maximum=self.DcMax,
+            step=self.DcStep,
+            precision=self.DcPrecision,
+            value=0,
+            value_changed=lambda: self.set_wire(_dc_=self.dc_spinbox.value())
+        )
         dc_layout = QHBoxLayout()
-        dc_layout.addWidget(self.dc_spinbox, alignment=Qt.AlignVCenter)
-        dc_unit_label = QLabel("A")
-        dc_unit_label.setAlignment(Qt.AlignRight)
-        dc_unit_label.setFixedWidth(self.UnitsLabelWidth)
-        dc_layout.addWidget(dc_unit_label, alignment=Qt.AlignVCenter)
+        dc_layout.addWidget(self.dc_spinbox)
+        dc_layout.addWidget(QLabel2("A", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(dc_layout)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -369,32 +308,170 @@ class Wire_Widget(QGroupBox2):
         # Initially load wire from configuration
         self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate_self=False)
 
+        self.update()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def update_table(self) -> None:
+        """
+        Populates the table.
+        """
+        Debug(self, ".update_table()")
+
+        points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.get_points_base()]
+
+        self.table.clear_rows()
+        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.get_points_base()))])
+        self.table.set_contents(points)
+        self.table.select_last_row(focus=False)
+
+        self.table_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
+
+    def on_table_row_added(self) -> None:
+        """
+        Gets called after a row has been added to the table.
+        """
+        Debug(self, ".on_table_row_added()")
+
+        # Add a new base point (0, 0, 0) to the wire
+        self.set_wire(_points_=list(self.gui.model.wire.get_points_base()) + [np.zeros(3)])
+        self.table.select_last_row()
+
+    def on_table_cell_edited(self, value: float, row: int, column: int) -> None:
+        """
+        Gets called after a table cell has been edited.
+
+        @param value: Cell value
+        @param row: Row index
+        @param column: Column index
+        """
+        points = self.gui.model.wire.get_points_base()
+        points[row][column] = value
+        self.set_wire(_points_=points)
+
+    def on_table_row_deleted(self, index: int) -> None:
+        """
+        Gets called after a row has been deleted from the table.
+
+        @param index: Row index
+        """
+        Debug(self, ".on_table_row_deleted()")
+
+        # Delete the wire base point at the given index
+        self.set_wire(_points_=np.delete(self.gui.model.wire.get_points_base(), index, axis=0))
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_stretch(self) -> None:
+        """
+        Handles changes to stretch transform parameters.
+        """
+        if self.signalsBlocked():
+            return
+
+        Debug(self, ".set_stretch()")
+
+        self.set_wire(_stretch_=[self.stretch_spinbox[i].value() for i in range(3)])
+
+    def clear_stretch(self) -> None:
+        """
+        Clears the stretch values.
+        """
+        Debug(self, ".clear_stretch()")
+
+        stretch = [1.0, 1.0, 1.0]
+        self.set_wire(_stretch_=stretch)
+        self.update_stretch(stretch=stretch)
+
+    def update_stretch(self, stretch: List) -> None:
+        """
+        Updates the stretch controls.
+
+        @param stretch: 3D point
+        """
+        Debug(self, ".update_stretch()")
+
+        self.blockSignals(True)
+        for i in range(3):
+            self.stretch_spinbox[i].setValue(stretch[i])
+        self.blockSignals(False)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_rotational_symmetry(self) -> None:
+        """
+        Handles changes to rotational symmetry transform parameters.
+        """
+        if self.signalsBlocked():
+            return
+
+        Debug(self, ".set_rotational_symmetry()")
+
+        self.set_wire(
+            _rotational_symmetry_={
+                "count" : self.rotational_symmetry_count_spinbox.value(),
+                "radius": self.rotational_symmetry_radius_spinbox.value(),
+                "axis"  : {"X": 0, "Y": 1, "Z": 2}[self.rotational_symmetry_axis_combobox.currentText()],
+                "offset": self.rotational_symmetry_offset_spinbox.value()
+            }
+        )
+
+    def clear_rotational_symmetry(self) -> None:
+        """
+        Clears the rotational symmetry values.
+        """
+        Debug(self, ".clear_rotational_symmetry()")
+
+        rotational_symmetry = {
+            "count": 1,
+            "radius": 0,
+            "axis": 2,
+            "offset": 0
+        }
+        self.set_wire(_rotational_symmetry_=rotational_symmetry)
+        self.update_rotational_symmetry(rotational_symmetry=rotational_symmetry)
+
+    def update_rotational_symmetry(self, rotational_symmetry: Dict) -> None:
+        """
+        Updates the rotational symmetry controls.
+
+        @param rotational_symmetry: Dictionary
+        """
+        Debug(self, ".update_rotational_symmetry()")
+
+        self.blockSignals(True)
+        self.rotational_symmetry_count_spinbox.setValue(rotational_symmetry["count"])
+        self.rotational_symmetry_radius_spinbox.setValue(rotational_symmetry["radius"])
+        self.rotational_symmetry_axis_combobox.setCurrentIndex(rotational_symmetry["axis"])
+        self.rotational_symmetry_offset_spinbox.setValue(rotational_symmetry["offset"])
+        self.blockSignals(False)
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_wire(
             self,
-            points: Optional[Union[List, np.ndarray]] = None,
-            stretch: Optional[List] = None,
-            rotational_symmetry: Optional[Dict] = None,
-            close_loop: Optional[bool] = None,
-            slicer_limit: Optional[float] = None,
-            dc: Optional[float] = None,
+            _points_: Optional[Union[List, np.ndarray]] = None,
+            _stretch_: Optional[List] = None,
+            _rotational_symmetry_: Optional[Dict] = None,
+            _close_loop_: Optional[bool] = None,
+            _slicer_limit_: Optional[float] = None,
+            _dc_: Optional[float] = None,
             recalculate: bool = True,
             readjust_sampling_volume: bool = True,
             invalidate_self: bool = True
     ) -> None:
         """
         Sets the wire. This will overwrite the currently set wire in the model.
-        Any parameter may be left set to None in order to load its default value.
+        Any underscored parameter may be left set to None in order to load its default value.
 
         Note: Currently, only `stretch` and `rotational symmetry` controls are automatically updated by this function.
 
-        @param points: Points (List of 3D points)
-        @param stretch: XYZ stretch transform factors (3D point)
-        @param rotational_symmetry: Dictionary for rotational symmetry transform
-        @param close_loop: Enable to transform the wire into a closed loop (append first point)
-        @param slicer_limit: Slicer limit
-        @param dc: DC value
+        @param _points_: Points (List of 3D points)
+        @param _stretch_: XYZ stretch transform factors (3D point)
+        @param _rotational_symmetry_: Dictionary for rotational symmetry transform
+        @param _close_loop_: Enable to transform the wire into a closed loop (append first point)
+        @param _slicer_limit_: Slicer limit
+        @param _dc_: DC value
         @param recalculate: Enable to trigger final re-calculation
         @param readjust_sampling_volume: Enable to readjust sampling volume
         @param invalidate_self: Enable to invalidate the old wire before setting a new one
@@ -406,20 +483,20 @@ class Wire_Widget(QGroupBox2):
 
         with ModelAccess(self.gui, recalculate):
 
-            should_update_stretch_controls = stretch is not None
-            should_update_rotational_symmetry_controls = rotational_symmetry is not None
+            should_update_stretch_controls = _stretch_ is not None
+            should_update_rotational_symmetry_controls = _rotational_symmetry_ is not None
 
-            points = self.gui.config.set_get_points("wire_points_base", points)
-            stretch = self.gui.config.set_get_point("wire_stretch", stretch)
-            close_loop = self.gui.config.set_get_bool("wire_close_loop", close_loop)
-            slicer_limit = self.gui.config.set_get_float("wire_slicer_limit", slicer_limit)
-            dc = self.gui.config.set_get_float("wire_dc", dc)
+            points = self.gui.config.set_get_points("wire_points_base", _points_)
+            stretch = self.gui.config.set_get_point("wire_stretch", _stretch_)
+            close_loop = self.gui.config.set_get_bool("wire_close_loop", _close_loop_)
+            slicer_limit = self.gui.config.set_get_float("wire_slicer_limit", _slicer_limit_)
+            dc = self.gui.config.set_get_float("wire_dc", _dc_)
 
             rotational_symmetry = self.gui.config.set_get_dict(
                 prefix="rotational_symmetry_",
                 suffix="",
                 types={"count": "int", "radius": "float", "axis": "int", "offset": "float"},
-                values=rotational_symmetry,
+                values=_rotational_symmetry_,
             )
 
             self.gui.model.set_wire(
@@ -449,141 +526,14 @@ class Wire_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_stretch(self) -> None:
+    def update(self) -> None:
         """
-        Handles changes to stretch transform parameters.
+        Updates the widget.
         """
-        if self.signalsBlocked():
-            return
+        Debug(self, ".update()")
 
-        Debug(self, ".set_stretch()")
-
-        self.set_wire(stretch=[self.stretch_spinbox[i].value() for i in range(3)])
-
-    def clear_stretch(self) -> None:
-        """
-        Clears the stretch values.
-        """
-        Debug(self, ".clear_stretch()")
-
-        stretch = [1.0, 1.0, 1.0]
-        self.set_wire(stretch=stretch)
-        self.update_stretch(stretch=stretch)
-
-    def update_stretch(self, stretch: List) -> None:
-        """
-        Updates the stretch controls.
-
-        @param stretch: 3D point
-        """
-        Debug(self, ".update_stretch()")
-
-        self.blockSignals(True)
-        for i in range(3):
-            self.stretch_spinbox[i].setValue(stretch[i])
-        self.blockSignals(False)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def set_rotational_symmetry(self) -> None:
-        """
-        Handles changes to rotational symmetry transform parameters.
-        """
-        if self.signalsBlocked():
-            return
-
-        Debug(self, ".set_rotational_symmetry()")
-
-        self.set_wire(
-            rotational_symmetry={
-                "count" : self.rotational_symmetry_count_spinbox.value(),
-                "radius": self.rotational_symmetry_radius_spinbox.value(),
-                "axis"  : {"X": 0, "Y": 1, "Z": 2}[self.rotational_symmetry_axis_combobox.currentText()],
-                "offset": self.rotational_symmetry_offset_spinbox.value()
-            }
-        )
-
-    def clear_rotational_symmetry(self) -> None:
-        """
-        Clears the rotational symmetry values.
-        """
-        Debug(self, ".clear_rotational_symmetry()")
-
-        rotational_symmetry = {
-            "count": 1,
-            "radius": 0,
-            "axis": 2,
-            "offset": 0
-        }
-        self.set_wire(rotational_symmetry=rotational_symmetry)
-        self.update_rotational_symmetry(rotational_symmetry=rotational_symmetry)
-
-    def update_rotational_symmetry(self, rotational_symmetry: Dict) -> None:
-        """
-        Updates the rotational symmetry controls.
-
-        @param rotational_symmetry: Dictionary
-        """
-        Debug(self, ".update_rotational_symmetry()")
-
-        self.blockSignals(True)
-        self.rotational_symmetry_count_spinbox.setValue(rotational_symmetry["count"])
-        self.rotational_symmetry_radius_spinbox.setValue(rotational_symmetry["radius"])
-        self.rotational_symmetry_axis_combobox.setCurrentIndex(rotational_symmetry["axis"])
-        self.rotational_symmetry_offset_spinbox.setValue(rotational_symmetry["offset"])
-        self.blockSignals(False)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update_table(self) -> None:
-        """
-        Populates the table.
-        """
-        Debug(self, ".update_table()")
-
-        points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.get_points_base()]
-
-        self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.get_points_base()))])
-        self.table.set_contents(points)
-        self.table.select_last_row(focus=False)
-
-        self.table_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
-
-    def on_table_row_added(self) -> None:
-        """
-        Gets called after a row has been added to the table.
-        """
-        Debug(self, ".on_table_row_added()")
-
-        # Add a new base point (0, 0, 0) to the wire
-        self.set_wire(points=list(self.gui.model.wire.get_points_base()) + [np.zeros(3)])
-        self.table.select_last_row()
-
-    def on_table_cell_edited(self, value: float, row: int, column: int) -> None:
-        """
-        Gets called after a table cell has been edited.
-
-        @param value: Cell value
-        @param row: Row index
-        @param column: Column index
-        """
-        points = self.gui.model.wire.get_points_base()
-        points[row][column] = value
-        self.set_wire(points=points)
-
-    def on_table_row_deleted(self, index: int) -> None:
-        """
-        Gets called after a row has been deleted from the table.
-
-        @param index: Row index
-        """
-        Debug(self, ".on_table_row_deleted()")
-
-        # Delete the wire base point at the given index
-        self.set_wire(points=np.delete(self.gui.model.wire.get_points_base(), index, axis=0))
-
-    # ------------------------------------------------------------------------------------------------------------------
+        self.update_labels()
+        self.update_controls()
 
     def update_labels(self) -> None:
         """
@@ -595,3 +545,11 @@ class Wire_Widget(QGroupBox2):
             self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
         else:
             self.sliced_total_label.setText("N/A")
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        Debug(self, ".update_controls()")
+
+        self.indicate_valid(self.gui.model.wire is not None and self.gui.model.wire.is_valid())

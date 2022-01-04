@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -36,12 +36,20 @@ class QGroupBox2(QGroupBox, QLayouted):
 
         self.setTitle(title)
 
+        self.set_color()
+
+    def set_color(self, color: str = Theme.MainColor) -> None:
+        """
+        Sets the style and label color of the groupbox.
+
+        @param color: Label color
+        """
         self.setStyleSheet(f"""
             QGroupBox {{
                 border: 1px solid #cccccc;
                 border-radius: 3px;
                 margin-top: 20px;
-                color: {Theme.MainColor};
+                color: {color};
                 font-weight: bold;
                 background-color: #e5e5e5;
             }}
@@ -52,3 +60,11 @@ class QGroupBox2(QGroupBox, QLayouted):
                 background-color: palette(window);
             }}
         """)
+
+    def indicate_valid(self, valid: bool) -> None:
+        """
+        Sets the foreground color based on the valid flag.
+
+        @param valid: Valid flag
+        """
+        self.set_color(Theme.MainColor if valid else Theme.FailureColor)

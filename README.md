@@ -38,7 +38,8 @@ and, if available, GPU-acceleration ([CUDA](https://numba.pydata.org/numba-doc/d
 to achieve high-performance calculations.
 Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape and arbitrary relative permeabilities
-<img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)"> (<i>experimental</i>).
+<img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)">
+(<i>experimental</i>).
 
 The shape of any wire is modeled as a 3D piecewise linear curve.
 Arbitrary loops of wire are sliced into differential current elements
@@ -54,7 +55,8 @@ summing over the positions of all current elements
 
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
 
-At each grid point, the field magnitude (or field angle in some plane) is displayed using colored arrows and/or dots;
+At each grid point, the field magnitude (or field angle in some plane) is displayed
+using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various
 [available metrics](#appendix-metrics).
 
@@ -123,14 +125,18 @@ sudo apt install libxcb-xinerama0 --reinstall
 It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
 Installation will currently fail for Python 3.9+ due to missing dependencies.
 
-On some systems, it may be necessary to install the latest [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) first.
+On some systems, it may be necessary to install the latest
+[Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+first.
 
 #### macOS with Apple Silicon (M1)
-On Apple Silicon, make sure to enable [Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/) for the Terminal app
-before installing and starting MagnetiCalc.
+On Apple Silicon, make sure to enable
+[Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/)
+for the Terminal app before installing and starting MagnetiCalc.
 
 ### Option A: Automatic install via pip
-This will install or upgrade MagnetiCalc (and its dependencies) to the user site-packages directory and start it from there.
+This will install or upgrade MagnetiCalc (and its dependencies)
+to the user site-packages directory and start it from there.
 
 #### Linux & macOS (Intel)
 ```shell
@@ -255,7 +261,7 @@ provides basic functions for importing/exporting data programmatically:
 
 License
 -------
-Copyright © 2020–2021, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
+Copyright © 2020–2022, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
 
 <b>ISC License</b>
 
@@ -283,35 +289,50 @@ ToDo
 ----
 
 **General**
-* Ensure consistent PyQt5 look and feel in Windows and Linux. (Dynamically adjust dialogs.)
-* Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data; make auto-generated `MagnetiCalc.ini` a global settings file instead. (Retain option to import old `MagnetiCalc.ini` files.)
+* Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data;
+  make auto-generated `MagnetiCalc.ini` a global settings file instead.
+  (Retain option to import old `MagnetiCalc.ini` files.)
 * Add a global settings dialog for some selection of options currently hard-coded in various classes.
 
 **Functional**
-* Add an overlay for vector metrics, like gradient or curvature (derived from the fundamental <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
-* Add a list of objects, for wires and permeability classes (constraints), with a transformation pipeline for each object; move the `Wire` widget to a dedicated dialog window instead.
+* Add an overlay for vector metrics, like gradient or curvature
+  (derived from the fundamental
+  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
+  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
+* Add a list of objects, for wires and permeability classes (constraints),
+  with a transformation pipeline for each object;
+  move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
-* Highlight permeability classes with <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
+* Highlight permeability classes with
+  <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
-* Add support for modeling of core material saturation and hysteresis effects ([Landau–Lifshitz–Gilbert equation](https://en.wikipedia.org/wiki/Landau%E2%80%93Lifshitz%E2%80%93Gilbert_equation)).
+* Add support for modeling of core material saturation and hysteresis effects.
 * Provide a means to emulate permanent magnets.
 
 **Usability**
 * Add more example projects to `examples/`.
-* Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu; alternatively, provide a dialog for parametric generation.
+* Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu;
+  alternatively, provide a dialog for parametric generation.
 * Add stationary coordinate system and ruler in the bottom left corner.
-* Add support for selective display over a portion of the metric range, enabling a kind of iso-contour display.
+* Add support for selective display over a portion of the metric range,
+  enabling a kind of iso-contour display.
 
 **Known Bugs**
-* Fix issue where the points of a sampling volume with *fractional* resolution are not always spaced equidistantly for some sampling volume dimensions.
+* Fix issue where the points of a sampling volume with *fractional* resolution
+  are not always spaced equidistantly for some sampling volume dimensions.
 * Fix calculation of divergence right at the sampling volume boundary.
 * Fix delayed GUI start-up when loading "complex" files.
 * Fix missing scaling of VisPy markers when zooming.
 * Fix unnecessary shading of VisPy markers.
 
+**Performance**
+* Parallelize sampling volume + constraint calculation which is currently slow.
+
 **Code Quality**
 * Add unit tests.
-* Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671) for accessing data where applicable. 
+* Remove the `Optional` typing of the members in `Model`.
+* Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671)
+  for accessing data where applicable. 
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 

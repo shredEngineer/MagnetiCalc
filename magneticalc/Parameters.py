@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -27,13 +27,6 @@ from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.Field import Field
-    from magneticalc.SamplingVolume import SamplingVolume
-    from magneticalc.Wire import Wire
-
 
 class Parameters:
     """ Parameters class. """
@@ -44,9 +37,11 @@ class Parameters:
         """
         Debug(self, ": Init")
 
-        self._energy = None
-        self._self_inductance = None
-        self._magnetic_dipole_moment = None
+        self._energy: float = 0.0
+        self._self_inductance: float = 0.0
+        self._magnetic_dipole_moment: float = 0.0
+
+        self._valid = False
 
     def is_valid(self) -> bool:
         """
@@ -54,9 +49,7 @@ class Parameters:
 
         @return: True if data is valid for display, False otherwise
         """
-        # Note: Not checking _energy and _self_inductance as these are not always calculated (only for B-field)
-        return \
-            self._magnetic_dipole_moment is not None
+        return self._valid
 
     def invalidate(self) -> None:
         """
@@ -64,9 +57,7 @@ class Parameters:
         """
         Debug(self, ".invalidate()")
 
-        self._energy = None
-        self._self_inductance = None
-        self._magnetic_dipole_moment = None
+        self._valid = False
 
     def get_energy(self) -> float:
         """
@@ -94,7 +85,11 @@ class Parameters:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_squared_field(self, sampling_volume: SamplingVolume, field: Field) -> float:
+    def get_squared_field(
+            self,
+            sampling_volume: SamplingVolume,  # type: ignore
+            field: Field  # type: ignore
+    ) -> float:
         """
         Returns the "squared" field scalar.
 
@@ -121,7 +116,10 @@ class Parameters:
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def _get_magnetic_dipole_moment(self, wire: Wire, length_scale: float) -> float:
+    def _get_magnetic_dipole_moment(
+            self, wire: Wire,  # type: ignore
+            length_scale: float
+    ) -> float:
         """
         Returns the magnetic dipole moment scalar.
 
@@ -158,9 +156,9 @@ class Parameters:
 
     def recalculate(
             self,
-            wire: Wire,
-            sampling_volume: SamplingVolume,
-            field: Field,
+            wire: Wire,  # type: ignore
+            sampling_volume: SamplingVolume,  # type: ignore
+            field: Field,  # type: ignore
             progress_callback: Callable
     ) -> bool:
         """
@@ -173,6 +171,8 @@ class Parameters:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".recalculate()")
+
+        self._valid = False
 
         progress_callback(0)
 
@@ -194,5 +194,7 @@ class Parameters:
             self._self_inductance = self._energy / np.square(wire.get_dc())
 
         progress_callback(100)
+
+        self._valid = True
 
         return True

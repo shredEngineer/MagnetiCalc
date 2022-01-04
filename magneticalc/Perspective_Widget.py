@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -20,23 +20,23 @@ from __future__ import annotations
 from typing import Dict
 from functools import partial
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
+from magneticalc.QLabel2 import QLabel2
+from magneticalc.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Perspective_Widget(QGroupBox2):
     """ Perspective_Widget class. """
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -46,40 +46,18 @@ class Perspective_Widget(QGroupBox2):
         Debug(self, ": Init")
         self.gui = gui
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         planar_perspective_layout = QVBoxLayout()
-
         for preset in Perspective_Presets.List:
-
-            button = QPushButton(preset["id"])
-            button.setStyleSheet("background-color: lightgrey")
-            # noinspection PyUnresolvedReferences
-            button.clicked.connect(
-                partial(self.set_perspective, preset)
-            )
-
-            planar_perspective_layout.addWidget(button, alignment=Qt.AlignTop)
-
+            button = QPushButton2(preset["id"], "", clicked=partial(self.set_perspective, preset))
+            planar_perspective_layout.addWidget(button)
         self.addLayout(planar_perspective_layout)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         self.addWidget(QHLine())
-
-        hint_label = QLabel("Axis Colors:")
-        x_label = QLabel("X")
-        y_label = QLabel("Y")
-        z_label = QLabel("Z")
-        hint_label.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-        x_label.setStyleSheet("color: #cc0000; font-weight: bold;")
-        y_label.setStyleSheet("color: #00cc00; font-weight: bold;")
-        z_label.setStyleSheet("color: #0000cc; font-weight: bold;")
         xyz_hint_layout = QHBoxLayout()
-        xyz_hint_layout.addWidget(hint_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(x_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(y_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
-        xyz_hint_layout.addWidget(z_label, alignment=Qt.AlignRight | Qt.AlignVCenter)
+        xyz_hint_layout.addWidget(QLabel2("Axis Colors:", italic=True, color=Theme.LiteColor))
+        xyz_hint_layout.addWidget(QLabel2("X", bold=True, color="#cc0000", align_right=True))
+        xyz_hint_layout.addWidget(QLabel2("Y", bold=True, color="#00cc00", align_right=True))
+        xyz_hint_layout.addWidget(QLabel2("Z", bold=True, color="#0000cc", align_right=True))
         self.addLayout(xyz_hint_layout)
 
     def set_perspective(self, preset: Dict) -> None:

@@ -1,6 +1,6 @@
 License
 -------
-Copyright © 2020–2021, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
+Copyright © 2020–2022, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
 
 <b>ISC License</b>
 

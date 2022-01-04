@@ -2,209 +2,258 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.SamplingVolume_Widget.SamplingVolume_Widget : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.SamplingVolume_Widget.SamplingVolume_Widget</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.SamplingVolume_Widget.SamplingVolume_Widget(<a href="magneticalc.QGroupBox2.QGroupBox2.html" class="code" data-type="Class">QGroupBox2</a>)</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.SamplingVolume_Widget.html">SamplingVolume_Widget</a></code><wbr></wbr>.<code><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html">SamplingVolume_Widget</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.SamplingVolume_Widget.html" class="code" data-type="Module">SamplingVolume_Widget</a></code>
-          
-          <a href="classIndex.html#magneticalc.SamplingVolume_Widget.SamplingVolume_Widget">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">SamplingVolume_Widget</span>(<a href="magneticalc.QGroupBox2.QGroupBox2.html" title="magneticalc.QGroupBox2.QGroupBox2">QGroupBox2</a>):</code></p>
+        <p><a href="classIndex.html#magneticalc.SamplingVolume_Widget.SamplingVolume_Widget">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>SamplingVolume_Widget class.</p></div>
+        <div>SamplingVolume_Widget class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id116">
+        <table class="children sortable" id="id125">
   
-  <tr class="classvariable">
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Populates the widget.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#clear_padding">clear_padding</a></code></td>
+    <td>Clears the padding values.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#open_constraint_editor">open_constraint_editor</a></code></td>
+    <td>Opens the constraint editor. Recalculates the sampling volume if the constraints changed.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#override_padding">override_padding</a></code></td>
+    <td>Override padding, setting the bounding box directly.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#readjust">readjust</a></code></td>
+    <td>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#reinitialize">reinitialize</a></code></td>
+    <td>Re-initializes the widget and the constraint editor</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_sampling_volume">set_sampling_volume</a></code></td>
+    <td>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Any underscored parameter may be left set to None in order to load its default value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update">update</a></code></td>
+    <td>Updates the widget.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_controls">update_controls</a></code></td>
+    <td>Updates the controls.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_labels">update_labels</a></code></td>
+    <td>Updates the labels.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#update_padding">update_padding</a></code></td>
+    <td>Updates padding.</td>
+  </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#UnitsLabelWidth" class="code" data-type="Class Variable">UnitsLabelWidth</a></td>
+    <td><code><a href="#PaddingMax">PaddingMax</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#PaddingMin" class="code" data-type="Class Variable">PaddingMin</a></td>
+    <td><code><a href="#PaddingMin">PaddingMin</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#PaddingMax" class="code" data-type="Class Variable">PaddingMax</a></td>
+    <td><code><a href="#ResolutionOptionsDict">ResolutionOptionsDict</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#ResolutionOptionsDict" class="code" data-type="Class Variable">ResolutionOptionsDict</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Populates the widget.</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#gui" class="code" data-type="Instance Variable">gui</a></td>
+    <td><code><a href="#UnitsLabelWidth">UnitsLabelWidth</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#constraint_editor" class="code" data-type="Instance Variable">constraint_editor</a></td>
+    <td><code><a href="#constraint_editor">constraint_editor</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#padding_widget" class="code" data-type="Instance Variable">padding_widget</a></td>
+    <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#padding_spinbox" class="code" data-type="Instance Variable">padding_spinbox</a></td>
+    <td><code><a href="#padding_spinbox">padding_spinbox</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_extent_label" class="code" data-type="Instance Variable">total_extent_label</a></td>
+    <td><code><a href="#padding_widget">padding_widget</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_constraints_label" class="code" data-type="Instance Variable">total_constraints_label</a></td>
+    <td><code><a href="#resolution_combobox">resolution_combobox</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#resolution_combobox" class="code" data-type="Instance Variable">resolution_combobox</a></td>
+    <td><code><a href="#resolution_units_label">resolution_units_label</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#resolution_units_label" class="code" data-type="Instance Variable">resolution_units_label</a></td>
+    <td><code><a href="#total_constraints_label">total_constraints_label</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#total_points_label" class="code" data-type="Instance Variable">total_points_label</a></td>
+    <td><code><a href="#total_extent_label">total_extent_label</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
+  </tr><tr class="instancevariable">
     
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#reinitialize" class="code" data-type="Method">reinitialize</a></td>
-    <td><span>Re-initializes the widget and the constraint editor</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update_padding" class="code" data-type="Method">update_padding</a></td>
-    <td><span>Updates padding.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#clear_padding" class="code" data-type="Method">clear_padding</a></td>
-    <td><span>Clears the padding values.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#override_padding" class="code" data-type="Method">override_padding</a></td>
-    <td><span>Override padding, setting the bounding box directly.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#set_sampling_volume" class="code" data-type="Method">set_sampling_volume</a></td>
-    <td><span>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#readjust" class="code" data-type="Method">readjust</a></td>
-    <td><span>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update" class="code" data-type="Method">update</a></td>
-    <td><span>Updates the widget.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update_controls" class="code" data-type="Method">update_controls</a></td>
-    <td><span>Updates the controls.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#update_labels" class="code" data-type="Method">update_labels</a></td>
-    <td><span>Updates the labels.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.html#open_constraint_editor" class="code" data-type="Method">open_constraint_editor</a></td>
-    <td><span>Opens the constraint editor. Recalculates the sampling volume if the constraints changed.</span></td>
+    <td>Instance Variable</td>
+    <td><code><a href="#total_points_label">total_points_label</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
-            Inherited from <a href="magneticalc.QLayouted.QLayouted.html" class="code" data-type="Class">QLayouted</a> (via <a href="magneticalc.QGroupBox2.QGroupBox2.html" class="code" data-type="Class">QGroupBox2</a>):
+            Inherited from <code><a href="magneticalc.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>:
           </p>
-          <table class="children sortable" id="id117">
+          <table class="children sortable" id="id126">
+  
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#install_layout" class="code" data-type="Method">install_layout</a></td>
-    <td><span>Installs this layout in the parent.</span></td>
+    <td><code><a href="magneticalc.QGroupBox2.QGroupBox2.html#indicate_valid">indicate_valid</a></code></td>
+    <td>Sets the foreground color based on the valid flag.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addWidget" class="code" data-type="Method">addWidget</a></td>
-    <td><span>Adds widget.</span></td>
+    <td><code><a href="magneticalc.QGroupBox2.QGroupBox2.html#set_color">set_color</a></code></td>
+    <td>Sets the style and label color of the groupbox.</td>
+  </tr>
+</table>
+          
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>):
+          </p>
+          <table class="children sortable" id="id127">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addLayout" class="code" data-type="Method">addLayout</a></td>
-    <td><span>Adds layout.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addSpacing" class="code" data-type="Method">addSpacing</a></td>
-    <td><span>Adds spacing.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#addButtons" class="code" data-type="Method">addButtons</a></td>
-    <td><span>Adds buttons.</span></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td>Adds widget.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.QLayouted.QLayouted.html#_layout" class="code" data-type="Instance Variable">_layout</a></td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -215,71 +264,8 @@
 
       <div id="childList">
 
-        <div class="baseclassvariable">
+        <div class="basemethod">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.UnitsLabelWidth">
-    
-  </a>
-  <a name="UnitsLabelWidth">
-    
-  </a>
-  <div class="functionHeader">
-    UnitsLabelWidth =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.PaddingMin">
-    
-  </a>
-  <a name="PaddingMin">
-    
-  </a>
-  <div class="functionHeader">
-    PaddingMin =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.PaddingMax">
-    
-  </a>
-  <a name="PaddingMax">
-    
-  </a>
-  <div class="functionHeader">
-    PaddingMax =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>float</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionOptionsDict">
-    
-  </a>
-  <a name="ResolutionOptionsDict">
-    
-  </a>
-  <div class="functionHeader">
-    ResolutionOptionsDict =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>Dict[str, int]</code>)
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.__init__">
     
@@ -289,198 +275,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, gui):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <a href="magneticalc.QGroupBox2.QGroupBox2.html#__init__" class="code" data-type="Method">magneticalc.QGroupBox2.QGroupBox2.__init__</a></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QGroupBox2.QGroupBox2.html#__init__">magneticalc.QGroupBox2.QGroupBox2.__init__</a></code></div>
     
-    <div><p>Populates the widget.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">gui</td><td>GUI</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    gui =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.constraint_editor">
-    
-  </a>
-  <a name="constraint_editor">
-    
-  </a>
-  <div class="functionHeader">
-    constraint_editor =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_widget">
-    
-  </a>
-  <a name="padding_widget">
-    
-  </a>
-  <div class="functionHeader">
-    padding_widget =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_spinbox">
-    
-  </a>
-  <a name="padding_spinbox">
-    
-  </a>
-  <div class="functionHeader">
-    padding_spinbox =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>List</code>)
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_extent_label">
-    
-  </a>
-  <a name="total_extent_label">
-    
-  </a>
-  <div class="functionHeader">
-    total_extent_label =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_constraints_label">
-    
-  </a>
-  <a name="total_constraints_label">
-    
-  </a>
-  <div class="functionHeader">
-    total_constraints_label =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_combobox">
-    
-  </a>
-  <a name="resolution_combobox">
-    
-  </a>
-  <div class="functionHeader">
-    resolution_combobox =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_units_label">
-    
-  </a>
-  <a name="resolution_units_label">
-    
-  </a>
-  <div class="functionHeader">
-    resolution_units_label =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_points_label">
-    
-  </a>
-  <a name="total_points_label">
-    
-  </a>
-  <div class="functionHeader">
-    total_points_label =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>Populates the widget.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.reinitialize">
-    
-  </a>
-  <a name="reinitialize">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    reinitialize(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Re-initializes the widget and the constraint editor</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_padding">
-    
-  </a>
-  <a name="update_padding">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    update_padding(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Updates padding.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.clear_padding">
     
@@ -490,130 +294,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    clear_padding(self):
+    <span class="py-keyword">def</span> <span class="py-defname">clear_padding</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Clears the padding values.</p></div>
+    <div>Clears the padding values.</div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.override_padding">
-    
-  </a>
-  <a name="override_padding">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    override_padding(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Override padding, setting the bounding box directly.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.set_sampling_volume">
-    
-  </a>
-  <a name="set_sampling_volume">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_sampling_volume(self, resolution_exponent=None, label_resolution_exponent=None, padding=None, override_padding=None, bounding_box=None, recalculate=(True), invalidate_self=(True)):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">resolution_exponent</td><td>Sampling volume resolution exponent</td></tr><tr><td></td><td class="fieldArg">label_resolution_exponent</td><td>Sampling volume label resolution exponent</td></tr><tr><td></td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">override_padding</td><td>Enable to override padding instead, setting the bounding box directly</td></tr><tr><td></td><td class="fieldArg">bounding_box</td><td>Bounding box (used in conjunction with override_padding)</td></tr><tr><td></td><td class="fieldArg">recalculate</td><td>Enable to trigger final re-calculation</td></tr><tr><td></td><td class="fieldArg">invalidate_self</td><td>Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.readjust">
-    
-  </a>
-  <a name="readjust">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    readjust(self, padding=None, override_padding=None, bounding_box=None):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</p><p>Padding may also be overridden instead, setting the bounding box directly.</p><p>Parameters may be left set to None in order to load their default value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">padding</td><td>Padding (3D point)</td></tr><tr><td></td><td class="fieldArg">override_padding</td><td>Enable to override padding instead, setting the bounding box directly</td></tr><tr><td></td><td class="fieldArg">bounding_box</td><td>Bounding box (used in conjunction with override_padding)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update">
-    
-  </a>
-  <a name="update">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    update(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Updates the widget.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_controls">
-    
-  </a>
-  <a name="update_controls">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    update_controls(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Updates the controls.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_labels">
-    
-  </a>
-  <a name="update_labels">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    update_labels(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Updates the labels.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.open_constraint_editor">
     
@@ -623,23 +313,442 @@
   </a>
   <div class="functionHeader">
     
-    def
-    open_constraint_editor(self):
+    <span class="py-keyword">def</span> <span class="py-defname">open_constraint_editor</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Opens the constraint editor. Recalculates the sampling volume if the constraints changed.</p></div>
+    <div>Opens the constraint editor. Recalculates the sampling volume if the constraints changed.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.override_padding">
+    
+  </a>
+  <a name="override_padding">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">override_padding</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Override padding, setting the bounding box directly.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.readjust">
+    
+  </a>
+  <a name="readjust">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">readjust</span>(self, _padding_=None, _override_padding_=None, _bounding_box_=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>Readjusts the sampling volume to the currently set wire bounds and padding. This also readjusts the minimum padding bounds in case the wire bounds have shrunk too far.</p>
+<p>Padding may also be overridden instead, setting the bounding box directly.</p>
+<p>Any underscored parameter may be left set to None in order to load its default value.</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_padding_:</span><code>Optional[<wbr></wbr>List]</code></td><td class="fieldArgDesc">Padding (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_override_padding_:</span><code>Optional[<wbr></wbr>bool]</code></td><td class="fieldArgDesc">Enable to override padding instead, setting the bounding box directly</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_bounding_box_:</span><code>Optional[<wbr></wbr>Tuple[<wbr></wbr>np.ndarray, <wbr></wbr>np.ndarray]]</code></td><td class="fieldArgDesc">Bounding box (used in conjunction with override_padding)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.reinitialize">
+    
+  </a>
+  <a name="reinitialize">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">reinitialize</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Re-initializes the widget and the constraint editor</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.set_sampling_volume">
+    
+  </a>
+  <a name="set_sampling_volume">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_sampling_volume</span>(self, _resolution_exponent_=None, _label_resolution_exponent_=None, _padding_=None, _override_padding_=None, _bounding_box_=None, recalculate=True, invalidate_self=True):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the sampling volume. This will overwrite the currently set sampling volume in the model. Any underscored parameter may be left set to None in order to load its default value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_resolution_exponent_:</span><code>Optional[<wbr></wbr>int]</code></td><td class="fieldArgDesc">Sampling volume resolution exponent</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_label_resolution_exponent_:</span><code>Optional[<wbr></wbr>int]</code></td><td class="fieldArgDesc">Sampling volume label resolution exponent</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_padding_:</span><code>Optional[<wbr></wbr>List]</code></td><td class="fieldArgDesc">Padding (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_override_padding_:</span><code>Optional[<wbr></wbr>bool]</code></td><td class="fieldArgDesc">Enable to override padding instead, setting the bounding box directly</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_bounding_box_:</span><code>Optional[<wbr></wbr>Tuple[<wbr></wbr>np.ndarray, <wbr></wbr>np.ndarray]]</code></td><td class="fieldArgDesc">Bounding box (used in conjunction with override_padding)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">recalculate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to trigger final re-calculation</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate_self:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the old sampling volume before setting a new one</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update">
+    
+  </a>
+  <a name="update">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the widget.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_controls">
+    
+  </a>
+  <a name="update_controls">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_controls</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the controls.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_labels">
+    
+  </a>
+  <a name="update_labels">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_labels</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the labels.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.update_padding">
+    
+  </a>
+  <a name="update_padding">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">update_padding</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates padding.</div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.PaddingMax">
+    
+  </a>
+  <a name="PaddingMax">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">PaddingMax</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.PaddingMin">
+    
+  </a>
+  <a name="PaddingMin">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">PaddingMin</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.ResolutionOptionsDict">
+    
+  </a>
+  <a name="ResolutionOptionsDict">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ResolutionOptionsDict</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>int]</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.UnitsLabelWidth">
+    
+  </a>
+  <a name="UnitsLabelWidth">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">UnitsLabelWidth</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.constraint_editor">
+    
+  </a>
+  <a name="constraint_editor">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">constraint_editor</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_spinbox">
+    
+  </a>
+  <a name="padding_spinbox">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">padding_spinbox</span>: <code>list</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.padding_widget">
+    
+  </a>
+  <a name="padding_widget">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">padding_widget</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_combobox">
+    
+  </a>
+  <a name="resolution_combobox">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">resolution_combobox</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.resolution_units_label">
+    
+  </a>
+  <a name="resolution_units_label">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">resolution_units_label</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_constraints_label">
+    
+  </a>
+  <a name="total_constraints_label">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">total_constraints_label</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_extent_label">
+    
+  </a>
+  <a name="total_extent_label">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">total_extent_label</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.SamplingVolume_Widget.SamplingVolume_Widget.total_points_label">
+    
+  </a>
+  <a name="total_points_label">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">total_points_label</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

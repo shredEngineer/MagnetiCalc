@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -45,10 +45,10 @@ class API:
         @param filename: Filename
         @param data: NumPy array of 3D points
         """
-        data = np.array(data)
-        assert data.shape[1] == 3, "Expecting array of 3D points"
+        _data_ = np.array(data)
+        assert _data_.shape[1] == 3, "Expecting array of 3D points"
         # noinspection PyTypeChecker
-        np.savetxt(filename, data)
+        np.savetxt(filename, _data_)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -81,7 +81,8 @@ class API:
         @param data: Dictionary or MagnetiCalc_Data object
         """
         hdf5_group = h5py.File(filename, "w")
-        API._dict_to_hdf5_group(hdf5_group, data)
+        _data_ = data.dictionary if isinstance(data, MagnetiCalc_Data) else data
+        API._dict_to_hdf5_group(hdf5_group, _data_)
         hdf5_group.close()
 
     # ------------------------------------------------------------------------------------------------------------------

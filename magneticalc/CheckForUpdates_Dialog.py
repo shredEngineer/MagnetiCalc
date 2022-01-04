@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -50,7 +50,11 @@ class CheckForUpdates_Dialog(QDialog2):
             pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
             # noinspection PyBroadException
             try:
-                version = "v" + ".".join(pattern.search(version_py).groups())
+                result = pattern.search(version_py)
+                if result is not None:
+                    version = "v" + ".".join(result.groups())
+                else:
+                    raise Exception
             except Exception:
                 icon, string, color = "fa.exclamation-circle", f"Invalid Format", Theme.FailureColor
             else:

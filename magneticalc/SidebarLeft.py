@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -23,11 +23,6 @@ from magneticalc.Debug import Debug
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
 from magneticalc.Wire_Widget import Wire_Widget
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class SidebarLeft(QScrollArea):
     """ SidebarLeft class. """
@@ -36,7 +31,10 @@ class SidebarLeft(QScrollArea):
     MaximumWidth = 370
     VerticalSpacing = 12
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the left sidebar.
 

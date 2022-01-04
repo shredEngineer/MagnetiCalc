@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -35,7 +35,7 @@ class About_Dialog(QDialog2):
     HTML = f"""
         <span style="color: {Theme.MainColor};"><b>{Version.String}</b></span><br>
         <br>
-        Copyright © 2020–2021, Paul Wilhelm, M. Sc.
+        Copyright © 2020–2022, Paul Wilhelm, M. Sc.
         &lt;<a href="mailto:anfrage@paulwilhelm.de">anfrage@paulwilhelm.de</a>&gt;<br>
         <br>
         <small>

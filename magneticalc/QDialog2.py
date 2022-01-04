@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -72,7 +72,5 @@ class QDialog2(QDialog, QLayouted):
         """
         Debug(self, ".showEvent(): Dialog opened")
 
-        # noinspection PyTypeChecker
-        super(QDialog, self).showEvent(event)
         # noinspection PyUnresolvedReferences
         self.dialog_shown.emit()

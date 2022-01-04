@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, List, Optional, Callable, Dict
+from typing import Tuple, List, Callable, Dict
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -46,24 +46,28 @@ class SamplingVolume:
 
         self._bounds_min = np.zeros(3)
         self._bounds_max = np.zeros(3)
-        self._dimension = None
+        self._dimension: Tuple[int, int, int] = (0, 0, 0)
 
-        self._points = None
-        self._permeabilities = None
-        self._labeled_indices = None
-        self._neighbor_indices = None
+        self._points = np.array([])
+        self._permeabilities = np.array([])
+        self._labeled_indices: List = []
+        self._neighbor_indices: List[np.ndarray] = []
+
+        self._valid = False
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
 
     @property
-    def dimension(self) -> Optional[Tuple[int, int, int]]:
+    def dimension(self) -> Tuple[int, int, int]:
         """
         Gets the sampling volume dimension if it is valid, None otherwise.
 
         @return: Sampling volume dimension if it is valid, None otherwise.
         """
-        return self._dimension if self.is_valid() else None
+        Assert_Dialog(self.is_valid(), "Accessing invalidated sampling volume")
+
+        return self._dimension
 
     def is_valid(self) -> bool:
         """
@@ -71,12 +75,7 @@ class SamplingVolume:
 
         @return: True if data is valid for display, False otherwise
         """
-        return \
-            self._dimension is not None and \
-            self._points is not None and \
-            self._permeabilities is not None and \
-            self._labeled_indices is not None and \
-            self._neighbor_indices is not None
+        return self._valid
 
     def invalidate(self) -> None:
         """
@@ -84,11 +83,7 @@ class SamplingVolume:
         """
         Debug(self, ".invalidate()")
 
-        self._dimension = None
-        self._points = None
-        self._permeabilities = None
-        self._labeled_indices = None
-        self._neighbor_indices = None
+        self._valid = False
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -230,6 +225,8 @@ class SamplingVolume:
         @return: True if successful, False if interrupted
         """
         Debug(self, ".recalculate()")
+
+        self._valid = False
 
         # Group constraints by permeability
         constraints_precedence_dict: Dict = {}
@@ -443,5 +440,7 @@ class SamplingVolume:
             self._neighbor_indices = np.array([[0, 0, 0, 0, 0, 0]])
 
         progress_callback(100)
+
+        self._valid = True
 
         return True

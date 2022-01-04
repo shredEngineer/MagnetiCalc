@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,20 +17,15 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Optional, List, Dict, Union
+from typing import Optional, List, Dict, Union, Callable
 from functools import partial
-import qtawesome as qta
 from PyQt5.Qt import QFocusEvent
 from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QPushButton, QAbstractItemView, QComboBox
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QComboBox
+from magneticalc.QPushButton2 import QPushButton2
 from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class QTableWidget2(QTableWidget):
@@ -41,20 +36,21 @@ class QTableWidget2(QTableWidget):
 
     def __init__(
             self,
-            gui: GUI,
-            enabled=True,
-            cell_edited_callback=None,
-            selection_changed_callback=None,
-            row_deleted_callback=None,
+            gui: GUI,  # type: ignore
+            enabled: bool = True,
+            _cell_edited_callback_: Optional[Callable] = None,
+            _selection_changed_callback_: Optional[Callable] = None,
+            _row_deleted_callback_: Optional[Callable] = None,
             minimum_rows: int = 0,
     ) -> None:
         """
         Initializes a table.
+        Underscored parameters are optional.
 
         @param gui: GUI
-        @param cell_edited_callback: Set this to make cells editable
-        @param selection_changed_callback: Used to inform the GUI that another row was selected
-        @param row_deleted_callback: Set this to make rows deletable
+        @param _cell_edited_callback_: Set this to make cells editable
+        @param _selection_changed_callback_: Used to inform the GUI that another row was selected
+        @param _row_deleted_callback_: Set this to make rows deletable
         @param minimum_rows: Minimum number of rows (no further rows can be deleted)
         """
         QTableWidget.__init__(self)
@@ -62,14 +58,14 @@ class QTableWidget2(QTableWidget):
         self.gui = gui
 
         self._enabled = enabled
-        self._cell_edited_callback = cell_edited_callback
-        self._selection_changed_callback = selection_changed_callback
-        self._row_deleted_callback = row_deleted_callback
+        self._cell_edited_callback = _cell_edited_callback_
+        self._selection_changed_callback = _selection_changed_callback_
+        self._row_deleted_callback = _row_deleted_callback_
         self._minimum_rows = minimum_rows
 
         self._prefix = None
-        self._types = None
-        self._options = None
+        self._types: Optional[Dict] = None
+        self._options: List = []
 
         if self._cell_edited_callback is not None:
             # noinspection PyUnresolvedReferences
@@ -126,7 +122,8 @@ class QTableWidget2(QTableWidget):
 
         item.setText(value)
 
-        self._cell_edited_callback(value, row, column)
+        if self._cell_edited_callback is not None:
+            self._cell_edited_callback(value, row, column)
 
     def on_combobox_cell_edited(self, combobox: QComboBox, row: int, column: int) -> None:
         """
@@ -138,7 +135,8 @@ class QTableWidget2(QTableWidget):
         """
         Debug(self, f".on_combobox_cell_edited()")
 
-        self._cell_edited_callback(combobox.currentText(), row, column)
+        if self._cell_edited_callback is not None:
+            self._cell_edited_callback(combobox.currentText(), row, column)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -154,7 +152,9 @@ class QTableWidget2(QTableWidget):
             return
 
         Debug(self, f".on_selection_changed()")
-        self._selection_changed_callback()
+
+        if self._selection_changed_callback is not None:
+            self._selection_changed_callback()
 
     def on_row_deleted(self, row: int) -> None:
         """
@@ -164,7 +164,9 @@ class QTableWidget2(QTableWidget):
         """
         Debug(self, f".on_row_deleted({row})")
 
-        self._row_deleted_callback(row)
+        if self._row_deleted_callback is not None:
+            self._row_deleted_callback(row)
+
         self.select_last_row()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -198,41 +200,40 @@ class QTableWidget2(QTableWidget):
         item = self.item(row, column)
         return item is None
 
-    def select_cell(self, row: Optional[int] = None, column: Optional[int] = None) -> None:
+    def select_cell(self, _row_: Optional[int] = None, _col_: Optional[int] = None) -> None:
         """
         Selects a cell.
-        Any parameter may be left set to None in order to load its value from the selection model.
+        Any underscored parameter may be left set to None in order to load its value from the selection model.
 
-        @param row: Row
-        @param column: Column
+        @param _row_: Row
+        @param _col_: Column
         """
-        if row is None:
-            row = self.selectionModel().currentIndex().row()
+        if _row_ is None:
+            _row_ = self.selectionModel().currentIndex().row()
 
-        if column is None:
-            column = self.selectionModel().currentIndex().column()
+        if _col_ is None:
+            _col_ = self.selectionModel().currentIndex().column()
 
-        if row == -1 or column == -1:
-            Debug(self, f".select_cell({row}, {column}): WARNING: Skipped", warning=True)
+        if _row_ == -1 or _col_ == -1:
+            Debug(self, f".select_cell({_row_}, {_col_}): WARNING: Skipped", warning=True)
             return
 
-        item = self.item(row, column)
+        item = self.item(_row_, _col_)
 
         if item is None:
 
             # Select cell widget
-            Debug(self, f".select_cell({row}, {column}): Selecting cell widget")
-            # widget = self.cellWidget(row, column)
+            Debug(self, f".select_cell({_row_}, {_col_}): Selecting cell widget")
 
             self.blockSignals(True)
-            self.setCurrentCell(row, column)
+            self.setCurrentCell(_row_, _col_)
             self.setFocus()
             self.blockSignals(False)
 
         else:
 
             # Select cell item
-            Debug(self, f".select_cell({row}, {column}): Selecting cell item")
+            Debug(self, f".select_cell({_row_}, {_col_}): Selecting cell item")
 
             item.setSelected(True)
             self.scrollToItem(item, QAbstractItemView.PositionAtCenter)
@@ -369,16 +370,16 @@ class QTableWidget2(QTableWidget):
                 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
                 # Determine the configuration and type binding of the cell
-                has_config = self._types is not None
-                has_options = self._options[col_index] is not None
 
-                if has_options:
-                    # Create a combobox
+                if self._options[col_index] is not None:
+                    # Cell has options: Create a combobox
                     combobox = QComboBox()
 
                     for i, text in enumerate(self._options[col_index]):
                         combobox.addItem(text)
-                        if has_config:
+
+                        # Cell has config:
+                        if self._types is not None:
                             key = list(self._types.keys())[col_index]
                             if text == self.gui.config.get_str(self._prefix + key + "_" + str(row_index)):
                                 combobox.setCurrentIndex(i)
@@ -391,7 +392,7 @@ class QTableWidget2(QTableWidget):
                     self.setCellWidget(row_index, col_index, combobox)
 
                 else:
-                    # Create a numerical cell
+                    # Cell doesn't have options: Create a numerical cell
                     item = QTableWidgetItem(col_contents)
                     item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
@@ -401,9 +402,10 @@ class QTableWidget2(QTableWidget):
                         flags |= Qt.ItemIsEnabled
                     if self._cell_edited_callback is not None:
                         flags |= Qt.ItemIsEditable
-                    item.setFlags(flags)
+                    item.setFlags(flags)  # type: ignore
 
-                    if has_config:
+                    # Cell has config:
+                    if self._types is not None:
                         key = list(self._types.keys())[col_index]
                         item.setText(self.gui.config.get_str(self._prefix + key + "_" + str(row_index)))
 
@@ -413,12 +415,7 @@ class QTableWidget2(QTableWidget):
 
             if self._row_deleted_callback is not None:
                 # Create a delete button
-                delete_button = QPushButton()
-                delete_button.setIcon(qta.icon("fa.minus"))
-                delete_button.setStyleSheet("""
-                    border: none;
-                    background: palette(window);
-                """)
+                delete_button = QPushButton2("", "fa.minus", css="border: none; background: palette(window);")
 
                 if self.rowCount() > self._minimum_rows:
                     # noinspection PyUnresolvedReferences

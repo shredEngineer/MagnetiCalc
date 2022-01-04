@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -58,6 +58,9 @@ class GUI(QMainWindow):
     calculation_status = pyqtSignal(str)
     calculation_exited = pyqtSignal(bool)
 
+    # Used by ModelAccess to invalidate the statusbar
+    invalidate_statusbar = pyqtSignal()
+
     def __init__(self) -> None:
         """
         Initializes the GUI.
@@ -65,7 +68,7 @@ class GUI(QMainWindow):
         QMainWindow.__init__(self, flags=Qt.Window)
         Debug(self, ": Init")
 
-        self.locale = QLocale(QLocale.English)
+        self.user_locale = QLocale(QLocale.English)
 
         self.setWindowIcon(qta.icon("ei.magnet", color=Theme.MainColor))
         self.setMinimumSize(*self.MinimumWindowSize)
@@ -78,12 +81,17 @@ class GUI(QMainWindow):
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by self.recalculate() but is needed here for ModelAccess
-        self.calculation_start_time = None
+        self.calculation_start_time = time.monotonic()  # Will be overwritten by L{recalculate()}
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.register(self.quit)
+        atexit.register(self.cleanup)
 
-        # Create the model first, as the following objects will access it (each widget acts as view *and* controller)
+        # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
+        self.statusbar = Statusbar(self)
+        # noinspection PyUnresolvedReferences
+        self.invalidate_statusbar.connect(self.statusbar.invalidate)
+
+        # Create the model next, as the following objects will access it (each widget acts as view *and* controller)
         self.model = Model(self)
 
         # Create the left and right sidebar
@@ -91,10 +99,9 @@ class GUI(QMainWindow):
         self.sidebar_left = SidebarLeft(self)
         self.sidebar_right = SidebarRight(self)
 
-        # Create the VisPy canvas (our 3D scene) and statusbar
+        # Create the VisPy canvas (our 3D scene)
         self.vispy_canvas = VispyCanvas(self)
         self.vispy_canvas.native.setFocusPolicy(Qt.NoFocus)  # Don't let VisPy gain control -- handle all events in GUI
-        self.statusbar = Statusbar(self)
 
         # Insert left sidebar, VisPy canvas and right sidebar into main layout.
         self.splitter = QSplitter(Qt.Horizontal)
@@ -114,6 +121,9 @@ class GUI(QMainWindow):
         self.calculation_exited.connect(lambda success: self.on_calculation_exited(success))
 
         self.initializing = True
+
+        # Invalidate the statusbar
+        self.statusbar.invalidate()
 
         # Kick off the field calculation
         if self.config.get_bool("auto_calculation"):
@@ -137,7 +147,7 @@ class GUI(QMainWindow):
                 Debug(self, ".redraw(): WARNING: Setting calculation thread to None", warning=True)
                 self.calculation_thread = None
 
-        self.sidebar_right.display_widget.set_enabled(self.model.field.is_valid())
+        self.sidebar_right.display_widget.set_enabled(self.model.field is not None and self.model.field.is_valid())
 
         self.vispy_canvas.redraw()
 
@@ -249,44 +259,36 @@ class GUI(QMainWindow):
         else:
             return None
 
-    def confirm_close(self) -> None:
+    def closeEvent(self, event: QCloseEvent) -> None:
         """
-        Called by menu "Quit" action.
-        Lets user choose to cancel closing or save / discard file if there is unsaved work.
-        """
-        Debug(self, ".confirm_close()")
+        Gets called when the window is closed (programmatically through close() or manually)
 
-        if not self.config.get_synced():
-            choice = self.confirm_saving_unsaved_work(cancelable=True)
-            if choice is None:
-                Debug(self, ".confirm_close(): Canceled")
-                return
-            elif choice:
-                Debug(self, ".confirm_close(): Saving unsaved work")
-                self.config.save()
-            else:
-                Debug(self, ".confirm_close(): Discarding unsaved work")
-
-        self.close()
-
-    def closeEvent(self, _event: QCloseEvent) -> None:
-        """
-        Handles close event.
-
-        @param _event: Close event
+        @param event: Close event
         """
         Debug(self, ".closeEvent()")
 
-        self.quit()
+        # Let user choose to cancel closing or save / discard file if there is unsaved work.
+        if not self.config.get_synced():
+            choice = self.confirm_saving_unsaved_work(cancelable=True)
+            if choice is None:
+                Debug(self, ".closeEvent(): Canceled")
+                event.ignore()
+                return
+            elif choice:
+                Debug(self, ".closeEvent(): Saving unsaved work")
+                self.config.save()
+            else:
+                Debug(self, ".closeEvent(): Discarding unsaved work")
 
-    def quit(self):
+        self.cleanup()
+
+    def cleanup(self):
         """
-        Quits the application.
+        Perform clean-up upon quitting the application.
         """
-        Debug(self, ".quit()")
+        Debug(self, ".cleanup()")
 
         if self.calculation_thread != QThread.currentThread():
-            Debug(self, ".quit()")
             if self.calculation_thread is not None:
                 self.interrupt_calculation()
         else:
@@ -298,7 +300,7 @@ class GUI(QMainWindow):
         print("Goodbye!")
 
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.unregister(self.quit)
+        atexit.unregister(self.cleanup)
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
         """
@@ -472,9 +474,9 @@ class GUI(QMainWindow):
 
             points = API.import_wire(filename)
             self.sidebar_left.wire_widget.set_wire(
-                points=points,
-                stretch=[1.0, 1.0, 1.0],
-                rotational_symmetry={
+                _points_=points,
+                _stretch_=[1.0, 1.0, 1.0],
+                _rotational_symmetry_={
                     "count": 1,
                     "radius": 0,
                     "axis": 2,
@@ -488,7 +490,7 @@ class GUI(QMainWindow):
         """
         Debug(self, ".export_wire()")
 
-        if not self.model.wire.is_valid():
+        if self.model.wire is None or not self.model.wire.is_valid():
             Assert_Dialog(False, "Attempting to export invalid wire")
             return
 

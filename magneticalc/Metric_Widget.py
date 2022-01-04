@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,23 +17,18 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
+from typing import Optional, Dict
 import numpy as np
-import qtawesome as qta
 from si_prefix import si_format
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox, QLabel
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
 from magneticalc.QIconLabel import QIconLabel
+from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Metric import Metric
 from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Metric_Widget(QGroupBox2):
@@ -42,7 +37,39 @@ class Metric_Widget(QGroupBox2):
     # Formatting settings
     ValuePrecision = 1
 
-    def __init__(self, gui: GUI) -> None:
+    # Divergent metric gradient
+    Cool_Gradient_CSS = """
+        background: qlineargradient(
+            x1:0 y1:0, x2:1 y2:0,
+            stop:0 #00fffe,
+            stop:1 #ff22f9
+        );
+    """
+
+    # Cyclic metric gradient
+    HSV_Gradient_CSS = """
+        background: qlineargradient(
+            x1:0 y1:0, x2:1 y2:0,
+            stop:0.00 #ff0000,
+            stop:0.08 #ff8000,
+            stop:0.17 #ffff00,
+            stop:0.25 #80ff00,
+            stop:0.33 #00ff00,
+            stop:0.42 #00ff80,
+            stop:0.50 #00ffff,
+            stop:0.58 #0080ff,
+            stop:0.67 #0000ff,
+            stop:0.75 #8000ff,
+            stop:0.83 #ff00ff,
+            stop:0.92 #ff0080,
+            stop:1.00 #ff0000
+        );
+    """
+
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -52,34 +79,28 @@ class Metric_Widget(QGroupBox2):
         Debug(self, ": Init")
         self.gui = gui
 
-        # --------------------------------------------------------------------------------------------------------------
-
         self.addLayout(QIconLabel("Color", "fa.tint"))
         self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             self.color_metric_combobox.addItem(preset["id"])
         # noinspection PyUnresolvedReferences
         self.color_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(color_preset=Metric_Presets.get_by_id(self.color_metric_combobox.currentText()))
+            lambda: self.set_metric(_color_preset_=Metric_Presets.get_by_id(self.color_metric_combobox.currentText()))
         )
         self.addWidget(self.color_metric_combobox)
 
         self.color_metric_limits_layout = QHBoxLayout()
         self.color_metric_limits_widget = QWidget()
         self.color_metric_limits_widget.setLayout(self.color_metric_limits_layout)
-        self.color_metric_min_label = QLabel("N/A")
-        self.color_metric_max_label = QLabel("N/A")
-        color_metric_dots_icon = QLabel()
-        color_metric_dots_icon.setPixmap(qta.icon("mdi.dots-horizontal").pixmap(QSize(16, 16)))
-        self.color_metric_min_label.setStyleSheet("background: none;")
-        self.color_metric_max_label.setStyleSheet("background: none;")
-        color_metric_dots_icon.setStyleSheet("background: none;")
-        self.color_metric_limits_layout.addWidget(self.color_metric_min_label, alignment=Qt.AlignVCenter)
-        self.color_metric_limits_layout.addWidget(color_metric_dots_icon, alignment=Qt.AlignVCenter | Qt.AlignCenter)
+        self.color_metric_min_label = QLabel2("N/A", css="background: none;", expand=False)
+        self.color_metric_max_label = QLabel2("N/A", css="background: none;", expand=False)
+        self.color_metric_limits_layout.addWidget(self.color_metric_min_label)
+        self.color_metric_limits_layout.addStretch()
         self.color_metric_limits_layout.addWidget(
-            self.color_metric_max_label,
-            alignment=Qt.AlignVCenter | Qt.AlignRight
+            QLabel2("", icon="mdi.dots-horizontal", css="background: none;", expand=False)
         )
+        self.color_metric_limits_layout.addStretch()
+        self.color_metric_limits_layout.addWidget(self.color_metric_max_label)
         self.addWidget(self.color_metric_limits_widget)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -95,26 +116,22 @@ class Metric_Widget(QGroupBox2):
                 self.alpha_metric_combobox.addItem(preset["id"])
         # noinspection PyUnresolvedReferences
         self.alpha_metric_combobox.currentIndexChanged.connect(
-            lambda: self.set_metric(alpha_preset=Metric_Presets.get_by_id(self.alpha_metric_combobox.currentText()))
+            lambda: self.set_metric(_alpha_preset_=Metric_Presets.get_by_id(self.alpha_metric_combobox.currentText()))
         )
         self.addWidget(self.alpha_metric_combobox)
 
         self.alpha_metric_limits_layout = QHBoxLayout()
         self.alpha_metric_limits_widget = QWidget()
         self.alpha_metric_limits_widget.setLayout(self.alpha_metric_limits_layout)
-        self.alpha_metric_min_label = QLabel("N/A")
-        self.alpha_metric_max_label = QLabel("N/A")
-        alpha_metric_dots_icon = QLabel()
-        alpha_metric_dots_icon.setPixmap(qta.icon("mdi.dots-horizontal").pixmap(QSize(16, 16)))
-        self.alpha_metric_min_label.setStyleSheet("background: none;")
-        self.alpha_metric_max_label.setStyleSheet("background: none;")
-        alpha_metric_dots_icon.setStyleSheet("background: none;")
-        self.alpha_metric_limits_layout.addWidget(self.alpha_metric_min_label, alignment=Qt.AlignVCenter)
-        self.alpha_metric_limits_layout.addWidget(alpha_metric_dots_icon, alignment=Qt.AlignVCenter | Qt.AlignCenter)
+        self.alpha_metric_min_label = QLabel2("N/A", css="background: none;", expand=False)
+        self.alpha_metric_max_label = QLabel2("N/A", css="background: none;", expand=False)
+        self.alpha_metric_limits_layout.addWidget(self.alpha_metric_min_label)
+        self.alpha_metric_limits_layout.addStretch()
         self.alpha_metric_limits_layout.addWidget(
-            self.alpha_metric_max_label,
-            alignment=Qt.AlignVCenter | Qt.AlignRight
+            QLabel2("", icon="mdi.dots-horizontal", css="background: none;", expand=False)
         )
+        self.alpha_metric_limits_layout.addStretch()
+        self.alpha_metric_limits_layout.addWidget(self.alpha_metric_max_label)
         self.addWidget(self.alpha_metric_limits_widget)
 
         self.reinitialize()
@@ -140,22 +157,24 @@ class Metric_Widget(QGroupBox2):
         # Initially load metric from configuration
         self.set_metric(recalculate=False, update_labels=False, invalidate_self=False)
 
+        self.update()
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_metric(
             self,
-            color_preset=None,
-            alpha_preset=None,
+            _color_preset_: Optional[Dict] = None,
+            _alpha_preset_: Optional[Dict] = None,
             recalculate: bool = True,
             update_labels: bool = True,
             invalidate_self: bool = True
     ) -> None:
         """
         Sets the metric. This will overwrite the currently set metric in the model.
-        Any parameter may be left set to None in order to load its default value.
+        Any underscored parameter may be left set to None in order to load its default value.
 
-        @param color_preset: Color metric preset (parameters, see Metric module)
-        @param alpha_preset: Alpha metric preset (parameters, see Metric module)
+        @param _color_preset_: Color metric preset (parameters, see Metric module)
+        @param _alpha_preset_: Alpha metric preset (parameters, see Metric module)
         @param recalculate: Enable to trigger final re-calculation
         @param update_labels: Enable to update metric labels
         @param invalidate_self: Enable to invalidate the old metric before setting a new one
@@ -169,15 +188,17 @@ class Metric_Widget(QGroupBox2):
 
             # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets
 
-            if color_preset is None:
+            if _color_preset_ is None:
                 color_preset = Metric_Presets.get_by_id(self.gui.config.get_str("color_metric"))
             else:
-                self.gui.config.set_str("color_metric", color_preset["id"])
+                self.gui.config.set_str("color_metric", _color_preset_["id"])
+                color_preset = _color_preset_
 
-            if alpha_preset is None:
+            if _alpha_preset_ is None:
                 alpha_preset = Metric_Presets.get_by_id(self.gui.config.get_str("alpha_metric"))
             else:
-                self.gui.config.set_str("alpha_metric", alpha_preset["id"])
+                self.gui.config.set_str("alpha_metric", _alpha_preset_["id"])
+                alpha_preset = _alpha_preset_
 
             self.gui.model.set_metric(
                 Metric(color_preset, alpha_preset),
@@ -189,32 +210,14 @@ class Metric_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    Cool_Gradient_CSS = """
-        background: qlineargradient(
-            x1:0 y1:0, x2:1 y2:0,
-            stop:0 #00fffe,
-            stop:1 #ff22f9
-        );
-    """
+    def update(self) -> None:
+        """
+        Updates the widget.
+        """
+        Debug(self, ".update()")
 
-    HSV_Gradient_CSS = """
-        background: qlineargradient(
-            x1:0 y1:0, x2:1 y2:0,
-            stop:0.00 #ff0000,
-            stop:0.08 #ff8000,
-            stop:0.17 #ffff00,
-            stop:0.25 #80ff00,
-            stop:0.33 #00ff00,
-            stop:0.42 #00ff80,
-            stop:0.50 #00ffff,
-            stop:0.58 #0080ff,
-            stop:0.67 #0000ff,
-            stop:0.75 #8000ff,
-            stop:0.83 #ff00ff,
-            stop:0.92 #ff0080,
-            stop:1.00 #ff0000
-        );
-    """
+        self.update_labels()
+        self.update_controls()
 
     def update_labels(self) -> None:
         """
@@ -321,3 +324,11 @@ class Metric_Widget(QGroupBox2):
             self.alpha_metric_limits_widget.setStyleSheet("")
             self.alpha_metric_min_label.setStyleSheet("background: none; color: #000000;")
             self.alpha_metric_max_label.setStyleSheet("background: none; color: #000000;")
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        Debug(self, ".update_controls()")
+
+        self.indicate_valid(self.gui.model.metric is not None and self.gui.model.metric.is_valid())

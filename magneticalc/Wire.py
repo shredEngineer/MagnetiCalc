@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -76,8 +76,10 @@ class Wire:
         self._slicer_limit = slicer_limit
         self._dc = dc
 
-        self._points_sliced = None
-        self._length = None
+        self._points_sliced = np.array([])
+        self._length = 0
+
+        self._valid = False
 
         self._points_transformed = self._points_base.copy()
 
@@ -92,9 +94,7 @@ class Wire:
 
         @return: True if data is valid for display, False otherwise
         """
-        return \
-            self._points_sliced is not None and \
-            self._length is not None
+        return self._valid
 
     def invalidate(self) -> None:
         """
@@ -102,8 +102,7 @@ class Wire:
         """
         Debug(self, ".invalidate()")
 
-        self._points_sliced = None
-        self._length = None
+        self._valid = False
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -148,7 +147,7 @@ class Wire:
         """
         Returns this curve's elements, i.e. an ordered list of segment center points and directions.
 
-        @return: [[element_center, element_direction], ...]
+        @return: [[element_center, element_direction], …]
         """
         Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
 
@@ -243,6 +242,8 @@ class Wire:
         """
         Debug(self, ".recalculate()")
 
+        self._valid = False
+
         points_sliced = []
         length = 0
 
@@ -273,5 +274,7 @@ class Wire:
         self._length = length
 
         progress_callback(100)
+
+        self._valid = True
 
         return True

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -36,6 +36,6 @@ class QHBoxLayout2(QHBoxLayout):
         QHBoxLayout.__init__(self)
         for element in elements:
             if isinstance(element, QWidget):
-                self.addWidget(element, alignment=Qt.AlignVCenter)
+                self.addWidget(element)
             elif isinstance(element, QLayout):
                 self.addLayout(element)

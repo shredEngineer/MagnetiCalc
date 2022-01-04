@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -26,11 +26,6 @@ from magneticalc.Metric_Widget import Metric_Widget
 from magneticalc.Parameters_Widget import Parameters_Widget
 from magneticalc.Perspective_Widget import Perspective_Widget
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class SidebarRight(QScrollArea):
     """ SidebarRight class. """
@@ -39,7 +34,10 @@ class SidebarRight(QScrollArea):
     MaximumWidth = 370
     VerticalSpacing = 12
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the right sidebar.
 
@@ -62,34 +60,34 @@ class SidebarRight(QScrollArea):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.field_widget = Field_Widget(self.gui)
-        layout.addWidget(self.field_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.field_widget)
 
         layout.addSpacing(self.VerticalSpacing)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.metric_widget = Metric_Widget(self.gui)
-        layout.addWidget(self.metric_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.metric_widget)
 
         layout.addSpacing(self.VerticalSpacing)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.parameters_widget = Parameters_Widget(self.gui)
-        layout.addWidget(self.parameters_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.parameters_widget)
 
         layout.addSpacing(self.VerticalSpacing)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.perspective_widget = Perspective_Widget(self.gui)
-        layout.addWidget(self.perspective_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.perspective_widget)
 
         layout.addSpacing(self.VerticalSpacing)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.display_widget = Display_Widget(self.gui)
-        layout.addWidget(self.display_widget, alignment=Qt.AlignTop)
+        layout.addWidget(self.display_widget)
 
         layout.addStretch()

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -27,11 +27,6 @@ from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Parameters import Parameters
 from magneticalc.Theme import Theme
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class Parameters_Widget(QGroupBox2):
     """ Parameters_Widget class. """
@@ -39,7 +34,10 @@ class Parameters_Widget(QGroupBox2):
     # Formatting settings
     ValuePrecision = 1
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Populates the widget.
 
@@ -85,7 +83,18 @@ class Parameters_Widget(QGroupBox2):
         self.self_inductance_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
         results_right.addWidget(self.self_inductance_units_label)
 
+        self.update()
+
     # ------------------------------------------------------------------------------------------------------------------
+
+    def update(self) -> None:
+        """
+        Updates the widget.
+        """
+        Debug(self, ".update()")
+
+        self.update_labels()
+        self.update_controls()
 
     def update_labels(self) -> None:
         """
@@ -169,3 +178,11 @@ class Parameters_Widget(QGroupBox2):
 
             self.magnetic_dipole_moment_value_label.set("", color=Theme.MainColor)
             self.magnetic_dipole_moment_units_label.set("N/A", color=Theme.MainColor)
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        Debug(self, ".update_controls()")
+
+        self.indicate_valid(self.gui.model.parameters is not None and self.gui.model.parameters.is_valid())

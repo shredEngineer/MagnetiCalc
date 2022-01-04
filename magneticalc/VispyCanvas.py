@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -28,11 +28,6 @@ from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Metric import Metric
 from magneticalc.Theme import Theme
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class VispyCanvas(scene.SceneCanvas):
@@ -71,7 +66,10 @@ class VispyCanvas(scene.SceneCanvas):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Initialize VisPy canvas.
 

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -20,25 +20,26 @@ from __future__ import annotations
 from typing import Optional, List, Dict
 from magneticalc.Assert_Dialog import Assert_Dialog
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class Config_Collection:
     """ Config_Collection class. """
 
-    def __init__(self, gui: GUI, prefix: str, types: Dict, first_without_suffix: bool) -> None:
+    def __init__(
+            self,
+            gui: GUI,  # type: ignore
+            prefix: str,
+            types: Dict,
+            first_without_suffix: bool
+    ) -> None:
         """
         Initializes a config collection: A list of groups (dictionaries).
 
         Example for the SOMETHING collection, consisting of two groups _0 and _1, each with two keys FOO and BAR:
-            SOMETHING_count = 2
-            SOMETHING_FOO_0 = "1st value in 1st group"
-            SOMETHING_BAR_0 = "2nd value in 1st group"
-            SOMETHING_FOO_1 = "1st value in 2nd group"
-            SOMETHING_BAR_1 = "2nd value in 2nd group"
+        SOMETHING_count = 2
+        SOMETHING_FOO_0 = "1st value in 1st group"
+        SOMETHING_BAR_0 = "2nd value in 1st group"
+        SOMETHING_FOO_1 = "1st value in 2nd group"
+        SOMETHING_BAR_1 = "2nd value in 2nd group"
 
         @param gui: GUI
         @param prefix: Prefix

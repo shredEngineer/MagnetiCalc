@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -26,7 +26,7 @@ from magneticalc.Backend_JIT import Backend_JIT
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_Str_Map
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Wire import Wire
 
@@ -50,9 +50,11 @@ class Field:
         self._distance_limit = distance_limit
         self._length_scale = length_scale
 
-        self._total_calculations = None
-        self._total_skipped_calculations = None
-        self._vectors = None
+        self._total_calculations: int = 0
+        self._total_skipped_calculations: int = 0
+        self._vectors: np.ndarray = np.array([])
+
+        self._valid = False
 
     def is_valid(self) -> bool:
         """
@@ -60,10 +62,7 @@ class Field:
 
         @return: True if data is valid for display, False otherwise
         """
-        return \
-            self._total_calculations is not None and \
-            self._total_skipped_calculations is not None and \
-            self._vectors is not None
+        return self._valid
 
     def invalidate(self) -> None:
         """
@@ -71,9 +70,7 @@ class Field:
         """
         Debug(self, ".invalidate()")
 
-        self._total_calculations = None
-        self._total_skipped_calculations = None
-        self._vectors = None
+        self._valid = False
 
     def get_type(self) -> int:
         """
@@ -90,16 +87,18 @@ class Field:
         @param show_gauss: Enable to show Gauss instead of Tesla
         @return: Field units, field factor
         """
+        Assert_Dialog(self._field_type in Field_Types_Str_Map, "Attempting to get units for invalid field type")
+
         if show_gauss:
             return {
                 A_FIELD: "Gs·m",    # Gauss · meter
                 B_FIELD: "Gs"       # Gauss
-            }.get(self._field_type, None), 1e4
+            }.get(self._field_type, ""), 1e4
         else:
             return {
                 A_FIELD: "T·m",     # Tesla · meter
                 B_FIELD: "T"        # Tesla
-            }.get(self._field_type, None), 1e0
+            }.get(self._field_type, ""), 1e0
 
     def get_vectors(self) -> np.ndarray:
         """
@@ -150,6 +149,8 @@ class Field:
         @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
         Debug(self, ".recalculate()")
+
+        self._valid = False
 
         # Compute the current elements.
         current_elements = wire.get_elements()
@@ -217,6 +218,8 @@ class Field:
         if expected_total_calculations != self._total_calculations:
             Assert_Dialog(False, "ERROR: Unexpected number of calculations – Backend seems to be buggy")
             return False
+
+        self._valid = True
 
         return True
 

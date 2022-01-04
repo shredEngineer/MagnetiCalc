@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -22,11 +22,6 @@ from typing import Optional, Type
 from sty import fg
 from magneticalc.Debug import Debug
 
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
-
 
 class ModelAccess:
     """ Model access class. """
@@ -34,7 +29,11 @@ class ModelAccess:
     # Used by L{Debug}
     DebugColor = fg.yellow
 
-    def __init__(self, gui: GUI, recalculate: bool) -> None:
+    def __init__(
+            self,
+            gui: GUI,  # type: ignore
+            recalculate: bool
+    ) -> None:
         """
         Initializes model access.
 
@@ -65,7 +64,11 @@ class ModelAccess:
         """
         Debug(self, ".exit()")
 
-        Debug(self, f": Valid: {'None' if str(self.gui.model) == '' else self.gui.model}")
+        summary = str(self.gui.model)
+        Debug(self, f": Valid: {'None' if summary == '' else summary}")
+
+        if not self.gui.model.is_valid():
+            self.gui.invalidate_statusbar.emit()
 
         if self._recalculate:
             if self.gui.config.get_bool("auto_calculation"):

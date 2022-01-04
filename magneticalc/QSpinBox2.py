@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from typing import Callable
-from PyQt5.QtWidgets import QSpinBox
+from PyQt5.QtWidgets import QSpinBox, QSizePolicy
 
 
 class QSpinBox2(QSpinBox):
@@ -44,3 +44,4 @@ class QSpinBox2(QSpinBox):
         self.setValue(value)
         # noinspection PyUnresolvedReferences
         self.valueChanged.connect(value_changed)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)

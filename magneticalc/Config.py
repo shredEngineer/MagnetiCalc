@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -109,12 +109,12 @@ class Config:
         self.Default["azimuth"] = f"{float(default_azimuth):.{Config.FloatPrecision}f}"
         self.Default["elevation"] = f"{float(default_elevation):.{Config.FloatPrecision}f}"
 
-        self._config = None
+        self._config = configparser.ConfigParser()  # Will be overwritten by L{load()}
 
         self._synced = False
         self._changed_callback = None
 
-        self._filename = None
+        self._filename: str = ""
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -335,12 +335,12 @@ class Config:
         if self._changed_callback is not None:
             self._changed_callback()
 
-    def set_get_bool(self, key: str, value: bool) -> Optional[bool]:
+    def set_get_bool(self, key: str, value: bool) -> bool:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_bool(key)
@@ -348,12 +348,12 @@ class Config:
             self.set_bool(key, value)
             return value
 
-    def set_get_float(self, key: str, value: float) -> Optional[float]:
+    def set_get_float(self, key: str, value: float) -> float:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_float(key)
@@ -361,12 +361,12 @@ class Config:
             self.set_float(key, value)
             return value
 
-    def set_get_int(self, key: str, value: int) -> Optional[int]:
+    def set_get_int(self, key: str, value: int) -> int:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_int(key)
@@ -378,12 +378,12 @@ class Config:
             self,
             key: str,
             value: Union[np.ndarray, List[List[float]]]
-    ) -> Optional[Union[np.ndarray, List[List[float]]]]:
+    ) -> Union[np.ndarray, List[List[float]]]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_points(key)
@@ -395,12 +395,12 @@ class Config:
             self,
             key: str,
             value: Union[np.ndarray, List[float]]
-    ) -> Optional[Union[np.ndarray, List[float]]]:
+    ) -> Union[np.ndarray, List[float]]:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_point(key)
@@ -408,12 +408,12 @@ class Config:
             self.set_point(key, value)
             return value
 
-    def set_get_str(self, key: str, value: str) -> Optional[str]:
+    def set_get_str(self, key: str, value: str) -> str:
         """
         If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.
 
         @param key: Key
-        @param value: Value or None
+        @param value: Value
         """
         if value is None:
             return self.get_str(key)
@@ -471,13 +471,17 @@ class Config:
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_generic(self, _key: str, _type) -> Any:
+    def get_generic(
+            self,
+            _key: str,
+            _type: str
+    ) -> Union[bool, float, int, str, np.ndarray, List[float], List[List[float]]]:
         """
         Gets some "_key"-"_value" of data type "_type".
 
         @param _key: Key
         @param _type: Data type
-        @return _value: Data (type determined by "_type")
+        @return: Data (type determined by "_type")
         """
         set_func = {
             "bool"  : self.get_bool,
@@ -488,10 +492,17 @@ class Config:
             "str"   : self.get_str
         }
 
-        # noinspection PyArgumentList
-        return set_func.get(_type)(_key)
+        if _type in set_func:
+            return set_func[_type](_key)
+        else:
+            raise TypeError("Invalid type")
 
-    def set_generic(self, _key: str, _type, _value: Any) -> None:
+    def set_generic(
+            self,
+            _key: str,
+            _type: str,
+            _value: Union[bool, float, int, str, np.ndarray, List[float], List[List[float]]]
+    ) -> None:
         """
         Sets some "_key"-"_value" of data type "_type".
 
@@ -508,10 +519,12 @@ class Config:
             "str"   : self.set_str
         }
 
-        # noinspection PyArgumentList
-        set_func.get(_type)(_key, _value)
+        if _type in set_func:
+            set_func[_type](_key, _value)
+        else:
+            raise TypeError("Invalid type")
 
-    def set_get_dict(self, prefix: str, suffix: str, types: Dict, values: Optional[Dict]) -> Optional[Dict]:
+    def set_get_dict(self, prefix: str, suffix: str, types: Dict, values: Optional[Dict]) -> Dict:
         """
         If "values" is None, reads and returns all key-values in "types".
         Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".
@@ -522,7 +535,7 @@ class Config:
         @param prefix: Prefix
         @param suffix: Suffix
         @param types: Key:Type (Dictionary)
-        @param values: Key:Value (Dictionary) or None
+        @param values: Key:Value (Dictionary)
         """
         if values is None:
             result = {}

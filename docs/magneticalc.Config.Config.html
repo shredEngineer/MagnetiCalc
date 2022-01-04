@@ -2,271 +2,300 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Config.Config : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Config.Config</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Config.Config</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Config.html">Config</a></code><wbr></wbr>.<code><a href="magneticalc.Config.Config.html">Config</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Config.html" class="code" data-type="Module">Config</a></code>
-          
-          <a href="classIndex.html#magneticalc.Config.Config">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Config</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Config.Config">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Config class.</p></div>
+        <div>Config class.</div>
       </div>
 
       <div id="splitTables">
         <table class="children sortable" id="id25">
   
-  <tr class="classvariable">
+  
+  <tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#point_to_str">point_to_str</a></code></td>
+    <td>Converts a single 3D point to string.</td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#points_to_str">points_to_str</a></code></td>
+    <td>Converts list of 3D points to string.</td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#str_to_point">str_to_point</a></code></td>
+    <td>Converts string to single 3D point.</td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#str_to_points">str_to_points</a></code></td>
+    <td>Converts string to list of 3D points.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes the configuration.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#close">close</a></code></td>
+    <td>Close configuration.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_bool">get_bool</a></code></td>
+    <td>Gets boolean value, convert from string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_filename">get_filename</a></code></td>
+    <td>Gets the filename of the current session.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_float">get_float</a></code></td>
+    <td>Gets float value, convert from string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_generic">get_generic</a></code></td>
+    <td>Gets some "_key"-"_value" of data type "_type".</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_int">get_int</a></code></td>
+    <td>Gets integer value, convert from string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_point">get_point</a></code></td>
+    <td>Gets a single 3D point, convert from string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_points">get_points</a></code></td>
+    <td>Gets list of 3D points, convert from string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_str">get_str</a></code></td>
+    <td>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_synced">get_synced</a></code></td>
+    <td>Returns the synchronization state of the current session.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#load">load</a></code></td>
+    <td>Loads the configuration from file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#remove_key">remove_key</a></code></td>
+    <td>Removes a key from the configuration.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#save">save</a></code></td>
+    <td>Saves the configuration to file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_bool">set_bool</a></code></td>
+    <td>Sets boolean value, convert to string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_changed_callback">set_changed_callback</a></code></td>
+    <td>Sets the callback for any changes to the configuration.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_defaults">set_defaults</a></code></td>
+    <td>Sets the default key-value pairs. Creates empty "User" section if not present.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_filename">set_filename</a></code></td>
+    <td>Sets the filename for the current session.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_float">set_float</a></code></td>
+    <td>Sets float value, convert to string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_generic">set_generic</a></code></td>
+    <td>Sets some "_key"-"_value" of data type "_type".</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_bool">set_get_bool</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_dict">set_get_dict</a></code></td>
+    <td>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_float">set_get_float</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_int">set_get_int</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_point">set_get_point</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_points">set_get_points</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_get_str">set_get_str</a></code></td>
+    <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_int">set_int</a></code></td>
+    <td>Sets integer value, convert to string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_point">set_point</a></code></td>
+    <td>Sets a single 3D point, convert to string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_points">set_points</a></code></td>
+    <td>Sets list of 3D points, convert to string.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_str">set_str</a></code></td>
+    <td>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.</td>
+  </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#FloatPrecision" class="code" data-type="Class Variable">FloatPrecision</a></td>
+    <td><code><a href="#CoordinatePrecision">CoordinatePrecision</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#CoordinatePrecision" class="code" data-type="Class Variable">CoordinatePrecision</a></td>
+    <td><code><a href="#Default">Default</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#DefaultWirePreset" class="code" data-type="Class Variable">DefaultWirePreset</a></td>
+    <td><code><a href="#DefaultPerspectivePreset">DefaultPerspectivePreset</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#DefaultPerspectivePreset" class="code" data-type="Class Variable">DefaultPerspectivePreset</a></td>
+    <td><code><a href="#DefaultWirePreset">DefaultWirePreset</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><a href="magneticalc.Config.Config.html#Default" class="code" data-type="Class Variable">Default</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>Initializes the configuration.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_changed_callback" class="code" data-type="Method">set_changed_callback</a></td>
-    <td><span>Sets the callback for any changes to the configuration.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_synced" class="code" data-type="Method">get_synced</a></td>
-    <td><span>Returns the synchronization state of the current session.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_filename" class="code" data-type="Method">set_filename</a></td>
-    <td><span>Sets the filename for the current session.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_filename" class="code" data-type="Method">get_filename</a></td>
-    <td><span>Gets the filename of the current session.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#load" class="code" data-type="Method">load</a></td>
-    <td><span>Loads the configuration from file.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_defaults" class="code" data-type="Method">set_defaults</a></td>
-    <td><span>Sets the default key-value pairs. Creates empty "User" section if not present.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#save" class="code" data-type="Method">save</a></td>
-    <td><span>Saves the configuration to file.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#close" class="code" data-type="Method">close</a></td>
-    <td><span>Close configuration.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#remove_key" class="code" data-type="Method">remove_key</a></td>
-    <td><span>Removes a key from the configuration.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_bool" class="code" data-type="Method">get_bool</a></td>
-    <td><span>Gets boolean value, convert from string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_float" class="code" data-type="Method">get_float</a></td>
-    <td><span>Gets float value, convert from string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_int" class="code" data-type="Method">get_int</a></td>
-    <td><span>Gets integer value, convert from string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_points" class="code" data-type="Method">get_points</a></td>
-    <td><span>Gets list of 3D points, convert from string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_point" class="code" data-type="Method">get_point</a></td>
-    <td><span>Gets a single 3D point, convert from string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_str" class="code" data-type="Method">get_str</a></td>
-    <td><span>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_bool" class="code" data-type="Method">set_bool</a></td>
-    <td><span>Sets boolean value, convert to string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_float" class="code" data-type="Method">set_float</a></td>
-    <td><span>Sets float value, convert to string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_int" class="code" data-type="Method">set_int</a></td>
-    <td><span>Sets integer value, convert to string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_points" class="code" data-type="Method">set_points</a></td>
-    <td><span>Sets list of 3D points, convert to string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_point" class="code" data-type="Method">set_point</a></td>
-    <td><span>Sets a single 3D point, convert to string.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_str" class="code" data-type="Method">set_str</a></td>
-    <td><span>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_bool" class="code" data-type="Method">set_get_bool</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_float" class="code" data-type="Method">set_get_float</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_int" class="code" data-type="Method">set_get_int</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_points" class="code" data-type="Method">set_get_points</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_point" class="code" data-type="Method">set_get_point</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_str" class="code" data-type="Method">set_get_str</a></td>
-    <td><span>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Config.Config.html#point_to_str" class="code" data-type="Static Method">point_to_str</a></td>
-    <td><span>Converts a single 3D point to string.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Config.Config.html#points_to_str" class="code" data-type="Static Method">points_to_str</a></td>
-    <td><span>Converts list of 3D points to string.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Config.Config.html#str_to_point" class="code" data-type="Static Method">str_to_point</a></td>
-    <td><span>Converts string to single 3D point.</span></td>
-  </tr><tr class="staticmethod">
-    
-    <td>Static Method</td>
-    <td><a href="magneticalc.Config.Config.html#str_to_points" class="code" data-type="Static Method">str_to_points</a></td>
-    <td><span>Converts string to list of 3D points.</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#get_generic" class="code" data-type="Method">get_generic</a></td>
-    <td><span>Gets some "_key"-"_value" of data type "_type".</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_generic" class="code" data-type="Method">set_generic</a></td>
-    <td><span>Sets some "_key"-"_value" of data type "_type".</span></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><a href="magneticalc.Config.Config.html#set_get_dict" class="code" data-type="Method">set_get_dict</a></td>
-    <td><span>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#_config" class="code" data-type="Instance Variable">_config</a></td>
+    <td><code><a href="#FloatPrecision">FloatPrecision</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#_synced" class="code" data-type="Instance Variable">_synced</a></td>
+    <td><code><a href="#_changed_callback">_changed_callback</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#_changed_callback" class="code" data-type="Instance Variable">_changed_callback</a></td>
+    <td><code><a href="#_config">_config</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><a href="magneticalc.Config.Config.html#_filename" class="code" data-type="Instance Variable">_filename</a></td>
+    <td><code><a href="#_filename">_filename</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_synced">_synced</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -277,683 +306,8 @@
 
       <div id="childList">
 
-        <div class="baseclassvariable">
+        <div class="basestaticmethod">
   
-  <a name="magneticalc.Config.Config.FloatPrecision">
-    
-  </a>
-  <a name="FloatPrecision">
-    
-  </a>
-  <div class="functionHeader">
-    FloatPrecision =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.CoordinatePrecision">
-    
-  </a>
-  <a name="CoordinatePrecision">
-    
-  </a>
-  <div class="functionHeader">
-    CoordinatePrecision =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>int</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.DefaultWirePreset">
-    
-  </a>
-  <a name="DefaultWirePreset">
-    
-  </a>
-  <div class="functionHeader">
-    DefaultWirePreset =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.DefaultPerspectivePreset">
-    
-  </a>
-  <a name="DefaultPerspectivePreset">
-    
-  </a>
-  <div class="functionHeader">
-    DefaultPerspectivePreset =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>str</code>)
-  </div>
-</div><div class="baseclassvariable">
-  
-  <a name="magneticalc.Config.Config.Default">
-    
-  </a>
-  <a name="Default">
-    
-  </a>
-  <div class="functionHeader">
-    Default =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.__init__">
-    
-  </a>
-  <a name="__init__">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    __init__(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Initializes the configuration.</p></div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Config.Config._config">
-    
-  </a>
-  <a name="_config">
-    
-  </a>
-  <div class="functionHeader">
-    _config =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Config.Config._synced">
-    
-  </a>
-  <a name="_synced">
-    
-  </a>
-  <div class="functionHeader">
-    _synced =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div> (type: <code>bool</code>)
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Config.Config._changed_callback">
-    
-  </a>
-  <a name="_changed_callback">
-    
-  </a>
-  <div class="functionHeader">
-    _changed_callback =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Config.Config._filename">
-    
-  </a>
-  <a name="_filename">
-    
-  </a>
-  <div class="functionHeader">
-    _filename =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_changed_callback">
-    
-  </a>
-  <a name="set_changed_callback">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_changed_callback(self, config_changed_callback):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the callback for any changes to the configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">config_changed_callback</td><td>Gets called when the filename or the synchronization flag changed</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_synced">
-    
-  </a>
-  <a name="get_synced">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_synced(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns the synchronization state of the current session.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_filename">
-    
-  </a>
-  <a name="set_filename">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_filename(self, filename):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the filename for the current session.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">filename</td><td>Filename</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_filename">
-    
-  </a>
-  <a name="get_filename">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_filename(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets the filename of the current session.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Filename</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.load">
-    
-  </a>
-  <a name="load">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    load(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Loads the configuration from file.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_defaults">
-    
-  </a>
-  <a name="set_defaults">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_defaults(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the default key-value pairs. Creates empty "User" section if not present.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.save">
-    
-  </a>
-  <a name="save">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    save(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Saves the configuration to file.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.close">
-    
-  </a>
-  <a name="close">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    close(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Close configuration.</p></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.remove_key">
-    
-  </a>
-  <a name="remove_key">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    remove_key(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Removes a key from the configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_bool">
-    
-  </a>
-  <a name="get_bool">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_bool(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets boolean value, convert from string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_float">
-    
-  </a>
-  <a name="get_float">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_float(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets float value, convert from string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_int">
-    
-  </a>
-  <a name="get_int">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_int(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets integer value, convert from string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_points">
-    
-  </a>
-  <a name="get_points">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_points(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets list of 3D points, convert from string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_point">
-    
-  </a>
-  <a name="get_point">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_point(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Gets a single 3D point, convert from string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Single 3D point</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.get_str">
-    
-  </a>
-  <a name="get_str">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_str(self, key):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_bool">
-    
-  </a>
-  <a name="set_bool">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_bool(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets boolean value, convert to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_float">
-    
-  </a>
-  <a name="set_float">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_float(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets float value, convert to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_int">
-    
-  </a>
-  <a name="set_int">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_int(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets integer value, convert to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_points">
-    
-  </a>
-  <a name="set_points">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_points(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets list of 3D points, convert to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>List of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_point">
-    
-  </a>
-  <a name="set_point">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_point(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets a single 3D point, convert to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Single 3D point</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_str">
-    
-  </a>
-  <a name="set_str">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_str(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_bool">
-    
-  </a>
-  <a name="set_get_bool">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_bool(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_float">
-    
-  </a>
-  <a name="set_get_float">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_float(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_int">
-    
-  </a>
-  <a name="set_get_int">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_int(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_points">
-    
-  </a>
-  <a name="set_get_points">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_points(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_point">
-    
-  </a>
-  <a name="set_get_point">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_point(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Config.Config.set_get_str">
-    
-  </a>
-  <a name="set_get_str">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    set_get_str(self, key, value):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">value</td><td>Value or None</td></tr></table></div>
-  </div>
-</div><div class="basestaticmethod">
   
   <a name="magneticalc.Config.Config.point_to_str">
     
@@ -963,16 +317,16 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    point_to_str(point):
+    <span class="py-keyword">def</span> <span class="py-defname">point_to_str</span>(point):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Converts a single 3D point to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">point</td><td>Single 3D point</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">String</td></tr></table></div>
+    <div>Converts a single 3D point to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">point:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Single 3D point</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
+  
   
   <a name="magneticalc.Config.Config.points_to_str">
     
@@ -982,16 +336,16 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    points_to_str(points):
+    <span class="py-keyword">def</span> <span class="py-defname">points_to_str</span>(points):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Converts list of 3D points to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>List of 3D points</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">String</td></tr></table></div>
+    <div>Converts list of 3D points to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
+  
   
   <a name="magneticalc.Config.Config.str_to_point">
     
@@ -1001,16 +355,16 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    str_to_point(str_point):
+    <span class="py-keyword">def</span> <span class="py-defname">str_to_point</span>(str_point):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Converts string to single 3D point.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">str_point</td><td>String</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Single 3D point</td></tr></table></div>
+    <div>Converts string to single 3D point.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str_point:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
+  
   
   <a name="magneticalc.Config.Config.str_to_points">
     
@@ -1020,16 +374,111 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    def
-    str_to_points(str_points):
+    <span class="py-keyword">def</span> <span class="py-defname">str_to_points</span>(str_points):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Converts string to list of 3D points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">str_points</td><td>String</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">List of 3D points</td></tr></table></div>
+    <div>Converts string to list of 3D points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str_points:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Initializes the configuration.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.close">
+    
+  </a>
+  <a name="close">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">close</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Close configuration.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_bool">
+    
+  </a>
+  <a name="get_bool">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_bool</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets boolean value, convert from string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_filename">
+    
+  </a>
+  <a name="get_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_filename</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the filename of the current session.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_float">
+    
+  </a>
+  <a name="get_float">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_float</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets float value, convert from string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Config.Config.get_generic">
     
@@ -1039,16 +488,263 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_generic(self, _key, _type):
+    <span class="py-keyword">def</span> <span class="py-defname">get_generic</span>(self, _key, _type):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Gets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Data (type determined by "_type")</td></tr></table></div>
+    <div>Gets some "_key"-"_value" of data type "_type".<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_type:</span><code>str</code></td><td class="fieldArgDesc">Data type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>bool, <wbr></wbr>float, <wbr></wbr>int, <wbr></wbr>str, <wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float], <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">Data (type determined by "_type")</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_int">
+    
+  </a>
+  <a name="get_int">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_int</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets integer value, convert from string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_point">
+    
+  </a>
+  <a name="get_point">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_point</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets a single 3D point, convert from string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr>float]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_points">
+    
+  </a>
+  <a name="get_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_points</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets list of 3D points, convert from string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_str">
+    
+  </a>
+  <a name="get_str">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_str</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.get_synced">
+    
+  </a>
+  <a name="get_synced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_synced</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns the synchronization state of the current session.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.load">
+    
+  </a>
+  <a name="load">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">load</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Loads the configuration from file.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.remove_key">
+    
+  </a>
+  <a name="remove_key">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">remove_key</span>(self, key):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Removes a key from the configuration.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.save">
+    
+  </a>
+  <a name="save">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">save</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Saves the configuration to file.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_bool">
+    
+  </a>
+  <a name="set_bool">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_bool</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets boolean value, convert to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>bool</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_changed_callback">
+    
+  </a>
+  <a name="set_changed_callback">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_changed_callback</span>(self, config_changed_callback):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the callback for any changes to the configuration.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">config_changed_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Gets called when the filename or the synchronization flag changed</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_defaults">
+    
+  </a>
+  <a name="set_defaults">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_defaults</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the default key-value pairs. Creates empty "User" section if not present.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_filename">
+    
+  </a>
+  <a name="set_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_filename</span>(self, filename):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the filename for the current session.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_float">
+    
+  </a>
+  <a name="set_float">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_float</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets float value, convert to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Config.Config.set_generic">
     
@@ -1058,16 +754,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    set_generic(self, _key, _type, _value):
+    <span class="py-keyword">def</span> <span class="py-defname">set_generic</span>(self, _key, _type, _value):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Sets some "_key"-"_value" of data type "_type".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">_key</td><td>Key</td></tr><tr><td></td><td class="fieldArg">_type</td><td>Data type</td></tr><tr><td></td><td class="fieldArg">_value</td><td>Data (type determined by "_type")</td></tr></table></div>
+    <div>Sets some "_key"-"_value" of data type "_type".<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_type:</span><code>str</code></td><td class="fieldArgDesc">Data type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_value:</span><code>Union[<wbr></wbr>bool, <wbr></wbr>float, <wbr></wbr>int, <wbr></wbr>str, <wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float], <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">Data (type determined by "_type")</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_bool">
+    
+  </a>
+  <a name="set_get_bool">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_bool</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>bool</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Config.Config.set_get_dict">
     
@@ -1077,23 +792,380 @@
   </a>
   <div class="functionHeader">
     
-    def
-    set_get_dict(self, prefix, suffix, types, values):
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_dict</span>(self, prefix, suffix, types, values):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</p><p>If "values" is not None, writes and returns all key-values in "types". Note: In this case, "values" must have the same keys as "types".</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">prefix</td><td>Prefix</td></tr><tr><td></td><td class="fieldArg">suffix</td><td>Suffix</td></tr><tr><td></td><td class="fieldArg">types</td><td>Key:Type (Dictionary)</td></tr><tr><td></td><td class="fieldArg">values</td><td>Key:Value (Dictionary) or None</td></tr></table></div>
+    <div><p>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</p>
+<p>If "values" is not None, writes and returns all key-values in "types". Note: In this case, "values" must have the same keys as "types".</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">prefix:</span><code>str</code></td><td class="fieldArgDesc">Prefix</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">suffix:</span><code>str</code></td><td class="fieldArgDesc">Suffix</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">types:</span><code>Dict</code></td><td class="fieldArgDesc">Key:Type (Dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">values:</span><code>Optional[<wbr></wbr>Dict]</code></td><td class="fieldArgDesc">Key:Value (Dictionary)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_float">
+    
+  </a>
+  <a name="set_get_float">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_float</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_int">
+    
+  </a>
+  <a name="set_get_int">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_int</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>int</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_point">
+    
+  </a>
+  <a name="set_get_point">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_point</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_points">
+    
+  </a>
+  <a name="set_get_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_points</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_get_str">
+    
+  </a>
+  <a name="set_get_str">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_get_str</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>str</code></td><td class="fieldArgDesc">Value</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_int">
+    
+  </a>
+  <a name="set_int">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_int</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets integer value, convert to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>int</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_point">
+    
+  </a>
+  <a name="set_point">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_point</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets a single 3D point, convert to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_points">
+    
+  </a>
+  <a name="set_points">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_points</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets list of 3D points, convert to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config.Config.set_str">
+    
+  </a>
+  <a name="set_str">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_str</span>(self, key, value):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>str</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Config.Config.CoordinatePrecision">
+    
+  </a>
+  <a name="CoordinatePrecision">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">CoordinatePrecision</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Config.Config.Default">
+    
+  </a>
+  <a name="Default">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Default</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Config.Config.DefaultPerspectivePreset">
+    
+  </a>
+  <a name="DefaultPerspectivePreset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DefaultPerspectivePreset</span>: <code>str</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Config.Config.DefaultWirePreset">
+    
+  </a>
+  <a name="DefaultWirePreset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DefaultWirePreset</span>: <code>str</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Config.Config.FloatPrecision">
+    
+  </a>
+  <a name="FloatPrecision">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">FloatPrecision</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Config.Config._changed_callback">
+    
+  </a>
+  <a name="_changed_callback">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_changed_callback</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Config.Config._config">
+    
+  </a>
+  <a name="_config">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_config</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Config.Config._filename">
+    
+  </a>
+  <a name="_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_filename</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Config.Config._synced">
+    
+  </a>
+  <a name="_synced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_synced</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

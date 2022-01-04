@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -17,18 +17,14 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
+from typing import Optional
 from multiprocessing import cpu_count
 from sty import fg
-import qtawesome as qta
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QCheckBox, QComboBox, QProgressBar, QLabel
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QCheckBox, QComboBox, QProgressBar, QLabel
+from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
-
-# Note: Workaround for type hinting
-# noinspection PyUnreachableCode
-if False:
-    from magneticalc.GUI import GUI
 
 
 class Statusbar:
@@ -37,7 +33,10 @@ class Statusbar:
     # Used by L{Debug}
     DebugColor = fg.blue
 
-    def __init__(self, gui: GUI) -> None:
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ) -> None:
         """
         Initializes statusbar.
 
@@ -46,19 +45,15 @@ class Statusbar:
         Debug(self, ": Init")
         self.gui = gui
 
+        self._canceled = False
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Start button
-        self._start_button = QPushButton(qta.icon("fa.play-circle"), " ⟨F5⟩ ", self.gui)
-        self._start_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
-        # noinspection PyUnresolvedReferences
-        self._start_button.clicked.connect(self.start)
+        self._start_button = QPushButton2(" ⟨F5⟩ ", "fa.play-circle", self.start, css="padding: 3px; font-size: 13px;")
 
         # Cancel button
-        self._cancel_button = QPushButton(qta.icon("fa.stop-circle"), "⟨ESC⟩", self.gui)
-        self._cancel_button.setStyleSheet(f"padding: 3px; font-size: 13px;")
-        # noinspection PyUnresolvedReferences
-        self._cancel_button.clicked.connect(self.cancel)
+        self._cancel_button = QPushButton2("⟨ESC⟩", "fa.stop-circle", self.cancel, css="padding: 3px; font-size: 13px;")
 
         # Auto-calculation checkbox
         self._auto_calculation_checkbox = QCheckBox("Auto-Calculation")
@@ -68,19 +63,28 @@ class Statusbar:
         # Number-of-cores combobox
         self._cores_combobox = QComboBox()
 
-        # "Auto" setting
-        num_cores_auto = max(1, cpu_count() - 1)
+        if get_jit_enabled():
 
-        for i in range(0, cpu_count() + 1):
-            if i == 0:
-                self._cores_combobox.addItem(f"Auto ({num_cores_auto} Core" + ("s" if num_cores_auto > 1 else "") + ")")
-            else:
-                self._cores_combobox.addItem(f"{i} Core" + ("s" if i > 1 else ""))
+            # "Auto" setting
+            num_cores_auto = max(1, cpu_count() - 1)
 
-        # noinspection PyUnresolvedReferences
-        self._cores_combobox.currentIndexChanged.connect(
-            lambda: self.gui.config.set_int("num_cores", self._cores_combobox.currentIndex())
-        )
+            for i in range(0, cpu_count() + 1):
+                if i == 0:
+                    self._cores_combobox.addItem(
+                        f"Auto ({num_cores_auto} Core" + ("s" if num_cores_auto > 1 else "") + ")"
+                    )
+                else:
+                    self._cores_combobox.addItem(f"{i} Core" + ("s" if i > 1 else ""))
+
+            # noinspection PyUnresolvedReferences
+            self._cores_combobox.currentIndexChanged.connect(
+                lambda: self.gui.config.set_int("num_cores", self._cores_combobox.currentIndex())
+            )
+
+        else:
+
+            self._cores_combobox.addItem("JIT Disabled")
+            self._cores_combobox.setEnabled(False)
 
         # Progress bar
         self._progressbar = QProgressBar()
@@ -91,22 +95,22 @@ class Statusbar:
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         # Populate statusbar layout
-        layout = QHBoxLayout()
-        layout.addWidget(self._start_button, alignment=Qt.AlignVCenter)
-        layout.addSpacing(4)
-        layout.addWidget(self._cancel_button, alignment=Qt.AlignVCenter)
-        layout.addSpacing(4)
-        layout.addWidget(self._auto_calculation_checkbox, alignment=Qt.AlignVCenter)
-        layout.addSpacing(-4)
-        layout.addWidget(self._cores_combobox, alignment=Qt.AlignVCenter)
-        layout.addSpacing(4)
-        layout.addWidget(self._progressbar, alignment=Qt.AlignVCenter)
-        layout.addSpacing(4)
-        layout.addWidget(self._label, alignment=Qt.AlignVCenter)
-        layout.setContentsMargins(8, 2, 10, 2)
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(self._start_button)
+        self.layout.addSpacing(4)
+        self.layout.addWidget(self._cancel_button)
+        self.layout.addSpacing(4)
+        self.layout.addWidget(self._auto_calculation_checkbox)
+        self.layout.addSpacing(-4)
+        self.layout.addWidget(self._cores_combobox)
+        self.layout.addSpacing(4)
+        self.layout.addWidget(self._progressbar)
+        self.layout.addSpacing(4)
+        self.layout.addWidget(self._label)
+        self.layout.setContentsMargins(8, 2, 10, 2)
 
         container_widget = QWidget()
-        container_widget.setLayout(layout)
+        container_widget.setLayout(self.layout)
         gui.statusBar().addPermanentWidget(container_widget, stretch=10)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,9 +131,10 @@ class Statusbar:
         if 0 > self.gui.config.get_int("num_cores") > cpu_count():
             self.gui.config.set_int("num_cores", 0)
 
-        for i in range(0, cpu_count() + 1):
-            if i == self.gui.config.get_int("num_cores"):
-                self._cores_combobox.setCurrentIndex(i)
+        if get_jit_enabled():
+            for i in range(0, cpu_count() + 1):
+                if i == self.gui.config.get_int("num_cores"):
+                    self._cores_combobox.setCurrentIndex(i)
 
         self.gui.blockSignals(False)
 
@@ -141,6 +146,8 @@ class Statusbar:
         """
         if self.gui.signalsBlocked():
             return
+
+        self._canceled = False
 
         self.gui.config.set_bool("auto_calculation", self._auto_calculation_checkbox.isChecked())
         if self._auto_calculation_checkbox.isChecked():
@@ -155,12 +162,17 @@ class Statusbar:
         """
         Debug(self, f".arm()")
 
+        self._canceled = False
+
         self._start_button.setEnabled(False)
         self._cancel_button.setEnabled(True)
         self._auto_calculation_checkbox.setEnabled(False)
-        self._cores_combobox.setEnabled(False)
+
+        if get_jit_enabled():
+            self._cores_combobox.setEnabled(False)
+
         self._progressbar.setValue(0)
-        self.set_progressbar_color(Theme.MainColor)
+        self.set_progressbar_color(fg_color=Theme.MainColor)
 
     def disarm(self, success: bool) -> None:
         """
@@ -170,21 +182,49 @@ class Statusbar:
         """
         Debug(self, f".disarm(success={success})")
 
+        self._canceled = not success
+
         self._start_button.setEnabled(True)
         self._cancel_button.setEnabled(False)
         self._auto_calculation_checkbox.setEnabled(True)
-        self._cores_combobox.setEnabled(True)
-        self.set_text("Ready." if success else "Canceled!")
-        self.set_progressbar_color(Theme.SuccessColor if success else Theme.FailureColor)
+
+        if get_jit_enabled():
+            self._cores_combobox.setEnabled(True)
+
+        self.set_text("Complete." if success else "Canceled!")
+        self.set_progressbar_color(fg_color=Theme.SuccessColor if success else Theme.FailureColor)
 
         if success:
             self._progressbar.setValue(100)
+
+    def invalidate(self) -> None:
+        """
+        "Invalidates" the statusbar.
+        """
+        Debug(self, ".invalidate()")
+
+        # Skip if the calculation was canceled
+        if self._canceled:
+            Debug(self, ".invalidate(): Skipped due to previously canceled calculation")
+            self._canceled = False
+            return
+
+        self._start_button.setEnabled(True)
+        self._cancel_button.setEnabled(False)
+        self._auto_calculation_checkbox.setEnabled(True)
+
+        if get_jit_enabled():
+            self._cores_combobox.setEnabled(True)
+
+        self.set_text("Pending Calculation")
+        self.set_progressbar_color(fg_color=Theme.LiteColor, bg_color=Theme.LiteColor)
+        self._progressbar.setValue(0)
 
     def start(self) -> None:
         """
         Starts the calculation.
         """
-        Debug(self, f".start()")
+        Debug(self, ".start()")
 
         self.gui.recalculate()
         self.disarm(True)
@@ -193,7 +233,7 @@ class Statusbar:
         """
         Cancels the ongoing calculation.
         """
-        Debug(self, f".cancel()")
+        Debug(self, ".cancel()")
 
         self.gui.interrupt_calculation()
         self.disarm(False)
@@ -216,11 +256,12 @@ class Statusbar:
         """
         self._progressbar.setValue(percentage)
 
-    def set_progressbar_color(self, color: str) -> None:
+    def set_progressbar_color(self, fg_color: str, bg_color: Optional[str] = None) -> None:
         """
         Sets the progressbar color & style.
 
-        @param color: Color
+        @param fg_color: Foreground color
+        @param bg_color: Background color (optional)
         """
         self._progressbar.setStyleSheet(
             f"""
@@ -232,12 +273,12 @@ class Statusbar:
                 text-align: center;
                 padding: 0px;
                 height: 23px;
-                background-color: #111111;
+                background-color: {bg_color if bg_color is not None else "#000000"};
                 font-size: 13px;
             }}
             QProgressBar::chunk {{
                 padding: 0px;
-                background-color: {color};
+                background-color: {fg_color};
                 text-align: center;
             }}"""
         )

@@ -2,7 +2,7 @@
 
 #  ISC License
 #
-#  Copyright (c) 2020–2021, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
+#  Copyright (c) 2020–2022, Paul Wilhelm, M. Sc. <anfrage@paulwilhelm.de>
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -34,7 +34,7 @@ class MagnetiCalc_Data(MutableMapping):
 
         @param data: Dictionary
         """
-        self.data: Dict = {}
+        self.dictionary: Dict = {}
         self.update(data)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -130,32 +130,36 @@ class MagnetiCalc_Data(MutableMapping):
     def get_a_field(self, **kwargs) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Gets the A-field components as three separate 1D arrays (raveled).
+        Please refer to L{get_field()} for possible arguments.
 
-        @param: A_x, A_y, A_z
+        @return: A_x, A_y, A_z
         """
         return self.get_field("A", **kwargs)
 
     def get_a_field_list(self, **kwargs) -> List:
         """
         Gets the A-field components as a single list of 3D points (raveled).
+        Please refer to L{get_field()} for possible arguments.
 
-        @param: List
+        @return: List
         """
         return list(zip(self.get_a_field(**kwargs)))
 
     def get_b_field(self, **kwargs) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Gets the B-field components.
+        Please refer to L{get_field()} for possible arguments.
 
-        @param: B_x, B_y, B_z
+        @return: B_x, B_y, B_z
         """
         return self.get_field("B", **kwargs)
 
     def get_b_field_list(self, **kwargs) -> List:
         """
         Gets the B-field components as a single list of 3D points (raveled).
+        Please refer to L{get_field()} for possible arguments.
 
-        @param: List
+        @return: List
         """
         return list(zip(self.get_b_field(**kwargs)))
 
@@ -173,19 +177,19 @@ class MagnetiCalc_Data(MutableMapping):
     # ------------------------------------------------------------------------------------------------------------------
 
     def __getitem__(self, key):
-        return self.data[self._keytransform(key)]
+        return self.dictionary[self._keytransform(key)]
 
     def __setitem__(self, key, value):
-        self.data[self._keytransform(key)] = value
+        self.dictionary[self._keytransform(key)] = value
 
     def __delitem__(self, key):
-        del self.data[self._keytransform(key)]
+        del self.dictionary[self._keytransform(key)]
 
     def __iter__(self):
-        return iter(self.data)
+        return iter(self.dictionary)
 
     def __len__(self):
-        return len(self.data)
+        return len(self.dictionary)
 
     # noinspection PyMethodMayBeStatic
     def _keytransform(self, key):

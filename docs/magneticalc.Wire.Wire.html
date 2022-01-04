@@ -2,147 +2,181 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
           "DTD/xhtml1-strict.dtd">
 <html>
-  <head>
-    <title>magneticalc.Wire.Wire : API documentation</title>
+  
 
+  <head>
+    
+    <title>magneticalc.Wire.Wire</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
   <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
-            <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a> API Documentation
-          </a>
-        </div>
-      </div>
-    </nav>
+    
 
-    <div id="showPrivate">
-      <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
     </div>
+  </div>
+</nav>
+
+    
 
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code>magneticalc.Wire.Wire</code> <small>class documentation</small></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Wire.html">Wire</a></code><wbr></wbr>.<code><a href="magneticalc.Wire.Wire.html">Wire</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
 
-        <span id="partOf">
-          Part of <code><a href="magneticalc.html" class="code" data-type="Package">magneticalc</a>.<a href="magneticalc.Wire.html" class="code" data-type="Module">Wire</a></code>
-          
-          <a href="classIndex.html#magneticalc.Wire.Wire">(View In Hierarchy)</a>
-        </span>
+      <div class="categoryHeader">
+        class documentation
       </div>
 
       <div class="extrasDocstring">
-        
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Wire</span>:</code></p>
+        <p><a href="classIndex.html#magneticalc.Wire.Wire">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div><p>Wire class.</p></div>
+        <div>Wire class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id135">
+        <table class="children sortable" id="id145">
+  
   
   <tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#__init__" class="code" data-type="Method">__init__</a></td>
-    <td><span>A 3D piecewise linear curve with some DC current associated with it.</span></td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>A 3D piecewise linear curve with some DC current associated with it.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#is_valid" class="code" data-type="Method">is_valid</a></td>
-    <td><span>Indicates valid data for display.</span></td>
+    <td><code><a href="#get_bounds">get_bounds</a></code></td>
+    <td>Returns this curve's bounding box.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#invalidate" class="code" data-type="Method">invalidate</a></td>
-    <td><span>Resets data, hiding from display.</span></td>
+    <td><code><a href="#get_dc">get_dc</a></code></td>
+    <td>Returns wire current (A).</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_bounds" class="code" data-type="Method">get_bounds</a></td>
-    <td><span>Returns this curve's bounding box.</span></td>
+    <td><code><a href="#get_elements">get_elements</a></code></td>
+    <td>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_points_base" class="code" data-type="Method">get_points_base</a></td>
-    <td><span>Returns this wire's base points.</span></td>
+    <td><code><a href="#get_length">get_length</a></code></td>
+    <td>Returns this curve's length.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_points_transformed" class="code" data-type="Method">get_points_transformed</a></td>
-    <td><span>Returns this wire's transformed points.</span></td>
+    <td><code><a href="#get_points_base">get_points_base</a></code></td>
+    <td>Returns this wire's base points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_points_sliced" class="code" data-type="Method">get_points_sliced</a></td>
-    <td><span>Returns this wire's points after slicing.</span></td>
+    <td><code><a href="#get_points_sliced">get_points_sliced</a></code></td>
+    <td>Returns this wire's points after slicing.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_elements" class="code" data-type="Method">get_elements</a></td>
-    <td><span>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</span></td>
+    <td><code><a href="#get_points_transformed">get_points_transformed</a></code></td>
+    <td>Returns this wire's transformed points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_dc" class="code" data-type="Method">get_dc</a></td>
-    <td><span>Returns wire current (A).</span></td>
+    <td><code><a href="#invalidate">invalidate</a></code></td>
+    <td>Resets data, hiding from display.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#get_length" class="code" data-type="Method">get_length</a></td>
-    <td><span>Returns this curve's length.</span></td>
+    <td><code><a href="#is_valid">is_valid</a></code></td>
+    <td>Indicates valid data for display.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#recalculate" class="code" data-type="Method">recalculate</a></td>
-    <td><span>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_points_base" class="code" data-type="Instance Variable">_points_base</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_slicer_limit" class="code" data-type="Instance Variable">_slicer_limit</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_dc" class="code" data-type="Instance Variable">_dc</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_points_sliced" class="code" data-type="Instance Variable">_points_sliced</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_length" class="code" data-type="Instance Variable">_length</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><a href="magneticalc.Wire.Wire.html#_points_transformed" class="code" data-type="Instance Variable">_points_transformed</a></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#recalculate">recalculate</a></code></td>
+    <td>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</td>
   </tr><tr class="method private">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#_set_stretch" class="code" data-type="Method">_set_stretch</a></td>
-    <td><span>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</span></td>
+    <td><code><a href="#_set_rotational_symmetry">_set_rotational_symmetry</a></code></td>
+    <td>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</td>
   </tr><tr class="method private">
     
     <td>Method</td>
-    <td><a href="magneticalc.Wire.Wire.html#_set_rotational_symmetry" class="code" data-type="Method">_set_rotational_symmetry</a></td>
-    <td><span>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</span></td>
+    <td><code><a href="#_set_stretch">_set_stretch</a></code></td>
+    <td>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_dc">_dc</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_length">_length</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_points_base">_points_base</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_points_sliced">_points_sliced</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_points_transformed">_points_transformed</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_slicer_limit">_slicer_limit</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_valid">_valid</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -154,6 +188,7 @@
 
         <div class="basemethod">
   
+  
   <a name="magneticalc.Wire.Wire.__init__">
     
   </a>
@@ -162,150 +197,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    __init__(self, points, stretch, rotational_symmetry, close_loop, slicer_limit, dc):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, points, stretch, rotational_symmetry, close_loop, slicer_limit, dc):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>A 3D piecewise linear curve with some DC current associated with it.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">points</td><td>Ordered list of 3D coordinates (see presets)</td></tr><tr><td></td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr><tr><td></td><td class="fieldArg">rotational_symmetry</td><td>Dictionary for rotational symmetry transform</td></tr><tr><td></td><td class="fieldArg">close_loop</td><td>Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td></td><td class="fieldArg">slicer_limit</td><td>Slicer limit</td></tr><tr><td></td><td class="fieldArg">dc</td><td>Wire current (A)</td></tr></table></div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._points_base">
-    
-  </a>
-  <a name="_points_base">
-    
-  </a>
-  <div class="functionHeader">
-    _points_base =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._slicer_limit">
-    
-  </a>
-  <a name="_slicer_limit">
-    
-  </a>
-  <div class="functionHeader">
-    _slicer_limit =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._dc">
-    
-  </a>
-  <a name="_dc">
-    
-  </a>
-  <div class="functionHeader">
-    _dc =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._points_sliced">
-    
-  </a>
-  <a name="_points_sliced">
-    
-  </a>
-  <div class="functionHeader">
-    _points_sliced =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._length">
-    
-  </a>
-  <a name="_length">
-    
-  </a>
-  <div class="functionHeader">
-    _length =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  <a name="magneticalc.Wire.Wire._points_transformed">
-    
-  </a>
-  <a name="_points_transformed">
-    
-  </a>
-  <div class="functionHeader">
-    _points_transformed =
-    
-  </div>
-  <div class="functionBody">
-    
-    <div class="undocumented">Undocumented</div>
+    <div>A 3D piecewise linear curve with some DC current associated with it.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D coordinates (see presets)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary for rotational symmetry transform</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">slicer_limit:</span><code>float</code></td><td class="fieldArgDesc">Slicer limit</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dc:</span><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Wire.Wire.is_valid">
-    
-  </a>
-  <a name="is_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    is_valid(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Indicates valid data for display.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if data is valid for display, False otherwise</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Wire.Wire.invalidate">
-    
-  </a>
-  <a name="invalidate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    invalidate(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Resets data, hiding from display.</p></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Wire.Wire.get_bounds">
     
@@ -315,92 +216,16 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_bounds(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_bounds</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this curve's bounding box.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Minimum bounds (3D point), maximum bounds (3D point)</td></tr></table></div>
+    <div>Returns this curve's bounding box.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Tuple[<wbr></wbr>List, <wbr></wbr>List]</code></td><td class="fieldArgDesc">Minimum bounds (3D point), maximum bounds (3D point)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
-  <a name="magneticalc.Wire.Wire.get_points_base">
-    
-  </a>
-  <a name="get_points_base">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_points_base(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns this wire's base points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Wire.Wire.get_points_transformed">
-    
-  </a>
-  <a name="get_points_transformed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_points_transformed(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns this wire's transformed points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Wire.Wire.get_points_sliced">
-    
-  </a>
-  <a name="get_points_sliced">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_points_sliced(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns this wire's points after slicing.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  <a name="magneticalc.Wire.Wire.get_elements">
-    
-  </a>
-  <a name="get_elements">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    get_elements(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">[[element_center, element_direction], ...]</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
   
   <a name="magneticalc.Wire.Wire.get_dc">
     
@@ -410,16 +235,35 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_dc(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_dc</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns wire current (A).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Wire current (A)</td></tr></table></div>
+    <div>Returns wire current (A).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.get_elements">
+    
+  </a>
+  <a name="get_elements">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_elements</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns this curve's elements, i.e. an ordered list of segment center points and directions.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">[[element_center, element_direction], …]</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Wire.Wire.get_length">
     
@@ -429,54 +273,111 @@
   </a>
   <div class="functionHeader">
     
-    def
-    get_length(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_length</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Returns this curve's length.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">Length</td></tr></table></div>
-  </div>
-</div><div class="basemethod private">
-  
-  <a name="magneticalc.Wire.Wire._set_stretch">
-    
-  </a>
-  <a name="_set_stretch">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    _set_stretch(self, stretch):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</p><p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">stretch</td><td>XYZ stretch transform factors (3D point)</td></tr></table></div>
-  </div>
-</div><div class="basemethod private">
-  
-  <a name="magneticalc.Wire.Wire._set_rotational_symmetry">
-    
-  </a>
-  <a name="_set_rotational_symmetry">
-    
-  </a>
-  <div class="functionHeader">
-    
-    def
-    _set_rotational_symmetry(self, parameters, close_loop):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</p><p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">parameters</td><td>Dictionary containing the transformation parameters (number of replications, radius, axis and offset angle)</td></tr><tr><td></td><td class="fieldArg">close_loop</td><td>Enable to transform the wire into a closed loop (append first point)</td></tr></table></div>
+    <div>Returns this curve's length.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Length</td></tr></table></div>
   </div>
 </div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.get_points_base">
+    
+  </a>
+  <a name="get_points_base">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_points_base</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns this wire's base points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.get_points_sliced">
+    
+  </a>
+  <a name="get_points_sliced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_points_sliced</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns this wire's points after slicing.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.get_points_transformed">
+    
+  </a>
+  <a name="get_points_transformed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_points_transformed</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns this wire's transformed points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.invalidate">
+    
+  </a>
+  <a name="invalidate">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Resets data, hiding from display.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire.Wire.is_valid">
+    
+  </a>
+  <a name="is_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">is_valid</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Indicates valid data for display.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if data is valid for display, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
   
   <a name="magneticalc.Wire.Wire.recalculate">
     
@@ -486,23 +387,209 @@
   </a>
   <div class="functionHeader">
     
-    def
-    recalculate(self, progress_callback):
+    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, progress_callback):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName">Parameters</td><td class="fieldArg">progress_callback</td><td>Progress callback</td></tr><tr class="fieldStart"><td class="fieldName">Returns</td><td colspan="2">True if successful, False if interrupted</td></tr></table></div>
+    <div>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted</td></tr></table></div>
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="magneticalc.Wire.Wire._set_rotational_symmetry">
+    
+  </a>
+  <a name="_set_rotational_symmetry">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_set_rotational_symmetry</span>(self, parameters, close_loop):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</p>
+<p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parameters:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary containing the transformation parameters (number of replications, radius, axis and offset angle)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr></table></div>
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="magneticalc.Wire.Wire._set_stretch">
+    
+  </a>
+  <a name="_set_stretch">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_set_stretch</span>(self, stretch):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div><p>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</p>
+<p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._dc">
+    
+  </a>
+  <a name="_dc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_dc</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._length">
+    
+  </a>
+  <a name="_length">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_length</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._points_base">
+    
+  </a>
+  <a name="_points_base">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_points_base</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._points_sliced">
+    
+  </a>
+  <a name="_points_sliced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_points_sliced</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._points_transformed">
+    
+  </a>
+  <a name="_points_transformed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_points_transformed</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._slicer_limit">
+    
+  </a>
+  <a name="_slicer_limit">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_slicer_limit</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.Wire.Wire._valid">
+    
+  </a>
+  <a name="_valid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_valid</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
   </div>
 </div>
 
       </div>
-      <address>
-        <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc">MagnetiCalc</a>, generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a> at 2022-01-03 23:22:21.
-      </address>
-
     </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-04 21:12:31.
+  </div>
+</footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>
 

@@ -29,7 +29,7 @@ from magneticalc.QLabel2 import QLabel2
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
 from magneticalc.QSliderFloat import QSliderFloat
 from magneticalc.Theme import Theme
-from magneticalc.VispyCanvas import VispyCanvas
+from magneticalc.VisPyCanvas import VisPyCanvas
 
 
 class Display_Widget(QGroupBox2):
@@ -38,19 +38,19 @@ class Display_Widget(QGroupBox2):
     # Slider limits
     FieldArrowHeadScaleMinimum = 0
     FieldArrowHeadScaleMaximum = 1
-    FieldArrowHeadScaleStep = 1 / VispyCanvas.FieldArrowHeadSize
+    FieldArrowHeadScaleStep = 1 / VisPyCanvas.FieldArrowHeadSize
     FieldArrowLineScaleMinimum = 0
     FieldArrowLineScaleMaximum = 1
     FieldArrowLineScaleStep = 1 / 10
     FieldPointScaleMinimum = 0
     FieldPointScaleMaximum = 1
-    FieldPointScaleStep = 1 / VispyCanvas.FieldPointSize
+    FieldPointScaleStep = 1 / VisPyCanvas.FieldPointSize
     FieldBoostMinimum = 0
     FieldBoostMaximum = 1
     FieldBoostStep = 1 / 20
 
     # Warn about displaying an excessive number of field labels
-    ExcessiveFieldLabelThreshold = 250
+    ExcessiveFieldLabelsThreshold = 250
 
     def __init__(
             self,
@@ -301,7 +301,7 @@ class Display_Widget(QGroupBox2):
         if not self.gui.model.sampling_volume.is_valid():
             return
 
-        if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelThreshold:
+        if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelsThreshold:
             return
 
         if choice:
@@ -361,7 +361,7 @@ class Display_Widget(QGroupBox2):
 
         if self.gui.model.sampling_volume.is_valid():
             n = self.gui.model.sampling_volume.get_labels_count()
-            color = Theme.FailureColor if n > self.ExcessiveFieldLabelThreshold else Theme.LiteColor
+            color = Theme.FailureColor if n > self.ExcessiveFieldLabelsThreshold else Theme.LiteColor
             self.total_labels_label.setText(str(n))
             self.total_labels_label.setStyleSheet(f"color: {color}; font-style: italic;")
         else:

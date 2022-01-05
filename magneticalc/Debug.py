@@ -52,7 +52,7 @@ class Debug:
         "QTableWidget2",
         "SamplingVolume_Widget",
         "Usage_Dialog",
-        "VispyCanvas",
+        "VisPyCanvas",
         "Wire_Widget",
     ]
 

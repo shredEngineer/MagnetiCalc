@@ -430,7 +430,7 @@ class Model:
 
         self.gui.sidebar_right.metric_widget.update()
 
-        # The field labels are now created on-demand inside VispyCanvas.redraw()
+        # The field labels are now created on-demand inside VisPyCanvas.redraw()
         # self.gui.vispy_canvas.create_field_labels()
 
     def on_parameters_valid(self) -> None:

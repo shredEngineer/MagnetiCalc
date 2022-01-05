@@ -236,7 +236,7 @@ class Field:
             magnitude_limit: float
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Returns the field arrow parameters needed by L{VispyCanvas}.
+        Returns the field arrow parameters needed by L{VisPyCanvas}.
 
         @param sampling_volume_points: Sampling volume points
         @param field_vectors: Field vectors

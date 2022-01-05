@@ -1,4 +1,4 @@
-""" VispyCanvas module. """
+""" VisPyCanvas module. """
 
 #  ISC License
 #
@@ -30,8 +30,8 @@ from magneticalc.Metric import Metric
 from magneticalc.Theme import Theme
 
 
-class VispyCanvas(scene.SceneCanvas):
-    """ VispyCanvas class. """
+class VisPyCanvas(scene.SceneCanvas):
+    """ VisPyCanvas class. """
 
     # Font
     DefaultFontFace = Theme.DefaultFontFace
@@ -330,7 +330,7 @@ class VispyCanvas(scene.SceneCanvas):
             self.visual_wire_points_sliced.set_data(
                 pos=self.gui.model.wire.get_points_sliced(),
                 face_color=self.foreground,
-                size=VispyCanvas.WirePointSize,
+                size=VisPyCanvas.WirePointSize,
                 edge_width=0,
                 edge_color=None,
                 symbol="disc"
@@ -362,8 +362,8 @@ class VispyCanvas(scene.SceneCanvas):
 
             self.visual_wire_points_selected.set_data(
                 pos=points_selected,
-                face_color=VispyCanvas.WirePointSelectedColor,
-                size=VispyCanvas.WirePointSelectedSize,
+                face_color=VisPyCanvas.WirePointSelectedColor,
+                size=VisPyCanvas.WirePointSelectedSize,
                 edge_width=0,
                 edge_color=None,
                 symbol="disc"
@@ -380,7 +380,7 @@ class VispyCanvas(scene.SceneCanvas):
         @param colors: Colors
         """
         sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
-        arrow_head_scale = VispyCanvas.FieldArrowHeadSize * self.gui.config.get_float("field_arrow_head_scale")
+        arrow_head_scale = VisPyCanvas.FieldArrowHeadSize * self.gui.config.get_float("field_arrow_head_scale")
         arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.config.get_float("field_arrow_line_scale")
 
         visible = \
@@ -399,7 +399,7 @@ class VispyCanvas(scene.SceneCanvas):
                 line_pairs,
                 head_points,
                 arrow_line_scale,
-                VispyCanvas.MagnitudeLimit
+                VisPyCanvas.MagnitudeLimit
             )
 
             if self.DebugVisuals:
@@ -432,7 +432,7 @@ class VispyCanvas(scene.SceneCanvas):
 
         @param colors: Colors
         """
-        point_scale = VispyCanvas.FieldPointSize * self.gui.config.get_float("field_point_scale")
+        point_scale = VisPyCanvas.FieldPointSize * self.gui.config.get_float("field_point_scale")
 
         visible = \
             self.gui.model.sampling_volume.is_valid() and \
@@ -482,7 +482,7 @@ class VispyCanvas(scene.SceneCanvas):
             else:
                 text = si_format(
                     magnitude * field_factor,
-                    precision=VispyCanvas.MagnitudePrecision,
+                    precision=VisPyCanvas.MagnitudePrecision,
                     exp_format_str="{value}e{expof10} "
                 ) + field_units
 

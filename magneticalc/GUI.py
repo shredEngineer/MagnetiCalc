@@ -39,7 +39,7 @@ from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version
-from magneticalc.VispyCanvas import VispyCanvas
+from magneticalc.VisPyCanvas import VisPyCanvas
 
 
 class GUI(QMainWindow):
@@ -94,13 +94,14 @@ class GUI(QMainWindow):
         self.model = Model(self)
 
         # Create the left and right sidebar
-        # Note: These create the wire, sampling volume, field and metric widgets, each populating the model from config
+        # Note: These create the wire, sampling volume, field, metric and parameters widgets,
+        #       each populating the model from config
         self.sidebar_left = SidebarLeft(self)
         self.sidebar_right = SidebarRight(self)
 
         # Create the VisPy canvas (our 3D scene)
-        self.vispy_canvas = VispyCanvas(self)
-        self.vispy_canvas.native.setFocusPolicy(Qt.NoFocus)  # Don't let VisPy gain control -- handle all events in GUI
+        self.vispy_canvas = VisPyCanvas(self)
+        self.vispy_canvas.native.setFocusPolicy(Qt.NoFocus)  # Don't let VisPy gain control – handle all events in GUI
 
         # Insert left sidebar, VisPy canvas and right sidebar into main layout.
         self.splitter = QSplitter(Qt.Horizontal)

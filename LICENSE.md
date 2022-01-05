@@ -2,7 +2,7 @@ License
 -------
 Copyright © 2020–2022, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
 
-<b>ISC License</b>
+ISC License
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

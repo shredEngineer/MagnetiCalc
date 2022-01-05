@@ -306,6 +306,7 @@ ToDo
   with a transformation pipeline for each object;
   move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
+* Interactively display superposition of fields with varying currents.
 * Highlight permeability classes with
   <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
@@ -333,9 +334,6 @@ ToDo
 
 **Code Quality**
 * Add unit tests.
-
-**Design**
-* Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 
 
 Video
 -----

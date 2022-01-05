@@ -550,4 +550,4 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.wire is not None and self.gui.model.wire.valid)
+        self.indicate_valid(self.gui.model.wire.valid)

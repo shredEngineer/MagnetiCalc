@@ -139,8 +139,6 @@ class GUI(QMainWindow):
         """
         Re-draws the scene.
         """
-        Debug(self, ".redraw()")
-
         if self.calculation_thread is not None:
             if self.calculation_thread.isRunning():
                 Debug(self, ".redraw(): WARNING: Skipped because calculation is in progress", warning=True)
@@ -148,8 +146,10 @@ class GUI(QMainWindow):
             else:
                 Debug(self, ".redraw(): WARNING: Setting calculation thread to None", warning=True)
                 self.calculation_thread = None
+        else:
+            Debug(self, ".redraw()")
 
-        self.sidebar_right.display_widget.set_enabled(self.model.field is not None and self.model.field.valid)
+        self.sidebar_right.display_widget.set_enabled(self.model.field.valid)
 
         self.vispy_canvas.redraw()
 
@@ -379,7 +379,7 @@ class GUI(QMainWindow):
         if filename != "":
 
             with ModelAccess(self, recalculate=False):
-                self.model.invalidate()
+                self.model.invalidate(do_all=True)
 
             if not self.config.get_synced():
                 if self.confirm_saving_unsaved_work(cancelable=False):
@@ -492,7 +492,7 @@ class GUI(QMainWindow):
         """
         Debug(self, ".export_wire()")
 
-        if self.model.wire is None or not self.model.wire.valid:
+        if not self.model.wire.valid:
             Assert_Dialog(False, "Attempting to export invalid wire")
             return
 

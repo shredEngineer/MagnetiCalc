@@ -29,7 +29,6 @@ class Validatable(object):
         Initializes a validatable object.
         """
         Debug(self, ": Init")
-
         self._valid = False
 
     @property
@@ -44,8 +43,7 @@ class Validatable(object):
         """
         @param valid: True if valid, False if invalid
         """
-        Debug(self, f".valid({valid})")
-
+        Debug(self, f".valid = {valid}", success=valid, warning=not valid)
         self._valid = valid
 
 

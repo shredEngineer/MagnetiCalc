@@ -437,4 +437,4 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.padding_widget.setEnabled(not self.gui.config.get_bool("sampling_volume_override_padding"))
 
-        self.indicate_valid(self.gui.model.sampling_volume is not None and self.gui.model.sampling_volume.valid)
+        self.indicate_valid(self.gui.model.sampling_volume.valid)

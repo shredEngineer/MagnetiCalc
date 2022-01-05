@@ -184,4 +184,4 @@ class Parameters_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.parameters is not None and self.gui.model.parameters.valid)
+        self.indicate_valid(self.gui.model.parameters.valid)

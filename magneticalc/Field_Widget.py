@@ -232,4 +232,4 @@ class Field_Widget(QGroupBox2):
         self.field_type_a_checkbox.setChecked(a_field_available)
         self.field_type_b_checkbox.setChecked(b_field_available)
 
-        self.indicate_valid(self.gui.model.field is not None and self.gui.model.field.valid)
+        self.indicate_valid(self.gui.model.field.valid)

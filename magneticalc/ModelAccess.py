@@ -29,6 +29,9 @@ class ModelAccess:
     # Used by L{Debug}
     DebugColor = fg.yellow
 
+    # Debug validity of hierarchy levels
+    DebugValidity = True
+
     def __init__(
             self,
             gui: GUI,  # type: ignore
@@ -63,6 +66,16 @@ class ModelAccess:
         Leaving the context starts recalculation if enabled; otherwise, just redraw.
         """
         Debug(self, ".exit()")
+
+        if self.DebugValidity:
+            for obj in [
+                self.gui.model.wire,
+                self.gui.model.sampling_volume,
+                self.gui.model.field,
+                self.gui.model.metric,
+                self.gui.model.parameters
+            ]:
+                Debug(self, f": {type(obj).__name__:>14}.valid = {obj.valid}", success=obj.valid, warning=not obj.valid)
 
         if not self.gui.model.valid:
             self.gui.invalidate_statusbar.emit()

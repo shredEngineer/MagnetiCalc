@@ -330,4 +330,4 @@ class Metric_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.metric is not None and self.gui.model.metric.valid)
+        self.indicate_valid(self.gui.model.metric.valid)

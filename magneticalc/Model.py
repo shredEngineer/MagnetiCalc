@@ -35,11 +35,6 @@ class Model:
 
     The model maintains a strict hierarchy of dependencies:  parameters > metric > field > sampling volume > wire
     When a lower module's data changed, all higher modules are invalidated (i.e. have their calculation results reset).
-
-    Note: The model maintains a cache for fields of different types, with at most one selected ("active") field.
-    Property decorators maintain coherency between the selected field type and the contents of the field cache.
-    The currently selected field is accessed using the L{field} property.
-    Invalidating the currently selected field also invalidates all the other cached fields.
     """
 
     # Used by L{Debug}
@@ -122,51 +117,47 @@ class Model:
             do_sampling_volume: bool = False,
             do_field: bool = False,
             do_metric: bool = False,
-            do_parameters: bool = False
+            do_parameters: bool = False,
+            do_all: bool = False
     ) -> None:
         """
-        Invalidates multiple modules at once, in descending order of hierarchy.
+        Invalidates multiple hierarchy levels at once, in descending order of hierarchy.
 
         @param do_wire: Enable to invalidate wire
         @param do_sampling_volume: Enable to invalidate sampling volume
         @param do_field: Enable to invalidate all fields
         @param do_metric: Enable to invalidate metric
         @param do_parameters: Enable to invalidate parameters
+        @param do_all: Enable to invalidate all hierarchy levels
         """
         Debug(self, ".invalidate()")
 
-        if do_parameters:
-            if self.parameters is not None:
-                if self.parameters.valid:
-                    self.parameters.valid = False
-                    self.on_parameters_invalid()
+        if do_all or do_parameters:
+            if self.parameters.valid:
+                self.parameters.valid = False
+                self.on_parameters_invalid()
 
-        if do_metric:
-            if self.metric is not None:
-                if self.metric.valid:
-                    self.metric.valid = False
-                    self.on_metric_invalid()
+        if do_all or do_metric:
+            if self.metric.valid:
+                self.metric.valid = False
+                self.on_metric_invalid()
 
-        if do_field:
-            did_field_invalidation = False
-            for field_type, field in self._field_cache.items():
-                if field.valid:
+        if do_all or do_field:
+            valid_fields = [field for field_type, field in self._field_cache.items() if field.valid]
+            if any(valid_fields):
+                for field in valid_fields:
                     field.valid = False
-                    did_field_invalidation = True
-            if did_field_invalidation:
                 self.on_field_invalid()
 
-        if do_sampling_volume:
-            if self.sampling_volume is not None:
-                if self.sampling_volume.valid:
-                    self.sampling_volume.valid = False
-                    self.on_sampling_volume_invalid()
+        if do_all or do_sampling_volume:
+            if self.sampling_volume.valid:
+                self.sampling_volume.valid = False
+                self.on_sampling_volume_invalid()
 
-        if do_wire:
-            if self.wire is not None:
-                if self.wire.valid:
-                    self.wire.valid = False
-                    self.on_wire_invalid()
+        if do_all or do_wire:
+            if self.wire.valid:
+                self.wire.valid = False
+                self.on_wire_invalid()
 
     def set_wire(
             self,

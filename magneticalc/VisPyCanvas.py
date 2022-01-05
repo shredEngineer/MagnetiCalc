@@ -265,9 +265,6 @@ class VisPyCanvas(scene.SceneCanvas):
         self.set_visible(self.visual_coordinate_system, self.gui.config.get_bool("show_coordinate_system"))
         self.redraw_perspective_info()
 
-        # Enable to see which model state is being drawn; may be used for debugging.
-        # print(self.gui.model)
-
         self.redraw_wire_segments()
         self.redraw_wire_points_sliced()
         self.redraw_wire_points_selected()

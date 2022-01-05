@@ -21,7 +21,7 @@ import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
-from magneticalc.Validatable import Validatable
+from magneticalc.Validatable import Validatable, require_valid, validator
 
 
 class Wire(Validatable):
@@ -81,8 +81,6 @@ class Wire(Validatable):
         self._points_sliced = np.array([])
         self._length = 0
 
-        self.valid = False
-
         self._points_transformed = self._points_base.copy()
 
         self._set_stretch(stretch)
@@ -91,6 +89,12 @@ class Wire(Validatable):
         Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
 
     # ------------------------------------------------------------------------------------------------------------------
+
+    def get_dc(self) -> float:
+        """
+        @return: Wire current (A)
+        """
+        return self._dc
 
     def get_bounds(self) -> Tuple[List, List]:
         """
@@ -119,24 +123,22 @@ class Wire(Validatable):
         """
         return self._points_transformed
 
+    @require_valid
     def get_points_sliced(self) -> np.ndarray:
         """
         Returns this wire's points after slicing.
 
         @return: Ordered list of 3D points
         """
-        Assert_Dialog(self.valid, "Accessing invalidated wire")
-
         return self._points_sliced
 
+    @require_valid
     def get_elements(self) -> np.ndarray:
         """
         Returns this curve's elements, i.e. an ordered list of segment center points and directions.
 
         @return: [[element_center, element_direction], …]
         """
-        Assert_Dialog(self.valid, "Accessing invalidated wire")
-
         result = []
 
         for i in range(len(self._points_sliced) - 1):
@@ -146,22 +148,11 @@ class Wire(Validatable):
 
         return np.array(result)
 
-    def get_dc(self) -> float:
-        """
-        Returns wire current (A).
-
-        @return: Wire current (A)
-        """
-        return self._dc
-
+    @require_valid
     def get_length(self) -> float:
         """
-        Returns this curve's length.
-
-        @return: Length
+        @return: Wire length
         """
-        Assert_Dialog(self.valid, "Accessing invalidated wire")
-
         return self._length
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -219,6 +210,7 @@ class Wire(Validatable):
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    @validator
     def recalculate(self, progress_callback: Callable) -> bool:
         """
         Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.
@@ -227,8 +219,6 @@ class Wire(Validatable):
         @return: True if successful, False if interrupted
         """
         Debug(self, ".recalculate()")
-
-        self.valid = False
 
         points_sliced = []
         length = 0
@@ -260,7 +250,5 @@ class Wire(Validatable):
         self._length = length
 
         progress_callback(100)
-
-        self.valid = True
 
         return True

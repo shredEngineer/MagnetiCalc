@@ -28,7 +28,7 @@ from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_Str_Map
 from magneticalc.SamplingVolume import SamplingVolume
-from magneticalc.Validatable import Validatable
+from magneticalc.Validatable import Validatable, require_valid, validator
 from magneticalc.Wire import Wire
 
 
@@ -84,38 +84,36 @@ class Field(Validatable):
                 B_FIELD: "T"        # Tesla
             }.get(self._field_type, ""), 1e0
 
+    @require_valid
     def get_vectors(self) -> np.ndarray:
         """
         Gets field vectors. (The selected field type determined which field was calculated.)
 
         @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
         """
-        Assert_Dialog(self.valid, "Accessing invalidated field")
-
         return self._vectors
 
+    @require_valid
     def get_total_calculations(self) -> int:
         """
         Gets total number of calculations.
 
         @return: Total number of calculations
         """
-        Assert_Dialog(self.valid, "Accessing invalidated field")
-
         return self._total_calculations
 
+    @require_valid
     def get_total_skipped_calculations(self) -> int:
         """
         Gets total number of skipped calculations.
 
         @return: Total number of skipped calculations
         """
-        Assert_Dialog(self.valid, "Accessing invalidated field")
-
         return self._total_skipped_calculations
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    @validator
     def recalculate(
             self,
             wire: Wire,
@@ -133,8 +131,6 @@ class Field(Validatable):
         @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
         Debug(self, ".recalculate()")
-
-        self.valid = False
 
         # Compute the current elements.
         current_elements = wire.get_elements()
@@ -202,8 +198,6 @@ class Field(Validatable):
         if expected_total_calculations != self._total_calculations:
             Assert_Dialog(False, "ERROR: Unexpected number of calculations – Backend seems to be buggy")
             return False
-
-        self.valid = True
 
         return True
 

@@ -17,7 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Optional, Dict, Any, Callable, List
+from typing import Optional, Dict, Callable, List
 from sty import fg
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import field_type_to_str
@@ -53,17 +53,19 @@ class Model:
         Debug(self, ": Init")
         self.gui = gui
 
+        # Note: wire, sampling_volume, metric, parameters are initialized with a Validatable that is invalid by default
+
         """ Set in L{set_wire} via L{Wire_Widget}. """
-        self.wire: Optional[Wire] = None  # type: ignore
+        self.wire: Wire = Validatable()  # type: ignore
 
         """ Set in L{set_sampling_volume} via L{SamplingVolume_Widget}. """
-        self.sampling_volume: Optional[SamplingVolume] = None  # type: ignore
+        self.sampling_volume: SamplingVolume = Validatable()  # type: ignore
 
         """ Set in L{set_metric} via L{Metric_Widget}. """
-        self.metric: Optional[Metric] = None  # type: ignore
+        self.metric: Metric = Validatable()  # type: ignore
 
         """ Set in L{set_parameters} via L{Parameters_Widget}. """
-        self.parameters: Optional[Parameters] = None  # type: ignore
+        self.parameters: Parameters = Validatable()  # type: ignore
 
         """ Field cache: Currently selected field: Set in L{set_field} via L{Field_Widget}. """
         self._selected_field_type: Optional[int] = None
@@ -114,35 +116,11 @@ class Model:
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def safe_valid(obj: Validatable) -> bool:
+    def safe_valid(obj: Optional[Validatable]) -> bool:
         """
         Safely checks the validity state of a possibly uninitialized object within the model.
         """
         return obj.valid if obj is not None else False
-
-    def __str__(self) -> str:
-        """
-        Returns the model validity state as a string.
-
-        @return: String
-        """
-        return ", ".join(self.get_summary(valid=True))
-
-    def get_summary(self, valid: bool) -> List[str]:
-        """
-        Gets a list of (in)valid object names.
-
-        @param valid: True returns names of valid objects, False returns names of invalid objects
-        @return: List of strings
-        """
-        valid_map = {
-            "Wire"              : self.safe_valid(self.wire),
-            "Sampling Volume"   : self.safe_valid(self.sampling_volume),
-            "Field"             : self.safe_valid(self.field),
-            "Metric"            : self.safe_valid(self.metric),
-            "Parameters"        : self.safe_valid(self.parameters)
-        }
-        return [name for name, is_valid in valid_map.items() if valid == is_valid]
 
     def is_valid(self) -> bool:
         """
@@ -330,11 +308,7 @@ class Model:
         @return: True if successful, False if interrupted
         """
         Debug(self, ".calculate_wire()")
-
-        assert self.wire is not None, "Attempting to calculate non-existing Wire"
-
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
-
         return self.wire.recalculate(progress_callback)
 
     def calculate_sampling_volume(self, progress_callback: Callable) -> bool:
@@ -345,9 +319,6 @@ class Model:
         @return: True if successful, False if interrupted
         """
         Debug(self, ".calculate_sampling_volume()")
-
-        assert self.sampling_volume is not None, "Attempting to calculate non-existing SamplingVolume"
-
         self.invalidate(do_field=True, do_metric=True)
         return self.sampling_volume.recalculate(progress_callback)
 
@@ -360,9 +331,6 @@ class Model:
         @return: True if successful, False if interrupted
         """
         Debug(self, f".calculate_field(num_cores={num_cores})")
-
-        assert self.field is not None, "Attempting to calculate non-existing Field"
-
         self.invalidate(do_metric=True)
         return self.field.recalculate(self.wire, self.sampling_volume, progress_callback, num_cores)
 
@@ -374,9 +342,6 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_metric()")
-
-        assert self.metric is not None, "Attempting to calculate non-existing Metric"
-
         return self.metric.recalculate(self.sampling_volume, self.field, progress_callback)
 
     def calculate_parameters(self, progress_callback: Callable) -> bool:
@@ -387,9 +352,6 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_parameters()")
-
-        assert self.parameters is not None, "Attempting to calculate non-existing Parameters"
-
         return self.parameters.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
 
     # ------------------------------------------------------------------------------------------------------------------

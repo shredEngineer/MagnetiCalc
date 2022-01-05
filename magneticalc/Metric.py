@@ -25,7 +25,7 @@ from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.Validatable import Validatable
+from magneticalc.Validatable import Validatable, require_valid, validator
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
@@ -191,24 +191,22 @@ class Metric(Validatable):
         """
         return self._alpha_preset
 
+    @require_valid
     def get_colors(self) -> np.ndarray:
         """
         Returns calculated colors.
 
         @return: Ordered list of color values (4-tuples)
         """
-        Assert_Dialog(self.valid, "Accessing invalidated metric")
-
         return self._colors
 
+    @require_valid
     def get_limits(self) -> Dict:
         """
         Returns calculated limits.
 
         @return: Dictionary
         """
-        Assert_Dialog(self.valid, "Accessing invalidated metric")
-
         return self._limits
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -347,6 +345,7 @@ class Metric(Validatable):
 
         return colors
 
+    @validator
     def recalculate(
             self,
             sampling_volume: SamplingVolume,  # type: ignore
@@ -362,8 +361,6 @@ class Metric(Validatable):
         @return: True (currently non-interruptable)
         """
         Debug(self, ".recalculate()")
-
-        self.valid = False
 
         n = len(field.get_vectors())
 
@@ -479,8 +476,6 @@ class Metric(Validatable):
         }
 
         progress_callback(100)
-
-        self.valid = True
 
         return True
 

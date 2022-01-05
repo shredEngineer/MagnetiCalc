@@ -16,6 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Any, Callable
+from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
 
 
@@ -45,3 +47,49 @@ class Validatable(object):
         Debug(self, f".valid({valid})")
 
         self._valid = valid
+
+
+def require_valid(func: Callable) -> Callable:
+    """
+    Decorator that requires a validatable object to be valid before calling a function.
+
+    @param func: Method of a validatable instance
+    @return: Function
+    """
+
+    def wrapper(validatable: Validatable, *args, **kwargs) -> Any:
+        """
+        Wrapper that requires a validatable object to be valid.
+
+        @param validatable: Validatable instance
+        @return: Result of the function
+        """
+        if not validatable.valid:
+            Assert_Dialog(False, "Attempting to access invalidated object")
+        result = func(validatable, *args, **kwargs)
+        return result
+
+    return wrapper
+
+
+def validator(func: Callable) -> Callable:
+    """
+    Decorator that invalidates a validatable object and then validates it based on the result of calling a function.
+
+    @param func: Method of a validatable instance
+    @return: Function
+    """
+
+    def wrapper(validatable: Validatable, *args, **kwargs) -> Any:
+        """
+        Wrapper that invalidates a validatable object and then validates it based on the result of calling a function.
+
+        @param validatable: Validatable instance
+        @return: Result of the function
+        """
+        validatable.valid = False
+        result = func(validatable, *args, **kwargs)
+        validatable.valid = result
+        return result
+
+    return wrapper

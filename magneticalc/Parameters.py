@@ -26,7 +26,7 @@ from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
-from magneticalc.Validatable import Validatable
+from magneticalc.Validatable import Validatable, require_valid, validator
 
 
 class Parameters(Validatable):
@@ -43,6 +43,7 @@ class Parameters(Validatable):
         self._self_inductance: float = 0.0
         self._magnetic_dipole_moment: float = 0.0
 
+    @require_valid
     def get_energy(self) -> float:
         """
         Returns calculated energy.
@@ -51,6 +52,7 @@ class Parameters(Validatable):
         """
         return self._energy
 
+    @require_valid
     def get_self_inductance(self) -> float:
         """
         Returns calculated self-inductance.
@@ -59,6 +61,7 @@ class Parameters(Validatable):
         """
         return self._self_inductance
 
+    @require_valid
     def get_magnetic_dipole_moment(self) -> float:
         """
         Returns calculated magnetic dipole moment.
@@ -138,6 +141,7 @@ class Parameters(Validatable):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    @validator
     def recalculate(
             self,
             wire: Wire,  # type: ignore
@@ -155,8 +159,6 @@ class Parameters(Validatable):
         @return: True (currently non-interruptable)
         """
         Debug(self, ".recalculate()")
-
-        self.valid = False
 
         progress_callback(0)
 
@@ -178,7 +180,5 @@ class Parameters(Validatable):
             self._self_inductance = self._energy / np.square(wire.get_dc())
 
         progress_callback(100)
-
-        self.valid = True
 
         return True

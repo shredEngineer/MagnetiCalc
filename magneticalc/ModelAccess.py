@@ -64,9 +64,6 @@ class ModelAccess:
         """
         Debug(self, ".exit()")
 
-        summary = str(self.gui.model)
-        Debug(self, f": Valid: {'None' if summary == '' else summary}")
-
         if not self.gui.model.is_valid():
             self.gui.invalidate_statusbar.emit()
 

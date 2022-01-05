@@ -22,7 +22,7 @@ from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
-from magneticalc.Validatable import Validatable
+from magneticalc.Validatable import Validatable, require_valid, validator
 
 
 class SamplingVolume(Validatable):
@@ -59,14 +59,11 @@ class SamplingVolume(Validatable):
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
 
     @property
+    @require_valid
     def dimension(self) -> Tuple[int, int, int]:
         """
-        Gets the sampling volume dimension if it is valid, None otherwise.
-
         @return: Sampling volume dimension if it is valid, None otherwise.
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return self._dimension
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -95,64 +92,58 @@ class SamplingVolume(Validatable):
         """
         return self._bounds_max - self._bounds_min
 
+    @require_valid
     def get_points(self) -> np.array:
         """
         Returns this sampling volume's points.
 
         @return: Array of 3D points
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return self._points
 
+    @require_valid
     def get_points_count(self) -> int:
         """
         Returns this sampling volume's point count.
 
         @return: Point count
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return len(self._points)
 
+    @require_valid
     def get_permeabilities(self) -> np.ndarray:
         """
         Returns this sampling volume's relative permeabilities µ_r.
 
         @return: Ordered list of sampling volume's relative permeabilities µ_r
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return self._permeabilities
 
+    @require_valid
     def get_labeled_indices(self) -> List:
         """
         Returns this sampling volume's labeled indices.
 
         @return: Unordered list of pairs [sampling volume point, field index]
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return self._labeled_indices
 
+    @require_valid
     def get_labels_count(self) -> int:
         """
         Returns this sampling volume's label count.
 
         @return: Label count
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return len(self._labeled_indices)
 
+    @require_valid
     def get_neighbor_indices(self) -> List[np.ndarray]:
         """
         Returns this sampling volume's neighborhood indices.
 
         @return: Ordered list of sampling volume neighborhood indices (six 3D vectors)
         """
-        Assert_Dialog(self.valid, "Accessing invalidated sampling volume")
-
         return self._neighbor_indices
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -201,6 +192,7 @@ class SamplingVolume(Validatable):
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    @validator
     def recalculate(self, progress_callback: Callable) -> bool:
         """
         Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.
@@ -209,8 +201,6 @@ class SamplingVolume(Validatable):
         @return: True if successful, False if interrupted
         """
         Debug(self, ".recalculate()")
-
-        self.valid = False
 
         # Group constraints by permeability
         constraints_precedence_dict: Dict = {}
@@ -424,7 +414,5 @@ class SamplingVolume(Validatable):
             self._neighbor_indices = np.array([[0, 0, 0, 0, 0, 0]])
 
         progress_callback(100)
-
-        self.valid = True
 
         return True

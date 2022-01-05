@@ -4,7 +4,7 @@ MagnetiCalc
 [![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
-[![Documentation](https://img.shields.io/badge/Documentation-orange)](https://shredengineer.github.io/MagnetiCalc/)
+[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
 
 **What does MagnetiCalc do?**
 
@@ -95,10 +95,10 @@ Requirements:
 * Python 3.6+
 
 Tested with:
-* Python 3.8 in Ubuntu 20.04
 * Python 3.7 in Linux Mint 19.3
+* Python 3.8 in Ubuntu 20.04
+* Python 3.8.2 in macOS 11.6 (M1)
 * Python 3.8.10 in Windows 10 (21H2)
-* Python 3.8.2 in macOS 11.6, Apple M1 (2020)
 
 ### Prerequisites
 On some systems, it may be necessary to upgrade pip first:
@@ -121,7 +121,7 @@ On some systems, it may be necessary to install the latest
 [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 first.
 
-#### macOS with Apple Silicon (M1)
+#### macOS (M1)
 On Apple Silicon,
 [Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/)
 must be enabled for the Terminal app before installing (upgrading) and starting MagnetiCalc.
@@ -144,7 +144,7 @@ python -m pip install --upgrade magneticalc
 python -m magneticalc
 ```
 
-#### macOS with Apple Silicon (M1)
+#### macOS (M1)
 *Note:* On Apple Silicon, JIT must be disabled due to incomplete support, resulting in slow calculations. 
 ```shell
 python3 -m pip install magneticalc --upgrade
@@ -192,12 +192,6 @@ Screenshot
 ![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Screenshot.png)
 
 (Screenshot taken from the latest GitHub release.)
-
-Video
------
-A very short demo of MagnetiCalc in action:
-
-[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Video-Thumb.png)](https://www.youtube.com/watch?v=d3QKdYfOuvQ)
 
 Data Import/Export and Python API
 ---------------------------------
@@ -295,16 +289,8 @@ If this software has been helpful to you in some way or another, please let me a
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
 
-Documentation
--------------
-If you are interested in the Python code, please refer to the auto-generated MagnetiCalc documentation.
-
-[![Documentation](https://img.shields.io/badge/Documentation-orange)](https://shredengineer.github.io/MagnetiCalc/)
-
-
 ToDo
 ----
-
 **General**
 * Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data;
   make auto-generated `MagnetiCalc.ini` a global settings file instead.
@@ -350,6 +336,18 @@ ToDo
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 
+
+Documentation
+-------------
+The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
+
+[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
+
+Video
+-----
+A very short demo of MagnetiCalc in action:
+
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Video-Thumb.png)](https://www.youtube.com/watch?v=d3QKdYfOuvQ)
 
 Links
 -----

@@ -42,8 +42,7 @@ class QButtons(QHBoxLayout):
             icon, callback = tup
 
             button = QPushButton(qta.icon(icon), " " + text)
-            # noinspection PyUnresolvedReferences
-            button.clicked.connect(callback)
+            button.clicked.connect(callback)  # type: ignore
             self.addWidget(button)
 
             self.dictionary[n] = button

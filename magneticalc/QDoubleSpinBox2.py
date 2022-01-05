@@ -52,6 +52,5 @@ class QDoubleSpinBox2(QDoubleSpinBox):
         self.setValue(value)
         self.setSingleStep(step)
         self.setDecimals(precision)
-        # noinspection PyUnresolvedReferences
-        self.valueChanged.connect(value_changed)
+        self.valueChanged.connect(value_changed)  # type: ignore
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)

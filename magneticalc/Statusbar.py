@@ -57,8 +57,7 @@ class Statusbar:
 
         # Auto-calculation checkbox
         self._auto_calculation_checkbox = QCheckBox("Auto-Calculation")
-        # noinspection PyUnresolvedReferences
-        self._auto_calculation_checkbox.toggled.connect(self._auto_calculation_changed)
+        self._auto_calculation_checkbox.toggled.connect(self._auto_calculation_changed)  # type: ignore
 
         # Number-of-cores combobox
         self._cores_combobox = QComboBox()
@@ -76,8 +75,7 @@ class Statusbar:
                 else:
                     self._cores_combobox.addItem(f"{i} Core" + ("s" if i > 1 else ""))
 
-            # noinspection PyUnresolvedReferences
-            self._cores_combobox.currentIndexChanged.connect(
+            self._cores_combobox.currentIndexChanged.connect(  # type: ignore
                 lambda: self.gui.config.set_int("num_cores", self._cores_combobox.currentIndex())
             )
 

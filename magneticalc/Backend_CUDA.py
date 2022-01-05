@@ -105,8 +105,7 @@ class Backend_CUDA:
         @param total_skipped_calculations: Total number of skipped calculations (output array)
         """
 
-        # noinspection PyUnresolvedReferences
-        sampling_volume_index = cuda.blockIdx.x * cuda.blockDim.x + cuda.threadIdx.x
+        sampling_volume_index = cuda.blockIdx.x * cuda.blockDim.x + cuda.threadIdx.x  # type: ignore
 
         if sampling_volume_index >= sampling_volume_points.shape[0]:
             return

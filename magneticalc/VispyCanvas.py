@@ -529,8 +529,7 @@ class VispyCanvas(scene.SceneCanvas):
         if visible:
 
             # Create field labels if necessary
-            # noinspection PySimplifyBooleanCheck
-            if self.visual_field_labels == []:
+            if len(self.visual_field_labels) == 0:
                 self.create_field_labels()
 
             if self.DebugVisuals:

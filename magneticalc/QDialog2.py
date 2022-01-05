@@ -72,5 +72,4 @@ class QDialog2(QDialog, QLayouted):
         """
         Debug(self, ".showEvent(): Dialog opened")
 
-        # noinspection PyUnresolvedReferences
-        self.dialog_shown.emit()
+        self.dialog_shown.emit()  # type: ignore

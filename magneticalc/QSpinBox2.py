@@ -42,6 +42,5 @@ class QSpinBox2(QSpinBox):
         self.setMinimum(minimum)
         self.setMaximum(maximum)
         self.setValue(value)
-        # noinspection PyUnresolvedReferences
-        self.valueChanged.connect(value_changed)
+        self.valueChanged.connect(value_changed)  # type: ignore
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)

@@ -45,11 +45,11 @@ from magneticalc.VispyCanvas import VispyCanvas
 class GUI(QMainWindow):
     """ GUI class. """
 
-    # Minimum window size
-    MinimumWindowSize = (800, 600)
-
     # Used by L{Debug}
     DebugColor = fg.blue
+
+    # Minimum window size
+    MinimumWindowSize = (800, 600)
 
     # Default configuration filename
     DefaultFilename = "MagnetiCalc-DefaultProject.ini"
@@ -88,8 +88,7 @@ class GUI(QMainWindow):
 
         # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
         self.statusbar = Statusbar(self)
-        # noinspection PyUnresolvedReferences
-        self.invalidate_statusbar.connect(self.statusbar.invalidate)
+        self.invalidate_statusbar.connect(self.statusbar.invalidate)  # type: ignore
 
         # Create the model next, as the following objects will access it (each widget acts as view *and* controller)
         self.model = Model(self)
@@ -115,10 +114,12 @@ class GUI(QMainWindow):
         self.menu = Menu(self)
 
         # Connect the calculation thread communication signals
-        # noinspection PyUnresolvedReferences
-        self.calculation_status.connect(lambda text: self.statusbar.set_text(text))
-        # noinspection PyUnresolvedReferences
-        self.calculation_exited.connect(lambda success: self.on_calculation_exited(success))
+        self.calculation_status.connect(  # type: ignore
+            lambda text: self.statusbar.set_text(text)
+        )
+        self.calculation_exited.connect(  # type: ignore
+            lambda success: self.on_calculation_exited(success)
+        )
 
         self.initializing = True
 
@@ -430,7 +431,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Project",
             extension=".ini",
-            filter="MagnetiCalc INI File (*.ini)"
+            _filter="MagnetiCalc INI File (*.ini)"
         )
         if action.filename:
             self.config.set_filename(action.filename)
@@ -450,7 +451,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Screenshot",
             extension=".png",
-            filter="PNG (*.png)"
+            _filter="PNG (*.png)"
         )
         if action.filename:
             self.vispy_canvas.save_image(action.filename)
@@ -500,7 +501,7 @@ class GUI(QMainWindow):
             date=True,
             filename="MagnetiCalc_Wire",
             extension=".txt",
-            filter="Text File (*.txt)"
+            _filter="Text File (*.txt)"
         )
         if action.filename:
             API.export_wire(action.filename, self.model.wire.get_points_sliced())

@@ -149,8 +149,7 @@ class SamplingVolume_Widget(QGroupBox2):
         # Populate resolution combobox
         for i, value in enumerate(self.ResolutionOptionsDict):
             self.resolution_combobox.addItem(str(value))
-        # noinspection PyUnresolvedReferences
-        self.resolution_combobox.currentIndexChanged.connect(
+        self.resolution_combobox.currentIndexChanged.connect(  # type: ignore
             lambda: self.set_sampling_volume(
                 _resolution_exponent_=self.ResolutionOptionsDict.get(
                     self.resolution_combobox.currentText(),

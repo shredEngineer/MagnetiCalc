@@ -83,8 +83,7 @@ class Metric_Widget(QGroupBox2):
         self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             self.color_metric_combobox.addItem(preset["id"])
-        # noinspection PyUnresolvedReferences
-        self.color_metric_combobox.currentIndexChanged.connect(
+        self.color_metric_combobox.currentIndexChanged.connect(  # type: ignore
             lambda: self.set_metric(_color_preset_=Metric_Presets.get_by_id(self.color_metric_combobox.currentText()))
         )
         self.addWidget(self.color_metric_combobox)
@@ -114,8 +113,7 @@ class Metric_Widget(QGroupBox2):
             # Using angle metric for alpha transparency is discouraged and is not available in the combobox anymore.
             if not preset["is_angle"]:
                 self.alpha_metric_combobox.addItem(preset["id"])
-        # noinspection PyUnresolvedReferences
-        self.alpha_metric_combobox.currentIndexChanged.connect(
+        self.alpha_metric_combobox.currentIndexChanged.connect(  # type: ignore
             lambda: self.set_metric(_alpha_preset_=Metric_Presets.get_by_id(self.alpha_metric_combobox.currentText()))
         )
         self.addWidget(self.alpha_metric_combobox)

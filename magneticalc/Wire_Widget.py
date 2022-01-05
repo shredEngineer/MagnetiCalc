@@ -182,8 +182,9 @@ class Wire_Widget(QGroupBox2):
         rotational_symmetry_layout_left.addWidget(QLabel2("Axis:"))
         rotational_symmetry_layout_middle.addWidget(self.rotational_symmetry_axis_combobox)
         rotational_symmetry_layout_right.addWidget(QLabel2("", width=self.UnitsLabelWidth))
-        # noinspection PyUnresolvedReferences
-        self.rotational_symmetry_axis_combobox.currentIndexChanged.connect(self.set_rotational_symmetry)
+        self.rotational_symmetry_axis_combobox.currentIndexChanged.connect(  # type: ignore
+            self.set_rotational_symmetry
+        )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -208,8 +209,7 @@ class Wire_Widget(QGroupBox2):
         self.addWidget(QHLine())
 
         self.close_loop_checkbox = QCheckBox(" Close Loop")
-        # noinspection PyUnresolvedReferences
-        self.close_loop_checkbox.toggled.connect(
+        self.close_loop_checkbox.toggled.connect(  # type: ignore
             lambda: self.set_wire(_close_loop_=self.close_loop_checkbox.isChecked())
         )
         self.addWidget(self.close_loop_checkbox)

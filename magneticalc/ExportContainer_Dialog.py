@@ -116,7 +116,7 @@ class ExportContainer_Dialog(QDialog2):
             date=True,
             filename="MagnetiCalc_Export" + (("_" + export_types_str) if export_types_str else ""),
             extension=".hdf5",
-            filter="HDF5 Container (*.hdf5)"
+            _filter="HDF5 Container (*.hdf5)"
         )
         if action.filename:
 

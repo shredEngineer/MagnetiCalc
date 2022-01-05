@@ -47,8 +47,7 @@ class QPushButton2(QPushButton):
             self.setIcon(qta.icon(icon))
 
         if clicked is not None:
-            # noinspection PyUnresolvedReferences
-            self.clicked.connect(clicked)
+            self.clicked.connect(clicked)  # type: ignore
 
         if css is not None:
             self.setStyleSheet(css)

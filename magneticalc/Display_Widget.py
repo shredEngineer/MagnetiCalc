@@ -74,8 +74,7 @@ class Display_Widget(QGroupBox2):
             self.FieldPointScaleMaximum,
             self.FieldPointScaleStep
         )
-        # noinspection PyUnresolvedReferences
-        self.field_point_scale_slider.valueChanged.connect(
+        self.field_point_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_point_scale(self.field_point_scale_slider.get_value())
         )
         self.addWidget(self.field_point_scale_slider)
@@ -96,8 +95,7 @@ class Display_Widget(QGroupBox2):
             self.FieldArrowHeadScaleMaximum,
             self.FieldArrowHeadScaleStep
         )
-        # noinspection PyUnresolvedReferences
-        self.field_arrow_head_scale_slider.valueChanged.connect(
+        self.field_arrow_head_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_arrow_head_scale(self.field_arrow_head_scale_slider.get_value())
         )
         field_arrow_scale_layout_right.addWidget(self.field_arrow_head_scale_slider)
@@ -109,8 +107,7 @@ class Display_Widget(QGroupBox2):
             self.FieldArrowLineScaleMaximum,
             self.FieldArrowLineScaleStep
         )
-        # noinspection PyUnresolvedReferences
-        self.field_arrow_line_scale_slider.valueChanged.connect(
+        self.field_arrow_line_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_arrow_line_scale(self.field_arrow_line_scale_slider.get_value())
         )
         field_arrow_scale_layout_right.addWidget(self.field_arrow_line_scale_slider)
@@ -131,8 +128,7 @@ class Display_Widget(QGroupBox2):
             self.FieldBoostMaximum,
             self.FieldBoostStep
         )
-        # noinspection PyUnresolvedReferences
-        self.field_boost_slider.valueChanged.connect(
+        self.field_boost_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_boost(self.field_boost_slider.get_value())
         )
         self.addWidget(self.field_boost_slider)
@@ -143,8 +139,7 @@ class Display_Widget(QGroupBox2):
 
         self.addLayout(QIconLabel("Field Labels", "fa.tags"))
         self.display_field_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")
-        # noinspection PyUnresolvedReferences
-        self.display_field_magnitude_labels_checkbox.toggled.connect(
+        self.display_field_magnitude_labels_checkbox.toggled.connect(  # type: ignore
             lambda: self.set_display_field_magnitude_labels(self.display_field_magnitude_labels_checkbox.isChecked())
         )
         self.addWidget(self.display_field_magnitude_labels_checkbox)
@@ -390,8 +385,7 @@ class Display_Widget(QGroupBox2):
 
         # Re-populate field label resolution combobox
         if self.field_label_resolution_combobox_connection is not None:
-            # noinspection PyUnresolvedReferences
-            self.field_label_resolution_combobox.currentIndexChanged.disconnect(
+            self.field_label_resolution_combobox.currentIndexChanged.disconnect(  # type: ignore
                 self.field_label_resolution_combobox_connection
             )
         self.field_label_resolution_combobox.clear()
@@ -407,8 +401,7 @@ class Display_Widget(QGroupBox2):
                 )
             )
         self.field_label_resolution_combobox_connection = connection
-        # noinspection PyUnresolvedReferences
-        self.field_label_resolution_combobox.currentIndexChanged.connect(connection)
+        self.field_label_resolution_combobox.currentIndexChanged.connect(connection)  # type: ignore
 
         # Set default field label resolution if it is not available anymore
         target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")

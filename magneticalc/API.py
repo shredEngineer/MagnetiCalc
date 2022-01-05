@@ -47,8 +47,10 @@ class API:
         """
         _data_ = np.array(data)
         assert _data_.shape[1] == 3, "Expecting array of 3D points"
-        # noinspection PyTypeChecker
-        np.savetxt(filename, _data_)
+        np.savetxt(
+            filename,
+            _data_  # type: ignore
+        )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

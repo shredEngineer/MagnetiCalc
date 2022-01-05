@@ -22,7 +22,6 @@ from PyQt5.QtWidgets import QMessageBox
 class QMessageBox2(QMessageBox):
     """ QMessageBox2 class. """
 
-    # noinspection PyShadowingBuiltins
     def __init__(
             self,
             title: str,

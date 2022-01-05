@@ -36,6 +36,7 @@ class Debug:
     ErrorColor = fg.red
 
     # Block debug output from specific classes
+    BlacklistEnabled = False
     Blacklist = [
         "About_Dialog",
         "CheckForUpdates_Dialog",
@@ -88,7 +89,7 @@ class Debug:
 
         if not force:
             # Skip blacklisted class names
-            if name in self.Blacklist:
+            if self.BlacklistEnabled and name in self.Blacklist:
                 return
 
         # A class may specify its own default color

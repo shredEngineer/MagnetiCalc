@@ -54,24 +54,17 @@ class CalculationThread(QThread):
         self.gui = gui
 
         # Connect progress update signal and create callback:
-
-        # noinspection PyUnresolvedReferences
-        self._progress_update.connect(lambda x: self.gui.statusbar.set_progress(x))
-        # noinspection PyUnresolvedReferences
-        self.progress_callback = self._progress_update.emit
+        self._progress_update.connect(  # type: ignore
+            lambda x: self.gui.statusbar.set_progress(x)
+        )
+        self.progress_callback = self._progress_update.emit  # type: ignore
 
         # Connect valid state signals to corresponding handlers:
-
-        # noinspection PyUnresolvedReferences
-        self._wire_valid.connect(self.on_wire_valid)
-        # noinspection PyUnresolvedReferences
-        self._sampling_volume_valid.connect(self.on_sampling_volume_valid)
-        # noinspection PyUnresolvedReferences
-        self._field_valid.connect(self.on_field_valid)
-        # noinspection PyUnresolvedReferences
-        self._metric_valid.connect(self.on_metric_valid)
-        # noinspection PyUnresolvedReferences
-        self._parameters_valid.connect(self.on_parameters_valid)
+        self._wire_valid.connect(self.on_wire_valid)  # type: ignore
+        self._sampling_volume_valid.connect(self.on_sampling_volume_valid)  # type: ignore
+        self._field_valid.connect(self.on_field_valid)  # type: ignore
+        self._metric_valid.connect(self.on_metric_valid)  # type: ignore
+        self._parameters_valid.connect(self.on_parameters_valid)  # type: ignore
 
     def run(self) -> None:
         """
@@ -88,8 +81,7 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                # noinspection PyUnresolvedReferences
-                self._wire_valid.emit()
+                self._wire_valid.emit()  # type: ignore
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -100,8 +92,7 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                # noinspection PyUnresolvedReferences
-                self._sampling_volume_valid.emit()
+                self._sampling_volume_valid.emit()  # type: ignore
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -119,8 +110,7 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                # noinspection PyUnresolvedReferences
-                self._field_valid.emit()
+                self._field_valid.emit()  # type: ignore
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -131,8 +121,7 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                # noinspection PyUnresolvedReferences
-                self._metric_valid.emit()
+                self._metric_valid.emit()  # type: ignore
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -143,8 +132,7 @@ class CalculationThread(QThread):
                     self.on_finished(False)
                     return
 
-                # noinspection PyUnresolvedReferences
-                self._parameters_valid.emit()
+                self._parameters_valid.emit()  # type: ignore
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

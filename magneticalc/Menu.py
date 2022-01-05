@@ -93,8 +93,7 @@ class Menu:
         for preset in Wire_Presets.List:
             action = QAction(preset["id"], wire_menu)
             action.setIcon(qta.icon("mdi.vector-square"))
-            # noinspection PyUnresolvedReferences
-            action.triggered.connect(
+            action.triggered.connect(  # type: ignore
                 partial(
                     self.gui.sidebar_left.wire_widget.set_wire,
                     _points_=preset["points"],
@@ -114,15 +113,17 @@ class Menu:
 
         self.import_wire_action = QAction("&Import TXT …")
         self.import_wire_action.setIcon(qta.icon("fa.folder"))
-        # noinspection PyUnresolvedReferences
-        self.import_wire_action.triggered.connect(self.gui.import_wire)
+        self.import_wire_action.triggered.connect(  # type: ignore
+            self.gui.import_wire
+        )
         wire_menu.addAction(self.import_wire_action)
 
         self.export_wire_action = QAction("&Export TXT …")
         self.export_wire_action.setIcon(qta.icon("fa.save"))
         self.export_wire_action.setEnabled(False)
-        # noinspection PyUnresolvedReferences
-        self.export_wire_action.triggered.connect(self.gui.export_wire)
+        self.export_wire_action.triggered.connect(  # type: ignore
+            self.gui.export_wire
+        )
         wire_menu.addAction(self.export_wire_action)
 
         self.gui.menuBar().addMenu(wire_menu)
@@ -159,8 +160,9 @@ class Menu:
             self.backend_actions.append(action)
             action.setCheckable(True)
             action.setEnabled(enabled and get_jit_enabled())
-            # noinspection PyUnresolvedReferences
-            action.changed.connect(partial(self.on_backend_changed, i))
+            action.changed.connect(  # type: ignore
+                partial(self.on_backend_changed, i)
+            )
             self.options_backend_group.addAction(action)
             options_menu.addAction(action)
         self.gui.blockSignals(False)
@@ -249,8 +251,9 @@ class Menu:
         """
         checkbox = QAction(label, menu)
         checkbox.setCheckable(True)
-        # noinspection PyUnresolvedReferences
-        checkbox.triggered.connect(partial(self.config_bound_checkbox_changed, key))
+        checkbox.triggered.connect(  # type: ignore
+            partial(self.config_bound_checkbox_changed, key)
+        )
         self.config_bound_checkboxes[key] = {"checkbox": checkbox, "callback_final": callback}
         checkbox.setChecked(self.gui.config.get_bool(key))
         menu.addAction(checkbox)

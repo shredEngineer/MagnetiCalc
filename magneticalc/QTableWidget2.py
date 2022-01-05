@@ -68,14 +68,11 @@ class QTableWidget2(QTableWidget):
         self._options: List = []
 
         if self._cell_edited_callback is not None:
-            # noinspection PyUnresolvedReferences
-            self.itemChanged.connect(self.on_numerical_cell_edited)
-            # noinspection PyUnresolvedReferences
-            self.cellChanged.connect(self.on_cell_changed)
+            self.itemChanged.connect(self.on_numerical_cell_edited)  # type: ignore
+            self.cellChanged.connect(self.on_cell_changed)  # type: ignore
 
         if self._selection_changed_callback is not None:
-            # noinspection PyUnresolvedReferences
-            self.selectionModel().selectionChanged.connect(self.on_selection_changed)
+            self.selectionModel().selectionChanged.connect(self.on_selection_changed)  # type: ignore
 
         self.set_style(border_color="black", border_width=1)
         self.setMinimumHeight(self.MinimumHeight)
@@ -148,7 +145,6 @@ class QTableWidget2(QTableWidget):
         @param _deselected: Currently deselected QItemSelection
         """
         if self.signalsBlocked():
-            Debug(self, f".on_selection_changed(): Blocked")
             return
 
         Debug(self, f".on_selection_changed()")
@@ -249,7 +245,8 @@ class QTableWidget2(QTableWidget):
             Debug(self, f".select_last_row(): Skipped for empty table")
             return
 
-        Debug(self, f".select_last_row(): Blocking signals")
+        Debug(self, f".select_last_row()")
+
         self.blockSignals(True)
 
         self.select_cell(self.rowCount() - 1, 0)
@@ -260,7 +257,6 @@ class QTableWidget2(QTableWidget):
         else:
             self.clearSelection()
 
-        Debug(self, f".select_last_row(): Unblocking signals")
         self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -358,7 +354,8 @@ class QTableWidget2(QTableWidget):
 
         @param contents: 2D array
         """
-        Debug(self, f".set_contents(): Blocking signals")
+        Debug(self, f".set_contents()")
+
         self.blockSignals(True)
 
         # Iterate over rows
@@ -384,8 +381,7 @@ class QTableWidget2(QTableWidget):
                             if text == self.gui.config.get_str(self._prefix + key + "_" + str(row_index)):
                                 combobox.setCurrentIndex(i)
 
-                    # noinspection PyUnresolvedReferences
-                    combobox.currentIndexChanged.connect(
+                    combobox.currentIndexChanged.connect(  # type: ignore
                         partial(self.on_combobox_cell_edited, combobox, row_index, col_index)
                     )
 
@@ -418,10 +414,10 @@ class QTableWidget2(QTableWidget):
                 delete_button = QPushButton2("", "fa.minus", css="border: none; background: palette(window);")
 
                 if self.rowCount() > self._minimum_rows:
-                    # noinspection PyUnresolvedReferences
-
                     # Allow this row to be deleted
-                    delete_button.clicked.connect(partial(self.on_row_deleted, row_index))
+                    delete_button.clicked.connect(  # type: ignore
+                        partial(self.on_row_deleted, row_index)
+                    )
                 else:
                     # Don't allow the any more rows to be deleted
                     delete_button.setEnabled(False)
@@ -429,7 +425,6 @@ class QTableWidget2(QTableWidget):
                 # Insert the delete button into the last column
                 self.setCellWidget(row_index, self.columnCount() - 1, delete_button)
 
-        Debug(self, f".set_contents(): Unblocking signals")
         self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------

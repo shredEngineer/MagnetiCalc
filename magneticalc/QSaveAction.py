@@ -24,7 +24,6 @@ from PyQt5.QtWidgets import QFileDialog
 class QSaveAction:
     """ QSaveAction class. """
 
-    # noinspection PyShadowingBuiltins
     def __init__(
             self,
             gui,
@@ -32,7 +31,7 @@ class QSaveAction:
             date: bool,
             filename: str,
             extension: str,
-            filter: str
+            _filter: str
     ) -> None:
         """
         Initializes a save dialog.
@@ -42,13 +41,13 @@ class QSaveAction:
         @param date: Enable datetime prefix
         @param filename: Filename
         @param extension: Extension
-        @param filter: Filename filters
+        @param _filter: Filename filters
         """
         self.filename, _chosen_extension = QFileDialog.getSaveFileName(
             parent=gui,
             caption=title,
             directory=(datetime.now().strftime("%Y-%m-%d_%H-%M-%S_") if date else "") + filename,
-            filter=filter,
+            filter=_filter,
             options=QFileDialog.DontUseNativeDialog
         )
 

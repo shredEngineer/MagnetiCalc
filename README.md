@@ -9,8 +9,7 @@ MagnetiCalc
 **What does MagnetiCalc do?**
 
 MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
-and magnetic dipole moment of arbitrary coils. Inside a [VisPy](https://github.com/vispy/vispy) / OpenGL-accelerated
-PyQt5 GUI, the magnetic flux density
+and magnetic dipole moment of arbitrary coils. Inside an OpenGL-accelerated GUI, the magnetic flux density
 (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field,
 in units of <i>Tesla</i>)
 or the magnetic vector potential
@@ -32,7 +31,7 @@ whenever I needed to solve a magnetostatic problem.
 **How does it work?**
 
 The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
-is implemented using the Biot-Savart law [1], employing multiprocessing techniques;
+is implemented using the Biot-Savart law [**1**], employing multiprocessing techniques;
 MagnetiCalc uses just-in-time compilation ([JIT](https://numba.pydata.org/))
 and, if available, GPU-acceleration ([CUDA](https://numba.pydata.org/numba-doc/dev/cuda/overview.html))
 to achieve high-performance calculations.
@@ -60,8 +59,8 @@ using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various
 [available metrics](#appendix-metrics).
 
-The coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [2]
-and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [3]
+The coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [**2**]
+and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [**3**]
 are calculated by summing the squared
 <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
 over the entire sampling volume;
@@ -72,17 +71,17 @@ ensure that the sampling volume encloses a large, non-singular portion of the fi
 <img src="https://render.githubusercontent.com/render/math?math=L=\frac{1}{\I^2} \cdot E"><br>
 
 Additionally, the scalar magnetic dipole moment
-<img src="https://render.githubusercontent.com/render/math?math=m" alt="m"> [4]
+<img src="https://render.githubusercontent.com/render/math?math=m" alt="m"> [**4**]
 is calculated by summing over all current elements:
 
 <img src="https://render.githubusercontent.com/render/math?math=m=\Bigl| I \cdot \frac{1}{2} \cdot \displaystyle \sum_\mathbf{x^'} \mathbf{x^'} \times \mathbf{\ell}(\mathbf{x^'}) \Bigr|"><br>
 
 ***References***
 
-[1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
-[2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
-[3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
-[4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).
+[**1**]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
+[**2**]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
+[**3**]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
+[**4**]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).
 
 Screenshot
 ----------

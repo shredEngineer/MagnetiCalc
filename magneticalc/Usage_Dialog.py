@@ -100,7 +100,7 @@ class Usage_Dialog(QDialog2):
 
         MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
         and magnetic dipole moment of arbitrary coils.
-        Inside a VisPy / OpenGL-accelerated PyQt5 GUI, the magnetic flux density
+        Inside an OpenGL-accelerated GUI, the magnetic flux density
         (B-field, in units of <i>Tesla</i>)
         or the magnetic vector potential (A-field, in units of <i>Tesla-meter</i>)
         is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.<br><br>

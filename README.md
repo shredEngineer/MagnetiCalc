@@ -87,7 +87,7 @@ Screenshot
 ----------
 ![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Screenshot.png)
 
-<small>Screenshot taken from the latest GitHub release.</small>
+(Screenshot taken from the latest GitHub release.)
 
 Installation
 ------------

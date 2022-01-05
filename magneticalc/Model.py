@@ -66,7 +66,7 @@ class Model:
     @property
     def field_type_select(self) -> int:
         """
-        @return Currently selected field type
+        @return: Currently selected field type
         """
         return self._field_type_select
 

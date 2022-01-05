@@ -20,6 +20,7 @@ pyright magneticalc/
 IGNORE_ERRORS=$(cat << EOF
   E203
   E226
+  E241
   E722
   W504
 EOF

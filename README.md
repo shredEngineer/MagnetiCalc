@@ -4,7 +4,7 @@ MagnetiCalc
 [![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
-[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
+[![Documentation](https://img.shields.io/badge/Documentation-API-orange)](https://shredengineer.github.io/MagnetiCalc/)
 
 **What does MagnetiCalc do?**
 
@@ -222,7 +222,7 @@ Documentation
 -------------
 The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
 
-[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
+[![Documentation](https://img.shields.io/badge/Documentation-API-orange)](https://shredengineer.github.io/MagnetiCalc/)
 
 Data Import/Export and Python API
 ---------------------------------

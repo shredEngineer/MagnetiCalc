@@ -1,10 +1,10 @@
 MagnetiCalc
 ===========
 
+[![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
-[![API Documentation](https://img.shields.io/badge/Documentation-API-orange)](https://shredengineer.github.io/MagnetiCalc/)
-[![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
+[![Documentation](https://img.shields.io/badge/Documentation-orange)](https://shredengineer.github.io/MagnetiCalc/)
 
 **What does MagnetiCalc do?**
 
@@ -84,14 +84,6 @@ is calculated by summing over all current elements:
 [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
 [4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).
 
-
-Screenshot
-----------
-
-![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Screenshot.png)
-
-(Screenshot taken from the latest GitHub release.)
-
 Installation
 ------------
 
@@ -130,13 +122,15 @@ On some systems, it may be necessary to install the latest
 first.
 
 #### macOS with Apple Silicon (M1)
-On Apple Silicon, make sure to enable
+On Apple Silicon,
 [Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/)
-for the Terminal app before installing and starting MagnetiCalc.
+must be enabled for the Terminal app before installing (upgrading) and starting MagnetiCalc.
 
 ### Option A: Automatic install via pip
-This will install or upgrade MagnetiCalc (and its dependencies)
-to the user site-packages directory and start it from there.
+This will install (upgrade) MagnetiCalc (and its dependencies)
+to the user site-packages directory and start it.
+
+[![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
 
 #### Linux & macOS (Intel)
 ```shell
@@ -192,7 +186,21 @@ Please refer to the
 [Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
-## Data Import/Export and Python API
+Screenshot
+----------
+
+![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Screenshot.png)
+
+(Screenshot taken from the latest GitHub release.)
+
+Video
+-----
+A very short demo of MagnetiCalc in action:
+
+[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Video-Thumb.png)](https://www.youtube.com/watch?v=d3QKdYfOuvQ)
+
+Data Import/Export and Python API
+---------------------------------
 
 ### GUI
 MagnetiCalc allows the following data to be imported/exported using the GUI:
@@ -277,13 +285,22 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+
 Contribute
 ----------
-You are invited to contribute to MagnetiCalc in any way you like! :)
+You are invited to contribute to MagnetiCalc in any way you like! 😃
 
 If this software has been helpful to you in some way or another, please let me and others know!
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
+
+Documentation
+-------------
+If you are interested in the Python code, please refer to the auto-generated MagnetiCalc documentation.
+
+[![Documentation](https://img.shields.io/badge/Documentation-orange)](https://shredengineer.github.io/MagnetiCalc/)
+
 
 ToDo
 ----
@@ -334,16 +351,10 @@ ToDo
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 
 
-Video
------
-A very short demo of MagnetiCalc in action:
-
-[![Magnetic Field Calculation with Python (MagnetiCalc)](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/docs/Video-Thumb.png)](https://www.youtube.com/watch?v=d3QKdYfOuvQ)
-
 Links
 -----
-If you want to comment on the project or see additional info, please visit my personal website:
-https://paulwilhelm.de/magneticalc/
+There is also a short article about MagnetiCalc on my personal website:
+[paulwilhelm.de/magneticalc](https://paulwilhelm.de/magneticalc/)
 
 *Appendix:* Metrics
 -------------------

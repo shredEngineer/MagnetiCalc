@@ -258,7 +258,7 @@ class VisPyCanvas(scene.SceneCanvas):
 
         self.update_color_scheme()
 
-        if self.gui.model.is_valid():
+        if self.gui.model.valid:
             self.initializing = False
         self.visual_startup_info.parent = self.view_text if self.initializing else None
 

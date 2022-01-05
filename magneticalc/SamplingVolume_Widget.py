@@ -197,7 +197,7 @@ class SamplingVolume_Widget(QGroupBox2):
         self.constraint_editor.reinitialize()
 
         # Initially load sampling volume from configuration
-        self.set_sampling_volume(recalculate=False, invalidate_self=False)
+        self.set_sampling_volume(recalculate=False, invalidate=False)
 
         self.update()
 
@@ -281,8 +281,8 @@ class SamplingVolume_Widget(QGroupBox2):
             _padding_: Optional[List] = None,
             _override_padding_: Optional[bool] = None,
             _bounding_box_: Optional[Tuple[np.ndarray, np.ndarray]] = None,
-            recalculate: bool = True,
-            invalidate_self: bool = True
+            invalidate: bool = True,
+            recalculate: bool = True
     ) -> None:
         """
         Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
@@ -293,8 +293,8 @@ class SamplingVolume_Widget(QGroupBox2):
         @param _padding_: Padding (3D point)
         @param _override_padding_: Enable to override padding instead, setting the bounding box directly
         @param _bounding_box_: Bounding box (used in conjunction with override_padding)
+        @param invalidate: Enable to invalidate this model hierarchy level
         @param recalculate: Enable to trigger final re-calculation
-        @param invalidate_self: Enable to invalidate the old sampling volume before setting a new one
         """
         if self.signalsBlocked():
             return
@@ -317,8 +317,9 @@ class SamplingVolume_Widget(QGroupBox2):
             label_resolution = np.power(2.0, label_resolution_exponent)
 
             self.gui.model.set_sampling_volume(
-                SamplingVolume(resolution=resolution, label_resolution=label_resolution),
-                invalidate_self=invalidate_self
+                invalidate=invalidate,
+                resolution=resolution,
+                label_resolution=label_resolution
             )
 
             self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)

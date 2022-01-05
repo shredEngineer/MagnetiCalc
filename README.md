@@ -330,9 +330,6 @@ ToDo
 
 **Code Quality**
 * Add unit tests.
-* Remove the `Optional` typing of the members in `Model`.
-* Use the [`@property` decorator](https://stackoverflow.com/a/36943813/2035671)
-  for accessing data where applicable. 
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 

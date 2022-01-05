@@ -31,18 +31,12 @@ class SamplingVolume(Validatable):
     # Enable to show additional debug info during constraint calculation
     Debug_Constraints = False
 
-    def __init__(self, resolution: float, label_resolution: float) -> None:
+    def __init__(self) -> None:
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
-
-        @param resolution: Resolution
-        @param label_resolution: Label resolution
         """
         Validatable.__init__(self)
         Debug(self, ": Init")
-
-        self._resolution = resolution
-        self._label_resolution = label_resolution
 
         self.constraints = []
 
@@ -54,6 +48,23 @@ class SamplingVolume(Validatable):
         self._permeabilities = np.array([])
         self._labeled_indices: List = []
         self._neighbor_indices: List[np.ndarray] = []
+
+        self._resolution = 0
+        self._label_resolution = 0
+
+    def set(
+            self,
+            resolution: float,
+            label_resolution: float
+    ) -> None:
+        """
+        Sets the parameters.
+
+        @param resolution: Resolution
+        @param label_resolution: Label resolution
+        """
+        self._resolution = resolution
+        self._label_resolution = label_resolution
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")

@@ -153,7 +153,7 @@ class Metric_Widget(QGroupBox2):
         self.blockSignals(False)
 
         # Initially load metric from configuration
-        self.set_metric(recalculate=False, update_labels=False, invalidate_self=False)
+        self.set_metric(recalculate=False, update_labels=False, invalidate=False)
 
         self.update()
 
@@ -163,9 +163,9 @@ class Metric_Widget(QGroupBox2):
             self,
             _color_preset_: Optional[Dict] = None,
             _alpha_preset_: Optional[Dict] = None,
+            invalidate: bool = True,
             recalculate: bool = True,
-            update_labels: bool = True,
-            invalidate_self: bool = True
+            update_labels: bool = True
     ) -> None:
         """
         Sets the metric. This will overwrite the currently set metric in the model.
@@ -173,9 +173,9 @@ class Metric_Widget(QGroupBox2):
 
         @param _color_preset_: Color metric preset (parameters, see Metric module)
         @param _alpha_preset_: Alpha metric preset (parameters, see Metric module)
+        @param invalidate: Enable to invalidate this model hierarchy level
         @param recalculate: Enable to trigger final re-calculation
         @param update_labels: Enable to update metric labels
-        @param invalidate_self: Enable to invalidate the old metric before setting a new one
         """
         if self.signalsBlocked():
             return
@@ -199,8 +199,9 @@ class Metric_Widget(QGroupBox2):
                 alpha_preset = _alpha_preset_
 
             self.gui.model.set_metric(
-                Metric(color_preset, alpha_preset),
-                invalidate_self=invalidate_self
+                invalidate=invalidate,
+                color_preset=color_preset,
+                alpha_preset=alpha_preset
             )
 
             if update_labels:

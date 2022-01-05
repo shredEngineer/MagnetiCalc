@@ -27,7 +27,25 @@ from magneticalc.Validatable import Validatable, require_valid, validator
 class Wire(Validatable):
     """ Wire class. """
 
-    def __init__(
+    def __init__(self) -> None:
+        """
+        Initializes an empty wire.
+        A 3D piecewise linear curve with some DC current associated with it.
+        """
+        Validatable.__init__(self)
+        Debug(self, ": Init")
+
+        self._points_base = np.array([])
+
+        self._slicer_limit = 0
+        self._dc = 0
+
+        self._points_sliced = np.array([])
+        self._length = 0
+
+        self._points_transformed = np.array([])
+
+    def set(
             self,
             points: np.ndarray,
             stretch: np.ndarray,
@@ -37,7 +55,7 @@ class Wire(Validatable):
             dc: float
     ) -> None:
         """
-        A 3D piecewise linear curve with some DC current associated with it.
+        Sets the parameters.
 
         @param points: Ordered list of 3D coordinates (see presets)
         @param stretch: XYZ stretch transform factors (3D point)
@@ -46,34 +64,7 @@ class Wire(Validatable):
         @param slicer_limit: Slicer limit
         @param dc: Wire current (A)
         """
-        Validatable.__init__(self)
-        Debug(self, ": Init")
-
         self._points_base = np.array(points)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Note: This is my playground for creating new wire presets!
-        override_base = False
-        if override_base:
-            self._points_base = np.array(
-                [
-                    [
-                        i / 128 - 1.125,
-                        -np.cos(+2 * np.pi * i / 16) / 2,
-                        +np.sin(+2 * np.pi * i / 16) / 2
-                    ]
-                    for i in range(128)
-                ] +
-                [
-                    [
-                        i / 128 + 0.125,
-                        -np.cos(-2 * np.pi * (i + 1) / 16) / 2,
-                        +np.sin(-2 * np.pi * (i + 1) / 16) / 2
-                    ]
-                    for i in range(128)
-                ]
-            )
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self._slicer_limit = slicer_limit
         self._dc = dc

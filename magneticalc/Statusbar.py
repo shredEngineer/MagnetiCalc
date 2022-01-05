@@ -149,7 +149,7 @@ class Statusbar:
 
         self.gui.config.set_bool("auto_calculation", self._auto_calculation_checkbox.isChecked())
         if self._auto_calculation_checkbox.isChecked():
-            if not self.gui.model.is_valid():
+            if not self.gui.model.valid:
                 self.gui.recalculate()
 
     # ------------------------------------------------------------------------------------------------------------------

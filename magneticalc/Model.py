@@ -17,12 +17,16 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Optional, Dict, Callable, List
+from typing import Optional, Dict, Callable
 from sty import fg
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import field_type_to_str
+from magneticalc.Field import Field
+from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Validatable import Validatable
+from magneticalc.Parameters import Parameters
+from magneticalc.SamplingVolume import SamplingVolume
+from magneticalc.Wire import Wire
 
 
 class Model:
@@ -53,87 +57,64 @@ class Model:
         Debug(self, ": Init")
         self.gui = gui
 
-        # Note: wire, sampling_volume, metric, parameters are initialized with a Validatable that is invalid by default
+        self.wire = Wire()
+        self.sampling_volume = SamplingVolume()
+        self.metric = Metric()
+        self.parameters = Parameters()
 
-        """ Set in L{set_wire} via L{Wire_Widget}. """
-        self.wire: Wire = Validatable()  # type: ignore
-
-        """ Set in L{set_sampling_volume} via L{SamplingVolume_Widget}. """
-        self.sampling_volume: SamplingVolume = Validatable()  # type: ignore
-
-        """ Set in L{set_metric} via L{Metric_Widget}. """
-        self.metric: Metric = Validatable()  # type: ignore
-
-        """ Set in L{set_parameters} via L{Parameters_Widget}. """
-        self.parameters: Parameters = Validatable()  # type: ignore
-
-        """ Field cache: Currently selected field: Set in L{set_field} via L{Field_Widget}. """
-        self._selected_field_type: Optional[int] = None
-
-        """ Field cache: Dictionary {types: fields}: Set in L{set_field} via L{Field_Widget}. """
-        self._field_cache: Dict[
-            int,
-            Field  # type: ignore
-        ] = {}
+        self._field_type_select: int = A_FIELD
+        self._field_cache: Dict[int, Field] = {
+            A_FIELD: Field(),
+            B_FIELD: Field(),
+        }
 
     @property
-    def field(
-            self
-    ) -> Optional[Field]:  # type: ignore
+    def field_type_select(self) -> int:
         """
-        Returns the currently selected field if it is cached.
+        @return Currently selected field type
+        """
+        return self._field_type_select
 
-        @return: Field if cached, None otherwise
+    @field_type_select.setter
+    def field_type_select(self, field_type: int) -> None:
         """
-        return self._field_cache.get(self._selected_field_type, None) if self._selected_field_type is not None else None
-
-    @field.setter
-    def field(
-            self,
-            field: Field  # type: ignore
-    ) -> None:
-        """
-        Sets the currently selected field.
-
-        @param field: Field
-        """
-        self._selected_field_type = field.get_type()
-        self._field_cache[self._selected_field_type] = field
-
-    def get_valid_field(
-            self,
-            field_type: int
-    ) -> Optional[Field]:  # type: ignore
-        """
-        Gets a field if it is cached and valid.
+        Sets the currently selected field type.
 
         @param field_type: Field type
-        @return: Field if cached and valid, None otherwise
         """
-        field = self._field_cache.get(field_type, None)
-        return (field if field.valid else None) if field is not None else None
+        Debug(self, f".field_type_select = {field_type}")
+        self._field_type_select = field_type
+
+    @property
+    def field(self) -> Field:
+        """
+        @return: Currently selected field
+        """
+        return self._field_cache[self.field_type_select]
+
+    def get_valid_field(self, field_type: int) -> Optional[Field]:
+        """
+        Gets a field by type if the field is valid.
+
+        @param field_type: Field type
+        @return: Field if valid, None otherwise
+        """
+        field = self._field_cache[field_type]
+        return field if field.valid else None
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    @staticmethod
-    def safe_valid(obj: Optional[Validatable]) -> bool:
+    @property
+    def valid(self) -> bool:
         """
-        Safely checks the validity state of a possibly uninitialized object within the model.
-        """
-        return obj.valid if obj is not None else False
-
-    def is_valid(self) -> bool:
-        """
-        Indicates valid data for display.
-
-        @return: True if data is valid for display, False otherwise
+        @return: True if model is valid, False otherwise
         """
         return \
-            self.safe_valid(self.wire) and \
-            self.safe_valid(self.sampling_volume) and \
-            self.safe_valid(self.field) and \
-            self.safe_valid(self.metric) and \
-            self.safe_valid(self.parameters)
+            self.wire.valid and \
+            self.sampling_volume.valid and \
+            self.field.valid and \
+            self.metric.valid and \
+            self.parameters.valid
 
     def invalidate(
             self,
@@ -148,7 +129,7 @@ class Model:
 
         @param do_wire: Enable to invalidate wire
         @param do_sampling_volume: Enable to invalidate sampling volume
-        @param do_field: Enable to invalidate all fields (the currently selected field and all the other cached fields)
+        @param do_field: Enable to invalidate all fields
         @param do_metric: Enable to invalidate metric
         @param do_parameters: Enable to invalidate parameters
         """
@@ -171,7 +152,6 @@ class Model:
             for field_type, field in self._field_cache.items():
                 if field.valid:
                     field.valid = False
-                    Debug(self, f".invalidate(): Invalidated {field_type_to_str(field_type)}")
                     did_field_invalidation = True
             if did_field_invalidation:
                 self.on_field_invalid()
@@ -190,113 +170,118 @@ class Model:
 
     def set_wire(
             self,
-            wire: Wire,  # type: ignore
-            invalidate_self: bool
+            invalidate: bool,
+            *args,
+            **kwargs
     ) -> None:
         """
         Sets the wire.
 
-        @param wire: Wire
-        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        @param invalidate: Enable to invalidate this model hierarchy level
         """
         Debug(self, ".set_wire()")
 
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
-                do_wire=invalidate_self,
+                do_wire=invalidate,
                 do_sampling_volume=True,
                 do_field=True,
                 do_metric=True,
                 do_parameters=True
             )
-            self.wire = wire
+            self.wire.set(*args, **kwargs)
 
     def set_sampling_volume(
             self,
-            sampling_volume: SamplingVolume,  # type: ignore
-            invalidate_self: bool
+            invalidate: bool,
+            *args,
+            **kwargs
     ) -> None:
         """
         Sets the sampling volume.
 
-        @param sampling_volume: Sampling volume
-        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        @param invalidate: Enable to invalidate this model hierarchy level
         """
         Debug(self, ".set_sampling_volume()")
 
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
-                do_sampling_volume=invalidate_self,
+                do_sampling_volume=invalidate,
                 do_field=True,
                 do_metric=True,
                 do_parameters=True
             )
-            self.sampling_volume = sampling_volume
+            self.sampling_volume.set(*args, **kwargs)
 
     def set_field(
             self,
-            field: Field,  # type: ignore
-            invalidate_self: bool
+            invalidate: bool,
+            field_type: int,
+            *args,
+            **kwargs
     ) -> None:
         """
         Sets the field.
 
-        @param field: Field
-        @param invalidate_self: Enable to invalidate the old object (including the cache) before setting a new one
+        @param invalidate: Enable to invalidate this model hierarchy level
+        @param field_type: Field type
         """
         Debug(self, ".set_field()")
 
         with ModelAccess(self.gui, recalculate=False):
 
+            self.field_type_select = field_type
+
             self.invalidate(
-                do_field=invalidate_self,
+                do_field=invalidate,
                 do_metric=True,
                 do_parameters=True
             )
-            self.field = field
+
+            self.field.set(field_type=field_type, *args, **kwargs)
 
     def set_metric(
             self,
-            metric: Metric,  # type: ignore
-            invalidate_self: bool
+            invalidate: bool,
+            *args,
+            **kwargs
     ) -> None:
         """
         Sets the metric.
 
-        @param metric: Metric
-        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        @param invalidate: Enable to invalidate this model hierarchy level
         """
         Debug(self, ".set_metric()")
 
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
-                do_metric=invalidate_self,
+                do_metric=invalidate,
                 do_parameters=True
             )
-            self.metric = metric
+            self.metric.set(*args, **kwargs)
 
     def set_parameters(
             self,
-            parameters: Parameters,  # type: ignore
-            invalidate_self: bool
+            invalidate: bool,
+            *args,
+            **kwargs
     ) -> None:
         """
         Sets the parameters.
 
-        @param parameters: Parameters
-        @param invalidate_self: Enable to invalidate the old object before setting a new one
+        @param invalidate: Enable to invalidate this model hierarchy level
         """
         Debug(self, ".set_parameters()")
 
         with ModelAccess(self.gui, recalculate=False):
 
             self.invalidate(
-                do_parameters=invalidate_self
+                do_parameters=invalidate
             )
-            self.parameters = parameters
+            self.parameters.set(*args, **kwargs)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -386,13 +371,12 @@ class Model:
     def on_metric_valid(self) -> None:
         """
         Gets called when the metric was successfully calculated.
+
+        Note: Field label creation is triggered on-demand inside L{VisPyCanvas.redraw()}, not here.
         """
         Debug(self, ".on_metric_valid()")
 
         self.gui.sidebar_right.metric_widget.update()
-
-        # The field labels are now created on-demand inside VisPyCanvas.redraw()
-        # self.gui.vispy_canvas.create_field_labels()
 
     def on_parameters_valid(self) -> None:
         """

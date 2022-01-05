@@ -158,22 +158,35 @@ class Metric(Validatable):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, color_preset: Dict, alpha_preset: Dict) -> None:
+    def __init__(self) -> None:
         """
+        Initializes an empty metric.
+
         This class holds a pair of metric presets.
         Using these metric presets, colors (including alpha channel) and field limits are calculated.
-
-        @param color_preset: Color metric preset (dictionary)
-        @param alpha_preset: Alpha metric preset (dictionary)
         """
         Validatable.__init__(self)
         Debug(self, ": Init")
 
-        self._color_preset = color_preset
-        self._alpha_preset = alpha_preset
+        self._color_preset = {}
+        self._alpha_preset = {}
 
         self._colors: np.ndarray = np.array([])
         self._limits: Dict = {}
+
+    def set(
+            self,
+            color_preset: Dict,
+            alpha_preset: Dict
+    ) -> None:
+        """
+        Sets the parameters.
+
+        @param color_preset: Color metric preset (dictionary)
+        @param alpha_preset: Alpha metric preset (dictionary)
+        """
+        self._color_preset = color_preset
+        self._alpha_preset = alpha_preset
 
     def get_color_preset(self) -> Dict:
         """

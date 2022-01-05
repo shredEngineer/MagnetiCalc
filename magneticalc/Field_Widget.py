@@ -142,7 +142,7 @@ class Field_Widget(QGroupBox2):
         self.blockSignals(False)
 
         # Initially load field from configuration
-        self.set_field(recalculate=False, invalidate_self=False)
+        self.set_field(recalculate=False, invalidate=False)
 
         self.update()
 
@@ -161,7 +161,7 @@ class Field_Widget(QGroupBox2):
         if not checked:
             return
 
-        self.set_field(_field_type_=field_type, allow_cache=True)
+        self.set_field(_field_type_=field_type, invalidate=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -169,9 +169,8 @@ class Field_Widget(QGroupBox2):
             self,
             _field_type_: Optional[int] = None,
             _distance_limit_: Optional[float] = None,
-            recalculate: bool = True,
-            invalidate_self: bool = True,
-            allow_cache: bool = False
+            invalidate: bool = True,
+            recalculate: bool = True
     ) -> None:
         """
         Sets the field. This will replace the currently set field in the model.
@@ -179,9 +178,8 @@ class Field_Widget(QGroupBox2):
 
         @param _field_type_: Field type
         @param _distance_limit_: Distance limit
+        @param invalidate: Enable to invalidate this model hierarchy level
         @param recalculate: Enable to trigger final re-calculation
-        @param invalidate_self: Enable to invalidate the old field before setting a new one
-        @param allow_cache: Enable to select a field from the cache if it is available (based on the field type)
         """
         if self.signalsBlocked():
             return
@@ -191,22 +189,15 @@ class Field_Widget(QGroupBox2):
         with ModelAccess(self.gui, recalculate):
 
             field_type = self.gui.config.set_get_int("field_type", _field_type_)
-
-            if allow_cache:
-                field = self.gui.model.get_valid_field(field_type)
-            else:
-                field = None
-
-            if field is not None:
-                Debug(self, ".set_field(): Using cached field")
-            else:
-                backend_type = self.gui.config.get_int("backend_type")
-                distance_limit = self.gui.config.set_get_float("field_distance_limit", _distance_limit_)
-                field = Field(backend_type, field_type, distance_limit, Metric.LengthScale)
+            backend_type = self.gui.config.get_int("backend_type")
+            distance_limit = self.gui.config.set_get_float("field_distance_limit", _distance_limit_)
 
             self.gui.model.set_field(
-                field=field,
-                invalidate_self=invalidate_self and not allow_cache,
+                invalidate=invalidate,
+                backend_type=backend_type,
+                field_type=field_type,
+                distance_limit=distance_limit,
+                length_scale=Metric.LengthScale
             )
 
     # ------------------------------------------------------------------------------------------------------------------

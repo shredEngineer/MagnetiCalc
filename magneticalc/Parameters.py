@@ -43,6 +43,11 @@ class Parameters(Validatable):
         self._self_inductance: float = 0.0
         self._magnetic_dipole_moment: float = 0.0
 
+    def set(self, *args, **kwargs):
+        """
+        Sets the parameters
+        """
+
     @require_valid
     def get_energy(self) -> float:
         """

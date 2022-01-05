@@ -306,7 +306,7 @@ class Wire_Widget(QGroupBox2):
         self.blockSignals(False)
 
         # Initially load wire from configuration
-        self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate_self=False)
+        self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate=False)
 
         self.update()
 
@@ -456,9 +456,9 @@ class Wire_Widget(QGroupBox2):
             _close_loop_: Optional[bool] = None,
             _slicer_limit_: Optional[float] = None,
             _dc_: Optional[float] = None,
+            invalidate: bool = True,
             recalculate: bool = True,
-            readjust_sampling_volume: bool = True,
-            invalidate_self: bool = True
+            readjust_sampling_volume: bool = True
     ) -> None:
         """
         Sets the wire. This will overwrite the currently set wire in the model.
@@ -472,9 +472,9 @@ class Wire_Widget(QGroupBox2):
         @param _close_loop_: Enable to transform the wire into a closed loop (append first point)
         @param _slicer_limit_: Slicer limit
         @param _dc_: DC value
+        @param invalidate: Enable to invalidate this model hierarchy level
         @param recalculate: Enable to trigger final re-calculation
         @param readjust_sampling_volume: Enable to readjust sampling volume
-        @param invalidate_self: Enable to invalidate the old wire before setting a new one
         """
         if self.signalsBlocked():
             return
@@ -500,15 +500,13 @@ class Wire_Widget(QGroupBox2):
             )
 
             self.gui.model.set_wire(
-                Wire(
-                    points=points,
-                    stretch=stretch,
-                    rotational_symmetry=rotational_symmetry,
-                    close_loop=close_loop,
-                    slicer_limit=slicer_limit,
-                    dc=dc
-                ),
-                invalidate_self=invalidate_self
+                invalidate=invalidate,
+                points=points,
+                stretch=stretch,
+                rotational_symmetry=rotational_symmetry,
+                close_loop=close_loop,
+                slicer_limit=slicer_limit,
+                dc=dc
             )
 
             self.update_table()

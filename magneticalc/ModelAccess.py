@@ -64,7 +64,7 @@ class ModelAccess:
         """
         Debug(self, ".exit()")
 
-        if not self.gui.model.is_valid():
+        if not self.gui.model.valid:
             self.gui.invalidate_statusbar.emit()
 
         if self._recalculate:

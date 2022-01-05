@@ -47,8 +47,7 @@ class Parameters_Widget(QGroupBox2):
         Debug(self, ": Init")
         self.gui = gui
 
-        # Assign the "Parameters" container class
-        self.gui.model.set_parameters(Parameters(), invalidate_self=False)
+        self.gui.model.set_parameters(invalidate=False)
 
         results_layout = QHBoxLayout()
         results_left = QVBoxLayout()

@@ -26,7 +26,7 @@ from magneticalc.Backend_JIT import Backend_JIT
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_Str_Map
+from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_List
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Validatable import Validatable, require_valid, validator
 from magneticalc.Wire import Wire
@@ -35,26 +35,41 @@ from magneticalc.Wire import Wire
 class Field(Validatable):
     """ Field class. """
 
-    def __init__(self, backend_type: int, field_type: int, distance_limit: float, length_scale: float) -> None:
+    def __init__(self) -> None:
         """
         Initializes an empty field.
+        """
+        Validatable.__init__(self)
+        Debug(self, ": Init")
+
+        self._total_calculations: int = 0
+        self._total_skipped_calculations: int = 0
+        self._vectors: np.ndarray = np.array([])
+
+        self._backend_type = 0
+        self._field_type = 0
+        self._distance_limit = 0
+        self._length_scale = 0
+
+    def set(
+            self,
+            backend_type: int,
+            field_type: int,
+            distance_limit: float,
+            length_scale: float
+    ):
+        """
+        Sets the parameters.
 
         @param backend_type: Backend type
         @param field_type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
-        Validatable.__init__(self)
-        Debug(self, ": Init")
-
         self._backend_type = backend_type
         self._field_type = field_type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
-
-        self._total_calculations: int = 0
-        self._total_skipped_calculations: int = 0
-        self._vectors: np.ndarray = np.array([])
 
     def get_type(self) -> int:
         """
@@ -71,7 +86,7 @@ class Field(Validatable):
         @param show_gauss: Enable to show Gauss instead of Tesla
         @return: Field units, field factor
         """
-        Assert_Dialog(self._field_type in Field_Types_Str_Map, "Attempting to get units for invalid field type")
+        Assert_Dialog(self._field_type in Field_Types_List, "Attempting to get units for invalid field type")
 
         if show_gauss:
             return {

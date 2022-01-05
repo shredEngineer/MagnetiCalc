@@ -289,6 +289,12 @@ If this software has been helpful to you in some way or another, please let me a
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
 
+Documentation
+-------------
+The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
+
+[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
+
 ToDo
 ----
 **General**
@@ -336,12 +342,6 @@ ToDo
 
 **Design**
 * Replace plain `QMessageBox` dialogs with nice-looking custom dialogs where possible. 
-
-Documentation
--------------
-The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
-
-[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
 
 Video
 -----

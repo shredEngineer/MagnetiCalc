@@ -53,13 +53,12 @@ class CalculationThread(QThread):
         Debug(self, ": Init")
         self.gui = gui
 
-        # Connect progress update signal and create callback:
+        # Connect progress update signal
         self._progress_update.connect(  # type: ignore
             lambda x: self.gui.statusbar.set_progress(x)
         )
-        self.progress_callback = self._progress_update.emit  # type: ignore
 
-        # Connect valid state signals to corresponding handlers:
+        # Connect valid state signals
         self._wire_valid.connect(self.on_wire_valid)  # type: ignore
         self._sampling_volume_valid.connect(self.on_sampling_volume_valid)  # type: ignore
         self._field_valid.connect(self.on_field_valid)  # type: ignore
@@ -77,8 +76,10 @@ class CalculationThread(QThread):
             if not self.gui.model.wire.is_valid():
                 self.gui.calculation_status.emit("Calculating Wire Segments … (1/5)")
 
-                if not self.gui.model.calculate_wire(self.progress_callback):
-                    self.on_finished(False)
+                if not self.gui.model.calculate_wire(
+                        self._progress_update.emit  # type: ignore
+                ):
+                    self._on_finished(False)
                     return
 
                 self._wire_valid.emit()  # type: ignore
@@ -88,8 +89,10 @@ class CalculationThread(QThread):
             if not self.gui.model.sampling_volume.is_valid():
                 self.gui.calculation_status.emit("Calculating Sampling Volume … (2/5)")
 
-                if not self.gui.model.calculate_sampling_volume(self.progress_callback):
-                    self.on_finished(False)
+                if not self.gui.model.calculate_sampling_volume(
+                        self._progress_update.emit  # type: ignore
+                ):
+                    self._on_finished(False)
                     return
 
                 self._sampling_volume_valid.emit()  # type: ignore
@@ -104,10 +107,13 @@ class CalculationThread(QThread):
                     # "Auto" setting
                     num_cores = max(1, cpu_count() - 1)
 
-                success = self.gui.model.calculate_field(self.progress_callback, num_cores)
+                success = self.gui.model.calculate_field(
+                    self._progress_update.emit,  # type: ignore
+                    num_cores
+                )
 
                 if not success:
-                    self.on_finished(False)
+                    self._on_finished(False)
                     return
 
                 self._field_valid.emit()  # type: ignore
@@ -117,8 +123,10 @@ class CalculationThread(QThread):
             if not self.gui.model.metric.is_valid():
                 self.gui.calculation_status.emit("Calculating Metric … (4/5)")
 
-                if not self.gui.model.calculate_metric(self.progress_callback):
-                    self.on_finished(False)
+                if not self.gui.model.calculate_metric(
+                        self._progress_update.emit  # type: ignore
+                ):
+                    self._on_finished(False)
                     return
 
                 self._metric_valid.emit()  # type: ignore
@@ -128,19 +136,21 @@ class CalculationThread(QThread):
             if not self.gui.model.parameters.is_valid():
                 self.gui.calculation_status.emit("Calculating Parameters … (5/5)")
 
-                if not self.gui.model.calculate_parameters(self.progress_callback):
-                    self.on_finished(False)
+                if not self.gui.model.calculate_parameters(
+                        self._progress_update.emit  # type: ignore
+                ):
+                    self._on_finished(False)
                     return
 
                 self._parameters_valid.emit()  # type: ignore
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.on_finished(True)
+        self._on_finished(True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_finished(self, success: bool) -> None:
+    def _on_finished(self, success: bool) -> None:
         """
         Signals that the calculation finished.
 
@@ -148,11 +158,8 @@ class CalculationThread(QThread):
         """
         Debug(self, f".on_finished(success={success})")
 
-        # We cannot directly call this; we won't be able to modify the UI thread (which we'd really like to do somehow):
-        # self.gui.calculation_stopped(success)
-
-        # Instead, we use a signal; however, this results in slightly delayed execution, even after joining this thread;
-        # the execution of  self.gui.on_calculation_exited()  will later be skipped when it sees another thread running.
+        # Firing this signal results in slightly delayed execution, even after joining this thread;
+        # the execution of "on_calculation_exited()" will later be skipped when it sees another thread running.
         self.gui.calculation_exited.emit(success)
 
     # ------------------------------------------------------------------------------------------------------------------

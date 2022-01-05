@@ -474,7 +474,7 @@ class QTableWidget2(QTableWidget):
     def focusOutEvent(self, _event: QFocusEvent) -> None:
         """
         Gets called when the table lost focus, or when a cell item is being edited, or when a cell widget is selected.
-        When not editing, this clears the selection, triggering L{on_selection_changed}
+        When not editing, this clears the selection, triggering L{on_selection_changed}.
 
         @param _event: QFocusEvent
         """

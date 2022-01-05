@@ -80,8 +80,8 @@ class GUI(QMainWindow):
         self.config.load()
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
-        self.calculation_thread = None  # Will be initialized by self.recalculate() but is needed here for ModelAccess
-        self.calculation_start_time = time.monotonic()  # Will be overwritten by L{recalculate()}
+        self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
+        self.calculation_start_time = time.monotonic()  # Will be overwritten by "recalculate()"
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
         atexit.register(self.cleanup)

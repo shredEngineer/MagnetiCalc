@@ -109,7 +109,7 @@ class Config:
         self.Default["azimuth"] = f"{float(default_azimuth):.{Config.FloatPrecision}f}"
         self.Default["elevation"] = f"{float(default_elevation):.{Config.FloatPrecision}f}"
 
-        self._config = configparser.ConfigParser()  # Will be overwritten by L{load()}
+        self._config = configparser.ConfigParser()  # Will be overwritten by "load()"
 
         self._synced = False
         self._changed_callback = None

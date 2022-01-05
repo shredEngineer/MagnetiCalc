@@ -270,7 +270,7 @@ class Display_Widget(QGroupBox2):
 
         self.gui.sidebar_left.sampling_volume_widget.set_sampling_volume(_label_resolution_exponent_=value)
 
-        # Note: L{prevent_excessive_field_labels(choice=False)} will be called by L{Model.on_sampling_volume_valid()}.
+        # Note: "prevent_excessive_field_labels()" will be called by "Model.on_sampling_volume_valid()".
 
         self.gui.redraw()
 

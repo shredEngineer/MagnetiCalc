@@ -43,7 +43,7 @@ class QLabel2(QLabel):
         """
         Initializes a QLabel.
 
-        Please see L{set()} for supported arguments.
+        Please see L{QLabel2.set()} for supported arguments.
 
         @param text: Text
         @param icon: QtAwesome icon id (optional)

@@ -106,7 +106,7 @@ class VisPyCanvas(scene.SceneCanvas):
             font_manager=self.font_manager
         )
 
-        self.visual_field_labels = []  # See: L{create_field_labels}, L{delete_field_labels}, L{redraw_field_labels}
+        self.visual_field_labels = []  # See: "create_field_labels()", "delete_field_labels()", "redraw_field_labels()"
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

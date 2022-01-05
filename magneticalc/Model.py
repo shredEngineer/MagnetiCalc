@@ -52,24 +52,22 @@ class Model:
         Debug(self, ": Init")
         self.gui = gui
 
-        # Set in L{set_wire} via L{Wire_Widget}
+        """ Set in L{set_wire} via L{Wire_Widget}. """
         self.wire: Optional[Wire] = None  # type: ignore
 
-        # Set in L{set_sampling_volume} via L{SamplingVolume_Widget}
+        """ Set in L{set_sampling_volume} via L{SamplingVolume_Widget}. """
         self.sampling_volume: Optional[SamplingVolume] = None  # type: ignore
 
-        # Set in L{set_metric} via L{Metric_Widget}
+        """ Set in L{set_metric} via L{Metric_Widget}. """
         self.metric: Optional[Metric] = None  # type: ignore
 
-        # Set in L{set_parameters} via L{Parameters_Widget}
+        """ Set in L{set_parameters} via L{Parameters_Widget}. """
         self.parameters: Optional[Parameters] = None  # type: ignore
 
-        # Field cache and currently selected field:
-
-        # Set in L{set_field} via L{Field_Widget}
+        """ Field cache: Currently selected field: Set in L{set_field} via L{Field_Widget}. """
         self._selected_field_type: Optional[int] = None
 
-        # Set in L{set_field} via L{Field_Widget}
+        """ Field cache: Dictionary {types: fields}: Set in L{set_field} via L{Field_Widget}. """
         self._field_cache: Dict[
             int,
             Field  # type: ignore

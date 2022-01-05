@@ -65,7 +65,7 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">QMessageBox2</span>(<span title="PyQt5.QtWidgets.QMessageBox">QMessageBox</span>):</code></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">QMessageBox2</span>(<a href="magneticalc.QDialog2.QDialog2.html" title="magneticalc.QDialog2.QDialog2">QDialog2</a>):</code></p>
         <p><a href="classIndex.html#magneticalc.QMessageBox2.QMessageBox2">View In Hierarchy</a></p>
       </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id112">
+        <table class="children sortable" id="id114">
   
   
   <tr class="method">
@@ -82,6 +82,16 @@
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
     <td>Initializes a message box.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#accepting">accepting</a></code></td>
+    <td>Sets the choice and accepts the dialog.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#rejecting">rejecting</a></code></td>
+    <td>Gets called when the user hits the ESC key.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
@@ -90,6 +100,74 @@
   </tr>
 </table>
         
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>:
+          </p>
+          <table class="children sortable" id="id115">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#show">show</a></code></td>
+    <td>Shows this dialog.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#showEvent">showEvent</a></code></td>
+    <td>Overrides the showEvent method.</td>
+  </tr><tr class="baseclassvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#dialog_shown">dialog_shown</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="baseinstancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.QDialog2.QDialog2.html#user_accepted">user_accepted</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>):
+          </p>
+          <table class="children sortable" id="id116">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td>Adds buttons.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td>Adds layout.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td>Adds spacing.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td>Adds widget.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td>Installs this layout in the parent.</td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
 
           
       </div>
@@ -111,9 +189,47 @@
     
   </div>
   <div class="docstring functionBody">
-    
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QDialog2.QDialog2.html#__init__">magneticalc.QDialog2.QDialog2.__init__</a></code></div>
     
     <div>Initializes a message box.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">title:</span><code>str</code></td><td class="fieldArgDesc">Title</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">text:</span><code>str</code></td><td class="fieldArgDesc">Text</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">icon</span></td><td class="fieldArgDesc">Icon</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">buttons</span></td><td class="fieldArgDesc">Buttons</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">default_button</span></td><td class="fieldArgDesc">Default button</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QMessageBox2.QMessageBox2.accepting">
+    
+  </a>
+  <a name="accepting">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">accepting</span>(self, button_flag):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the choice and accepts the dialog.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">button_flag:</span><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QMessageBox2.QMessageBox2.rejecting">
+    
+  </a>
+  <a name="rejecting">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">rejecting</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the user hits the ESC key.</div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -145,7 +261,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 15:16:15.
+    21.12.0 at 2022-01-05 21:28:19.
   </div>
 </footer>
 

@@ -92,6 +92,16 @@
     <td>Class Variable</td>
     <td><code><a href="#BlacklistEnabled">BlacklistEnabled</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#EnableInit">EnableInit</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#EnableRefresh">EnableRefresh</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
@@ -112,13 +122,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, obj, text, color=None, force=False, success=False, warning=False, error=False):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, obj, text, color=None, force=False, success=False, warning=False, error=False, init=False, refresh=False):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Displays a colorful debug message and the current call hierarchy.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">obj:</span><code>object</code></td><td class="fieldArgDesc">Class instance</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">text:</span><code>str</code></td><td class="fieldArgDesc">Debug message</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color:</span><code>Optional[<wbr></wbr>Style]</code></td><td class="fieldArgDesc">Color (may be None)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">force:</span><code>bool</code></td><td class="fieldArgDesc">Enable to override whitelist</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=SuccessColor</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">warning:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=WarningColor and force=True</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">error:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=ErrorColor and force=True</td></tr></table></div>
+    <div>Displays a colorful debug message and the current call hierarchy.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">obj:</span><code>object</code></td><td class="fieldArgDesc">Class instance</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">text:</span><code>str</code></td><td class="fieldArgDesc">Debug message</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color:</span><code>Optional[<wbr></wbr>Style]</code></td><td class="fieldArgDesc">Color (may be None)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">force:</span><code>bool</code></td><td class="fieldArgDesc">Enable to override whitelist</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=SuccessColor</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">warning:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=WarningColor and force=True</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">error:</span><code>bool</code></td><td class="fieldArgDesc">Enable to set color=ErrorColor and force=True</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">init:</span><code>bool</code></td><td class="fieldArgDesc">Enable to mark as init message (filtering through EnableInit)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">refresh:</span><code>bool</code></td><td class="fieldArgDesc">Enable to mark as refresh message (filtering through EnableRefresh)</td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -160,6 +170,46 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Debug.Debug.EnableInit">
+    
+  </a>
+  <a name="EnableInit">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">EnableInit</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Debug.Debug.EnableRefresh">
+    
+  </a>
+  <a name="EnableRefresh">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">EnableRefresh</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
 </div>
 
       </div>
@@ -170,7 +220,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 15:16:15.
+    21.12.0 at 2022-01-05 21:28:19.
   </div>
 </footer>
 

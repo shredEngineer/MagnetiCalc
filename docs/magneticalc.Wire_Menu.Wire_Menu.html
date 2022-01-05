@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>magneticalc.ConditionalDecorator.ConditionalDecorator</title>
+    <title>magneticalc.Wire_Menu.Wire_Menu</title>
     <meta name="generator" content="pydoctor 21.12.0"> 
         
     </meta>
@@ -54,7 +54,7 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.ConditionalDecorator.html">ConditionalDecorator</a></code><wbr></wbr>.<code><a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a></code></code></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Menu.html">Wire_Menu</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Menu.Wire_Menu.html">Wire_Menu</a></code></code></h1>
         <div id="showPrivate">
           <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
         </div>
@@ -65,42 +65,52 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">ConditionalDecorator</span>(<span title="object">object</span>):</code></p>
-        <p><a href="classIndex.html#magneticalc.ConditionalDecorator.ConditionalDecorator">View In Hierarchy</a></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Wire_Menu</span>(<span title="PyQt5.QtWidgets.QMenu">QMenu</span>):</code></p>
+        <p><a href="classIndex.html#magneticalc.Wire_Menu.Wire_Menu">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div>ConditionalDecorator class.</div>
+        <div>Wire_Menu class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id23">
+        <table class="children sortable" id="id158">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__call__">__call__</a></code></td>
-    <td>Gets called when a function is to be decorated.</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
-    <td>Initializes a conditional decorator.</td>
+    <td><code><a href="#update">update</a></code></td>
+    <td>Updates the menu.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#wire_export">wire_export</a></code></td>
+    <td>Exports wire points to a TXT file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#wire_import">wire_import</a></code></td>
+    <td>Imports wire points from a TXT file.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#condition">condition</a></code></td>
+    <td><code><a href="#export_wire_action">export_wire_action</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#decorating_args">decorating_args</a></code></td>
+    <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#decorating_func">decorating_func</a></code></td>
+    <td><code><a href="#import_wire_action">import_wire_action</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -114,26 +124,7 @@
         <div class="basemethod">
   
   
-  <a name="magneticalc.ConditionalDecorator.ConditionalDecorator.__call__">
-    
-  </a>
-  <a name="__call__">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">__call__</span>(self, func):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets called when a function is to be decorated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">func:</span><code>Callable</code></td><td class="fieldArgDesc">Function to be decorated</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Callable</code></td><td class="fieldArgDesc">Decorated function</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.ConditionalDecorator.ConditionalDecorator.__init__">
+  <a name="magneticalc.Wire_Menu.Wire_Menu.__init__">
     
   </a>
   <a name="__init__">
@@ -141,26 +132,83 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, condition, decorating_func, **decorating_args):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Initializes a conditional decorator.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">condition:</span><code>bool</code></td><td class="fieldArgDesc">Condition</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">decorating_func:</span><code>Callable</code></td><td class="fieldArgDesc">Decorating function</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">**decorating_args:</span><code>Any</code></td><td class="fieldArgDesc">Arguments to decorating function</td></tr></table></div>
+    <div><p class="undocumented">Undocumented</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="basemethod">
   
   
-  <a name="magneticalc.ConditionalDecorator.ConditionalDecorator.condition">
+  <a name="magneticalc.Wire_Menu.Wire_Menu.update">
     
   </a>
-  <a name="condition">
+  <a name="update">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">condition</span> =
+    <span class="py-keyword">def</span> <span class="py-defname">update</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the menu.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire_Menu.Wire_Menu.wire_export">
+    
+  </a>
+  <a name="wire_export">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">wire_export</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Exports wire points to a TXT file.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Wire_Menu.Wire_Menu.wire_import">
+    
+  </a>
+  <a name="wire_import">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">wire_import</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Imports wire points from a TXT file.</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire_Menu.Wire_Menu.export_wire_action">
+    
+  </a>
+  <a name="export_wire_action">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">export_wire_action</span> =
     
   </div>
   <div class="functionBody">
@@ -172,15 +220,15 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.ConditionalDecorator.ConditionalDecorator.decorating_args">
+  <a name="magneticalc.Wire_Menu.Wire_Menu.gui">
     
   </a>
-  <a name="decorating_args">
+  <a name="gui">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">decorating_args</span> =
+    <span class="py-defname">gui</span> =
     
   </div>
   <div class="functionBody">
@@ -192,15 +240,15 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.ConditionalDecorator.ConditionalDecorator.decorating_func">
+  <a name="magneticalc.Wire_Menu.Wire_Menu.import_wire_action">
     
   </a>
-  <a name="decorating_func">
+  <a name="import_wire_action">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">decorating_func</span> =
+    <span class="py-defname">import_wire_action</span> =
     
   </div>
   <div class="functionBody">

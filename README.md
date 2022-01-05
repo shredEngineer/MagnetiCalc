@@ -127,8 +127,7 @@ On Apple Silicon,
 must be enabled for the Terminal app before installing (upgrading) and starting MagnetiCalc.
 
 ### Option A: Automatic install via pip
-This will install (upgrade) MagnetiCalc (and its dependencies)
-to the user site-packages directory and start it.
+This will install (upgrade) MagnetiCalc (and its dependencies) to the user site-packages directory and start it.
 
 [![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
 
@@ -152,8 +151,7 @@ export NUMBA_DISABLE_JIT=1 && python3 -m magneticalc
 ```
 
 #### Juptyer Notebook & Jupyter Lab
-From within a [Jupyter](https://jupyter.org/) Notebook,
-MagnetiCalc can be installed (upgraded) and run like this:
+From within a [Jupyter](https://jupyter.org/) Notebook,  MagnetiCalc can be installed (upgraded) and run like this:
 ```python
 import sys
 !{sys.executable} -m pip install magneticalc --upgrade
@@ -195,7 +193,6 @@ Screenshot
 
 Data Import/Export and Python API
 ---------------------------------
-
 ### GUI
 MagnetiCalc allows the following data to be imported/exported using the GUI:
 * Import/export wire points from/to TXT file.
@@ -204,62 +201,61 @@ MagnetiCalc allows the following data to be imported/exported using the GUI:
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
 ### API
-Relevant documentation: [`API` class](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html),
-[`MagnetiCalc_Data` class](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
-
 The [`API`](magneticalc/API.py) class
-provides basic functions for importing/exporting data programmatically:
+([documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html))
+provides basic functions for importing/exporting data programmatically.
 
-* Generate a wire shape using [NumPy](https://numpy.org/) and export it to a TXT file: 
-  ```python
-  from magneticalc import API
-  import numpy as np
-  
-  wire = [
-      (np.cos(a), np.sin(a), np.sin(16 * a))
-      for a in np.linspace(0, 2 * np.pi, 200)
-  ]
-  
-  API.export_wire("MyWire.txt", wire)
-  ```
+#### Example: Wire Export
+Generate a wire shape using [NumPy](https://numpy.org/) and export it to a TXT file:
 
-* Import an HDF5 file containing an
-  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
-  (which needs to be generated using the GUI first)
-  and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html).
-  ```python
-  from magneticalc import API
-  import matplotlib.pyplot as plt
+```python
+from magneticalc import API
+import numpy as np
 
-  data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
-  axes = data.get_axes()
-  a_field = data.get_a_field()
+wire = [
+    (np.cos(a), np.sin(a), np.sin(16 * a))
+    for a in np.linspace(0, 2 * np.pi, 200)
+]
 
-  ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
-  ax.quiver(*axes, *a_field, length=5e5, normalize=False, linewidth=2)
-  plt.show()
-  ```
+API.export_wire("MyWire.txt", wire)
+```
 
-  The data is wrapped in a [`MagnetiCalc_Data`](magneticalc/MagnetiCalc_Data.py) object
-  which provides convenience functions for accessing, transforming and reshaping the data:
-  * `.get_wire_list()` returns a list of all 3D points of the wire.
-  * `.get_wire()` returns the raveled wire points as three arrays.
-  * `.get_current()` returns the wire current.
-  * `.get_dimension()` returns the sampling volume dimension as a 3-tuple.
-  * `.get_axes_list()` returns a list of all 3D points of the sampling volume.
-  * `.get_axes()` returns the raveled sampling volume coordinates as three arrays.
-  * `.get_axes(reduce=True)` returns the axis ticks of the sampling volume.
-  * `.get_a_field_list()` returns a list of all 3D vectors of the
-    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field.
-  * `.get_a_field()` returns the raveled
-    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
-    coordinates as three arrays.
-  * `.get_a_field(as_3d=True)` returns a 3D field for each component of the
-    <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
-    indexed over the reduced axes.
-  
-  Analogously, use the `.get_b_field_list()` and `.get_b_field()` functions
-  to get the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field.
+#### Example: Field Import
+Import an HDF5 file containing an
+<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
+and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
+
+```python
+from magneticalc import API
+import matplotlib.pyplot as plt
+
+data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
+axes = data.get_axes()
+a_field = data.get_a_field()
+
+ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
+ax.quiver(*axes, *a_field, length=5e5, normalize=False, linewidth=2)
+plt.show()
+```
+
+*Note:* The required HDF5 file needs to be exported using the GUI first.
+
+The imported data is wrapped in a [`MagnetiCalc_Data`](magneticalc/MagnetiCalc_Data.py) object
+([documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html))
+which provides convenience functions for accessing, transforming and reshaping the data:
+
+| Method                                                   | Description                                                                                                                                                                                                                                                      |
+|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.get_wire_list()`                                       | Returns a list of all 3D points of the wire.                                                                                                                                                                                                                     |
+| `.get_wire()`                                            | Returns the raveled wire points as three arrays.                                                                                                                                                                                                                 |
+| `.get_current()`                                         | Returns the wire current.                                                                                                                                                                                                                                        |
+| `.get_dimension()`                                       | Returns the sampling volume dimension as a 3-tuple.                                                                                                                                                                                                              |
+| `.get_axes_list()`                                       | Returns a list of all 3D points of the sampling volume.                                                                                                                                                                                                          |
+| `.get_axes()`                                            | Returns the raveled sampling volume coordinates as three arrays.                                                                                                                                                                                                 |
+| `.get_axes(reduce=True)`                                 | Returns the axis ticks of the sampling volume.                                                                                                                                                                                                                   |
+| `.get_a_field_list()`<br>`.get_b_field_list()`           | Returns a list of all 3D vectors of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field.                                     |
+| `.get_a_field()`<br>`.get_b_field()`                     | Returns the raveled <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field coordinates as three arrays.                             |
+| `.get_a_field(as_3d=True)`<br>`.get_b_field(as_3d=True)` | Returns a 3D field for each component of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field, indexed over the reduced axes. |
 
 License
 -------
@@ -357,28 +353,28 @@ There is also a short article about MagnetiCalc on my personal website:
 *Appendix:* Metrics
 -------------------
 
-| Metric               | Symbol                                                                                                     | Description                           |
-|----------------------|------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                          | Magnitude in space                    |
-| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                      | Magnitude in X-direction              |
-| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                      | Magnitude in Y-direction              |
-| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                      | Magnitude in Z-direction              |
-| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                     | Magnitude in XY-plane                 |
-| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                     | Magnitude in XZ-plane                 |
-| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                     | Magnitude in YZ-plane                 |
-| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                       | Divergence                            |
-| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">           | Positive Divergence                   |
-| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">             | Negative Divergence                   |
-| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}\mid">                     | Logarithmic Magnitude in space        |
-| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_X}\mid">                   | Logarithmic Magnitude in X-direction  |
-| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Y}\mid">                   | Logarithmic Magnitude in Y-direction  |
-| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Z}\mid">                   | Logarithmic Magnitude in Z-direction  |
-| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XY}\mid">                | Logarithmic Magnitude in XY-plane     |
-| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XZ}\mid">                | Logarithmic Magnitude in XZ-plane     |
-| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{YZ}\mid">                | Logarithmic Magnitude in YZ-plane     |
-| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ \ \nabla\cdot\vec{B}">              | Logarithmic Divergence                |
-| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ %2b\{\nabla\cdot\vec{B}\}_{>0}">    | Positive Logarithmic Divergence       |
-| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ -\{\nabla\cdot\vec{B}\}_{<0}"> | Negative Logarithmic Divergence       |
-| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">               | Field angle in XY-plane               |
-| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">               | Field angle in XZ-plane               |
-| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">               | Field angle in YZ-plane               |
+| Metric               | Symbol                                                                                                       | Description                           |
+|----------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                            | Magnitude in space                    |
+| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                        | Magnitude in X-direction              |
+| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                        | Magnitude in Y-direction              |
+| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                        | Magnitude in Z-direction              |
+| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                       | Magnitude in XY-plane                 |
+| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                       | Magnitude in XZ-plane                 |
+| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                       | Magnitude in YZ-plane                 |
+| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                         | Divergence                            |
+| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">             | Positive Divergence                   |
+| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">               | Negative Divergence                   |
+| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}\mid">                  | Logarithmic Magnitude in space        |
+| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_X}\mid">                | Logarithmic Magnitude in X-direction  |
+| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Y}\mid">                | Logarithmic Magnitude in Y-direction  |
+| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Z}\mid">                | Logarithmic Magnitude in Z-direction  |
+| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XY}\mid">             | Logarithmic Magnitude in XY-plane     |
+| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XZ}\mid">             | Logarithmic Magnitude in XZ-plane     |
+| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{YZ}\mid">             | Logarithmic Magnitude in YZ-plane     |
+| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ \ \nabla\cdot\vec{B}">           | Logarithmic Divergence                |
+| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ %2b\{\nabla\cdot\vec{B}\}_{>0}"> | Positive Logarithmic Divergence       |
+| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ -\{\nabla\cdot\vec{B}\}_{<0}">   | Negative Logarithmic Divergence       |
+| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">                 | Field angle in XY-plane               |
+| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">                 | Field angle in XZ-plane               |
+| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">                 | Field angle in YZ-plane               |

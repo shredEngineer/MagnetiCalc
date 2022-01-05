@@ -65,11 +65,11 @@ rm -r docs/*
 pydoctor \
   --make-html \
   --html-output=docs \
-  --add-package=magneticalc \
   --docformat=epytext \
   --project-base-dir=. \
   --project-name=MagnetiCalc \
-  --project-url=https://github.com/shredEngineer/MagnetiCalc
+  --project-url=https://github.com/shredEngineer/MagnetiCalc \
+  magneticalc
 
 # ----------------------------------------------------------------------------------------------------------------------
 cd dev/

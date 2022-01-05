@@ -84,6 +84,12 @@ is calculated by summing over all current elements:
 [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
 [4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).
 
+Screenshot
+----------
+![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Screenshot.png)
+
+(Screenshot taken from the latest GitHub release.)
+
 Installation
 ------------
 
@@ -184,12 +190,39 @@ Please refer to the
 [Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
-Screenshot
+License
+-------
+Copyright © 2020–2022, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
+
+<b>ISC License</b>
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+
+Contribute
 ----------
+You are invited to contribute to MagnetiCalc in any way you like! 😃
 
-![Screenshot](https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/dev/img/Screenshot.png)
+If this software has been helpful to you in some way or another, please let me and others know!
 
-(Screenshot taken from the latest GitHub release.)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
+
+Documentation
+-------------
+The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
+
+[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
 
 Data Import/Export and Python API
 ---------------------------------
@@ -256,40 +289,6 @@ which provides convenience functions for accessing, transforming and reshaping t
 | `.get_a_field_list()`<br>`.get_b_field_list()`           | Returns a list of all 3D vectors of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field.                                     |
 | `.get_a_field()`<br>`.get_b_field()`                     | Returns the raveled <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field coordinates as three arrays.                             |
 | `.get_a_field(as_3d=True)`<br>`.get_b_field(as_3d=True)` | Returns a 3D field for each component of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field, indexed over the reduced axes. |
-
-License
--------
-Copyright © 2020–2022, Paul Wilhelm, M. Sc. <[anfrage@paulwilhelm.de](mailto:anfrage@paulwilhelm.de)>
-
-<b>ISC License</b>
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-
-Contribute
-----------
-You are invited to contribute to MagnetiCalc in any way you like! 😃
-
-If this software has been helpful to you in some way or another, please let me and others know!
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
-
-Documentation
--------------
-The documentation for MagnetiCalc is auto-generated from docstrings in the Python code.
-
-[![Documentation](https://img.shields.io/badge/Documentation-API-gold)](https://shredengineer.github.io/MagnetiCalc/)
 
 ToDo
 ----

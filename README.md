@@ -204,8 +204,8 @@ MagnetiCalc allows the following data to be imported/exported using the GUI:
 wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
 
 ### API
-Documentation: [API](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html),
-[MagnetiCalc_Data](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
+Relevant documentation: [`API` class](https://shredengineer.github.io/MagnetiCalc/magneticalc.API.API.html),
+[`MagnetiCalc_Data` class](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html)
 
 The [`API`](magneticalc/API.py) class
 provides basic functions for importing/exporting data programmatically:

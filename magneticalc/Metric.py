@@ -25,6 +25,7 @@ from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
+from magneticalc.Validatable import Validatable
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
@@ -112,7 +113,7 @@ def metric_divergence(neighborhood_vectors: np.ndarray, dL: float, polarity: int
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
-def color_map_divergent(color_normalized: float) -> Tuple[float, float, float]:
+def color_map_divergent(color_normalized: float) -> np.ndarray:
     """
     Maps normalized value to color, divergent.
 
@@ -127,7 +128,7 @@ def color_map_divergent(color_normalized: float) -> Tuple[float, float, float]:
 
 
 @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=False)
-def color_map_cyclic(color_normalized: float) -> Tuple[float, float, float]:
+def color_map_cyclic(color_normalized: float) -> np.ndarray:
     """
     Maps normalized value to color, cyclic.
 
@@ -144,7 +145,7 @@ def color_map_cyclic(color_normalized: float) -> Tuple[float, float, float]:
     return np.array([r, g, b])
 
 
-class Metric:
+class Metric(Validatable):
     """
     Provides different metrics, used for mapping some field vector properties to some color and alpha range.
     """
@@ -165,6 +166,7 @@ class Metric:
         @param color_preset: Color metric preset (dictionary)
         @param alpha_preset: Alpha metric preset (dictionary)
         """
+        Validatable.__init__(self)
         Debug(self, ": Init")
 
         self._color_preset = color_preset
@@ -172,24 +174,6 @@ class Metric:
 
         self._colors: np.ndarray = np.array([])
         self._limits: Dict = {}
-
-        self._valid = False
-
-    def is_valid(self) -> bool:
-        """
-        Indicates valid data for display.
-
-        @return: True if data is valid for display, False otherwise
-        """
-        return self._valid
-
-    def invalidate(self) -> None:
-        """
-        Resets data, hiding from display.
-        """
-        Debug(self, ".invalidate()")
-
-        self._valid = False
 
     def get_color_preset(self) -> Dict:
         """
@@ -213,7 +197,7 @@ class Metric:
 
         @return: Ordered list of color values (4-tuples)
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated metric")
+        Assert_Dialog(self.valid, "Accessing invalidated metric")
 
         return self._colors
 
@@ -223,7 +207,7 @@ class Metric:
 
         @return: Dictionary
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated metric")
+        Assert_Dialog(self.valid, "Accessing invalidated metric")
 
         return self._limits
 
@@ -379,7 +363,7 @@ class Metric:
         """
         Debug(self, ".recalculate()")
 
-        self._valid = False
+        self.valid = False
 
         n = len(field.get_vectors())
 
@@ -496,7 +480,7 @@ class Metric:
 
         progress_callback(100)
 
-        self._valid = True
+        self.valid = True
 
         return True
 

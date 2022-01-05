@@ -26,38 +26,22 @@ from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
 from magneticalc.Metric import Metric
+from magneticalc.Validatable import Validatable
 
 
-class Parameters:
+class Parameters(Validatable):
     """ Parameters class. """
 
     def __init__(self) -> None:
         """
         Initializes parameters class.
         """
+        Validatable.__init__(self)
         Debug(self, ": Init")
 
         self._energy: float = 0.0
         self._self_inductance: float = 0.0
         self._magnetic_dipole_moment: float = 0.0
-
-        self._valid = False
-
-    def is_valid(self) -> bool:
-        """
-        Indicates valid data for display.
-
-        @return: True if data is valid for display, False otherwise
-        """
-        return self._valid
-
-    def invalidate(self) -> None:
-        """
-        Resets data, hiding from display.
-        """
-        Debug(self, ".invalidate()")
-
-        self._valid = False
 
     def get_energy(self) -> float:
         """
@@ -172,7 +156,7 @@ class Parameters:
         """
         Debug(self, ".recalculate()")
 
-        self._valid = False
+        self.valid = False
 
         progress_callback(0)
 
@@ -195,6 +179,6 @@ class Parameters:
 
         progress_callback(100)
 
-        self._valid = True
+        self.valid = True
 
         return True

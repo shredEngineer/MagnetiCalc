@@ -73,7 +73,7 @@ class CalculationThread(QThread):
 
         with ModelAccess(self.gui, recalculate=False):
 
-            if not self.gui.model.wire.is_valid():
+            if not self.gui.model.wire.valid:
                 self.gui.calculation_status.emit("Calculating Wire Segments … (1/5)")
 
                 if not self.gui.model.calculate_wire(
@@ -86,7 +86,7 @@ class CalculationThread(QThread):
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            if not self.gui.model.sampling_volume.is_valid():
+            if not self.gui.model.sampling_volume.valid:
                 self.gui.calculation_status.emit("Calculating Sampling Volume … (2/5)")
 
                 if not self.gui.model.calculate_sampling_volume(
@@ -99,7 +99,7 @@ class CalculationThread(QThread):
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            if not self.gui.model.field.is_valid():
+            if not self.gui.model.field.valid:
                 self.gui.calculation_status.emit("Calculating Field … (3/5)")
 
                 num_cores = self.gui.config.get_int("num_cores")
@@ -120,7 +120,7 @@ class CalculationThread(QThread):
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            if not self.gui.model.metric.is_valid():
+            if not self.gui.model.metric.valid:
                 self.gui.calculation_status.emit("Calculating Metric … (4/5)")
 
                 if not self.gui.model.calculate_metric(
@@ -133,7 +133,7 @@ class CalculationThread(QThread):
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            if not self.gui.model.parameters.is_valid():
+            if not self.gui.model.parameters.valid:
                 self.gui.calculation_status.emit("Calculating Parameters … (5/5)")
 
                 if not self.gui.model.calculate_parameters(

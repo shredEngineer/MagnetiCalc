@@ -47,12 +47,12 @@ class CheckForUpdates_Dialog(QDialog2):
             icon, string, color = "fa.exclamation-circle", f"Network Error", Theme.FailureColor
         else:
             # noinspection RegExpAnonymousGroup
-            pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
+            pattern = re.compile(r'__VERSION__ = "valid(\d+)\.(\d+)\.(\d+)"')
             # noinspection PyBroadException
             try:
                 result = pattern.search(version_py)
                 if result is not None:
-                    version = "v" + ".".join(result.groups())
+                    version = "valid" + ".".join(result.groups())
                 else:
                     raise Exception
             except Exception:

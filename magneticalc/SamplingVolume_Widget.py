@@ -341,7 +341,7 @@ class SamplingVolume_Widget(QGroupBox2):
                 self.gui.sidebar_right.display_widget.update()
 
                 # This forces updating the number of constraints if the sampling volume is already invalidated
-                if not self.gui.model.sampling_volume.is_valid():
+                if not self.gui.model.sampling_volume.valid:
                     self.update()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -415,7 +415,7 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Debug(self, ".update_labels()")
 
-        if self.gui.model.sampling_volume.is_valid():
+        if self.gui.model.sampling_volume.valid:
             self.total_extent_label.setText(
                 " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
             )
@@ -436,4 +436,4 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.padding_widget.setEnabled(not self.gui.config.get_bool("sampling_volume_override_padding"))
 
-        self.indicate_valid(self.gui.model.sampling_volume is not None and self.gui.model.sampling_volume.is_valid())
+        self.indicate_valid(self.gui.model.sampling_volume is not None and self.gui.model.sampling_volume.valid)

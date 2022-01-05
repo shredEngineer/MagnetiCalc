@@ -149,7 +149,7 @@ class GUI(QMainWindow):
                 Debug(self, ".redraw(): WARNING: Setting calculation thread to None", warning=True)
                 self.calculation_thread = None
 
-        self.sidebar_right.display_widget.set_enabled(self.model.field is not None and self.model.field.is_valid())
+        self.sidebar_right.display_widget.set_enabled(self.model.field is not None and self.model.field.valid)
 
         self.vispy_canvas.redraw()
 
@@ -492,7 +492,7 @@ class GUI(QMainWindow):
         """
         Debug(self, ".export_wire()")
 
-        if self.model.wire is None or not self.model.wire.is_valid():
+        if self.model.wire is None or not self.model.wire.valid:
             Assert_Dialog(False, "Attempting to export invalid wire")
             return
 

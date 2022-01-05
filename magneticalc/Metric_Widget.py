@@ -223,7 +223,7 @@ class Metric_Widget(QGroupBox2):
         """
         Debug(self, ".update_labels()")
 
-        if self.gui.model.metric.is_valid():
+        if self.gui.model.metric.valid:
 
             limits = self.gui.model.metric.get_limits()
 
@@ -329,4 +329,4 @@ class Metric_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.metric is not None and self.gui.model.metric.is_valid())
+        self.indicate_valid(self.gui.model.metric is not None and self.gui.model.metric.valid)

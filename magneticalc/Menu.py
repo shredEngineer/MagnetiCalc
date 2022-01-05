@@ -285,4 +285,4 @@ class Menu:
         """
         Debug(self, ".update_wire_menu()")
 
-        self.export_wire_action.setEnabled(self.gui.model.wire.is_valid())
+        self.export_wire_action.setEnabled(self.gui.model.wire.valid)

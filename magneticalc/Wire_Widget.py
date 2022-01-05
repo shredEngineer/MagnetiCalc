@@ -541,7 +541,7 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_labels()")
 
-        if self.gui.model.wire.is_valid():
+        if self.gui.model.wire.valid:
             self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
         else:
             self.sliced_total_label.setText("N/A")
@@ -552,4 +552,4 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.wire is not None and self.gui.model.wire.is_valid())
+        self.indicate_valid(self.gui.model.wire is not None and self.gui.model.wire.valid)

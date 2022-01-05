@@ -21,9 +21,10 @@ import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Validatable import Validatable
 
 
-class Wire:
+class Wire(Validatable):
     """ Wire class. """
 
     def __init__(
@@ -45,6 +46,7 @@ class Wire:
         @param slicer_limit: Slicer limit
         @param dc: Wire current (A)
         """
+        Validatable.__init__(self)
         Debug(self, ": Init")
 
         self._points_base = np.array(points)
@@ -79,7 +81,7 @@ class Wire:
         self._points_sliced = np.array([])
         self._length = 0
 
-        self._valid = False
+        self.valid = False
 
         self._points_transformed = self._points_base.copy()
 
@@ -87,22 +89,6 @@ class Wire:
         self._set_rotational_symmetry(rotational_symmetry, close_loop=close_loop)
 
         Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
-
-    def is_valid(self) -> bool:
-        """
-        Indicates valid data for display.
-
-        @return: True if data is valid for display, False otherwise
-        """
-        return self._valid
-
-    def invalidate(self) -> None:
-        """
-        Resets data, hiding from display.
-        """
-        Debug(self, ".invalidate()")
-
-        self._valid = False
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -139,7 +125,7 @@ class Wire:
 
         @return: Ordered list of 3D points
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
+        Assert_Dialog(self.valid, "Accessing invalidated wire")
 
         return self._points_sliced
 
@@ -149,7 +135,7 @@ class Wire:
 
         @return: [[element_center, element_direction], …]
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
+        Assert_Dialog(self.valid, "Accessing invalidated wire")
 
         result = []
 
@@ -174,7 +160,7 @@ class Wire:
 
         @return: Length
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated wire")
+        Assert_Dialog(self.valid, "Accessing invalidated wire")
 
         return self._length
 
@@ -242,7 +228,7 @@ class Wire:
         """
         Debug(self, ".recalculate()")
 
-        self._valid = False
+        self.valid = False
 
         points_sliced = []
         length = 0
@@ -275,6 +261,6 @@ class Wire:
 
         progress_callback(100)
 
-        self._valid = True
+        self.valid = True
 
         return True

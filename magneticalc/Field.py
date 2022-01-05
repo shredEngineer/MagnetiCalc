@@ -28,10 +28,11 @@ from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_Str_Map
 from magneticalc.SamplingVolume import SamplingVolume
+from magneticalc.Validatable import Validatable
 from magneticalc.Wire import Wire
 
 
-class Field:
+class Field(Validatable):
     """ Field class. """
 
     def __init__(self, backend_type: int, field_type: int, distance_limit: float, length_scale: float) -> None:
@@ -43,6 +44,7 @@ class Field:
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
+        Validatable.__init__(self)
         Debug(self, ": Init")
 
         self._backend_type = backend_type
@@ -53,24 +55,6 @@ class Field:
         self._total_calculations: int = 0
         self._total_skipped_calculations: int = 0
         self._vectors: np.ndarray = np.array([])
-
-        self._valid = False
-
-    def is_valid(self) -> bool:
-        """
-        Indicates valid data for display.
-
-        @return: True if data is valid for display, False otherwise
-        """
-        return self._valid
-
-    def invalidate(self) -> None:
-        """
-        Resets data, hiding from display.
-        """
-        Debug(self, ".invalidate()")
-
-        self._valid = False
 
     def get_type(self) -> int:
         """
@@ -106,7 +90,7 @@ class Field:
 
         @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated field")
+        Assert_Dialog(self.valid, "Accessing invalidated field")
 
         return self._vectors
 
@@ -116,7 +100,7 @@ class Field:
 
         @return: Total number of calculations
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated field")
+        Assert_Dialog(self.valid, "Accessing invalidated field")
 
         return self._total_calculations
 
@@ -126,7 +110,7 @@ class Field:
 
         @return: Total number of skipped calculations
         """
-        Assert_Dialog(self.is_valid(), "Accessing invalidated field")
+        Assert_Dialog(self.valid, "Accessing invalidated field")
 
         return self._total_skipped_calculations
 
@@ -150,7 +134,7 @@ class Field:
         """
         Debug(self, ".recalculate()")
 
-        self._valid = False
+        self.valid = False
 
         # Compute the current elements.
         current_elements = wire.get_elements()
@@ -219,7 +203,7 @@ class Field:
             Assert_Dialog(False, "ERROR: Unexpected number of calculations – Backend seems to be buggy")
             return False
 
-        self._valid = True
+        self.valid = True
 
         return True
 

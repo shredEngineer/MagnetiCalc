@@ -298,7 +298,7 @@ class Display_Widget(QGroupBox2):
         if not self.gui.config.get_bool("display_field_magnitude_labels"):
             return
 
-        if not self.gui.model.sampling_volume.is_valid():
+        if not self.gui.model.sampling_volume.valid:
             return
 
         if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelsThreshold:
@@ -359,7 +359,7 @@ class Display_Widget(QGroupBox2):
         """
         Debug(self, ".update_labels()")
 
-        if self.gui.model.sampling_volume.is_valid():
+        if self.gui.model.sampling_volume.valid:
             n = self.gui.model.sampling_volume.get_labels_count()
             color = Theme.FailureColor if n > self.ExcessiveFieldLabelsThreshold else Theme.LiteColor
             self.total_labels_label.setText(str(n))

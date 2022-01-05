@@ -50,8 +50,8 @@ class ExportContainer_Dialog(QDialog2):
         ))
         self.addSpacing(16)
 
-        wire_points_available = self.gui.model.wire.is_valid()
-        wire_current_available = self.gui.model.wire.is_valid()
+        wire_points_available = self.gui.model.wire.valid
+        wire_current_available = self.gui.model.wire.valid
 
         a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
         b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None

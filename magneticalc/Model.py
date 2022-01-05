@@ -22,6 +22,7 @@ from sty import fg
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import field_type_to_str
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Validatable import Validatable
 
 
 class Model:
@@ -108,16 +109,16 @@ class Model:
         @return: Field if cached and valid, None otherwise
         """
         field = self._field_cache.get(field_type, None)
-        return (field if field.is_valid() else None) if field is not None else None
+        return (field if field.valid else None) if field is not None else None
 
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def safe_valid(obj: Any) -> bool:
+    def safe_valid(obj: Validatable) -> bool:
         """
         Safely checks the validity state of a possibly uninitialized object within the model.
         """
-        return obj.is_valid() if obj is not None else False
+        return obj.valid if obj is not None else False
 
     def __str__(self) -> str:
         """
@@ -177,21 +178,21 @@ class Model:
 
         if do_parameters:
             if self.parameters is not None:
-                if self.parameters.is_valid():
-                    self.parameters.invalidate()
+                if self.parameters.valid:
+                    self.parameters.valid = False
                     self.on_parameters_invalid()
 
         if do_metric:
             if self.metric is not None:
-                if self.metric.is_valid():
-                    self.metric.invalidate()
+                if self.metric.valid:
+                    self.metric.valid = False
                     self.on_metric_invalid()
 
         if do_field:
             did_field_invalidation = False
             for field_type, field in self._field_cache.items():
-                if field.is_valid():
-                    field.invalidate()
+                if field.valid:
+                    field.valid = False
                     Debug(self, f".invalidate(): Invalidated {field_type_to_str(field_type)}")
                     did_field_invalidation = True
             if did_field_invalidation:
@@ -199,14 +200,14 @@ class Model:
 
         if do_sampling_volume:
             if self.sampling_volume is not None:
-                if self.sampling_volume.is_valid():
-                    self.sampling_volume.invalidate()
+                if self.sampling_volume.valid:
+                    self.sampling_volume.valid = False
                     self.on_sampling_volume_invalid()
 
         if do_wire:
             if self.wire is not None:
-                if self.wire.is_valid():
-                    self.wire.invalidate()
+                if self.wire.valid:
+                    self.wire.valid = False
                     self.on_wire_invalid()
 
     def set_wire(

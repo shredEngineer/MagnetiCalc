@@ -224,7 +224,7 @@ class Field_Widget(QGroupBox2):
         """
         Updates the labels.
         """
-        if self.gui.model.field.is_valid():
+        if self.gui.model.field.valid:
             self.total_calculations_label.setText(str(self.gui.model.field.get_total_calculations()))
             self.total_skipped_calculations_label.setText(str(self.gui.model.field.get_total_skipped_calculations()))
         else:
@@ -241,4 +241,4 @@ class Field_Widget(QGroupBox2):
         self.field_type_a_checkbox.setChecked(a_field_available)
         self.field_type_b_checkbox.setChecked(b_field_available)
 
-        self.indicate_valid(self.gui.model.field is not None and self.gui.model.field.is_valid())
+        self.indicate_valid(self.gui.model.field is not None and self.gui.model.field.valid)

@@ -102,7 +102,7 @@ class Parameters_Widget(QGroupBox2):
         """
         Debug(self, ".update_labels()")
 
-        if self.gui.model.parameters.is_valid():
+        if self.gui.model.parameters.valid:
 
             self.wire_length_value_label.set(
                 f"{self.gui.model.wire.get_length():.2f}", color=Theme.MainColor, bold=True
@@ -185,4 +185,4 @@ class Parameters_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()")
 
-        self.indicate_valid(self.gui.model.parameters is not None and self.gui.model.parameters.is_valid())
+        self.indicate_valid(self.gui.model.parameters is not None and self.gui.model.parameters.valid)

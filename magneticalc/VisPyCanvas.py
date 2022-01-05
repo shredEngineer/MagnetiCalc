@@ -273,13 +273,13 @@ class VisPyCanvas(scene.SceneCanvas):
         self.redraw_wire_points_selected()
 
         # Determine which field colors to use (if at all)
-        if self.gui.model.metric.is_valid():
+        if self.gui.model.metric.valid:
             # Use metric colors
             boost = self.gui.config.get_float("field_boost")
             direction = 1 if self.gui.config.get_bool("dark_background") else -1
             colors = Metric.boost_colors(boost, direction, self.gui.model.metric.get_colors().copy())
         else:
-            if self.gui.model.sampling_volume.is_valid():
+            if self.gui.model.sampling_volume.valid:
                 # Use foreground color for all arrows and points
                 colors = [self.foreground] * self.gui.model.sampling_volume.get_points_count()
             else:
@@ -299,7 +299,7 @@ class VisPyCanvas(scene.SceneCanvas):
         """
         Re-draws wire segments.
         """
-        visible = self.gui.model.wire.is_valid() and self.gui.config.get_bool("show_wire_segments")
+        visible = self.gui.model.wire.valid and self.gui.config.get_bool("show_wire_segments")
 
         self.set_visible(self.visual_wire_segments, visible)
 
@@ -318,7 +318,7 @@ class VisPyCanvas(scene.SceneCanvas):
         Re-draws sliced wire points.
         """
         visible = \
-            self.gui.model.wire.is_valid() and \
+            self.gui.model.wire.valid and \
             self.gui.config.get_bool("show_wire_points")
 
         self.set_visible(self.visual_wire_points_sliced, visible)
@@ -343,7 +343,7 @@ class VisPyCanvas(scene.SceneCanvas):
         point_index = self.gui.sidebar_left.wire_widget.table.get_selected_row()
 
         visible = \
-            self.gui.model.wire.is_valid() and \
+            self.gui.model.wire.valid and \
             self.gui.config.get_bool("show_wire_points") and \
             point_index is not None
 
@@ -384,7 +384,7 @@ class VisPyCanvas(scene.SceneCanvas):
         arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.config.get_float("field_arrow_line_scale")
 
         visible = \
-            self.gui.model.field.is_valid() and \
+            self.gui.model.field.valid and \
             (arrow_head_scale > 0 or arrow_line_scale > 0) and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
@@ -435,7 +435,7 @@ class VisPyCanvas(scene.SceneCanvas):
         point_scale = VisPyCanvas.FieldPointSize * self.gui.config.get_float("field_point_scale")
 
         visible = \
-            self.gui.model.sampling_volume.is_valid() and \
+            self.gui.model.sampling_volume.valid and \
             point_scale > 0 and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
@@ -522,7 +522,7 @@ class VisPyCanvas(scene.SceneCanvas):
         @param colors: Colors
         """
         visible = \
-            self.gui.model.metric.is_valid() and \
+            self.gui.model.metric.valid and \
             self.gui.config.get_bool("display_field_magnitude_labels") and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 

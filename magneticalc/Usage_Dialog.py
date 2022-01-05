@@ -103,7 +103,7 @@ class Usage_Dialog(QDialog2):
         Inside an OpenGL-accelerated GUI, the magnetic flux density
         (B-field, in units of <i>Tesla</i>)
         or the magnetic vector potential (A-field, in units of <i>Tesla-meter</i>)
-        is displayed in interactive 3D, using multiple metrics for highlighting this field's properties.<br><br>
+        is displayed in interactive 3D, using multiple metrics for highlighting the field properties.<br><br>
 
         <i>Experimental feature:</i> To calculate the energy and self-inductance of permeable (i.e. ferrous)
         materials, different core media can be modeled as regions of variable relative permeability;

@@ -69,7 +69,7 @@ pydoctor \
   --project-base-dir=. \
   --project-name=MagnetiCalc \
   --project-url=https://github.com/shredEngineer/MagnetiCalc \
-  magneticalc
+  magneticalc/
 
 # ----------------------------------------------------------------------------------------------------------------------
 cd dev/

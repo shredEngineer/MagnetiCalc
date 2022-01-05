@@ -65,7 +65,7 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Metric</span>:</code></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">Metric</span>(<a href="magneticalc.Validatable.Validatable.html" title="magneticalc.Validatable.Validatable">Validatable</a>):</code></p>
         <p><a href="classIndex.html#magneticalc.Metric.Metric">View In Hierarchy</a></p>
       </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id60">
+        <table class="children sortable" id="id61">
   
   
   <tr class="staticmethod">
@@ -86,7 +86,7 @@
     
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
-    <td>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</td>
+    <td>Initializes an empty metric.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -110,18 +110,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#invalidate">invalidate</a></code></td>
-    <td>Resets data, hiding from display.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#is_valid">is_valid</a></code></td>
-    <td>Indicates valid data for display.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
     <td>Recalculates color and alpha values for field.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set">set</a></code></td>
+    <td>Sets the parameters.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
@@ -167,14 +162,33 @@
     <td>Instance Variable</td>
     <td><code><a href="#_limits">_limits</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_valid">_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
+          </p>
+          <table class="children sortable" id="id62">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid.setter">valid.setter</a></code></td>
+    <td></td>
+  </tr><tr class="baseproperty">
+    
+    <td>Property</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid">valid</a></code></td>
+    <td>True if valid, False if invalid</td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#_valid">_valid</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
 
           
       </div>
@@ -211,13 +225,15 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, color_preset, alpha_preset):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
     
   </div>
   <div class="docstring functionBody">
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
     
-    
-    <div>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
+    <div><p>Initializes an empty metric.</p>
+<p>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</p>
+</div>
   </div>
 </div><div class="basemethod">
   
@@ -267,7 +283,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_colors</span>(self):
     
   </div>
@@ -286,7 +302,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_limits</span>(self):
     
   </div>
@@ -298,44 +314,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Metric.Metric.invalidate">
-    
-  </a>
-  <a name="invalidate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Resets data, hiding from display.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Metric.Metric.is_valid">
-    
-  </a>
-  <a name="is_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">is_valid</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Indicates valid data for display.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if data is valid for display, False otherwise</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Metric.Metric.recalculate">
     
   </a>
@@ -343,7 +321,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#validator">validator</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, sampling_volume, field, progress_callback):
     
   </div>
@@ -351,6 +329,25 @@
     
     
     <div>Recalculates color and alpha values for field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Metric.Metric.set">
+    
+  </a>
+  <a name="set">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, color_preset, alpha_preset):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -529,26 +526,6 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.Metric.Metric._valid">
-    
-  </a>
-  <a name="_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_valid</span>: <code>bool</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
 </div>
 
       </div>
@@ -559,7 +536,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-04 21:12:31.
+    21.12.0 at 2022-01-05 11:49:53.
   </div>
 </footer>
 

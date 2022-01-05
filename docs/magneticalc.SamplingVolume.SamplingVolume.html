@@ -65,7 +65,7 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">SamplingVolume</span>:</code></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">SamplingVolume</span>(<a href="magneticalc.Validatable.Validatable.html" title="magneticalc.Validatable.Validatable">Validatable</a>):</code></p>
         <p><a href="classIndex.html#magneticalc.SamplingVolume.SamplingVolume">View In Hierarchy</a></p>
       </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id123">
+        <table class="children sortable" id="id126">
   
   
   <tr class="method">
@@ -135,18 +135,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#invalidate">invalidate</a></code></td>
-    <td>Resets data, hiding from display.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#is_valid">is_valid</a></code></td>
-    <td>Indicates valid data for display.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
     <td>Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set">set</a></code></td>
+    <td>Sets the parameters.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -171,7 +166,7 @@
     
     <td>Property</td>
     <td><code><a href="#dimension">dimension</a></code></td>
-    <td>Gets the sampling volume dimension if it is valid, None otherwise.</td>
+    <td>Sampling volume dimension if it is valid, None otherwise.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -217,14 +212,33 @@
     <td>Instance Variable</td>
     <td><code><a href="#_resolution">_resolution</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_valid">_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
+          <p class="inheritedFrom">
+            Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
+          </p>
+          <table class="children sortable" id="id127">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid.setter">valid.setter</a></code></td>
+    <td></td>
+  </tr><tr class="baseproperty">
+    
+    <td>Property</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid">valid</a></code></td>
+    <td>True if valid, False if invalid</td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#_valid">_valid</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
 
           
       </div>
@@ -242,13 +256,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, resolution, label_resolution):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
     
   </div>
   <div class="docstring functionBody">
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
     
-    
-    <div>Initializes an empty sampling volume, with zero bounds and no constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">resolution:</span><code>float</code></td><td class="fieldArgDesc">Resolution</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">label_resolution:</span><code>float</code></td><td class="fieldArgDesc">Label resolution</td></tr></table></div>
+    <div>Initializes an empty sampling volume, with zero bounds and no constraints.</div>
   </div>
 </div><div class="basemethod">
   
@@ -317,7 +331,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_labeled_indices</span>(self):
     
   </div>
@@ -336,7 +350,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_labels_count</span>(self):
     
   </div>
@@ -355,7 +369,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_neighbor_indices</span>(self):
     
   </div>
@@ -374,7 +388,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_permeabilities</span>(self):
     
   </div>
@@ -393,7 +407,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_points</span>(self):
     
   </div>
@@ -412,7 +426,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">get_points_count</span>(self):
     
   </div>
@@ -443,44 +457,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.SamplingVolume.SamplingVolume.invalidate">
-    
-  </a>
-  <a name="invalidate">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">invalidate</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Resets data, hiding from display.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.SamplingVolume.SamplingVolume.is_valid">
-    
-  </a>
-  <a name="is_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">is_valid</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Indicates valid data for display.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if data is valid for display, False otherwise</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.SamplingVolume.SamplingVolume.recalculate">
     
   </a>
@@ -488,7 +464,7 @@
     
   </a>
   <div class="functionHeader">
-    
+    @<a href="magneticalc.Validatable.html#validator">validator</a><br />
     <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, progress_callback):
     
   </div>
@@ -496,6 +472,25 @@
     
     
     <div>Recalculates the sampling volume points, permeabilities, labels and neighborhoods according to the constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume.set">
+    
+  </a>
+  <a name="set">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, resolution, label_resolution):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">resolution:</span><code>float</code></td><td class="fieldArgDesc">Resolution</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">label_resolution:</span><code>float</code></td><td class="fieldArgDesc">Label resolution</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -589,14 +584,14 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
     <span class="py-defname">dimension</span>: <code>Tuple[<wbr></wbr>int, <wbr></wbr>int, <wbr></wbr>int]</code> =
     
   </div>
   <div class="functionBody">
     
     
-    <div>Gets the sampling volume dimension if it is valid, None otherwise.</div>
+    <div>Sampling volume dimension if it is valid, None otherwise.</div>
     
   </div>
 </div><div class="baseinstancevariable private">
@@ -779,26 +774,6 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.SamplingVolume.SamplingVolume._valid">
-    
-  </a>
-  <a name="_valid">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_valid</span>: <code>bool</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
 </div>
 
       </div>
@@ -809,7 +784,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-04 21:12:31.
+    21.12.0 at 2022-01-05 11:49:53.
   </div>
 </footer>
 

@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>magneticalc.Config</title>
+    <title>magneticalc.Validatable</title>
     <meta name="generator" content="pydoctor 21.12.0"> 
         
     </meta>
@@ -54,7 +54,7 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="module"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Config.html">Config</a></code></code></h1>
+        <h1 class="module"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Validatable.html">Validatable</a></code></code></h1>
         <div id="showPrivate">
           <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
         </div>
@@ -70,23 +70,28 @@
       </div>
 
       <div class="moduleDocstring">
-        <div>Config module.</div>
+        <div>Validatable module.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id24">
+        <table class="children sortable" id="id144">
   
   
   <tr class="class">
     
     <td>Class</td>
-    <td><code><a href="magneticalc.Config.Config.html">Config</a></code></td>
-    <td>Config class.</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code></td>
+    <td>Validatable class.</td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#get_jit_enabled">get_jit_enabled</a></code></td>
-    <td>Checks if JIT is enabled (or at least not explicitly disabled).</td>
+    <td><code><a href="#require_valid">require_valid</a></code></td>
+    <td>Decorator that requires a validatable object to be valid before calling a function.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#validator">validator</a></code></td>
+    <td>Decorator that invalidates a validatable object and then validates it based on the result of calling a function.</td>
   </tr>
 </table>
         
@@ -99,21 +104,40 @@
         <div class="basefunction">
   
   
-  <a name="magneticalc.Config.get_jit_enabled">
+  <a name="magneticalc.Validatable.require_valid">
     
   </a>
-  <a name="get_jit_enabled">
+  <a name="require_valid">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_jit_enabled</span>():
+    <span class="py-keyword">def</span> <span class="py-defname">require_valid</span>(func):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Checks if JIT is enabled (or at least not explicitly disabled).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">Boolean</td></tr></table></div>
+    <div>Decorator that requires a validatable object to be valid before calling a function.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">func:</span><code>Callable</code></td><td class="fieldArgDesc">Method of a validatable instance</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Callable</code></td><td class="fieldArgDesc">Function</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="magneticalc.Validatable.validator">
+    
+  </a>
+  <a name="validator">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">validator</span>(func):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Decorator that invalidates a validatable object and then validates it based on the result of calling a function.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">func:</span><code>Callable</code></td><td class="fieldArgDesc">Method of a validatable instance</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Callable</code></td><td class="fieldArgDesc">Function</td></tr></table></div>
   </div>
 </div>
 

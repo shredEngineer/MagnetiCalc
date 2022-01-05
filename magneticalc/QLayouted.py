@@ -72,12 +72,12 @@ class QLayouted:
         self._layout.addSpacing(spacing)
 
     # noinspection PyPep8Naming
-    def addButtons(self, data: Dict[str, Tuple[str, Callable]]) -> Dict[Union[int, str], QPushButton]:
+    def addButtons(self, data: Dict[str, Tuple[str, Callable]]) -> Dict[int, QPushButton]:
         """
         Adds buttons.
 
-        @param data: Dictionary {text: (icon, callback)}
-        @return: Dictionary {text: QPushButton}
+        @param data: Dictionary {text: (icon, callback), …}
+        @return: Dictionary {index: QPushButton, …}
         """
         buttons = QButtons(data)
         self.addLayout(buttons)

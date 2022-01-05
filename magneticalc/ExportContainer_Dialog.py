@@ -40,7 +40,7 @@ class ExportContainer_Dialog(QDialog2):
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Export Container", width=500)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self.addWidget(QLabel2("Please select items for export", bold=True, color=Theme.MainColor))

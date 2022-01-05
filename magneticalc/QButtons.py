@@ -35,7 +35,7 @@ class QButtons(QHBoxLayout):
         """
         QHBoxLayout.__init__(self)
 
-        self.dictionary: Dict[Union[int, str], QPushButton] = {}
+        self.dictionary: Dict[int, QPushButton] = {}
 
         for n, key_val in enumerate(data.items()):
             text, tup = key_val
@@ -46,4 +46,3 @@ class QButtons(QHBoxLayout):
             self.addWidget(button)
 
             self.dictionary[n] = button
-            self.dictionary[text] = button

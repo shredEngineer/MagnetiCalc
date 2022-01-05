@@ -78,7 +78,7 @@ class SamplingVolume_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Sampling Volume")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -164,15 +164,11 @@ class SamplingVolume_Widget(QGroupBox2):
         total_points_layout.addWidget(self.total_points_label)
         self.addLayout(total_points_layout)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the widget and the constraint editor
+        Reloads the widget.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.blockSignals(True)
 
@@ -194,12 +190,50 @@ class SamplingVolume_Widget(QGroupBox2):
         self.blockSignals(False)
 
         # Re-initialize the constraint editor
-        self.constraint_editor.reinitialize()
+        self.constraint_editor.reload()
 
         # Initially load sampling volume from configuration
         self.set_sampling_volume(recalculate=False, invalidate=False)
 
         self.update()
+
+    def update(self) -> None:
+        """
+        Updates the widget.
+        """
+        Debug(self, ".update()", refresh=True)
+
+        self.update_labels()
+        self.update_controls()
+
+    def update_labels(self) -> None:
+        """
+        Updates the labels.
+        """
+        Debug(self, ".update_labels()", refresh=True)
+
+        if self.gui.model.sampling_volume.valid:
+            self.total_extent_label.setText(
+                " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
+            )
+            self.total_points_label.setText(
+                str(self.gui.model.sampling_volume.get_points_count())
+            )
+        else:
+            self.total_extent_label.setText("N/A")
+            self.total_points_label.setText("N/A")
+
+        self.total_constraints_label.setText(str(self.constraint_editor.get_count()))
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        Debug(self, ".update_controls()", refresh=True)
+
+        self.padding_widget.setEnabled(not self.gui.config.get_bool("sampling_volume_override_padding"))
+
+        self.indicate_valid(self.gui.model.sampling_volume.valid)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -398,43 +432,3 @@ class SamplingVolume_Widget(QGroupBox2):
             self.blockSignals(False)
 
             self.gui.model.sampling_volume.set_padding_nearest(padding)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update(self) -> None:
-        """
-        Updates the widget.
-        """
-        Debug(self, ".update()")
-
-        self.update_labels()
-        self.update_controls()
-
-    def update_labels(self) -> None:
-        """
-        Updates the labels.
-        """
-        Debug(self, ".update_labels()")
-
-        if self.gui.model.sampling_volume.valid:
-            self.total_extent_label.setText(
-                " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
-            )
-            self.total_points_label.setText(
-                str(self.gui.model.sampling_volume.get_points_count())
-            )
-        else:
-            self.total_extent_label.setText("N/A")
-            self.total_points_label.setText("N/A")
-
-        self.total_constraints_label.setText(str(self.constraint_editor.get_count()))
-
-    def update_controls(self) -> None:
-        """
-        Updates the controls.
-        """
-        Debug(self, ".update_controls()")
-
-        self.padding_widget.setEnabled(not self.gui.config.get_bool("sampling_volume_override_padding"))
-
-        self.indicate_valid(self.gui.model.sampling_volume.valid)

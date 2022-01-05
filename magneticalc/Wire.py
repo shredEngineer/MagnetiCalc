@@ -33,7 +33,7 @@ class Wire(Validatable):
         A 3D piecewise linear curve with some DC current associated with it.
         """
         Validatable.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self._points_base = np.array([])
 

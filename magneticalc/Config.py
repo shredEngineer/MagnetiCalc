@@ -98,7 +98,7 @@ class Config:
         """
         Initializes the configuration.
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         # Populate defaults
         self.Default["wire_points_base"] = Config.points_to_str(

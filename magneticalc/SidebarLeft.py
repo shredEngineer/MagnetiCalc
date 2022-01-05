@@ -41,7 +41,7 @@ class SidebarLeft(QScrollArea):
         @param gui: GUI
         """
         QScrollArea.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         layout = QVBoxLayout()

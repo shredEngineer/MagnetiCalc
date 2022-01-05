@@ -65,7 +65,7 @@ class About_Dialog(QDialog2):
         Initializes "About" dialog.
         """
         QDialog2.__init__(self, title="About", width=640)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         text_browser = QTextBrowser2(html=self.HTML)
         self.dialog_shown.connect(text_browser.fit_to_contents)

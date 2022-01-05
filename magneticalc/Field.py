@@ -40,7 +40,7 @@ class Field(Validatable):
         Initializes an empty field.
         """
         Validatable.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self._total_calculations: int = 0
         self._total_skipped_calculations: int = 0

@@ -18,15 +18,12 @@
 
 import time
 import atexit
-from typing import Optional
 from sty import fg
 import qtawesome as qta
 from PyQt5.Qt import QCloseEvent, QKeyEvent
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
-from PyQt5.QtWidgets import QMainWindow, QSplitter, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QSplitter, QMessageBox
 from magneticalc.QMessageBox2 import QMessageBox2
-from magneticalc.QSaveAction import QSaveAction
-from magneticalc import API
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
 from magneticalc.Config import Config
@@ -66,7 +63,7 @@ class GUI(QMainWindow):
         Initializes the GUI.
         """
         QMainWindow.__init__(self, flags=Qt.Window)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self.user_locale = QLocale(QLocale.English)
 
@@ -124,10 +121,27 @@ class GUI(QMainWindow):
 
         self.initializing = True
 
-        # Invalidate the statusbar
-        self.statusbar.invalidate()
+        self.reload()
 
-        # Kick off the field calculation
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def reload(self) -> None:
+        """
+        Reloads the GUI.
+        """
+        self.sidebar_left.wire_widget.reload()
+        self.sidebar_left.sampling_volume_widget.reload()
+        self.sidebar_right.field_widget.reload()
+        self.sidebar_right.metric_widget.reload()
+        self.sidebar_right.parameters_widget.reload()
+        self.sidebar_right.perspective_widget.reload()
+        self.sidebar_right.display_widget.reload()
+
+        self.menu.reload()
+        self.statusbar.reload()
+
+        self.vispy_canvas.load_perspective()
+
         if self.config.get_bool("auto_calculation"):
             self.recalculate()
         else:
@@ -149,7 +163,7 @@ class GUI(QMainWindow):
         else:
             Debug(self, ".redraw()")
 
-        self.sidebar_right.display_widget.set_enabled(self.model.field.valid)
+        self.sidebar_right.display_widget.setEnabled(self.model.field.valid)
 
         self.vispy_canvas.redraw()
 
@@ -183,8 +197,6 @@ class GUI(QMainWindow):
 
         @param success: True if calculation was successful, False otherwise
         """
-        Debug(self, f".on_calculation_exited(success={success})")
-
         calculation_time = time.monotonic() - self.calculation_start_time
 
         if self.calculation_thread is not None:
@@ -197,10 +209,19 @@ class GUI(QMainWindow):
             else:
                 # This happens when calculation finished and no other thread was started
                 self.calculation_thread = None
-                Debug(self, f".on_calculation_exited(): Success (took {calculation_time:.2f} s)", success=True)
+                Debug(
+                    self,
+                    f".on_calculation_exited(success={success}): "
+                    f"Took {calculation_time:.2f} s",
+                    success=success
+                )
         else:
             Debug(
-                self, f".on_calculation_exited(): WARNING: Interrupted after {calculation_time:.2f} s", warning=True)
+                self,
+                f".on_calculation_exited(success={success}): "
+                f"WARNING: Interrupted after {calculation_time:.2f} s",
+                warning=True
+            )
 
         # Note: For some reason, most of the time we need an additional ("final-final") re-draw here; VisPy glitch?
         self.redraw()
@@ -237,30 +258,6 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def confirm_saving_unsaved_work(self, cancelable: bool) -> Optional[bool]:
-        """
-        Confirm saving unsaved work.
-
-        @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
-        @return: None if canceled, True if saving, False if discarding
-        """
-        Debug(self, f".confirm_saving_unsaved_work(cancelable={cancelable})")
-
-        buttons = QMessageBox.Save | QMessageBox.Discard | (QMessageBox.Cancel if cancelable else 0)
-        messagebox = QMessageBox2(
-            title="Project Changed",
-            text="Do you want to save your changes?",
-            icon=QMessageBox.Question,
-            buttons=buttons,
-            default_button=QMessageBox.Save
-        )
-        if messagebox.choice == QMessageBox.Save:
-            return True
-        elif messagebox.choice == QMessageBox.Discard:
-            return False
-        else:
-            return None
-
     def closeEvent(self, event: QCloseEvent) -> None:
         """
         Gets called when the window is closed (programmatically through close() or manually)
@@ -269,18 +266,10 @@ class GUI(QMainWindow):
         """
         Debug(self, ".closeEvent()")
 
-        # Let user choose to cancel closing or save / discard file if there is unsaved work.
-        if not self.config.get_synced():
-            choice = self.confirm_saving_unsaved_work(cancelable=True)
-            if choice is None:
-                Debug(self, ".closeEvent(): Canceled")
-                event.ignore()
-                return
-            elif choice:
-                Debug(self, ".closeEvent(): Saving unsaved work")
-                self.config.save()
-            else:
-                Debug(self, ".closeEvent(): Discarding unsaved work")
+        closed = self.close_project(cancelable=True)
+        if not closed:
+            event.ignore()
+            return
 
         self.cleanup()
 
@@ -295,8 +284,6 @@ class GUI(QMainWindow):
                 self.interrupt_calculation()
         else:
             Debug(self, ".quit(): Called from calculation thread (assertion failed)")
-
-        self.config.close()
 
         print()
         print("Goodbye!")
@@ -355,154 +342,53 @@ class GUI(QMainWindow):
             ("" if self.config.get_synced() else " *")
         )
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def file_open(self) -> None:
-        """
-        Opens a project from an INI file.
-        """
-        Debug(self, ".file_open()")
-
-        # Stop any running calculation
-        if self.calculation_thread is not None:
-            if self.calculation_thread.isRunning():
-                # Cancel the running calculation
-                self.interrupt_calculation()
-
-        filename, _chosen_extension = QFileDialog.getOpenFileName(
-            parent=self,
-            caption="Open Project",
-            filter="MagnetiCalc INI File (*.ini)",
-            options=QFileDialog.DontUseNativeDialog
-        )
-
-        if filename != "":
-
-            with ModelAccess(self, recalculate=False):
-                self.model.invalidate(do_all=True)
-
-            if not self.config.get_synced():
-                if self.confirm_saving_unsaved_work(cancelable=False):
-                    Debug(self, ".file_open(): Saving unsaved work")
-                    self.config.save()
-                else:
-                    Debug(self, ".file_open(): Discarding unsaved work")
-
-            self.config.close()
-            self.config.set_filename(filename)
-            self.config.load()
-
-            self.sidebar_left.wire_widget.reinitialize()
-            self.sidebar_left.sampling_volume_widget.reinitialize()
-            self.sidebar_right.field_widget.reinitialize()
-            self.sidebar_right.metric_widget.reinitialize()
-            # Parameters_Widget doesn't need reinitialization as it does not access the configuration
-            # Perspective_Widget doesn't need reinitialization as it does not access the configuration
-            self.sidebar_right.display_widget.reinitialize()
-
-            self.menu.reinitialize()
-            self.statusbar.reinitialize()
-
-            self.vispy_canvas.load_perspective()
-
-            if self.config.get_bool("auto_calculation"):
-                self.recalculate()
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def file_save(self) -> None:
-        """
-        Saves the project to the currently set INI file.
-        """
-        Debug(self, ".file_save()")
-
-        self.config.save()
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def file_save_as(self) -> None:
-        """
-        Saves the project to an INI file.
-        """
-        Debug(self, ".file_save_as()")
-
-        action = QSaveAction(
-            self,
-            title="Save Project",
-            date=True,
-            filename="MagnetiCalc_Project",
-            extension=".ini",
-            _filter="MagnetiCalc INI File (*.ini)"
-        )
-        if action.filename:
-            self.config.set_filename(action.filename)
-            self.config.save()
-
     # ------------------------------------------------------------------------------------------------------------------
 
-    def file_save_image(self) -> None:
+    def close_project(self, cancelable: bool) -> bool:
         """
-        Saves the currently displayed scene to a PNG file.
+        Confirm closing the project.
+        Let user choose to cancel closing, or save/discard changes if there is unsaved work.
+
+        @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
+        @return: False if canceled, True if saved/discarded
         """
-        Debug(self, ".file_save_image()")
+        if not self.config.get_synced():
+            Debug(self, ".close_project(): Project has unsaved changes", warning=True)
 
-        action = QSaveAction(
-            self,
-            title="Save Image",
-            date=True,
-            filename="MagnetiCalc_Screenshot",
-            extension=".png",
-            _filter="PNG (*.png)"
-        )
-        if action.filename:
-            self.vispy_canvas.save_image(action.filename)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def import_wire(self) -> None:
-        """
-        Imports wire points from a TXT file.
-        """
-        Debug(self, ".import_wire()")
-
-        filename, _chosen_extension = QFileDialog.getOpenFileName(
-            parent=self,
-            caption="Import Wire",
-            filter="Text File (*.txt)",
-            options=QFileDialog.DontUseNativeDialog
-        )
-
-        if filename != "":
-
-            points = API.import_wire(filename)
-            self.sidebar_left.wire_widget.set_wire(
-                _points_=points,
-                _stretch_=[1.0, 1.0, 1.0],
-                _rotational_symmetry_={
-                    "count": 1,
-                    "radius": 0,
-                    "axis": 2,
-                    "offset": 0
-                }
+            messagebox = QMessageBox2(
+                title="Project Changed",
+                text="Do you want to save your changes?",
+                icon=QMessageBox.Question,
+                buttons=QMessageBox.Save | QMessageBox.Discard | (QMessageBox.Cancel if cancelable else 0),
+                default_button=QMessageBox.Save
             )
+            if not messagebox.user_accepted or messagebox.choice == QMessageBox.Cancel:
+                Debug(self, ".close_project(): Canceled")
+                return False
+            elif messagebox.choice == QMessageBox.Save:
+                Debug(self, ".close_project(): Saving changes to project", success=True)
+                self.config.save()
+            else:
+                Debug(self, ".close_project(): Discarding changes to project", warning=True)
 
-    def export_wire(self) -> None:
-        """
-        Exports wire points to a TXT file.
-        """
-        Debug(self, ".export_wire()")
+        self.config.close()
+        Debug(self, ".close_project(): Project closed")
+        return True
 
-        if not self.model.wire.valid:
-            Assert_Dialog(False, "Attempting to export invalid wire")
+    def switch_project(self, filename: str) -> None:
+        """
+        Switches to another project file.
+        """
+        Debug(self, f".switch_project(): {filename}", warning=True)
+
+        if not self.close_project(cancelable=True):
+            Debug(self, ".switch_project(): Canceled")
             return
 
-        action = QSaveAction(
-            self,
-            title="Export Wire",
-            date=True,
-            filename="MagnetiCalc_Wire",
-            extension=".txt",
-            _filter="Text File (*.txt)"
-        )
-        if action.filename:
-            API.export_wire(action.filename, self.model.wire.get_points_sliced())
+        with ModelAccess(self, recalculate=False):
+            self.model.invalidate(do_all=True)
+
+        self.config.set_filename(filename)
+        self.config.load()
+
+        self.reload()

@@ -28,7 +28,7 @@ class Validatable(object):
         """
         Initializes a validatable object.
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self._valid = False
 
     @property

@@ -41,7 +41,7 @@ class OverridePadding_Dialog(QDialog2):
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Override Padding", width=420)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self.addWidget(
@@ -80,6 +80,6 @@ class OverridePadding_Dialog(QDialog2):
         """
         Validates the bounding box values and enables/disables the "Apply" button accordingly.
         """
-        self.buttons["Apply"].setEnabled(
+        self.buttons[1].setEnabled(
             all([self.bounds_min_spinbox[i].value() <= self.bounds_max_spinbox[i].value() for i in range(3)])
         )

@@ -26,6 +26,8 @@ class Theme:
     DarkColor = "#12344a"
     SuccessColor = "#2e7d32"
     FailureColor = "#c62828"
+    QuestionColor = "#ff8c00"
+    DialogTextColor = "#000000"
 
     # Default font
     DefaultFontFace = "DejaVu Sans Mono"

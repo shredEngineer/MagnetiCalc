@@ -53,7 +53,7 @@ class Field_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Field")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,15 +122,11 @@ class Field_Widget(QGroupBox2):
         total_skipped_calculations_layout.addWidget(self.total_skipped_calculations_label)
         self.addLayout(total_skipped_calculations_layout)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the widget.
+        Reloads the widget.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.blockSignals(True)
 
@@ -145,6 +141,38 @@ class Field_Widget(QGroupBox2):
         self.set_field(recalculate=False, invalidate=False)
 
         self.update()
+
+    def update(self) -> None:
+        """
+        Updates this widget.
+        """
+        Debug(self, ".update()", refresh=True)
+
+        self.update_labels()
+        self.update_controls()
+
+    def update_labels(self) -> None:
+        """
+        Updates the labels.
+        """
+        if self.gui.model.field.valid:
+            self.total_calculations_label.setText(str(self.gui.model.field.get_total_calculations()))
+            self.total_skipped_calculations_label.setText(str(self.gui.model.field.get_total_skipped_calculations()))
+        else:
+            self.total_calculations_label.setText("N/A")
+            self.total_skipped_calculations_label.setText("N/A")
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
+        b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None
+
+        self.field_type_a_checkbox.setChecked(a_field_available)
+        self.field_type_b_checkbox.setChecked(b_field_available)
+
+        self.indicate_valid(self.gui.model.field.valid)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -199,37 +227,3 @@ class Field_Widget(QGroupBox2):
                 distance_limit=distance_limit,
                 length_scale=Metric.LengthScale
             )
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update(self) -> None:
-        """
-        Updates this widget.
-        """
-        Debug(self, ".update()")
-
-        self.update_labels()
-        self.update_controls()
-
-    def update_labels(self) -> None:
-        """
-        Updates the labels.
-        """
-        if self.gui.model.field.valid:
-            self.total_calculations_label.setText(str(self.gui.model.field.get_total_calculations()))
-            self.total_skipped_calculations_label.setText(str(self.gui.model.field.get_total_skipped_calculations()))
-        else:
-            self.total_calculations_label.setText("N/A")
-            self.total_skipped_calculations_label.setText("N/A")
-
-    def update_controls(self) -> None:
-        """
-        Updates the controls.
-        """
-        a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
-        b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None
-
-        self.field_type_a_checkbox.setChecked(a_field_available)
-        self.field_type_b_checkbox.setChecked(b_field_available)
-
-        self.indicate_valid(self.gui.model.field.valid)

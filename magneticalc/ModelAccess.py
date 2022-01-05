@@ -30,7 +30,7 @@ class ModelAccess:
     DebugColor = fg.yellow
 
     # Debug validity of hierarchy levels
-    DebugValidity = True
+    DebugValidity = False
 
     def __init__(
             self,

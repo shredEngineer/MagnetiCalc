@@ -16,6 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from typing import Optional, Tuple
 import re
 from urllib.request import urlopen
 from PyQt5.Qt import QFont, QSize
@@ -36,49 +37,24 @@ class CheckForUpdates_Dialog(QDialog2):
         Prepares the 'Check for Updates' dialog.
         """
         QDialog2.__init__(self, title="Check for Updates", width=500)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
-        update_hint = False
+        icon, string, success, error = self.check_for_updates()
 
-        # noinspection PyBroadException
-        try:
-            version_py = urlopen(__VERSION__URL__, timeout=2).read().decode("utf-8")
-        except Exception:
-            icon, string, color = "fa.exclamation-circle", f"Network Error", Theme.FailureColor
-        else:
-            # noinspection RegExpAnonymousGroup
-            pattern = re.compile(r'__VERSION__ = "valid(\d+)\.(\d+)\.(\d+)"')
-            # noinspection PyBroadException
-            try:
-                result = pattern.search(version_py)
-                if result is not None:
-                    version = "valid" + ".".join(result.groups())
-                else:
-                    raise Exception
-            except Exception:
-                icon, string, color = "fa.exclamation-circle", f"Invalid Format", Theme.FailureColor
-            else:
-                if version > __VERSION__:
-                    icon, string, color = "fa.info-circle", f"Newer version available: {version}", Theme.SuccessColor
-                    update_hint = True
-                elif version == __VERSION__:
-                    icon, string, color = "fa.check-circle", f"Up-to-date: {version}", Theme.MainColor
-                else:
-                    icon, string, color = \
-                        "fa.exclamation-circle", f"Ahead of current release {version}", Theme.FailureColor
+        Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", success=success, error=error)
 
-        Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", color=color)
-        icon_label = QIconLabel(
-            text=string,
-            icon=icon,
-            text_color=color,
-            icon_color=color,
-            icon_size=QSize(32, 32),
-            font=QFont(Theme.DefaultFontFace, 14)
+        color = Theme.FailureColor if error else (Theme.SuccessColor if success else Theme.DialogTextColor)
+        self.addLayout(
+            QIconLabel(
+                text=string,
+                icon=icon,
+                text_color=color,
+                icon_color=color,
+                icon_size=QSize(48, 48)
+            )
         )
-        self.addLayout(icon_label)
 
-        if update_hint:
+        if success:
             self.addSpacing(8)
             self.addWidget(QLabel2("Please update now:", italic=True))
             self.addSpacing(8)
@@ -86,10 +62,69 @@ class CheckForUpdates_Dialog(QDialog2):
             cmd.setFont(QFont(Theme.DefaultFontFace, 12))
             cmd.setMaximumHeight(64)
             cmd.setReadOnly(True)
-            self.add_element(cmd)
+            self.addWidget(cmd)
 
         self.addSpacing(8)
 
         self.addButtons({
             "Close": ("fa.check", self.accept)
         })
+
+    def check_for_updates(self) -> Tuple[str, str, bool, bool]:
+        """
+        Checks for updates.
+
+        @return: Icon, text, success flag, error flag
+        """
+        contents = self.get_remote_contents(url=__VERSION__URL__, timeout=2)
+        if contents is None:
+            return "fa.exclamation-circle", "Network Error", False, True
+
+        version = self.parse_version(contents)
+        if version is None:
+            return "fa.exclamation-circle", "Invalid Format", False, True
+
+        if version > __VERSION__:
+            return "fa.info-circle", f"Newer version available ({version})", True, False
+        elif version == __VERSION__:
+            return "fa.check-circle", f"Up-to-date ({version})", False, False
+        else:
+            return "fa.exclamation-circle", f"Ahead of current release ({version})", False, True
+
+    @staticmethod
+    def get_remote_contents(url: str, timeout: int) -> Optional[str]:
+        """
+        Gets the contents of a remote file.
+
+        @param url: URL
+        @param timeout: Timeout (s)
+        @return: Contents if successful, None otherwise
+        """
+
+        # noinspection PyBroadException
+        try:
+            return urlopen(url=url, timeout=timeout).read().decode("utf-8")
+        except Exception:
+            return None
+
+    @staticmethod
+    def parse_version(contents: str) -> Optional[str]:
+        """
+        Extracts and parses the version number from the raw Version.py contents.
+
+        @param contents: Contents
+        @return: Version string if successful, None otherwise
+        """
+
+        # noinspection RegExpAnonymousGroup
+        pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
+
+        # noinspection PyBroadException
+        try:
+            result = pattern.search(contents)
+            if result is None:
+                return None
+
+            return "v" + ".".join(result.groups())
+        except Exception:
+            return None

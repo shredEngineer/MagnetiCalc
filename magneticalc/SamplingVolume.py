@@ -36,7 +36,7 @@ class SamplingVolume(Validatable):
         Initializes an empty sampling volume, with zero bounds and no constraints.
         """
         Validatable.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self.constraints = []
 

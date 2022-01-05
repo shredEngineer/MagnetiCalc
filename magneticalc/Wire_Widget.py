@@ -75,7 +75,7 @@ class Wire_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Wire")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         # --------------------------------------------------------------------------------------------------------------
@@ -274,15 +274,11 @@ class Wire_Widget(QGroupBox2):
         dc_layout.addWidget(QLabel2("A", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(dc_layout)
 
-        # --------------------------------------------------------------------------------------------------------------
-
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the widget.
+        Reloads the widget.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.blockSignals(True)
 
@@ -309,6 +305,34 @@ class Wire_Widget(QGroupBox2):
         self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate=False)
 
         self.update()
+
+    def update(self) -> None:
+        """
+        Updates the widget.
+        """
+        Debug(self, ".update()", refresh=True)
+
+        self.update_labels()
+        self.update_controls()
+
+    def update_labels(self) -> None:
+        """
+        Updates the labels.
+        """
+        Debug(self, ".update_labels()", refresh=True)
+
+        if self.gui.model.wire.valid:
+            self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
+        else:
+            self.sliced_total_label.setText("N/A")
+
+    def update_controls(self) -> None:
+        """
+        Updates the controls.
+        """
+        Debug(self, ".update_controls()", refresh=True)
+
+        self.indicate_valid(self.gui.model.wire.valid)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -521,33 +545,3 @@ class Wire_Widget(QGroupBox2):
 
             if readjust_sampling_volume:
                 self.gui.sidebar_left.sampling_volume_widget.readjust()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update(self) -> None:
-        """
-        Updates the widget.
-        """
-        Debug(self, ".update()")
-
-        self.update_labels()
-        self.update_controls()
-
-    def update_labels(self) -> None:
-        """
-        Updates the labels.
-        """
-        Debug(self, ".update_labels()")
-
-        if self.gui.model.wire.valid:
-            self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
-        else:
-            self.sliced_total_label.setText("N/A")
-
-    def update_controls(self) -> None:
-        """
-        Updates the controls.
-        """
-        Debug(self, ".update_controls()")
-
-        self.indicate_valid(self.gui.model.wire.valid)

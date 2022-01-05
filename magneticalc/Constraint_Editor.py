@@ -61,7 +61,7 @@ class Constraint_Editor(QDialog2):
         @param gui: GUI
         """
         QDialog2.__init__(self, title="Constraint Editor", width=700)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self._constraint_collection = Config_Collection(
@@ -117,16 +117,13 @@ class Constraint_Editor(QDialog2):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        # This will be called by the SamplingVolume_Widget:
-        # self.reinitialize()
-
         self.dialog_shown.connect(self.table.setFocus)
 
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the constraint editor.
+        Reloads the constraint editor.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.update_table()
 

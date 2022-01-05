@@ -43,7 +43,7 @@ class Perspective_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Perspective")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         planar_perspective_layout = QVBoxLayout()
@@ -59,6 +59,12 @@ class Perspective_Widget(QGroupBox2):
         xyz_hint_layout.addWidget(QLabel2("Y", bold=True, color="#00cc00", align_right=True))
         xyz_hint_layout.addWidget(QLabel2("Z", bold=True, color="#0000cc", align_right=True))
         self.addLayout(xyz_hint_layout)
+
+    def reload(self) -> None:
+        """
+        Reloads the widget.
+        """
+        Debug(self, ".reload()", refresh=True)
 
     def set_perspective(self, preset: Dict) -> None:
         """

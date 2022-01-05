@@ -17,7 +17,8 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from typing import Optional
-from PyQt5.QtCore import QEvent, pyqtSignal
+from PyQt5.Qt import QShowEvent
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from magneticalc.QLayouted import QLayouted
 from magneticalc.Debug import Debug
@@ -44,7 +45,7 @@ class QDialog2(QDialog, QLayouted):
         QLayouted.__init__(self)
         self.install_layout(self)
 
-        Debug(self, f": Init: {title}")
+        Debug(self, f": Init: {title}", init=True)
 
         if title:
             self.setWindowTitle(title)
@@ -52,7 +53,7 @@ class QDialog2(QDialog, QLayouted):
         if width:
             self.setMinimumWidth(width)
 
-        self.success = None
+        self.user_accepted = None
 
     def show(self):
         """
@@ -60,11 +61,11 @@ class QDialog2(QDialog, QLayouted):
         """
         Debug(self, ".show()")
 
-        self.success = self.exec() == 1
+        self.user_accepted = self.exec() == QDialog.Accepted
 
-        Debug(self, f".show(): Dialog closed: success={self.success}")
+        Debug(self, f".show(): Dialog closed: accepted = {self.user_accepted}")
 
-    def showEvent(self, event: QEvent) -> None:
+    def showEvent(self, event: QShowEvent) -> None:
         """
         Overrides the showEvent method.
 

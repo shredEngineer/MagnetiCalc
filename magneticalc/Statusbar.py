@@ -42,9 +42,10 @@ class Statusbar:
 
         @param gui: GUI
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
+        self._valid = True  # Note: Needs to be true initially, otherwise the first L{invalidate()} would have no effect
         self._canceled = False
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -115,13 +116,11 @@ class Statusbar:
 
         gui.statusBar().setSizeGripEnabled(False)
 
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the statusbar.
+        Reloads the statusbar.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.gui.blockSignals(True)
 
@@ -135,6 +134,8 @@ class Statusbar:
                     self._cores_combobox.setCurrentIndex(i)
 
         self.gui.blockSignals(False)
+
+        self.invalidate()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -160,6 +161,7 @@ class Statusbar:
         """
         Debug(self, f".arm()")
 
+        self._valid = False
         self._canceled = False
 
         self._start_button.setEnabled(False)
@@ -180,6 +182,7 @@ class Statusbar:
         """
         Debug(self, f".disarm(success={success})")
 
+        self._valid = success
         self._canceled = not success
 
         self._start_button.setEnabled(True)
@@ -199,13 +202,19 @@ class Statusbar:
         """
         "Invalidates" the statusbar.
         """
-        Debug(self, ".invalidate()")
 
-        # Skip if the calculation was canceled
+        # Don't invalidate more than once
+        if not self._valid:
+            return
+
+        # Don't invalidate after cancellation
         if self._canceled:
-            Debug(self, ".invalidate(): Skipped due to previously canceled calculation")
             self._canceled = False
             return
+
+        Debug(self, ".invalidate()")
+
+        self._valid = False
 
         self._start_button.setEnabled(True)
         self._cancel_button.setEnabled(False)

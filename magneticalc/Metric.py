@@ -154,7 +154,7 @@ class Metric(Validatable):
     LengthScale = 1e-2  # m  (1 cm)
 
     # Minimum argument limit for logarithmic scaling
-    LogNormMinimum = 1e-12
+    LogNormMin = 1e-12
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -166,7 +166,7 @@ class Metric(Validatable):
         Using these metric presets, colors (including alpha channel) and field limits are calculated.
         """
         Validatable.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self._color_preset = {}
         self._alpha_preset = {}
@@ -441,7 +441,7 @@ class Metric(Validatable):
             Assert_Dialog(not self._color_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
-            color_norm_min_ = max(color_norm_min, Metric.LogNormMinimum)    # avoiding ValueError: min must be positive
+            color_norm_min_ = max(color_norm_min, Metric.LogNormMin)    # avoiding ValueError: min must be positive
             color_norm_max_ = max(color_norm_min_, color_norm_max)          # avoiding ValueError: min must be <= max
         else:
             # Linear normalization
@@ -455,7 +455,7 @@ class Metric(Validatable):
             Assert_Dialog(not self._alpha_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
-            alpha_norm_min_ = max(alpha_norm_min, Metric.LogNormMinimum)    # avoiding ValueError: min must be positive
+            alpha_norm_min_ = max(alpha_norm_min, Metric.LogNormMin)    # avoiding ValueError: min must be positive
             alpha_norm_max_ = max(alpha_norm_min_, alpha_norm_max)          # avoiding ValueError: min must be <= max
         else:
             # Linear normalization

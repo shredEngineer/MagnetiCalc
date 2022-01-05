@@ -46,7 +46,7 @@ class QLabel2(QLabel):
         Please see L{QLabel2.set()} for supported arguments.
 
         @param text: Text
-        @param icon: QtAwesome icon id (optional)
+        @param icon: QtAwesome icon ID (optional)
         @param icon_color: Icon color
         @param icon_size: Icon size
         @param expand: Enable to expand

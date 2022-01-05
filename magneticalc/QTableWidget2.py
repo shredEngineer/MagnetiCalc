@@ -54,7 +54,7 @@ class QTableWidget2(QTableWidget):
         @param minimum_rows: Minimum number of rows (no further rows can be deleted)
         """
         QTableWidget.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self._enabled = enabled

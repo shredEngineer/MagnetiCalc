@@ -35,8 +35,14 @@ class Debug:
     WarningColor = fg.magenta
     ErrorColor = fg.red
 
+    # Enable debug output where init=True
+    EnableInit = False
+
+    # Enable debug output where refresh=True
+    EnableRefresh = False
+
     # Block debug output from specific classes
-    BlacklistEnabled = False
+    BlacklistEnabled = True
     Blacklist = [
         "About_Dialog",
         "CheckForUpdates_Dialog",
@@ -64,7 +70,9 @@ class Debug:
             force: bool = False,
             success: bool = False,
             warning: bool = False,
-            error: bool = False
+            error: bool = False,
+            init: bool = False,
+            refresh: bool = False
     ) -> None:
         """
         Displays a colorful debug message and the current call hierarchy.
@@ -76,7 +84,15 @@ class Debug:
         @param success: Enable to set color=SuccessColor
         @param warning: Enable to set color=WarningColor and force=True
         @param error: Enable to set color=ErrorColor and force=True
+        @param init: Enable to mark as init message (filtering through EnableInit)
+        @param refresh: Enable to mark as refresh message (filtering through EnableRefresh)
         """
+        if init and not self.EnableInit:
+            return
+
+        if refresh and not self.EnableRefresh:
+            return
+
         if isclass(obj):
             # Called from within class method, i.e. Debug(self, …)
             name = obj.__name__

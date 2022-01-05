@@ -56,7 +56,7 @@ class Backend_JIT:
         @param sampling_volume_permeabilities: Ordered list of sampling volume's relative permeabilities µ_r
         @param progress_callback: Progress callback
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self._field_type = field_type
         self._distance_limit = distance_limit

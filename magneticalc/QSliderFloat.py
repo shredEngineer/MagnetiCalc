@@ -23,29 +23,26 @@ from PyQt5.QtWidgets import QSlider
 class QSliderFloat(QSlider):
     """ QSliderFloat class. """
 
-    def __init__(self, orientation: Qt.Orientation) -> None:
+    def __init__(
+            self,
+            orientation: Qt.Orientation,
+            minimum: float,
+            maximum: float,
+            step: float
+    ) -> None:
         """
         Initializes a slider supporting float values.
 
         @param orientation: Orientation
-        """
-        QSlider.__init__(self, orientation)
-
-        self._step = 0
-
-    def set_range_step(self, minimum: float, maximum: float, step: float) -> None:
-        """
-        Sets the float step.
-
         @param step: Step value
         @param minimum: Minimum value
         @param maximum: Maximum value
         """
+        QSlider.__init__(self, orientation)
         self._step = step
-
-        super().setMinimum(round(minimum / self._step))
-        super().setMaximum(round(maximum / self._step))
-        super().setSingleStep(1)
+        self.setMinimum(round(minimum / self._step))
+        self.setMaximum(round(maximum / self._step))
+        self.setSingleStep(1)
 
     def setValue(self, value: float) -> None:
         """

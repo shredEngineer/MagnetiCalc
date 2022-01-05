@@ -44,7 +44,7 @@ class QIconLabel(QHBoxLayout):
         Initializes the icon label.
 
         @param text: Label text
-        @param icon: QtAwesome icon id
+        @param icon: QtAwesome icon ID
         @param text_color: Text color
         @param icon_color: Icon color
         @param icon_size: Icon size

@@ -28,9 +28,9 @@ from magneticalc.Backend_CUDA import Backend_CUDA
 from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
 from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
+from magneticalc.File_Menu import File_Menu
 from magneticalc.Usage_Dialog import Usage_Dialog
-from magneticalc.Wire_Presets import Wire_Presets
+from magneticalc.Wire_Menu import Wire_Menu
 from magneticalc.Version import __URL__
 
 
@@ -52,81 +52,17 @@ class Menu:
 
         @param gui: GUI
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         # List of checkboxes that are bound to configuration
         self.config_bound_checkboxes = {}
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        self.file_menu = File_Menu(self.gui)
+        self.wire_menu = Wire_Menu(self.gui)
 
-        # File menu
-        file_menu = QMenu("&File", self.gui)
-        file_menu.addAction(qta.icon("fa.folder"), "&Open File …", self.gui.file_open, Qt.CTRL + Qt.Key_O)
-        file_menu.addAction(qta.icon("fa.save"), "&Save File", self.gui.file_save, Qt.CTRL + Qt.Key_S)
-        file_menu.addAction(
-            qta.icon("fa.save"),
-            "Save File &As …",
-            self.gui.file_save_as,
-            Qt.CTRL + Qt.SHIFT + Qt.Key_S
-        )
-        file_menu.addSeparator()
-        file_menu.addAction(qta.icon("fa.picture-o"), "Save &Image …", self.gui.file_save_image, Qt.CTRL + Qt.Key_I)
-        file_menu.addSeparator()
-        file_menu.addAction(
-            qta.icon("fa.folder"),
-            "&Export Container …",
-            lambda: ExportContainer_Dialog(self.gui).show(),
-            Qt.CTRL + Qt.Key_E
-        )
-        file_menu.addSeparator()
-        file_menu.addAction(qta.icon("fa.window-close"), "&Quit", self.gui.close, Qt.CTRL + Qt.Key_Q)
-        self.gui.menuBar().addMenu(file_menu)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        # Wire menu
-        wire_menu = QMenu("&Wire", self.gui)
-
-        load_preset_menu = QMenu("Load &Preset", self.gui)
-        load_preset_menu.setIcon(qta.icon("mdi.vector-square"))
-        for preset in Wire_Presets.List:
-            action = QAction(preset["id"], wire_menu)
-            action.setIcon(qta.icon("mdi.vector-square"))
-            action.triggered.connect(  # type: ignore
-                partial(
-                    self.gui.sidebar_left.wire_widget.set_wire,
-                    _points_=preset["points"],
-                    _stretch_=[1.0, 1.0, 1.0],
-                    _rotational_symmetry_={
-                        "count" : 1,
-                        "radius": 0,
-                        "axis"  : 2,
-                        "offset": 0
-                    }
-                )
-            )
-            load_preset_menu.addAction(action)
-
-        wire_menu.addMenu(load_preset_menu)
-        wire_menu.addSeparator()
-
-        self.import_wire_action = QAction("&Import TXT …")
-        self.import_wire_action.setIcon(qta.icon("fa.folder"))
-        self.import_wire_action.triggered.connect(  # type: ignore
-            self.gui.import_wire
-        )
-        wire_menu.addAction(self.import_wire_action)
-
-        self.export_wire_action = QAction("&Export TXT …")
-        self.export_wire_action.setIcon(qta.icon("fa.save"))
-        self.export_wire_action.setEnabled(False)
-        self.export_wire_action.triggered.connect(  # type: ignore
-            self.gui.export_wire
-        )
-        wire_menu.addAction(self.export_wire_action)
-
-        self.gui.menuBar().addMenu(wire_menu)
+        self.gui.menuBar().addMenu(self.file_menu)
+        self.gui.menuBar().addMenu(self.wire_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -175,8 +111,7 @@ class Menu:
         help_menu.addAction(qta.icon("fa.info"), "&Usage …", lambda: Usage_Dialog().show(), Qt.Key_F1)
         help_menu.addSeparator()
         help_menu.addAction(
-            qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show(),
-            Qt.Key_F4
+            qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show()
         )
         help_menu.addAction(
             qta.icon("fa.github"),
@@ -187,15 +122,11 @@ class Menu:
         help_menu.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())
         self.gui.menuBar().addMenu(help_menu)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the menu.
+        Reloads the menu.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.gui.blockSignals(True)
 
@@ -209,9 +140,17 @@ class Menu:
             self.backend_actions[i].setChecked(self.gui.config.get_int("backend_type") == i)
             self.backend_actions[i].setEnabled(enabled and get_jit_enabled())
 
-        self.reinitialize_config_bound_checkboxes()
+        self.reload_config_bound_checkboxes()
 
         self.gui.blockSignals(False)
+
+    def update(self) -> None:
+        """
+        Updates all menus.
+        """
+        Debug(self, ".update()", refresh=True)
+        self.file_menu.update()
+        self.wire_menu.update()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -267,22 +206,12 @@ class Menu:
         self.gui.config.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
         self.config_bound_checkboxes[key]["callback_final"]()
 
-    def reinitialize_config_bound_checkboxes(self) -> None:
+    def reload_config_bound_checkboxes(self) -> None:
         """
-        Re-initializes the configuration bound checkboxes.
+        Reloads the configuration bound checkboxes.
 
         Note: This doesn't block the change signals.
         """
         for item in self.config_bound_checkboxes.items():
             key, dictionary = item
             dictionary["checkbox"].setChecked(self.gui.config.get_bool(key))
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update_wire_menu(self) -> None:
-        """
-        Updates the wire menu.
-        """
-        Debug(self, ".update_wire_menu()")
-
-        self.export_wire_action.setEnabled(self.gui.model.wire.valid)

@@ -76,7 +76,7 @@ class VisPyCanvas(scene.SceneCanvas):
         @param gui: GUI
         """
         scene.SceneCanvas.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self.unfreeze()
 

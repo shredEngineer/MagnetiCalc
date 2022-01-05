@@ -37,7 +37,7 @@ class Parameters(Validatable):
         Initializes parameters class.
         """
         Validatable.__init__(self)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         self._energy: float = 0.0
         self._self_inductance: float = 0.0

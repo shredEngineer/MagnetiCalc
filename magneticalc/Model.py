@@ -40,6 +40,9 @@ class Model:
     # Used by L{Debug}
     DebugColor = fg.yellow
 
+    """ Enable to debug calls to L{invalidate()}. """
+    DebugInvalidate = False
+
     def __init__(
             self,
             gui: GUI  # type: ignore
@@ -49,7 +52,7 @@ class Model:
 
         @param gui: GUI
         """
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self.wire = Wire()
@@ -130,7 +133,17 @@ class Model:
         @param do_parameters: Enable to invalidate parameters
         @param do_all: Enable to invalidate all hierarchy levels
         """
-        Debug(self, ".invalidate()")
+        if self.DebugInvalidate:
+            subject = {
+                "wire": do_wire,
+                "sampling_volume": do_sampling_volume,
+                "field": do_field,
+                "metric": do_metric,
+                "parameters": do_parameters,
+                "all": do_all
+            }
+            string = ", ".join([name for name, condition in subject.items() if condition])
+            Debug(self, f".invalidate({string})")
 
         if do_all or do_parameters:
             if self.parameters.valid:
@@ -339,7 +352,7 @@ class Model:
         Debug(self, ".on_wire_valid()")
 
         self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.update_wire_menu()
+        self.gui.menu.update()
 
     def on_sampling_volume_valid(self) -> None:
         """
@@ -386,7 +399,7 @@ class Model:
         Debug(self, ".on_wire_invalid()")
 
         self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.update_wire_menu()
+        self.gui.menu.update()
 
     def on_sampling_volume_invalid(self) -> None:
         """

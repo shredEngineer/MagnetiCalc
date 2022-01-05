@@ -36,17 +36,17 @@ class Display_Widget(QGroupBox2):
     """ Display_Widget class. """
 
     # Slider limits
-    FieldArrowHeadScaleMinimum = 0
-    FieldArrowHeadScaleMaximum = 1
+    FieldArrowHeadScaleMin = 0
+    FieldArrowHeadScaleMax = 1
     FieldArrowHeadScaleStep = 1 / VisPyCanvas.FieldArrowHeadSize
-    FieldArrowLineScaleMinimum = 0
-    FieldArrowLineScaleMaximum = 1
+    FieldArrowLineScaleMin = 0
+    FieldArrowLineScaleMax = 1
     FieldArrowLineScaleStep = 1 / 10
-    FieldPointScaleMinimum = 0
-    FieldPointScaleMaximum = 1
+    FieldPointScaleMin = 0
+    FieldPointScaleMax = 1
     FieldPointScaleStep = 1 / VisPyCanvas.FieldPointSize
-    FieldBoostMinimum = 0
-    FieldBoostMaximum = 1
+    FieldBoostMin = 0
+    FieldBoostMax = 1
     FieldBoostStep = 1 / 20
 
     # Warn about displaying an excessive number of field labels
@@ -62,17 +62,17 @@ class Display_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Display")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         self.addLayout(QIconLabel("Point Scale", "fa.circle"))
-        self.field_point_scale_slider = QSliderFloat(Qt.Horizontal)
-        self.field_point_scale_slider.set_range_step(
-            self.FieldPointScaleMinimum,
-            self.FieldPointScaleMaximum,
-            self.FieldPointScaleStep
+        self.field_point_scale_slider = QSliderFloat(
+            orientation=Qt.Horizontal,
+            minimum=self.FieldPointScaleMin,
+            maximum=self.FieldPointScaleMax,
+            step=self.FieldPointScaleStep
         )
         self.field_point_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_point_scale(self.field_point_scale_slider.get_value())
@@ -89,11 +89,11 @@ class Display_Widget(QGroupBox2):
         field_arrow_scale_layout_right = QVBoxLayout()
 
         field_arrow_scale_layout_left.addWidget(QLabel2("Head:", expand=False))
-        self.field_arrow_head_scale_slider = QSliderFloat(Qt.Horizontal)
-        self.field_arrow_head_scale_slider.set_range_step(
-            self.FieldArrowHeadScaleMinimum,
-            self.FieldArrowHeadScaleMaximum,
-            self.FieldArrowHeadScaleStep
+        self.field_arrow_head_scale_slider = QSliderFloat(
+            orientation=Qt.Horizontal,
+            minimum=self.FieldArrowHeadScaleMin,
+            maximum=self.FieldArrowHeadScaleMax,
+            step=self.FieldArrowHeadScaleStep
         )
         self.field_arrow_head_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_arrow_head_scale(self.field_arrow_head_scale_slider.get_value())
@@ -101,11 +101,11 @@ class Display_Widget(QGroupBox2):
         field_arrow_scale_layout_right.addWidget(self.field_arrow_head_scale_slider)
 
         field_arrow_scale_layout_left.addWidget(QLabel2("Line:", expand=False))
-        self.field_arrow_line_scale_slider = QSliderFloat(Qt.Horizontal)
-        self.field_arrow_line_scale_slider.set_range_step(
-            self.FieldArrowLineScaleMinimum,
-            self.FieldArrowLineScaleMaximum,
-            self.FieldArrowLineScaleStep
+        self.field_arrow_line_scale_slider = QSliderFloat(
+            orientation=Qt.Horizontal,
+            minimum=self.FieldArrowLineScaleMin,
+            maximum=self.FieldArrowLineScaleMax,
+            step=self.FieldArrowLineScaleStep
         )
         self.field_arrow_line_scale_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_arrow_line_scale(self.field_arrow_line_scale_slider.get_value())
@@ -122,11 +122,11 @@ class Display_Widget(QGroupBox2):
         self.addWidget(QHLine())
 
         self.addLayout(QIconLabel("Field Boost", "fa.adjust"))
-        self.field_boost_slider = QSliderFloat(Qt.Horizontal)
-        self.field_boost_slider.set_range_step(
-            self.FieldBoostMinimum,
-            self.FieldBoostMaximum,
-            self.FieldBoostStep
+        self.field_boost_slider = QSliderFloat(
+            orientation=Qt.Horizontal,
+            minimum=self.FieldBoostMin,
+            maximum=self.FieldBoostMax,
+            step=self.FieldBoostStep
         )
         self.field_boost_slider.valueChanged.connect(  # type: ignore
             lambda: self.set_field_boost(self.field_boost_slider.get_value())
@@ -158,15 +158,11 @@ class Display_Widget(QGroupBox2):
         total_labels_layout.addWidget(self.total_labels_label)
         self.addLayout(total_labels_layout)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the widget.
+        Reloads the widget.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.blockSignals(True)
 
@@ -182,13 +178,81 @@ class Display_Widget(QGroupBox2):
 
         self.update()
 
-    def set_enabled(self, enabled: bool) -> None:
+    def update(self) -> None:
         """
-        Enables/disables this widget.
+        Updates this widget.
+        """
+        Debug(self, ".update()", refresh=True)
 
-        @param enabled: Enabled state
+        self.update_labels()
+        self.update_controls()
+
+    def update_labels(self) -> None:
         """
-        self.setEnabled(enabled)
+        Updates the labels.
+        """
+        Debug(self, ".update_labels()", refresh=True)
+
+        if self.gui.model.sampling_volume.valid:
+            n = self.gui.model.sampling_volume.get_labels_count()
+            color = Theme.FailureColor if n > self.ExcessiveFieldLabelsThreshold else Theme.MainColor
+            self.total_labels_label.setText(str(n))
+            self.total_labels_label.setStyleSheet(f"color: {color}; font-style: italic;")
+        else:
+            self.total_labels_label.setText("N/A")
+            self.total_labels_label.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
+
+    def update_controls(self) -> None:
+        """
+        Updates the field label resolution combobox.
+        """
+        Debug(self, ".update_controls()", refresh=True)
+
+        # Possible field label resolution values: Less than or equal to sampling volume resolution
+        sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
+        label_resolution_options_dict = {
+            key: value for key, value in SamplingVolume_Widget.ResolutionOptionsDict.items()
+            if np.power(2.0, value) <= sampling_volume_resolution
+        }
+
+        self.blockSignals(True)
+
+        # Re-populate field label resolution combobox
+        if self.field_label_resolution_combobox_connection is not None:
+            self.field_label_resolution_combobox.currentIndexChanged.disconnect(  # type: ignore
+                self.field_label_resolution_combobox_connection
+            )
+        self.field_label_resolution_combobox.clear()
+        for i, value in enumerate(label_resolution_options_dict.keys()):
+            self.field_label_resolution_combobox.addItem(str(value))
+
+        def connection():
+            """ Sets field label resolution. """
+            self.set_field_label_resolution(
+                label_resolution_options_dict.get(
+                    self.field_label_resolution_combobox.currentText(),
+                    0
+                )
+            )
+        self.field_label_resolution_combobox_connection = connection
+        self.field_label_resolution_combobox.currentIndexChanged.connect(connection)  # type: ignore
+
+        # Set default field label resolution if it is not available anymore
+        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
+        if target not in label_resolution_options_dict.values():
+            Debug(self, f": WARNING: Invalid: sampling_volume_label_resolution_exponent = {target}", warning=True)
+            self.gui.config.set_int(
+                "sampling_volume_label_resolution_exponent",
+                next(iter(label_resolution_options_dict.items()))[1]  # First value from combobox
+            )
+
+        # Select the field label resolution
+        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
+        for i, value in enumerate(label_resolution_options_dict.values()):
+            if value == target:
+                self.field_label_resolution_combobox.setCurrentIndex(i)
+
+        self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -306,10 +370,12 @@ class Display_Widget(QGroupBox2):
 
         if choice:
             text = (
-                "You are about to display an excessive number of field labels. "
+                "You are about to display an excessive number of field labels.\n"
                 "This will be very slow and cannot be interrupted.\n\n"
-                "DO YOU WANT TO DISPLAY FIELD LABELS ANYWAY?\n\n"
+
+                "DO YOU WANT TO DISPLAY FIELD LABELS ANYWAY?\n"
                 "Choosing 'No' will disable field labels immediately.\n\n"
+
                 "Please consider the following before choosing 'Yes':\n"
                 "– Save your work first.\n"
                 "– Decrease sampling volume resolution.\n"
@@ -322,7 +388,7 @@ class Display_Widget(QGroupBox2):
                 buttons=QMessageBox.Yes | QMessageBox.No,
                 default_button=QMessageBox.No
             )
-            if messagebox.choice == QMessageBox.No:
+            if not messagebox.user_accepted or messagebox.choice == QMessageBox.No:
                 self.disable_field_labels()
 
         else:
@@ -332,7 +398,9 @@ class Display_Widget(QGroupBox2):
             text = (
                 "Field labels were disabled automatically because\n"
                 "an excessive number of field labels was detected.\n\n"
-                "You may manually re-enable field labels after all calculations have finished."
+
+                "You may manually re-enable field labels\n"
+                "after all calculations have finished."
             )
             QMessageBox2(
                 title="Excessive Number Of Field Labels",
@@ -341,81 +409,3 @@ class Display_Widget(QGroupBox2):
                 buttons=QMessageBox.Ok,
                 default_button=QMessageBox.Ok
             )
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update(self) -> None:
-        """
-        Updates this widget.
-        """
-        Debug(self, ".update()")
-
-        self.update_labels()
-        self.update_controls()
-
-    def update_labels(self) -> None:
-        """
-        Updates the labels.
-        """
-        Debug(self, ".update_labels()")
-
-        if self.gui.model.sampling_volume.valid:
-            n = self.gui.model.sampling_volume.get_labels_count()
-            color = Theme.FailureColor if n > self.ExcessiveFieldLabelsThreshold else Theme.LiteColor
-            self.total_labels_label.setText(str(n))
-            self.total_labels_label.setStyleSheet(f"color: {color}; font-style: italic;")
-        else:
-            self.total_labels_label.setText("N/A")
-            self.total_labels_label.setStyleSheet(f"color: {Theme.LiteColor}; font-style: italic;")
-
-    def update_controls(self) -> None:
-        """
-        Updates the field label resolution combobox.
-        """
-        Debug(self, ".update_controls()")
-
-        # Possible field label resolution values: Less than or equal to sampling volume resolution
-        sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
-        label_resolution_options_dict = {
-            key: value for key, value in SamplingVolume_Widget.ResolutionOptionsDict.items()
-            if np.power(2.0, value) <= sampling_volume_resolution
-        }
-
-        self.blockSignals(True)
-
-        # Re-populate field label resolution combobox
-        if self.field_label_resolution_combobox_connection is not None:
-            self.field_label_resolution_combobox.currentIndexChanged.disconnect(  # type: ignore
-                self.field_label_resolution_combobox_connection
-            )
-        self.field_label_resolution_combobox.clear()
-        for i, value in enumerate(label_resolution_options_dict.keys()):
-            self.field_label_resolution_combobox.addItem(str(value))
-
-        def connection():
-            """ Sets field label resolution. """
-            self.set_field_label_resolution(
-                label_resolution_options_dict.get(
-                    self.field_label_resolution_combobox.currentText(),
-                    0
-                )
-            )
-        self.field_label_resolution_combobox_connection = connection
-        self.field_label_resolution_combobox.currentIndexChanged.connect(connection)  # type: ignore
-
-        # Set default field label resolution if it is not available anymore
-        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
-        if target not in label_resolution_options_dict.values():
-            Debug(self, f": WARNING: Invalid: sampling_volume_label_resolution_exponent = {target}", warning=True)
-            self.gui.config.set_int(
-                "sampling_volume_label_resolution_exponent",
-                next(iter(label_resolution_options_dict.items()))[1]  # First value from combobox
-            )
-
-        # Select the field label resolution
-        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
-        for i, value in enumerate(label_resolution_options_dict.values()):
-            if value == target:
-                self.field_label_resolution_combobox.setCurrentIndex(i)
-
-        self.blockSignals(False)

@@ -24,7 +24,6 @@ from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import A_FIELD, B_FIELD
-from magneticalc.Parameters import Parameters
 from magneticalc.Theme import Theme
 
 
@@ -44,7 +43,7 @@ class Parameters_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Parameters")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self.gui.model.set_parameters(invalidate=False)
@@ -84,13 +83,19 @@ class Parameters_Widget(QGroupBox2):
 
         self.update()
 
+    def reload(self) -> None:
+        """
+        Reloads the widget.
+        """
+        Debug(self, ".reload()", refresh=True)
+
     # ------------------------------------------------------------------------------------------------------------------
 
     def update(self) -> None:
         """
         Updates the widget.
         """
-        Debug(self, ".update()")
+        Debug(self, ".update()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -99,7 +104,7 @@ class Parameters_Widget(QGroupBox2):
         """
         Updates the labels.
         """
-        Debug(self, ".update_labels()")
+        Debug(self, ".update_labels()", refresh=True)
 
         if self.gui.model.parameters.valid:
 
@@ -146,7 +151,8 @@ class Parameters_Widget(QGroupBox2):
                     self_inductance_value.split(" ")[0], color=Theme.MainColor, bold=True
                 )
                 self.self_inductance_units_label.set(
-                    self_inductance_value.split(" ")[1], color=Theme.MainColor, bold=True)
+                    self_inductance_value.split(" ")[1], color=Theme.MainColor, bold=True
+                )
 
                 magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
                 if np.isnan(magnetic_dipole_moment_value):
@@ -182,6 +188,6 @@ class Parameters_Widget(QGroupBox2):
         """
         Updates the controls.
         """
-        Debug(self, ".update_controls()")
+        Debug(self, ".update_controls()", refresh=True)
 
         self.indicate_valid(self.gui.model.parameters.valid)

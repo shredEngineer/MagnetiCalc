@@ -76,7 +76,7 @@ class Metric_Widget(QGroupBox2):
         @param gui: GUI
         """
         QGroupBox2.__init__(self, "Metric")
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
         self.gui = gui
 
         self.addLayout(QIconLabel("Color", "fa.tint"))
@@ -132,13 +132,11 @@ class Metric_Widget(QGroupBox2):
         self.alpha_metric_limits_layout.addWidget(self.alpha_metric_max_label)
         self.addWidget(self.alpha_metric_limits_widget)
 
-        self.reinitialize()
-
-    def reinitialize(self) -> None:
+    def reload(self) -> None:
         """
-        Re-initializes the widget.
+        Reloads the widget.
         """
-        Debug(self, ".reinitialize()")
+        Debug(self, ".reload()", refresh=True)
 
         self.blockSignals(True)
 
@@ -157,63 +155,11 @@ class Metric_Widget(QGroupBox2):
 
         self.update()
 
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def set_metric(
-            self,
-            _color_preset_: Optional[Dict] = None,
-            _alpha_preset_: Optional[Dict] = None,
-            invalidate: bool = True,
-            recalculate: bool = True,
-            update_labels: bool = True
-    ) -> None:
-        """
-        Sets the metric. This will overwrite the currently set metric in the model.
-        Any underscored parameter may be left set to None in order to load its default value.
-
-        @param _color_preset_: Color metric preset (parameters, see Metric module)
-        @param _alpha_preset_: Alpha metric preset (parameters, see Metric module)
-        @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final re-calculation
-        @param update_labels: Enable to update metric labels
-        """
-        if self.signalsBlocked():
-            return
-
-        Debug(self, ".set_metric()")
-
-        with ModelAccess(self.gui, recalculate):
-
-            # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets
-
-            if _color_preset_ is None:
-                color_preset = Metric_Presets.get_by_id(self.gui.config.get_str("color_metric"))
-            else:
-                self.gui.config.set_str("color_metric", _color_preset_["id"])
-                color_preset = _color_preset_
-
-            if _alpha_preset_ is None:
-                alpha_preset = Metric_Presets.get_by_id(self.gui.config.get_str("alpha_metric"))
-            else:
-                self.gui.config.set_str("alpha_metric", _alpha_preset_["id"])
-                alpha_preset = _alpha_preset_
-
-            self.gui.model.set_metric(
-                invalidate=invalidate,
-                color_preset=color_preset,
-                alpha_preset=alpha_preset
-            )
-
-            if update_labels:
-                self.update_labels()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     def update(self) -> None:
         """
         Updates the widget.
         """
-        Debug(self, ".update()")
+        Debug(self, ".update()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -222,7 +168,7 @@ class Metric_Widget(QGroupBox2):
         """
         Updates the labels.
         """
-        Debug(self, ".update_labels()")
+        Debug(self, ".update_labels()", refresh=True)
 
         if self.gui.model.metric.valid:
 
@@ -328,6 +274,56 @@ class Metric_Widget(QGroupBox2):
         """
         Updates the controls.
         """
-        Debug(self, ".update_controls()")
+        Debug(self, ".update_controls()", refresh=True)
 
         self.indicate_valid(self.gui.model.metric.valid)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_metric(
+            self,
+            _color_preset_: Optional[Dict] = None,
+            _alpha_preset_: Optional[Dict] = None,
+            invalidate: bool = True,
+            recalculate: bool = True,
+            update_labels: bool = True
+    ) -> None:
+        """
+        Sets the metric. This will overwrite the currently set metric in the model.
+        Any underscored parameter may be left set to None in order to load its default value.
+
+        @param _color_preset_: Color metric preset (parameters, see Metric module)
+        @param _alpha_preset_: Alpha metric preset (parameters, see Metric module)
+        @param invalidate: Enable to invalidate this model hierarchy level
+        @param recalculate: Enable to trigger final re-calculation
+        @param update_labels: Enable to update metric labels
+        """
+        if self.signalsBlocked():
+            return
+
+        Debug(self, ".set_metric()")
+
+        with ModelAccess(self.gui, recalculate):
+
+            # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets
+
+            if _color_preset_ is None:
+                color_preset = Metric_Presets.get_by_id(self.gui.config.get_str("color_metric"))
+            else:
+                self.gui.config.set_str("color_metric", _color_preset_["id"])
+                color_preset = _color_preset_
+
+            if _alpha_preset_ is None:
+                alpha_preset = Metric_Presets.get_by_id(self.gui.config.get_str("alpha_metric"))
+            else:
+                self.gui.config.set_str("alpha_metric", _alpha_preset_["id"])
+                alpha_preset = _alpha_preset_
+
+            self.gui.model.set_metric(
+                invalidate=invalidate,
+                color_preset=color_preset,
+                alpha_preset=alpha_preset
+            )
+
+            if update_labels:
+                self.update_labels()

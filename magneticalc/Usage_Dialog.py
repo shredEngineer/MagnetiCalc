@@ -154,7 +154,7 @@ class Usage_Dialog(QDialog2):
         Initializes "Usage" dialog.
         """
         QDialog2.__init__(self, title="Usage", width=850)
-        Debug(self, ": Init")
+        Debug(self, ": Init", init=True)
 
         text_browser = QTextBrowser2(html=self.HTML)
         text_browser.setMinimumHeight(600)

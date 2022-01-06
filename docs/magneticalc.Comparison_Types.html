@@ -80,23 +80,28 @@
   <tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#comparison_type_from_str">comparison_type_from_str</a></code></td>
-    <td>Converts a comparison string to a comparison type.</td>
+    <td><code><a href="#comparison_name_to_type">comparison_name_to_type</a></code></td>
+    <td>Converts a comparison name to a comparison type.</td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#comparison_type_to_str">comparison_type_to_str</a></code></td>
-    <td>Converts a comparison type to a comparison string.</td>
+    <td><code><a href="#comparison_type_safe">comparison_type_safe</a></code></td>
+    <td>A valid comparison type is passed through, but an invalid comparison type converts to the default type.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#comparison_type_to_name">comparison_type_to_name</a></code></td>
+    <td>Converts a comparison type to a comparison name.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#COMPARISON_TYPE_IN_RANGE">COMPARISON_TYPE_IN_RANGE</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Map of comparison types to names.</td>
   </tr><tr class="variable">
     
     <td>Variable</td>
-    <td><code><a href="#Comparison_Types_Str_Map">Comparison_Types_Str_Map</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#Comparison_Types_Names_Map">Comparison_Types_Names_Map</a></code></td>
+    <td>Default comparison type.</td>
   </tr>
 </table>
         
@@ -109,40 +114,59 @@
         <div class="basefunction">
   
   
-  <a name="magneticalc.Comparison_Types.comparison_type_from_str">
+  <a name="magneticalc.Comparison_Types.comparison_name_to_type">
     
   </a>
-  <a name="comparison_type_from_str">
+  <a name="comparison_name_to_type">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">comparison_type_from_str</span>(comparison_str):
+    <span class="py-keyword">def</span> <span class="py-defname">comparison_name_to_type</span>(comparison_name):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Converts a comparison string to a comparison type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">comparison_str:</span><code>str</code></td><td class="fieldArgDesc">Comparison string @return Comparison type, or None if comparison string is invalid</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div>Converts a comparison name to a comparison type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">comparison_name:</span><code>str</code></td><td class="fieldArgDesc">Comparison name @return Comparison type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
   
-  <a name="magneticalc.Comparison_Types.comparison_type_to_str">
+  <a name="magneticalc.Comparison_Types.comparison_type_safe">
     
   </a>
-  <a name="comparison_type_to_str">
+  <a name="comparison_type_safe">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">comparison_type_to_str</span>(comparison_type):
+    <span class="py-keyword">def</span> <span class="py-defname">comparison_type_safe</span>(comparison_type):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Converts a comparison type to a comparison string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">comparison_type:</span><code>int</code></td><td class="fieldArgDesc">Comparison type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Comparison string</td></tr></table></div>
+    <div>A valid comparison type is passed through, but an invalid comparison type converts to the default type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">comparison_type:</span><code>int</code></td><td class="fieldArgDesc">Comparison type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Safe comparison type</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="magneticalc.Comparison_Types.comparison_type_to_name">
+    
+  </a>
+  <a name="comparison_type_to_name">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">comparison_type_to_name</span>(comparison_type):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Converts a comparison type to a comparison name.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">comparison_type:</span><code>int</code></td><td class="fieldArgDesc">Comparison type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Comparison name</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -161,27 +185,27 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Map of comparison types to names.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>0</code></pre></td></tr></table>
   </div>
 </div><div class="basevariable">
   
   
-  <a name="magneticalc.Comparison_Types.Comparison_Types_Str_Map">
+  <a name="magneticalc.Comparison_Types.Comparison_Types_Names_Map">
     
   </a>
-  <a name="Comparison_Types_Str_Map">
+  <a name="Comparison_Types_Names_Map">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">Comparison_Types_Str_Map</span> =
+    <span class="py-defname">Comparison_Types_Names_Map</span> =
     
   </div>
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Default comparison type.</div>
     
   </div>
 </div>
@@ -194,7 +218,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 21:28:19.
+    21.12.0 at 2022-01-06 15:11:21.
   </div>
 </footer>
 

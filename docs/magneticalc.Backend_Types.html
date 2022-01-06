@@ -77,16 +77,41 @@
         <table class="children sortable" id="id14">
   
   
-  <tr class="constant">
+  <tr class="function">
     
-    <td>Constant</td>
-    <td><code><a href="#BACKEND_CUDA">BACKEND_CUDA</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Function</td>
+    <td><code><a href="#backend_type_safe">backend_type_safe</a></code></td>
+    <td>A valid backend type is passed through, but an invalid backend type converts to the default type.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#backend_type_to_name">backend_type_to_name</a></code></td>
+    <td>Converts a backend type to a backend name.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#get_jit_enabled">get_jit_enabled</a></code></td>
+    <td>Checks if JIT is enabled (or at least not explicitly disabled).</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
-    <td><code><a href="#BACKEND_JIT">BACKEND_JIT</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#BACKEND_TYPE_CUDA">BACKEND_TYPE_CUDA</a></code></td>
+    <td>Map of backend types to their availability.</td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
+    <td><code><a href="#BACKEND_TYPE_JIT">BACKEND_TYPE_JIT</a></code></td>
+    <td>Backend type: CUDA.</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#Backend_Types_Available">Backend_Types_Available</a></code></td>
+    <td>Map of backend types to names.</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#Backend_Types_Names_Map">Backend_Types_Names_Map</a></code></td>
+    <td>Default backend type.</td>
   </tr>
 </table>
         
@@ -96,45 +121,142 @@
 
       <div id="childList">
 
-        <div class="baseconstant">
+        <div class="basefunction">
   
   
-  <a name="magneticalc.Backend_Types.BACKEND_CUDA">
+  <a name="magneticalc.Backend_Types.backend_type_safe">
     
   </a>
-  <a name="BACKEND_CUDA">
+  <a name="backend_type_safe">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">BACKEND_CUDA</span>: <code>int</code> =
+    <span class="py-keyword">def</span> <span class="py-defname">backend_type_safe</span>(backend_type):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>A valid backend type is passed through, but an invalid backend type converts to the default type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">backend_type:</span><code>int</code></td><td class="fieldArgDesc">Backend type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Safe backend type</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="magneticalc.Backend_Types.backend_type_to_name">
+    
+  </a>
+  <a name="backend_type_to_name">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">backend_type_to_name</span>(backend_type):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Converts a backend type to a backend name.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">backend_type:</span><code>int</code></td><td class="fieldArgDesc">Backend type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Backend name</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="magneticalc.Backend_Types.get_jit_enabled">
+    
+  </a>
+  <a name="get_jit_enabled">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_jit_enabled</span>():
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Checks if JIT is enabled (or at least not explicitly disabled).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if JIT enabled, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="magneticalc.Backend_Types.BACKEND_TYPE_CUDA">
+    
+  </a>
+  <a name="BACKEND_TYPE_CUDA">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">BACKEND_TYPE_CUDA</span>: <code>int</code> =
     
   </div>
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Map of backend types to their availability.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>1</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
   
   
-  <a name="magneticalc.Backend_Types.BACKEND_JIT">
+  <a name="magneticalc.Backend_Types.BACKEND_TYPE_JIT">
     
   </a>
-  <a name="BACKEND_JIT">
+  <a name="BACKEND_TYPE_JIT">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">BACKEND_JIT</span>: <code>int</code> =
+    <span class="py-defname">BACKEND_TYPE_JIT</span>: <code>int</code> =
     
   </div>
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Backend type: CUDA.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>0</code></pre></td></tr></table>
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="magneticalc.Backend_Types.Backend_Types_Available">
+    
+  </a>
+  <a name="Backend_Types_Available">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Backend_Types_Available</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Map of backend types to names.</div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="magneticalc.Backend_Types.Backend_Types_Names_Map">
+    
+  </a>
+  <a name="Backend_Types_Names_Map">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">Backend_Types_Names_Map</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Default backend type.</div>
+    
   </div>
 </div>
 
@@ -146,7 +268,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 21:28:19.
+    21.12.0 at 2022-01-06 15:11:21.
   </div>
 </footer>
 

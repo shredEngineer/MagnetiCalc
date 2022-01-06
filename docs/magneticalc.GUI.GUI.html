@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id57">
+        <table class="children sortable" id="id59">
   
   
   <tr class="method">
@@ -85,18 +85,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#cleanup">cleanup</a></code></td>
-    <td>Perform clean-up upon quitting the application.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#close_project">close_project</a></code></td>
-    <td>Confirm closing the project. Let user choose to cancel closing, or save/discard changes if there is unsaved work.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#closeEvent">closeEvent</a></code></td>
     <td>Gets called when the window is closed (programmatically through close() or manually)</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#goodbye">goodbye</a></code></td>
+    <td>Perform clean-up upon quitting the application.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -115,28 +110,18 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_config_changed">on_config_changed</a></code></td>
-    <td>Gets called when the configuration changed.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
-    <td>Re-calculates the model.</td>
+    <td>Recalculates the model.</td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#redraw">redraw</a></code></td>
-    <td>Re-draws the scene.</td>
+    <td>Redraws the scene.</td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#reload">reload</a></code></td>
     <td>Reloads the GUI.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#switch_project">switch_project</a></code></td>
-    <td>Switches to another project file.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
@@ -175,11 +160,6 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#config">config</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
     <td><code><a href="#initializing">initializing</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
@@ -191,6 +171,11 @@
     
     <td>Instance Variable</td>
     <td><code><a href="#model">model</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#project">project</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -253,44 +238,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.GUI.GUI.cleanup">
-    
-  </a>
-  <a name="cleanup">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">cleanup</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Perform clean-up upon quitting the application.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.GUI.GUI.close_project">
-    
-  </a>
-  <a name="close_project">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">close_project</span>(self, cancelable):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Confirm closing the project. Let user choose to cancel closing, or save/discard changes if there is unsaved work.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">cancelable:</span><code>bool</code></td><td class="fieldArgDesc">True to make dialog cancelable, False to make dialog non-cancelable</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False if canceled, True if saved/discarded</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.GUI.GUI.closeEvent">
     
   </a>
@@ -306,6 +253,25 @@
     
     
     <div>Gets called when the window is closed (programmatically through close() or manually)<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QCloseEvent</code></td><td class="fieldArgDesc">Close event</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.goodbye">
+    
+  </a>
+  <a name="goodbye">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">goodbye</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Perform clean-up upon quitting the application.</div>
   </div>
 </div><div class="basemethod">
   
@@ -367,25 +333,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.GUI.GUI.on_config_changed">
-    
-  </a>
-  <a name="on_config_changed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">on_config_changed</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets called when the configuration changed.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.GUI.GUI.recalculate">
     
   </a>
@@ -400,7 +347,7 @@
   <div class="docstring functionBody">
     
     
-    <div>Re-calculates the model.</div>
+    <div>Recalculates the model.</div>
   </div>
 </div><div class="basemethod">
   
@@ -419,7 +366,7 @@
   <div class="docstring functionBody">
     
     
-    <div>Re-draws the scene.</div>
+    <div>Redraws the scene.</div>
   </div>
 </div><div class="basemethod">
   
@@ -439,25 +386,6 @@
     
     
     <div>Reloads the GUI.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.GUI.GUI.switch_project">
-    
-  </a>
-  <a name="switch_project">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">switch_project</span>(self, filename):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Switches to another project file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -602,26 +530,6 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.GUI.GUI.config">
-    
-  </a>
-  <a name="config">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">config</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable">
-  
-  
   <a name="magneticalc.GUI.GUI.initializing">
     
   </a>
@@ -671,6 +579,26 @@
   <div class="functionHeader">
     
     <span class="py-defname">model</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.project">
+    
+  </a>
+  <a name="project">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">project</span> =
     
   </div>
   <div class="functionBody">
@@ -809,7 +737,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 21:28:19.
+    21.12.0 at 2022-01-06 15:11:21.
   </div>
 </footer>
 

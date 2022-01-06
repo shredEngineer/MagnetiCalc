@@ -74,94 +74,99 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id75">
+        <table class="children sortable" id="id77">
   
   
   <tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#norm_type_from_str">norm_type_from_str</a></code></td>
-    <td>Converts a norm string to a norm type.</td>
+    <td><code><a href="#norm_name_to_type">norm_name_to_type</a></code></td>
+    <td>Converts a norm name to a norm type.</td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#norm_type_to_str">norm_type_to_str</a></code></td>
-    <td>Converts a norm type to a norm string.</td>
+    <td><code><a href="#norm_type_safe">norm_type_safe</a></code></td>
+    <td>A valid norm type is passed through, but an invalid norm type converts to the default type.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#norm_type_to_name">norm_type_to_name</a></code></td>
+    <td>Converts a norm type to a norm name.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_ANGLE_XY">NORM_TYPE_ANGLE_XY</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Angle XZ.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_ANGLE_XZ">NORM_TYPE_ANGLE_XZ</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Angle YZ.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_ANGLE_YZ">NORM_TYPE_ANGLE_YZ</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Divergence.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_DIVERGENCE">NORM_TYPE_DIVERGENCE</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Map of norm types to names.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS">NORM_TYPE_RADIUS</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius X.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_X">NORM_TYPE_RADIUS_X</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius Y.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_XY">NORM_TYPE_RADIUS_XY</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius XZ.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_XZ">NORM_TYPE_RADIUS_XZ</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius YZ.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_Y">NORM_TYPE_RADIUS_Y</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius Z.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_YZ">NORM_TYPE_RADIUS_YZ</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Angle XY.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_RADIUS_Z">NORM_TYPE_RADIUS_Z</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius XY.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_X">NORM_TYPE_X</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Y.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_Y">NORM_TYPE_Y</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Z.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
     <td><code><a href="#NORM_TYPE_Z">NORM_TYPE_Z</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Norm type: Radius.</td>
   </tr><tr class="variable">
     
     <td>Variable</td>
-    <td><code><a href="#Norm_Types_Str_Map">Norm_Types_Str_Map</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#Norm_Types_Names_Map">Norm_Types_Names_Map</a></code></td>
+    <td>Default norm type.</td>
   </tr>
 </table>
         
@@ -174,40 +179,59 @@
         <div class="basefunction">
   
   
-  <a name="magneticalc.Norm_Types.norm_type_from_str">
+  <a name="magneticalc.Norm_Types.norm_name_to_type">
     
   </a>
-  <a name="norm_type_from_str">
+  <a name="norm_name_to_type">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">norm_type_from_str</span>(norm_str):
+    <span class="py-keyword">def</span> <span class="py-defname">norm_name_to_type</span>(norm_name):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Converts a norm string to a norm type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_str:</span><code>str</code></td><td class="fieldArgDesc">Norm string @return Norm type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div>Converts a norm name to a norm type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_name:</span><code>str</code></td><td class="fieldArgDesc">Norm name @return Norm type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
   
-  <a name="magneticalc.Norm_Types.norm_type_to_str">
+  <a name="magneticalc.Norm_Types.norm_type_safe">
     
   </a>
-  <a name="norm_type_to_str">
+  <a name="norm_type_safe">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">norm_type_to_str</span>(norm_type):
+    <span class="py-keyword">def</span> <span class="py-defname">norm_type_safe</span>(norm_type):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Converts a norm type to a norm string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Norm string</td></tr></table></div>
+    <div>A valid norm type is passed through, but an invalid norm type converts to the default type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Safe norm type</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="magneticalc.Norm_Types.norm_type_to_name">
+    
+  </a>
+  <a name="norm_type_to_name">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">norm_type_to_name</span>(norm_type):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Converts a norm type to a norm name.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Norm name</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -226,7 +250,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Angle XZ.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>10</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -246,7 +270,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Angle YZ.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>11</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -266,7 +290,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Divergence.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>12</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -286,7 +310,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Map of norm types to names.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>13</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -306,7 +330,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius X.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>3</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -326,7 +350,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius Y.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>4</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -346,7 +370,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius XZ.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>7</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -366,7 +390,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius YZ.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>8</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -386,7 +410,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius Z.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>5</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -406,7 +430,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Angle XY.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>9</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -426,7 +450,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius XY.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>6</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -446,7 +470,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Y.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>0</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -466,7 +490,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Z.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>1</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
@@ -486,27 +510,27 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Norm type: Radius.</div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>2</code></pre></td></tr></table>
   </div>
 </div><div class="basevariable">
   
   
-  <a name="magneticalc.Norm_Types.Norm_Types_Str_Map">
+  <a name="magneticalc.Norm_Types.Norm_Types_Names_Map">
     
   </a>
-  <a name="Norm_Types_Str_Map">
+  <a name="Norm_Types_Names_Map">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">Norm_Types_Str_Map</span> =
+    <span class="py-defname">Norm_Types_Names_Map</span> =
     
   </div>
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Default norm type.</div>
     
   </div>
 </div>
@@ -519,7 +543,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-05 21:28:19.
+    21.12.0 at 2022-01-06 15:11:21.
   </div>
 </footer>
 

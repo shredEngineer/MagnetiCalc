@@ -18,18 +18,131 @@
 
 from __future__ import annotations
 from typing import Dict
+from PyQt5.QtWidgets import QMessageBox
+from magneticalc.QMessageBox2 import QMessageBox2
 from magneticalc.Backend_Types import BACKEND_TYPE_CUDA
 from magneticalc.Backend_Types import Backend_Types_Available, Backend_Type_Default, backend_type_safe
+from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import FIELD_TYPE_B, field_type_safe
 from magneticalc.Format import Format
+from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Version import Version
 from magneticalc.Wire_Presets import Wire_Presets
 
 
-class Project:
+class Project(Config):
     """ Project class. """
+
+    def __init__(
+            self,
+            gui: GUI  # type: ignore
+    ):
+        """
+        Initializes the project class.
+
+        @param gui: GUI
+        """
+        Config.__init__(self)
+        Debug(self, ": Init", init=True)
+        self.gui = gui
+
+    def open(self, filename: str) -> None:
+        """
+        Opens a project.
+
+        @param filename: Project filename
+        """
+        Debug(self, ".open()")
+        self.load_file(filename=filename, default_config=Project.get_default())
+        self.validate()
+
+    def close(self) -> bool:
+        """
+        Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.
+
+        @return: False if canceled, True if saved/discarded
+        """
+        if not self.synced:
+            Debug(self, ".close(): Project has unsaved changes", warning=True)
+
+            messagebox = QMessageBox2(
+                title="Project Changed",
+                text="Do you want to save your changes?",
+                icon=QMessageBox.Question,
+                buttons=QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                default_button=QMessageBox.Save
+            )
+            if not messagebox.user_accepted or messagebox.choice == QMessageBox.Cancel:
+                Debug(self, ".close(): Canceled")
+                return False
+            elif messagebox.choice == QMessageBox.Save:
+                Debug(self, ".close(): Saving changes to project", success=True)
+                self.save_file()
+            else:
+                Debug(self, ".close(): Discarding changes to project", warning=True)
+
+        self.on_closing()
+
+        self.close_file()
+        Debug(self, ".close(): Project closed")
+        return True
+
+    def switch(self, filename: str) -> None:
+        """
+        Closes the current project and opens another project.
+
+        @param filename: Project filename
+        """
+        Debug(self, f".switch(): {filename}")
+
+        if not self.close():
+            Debug(self, ".switch(): Canceled")
+            return
+
+        self.open(filename)
+
+        self.gui.reload()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_changed(self) -> None:
+        """
+        Gets called when the project changed.
+        """
+        self.gui.setWindowTitle(Version.String + " – " + self.filename + ("" if self.synced else " *"))
+
+    def on_closing(self) -> None:
+        """
+        Gets called just before the project file is closed.
+        Invalidates the model, also needlessly before closing the app, but that's ok.
+        """
+        with ModelAccess(self.gui, recalculate=False):
+            self.gui.model.invalidate(do_all=True)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def validate(self) -> None:
+        """
+        Validates the configuration.
+        """
+        Debug(self.gui, ".validate()")
+
+        # Ensure valid backend type
+        backend_type = self.gui.config.get_int("backend_type")
+        if backend_type != backend_type_safe(backend_type):
+            backend_type = self.gui.config.set_get_int("backend_type", backend_type_safe(backend_type))
+
+        # Use default backend if selected backend is not available
+        if backend_type != Backend_Type_Default and not Backend_Types_Available[backend_type]:
+            Debug(self.gui, ".validate(): WARNING: Selected backend not available, using default backend", warning=True)
+            self.gui.config.set_int("backend_type", Backend_Type_Default)
+
+        # Ensue valid field type
+        field_type = self.gui.config.get_int("field_type")
+        if field_type != field_type_safe(field_type):
+            self.gui.config.set_int("field_type", field_type_safe(field_type))
 
     @staticmethod
     def get_default() -> Dict:
@@ -81,25 +194,3 @@ class Project:
             "scale_factor"                              : "3.0000",
             "constraint_count"                          : "0"
         }
-
-    @staticmethod
-    def validate(
-            gui: GUI  # type: ignore
-    ) -> None:
-        """
-        Validates the configuration.
-
-        @param gui: GUI
-        """
-        Debug(gui, ".validate()")
-
-        # Ensure valid backend type
-        backend_type = gui.config.set_get_int("backend_type", backend_type_safe(gui.config.get_int("backend_type")))
-
-        # Use default backend if selected backend is not available
-        if backend_type != Backend_Type_Default and not Backend_Types_Available[backend_type]:
-            Debug(gui, ".validate(): WARNING: Selected backend not available, using default backend", warning=True)
-            gui.config.set_int("backend_type", Backend_Type_Default)
-
-        # Ensue valid field type
-        gui.config.set_int("field_type", field_type_safe(gui.config.get_int("field_type")))

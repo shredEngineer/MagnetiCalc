@@ -282,14 +282,16 @@ class Wire_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
+        wire_stretch = self.gui.config.get_point("wire_stretch")
         for i in range(3):
-            self.stretch_spinbox[i].setValue(self.gui.config.get_point("wire_stretch")[i])
+            self.stretch_spinbox[i].setValue(wire_stretch[i])
 
         self.rotational_symmetry_count_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_count"))
         self.rotational_symmetry_radius_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_radius"))
 
+        rotational_symmetry_axis = self.gui.config.get_int("rotational_symmetry_axis")
         for i, axis in enumerate(["X", "Y", "Z"]):
-            if i == self.gui.config.get_int("rotational_symmetry_axis"):
+            if i == rotational_symmetry_axis:
                 self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
 
         self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))

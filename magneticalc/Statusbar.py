@@ -129,8 +129,9 @@ class Statusbar:
             self.gui.config.set_int("num_cores", 0)
 
         if get_jit_enabled():
+            num_cores = self.gui.config.get_int("num_cores")
             for i in range(0, cpu_count() + 1):
-                if i == self.gui.config.get_int("num_cores"):
+                if i == num_cores:
                     self._cores_combobox.setCurrentIndex(i)
 
         self.gui.blockSignals(False)

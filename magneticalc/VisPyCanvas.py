@@ -146,9 +146,6 @@ class VisPyCanvas(scene.SceneCanvas):
             font_manager=self.font_manager
         )
 
-        # Initially load perspective from configuration
-        self.load_perspective(redraw=False)
-
         # Insert perspective change handler
         self.signals_blocked = False
         self.super_perspective_changed = self.view_main.camera.view_changed
@@ -162,8 +159,9 @@ class VisPyCanvas(scene.SceneCanvas):
         """
         Debug(self, ".update_color_scheme()")
 
-        self.foreground = self.White if self.gui.config.get_bool("dark_background") else self.Black
-        self.background = self.Black if self.gui.config.get_bool("dark_background") else self.White
+        dark_background = self.gui.config.get_bool("dark_background")
+        self.foreground = self.White if dark_background else self.Black
+        self.background = self.Black if dark_background else self.White
         self.bgcolor = self.background
         self.visual_perspective_info.color = np.append(self.foreground[:3], 0.6)
 
@@ -198,11 +196,12 @@ class VisPyCanvas(scene.SceneCanvas):
         """
         Handles a change of perspective.
         """
-        if self.DebugPerspective:
-            if self.signals_blocked:
+        if self.signals_blocked:
+            if self.DebugPerspective:
                 Debug(self, ".on_perspective_changed(): Skipped")
-                return
-            else:
+            return
+        else:
+            if self.DebugPerspective:
                 Debug(self, ".on_perspective_changed()")
 
         # Limit scale factor
@@ -250,7 +249,7 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw(self) -> None:
         """
-        Re-draws the entire scene.
+        Redraws the canvas.
         """
         Debug(self, ".redraw()")
 
@@ -533,9 +532,9 @@ class VisPyCanvas(scene.SceneCanvas):
                 Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}")
 
             # Update label colors
+            show_colored_labels = self.gui.config.get_bool("show_colored_labels")
             for i in range(len(self.visual_field_labels)):
-
-                if self.gui.config.get_bool("show_colored_labels"):
+                if show_colored_labels:
                     # Use metric color at labeled sampling volume point
                     _, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
                     self.visual_field_labels[i].color = np.append(colors[field_vector_index][:3], 1.0)

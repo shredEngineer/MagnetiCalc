@@ -123,8 +123,9 @@ class Field_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
+        field_type = self.gui.config.get_int("field_type")
         for i, button in enumerate(self.field_type_group.buttons()):
-            button.setChecked(i == self.gui.config.get_int("field_type"))
+            button.setChecked(i == field_type)
 
         self.distance_limit_spinbox.setValue(self.gui.config.get_float("field_distance_limit"))
 

@@ -140,12 +140,14 @@ class Metric_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
+        color_metric = self.gui.config.get_str("color_metric")
         for i, preset in enumerate(Metric_Presets.List):
-            if preset["id"] == self.gui.config.get_str("color_metric"):
+            if preset["id"] == color_metric:
                 self.color_metric_combobox.setCurrentIndex(i)
 
+        alpha_metric = self.gui.config.get_str("alpha_metric")
         for i, preset in enumerate(Metric_Presets.List):
-            if preset["id"] == self.gui.config.get_str("alpha_metric"):
+            if preset["id"] == alpha_metric:
                 self.alpha_metric_combobox.setCurrentIndex(i)
 
         self.blockSignals(False)

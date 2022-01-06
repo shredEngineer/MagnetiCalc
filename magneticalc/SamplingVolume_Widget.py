@@ -171,8 +171,9 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
+        sampling_volume_padding = self.gui.config.get_point("sampling_volume_padding")
         for i in range(3):
-            self.padding_spinbox[i].setValue(self.gui.config.get_point("sampling_volume_padding")[i])
+            self.padding_spinbox[i].setValue(sampling_volume_padding[i])
 
         # Set default resolution if it is not available anymore
         target = self.gui.config.get_int("sampling_volume_resolution_exponent")

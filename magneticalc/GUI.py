@@ -22,21 +22,17 @@ from sty import fg
 import qtawesome as qta
 from PyQt5.Qt import QCloseEvent, QKeyEvent
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
-from PyQt5.QtWidgets import QMainWindow, QSplitter, QMessageBox
-from magneticalc.QMessageBox2 import QMessageBox2
+from PyQt5.QtWidgets import QMainWindow, QSplitter
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.CalculationThread import CalculationThread
-from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
 from magneticalc.Model import Model
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Project import Project
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
 from magneticalc.Theme import Theme
-from magneticalc.Version import Version
 from magneticalc.VisPyCanvas import VisPyCanvas
 
 
@@ -72,9 +68,8 @@ class GUI(QMainWindow):
         self.setMinimumSize(*self.MinimumWindowSize)
         self.showMaximized()
 
-        self.config = Config()
-        self.config.on_changed = self.on_project_changed
-        self.open_project(self.DefaultFilename)
+        self.config = Project(self)
+        self.config.open(self.DefaultFilename)
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
@@ -300,7 +295,7 @@ class GUI(QMainWindow):
         """
         Debug(self, ".closeEvent()")
 
-        closed = self.close_project(cancelable=True)
+        closed = self.config.close()
         if not closed:
             event.ignore()
             return
@@ -324,70 +319,3 @@ class GUI(QMainWindow):
 
         print()
         print("Goodbye!")
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def open_project(self, filename: str) -> None:
-        """
-        Opens a project.
-
-        @param filename: Project filename
-        """
-        self.config.load(filename=filename, default_config=Project.get_default())
-        Project.validate(self)
-
-    def close_project(self, cancelable: bool) -> bool:
-        """
-        Confirm closing the project.
-        Let user choose to cancel closing, or save/discard changes if there is unsaved work.
-
-        @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
-        @return: False if canceled, True if saved/discarded
-        """
-        if not self.config.synced:
-            Debug(self, ".close_project(): Project has unsaved changes", warning=True)
-
-            messagebox = QMessageBox2(
-                title="Project Changed",
-                text="Do you want to save your changes?",
-                icon=QMessageBox.Question,
-                buttons=QMessageBox.Save | QMessageBox.Discard | (QMessageBox.Cancel if cancelable else 0),
-                default_button=QMessageBox.Save
-            )
-            if not messagebox.user_accepted or messagebox.choice == QMessageBox.Cancel:
-                Debug(self, ".close_project(): Canceled")
-                return False
-            elif messagebox.choice == QMessageBox.Save:
-                Debug(self, ".close_project(): Saving changes to project", success=True)
-                self.config.save()
-            else:
-                Debug(self, ".close_project(): Discarding changes to project", warning=True)
-
-        self.config.close()
-        Debug(self, ".close_project(): Project closed")
-        return True
-
-    def switch_project(self, filename: str) -> None:
-        """
-        Closes the current project and opens another project.
-
-        @param filename: Project filename
-        """
-        Debug(self, f".switch_project(): {filename}", warning=True)
-
-        if not self.close_project(cancelable=True):
-            Debug(self, ".switch_project(): Canceled")
-            return
-
-        with ModelAccess(self, recalculate=False):
-            self.model.invalidate(do_all=True)
-
-        self.open_project(filename)
-
-        self.reload()
-
-    def on_project_changed(self) -> None:
-        """
-        Gets called when the project changed.
-        """
-        self.setWindowTitle(Version.String + " – " + self.config.filename + ("" if self.config.synced else " *"))

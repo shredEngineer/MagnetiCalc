@@ -72,6 +72,7 @@ class Perspective_Widget(QGroupBox2):
 
         @param preset: Perspective preset (parameters, see VisPyCanvas module)
         """
+        Debug(self, ".set_perspective()")
         self.gui.config.set_float("azimuth", preset["azimuth"])
         self.gui.config.set_float("elevation", preset["elevation"])
         self.gui.vispy_canvas.view_main.camera.azimuth = preset["azimuth"]

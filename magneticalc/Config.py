@@ -16,16 +16,20 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Callable, Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union
 import os
+import abc
 import configparser
 import numpy as np
 from magneticalc.Debug import Debug
 from magneticalc.Format import Format
 
 
-class Config:
+class Config(metaclass=abc.ABCMeta):
     """ Config class. """
+
+    """ Enables debug output for config access. """
+    DebugAccess = False
 
     def __init__(self) -> None:
         """
@@ -35,9 +39,15 @@ class Config:
         self._parser: Optional[configparser.ConfigParser] = None
         self.filename: str = ""
         self.synced: bool = False
-        self.on_changed: Optional[Callable] = None
 
-    def load(self, filename: str, default_config: Dict) -> None:
+    @abc.abstractmethod
+    def on_changed(self) -> None:
+        """
+        Gets called when the project changed.
+        """
+        pass
+
+    def load_file(self, filename: str, default_config: Dict) -> None:
         """
         Loads the configuration from file.
 
@@ -45,25 +55,24 @@ class Config:
         @param default_config: Default config
         """
         self.filename = Format.absolute_filename(filename)
-        Debug(self, f".load(): Loading file: {Format.filename_uri(self.filename)}")
+        Debug(self, f".load_file(): {Format.filename_uri(self.filename)}")
 
         self._parser = configparser.ConfigParser()
         self._parser.read(self.filename)
         self._parser["DEFAULT"] = default_config
 
         if "User" not in self._parser:
-            Debug(self, ".load(): Creating empty User section")
+            Debug(self, ".load_file(): Creating empty User section")
             self._parser["User"] = {}
-
-        self.synced = True
-        if self.on_changed is not None:
-            self.on_changed()
 
         if not os.path.isfile(self.filename):
             Debug(self, f".load(): Creating file: {Format.filename_uri(self.filename)}")
-            self.save()
+            self.save_file()
 
-    def save(self, filename: Optional[str] = None) -> None:
+        self.synced = True
+        self.on_changed()
+
+    def save_file(self, filename: Optional[str] = None) -> None:
         """
         Saves the configuration to file.
 
@@ -74,22 +83,21 @@ class Config:
         if filename is not None:
             self.filename = Format.absolute_filename(filename)
 
-        Debug(self, f".save(): Saving file: {Format.filename_uri(self.filename)}")
+        Debug(self, f".save_file(): {Format.filename_uri(self.filename)}")
 
         with open(self.filename, "w") as file:
             self._parser.write(file)
 
         self.synced = True
-        if self.on_changed is not None:
-            self.on_changed()
+        self.on_changed()
 
-    def close(self) -> None:
+    def close_file(self) -> None:
         """
         Closes the configuration.
         """
         assert self._parser is not None, "Not initialized"
 
-        Debug(self, ".close()")
+        Debug(self, ".close_file()")
         self._parser = None
         self.filename = ""
         self.synced = False
@@ -131,10 +139,16 @@ class Config:
         """
         assert self._parser is not None, "Not initialized"
 
-        self._parser.set("User", key, value)
-        self.synced = False
-        if self.on_changed is not None:
+        old_value = self._parser.get("User", key)
+        if old_value != value:
+            if self.DebugAccess:
+                Debug(self, f".set_str(\"{key}\"): Changing \"{old_value}\" to \"{value}\"")
+            self._parser.set("User", key, value)
+            self.synced = False
             self.on_changed()
+        else:
+            if self.DebugAccess:
+                Debug(self, f".set_str(\"{key}\"): Unchanged: \"{old_value}\"")
 
     def get_str(self, key: str) -> str:
         """
@@ -146,6 +160,10 @@ class Config:
         assert self._parser is not None, "Not initialized"
 
         value = self._parser.get("User", key)
+
+        if self.DebugAccess:
+            Debug(self, f".get_str(\"{key}\") = \"{value}\"")
+
         return value
 
     # ------------------------------------------------------------------------------------------------------------------

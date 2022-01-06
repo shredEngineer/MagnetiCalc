@@ -53,7 +53,7 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.save"),
             "&Save Project",
-            self.file_save,
+            self.gui.config.save_file,
             Qt.CTRL + Qt.Key_S
         )
 
@@ -76,7 +76,7 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.folder"),
             "Export &Container …",
-            self.file_export_container,
+            lambda: ExportContainer_Dialog(self.gui).show(),
             Qt.CTRL + Qt.Key_C
         )
 
@@ -119,7 +119,7 @@ class File_Menu(QMenu):
         )
         if action.filename:
             # This just works because the default configuration is written to the specified filename if it doesn't exist
-            self.gui.switch_project(action.filename)
+            self.gui.config.switch(action.filename)
 
     def file_open(self) -> None:
         """
@@ -141,15 +141,7 @@ class File_Menu(QMenu):
         )
 
         if filename != "":
-            self.gui.switch_project(filename)
-
-    def file_save(self) -> None:
-        """
-        Saves the project to the currently set INI file.
-        """
-        Debug(self.gui, ".file_save()")
-
-        self.gui.config.save()
+            self.gui.config.switch(filename)
 
     def file_save_as(self) -> None:
         """
@@ -166,7 +158,7 @@ class File_Menu(QMenu):
             _filter="MagnetiCalc Project (*.ini)"
         )
         if action.filename:
-            self.gui.config.save(filename=action.filename)
+            self.gui.config.save_file(filename=action.filename)
 
     def file_export_image(self) -> None:
         """
@@ -184,11 +176,3 @@ class File_Menu(QMenu):
         )
         if action.filename:
             self.gui.vispy_canvas.save_image(action.filename)
-
-    def file_export_container(self) -> None:
-        """
-        Exports an HDF5 container.
-        """
-        Debug(self.gui, ".file_export_container()")
-
-        ExportContainer_Dialog(self.gui).show()

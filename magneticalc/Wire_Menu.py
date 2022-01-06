@@ -24,6 +24,7 @@ from magneticalc.QSaveAction import QSaveAction
 from magneticalc import API
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
+from magneticalc.Wire_Widget import DefaultStretch, DefaultRotationalSymmetry
 from magneticalc.Wire_Presets import Wire_Presets
 
 
@@ -45,14 +46,7 @@ class Wire_Menu(QMenu):
             action.triggered.connect(  # type: ignore
                 partial(
                     self.gui.sidebar_left.wire_widget.set_wire,
-                    _points_=preset["points"],
-                    _stretch_=[1.0, 1.0, 1.0],
-                    _rotational_symmetry_={
-                        "count" : 1,
-                        "radius": 0,
-                        "axis"  : 2,
-                        "offset": 0
-                    }
+                    _points_=preset["points"], _stretch_=DefaultStretch, _rotational_symmetry_=DefaultRotationalSymmetry
                 )
             )
             load_preset_menu.addAction(action)
@@ -97,17 +91,9 @@ class Wire_Menu(QMenu):
         )
 
         if filename != "":
-
             points = API.import_wire(filename)
             self.gui.sidebar_left.wire_widget.set_wire(
-                _points_=points,
-                _stretch_=[1.0, 1.0, 1.0],
-                _rotational_symmetry_={
-                    "count": 1,
-                    "radius": 0,
-                    "axis": 2,
-                    "offset": 0
-                }
+                _points_=points, _stretch_=DefaultStretch, _rotational_symmetry_=DefaultRotationalSymmetry
             )
 
     def wire_export(self) -> None:

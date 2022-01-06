@@ -28,8 +28,9 @@ from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
 from magneticalc.Debug import Debug
 from magneticalc.File_Menu import File_Menu
 from magneticalc.Usage_Dialog import Usage_Dialog
-from magneticalc.Wire_Menu import Wire_Menu
 from magneticalc.Version import __URL__
+from magneticalc.View_Menu import View_Menu
+from magneticalc.Wire_Menu import Wire_Menu
 
 
 class Menu:
@@ -47,32 +48,13 @@ class Menu:
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        # List of checkboxes that are bound to project configuration
-        self.config_bound_checkboxes = {}
-
         self.file_menu = File_Menu(self.gui)
         self.wire_menu = Wire_Menu(self.gui)
+        self.view_menu = View_Menu(self.gui)
 
         self.gui.menuBar().addMenu(self.file_menu)
         self.gui.menuBar().addMenu(self.wire_menu)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        # View menu
-        view_menu = QMenu("&View", self.gui)
-        self.add_config_bound_checkbox("Show Wire Segments", "show_wire_segments", view_menu, self.gui.redraw)
-        self.add_config_bound_checkbox("Show Wire Points", "show_wire_points", view_menu, self.gui.redraw)
-        view_menu.addSeparator()
-        self.add_config_bound_checkbox("Show Colored Labels", "show_colored_labels", view_menu, self.gui.redraw)
-        self.add_config_bound_checkbox(
-            "Show Gauss instead of Tesla", "show_gauss", view_menu, self.on_show_gauss_changed
-        )
-        view_menu.addSeparator()
-        self.add_config_bound_checkbox("Show Coordinate System", "show_coordinate_system", view_menu, self.gui.redraw)
-        self.add_config_bound_checkbox("Show Perspective Info", "show_perspective_info", view_menu, self.gui.redraw)
-        view_menu.addSeparator()
-        self.add_config_bound_checkbox("Dark Background", "dark_background", view_menu, self.gui.redraw)
-        self.gui.menuBar().addMenu(view_menu)
+        self.gui.menuBar().addMenu(self.view_menu)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -122,13 +104,14 @@ class Menu:
 
         self.gui.blockSignals(True)
 
+        # Reload the options menu state
         for i, item in enumerate(Backend_Types_Available.items()):
             backend_type, enabled = item
             self.backend_actions[i].setChecked(backend_type == self.gui.project.get_int("backend_type"))
 
-        self.reload_config_bound_checkboxes()
-
         self.gui.blockSignals(False)
+
+        self.update()
 
     def update(self) -> None:
         """
@@ -137,16 +120,7 @@ class Menu:
         Debug(self, ".update()", refresh=True)
         self.file_menu.update()
         self.wire_menu.update()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def on_show_gauss_changed(self) -> None:
-        """
-        Gets called when the "Show Gauss instead of Tesla" option changed.
-        """
-        self.gui.sidebar_right.metric_widget.update()
-        self.gui.vispy_canvas.delete_field_labels()
-        self.gui.redraw()
+        self.view_menu.update()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -162,42 +136,3 @@ class Menu:
         if self.backend_actions[index].isChecked():
             self.gui.project.set_int("backend_type", index)
             self.gui.sidebar_right.field_widget.set_field()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def add_config_bound_checkbox(self, label: str, key: str, menu, callback) -> None:
-        """
-        Creates a checkbox inside some menu. Checkbox state is bound to project configuration.
-
-        @param label: Checkbox label
-        @param key: Configuration key
-        @param menu: Menu
-        @param callback:
-        """
-        checkbox = QAction(label, menu)
-        checkbox.setCheckable(True)
-        checkbox.triggered.connect(  # type: ignore
-            partial(self.config_bound_checkbox_changed, key)
-        )
-        self.config_bound_checkboxes[key] = {"checkbox": checkbox, "callback_final": callback}
-        checkbox.setChecked(self.gui.project.get_bool(key))
-        menu.addAction(checkbox)
-
-    def config_bound_checkbox_changed(self, key: str) -> None:
-        """
-        Handles change of checkbox state.
-
-        @param key: Configuration key
-        """
-        self.gui.project.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
-        self.config_bound_checkboxes[key]["callback_final"]()
-
-    def reload_config_bound_checkboxes(self) -> None:
-        """
-        Reloads the configuration bound checkboxes.
-
-        Note: This doesn't block the change signals.
-        """
-        for item in self.config_bound_checkboxes.items():
-            key, dictionary = item
-            dictionary["checkbox"].setChecked(self.gui.project.get_bool(key))

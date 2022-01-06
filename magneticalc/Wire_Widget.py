@@ -32,7 +32,19 @@ from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
-from magneticalc.Wire import Wire
+
+
+""" Default stretch setting. """
+DefaultStretch = [1.0, 1.0, 1.0]
+
+
+""" Default rotational symmetry setting. """
+DefaultRotationalSymmetry = {
+    "count" : 1,
+    "radius": 0,
+    "axis"  : 2,
+    "offset": 0
+}
 
 
 class Wire_Widget(QGroupBox2):

@@ -55,7 +55,7 @@ class About_Dialog(QDialog2):
         </small>
         <br>
         <span style="color: {Theme.MainColor}; font-weight: bold;">
-            If you like this software, please consider buying me a coffee!&nbsp; 😃
+            If you like this software, please consider buying me a coffee!
         </span>
         <br>
         """

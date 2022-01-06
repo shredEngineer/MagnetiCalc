@@ -23,8 +23,8 @@ from PyQt5.Qt import QFocusEvent
 from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QComboBox
 from magneticalc.QPushButton2 import QPushButton2
-from magneticalc.Config import Config
 from magneticalc.Debug import Debug
+from magneticalc.Format import Format
 from magneticalc.Theme import Theme
 
 
@@ -106,14 +106,14 @@ class QTableWidget2(QTableWidget):
 
         @param item: QTableWidgetItem
         """
-        Debug(self, f".on_cell_edited()")
+        Debug(self, ".on_cell_edited()")
 
         try:
             value = float(item.text().replace(",", "."))
         except ValueError:
             value = 0.0
 
-        value = f"{value:.{Config.FloatPrecision}f}"
+        value = Format.float_to_str(value)
         row = item.row()
         column = item.column()
 
@@ -130,7 +130,7 @@ class QTableWidget2(QTableWidget):
         @param row: Row index
         @param column: Column index
         """
-        Debug(self, f".on_combobox_cell_edited()")
+        Debug(self, ".on_combobox_cell_edited()")
 
         if self._cell_edited_callback is not None:
             self._cell_edited_callback(combobox.currentText(), row, column)
@@ -147,7 +147,7 @@ class QTableWidget2(QTableWidget):
         if self.signalsBlocked():
             return
 
-        Debug(self, f".on_selection_changed()")
+        Debug(self, ".on_selection_changed()")
 
         if self._selection_changed_callback is not None:
             self._selection_changed_callback()
@@ -190,7 +190,7 @@ class QTableWidget2(QTableWidget):
 
         if self._row_deleted_callback is not None:
             if column == self.columnCount() - 1:
-                Debug(self, f".is_cell_widget_selected: Ignoring delete button")
+                Debug(self, ".is_cell_widget_selected: Ignoring delete button")
                 return False
 
         item = self.item(row, column)
@@ -242,10 +242,10 @@ class QTableWidget2(QTableWidget):
         @param focus: Enable to focus the table, disable to explicitly clear the visual selection
         """
         if self.rowCount() == 0:
-            Debug(self, f".select_last_row(): Skipped for empty table")
+            Debug(self, ".select_last_row(): Skipped for empty table")
             return
 
-        Debug(self, f".select_last_row()")
+        Debug(self, ".select_last_row()")
 
         self.blockSignals(True)
 
@@ -267,7 +267,7 @@ class QTableWidget2(QTableWidget):
 
         @param header: List of row header strings
         """
-        Debug(self, f".set_horizontal_header()")
+        Debug(self, ".set_horizontal_header()")
 
         if self._row_deleted_callback is not None:
             header.append("")
@@ -320,7 +320,7 @@ class QTableWidget2(QTableWidget):
 
         @param header: List of column header strings
         """
-        Debug(self, f".set_vertical_header()")
+        Debug(self, ".set_vertical_header()")
 
         self.setRowCount(len(header))
 
@@ -342,7 +342,7 @@ class QTableWidget2(QTableWidget):
         """
         Clears all table rows.
         """
-        Debug(self, f".clear_rows()")
+        Debug(self, ".clear_rows()")
 
         self.setRowCount(0)
 
@@ -354,7 +354,7 @@ class QTableWidget2(QTableWidget):
 
         @param contents: 2D array
         """
-        Debug(self, f".set_contents()")
+        Debug(self, ".set_contents()")
 
         self.blockSignals(True)
 
@@ -464,7 +464,7 @@ class QTableWidget2(QTableWidget):
 
         @param _event: QFocusEvent
         """
-        Debug(self, f".focusInEvent()")
+        Debug(self, ".focusInEvent()")
 
         if self.rowCount() > 0:
             self.select_cell()
@@ -479,10 +479,10 @@ class QTableWidget2(QTableWidget):
         @param _event: QFocusEvent
         """
         if self.state() == QAbstractItemView.EditingState:
-            Debug(self, f".focusOutEvent(): Ignored in editing mode")
+            Debug(self, ".focusOutEvent(): Ignored in editing mode")
         elif self.is_cell_widget_selected():
-            Debug(self, f".focusOutEvent(): Ignored for cell widget")
+            Debug(self, ".focusOutEvent(): Ignored for cell widget")
         else:
-            Debug(self, f".focusOutEvent(): Clearing selection")
+            Debug(self, ".focusOutEvent(): Clearing selection")
             self.clearSelection()
             self.set_style(border_color="black", border_width=1)

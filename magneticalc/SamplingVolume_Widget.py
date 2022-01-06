@@ -26,14 +26,13 @@ from magneticalc.QIconLabel import QIconLabel
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.QPushButton2 import QPushButton2
 from magneticalc.QSpinBox2 import QSpinBox2
-from magneticalc.Comparison_Types import comparison_type_from_str
+from magneticalc.Comparison_Types import comparison_name_to_type
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Norm_Types import norm_type_from_str
+from magneticalc.Norm_Types import norm_name_to_type
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
-from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Theme import Theme
 
 
@@ -363,8 +362,8 @@ class SamplingVolume_Widget(QGroupBox2):
                 Debug(self, f".set_sampling_volume(): Loading Constraint: {constraint}")
                 self.gui.model.sampling_volume.add_constraint(
                     Constraint(
-                        norm_type_from_str(constraint["norm"]),
-                        comparison_type_from_str(constraint["comparison"]),
+                        norm_name_to_type(constraint["norm"]),
+                        comparison_name_to_type(constraint["comparison"]),
                         constraint["min"],
                         constraint["max"],
                         constraint["permeability"]

@@ -275,7 +275,6 @@ class Metric_Widget(QGroupBox2):
         Updates the controls.
         """
         Debug(self, ".update_controls()", refresh=True)
-
         self.indicate_valid(self.gui.model.metric.valid)
 
     # ------------------------------------------------------------------------------------------------------------------

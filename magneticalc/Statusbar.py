@@ -22,7 +22,7 @@ from multiprocessing import cpu_count
 from sty import fg
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QCheckBox, QComboBox, QProgressBar, QLabel
 from magneticalc.QPushButton2 import QPushButton2
-from magneticalc.Config import get_jit_enabled
+from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 
@@ -159,7 +159,7 @@ class Statusbar:
         """
         "Arms" the statusbar before calculation.
         """
-        Debug(self, f".arm()")
+        Debug(self, ".arm()")
 
         self._valid = False
         self._canceled = False

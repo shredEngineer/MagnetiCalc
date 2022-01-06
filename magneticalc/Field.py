@@ -20,13 +20,12 @@ from typing import Tuple, Callable
 import numpy as np
 from numba import jit, prange, set_num_threads
 from magneticalc.Assert_Dialog import Assert_Dialog
-from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
+from magneticalc.Backend_Types import BACKEND_TYPE_JIT, BACKEND_TYPE_CUDA, get_jit_enabled
 from magneticalc.Backend_CUDA import Backend_CUDA
 from magneticalc.Backend_JIT import Backend_JIT
 from magneticalc.ConditionalDecorator import ConditionalDecorator
-from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD, Field_Types_List
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Validatable import Validatable, require_valid, validator
 from magneticalc.Wire import Wire
@@ -86,17 +85,15 @@ class Field(Validatable):
         @param show_gauss: Enable to show Gauss instead of Tesla
         @return: Field units, field factor
         """
-        Assert_Dialog(self._field_type in Field_Types_List, "Attempting to get units for invalid field type")
-
         if show_gauss:
             return {
-                A_FIELD: "Gs·m",    # Gauss · meter
-                B_FIELD: "Gs"       # Gauss
+                FIELD_TYPE_A: "Gs·m",    # Gauss · meter
+                FIELD_TYPE_B: "Gs"       # Gauss
             }.get(self._field_type, ""), 1e4
         else:
             return {
-                A_FIELD: "T·m",     # Tesla · meter
-                B_FIELD: "T"        # Tesla
+                FIELD_TYPE_A: "T·m",     # Tesla · meter
+                FIELD_TYPE_B: "T"        # Tesla
             }.get(self._field_type, ""), 1e0
 
     @require_valid
@@ -150,16 +147,7 @@ class Field(Validatable):
         # Compute the current elements.
         current_elements = wire.get_elements()
 
-        # Default to JIT backend if CUDA backend is selected but not available.
-        if self._backend_type == BACKEND_CUDA:
-            if not Backend_CUDA.is_available():
-                Debug(
-                    self, f".recalculate(): WARNING: CUDA backend not available, defaulting to JIT backend",
-                    warning=True
-                )
-                self._backend_type = BACKEND_JIT
-
-        if self._backend_type == BACKEND_JIT:
+        if self._backend_type == BACKEND_TYPE_JIT:
 
             # Initialize Biot-Savart JIT backend
             backend = Backend_JIT(
@@ -177,7 +165,7 @@ class Field(Validatable):
             set_num_threads(num_cores)
             backend_result = backend.get_result()
 
-        elif self._backend_type == BACKEND_CUDA:
+        elif self._backend_type == BACKEND_TYPE_CUDA:
 
             # Initialize Biot-Savart CUDA backend
             backend = Backend_CUDA(

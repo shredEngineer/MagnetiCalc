@@ -62,7 +62,7 @@ class About_Dialog(QDialog2):
 
     def __init__(self) -> None:
         """
-        Initializes "About" dialog.
+        Initializes the dialog.
         """
         QDialog2.__init__(self, title="About", width=640)
         Debug(self, ": Init", init=True)

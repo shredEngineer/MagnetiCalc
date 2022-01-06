@@ -22,8 +22,8 @@ from typing import Dict, List, Callable, Tuple
 import numpy as np
 from numba import jit, prange
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.ConditionalDecorator import ConditionalDecorator
-from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Validatable import Validatable, require_valid, validator
 

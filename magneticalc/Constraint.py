@@ -19,7 +19,6 @@
 from magneticalc.Norm_Types import *
 from typing import Union, List
 import numpy as np
-from magneticalc.Debug import Debug
 from magneticalc.Metric import metric_norm
 from magneticalc.Comparison_Types import *
 
@@ -27,8 +26,8 @@ from magneticalc.Comparison_Types import *
 class Constraint:
     """ Constraint class. """
 
-    # Supported norm types
-    Norm_Types_List = [
+    """ Supported norm types. """
+    Norm_Types_Supported = [
         NORM_TYPE_X,
         NORM_TYPE_Y,
         NORM_TYPE_Z,
@@ -43,20 +42,18 @@ class Constraint:
         NORM_TYPE_ANGLE_XZ,
         NORM_TYPE_ANGLE_YZ
     ]
-    Norm_Types_List_Str = [norm_type_to_str(norm_type) for norm_type in Norm_Types_List]
 
-    # Supported norm types using minimum and maximum angles in degrees
-    Norm_Types_Degrees_List = [
+    """ Supported norm types using minimum and maximum angles in degrees. """
+    Norm_Types_Supported_Degrees = [
         NORM_TYPE_ANGLE_XY,
         NORM_TYPE_ANGLE_XZ,
         NORM_TYPE_ANGLE_YZ
     ]
 
-    # Supported comparison types
-    Comparison_Types_List = [
+    """ Supported comparison types. """
+    Comparison_Types_Supported = [
         COMPARISON_TYPE_IN_RANGE
     ]
-    Comparison_Types_List_Str = [comparison_type_to_str(comparison_type) for comparison_type in Comparison_Types_List]
 
     def __init__(self, norm_type: int, comparison_type: int, _min: float, _max: float, permeability: float):
         """
@@ -68,15 +65,10 @@ class Constraint:
         @param _max: Maximum value
         @param permeability: Relative permeability µ_r
         """
-        if norm_type not in self.Norm_Types_List:
-            Debug(self, ": ERROR: Invalid norm ID", error=True)
-            return
+        norm_type = norm_type_safe(norm_type)
+        comparison_type = comparison_type_safe(comparison_type)
 
-        if comparison_type not in self.Comparison_Types_List:
-            Debug(self, ": ERROR: Invalid comparison ID", error=True)
-            return
-
-        self._is_angle = norm_type in self.Norm_Types_Degrees_List
+        self._is_angle = norm_type in self.Norm_Types_Supported_Degrees
 
         self._norm_type = norm_type
         self._comparison_type = comparison_type

@@ -23,10 +23,8 @@ import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QAction, QActionGroup
 from magneticalc.About_Dialog import About_Dialog
-from magneticalc.Backend_Types import BACKEND_JIT, BACKEND_CUDA
-from magneticalc.Backend_CUDA import Backend_CUDA
+from magneticalc.Backend_Types import Backend_Types_Available, backend_type_to_name
 from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
-from magneticalc.Config import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.File_Menu import File_Menu
 from magneticalc.Usage_Dialog import Usage_Dialog
@@ -36,12 +34,6 @@ from magneticalc.Version import __URL__
 
 class Menu:
     """ Menu class. """
-
-    # List of available backends
-    Backends_Available_List = {
-        "Backend: JIT"          : True,
-        "Backend: JIT + CUDA"   : Backend_CUDA.is_available()
-    }
 
     def __init__(
             self,
@@ -90,12 +82,12 @@ class Menu:
         self.options_backend_group.setExclusive(True)
         self.gui.blockSignals(True)
         self.backend_actions = []
-        for i, item in enumerate(self.Backends_Available_List.items()):
-            name, enabled = item
-            action = QAction(name)
+        for i, item in enumerate(Backend_Types_Available.items()):
+            backend_type, available = item
+            action = QAction("Backend: " + backend_type_to_name(backend_type))
             self.backend_actions.append(action)
             action.setCheckable(True)
-            action.setEnabled(enabled and get_jit_enabled())
+            action.setEnabled(available)
             action.changed.connect(  # type: ignore
                 partial(self.on_backend_changed, i)
             )
@@ -130,15 +122,9 @@ class Menu:
 
         self.gui.blockSignals(True)
 
-        # Default to JIT backend if CUDA backend is selected but not available
-        if self.gui.config.get_int("backend_type") == BACKEND_CUDA:
-            if not Backend_CUDA.is_available():
-                self.gui.config.set_int("backend_type", BACKEND_JIT)
-
-        for i, item in enumerate(self.Backends_Available_List.items()):
-            name, enabled = item
-            self.backend_actions[i].setChecked(self.gui.config.get_int("backend_type") == i)
-            self.backend_actions[i].setEnabled(enabled and get_jit_enabled())
+        for i, item in enumerate(Backend_Types_Available.items()):
+            backend_type, enabled = item
+            self.backend_actions[i].setChecked(backend_type == self.gui.config.get_int("backend_type"))
 
         self.reload_config_bound_checkboxes()
 

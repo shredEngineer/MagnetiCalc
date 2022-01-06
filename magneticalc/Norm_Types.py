@@ -19,23 +19,51 @@
 from magneticalc.Assert_Dialog import Assert_Dialog
 
 
+""" Norm type: X. """
 NORM_TYPE_X = 0
+
+""" Norm type: Y. """
 NORM_TYPE_Y = 1
+
+""" Norm type: Z. """
 NORM_TYPE_Z = 2
+
+""" Norm type: Radius. """
 NORM_TYPE_RADIUS = 3
+
+""" Norm type: Radius X. """
 NORM_TYPE_RADIUS_X = 4
+
+""" Norm type: Radius Y. """
 NORM_TYPE_RADIUS_Y = 5
+
+""" Norm type: Radius Z. """
 NORM_TYPE_RADIUS_Z = 6
+
+""" Norm type: Radius XY. """
 NORM_TYPE_RADIUS_XY = 7
+
+""" Norm type: Radius XZ. """
 NORM_TYPE_RADIUS_XZ = 8
+
+""" Norm type: Radius YZ. """
 NORM_TYPE_RADIUS_YZ = 9
+
+""" Norm type: Angle XY. """
 NORM_TYPE_ANGLE_XY = 10
+
+""" Norm type: Angle XZ. """
 NORM_TYPE_ANGLE_XZ = 11
+
+""" Norm type: Angle YZ. """
 NORM_TYPE_ANGLE_YZ = 12
+
+""" Norm type: Divergence. """
 NORM_TYPE_DIVERGENCE = 13
 
 
-Norm_Types_Str_Map = {
+""" Map of norm types to names. """
+Norm_Types_Names_Map = {
     NORM_TYPE_X             : "X",
     NORM_TYPE_Y             : "Y",
     NORM_TYPE_Z             : "Z",
@@ -52,34 +80,39 @@ Norm_Types_Str_Map = {
     NORM_TYPE_DIVERGENCE    : "Divergence",
 }
 
+""" Default norm type. """
+Norm_Type_Default = NORM_TYPE_X
 
-Norm_Types_Fallback = NORM_TYPE_X
 
-
-def norm_type_to_str(norm_type: int) -> str:
+def norm_type_safe(norm_type: int) -> int:
     """
-    Converts a norm type to a norm string.
+    A valid norm type is passed through, but an invalid norm type converts to the default type.
 
     @param norm_type: Norm type
-    @return: Norm string
+    @return: Safe norm type
     """
-    if norm_type in Norm_Types_Str_Map:
-        return Norm_Types_Str_Map.get(norm_type, "")
+    if norm_type in Norm_Types_Names_Map:
+        return norm_type
     else:
-        Assert_Dialog(False, f"Invalid norm type: Defaulting to \"{Norm_Types_Str_Map[Norm_Types_Fallback]}\"")
-        return Norm_Types_Str_Map[Norm_Types_Fallback]
+        Assert_Dialog(False, "Invalid norm type, using fallback type")
+        return Norm_Type_Default
 
 
-def norm_type_from_str(norm_str: str) -> int:
+def norm_type_to_name(norm_type: int) -> str:
     """
-    Converts a norm string to a norm type.
+    Converts a norm type to a norm name.
 
-    @param norm_str: Norm string
+    @param norm_type: Norm type
+    @return: Norm name
+    """
+    return Norm_Types_Names_Map[norm_type_safe(norm_type)]
+
+
+def norm_name_to_type(norm_name: str) -> int:
+    """
+    Converts a norm name to a norm type.
+
+    @param norm_name: Norm name
     @return Norm type
     """
-    result = [_norm_type for _norm_type, _norm_str in Norm_Types_Str_Map.items() if _norm_str == norm_str]
-    if len(result) == 1:
-        return result[0]
-    else:
-        Assert_Dialog(False, f"Invalid norm string: Defaulting to \"{Norm_Types_Str_Map[Norm_Types_Fallback]}\"")
-        return Norm_Types_Fallback
+    return {_name: _type for _type, _name in Norm_Types_Names_Map.items()}[norm_name]

@@ -166,8 +166,7 @@ class File_Menu(QMenu):
             _filter="MagnetiCalc Project (*.ini)"
         )
         if action.filename:
-            self.gui.config.set_filename(action.filename)
-            self.gui.config.save()
+            self.gui.config.save(filename=action.filename)
 
     def file_export_image(self) -> None:
         """

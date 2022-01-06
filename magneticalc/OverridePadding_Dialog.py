@@ -36,7 +36,7 @@ class OverridePadding_Dialog(QDialog2):
             gui: GUI  # type: ignore
     ) -> None:
         """
-        Initializes "Override Padding" dialog.
+        Initializes the dialog.
 
         @param gui: GUI
         """

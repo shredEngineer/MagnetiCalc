@@ -19,48 +19,48 @@
 from magneticalc.Assert_Dialog import Assert_Dialog
 
 
+""" Comparison type: In Range. """
 COMPARISON_TYPE_IN_RANGE = 0
 
 
-Comparison_Types_Str_Map = {
+""" Map of comparison types to names. """
+Comparison_Types_Names_Map = {
     COMPARISON_TYPE_IN_RANGE    : "In Range"
 }
 
+""" Default comparison type. """
+Comparison_Type_Default = COMPARISON_TYPE_IN_RANGE
 
-Comparison_Type_Fallback = COMPARISON_TYPE_IN_RANGE
 
-
-def comparison_type_to_str(comparison_type: int) -> str:
+def comparison_type_safe(comparison_type: int) -> int:
     """
-    Converts a comparison type to a comparison string.
+    A valid comparison type is passed through, but an invalid comparison type converts to the default type.
 
     @param comparison_type: Comparison type
-    @return: Comparison string
+    @return: Safe comparison type
     """
-    if comparison_type in Comparison_Types_Str_Map:
-        return Comparison_Types_Str_Map.get(comparison_type, "")
+    if comparison_type in Comparison_Types_Names_Map:
+        return comparison_type
     else:
-        Assert_Dialog(
-            False, f"Invalid comparison type: Defaulting to \"{Comparison_Types_Str_Map[Comparison_Type_Fallback]}\""
-        )
-        return Comparison_Types_Str_Map[Comparison_Type_Fallback]
+        Assert_Dialog(False, "Invalid comparison type, using fallback type")
+        return Comparison_Type_Default
 
 
-def comparison_type_from_str(comparison_str: str) -> int:
+def comparison_type_to_name(comparison_type: int) -> str:
     """
-    Converts a comparison string to a comparison type.
+    Converts a comparison type to a comparison name.
 
-    @param comparison_str: Comparison string
-    @return Comparison type, or None if comparison string is invalid
+    @param comparison_type: Comparison type
+    @return: Comparison name
     """
-    result = [
-        _comparison_type for _comparison_type, _comparison_str in Comparison_Types_Str_Map.items()
-        if _comparison_str == comparison_str
-    ]
-    if len(result) == 1:
-        return result[0]
-    else:
-        Assert_Dialog(
-            False, f"Invalid comparison string: Defaulting to \"{Comparison_Types_Str_Map[Comparison_Type_Fallback]}\""
-        )
-        return Comparison_Type_Fallback
+    return Comparison_Types_Names_Map[comparison_type_safe(comparison_type)]
+
+
+def comparison_name_to_type(comparison_name: str) -> int:
+    """
+    Converts a comparison name to a comparison type.
+
+    @param comparison_name: Comparison name
+    @return Comparison type
+    """
+    return {_name: _type for _type, _name in Comparison_Types_Names_Map.items()}[comparison_name]

@@ -22,7 +22,7 @@ import os
 import sys
 from sty import ef
 from PyQt5.QtWidgets import QApplication
-from magneticalc.Config import get_jit_enabled
+from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.GUI import GUI
 from magneticalc.Version import Version
 

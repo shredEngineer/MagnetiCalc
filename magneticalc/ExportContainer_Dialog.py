@@ -23,7 +23,7 @@ from magneticalc.QDialog2 import QDialog2
 from magneticalc.QSaveAction import QSaveAction
 from magneticalc.API import API
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Theme import Theme
 
 
@@ -35,7 +35,7 @@ class ExportContainer_Dialog(QDialog2):
             gui: GUI  # type: ignore
     ) -> None:
         """
-        Prepares the 'Export Container' dialog.
+        Initializes the dialog.
 
         @param gui: GUI
         """
@@ -53,8 +53,8 @@ class ExportContainer_Dialog(QDialog2):
         wire_points_available = self.gui.model.wire.valid
         wire_current_available = self.gui.model.wire.valid
 
-        a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
-        b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None
+        a_field_available = self.gui.model.get_valid_field(FIELD_TYPE_A) is not None
+        b_field_available = self.gui.model.get_valid_field(FIELD_TYPE_B) is not None
 
         calculate_hint = " (not calculated)"
 
@@ -128,10 +128,10 @@ class ExportContainer_Dialog(QDialog2):
                 fields.update(dict(zip(["nx", "ny", "nz"], self.gui.model.sampling_volume.dimension)))
                 fields.update(dict(zip(["x", "y", "z"], sampling_volume_components)))
             if export_a_field:
-                a_field_components = self.gui.model.get_valid_field(A_FIELD).get_vectors().T
+                a_field_components = self.gui.model.get_valid_field(FIELD_TYPE_A).get_vectors().T
                 fields.update(dict(zip(["A_x", "A_y", "A_z"], a_field_components)))
             if export_b_field:
-                b_field_components = self.gui.model.get_valid_field(B_FIELD).get_vectors().T
+                b_field_components = self.gui.model.get_valid_field(FIELD_TYPE_B).get_vectors().T
                 fields.update(dict(zip(["B_x", "B_y", "B_z"], b_field_components)))
             if export_a_field or export_b_field:
                 container_dictionary.update({"fields": fields})

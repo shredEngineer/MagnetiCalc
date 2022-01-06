@@ -21,7 +21,9 @@ from typing import List, Dict
 from PyQt5.QtWidgets import QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
+from magneticalc.Comparison_Types import comparison_type_to_name
 from magneticalc.Config_Group import Config_Collection
+from magneticalc.Norm_Types import norm_type_to_name
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QIconLabel import QIconLabel
 from magneticalc.QPushButton2 import QPushButton2
@@ -44,8 +46,8 @@ class Constraint_Editor(QDialog2):
 
     # Constraint options
     Constraint_Options = [
-        Constraint.Norm_Types_List_Str,
-        Constraint.Comparison_Types_List_Str,
+        [norm_type_to_name(norm_type) for norm_type in Constraint.Norm_Types_Supported],
+        [comparison_type_to_name(comparison_type) for comparison_type in Constraint.Comparison_Types_Supported],
         None,
         None,
         None
@@ -187,8 +189,8 @@ class Constraint_Editor(QDialog2):
         Gets called after a row has been added to the table.
         """
         self._constraint_collection.add_group(values={
-            "norm"          : Constraint.Norm_Types_List_Str[0],
-            "comparison"    : Constraint.Comparison_Types_List_Str[0],
+            "norm"          : norm_type_to_name(Constraint.Norm_Types_Supported[0]),
+            "comparison"    : comparison_type_to_name(Constraint.Comparison_Types_Supported[0]),
             "min"           : "0.0000",
             "max"           : "1.0000",
             "permeability"  : "1.0000"

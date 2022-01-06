@@ -20,15 +20,14 @@ from __future__ import annotations
 from typing import Optional
 from functools import partial
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSizePolicy
-from PyQt5.QtWidgets import QButtonGroup, QRadioButton, QCheckBox
+from PyQt5.QtWidgets import QButtonGroup, QCheckBox, QRadioButton
 from magneticalc.QDoubleSpinBox2 import QDoubleSpinBox2
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QHLine import QHLine
 from magneticalc.QIconLabel import QIconLabel
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
-from magneticalc.Field import Field
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import Field_Types_Names_Map
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
@@ -63,23 +62,17 @@ class Field_Widget(QGroupBox2):
         field_type_layout_left = QVBoxLayout()
         field_type_layout_right = QVBoxLayout()
 
-        field_type_a_radiobutton = QRadioButton(" A-Field (Vector Potential)")
-        field_type_layout_left.addWidget(field_type_a_radiobutton)
-        self.field_type_a_checkbox = QCheckBox(" Cached")
-        self.field_type_a_checkbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.field_type_a_checkbox.setEnabled(False)
-        field_type_layout_right.addWidget(self.field_type_a_checkbox)
-
-        field_type_b_radiobutton = QRadioButton(" B-Field (Flux Density)")
-        field_type_layout_left.addWidget(field_type_b_radiobutton)
-        self.field_type_b_checkbox = QCheckBox(" Cached")
-        self.field_type_b_checkbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.field_type_b_checkbox.setEnabled(False)
-        field_type_layout_right.addWidget(self.field_type_b_checkbox)
-
         self.field_type_group = QButtonGroup()
-        self.field_type_group.addButton(field_type_a_radiobutton)
-        self.field_type_group.addButton(field_type_b_radiobutton)
+        field_type_radiobuttons = {}
+        self.field_type_checkboxes = {}
+        for field_type, field_name in Field_Types_Names_Map.items():
+            field_type_radiobuttons[field_type] = QRadioButton(" " + field_name)
+            field_type_layout_left.addWidget(field_type_radiobuttons[field_type])
+            self.field_type_checkboxes[field_type] = QCheckBox(" Cached")
+            self.field_type_checkboxes[field_type].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+            self.field_type_checkboxes[field_type].setEnabled(False)
+            field_type_layout_right.addWidget(self.field_type_checkboxes[field_type])
+            self.field_type_group.addButton(field_type_radiobuttons[field_type])
 
         field_type_layout = QHBoxLayout()
         field_type_layout.addLayout(field_type_layout_left)
@@ -166,11 +159,8 @@ class Field_Widget(QGroupBox2):
         """
         Updates the controls.
         """
-        a_field_available = self.gui.model.get_valid_field(A_FIELD) is not None
-        b_field_available = self.gui.model.get_valid_field(B_FIELD) is not None
-
-        self.field_type_a_checkbox.setChecked(a_field_available)
-        self.field_type_b_checkbox.setChecked(b_field_available)
+        for field_type in Field_Types_Names_Map:
+            self.field_type_checkboxes[field_type].setChecked(self.gui.model.get_valid_field(field_type) is not None)
 
         self.indicate_valid(self.gui.model.field.valid)
 

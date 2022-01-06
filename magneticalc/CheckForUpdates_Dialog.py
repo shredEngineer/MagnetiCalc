@@ -34,7 +34,7 @@ class CheckForUpdates_Dialog(QDialog2):
 
     def __init__(self) -> None:
         """
-        Prepares the 'Check for Updates' dialog.
+        Initializes the dialog.
         """
         QDialog2.__init__(self, title="Check for Updates", width=500)
         Debug(self, ": Init", init=True)

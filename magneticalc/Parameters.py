@@ -20,11 +20,11 @@ from __future__ import annotations
 from typing import Callable
 import numpy as np
 from numba import jit, prange
+from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.ConditionalDecorator import ConditionalDecorator
-from magneticalc.Config import get_jit_enabled
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Metric import Metric
 from magneticalc.Validatable import Validatable, require_valid, validator
 
@@ -171,11 +171,11 @@ class Parameters(Validatable):
 
         progress_callback(33)
 
-        if field.get_type == A_FIELD:
+        if field.get_type == FIELD_TYPE_A:
 
             pass
 
-        elif field.get_type() == B_FIELD:
+        elif field.get_type() == FIELD_TYPE_B:
 
             dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3  # Sampling volume element
             self._energy = self.get_squared_field(sampling_volume, field) * dV / Constants.mu_0

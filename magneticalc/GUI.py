@@ -31,6 +31,7 @@ from magneticalc.Debug import Debug
 from magneticalc.Menu import Menu
 from magneticalc.Model import Model
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Project import Project
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
@@ -72,16 +73,15 @@ class GUI(QMainWindow):
         self.showMaximized()
 
         self.config = Config()
-        self.config.set_changed_callback(self.on_config_changed)
-        self.config.set_filename(self.DefaultFilename)
-        self.config.load()
+        self.config.on_changed = self.on_project_changed
+        self.open_project(self.DefaultFilename)
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
         self.calculation_start_time = time.monotonic()  # Will be overwritten by "recalculate()"
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.register(self.cleanup)
+        atexit.register(self.goodbye)
 
         # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
         self.statusbar = Statusbar(self)
@@ -147,8 +147,6 @@ class GUI(QMainWindow):
         else:
             self.redraw()
 
-    # ------------------------------------------------------------------------------------------------------------------
-
     def redraw(self) -> None:
         """
         Re-draws the scene.
@@ -166,8 +164,6 @@ class GUI(QMainWindow):
         self.sidebar_right.display_widget.setEnabled(self.model.field.valid)
 
         self.vispy_canvas.redraw()
-
-    # ------------------------------------------------------------------------------------------------------------------
 
     def recalculate(self) -> None:
         """
@@ -190,6 +186,34 @@ class GUI(QMainWindow):
         self.calculation_thread = CalculationThread(self)
         self.calculation_start_time = time.monotonic()
         self.calculation_thread.start()
+
+    def interrupt_calculation(self) -> None:
+        """
+        Kills any running calculation.
+        """
+        Debug(self, ".interrupt_calculation()")
+
+        if self.calculation_thread is None:
+            Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
+            return
+
+        if self.calculation_thread.isRunning():
+            Debug(self, ".interrupt_calculation(): WARNING: Requesting interruption", warning=True)
+            self.calculation_thread.requestInterruption()
+
+            if self.calculation_thread.wait(5000):
+                Debug(self, ".interrupt_calculation(): Exited gracefully", success=True)
+            else:
+                Assert_Dialog(False, "Failed to terminate calculation thread")
+                if self.calculation_thread is not None:
+                    if self.calculation_thread.isRunning():
+                        Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", warning=True)
+                        self.calculation_thread.terminate()
+                        self.calculation_thread.wait()
+        else:
+            Debug(self, ".interrupt_calculation(): WARNING: Calculation thread should be running", warning=True)
+
+        self.calculation_thread = None
 
     def on_calculation_exited(self, success: bool) -> None:
         """
@@ -228,68 +252,7 @@ class GUI(QMainWindow):
 
         self.statusbar.disarm(success)
 
-    def interrupt_calculation(self) -> None:
-        """
-        Kills any running calculation.
-        """
-        Debug(self, ".interrupt_calculation()")
-
-        if self.calculation_thread is None:
-            Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
-            return
-
-        if self.calculation_thread.isRunning():
-            Debug(self, ".interrupt_calculation(): WARNING: Requesting interruption", warning=True)
-            self.calculation_thread.requestInterruption()
-
-            if self.calculation_thread.wait(5000):
-                Debug(self, ".interrupt_calculation(): Exited gracefully", success=True)
-            else:
-                Assert_Dialog(False, "Failed to terminate calculation thread")
-                if self.calculation_thread is not None:
-                    if self.calculation_thread.isRunning():
-                        Debug(self, ".interrupt_calculation(): WARNING: Terminating ungracefully", warning=True)
-                        self.calculation_thread.terminate()
-                        self.calculation_thread.wait()
-        else:
-            Debug(self, ".interrupt_calculation(): WARNING: Calculation thread should be running", warning=True)
-
-        self.calculation_thread = None
-
     # ------------------------------------------------------------------------------------------------------------------
-
-    def closeEvent(self, event: QCloseEvent) -> None:
-        """
-        Gets called when the window is closed (programmatically through close() or manually)
-
-        @param event: Close event
-        """
-        Debug(self, ".closeEvent()")
-
-        closed = self.close_project(cancelable=True)
-        if not closed:
-            event.ignore()
-            return
-
-        self.cleanup()
-
-    def cleanup(self):
-        """
-        Perform clean-up upon quitting the application.
-        """
-        Debug(self, ".cleanup()")
-
-        if self.calculation_thread != QThread.currentThread():
-            if self.calculation_thread is not None:
-                self.interrupt_calculation()
-        else:
-            Debug(self, ".quit(): Called from calculation thread (assertion failed)")
-
-        print()
-        print("Goodbye!")
-
-        # Unregister exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.unregister(self.cleanup)
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
         """
@@ -329,20 +292,49 @@ class GUI(QMainWindow):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_config_changed(self) -> None:
+    def closeEvent(self, event: QCloseEvent) -> None:
         """
-        Gets called when the configuration changed.
-        """
+        Gets called when the window is closed (programmatically through close() or manually)
 
-        # Update the window title
-        self.setWindowTitle(
-            Version.String +
-            " – " +
-            self.config.get_filename() +
-            ("" if self.config.get_synced() else " *")
-        )
+        @param event: Close event
+        """
+        Debug(self, ".closeEvent()")
+
+        closed = self.close_project(cancelable=True)
+        if not closed:
+            event.ignore()
+            return
+
+        self.goodbye()
+
+    def goodbye(self):
+        """
+        Perform clean-up upon quitting the application.
+        """
+        Debug(self, ".cleanup()")
+
+        # Unregister exit handler (used by Assert_Dialog to exit gracefully)
+        atexit.unregister(self.goodbye)
+
+        if self.calculation_thread != QThread.currentThread():
+            if self.calculation_thread is not None:
+                self.interrupt_calculation()
+        else:
+            Debug(self, ".quit(): Called from calculation thread (assertion failed)")
+
+        print()
+        print("Goodbye!")
 
     # ------------------------------------------------------------------------------------------------------------------
+
+    def open_project(self, filename: str) -> None:
+        """
+        Opens a project.
+
+        @param filename: Project filename
+        """
+        self.config.load(filename=filename, default_config=Project.get_default())
+        Project.validate(self)
 
     def close_project(self, cancelable: bool) -> bool:
         """
@@ -352,7 +344,7 @@ class GUI(QMainWindow):
         @param cancelable: True to make dialog cancelable, False to make dialog non-cancelable
         @return: False if canceled, True if saved/discarded
         """
-        if not self.config.get_synced():
+        if not self.config.synced:
             Debug(self, ".close_project(): Project has unsaved changes", warning=True)
 
             messagebox = QMessageBox2(
@@ -377,7 +369,9 @@ class GUI(QMainWindow):
 
     def switch_project(self, filename: str) -> None:
         """
-        Switches to another project file.
+        Closes the current project and opens another project.
+
+        @param filename: Project filename
         """
         Debug(self, f".switch_project(): {filename}", warning=True)
 
@@ -388,7 +382,12 @@ class GUI(QMainWindow):
         with ModelAccess(self, recalculate=False):
             self.model.invalidate(do_all=True)
 
-        self.config.set_filename(filename)
-        self.config.load()
+        self.open_project(filename)
 
         self.reload()
+
+    def on_project_changed(self) -> None:
+        """
+        Gets called when the project changed.
+        """
+        self.setWindowTitle(Version.String + " – " + self.config.filename + ("" if self.config.synced else " *"))

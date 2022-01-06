@@ -21,7 +21,7 @@ from typing import Optional, Dict, Callable
 from sty import fg
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Parameters import Parameters
@@ -60,10 +60,10 @@ class Model:
         self.metric = Metric()
         self.parameters = Parameters()
 
-        self._field_type_select: int = A_FIELD
+        self._field_type_select: int = FIELD_TYPE_A
         self._field_cache: Dict[int, Field] = {
-            A_FIELD: Field(),
-            B_FIELD: Field(),
+            FIELD_TYPE_A: Field(),
+            FIELD_TYPE_B: Field(),
         }
 
     @property

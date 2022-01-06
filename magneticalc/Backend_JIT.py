@@ -20,11 +20,11 @@ from typing import Callable, Tuple, Optional
 import numpy as np
 from numba import jit, prange
 from PyQt5.QtCore import QThread
+from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.ConditionalDecorator import ConditionalDecorator
-from magneticalc.Config import get_jit_enabled
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 
 
 class Backend_JIT:
@@ -106,10 +106,10 @@ class Backend_JIT:
 
             total_calculations += 1
 
-            if field_type == A_FIELD:
+            if field_type == FIELD_TYPE_A:
                 # Calculate A-field (vector potential)
                 vector += element_direction * length_scale / scalar_distance
-            elif field_type == B_FIELD:
+            elif field_type == FIELD_TYPE_B:
                 # Calculate B-field (flux density)
                 vector += np.cross(element_direction * length_scale, vector_distance) / (scalar_distance ** 3)
 
@@ -152,7 +152,7 @@ class Backend_JIT:
                     Debug(self, ".get_result(): WARNING: Interruption requested, exiting now", warning=True)
                     return None
 
-        if self._field_type == A_FIELD or self._field_type == B_FIELD:
+        if self._field_type == FIELD_TYPE_A or self._field_type == FIELD_TYPE_B:
             vectors = np.array(vectors) * self._dc * Constants.mu_0 / 4 / np.pi
 
         self._progress_callback(100)

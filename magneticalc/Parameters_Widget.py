@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
 from magneticalc.QGroupBox2 import QGroupBox2
 from magneticalc.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Theme import Theme
 
 
@@ -113,7 +113,7 @@ class Parameters_Widget(QGroupBox2):
             )
             self.wire_length_units_label.set("cm", color=Theme.MainColor, bold=True)
 
-            if self.gui.model.field.get_type() == A_FIELD:
+            if self.gui.model.field.get_type() == FIELD_TYPE_A:
 
                 self.energy_value_label.set("", color=Theme.MainColor)
                 self.energy_units_label.set("N/A", color=Theme.MainColor)
@@ -124,7 +124,7 @@ class Parameters_Widget(QGroupBox2):
                 self.magnetic_dipole_moment_value_label.set("", color=Theme.MainColor)
                 self.magnetic_dipole_moment_units_label.set("N/A", color=Theme.MainColor)
 
-            elif self.gui.model.field.get_type() == B_FIELD:
+            elif self.gui.model.field.get_type() == FIELD_TYPE_B:
 
                 energy_value = self.gui.model.parameters.get_energy()
                 if np.isnan(energy_value):

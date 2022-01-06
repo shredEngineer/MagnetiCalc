@@ -23,7 +23,7 @@ from numba import cuda
 from PyQt5.QtCore import QThread
 from magneticalc.Constants import Constants
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import A_FIELD, B_FIELD
+from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 
 
 class Backend_CUDA:
@@ -133,14 +133,14 @@ class Backend_CUDA:
 
             total_calculations[sampling_volume_index] += 1
 
-            if field_type == A_FIELD:
+            if field_type == FIELD_TYPE_A:
 
                 # Calculate A-field (vector potential)
                 vector_x += element_directions[current_element_index][0] * length_scale / scalar_distance
                 vector_y += element_directions[current_element_index][1] * length_scale / scalar_distance
                 vector_z += element_directions[current_element_index][2] * length_scale / scalar_distance
 
-            elif field_type == B_FIELD:
+            elif field_type == FIELD_TYPE_B:
 
                 # Calculate B-field (flux density)
                 a_1 = element_directions[current_element_index][0] * length_scale
@@ -225,7 +225,7 @@ class Backend_CUDA:
             total_skipped_calculations_local = total_skipped_calculations_global.copy_to_host()
             field_vectors_local = field_vectors_global.copy_to_host()
 
-            if self._field_type == A_FIELD or self._field_type == B_FIELD:
+            if self._field_type == FIELD_TYPE_A or self._field_type == FIELD_TYPE_B:
                 # Field is A-field or B-field
                 field_vectors_local = field_vectors_local * self._dc * Constants.mu_0 / 4 / np.pi
 

@@ -226,6 +226,12 @@ The documentation for MagnetiCalc is auto-generated from docstrings in the Pytho
 
 [![Documentation](https://img.shields.io/badge/Documentation-API-orange)](https://shredengineer.github.io/MagnetiCalc/)
 
+### Debugging
+
+If desired, MagnetiCalc can be *very* verbose about everything it is doing in the terminal:
+* Some modules are blacklisted in [`Debug.py`](magneticalc/Debug.py), but this can easily be changed.  
+* Some modules also provide their own debug switches to increase the level of detail. 
+
 Data Import/Export and Python API
 ---------------------------------
 ### GUI

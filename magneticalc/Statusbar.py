@@ -243,7 +243,9 @@ class Statusbar:
         """
         Debug(self, ".cancel()")
 
-        self.gui.interrupt_calculation()
+        if self.gui.calculation_thread is not None:
+            self.gui.interrupt_calculation()
+
         self.disarm(False)
 
     def set_text(self, text: str) -> None:

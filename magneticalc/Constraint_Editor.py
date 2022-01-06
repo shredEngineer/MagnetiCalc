@@ -53,6 +53,19 @@ class Constraint_Editor(QDialog2):
         None
     ]
 
+    # HTML content
+    HTML = f"""
+        Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br>
+
+        <b style="color: {Theme.MainColor};">Experimental Feature</b><br><br>
+
+        By default, all sampling volume points have relative permeability µ<sub>r</sub> = 1.<br>
+        A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
+        Constraints of identical permeability are effectively intersected (logical AND).<br>
+        In case of ambiguous constraints, the ones with maximum permeability take precedence.<br>
+        Setting the permeability of some region to zero locally disables the field calculation.
+    """
+
     def __init__(
             self,
             gui: GUI  # type: ignore
@@ -73,10 +86,6 @@ class Constraint_Editor(QDialog2):
             first_without_suffix=False
         )
 
-        self._changed = False
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
         table_add_button = QPushButton2("Add constraint", "fa.plus", self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
@@ -94,22 +103,7 @@ class Constraint_Editor(QDialog2):
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.addWidget(self.table)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        # HTML content
-        html = f"""
-            Lengths in <b>cm</b>. &nbsp; Angles in <b>degrees</b>.<br><br>
-
-            <b style="color: {Theme.MainColor};">Experimental Feature</b><br><br>
-
-            By default, all sampling volume points have relative permeability µ<sub>r</sub> = 1.<br>
-            A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
-            Constraints of identical permeability are effectively intersected (logical AND).<br>
-            In case of ambiguous constraints, the ones with maximum permeability take precedence.<br>
-            Setting the permeability of some region to zero locally disables the field calculation.
-        """
-
-        text_browser = QTextBrowser2(html=html)
+        text_browser = QTextBrowser2(html=self.HTML)
         self.dialog_shown.connect(text_browser.fit_to_contents)
         self.addWidget(text_browser)
 
@@ -117,43 +111,42 @@ class Constraint_Editor(QDialog2):
             "OK": ("fa.check", self.accept)
         })
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         self.dialog_shown.connect(self.table.setFocus)
+
+        self._changed = False
+
+    @property
+    def changed(self) -> bool:
+        """
+        Returns the "changed" state.
+        """
+        return self._changed
+
+    @changed.setter
+    def changed(self, changed: bool) -> None:
+        """
+        Sets the "changed" state.
+        This updates the window title.
+        """
+        self._changed = changed
+        self.setWindowTitle("Constraint Editor" + (" *" if changed else ""))
 
     def reload(self) -> None:
         """
         Reloads the constraint editor.
         """
         Debug(self, ".reload()", refresh=True)
-
         self.update_table()
+        self.changed = False
 
-        self.clear_changed()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def get_changed(self) -> bool:
+    def update_table(self) -> None:
         """
-        Returns the "changed" state of the current session.
+        Populates the table.
         """
-        return self._changed
-
-    def clear_changed(self) -> None:
-        """
-        Clears the "changed" state of the current session.
-        """
-        self._changed = False
-        self.update_title()
-
-    def update_title(self) -> None:
-        """
-        Updates the window title.
-        """
-        self.setWindowTitle(
-            "Constraint Editor" +
-            (" *" if self.get_changed() else "")
-        )
+        self.table.clear_rows()
+        self.table.set_vertical_header([str(i + 1) for i in range(self.get_count())])
+        self.table.set_contents(self.get_constraints())
+        self.table.select_last_row(focus=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -175,15 +168,6 @@ class Constraint_Editor(QDialog2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update_table(self) -> None:
-        """
-        Populates the table.
-        """
-        self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(self.get_count())])
-        self.table.set_contents(self.get_constraints())
-        self.table.select_last_row(focus=False)
-
     def on_table_row_added(self) -> None:
         """
         Gets called after a row has been added to the table.
@@ -198,9 +182,7 @@ class Constraint_Editor(QDialog2):
 
         self.update_table()
         self.table.select_last_row()
-
-        self._changed = True
-        self.update_title()
+        self.changed = True
 
     def on_table_cell_edited(self, value: str, row: int, column: int):
         """
@@ -211,9 +193,7 @@ class Constraint_Editor(QDialog2):
         @param column: Column index
         """
         self._constraint_collection.set(group_index=row, key=list(self.Constraint_Types.keys())[column], value=value)
-
-        self._changed = True
-        self.update_title()
+        self.changed = True
 
     def on_table_row_deleted(self, row: int) -> None:
         """
@@ -223,6 +203,4 @@ class Constraint_Editor(QDialog2):
         """
         self._constraint_collection.del_group(row)
         self.update_table()
-
-        self._changed = True
-        self.update_title()
+        self.changed = True

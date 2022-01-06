@@ -97,13 +97,13 @@ class Config_Collection:
         @param values: Key:Value (Dictionary)
         """
         group_index = self.get_count()
-        self.gui.project.set_int(self.prefix + "count", group_index + 1)
         self.gui.project.set_get_dict(
             prefix=self.prefix,
             suffix=self._get_suffix(group_index),
             types=self.types,
             values=values,
         )
+        self.gui.project.set_int(self.prefix + "count", group_index + 1)
 
     def del_group(self, group_index: int) -> None:
         """

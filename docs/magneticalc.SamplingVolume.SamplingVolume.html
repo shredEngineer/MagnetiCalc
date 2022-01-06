@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id137">
+        <table class="children sortable" id="id141">
   
   
   <tr class="method">
@@ -82,11 +82,6 @@
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
     <td>Initializes an empty sampling volume, with zero bounds and no constraints.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#add_constraint">add_constraint</a></code></td>
-    <td>Adds some constraint to this volume's point generator.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -157,11 +152,6 @@
     <td>Class Variable</td>
     <td><code><a href="#Debug_Constraints">Debug_Constraints</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#constraints">constraints</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="property">
     
     <td>Property</td>
@@ -176,6 +166,11 @@
     
     <td>Instance Variable</td>
     <td><code><a href="#_bounds_min">_bounds_min</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_constraints">_constraints</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -218,7 +213,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
           </p>
-          <table class="children sortable" id="id138">
+          <table class="children sortable" id="id142">
   
   
   <tr class="basemethod">
@@ -263,25 +258,6 @@
     <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
     
     <div>Initializes an empty sampling volume, with zero bounds and no constraints.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.SamplingVolume.SamplingVolume.add_constraint">
-    
-  </a>
-  <a name="add_constraint">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">add_constraint</span>(self, constraint):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Adds some constraint to this volume's point generator.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">constraint:</span><code><a href="magneticalc.Constraint.Constraint.html">Constraint</a></code></td><td class="fieldArgDesc">Constraint</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -484,13 +460,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, resolution, label_resolution):
+    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, resolution, label_resolution, constraints):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">resolution:</span><code>float</code></td><td class="fieldArgDesc">Resolution</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">label_resolution:</span><code>float</code></td><td class="fieldArgDesc">Label resolution</td></tr></table></div>
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">resolution:</span><code>float</code></td><td class="fieldArgDesc">Resolution</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">label_resolution:</span><code>float</code></td><td class="fieldArgDesc">Label resolution</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">constraints:</span><code>List[<wbr></wbr><a href="magneticalc.Constraint.Constraint.html">Constraint</a>]</code></td><td class="fieldArgDesc">List of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -554,26 +530,6 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
-  
-  
-  <a name="magneticalc.SamplingVolume.SamplingVolume.constraints">
-    
-  </a>
-  <a name="constraints">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">constraints</span>: <code>list</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
 </div><div class="baseproperty">
   
   
@@ -626,6 +582,26 @@
   <div class="functionHeader">
     
     <span class="py-defname">_bounds_min</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.SamplingVolume.SamplingVolume._constraints">
+    
+  </a>
+  <a name="_constraints">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_constraints</span> =
     
   </div>
   <div class="functionBody">
@@ -784,7 +760,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 15:11:21.
+    21.12.0 at 2022-01-06 20:52:40.
   </div>
 </footer>
 

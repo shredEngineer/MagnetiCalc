@@ -80,12 +80,8 @@ class SamplingVolume_Widget(QGroupBox2):
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         # Insert constraint editor, but don't fully initialize it yet
         self.constraint_editor = Constraint_Editor(self.gui)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         padding_icon_label = QIconLabel("Padding", "mdi.arrow-expand-all")
         padding_override_button = QPushButton2("  Override …  ", "", self.override_padding)
@@ -300,11 +296,9 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.constraint_editor.show()
 
-        if self.constraint_editor.get_changed():
-
+        if self.constraint_editor.changed:
             self.set_sampling_volume()
-
-            self.constraint_editor.clear_changed()
+            self.constraint_editor.changed = False
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -350,18 +344,11 @@ class SamplingVolume_Widget(QGroupBox2):
             resolution = np.power(2.0, resolution_exponent)
             label_resolution = np.power(2.0, label_resolution_exponent)
 
-            self.gui.model.set_sampling_volume(
-                invalidate=invalidate,
-                resolution=resolution,
-                label_resolution=label_resolution
-            )
-
-            self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)
-
-            # Load sampling volume constraints from project
+            # Convert every line in the constraint editor to a Constraint() object
+            constraints = []
             for constraint in self.constraint_editor.get_constraints():
-                Debug(self, f".set_sampling_volume(): Loading Constraint: {constraint}")
-                self.gui.model.sampling_volume.add_constraint(
+                Debug(self, f".set_sampling_volume(): Constraint: {constraint}")
+                constraints.append(
                     Constraint(
                         norm_name_to_type(constraint["norm"]),
                         comparison_name_to_type(constraint["comparison"]),
@@ -370,6 +357,15 @@ class SamplingVolume_Widget(QGroupBox2):
                         constraint["permeability"]
                     )
                 )
+
+            self.gui.model.set_sampling_volume(
+                invalidate=invalidate,
+                resolution=resolution,
+                label_resolution=label_resolution,
+                constraints=constraints
+            )
+
+            self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)
 
             if recalculate:
                 # The display widget depends on the sampling volume

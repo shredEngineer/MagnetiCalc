@@ -29,6 +29,9 @@ class View_Menu(QMenu):
             self,
             gui: GUI  # type: ignore
     ):
+        """
+        Initializes the menu.
+        """
         QMenu.__init__(self, "&View")
         Debug(self, ": Init", init=True)
         self.gui = gui

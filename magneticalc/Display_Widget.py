@@ -399,7 +399,7 @@ class Display_Widget(QGroupBox2):
                 "Field labels were disabled automatically because\n"
                 "an excessive number of field labels was detected.\n\n"
 
-                "You may manually re-enable field labels\n"
+                "You can manually re-enable field labels\n"
                 "after all calculations have finished."
             )
             QMessageBox2(

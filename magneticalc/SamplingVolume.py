@@ -38,8 +38,6 @@ class SamplingVolume(Validatable):
         Validatable.__init__(self)
         Debug(self, ": Init", init=True)
 
-        self.constraints = []
-
         self._bounds_min = np.zeros(3)
         self._bounds_max = np.zeros(3)
         self._dimension: Tuple[int, int, int] = (0, 0, 0)
@@ -51,20 +49,24 @@ class SamplingVolume(Validatable):
 
         self._resolution = 0
         self._label_resolution = 0
+        self._constraints = []
 
     def set(
             self,
             resolution: float,
-            label_resolution: float
+            label_resolution: float,
+            constraints: List[Constraint]
     ) -> None:
         """
         Sets the parameters.
 
         @param resolution: Resolution
         @param label_resolution: Label resolution
+        @param constraints: List of constraints
         """
         self._resolution = resolution
         self._label_resolution = label_resolution
+        self._constraints = constraints
 
         Assert_Dialog(resolution > 0, "Resolution must be > 0")
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
@@ -191,18 +193,6 @@ class SamplingVolume(Validatable):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def add_constraint(self, constraint: Constraint) -> None:
-        """
-        Adds some constraint to this volume's point generator.
-
-        @param constraint: Constraint
-        """
-        Debug(self, ".add_constraint()")
-
-        self.constraints.append(constraint)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
     @validator
     def recalculate(self, progress_callback: Callable) -> bool:
         """
@@ -215,7 +205,7 @@ class SamplingVolume(Validatable):
 
         # Group constraints by permeability
         constraints_precedence_dict: Dict = {}
-        for constraint in self.constraints:
+        for constraint in self._constraints:
             if constraint.permeability in constraints_precedence_dict:
                 constraints_precedence_dict[constraint.permeability].append(constraint)
             else:
@@ -413,7 +403,7 @@ class SamplingVolume(Validatable):
         Debug(
             self,
             ".recalculate(): "
-            f"{len(self.constraints)} constraints left {n} of {len(self._points)} possible points"
+            f"{len(self._constraints)} constraints left {n} of {len(self._points)} possible points"
         )
 
         if len(self._points) == 0:

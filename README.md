@@ -253,11 +253,11 @@ from magneticalc import API
 import numpy as np
 
 wire = [
-    (np.cos(a), np.sin(a), np.sin(16 * a))
+    (np.cos(a), np.sin(a), np.sin(16 * a) / 5)
     for a in np.linspace(0, 2 * np.pi, 200)
 ]
 
-API.export_wire("MyWire.txt", wire)
+API.export_wire("My Wire.txt", wire)
 ```
 
 #### Example: Field Import
@@ -269,16 +269,14 @@ and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
 from magneticalc import API
 import matplotlib.pyplot as plt
 
-data = API.import_hdf5("MagnetiCalc_Export_A.hdf5")
+data = API.import_hdf5("examples/My Export.hdf5")
 axes = data.get_axes()
 a_field = data.get_a_field()
 
-ax = plt.figure(figsize=(10, 10), dpi=150).add_subplot(projection="3d")
-ax.quiver(*axes, *a_field, length=5e5, normalize=False, linewidth=2)
+ax = plt.figure(figsize=(5, 5), dpi=150).add_subplot(projection="3d")
+ax.quiver(*axes, *a_field, length=1e5, normalize=False, linewidth=.5)
 plt.show()
 ```
-
-*Note:* The required HDF5 file needs to be exported using the GUI first.
 
 The imported data is wrapped in a [`MagnetiCalc_Data`](magneticalc/MagnetiCalc_Data.py) object
 ([documentation](https://shredengineer.github.io/MagnetiCalc/magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html))
@@ -299,13 +297,8 @@ which provides convenience functions for accessing, transforming and reshaping t
 
 ToDo
 ----
-**General**
-* Move from `INI` format to [HDF5](https://www.h5py.org/) format for storing project data;
-  make auto-generated `MagnetiCalc.ini` a global settings file instead.
-  (Retain option to import old `MagnetiCalc.ini` files.)
-* Add a global settings dialog for some selection of options currently hard-coded in various classes.
-
 **Functional**
+* Add a histogram for every metric.
 * Add an overlay for vector metrics, like gradient or curvature
   (derived from the fundamental
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
@@ -315,6 +308,7 @@ ToDo
   move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
 * Interactively display superposition of fields with varying currents.
+* Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
 * Highlight permeability classes with
   <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
@@ -322,7 +316,6 @@ ToDo
 * Provide a means to emulate permanent magnets.
 
 **Usability**
-* Add more example projects to `examples/`.
 * Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu;
   alternatively, provide a dialog for parametric generation.
 * Add stationary coordinate system and ruler in the bottom left corner.

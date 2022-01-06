@@ -51,9 +51,7 @@ class Constraint:
     ]
 
     """ Supported comparison types. """
-    Comparison_Types_Supported = [
-        COMPARISON_TYPE_IN_RANGE
-    ]
+    Comparison_Types_Supported = list(Comparison_Types_Names_Map.keys())
 
     def __init__(self, norm_type: int, comparison_type: int, _min: float, _max: float, permeability: float):
         """
@@ -68,13 +66,24 @@ class Constraint:
         norm_type = norm_type_safe(norm_type)
         comparison_type = comparison_type_safe(comparison_type)
 
-        self._is_angle = norm_type in self.Norm_Types_Supported_Degrees
-
         self._norm_type = norm_type
         self._comparison_type = comparison_type
 
         self._min = _min
         self._max = _max
+
+        if norm_type in self.Norm_Types_Supported_Degrees:
+            # Clip angles to range
+            self._min %= 360
+            self._max %= 360
+
+            # Normalize angles
+            self._min /= 360.0
+            self._max /= 360.0
+
+            # Ensure monotonicity
+            if self._min > self._max:
+                self._min, self._max = self._max, self._min
 
         self.permeability = permeability
 
@@ -86,14 +95,13 @@ class Constraint:
         """
         norm = metric_norm(self._norm_type, point)
 
-        # Perform comparison
         if self._comparison_type == COMPARISON_TYPE_IN_RANGE:
 
-            if self._is_angle:
-                # Convert normalized angle to degrees
-                norm *= 360
-
             return self._min <= norm <= self._max
+
+        elif self._comparison_type == COMPARISON_TYPE_NOT_IN_RANGE:
+
+            return not self._min <= norm <= self._max
 
         else:
             # Invalid comparison ID

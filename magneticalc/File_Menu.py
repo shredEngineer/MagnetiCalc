@@ -32,6 +32,9 @@ class File_Menu(QMenu):
             self,
             gui: GUI  # type: ignore
     ):
+        """
+        Initializes the menu.
+        """
         QMenu.__init__(self, "&File")
         Debug(self, ": Init", init=True)
         self.gui = gui
@@ -39,14 +42,14 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.file"),
             "&New Project …",
-            self.file_new,
+            self.new_project,
             Qt.CTRL + Qt.Key_N
         )
 
         self.addAction(
             qta.icon("fa.folder"),
             "&Open Project …",
-            self.file_open,
+            self.open_project,
             Qt.CTRL + Qt.Key_O
         )
 
@@ -60,8 +63,15 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.save"),
             "Save Project &As …",
-            self.file_save_as,
+            self.save_project_as,
             Qt.CTRL + Qt.SHIFT + Qt.Key_S
+        )
+
+        self.addAction(
+            qta.icon("fa.times"),
+            "Close Project",
+            self.close_project,
+            Qt.CTRL + Qt.Key_C
         )
 
         self.addSeparator()
@@ -69,15 +79,15 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.picture-o"),
             "Export &Image …",
-            self.file_export_image,
+            self.export_image,
             Qt.CTRL + Qt.Key_I
         )
 
         self.addAction(
             qta.icon("fa.folder"),
-            "Export &Container …",
+            "&Export Container …",
             lambda: ExportContainer_Dialog(self.gui).show(),
-            Qt.CTRL + Qt.Key_C
+            Qt.CTRL + Qt.Key_E
         )
 
         self.addSeparator()
@@ -97,17 +107,14 @@ class File_Menu(QMenu):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def file_new(self) -> None:
+    def new_project(self) -> None:
         """
-        Opens a project from an INI file.
+        Creates a new project with an INI file.
         """
-        Debug(self.gui, ".file_new()")
+        Debug(self.gui, ".new_project()")
 
-        # Stop any running calculation
         if self.gui.calculation_thread is not None:
-            if self.gui.calculation_thread.isRunning():
-                # Cancel the running calculation
-                self.gui.interrupt_calculation()
+            self.gui.interrupt_calculation()
 
         action = QSaveAction(
             self.gui,
@@ -118,20 +125,16 @@ class File_Menu(QMenu):
             _filter="MagnetiCalc Project (*.ini)"
         )
         if action.filename:
-            # This just works because the default project is written to the specified filename if the file doesn't exist
             self.gui.project.switch(action.filename)
 
-    def file_open(self) -> None:
+    def open_project(self) -> None:
         """
         Opens a project from an INI file.
         """
-        Debug(self.gui, ".file_open()")
+        Debug(self.gui, ".open_project()")
 
-        # Stop any running calculation
         if self.gui.calculation_thread is not None:
-            if self.gui.calculation_thread.isRunning():
-                # Cancel the running calculation
-                self.gui.interrupt_calculation()
+            self.gui.interrupt_calculation()
 
         filename, _chosen_extension = QFileDialog.getOpenFileName(
             parent=self.gui,
@@ -143,11 +146,11 @@ class File_Menu(QMenu):
         if filename != "":
             self.gui.project.switch(filename)
 
-    def file_save_as(self) -> None:
+    def save_project_as(self) -> None:
         """
         Saves the project to an INI file.
         """
-        Debug(self.gui, ".file_save_as()")
+        Debug(self.gui, ".save_project_as()")
 
         action = QSaveAction(
             self.gui,
@@ -160,11 +163,22 @@ class File_Menu(QMenu):
         if action.filename:
             self.gui.project.save_file(filename=action.filename)
 
-    def file_export_image(self) -> None:
+    def close_project(self) -> None:
+        """
+        Closes the project and loads the default project.
+        """
+        Debug(self.gui, ".close_project()")
+
+        if self.gui.calculation_thread is not None:
+            self.gui.interrupt_calculation()
+
+        self.gui.project.switch(self.gui.DefaultProjectFilename)
+
+    def export_image(self) -> None:
         """
         Exports the currently displayed scene to a PNG file.
         """
-        Debug(self.gui, ".file_export_image()")
+        Debug(self.gui, ".export_image()")
 
         action = QSaveAction(
             self.gui,

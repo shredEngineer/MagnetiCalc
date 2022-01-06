@@ -85,13 +85,8 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#clear_changed">clear_changed</a></code></td>
-    <td>Clears the "changed" state of the current session.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_changed">get_changed</a></code></td>
-    <td>Returns the "changed" state of the current session.</td>
+    <td><code><a href="#changed.setter">changed.setter</a></code></td>
+    <td>Sets the "changed" state. This updates the window title.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -127,11 +122,11 @@
     <td>Method</td>
     <td><code><a href="#update_table">update_table</a></code></td>
     <td>Populates the table.</td>
-  </tr><tr class="method">
+  </tr><tr class="constant">
     
-    <td>Method</td>
-    <td><code><a href="#update_title">update_title</a></code></td>
-    <td>Updates the window title.</td>
+    <td>Constant</td>
+    <td><code><a href="#HTML">HTML</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
@@ -142,6 +137,11 @@
     <td>Class Variable</td>
     <td><code><a href="#Constraint_Types">Constraint_Types</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#changed">changed</a></code></td>
+    <td>Returns the "changed" state.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
@@ -261,40 +261,21 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.clear_changed">
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.changed.setter">
     
   </a>
-  <a name="clear_changed">
+  <a name="changed.setter">
     
   </a>
   <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">clear_changed</span>(self):
+    @<a href="#changed.setter">changed.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">changed</span>(self, changed):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Clears the "changed" state of the current session.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_changed">
-    
-  </a>
-  <a name="get_changed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_changed</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns the "changed" state of the current session.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div>Sets the "changed" state. This updates the window title.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">changed:</span><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -429,24 +410,32 @@
     
     <div>Populates the table.</div>
   </div>
-</div><div class="basemethod">
+</div><div class="baseconstant">
   
   
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.update_title">
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.HTML">
     
   </a>
-  <a name="update_title">
+  <a name="HTML">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_title</span>(self):
+    <span class="py-defname">HTML</span> =
     
   </div>
-  <div class="docstring functionBody">
+  <div class="functionBody">
     
     
-    <div>Updates the window title.</div>
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>f"""
+        Lengths in &lt;b&gt;cm&lt;/b&gt;. &amp;nbsp; Angles in &lt;b&gt;degrees&lt;/b&gt;.&lt;br&gt;&lt;br&gt;
+
+        &lt;b style="color: {Theme.MainColor};"&gt;Experimental Feature&lt;/b&gt;&lt;br&gt;&lt;br&gt;
+
+        By default, all sampling volume points have relative permeability µ&lt;sub&gt;<span class="rst-variable-linewrap">↵</span>
+r&lt;/sub&gt; = 1.&lt;br&gt;
+<span class="rst-variable-ellipsis">...</span></code></pre></td></tr></table>
   </div>
 </div><div class="baseclassvariable">
   
@@ -486,6 +475,26 @@
     
     
     <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.changed">
+    
+  </a>
+  <a name="changed">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">changed</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns the "changed" state.</div>
     
   </div>
 </div><div class="baseinstancevariable">
@@ -539,7 +548,7 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_changed</span>: <code>bool</code> =
+    <span class="py-defname">_changed</span> =
     
   </div>
   <div class="functionBody">
@@ -578,7 +587,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 15:11:21.
+    21.12.0 at 2022-01-06 20:52:40.
   </div>
 </footer>
 

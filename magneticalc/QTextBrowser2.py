@@ -40,7 +40,6 @@ class QTextBrowser2(QTextBrowser):
         self.setStyleSheet("""
             background: palette(window);
             border: none;
-            line-height: 20px;
         """)
 
         if html:

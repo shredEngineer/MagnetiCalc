@@ -60,16 +60,19 @@ class Config(metaclass=abc.ABCMeta):
         self._parser = configparser.ConfigParser()
         self._parser.read(self.filename)
         self._parser["DEFAULT"] = default_config
+        self.synced = True
 
         if "User" not in self._parser:
             Debug(self, ".load_file(): Creating empty User section")
             self._parser["User"] = {}
+            self.synced = False
 
         if not os.path.isfile(self.filename):
-            Debug(self, f".load(): Creating file: {Format.filename_uri(self.filename)}")
-            self.save_file()
+            Debug(
+                self, f".load_file(): WARNING: File does not exist: {Format.filename_uri(self.filename)}", warning=True
+            )
+            self.synced = False
 
-        self.synced = True
         self.on_changed()
 
     def save_file(self, filename: Optional[str] = None) -> None:
@@ -132,17 +135,20 @@ class Config(metaclass=abc.ABCMeta):
 
     def set_str(self, key: str, value: str) -> None:
         """
-        Writes a configuration value. Key must be in "Default" section and may be overridden in "User" section.
+        Writes a configuration value.
 
         @param key: Key
         @param value: Value
         """
         assert self._parser is not None, "Not initialized"
 
-        old_value = self._parser.get("User", key)
+        old_value = self._parser.get("User", key, fallback=None)
         if old_value != value:
             if self.DebugAccess:
-                Debug(self, f".set_str(\"{key}\"): Changing \"{old_value}\" to \"{value}\"")
+                if old_value is None:
+                    Debug(self, f".set_str(\"{key}\"): Created key with value \"{value}\"")
+                else:
+                    Debug(self, f".set_str(\"{key}\"): Changing \"{old_value}\" to \"{value}\"")
             self._parser.set("User", key, value)
             self.synced = False
             self.on_changed()
@@ -152,14 +158,15 @@ class Config(metaclass=abc.ABCMeta):
 
     def get_str(self, key: str) -> str:
         """
-        Reads a configuration value. Key must be in "Default" section and may be overridden in "User" section.
+        Reads a configuration value.
 
         @param key: Key
         @return: Value
         """
         assert self._parser is not None, "Not initialized"
 
-        value = self._parser.get("User", key)
+        value = self._parser.get("User", key, fallback=None)
+        assert value is not None, f"Attempting to read non-existing key: {key}"
 
         if self.DebugAccess:
             Debug(self, f".get_str(\"{key}\") = \"{value}\"")

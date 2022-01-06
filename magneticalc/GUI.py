@@ -46,7 +46,7 @@ class GUI(QMainWindow):
     MinimumWindowSize = (800, 600)
 
     # Default project filename
-    DefaultFilename = "MagnetiCalc-DefaultProject.ini"
+    DefaultProjectFilename = "MagnetiCalc-DefaultProject.ini"
 
     # These signals are fired from the calculation thread
     calculation_status = pyqtSignal(str)
@@ -69,7 +69,7 @@ class GUI(QMainWindow):
         self.showMaximized()
 
         self.project = Project(self)
-        self.project.open(self.DefaultFilename)
+        self.project.open(self.DefaultProjectFilename)
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
@@ -186,8 +186,6 @@ class GUI(QMainWindow):
         """
         Kills any running calculation.
         """
-        Debug(self, ".interrupt_calculation()")
-
         if self.calculation_thread is None:
             Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
             return

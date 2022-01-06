@@ -28,47 +28,51 @@ class Usage_Dialog(QDialog2):
     # HTML content
     HTML = f"""
         <h3 style="color: {Theme.MainColor};">First Steps</h3>
+        <h4>
+            MagnetiCalc loads a very simple magnetic setup by default.<br>
+            Follow these steps to turn it into your own custom setup:
+        </h4>
         <ul>
             <li>
-                Go to <b>Wire › Load Preset</b> to select a basic wire shape.<br>
-                You may also import (export) wire points from (to) a TXT file created using NumPy.
+                Go to <i>Wire</i> › <i>Load Preset</i> to select a basic wire shape.<br>
+                (But you could also import/export wire points from/to a TXT file.)
             </li>
-            <li>Customize the wire's base points inside the spreadsheet.</li>
-            <li>Apply some transformations to your basic wire; stretch or rotate its shape.</li>
-            <li>Reduce the slicer limit to improve the field calculation accuracy.</li>
-            <li>Set the electrical current flowing through your wire.</li>
         </ul>
-
+        <ul>
+            <li>
+                Customize the wire's base points inside the spreadsheet.<br>
+                Apply some transformations to your basic wire; stretch its shape, rotate or duplicate it.<br>
+                Reduce the slicer limit to improve the field calculation accuracy.<br>
+                Set the electrical current flowing through your wire.
+            </li>
+        </ul>
         <ul>
             <li>
                 The sampling volume is the grid over which the field is calculated;<br>
-                increase its resolution to the desired level to show every detail of the field.
-            </li>
-            <li>
-                By default, the cuboid sampling volume covers the wire completely;<br>
-                however, you may symmetrically adjust its bounding box by adding (subtracting) some padding.<br>
-                By setting <i>negative</i> padding, you may reduce the sampling volume to a plane, line or point.
-            </li>
-            <li>
-                <i>Experimental Feature:</i>
-                Use the constraint editor to create regions of relative permeability µ<sub>r</sub> ≠ 1.<br>
-                Constraints may also be used to selectively <i>disable</i> calculation over some regions.
+                increase its resolution to the desired level to show every detail of the field.<br>
+                <i>Warning:</i> Detailed sampling volumes can take a considerable amount of time to compute.<br>
+                <b>Please note that you can disable Auto-Calculation at any time.<br>
+                You can and hit F5 or ESC to start or stop the calculation on demand.</b>
             </li>
         </ul>
-
         <ul>
             <li>
-                Select the type of field to calculate:
-                A-field (vector potential) or
-                B-field (flux density).
+                By default, the cuboid sampling volume covers the wire completely;<br>
+                however, you can symmetrically adjust its bounding box by adding (subtracting) some padding.<br>
+                By setting a <i>negative</i> padding, you can reduce the sampling volume to a plane, line or point.<br>
+                <i>Experimental Feature:</i>
+                Use the constraint editor to create regions of relative permeability µ<sub>r</sub> ≠ 1.<br>
+                Constraints can also be used to selectively <i>disable</i> calculation over some regions.
             </li>
+        </ul>
+        <ul>
             <li>
-                Current element center points may be located very close to sampling volume points;<br>
+                Select the type of field to calculate: A-field (vector potential) or B-field (flux density).<br>
+                <i>Note:</i> Current element center points may be located very close to sampling volume points;<br>
                 as this distance approaches zero, the field magnitude approaches infinity (singular behaviour).<br>
                 Therefore, some distance limit must be set to cut off (skip) these infinities during calculation.
             </li>
         </ul>
-
         <ul>
             <li>
                 Select a color/alpha metric to adjust the field's hue/transparency individually.<br>
@@ -76,25 +80,23 @@ class Usage_Dialog(QDialog2):
                 however, the displayed metric limits linearly scale with the DC current.
             </li>
         </ul>
-
         <ul>
-            <li>Take a look at the minimum and maximum magnetic flux densities reached in each metric.</li>
             <li>
-                For a more accurate coil energy and self-inductance calculation,<br>
+                Take a look at the minimum and maximum magnetic flux densities reached in each metric.<br>
+                <i>Note:</i> To achieve an accurate coil energy and self-inductance calculation,<br>
                 ensure that the sampling volume encloses a large, non-singular portion of the field.
             </li>
         </ul>
-
         <ul>
-            <li>Use the scroll wheel to zoom in and out of the 3D scene.</li>
-            <li>Click and drag into the 3D scene to rotate.</li>
-            <li>Press SHIFT while dragging to <i>move</i> the entire 3D scene.</li>
-            <li>If you like the result, press CTRL+I to save a screenshot!</li>
-            <li>You may also export the fields, wire and current to an HDF5 container for use in post-processing.</li>
+            <li>
+                Use the scroll wheel to zoom in and out of the 3D scene.<br>
+                Click and drag into the 3D scene to rotate.<br>
+                Press SHIFT while dragging to <i>move</i> the entire 3D scene.<br>
+                If you like the result, press CTRL+I to save a screenshot.<br>
+                You can also export the fields, wire and current to an HDF5 container for use in post-processing.<br>
+                Finally, make sure to save your project!
+            </li>
         </ul>
-
-        All settings (including your wire shape) are stored in the <code>MagnetiCalc.ini</code> file by default.<br>
-        Deleting or renaming this file will restore the default settings.
 
         <h3 style="color: {Theme.MainColor};">What does MagnetiCalc do?</h3>
 
@@ -117,7 +119,7 @@ class Usage_Dialog(QDialog2):
 
         <h3 style="color: {Theme.MainColor};">How does it work?</h3>
 
-        The B-field calculation is implemented using the Biot-Savart law [1],
+        The B-field calculation is implemented using the Biot-Savart law [<b>1</b>],
         employing multiprocessing techniques;
         MagnetiCalc uses just-in-time compilation (JIT) and, if available, GPU-acceleration (CUDA)
         to achieve high-performance calculations.
@@ -133,16 +135,17 @@ class Usage_Dialog(QDialog2):
         At each grid point, the field is displayed using colored arrows and/or dots;
         field color and alpha transparency are individually mapped using one of the various available metrics.<br><br>
 
-        The coil's energy [2] and self-inductance [3]
+        The coil's energy [<b>2</b>] and self-inductance [<b>3</b>]
         are calculated by summing the squared B-field over the entire sampling volume;
         ensure that the sampling volume encloses a large, non-singular portion of the field.<br><br>
 
-        Additionally, the scalar magnetic dipole moment [4] is calculated by summing over all current elements.<br><br>
+        Additionally, the scalar magnetic dipole moment [<b>4</b>]
+        is calculated by summing over all current elements.<br><br>
 
-        [1]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
-        [2]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
-        [3]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
-        [4]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).<br>
+        [<b>1</b>]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 204, (5.4).<br>
+        [<b>2</b>]: Kraus, Electromagnetics, 4th Edition, p. 269, 6-9-1.<br>
+        [<b>3</b>]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 252, (5.157).<br>
+        [<b>4</b>]: Jackson, Klassische Elektrodynamik, 5. Auflage, S. 216, (5.54).<br>
 
         <br><br><span style="color: {Theme.MainColor};">
             This and more information about MagnetiCalc can be found in the <code>README.md</code> file and on GitHub.

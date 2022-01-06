@@ -81,26 +81,31 @@
     
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Initializes the menu.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#file_export_image">file_export_image</a></code></td>
+    <td><code><a href="#close_project">close_project</a></code></td>
+    <td>Closes the project and loads the default project.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#export_image">export_image</a></code></td>
     <td>Exports the currently displayed scene to a PNG file.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#file_new">file_new</a></code></td>
+    <td><code><a href="#new_project">new_project</a></code></td>
+    <td>Creates a new project with an INI file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#open_project">open_project</a></code></td>
     <td>Opens a project from an INI file.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#file_open">file_open</a></code></td>
-    <td>Opens a project from an INI file.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#file_save_as">file_save_as</a></code></td>
+    <td><code><a href="#save_project_as">save_project_as</a></code></td>
     <td>Saves the project to an INI file.</td>
   </tr><tr class="method">
     
@@ -138,20 +143,39 @@
   <div class="docstring functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div>Initializes the menu.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.File_Menu.File_Menu.file_export_image">
+  <a name="magneticalc.File_Menu.File_Menu.close_project">
     
   </a>
-  <a name="file_export_image">
+  <a name="close_project">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">file_export_image</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">close_project</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Closes the project and loads the default project.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.File_Menu.File_Menu.export_image">
+    
+  </a>
+  <a name="export_image">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">export_image</span>(self):
     
   </div>
   <div class="docstring functionBody">
@@ -162,15 +186,34 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.File_Menu.File_Menu.file_new">
+  <a name="magneticalc.File_Menu.File_Menu.new_project">
     
   </a>
-  <a name="file_new">
+  <a name="new_project">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">file_new</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">new_project</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Creates a new project with an INI file.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.File_Menu.File_Menu.open_project">
+    
+  </a>
+  <a name="open_project">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">open_project</span>(self):
     
   </div>
   <div class="docstring functionBody">
@@ -181,34 +224,15 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.File_Menu.File_Menu.file_open">
+  <a name="magneticalc.File_Menu.File_Menu.save_project_as">
     
   </a>
-  <a name="file_open">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">file_open</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Opens a project from an INI file.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.File_Menu.File_Menu.file_save_as">
-    
-  </a>
-  <a name="file_save_as">
+  <a name="save_project_as">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">file_save_as</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">save_project_as</span>(self):
     
   </div>
   <div class="docstring functionBody">
@@ -265,7 +289,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 15:11:21.
+    21.12.0 at 2022-01-06 20:52:40.
   </div>
 </footer>
 

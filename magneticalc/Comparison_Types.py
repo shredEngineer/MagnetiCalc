@@ -22,10 +22,14 @@ from magneticalc.Assert_Dialog import Assert_Dialog
 """ Comparison type: In Range. """
 COMPARISON_TYPE_IN_RANGE = 0
 
+""" Comparison type: Not In Range. """
+COMPARISON_TYPE_NOT_IN_RANGE = 1
+
 
 """ Map of comparison types to names. """
 Comparison_Types_Names_Map = {
-    COMPARISON_TYPE_IN_RANGE    : "In Range"
+    COMPARISON_TYPE_IN_RANGE        : "In Range",
+    COMPARISON_TYPE_NOT_IN_RANGE    : "Not In Range",
 }
 
 """ Default comparison type. """

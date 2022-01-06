@@ -35,6 +35,9 @@ class Wire_Menu(QMenu):
             self,
             gui: GUI  # type: ignore
     ):
+        """
+        Initializes the menu.
+        """
         QMenu.__init__(self, "&Wire")
         Debug(self, ": Init", init=True)
         self.gui = gui

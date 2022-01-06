@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Upload to TestPyPI
+# Upload-to-TestPyPI
 # Prerequisites:
 #     python3 -m pip install --upgrade --user setuptools wheel
 #     ~/.pypirc:  See: https://packaging.python.org/en/latest/specifications/pypirc/

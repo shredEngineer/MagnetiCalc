@@ -352,7 +352,7 @@ class Model:
         Debug(self, ".on_wire_valid()")
 
         self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.update()
+        self.gui.menu.wire_menu.update()
 
     def on_sampling_volume_valid(self) -> None:
         """
@@ -399,7 +399,7 @@ class Model:
         Debug(self, ".on_wire_invalid()")
 
         self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.update()
+        self.gui.menu.wire_menu.update()
 
     def on_sampling_volume_invalid(self) -> None:
         """

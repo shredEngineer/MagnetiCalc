@@ -5,7 +5,7 @@ MagnetiCalc
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TN6YTPVX36YHA&source=url)
 [![Documentation](https://img.shields.io/badge/Documentation-API-orange)](https://shredengineer.github.io/MagnetiCalc/)
 
-🍀 Always looking for beta testers!
+🍀 [Always looking for beta testers!](#contribute)
 
 **What does MagnetiCalc do?**
 
@@ -212,7 +212,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Contribute
 ----------
-You are invited to contribute to MagnetiCalc in any way you like! 😃
+**You** are invited to contribute to MagnetiCalc!
+
+General feedback, Issues and Pull Requests are always welcome.
 
 If this software has been helpful to you in some way or another, please let me and others know!
 

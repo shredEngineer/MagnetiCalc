@@ -32,7 +32,7 @@ class Assert_Dialog:
         """
         Shows a user dialog if an assertion failed. Intended for beta-testing.
         This allows the user to either quit or resume (possibly resulting in unstable behaviour).
-        Furthermore, it provides a link for filing an issue on GitHub (partially pre-filled).
+        Furthermore, it provides a link for filing an issue on GitHub (partially prefilled).
 
         @param assertion: Boolean
         @param message: Error message

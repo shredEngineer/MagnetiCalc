@@ -140,19 +140,19 @@ class Metric_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        color_metric = self.gui.config.get_str("color_metric")
+        color_metric = self.gui.project.get_str("color_metric")
         for i, preset in enumerate(Metric_Presets.List):
             if preset["id"] == color_metric:
                 self.color_metric_combobox.setCurrentIndex(i)
 
-        alpha_metric = self.gui.config.get_str("alpha_metric")
+        alpha_metric = self.gui.project.get_str("alpha_metric")
         for i, preset in enumerate(Metric_Presets.List):
             if preset["id"] == alpha_metric:
                 self.alpha_metric_combobox.setCurrentIndex(i)
 
         self.blockSignals(False)
 
-        # Initially load metric from configuration
+        # Initially load metric from project
         self.set_metric(recalculate=False, update_labels=False, invalidate=False)
 
         self.update()
@@ -176,7 +176,7 @@ class Metric_Widget(QGroupBox2):
 
             limits = self.gui.model.metric.get_limits()
 
-            show_gauss = self.gui.config.get_bool("show_gauss")
+            show_gauss = self.gui.project.get_bool("show_gauss")
             field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
 
             if self.gui.model.metric.get_color_preset()["is_angle"]:
@@ -296,7 +296,7 @@ class Metric_Widget(QGroupBox2):
         @param _color_preset_: Color metric preset (parameters, see Metric module)
         @param _alpha_preset_: Alpha metric preset (parameters, see Metric module)
         @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final re-calculation
+        @param recalculate: Enable to trigger final recalculation
         @param update_labels: Enable to update metric labels
         """
         if self.signalsBlocked():
@@ -306,18 +306,16 @@ class Metric_Widget(QGroupBox2):
 
         with ModelAccess(self.gui, recalculate):
 
-            # Note: Not using self.gui.config.write_read_str here because we're translating between strings and presets
-
             if _color_preset_ is None:
-                color_preset = Metric_Presets.get_by_id(self.gui.config.get_str("color_metric"))
+                color_preset = Metric_Presets.get_by_id(self.gui.project.get_str("color_metric"))
             else:
-                self.gui.config.set_str("color_metric", _color_preset_["id"])
+                self.gui.project.set_str("color_metric", _color_preset_["id"])
                 color_preset = _color_preset_
 
             if _alpha_preset_ is None:
-                alpha_preset = Metric_Presets.get_by_id(self.gui.config.get_str("alpha_metric"))
+                alpha_preset = Metric_Presets.get_by_id(self.gui.project.get_str("alpha_metric"))
             else:
-                self.gui.config.set_str("alpha_metric", _alpha_preset_["id"])
+                self.gui.project.set_str("alpha_metric", _alpha_preset_["id"])
                 alpha_preset = _alpha_preset_
 
             self.gui.model.set_metric(

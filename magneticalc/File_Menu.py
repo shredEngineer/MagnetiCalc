@@ -53,7 +53,7 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.save"),
             "&Save Project",
-            self.gui.config.save_file,
+            self.gui.project.save_file,
             Qt.CTRL + Qt.Key_S
         )
 
@@ -118,8 +118,8 @@ class File_Menu(QMenu):
             _filter="MagnetiCalc Project (*.ini)"
         )
         if action.filename:
-            # This just works because the default configuration is written to the specified filename if it doesn't exist
-            self.gui.config.switch(action.filename)
+            # This just works because the default project is written to the specified filename if the file doesn't exist
+            self.gui.project.switch(action.filename)
 
     def file_open(self) -> None:
         """
@@ -141,7 +141,7 @@ class File_Menu(QMenu):
         )
 
         if filename != "":
-            self.gui.config.switch(filename)
+            self.gui.project.switch(filename)
 
     def file_save_as(self) -> None:
         """
@@ -158,7 +158,7 @@ class File_Menu(QMenu):
             _filter="MagnetiCalc Project (*.ini)"
         )
         if action.filename:
-            self.gui.config.save_file(filename=action.filename)
+            self.gui.project.save_file(filename=action.filename)
 
     def file_export_image(self) -> None:
         """

@@ -66,7 +66,7 @@ class Config_Collection:
 
         @return: Number of groups in the collection
         """
-        return self.gui.config.get_int(self.prefix + "count")
+        return self.gui.project.get_int(self.prefix + "count")
 
     def get_group(self, group_index: int) -> Dict:
         """
@@ -75,7 +75,7 @@ class Config_Collection:
         @param group_index: Group index
         @return: Group (dictionary)
         """
-        return self.gui.config.set_get_dict(
+        return self.gui.project.set_get_dict(
             prefix=self.prefix,
             suffix=self._get_suffix(group_index),
             types=self.types,
@@ -97,8 +97,8 @@ class Config_Collection:
         @param values: Key:Value (Dictionary)
         """
         group_index = self.get_count()
-        self.gui.config.set_int(self.prefix + "count", group_index + 1)
-        self.gui.config.set_get_dict(
+        self.gui.project.set_int(self.prefix + "count", group_index + 1)
+        self.gui.project.set_get_dict(
             prefix=self.prefix,
             suffix=self._get_suffix(group_index),
             types=self.types,
@@ -122,10 +122,10 @@ class Config_Collection:
         # Delete all groups from the collection
         for i in range(self.get_count()):
             for key in self.types.keys():
-                self.gui.config.remove_key(f"{self.prefix}{key}_{i}")
+                self.gui.project.remove_key(f"{self.prefix}{key}_{i}")
 
         # Clear the group count of the collection
-        self.gui.config.set_int(self.prefix + "count", 0)
+        self.gui.project.set_int(self.prefix + "count", 0)
 
         # Recreate the groups of the collection (regenerate suffixes)
         for group in groups:
@@ -140,4 +140,4 @@ class Config_Collection:
         @param value: Value
         """
         _type = self.types.get(key)
-        self.gui.config.set_generic(f"{self.prefix}{key}_{group_index}", _type, value)
+        self.gui.project.set_generic(f"{self.prefix}{key}_{group_index}", _type, value)

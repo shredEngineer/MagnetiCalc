@@ -171,28 +171,28 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        sampling_volume_padding = self.gui.config.get_point("sampling_volume_padding")
+        sampling_volume_padding = self.gui.project.get_point("sampling_volume_padding")
         for i in range(3):
             self.padding_spinbox[i].setValue(sampling_volume_padding[i])
 
         # Set default resolution if it is not available anymore
-        target = self.gui.config.get_int("sampling_volume_resolution_exponent")
+        target = self.gui.project.get_int("sampling_volume_resolution_exponent")
         if target not in self.ResolutionOptionsDict.values():
             Debug(self, f": WARNING: Invalid: sampling_volume_resolution_exponent = {target}", warning=True)
-            self.gui.config.set_int("sampling_volume_resolution_exponent", 0)
+            self.gui.project.set_int("sampling_volume_resolution_exponent", 0)
 
         # Select the resolution
-        target = self.gui.config.get_int("sampling_volume_resolution_exponent")
+        target = self.gui.project.get_int("sampling_volume_resolution_exponent")
         for i, value in enumerate(self.ResolutionOptionsDict.values()):
             if value == target:
                 self.resolution_combobox.setCurrentIndex(i)
 
         self.blockSignals(False)
 
-        # Re-initialize the constraint editor
+        # Reload the constraint editor
         self.constraint_editor.reload()
 
-        # Initially load sampling volume from configuration
+        # Initially load sampling volume from project
         self.set_sampling_volume(recalculate=False, invalidate=False)
 
         self.update()
@@ -231,7 +231,7 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()", refresh=True)
 
-        self.padding_widget.setEnabled(not self.gui.config.get_bool("sampling_volume_override_padding"))
+        self.padding_widget.setEnabled(not self.gui.project.get_bool("sampling_volume_override_padding"))
 
         self.indicate_valid(self.gui.model.sampling_volume.valid)
 
@@ -254,8 +254,8 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Debug(self, ".clear_padding()")
 
-        self.gui.config.set_bool("sampling_volume_override_padding", False)
-        self.gui.config.set_points("sampling_volume_bounding_box", [np.zeros(3), np.zeros(3)])
+        self.gui.project.set_bool("sampling_volume_override_padding", False)
+        self.gui.project.set_points("sampling_volume_bounding_box", [np.zeros(3), np.zeros(3)])
 
         self.set_sampling_volume(_padding_=[0, 0, 0])
 
@@ -276,7 +276,7 @@ class SamplingVolume_Widget(QGroupBox2):
         if not dialog.success:
             return
 
-        # This needlessly also clears the override padding and bounding box config, but that's acceptable.
+        # This needlessly also clears the override padding and bounding box settings, but that's acceptable.
         self.clear_padding()
 
         self.set_sampling_volume(
@@ -328,7 +328,7 @@ class SamplingVolume_Widget(QGroupBox2):
         @param _override_padding_: Enable to override padding instead, setting the bounding box directly
         @param _bounding_box_: Bounding box (used in conjunction with override_padding)
         @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final re-calculation
+        @param recalculate: Enable to trigger final recalculation
         """
         if self.signalsBlocked():
             return
@@ -337,12 +337,12 @@ class SamplingVolume_Widget(QGroupBox2):
 
         with ModelAccess(self.gui, recalculate):
 
-            resolution_exponent = self.gui.config.set_get_int(
+            resolution_exponent = self.gui.project.set_get_int(
                 "sampling_volume_resolution_exponent",
                 _resolution_exponent_
             )
 
-            label_resolution_exponent = self.gui.config.set_get_int(
+            label_resolution_exponent = self.gui.project.set_get_int(
                 "sampling_volume_label_resolution_exponent",
                 _label_resolution_exponent_
             )
@@ -358,7 +358,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
             self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)
 
-            # Load sampling volume constraints from configuration
+            # Load sampling volume constraints from project
             for constraint in self.constraint_editor.get_constraints():
                 Debug(self, f".set_sampling_volume(): Loading Constraint: {constraint}")
                 self.gui.model.sampling_volume.add_constraint(
@@ -401,8 +401,8 @@ class SamplingVolume_Widget(QGroupBox2):
         """
         Debug(self, ".readjust()")
 
-        override_padding = self.gui.config.set_get_bool("sampling_volume_override_padding", _override_padding_)
-        bounding_box = self.gui.config.set_get_points("sampling_volume_bounding_box", _bounding_box_)
+        override_padding = self.gui.project.set_get_bool("sampling_volume_override_padding", _override_padding_)
+        bounding_box = self.gui.project.set_get_points("sampling_volume_bounding_box", _bounding_box_)
 
         if override_padding:
 
@@ -414,7 +414,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
             bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
 
-            padding = self.gui.config.set_get_point("sampling_volume_padding", _padding_)
+            padding = self.gui.project.set_get_point("sampling_volume_padding", _padding_)
 
             # Adjust padding values if they are now outside the new minimum padding bounds
             padding_adjusted = False
@@ -424,7 +424,7 @@ class SamplingVolume_Widget(QGroupBox2):
                     padding_adjusted = True
             if padding_adjusted:
                 Debug(self, ".readjust(): Adjusted padding values to new minimum padding bounds")
-                self.gui.config.set_point("sampling_volume_padding", padding)
+                self.gui.project.set_point("sampling_volume_padding", padding)
 
             self.blockSignals(True)
             for i in range(3):

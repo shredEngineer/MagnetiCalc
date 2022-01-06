@@ -159,7 +159,7 @@ class VisPyCanvas(scene.SceneCanvas):
         """
         Debug(self, ".update_color_scheme()")
 
-        dark_background = self.gui.config.get_bool("dark_background")
+        dark_background = self.gui.project.get_bool("dark_background")
         self.foreground = self.White if dark_background else self.Black
         self.background = self.Black if dark_background else self.White
         self.bgcolor = self.background
@@ -176,16 +176,16 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def load_perspective(self, redraw: bool = True) -> None:
         """
-        Loads perspective from configuration.
+        Loads perspective from project.
 
-        @param redraw: Enable to trigger final re-draw
+        @param redraw: Enable to trigger final redraw
         """
         Debug(self, ".load_perspective()")
 
         self.signals_blocked = True
-        self.view_main.camera.azimuth = self.gui.config.get_float("azimuth")
-        self.view_main.camera.elevation = self.gui.config.get_float("elevation")
-        self.view_main.camera.scale_factor = self.gui.config.get_float("scale_factor")
+        self.view_main.camera.azimuth = self.gui.project.get_float("azimuth")
+        self.view_main.camera.elevation = self.gui.project.get_float("elevation")
+        self.view_main.camera.scale_factor = self.gui.project.get_float("scale_factor")
         self.signals_blocked = False
 
         if redraw:
@@ -210,18 +210,18 @@ class VisPyCanvas(scene.SceneCanvas):
         elif self.view_main.camera.scale_factor < self.ScaleFactorMin:
             self.view_main.camera.scale_factor = self.ScaleFactorMin
 
-        if self.view_main.camera.azimuth != self.gui.config.get_float("azimuth"):
-            self.gui.config.set_float("azimuth", self.view_main.camera.azimuth)
+        if self.view_main.camera.azimuth != self.gui.project.get_float("azimuth"):
+            self.gui.project.set_float("azimuth", self.view_main.camera.azimuth)
             if self.DebugPerspective:
                 Debug(self, f".on_perspective_changed(): azimuth = {self.view_main.camera.azimuth}")
 
-        if self.view_main.camera.elevation != self.gui.config.get_float("elevation"):
-            self.gui.config.set_float("elevation", self.view_main.camera.elevation)
+        if self.view_main.camera.elevation != self.gui.project.get_float("elevation"):
+            self.gui.project.set_float("elevation", self.view_main.camera.elevation)
             if self.DebugPerspective:
                 Debug(self, f".on_perspective_changed(): elevation = {self.view_main.camera.elevation}")
 
-        if self.view_main.camera.scale_factor != self.gui.config.get_float("scale_factor"):
-            self.gui.config.set_float("scale_factor", self.view_main.camera.scale_factor)
+        if self.view_main.camera.scale_factor != self.gui.project.get_float("scale_factor"):
+            self.gui.project.set_float("scale_factor", self.view_main.camera.scale_factor)
             if self.DebugPerspective:
                 Debug(self, f".on_perspective_changed(): scale_factor = {self.view_main.camera.scale_factor}")
 
@@ -230,9 +230,9 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_perspective_info(self) -> None:
         """
-        Re-draws the perspective info text.
+        Redraws the perspective info text.
         """
-        visible = self.gui.config.get_bool("show_perspective_info")
+        visible = self.gui.project.get_bool("show_perspective_info")
 
         self.visual_perspective_info.parent = self.view_text.scene if visible else None
 
@@ -261,7 +261,7 @@ class VisPyCanvas(scene.SceneCanvas):
             self.initializing = False
         self.visual_startup_info.parent = self.view_text if self.initializing else None
 
-        self.set_visible(self.visual_coordinate_system, self.gui.config.get_bool("show_coordinate_system"))
+        self.set_visible(self.visual_coordinate_system, self.gui.project.get_bool("show_coordinate_system"))
         self.redraw_perspective_info()
 
         self.redraw_wire_segments()
@@ -271,8 +271,8 @@ class VisPyCanvas(scene.SceneCanvas):
         # Determine which field colors to use (if at all)
         if self.gui.model.metric.valid:
             # Use metric colors
-            boost = self.gui.config.get_float("field_boost")
-            direction = 1 if self.gui.config.get_bool("dark_background") else -1
+            boost = self.gui.project.get_float("field_boost")
+            direction = 1 if self.gui.project.get_bool("dark_background") else -1
             colors = Metric.boost_colors(boost, direction, self.gui.model.metric.get_colors().copy())
         else:
             if self.gui.model.sampling_volume.valid:
@@ -293,9 +293,9 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_wire_segments(self) -> None:
         """
-        Re-draws wire segments.
+        Redraws wire segments.
         """
-        visible = self.gui.model.wire.valid and self.gui.config.get_bool("show_wire_segments")
+        visible = self.gui.model.wire.valid and self.gui.project.get_bool("show_wire_segments")
 
         self.set_visible(self.visual_wire_segments, visible)
 
@@ -311,11 +311,11 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_wire_points_sliced(self) -> None:
         """
-        Re-draws sliced wire points.
+        Redraws sliced wire points.
         """
         visible = \
             self.gui.model.wire.valid and \
-            self.gui.config.get_bool("show_wire_points")
+            self.gui.project.get_bool("show_wire_points")
 
         self.set_visible(self.visual_wire_points_sliced, visible)
 
@@ -334,13 +334,13 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_wire_points_selected(self) -> None:
         """
-        Re-draws selected wire base points.
+        Redraws selected wire base points.
         """
         point_index = self.gui.sidebar_left.wire_widget.table.get_selected_row()
 
         visible = \
             self.gui.model.wire.valid and \
-            self.gui.config.get_bool("show_wire_points") and \
+            self.gui.project.get_bool("show_wire_points") and \
             point_index is not None
 
         if visible:
@@ -371,13 +371,13 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_field_arrows(self, colors: np.ndarray) -> None:
         """
-        Re-draws field arrows.
+        Redraws field arrows.
 
         @param colors: Colors
         """
         sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
-        arrow_head_scale = VisPyCanvas.FieldArrowHeadSize * self.gui.config.get_float("field_arrow_head_scale")
-        arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.config.get_float("field_arrow_line_scale")
+        arrow_head_scale = VisPyCanvas.FieldArrowHeadSize * self.gui.project.get_float("field_arrow_head_scale")
+        arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.project.get_float("field_arrow_line_scale")
 
         visible = \
             self.gui.model.field.valid and \
@@ -424,11 +424,11 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_field_points(self, colors: np.ndarray) -> None:
         """
-        Re-draws field points.
+        Redraws field points.
 
         @param colors: Colors
         """
-        point_scale = VisPyCanvas.FieldPointSize * self.gui.config.get_float("field_point_scale")
+        point_scale = VisPyCanvas.FieldPointSize * self.gui.project.get_float("field_point_scale")
 
         visible = \
             self.gui.model.sampling_volume.valid and \
@@ -465,7 +465,7 @@ class VisPyCanvas(scene.SceneCanvas):
         if self.DebugVisuals:
             Debug(self, f".create_field_labels(): Creating {n} labels …")
 
-        show_gauss = self.gui.config.get_bool("show_gauss")
+        show_gauss = self.gui.project.get_bool("show_gauss")
         field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
 
         # Iterate through the labeled sampling volume points
@@ -513,13 +513,13 @@ class VisPyCanvas(scene.SceneCanvas):
 
     def redraw_field_labels(self, colors) -> None:
         """
-        Re-draws field labels.
+        Redraws field labels.
 
         @param colors: Colors
         """
         visible = \
             self.gui.model.metric.valid and \
-            self.gui.config.get_bool("display_field_magnitude_labels") and \
+            self.gui.project.get_bool("display_field_magnitude_labels") and \
             self.gui.sidebar_left.wire_widget.table.get_selected_row() is None
 
         if visible:
@@ -532,7 +532,7 @@ class VisPyCanvas(scene.SceneCanvas):
                 Debug(self, f".redraw_field_labels(): Coloring {len(self.visual_field_labels)}")
 
             # Update label colors
-            show_colored_labels = self.gui.config.get_bool("show_colored_labels")
+            show_colored_labels = self.gui.project.get_bool("show_colored_labels")
             for i in range(len(self.visual_field_labels)):
                 if show_colored_labels:
                     # Use metric color at labeled sampling volume point

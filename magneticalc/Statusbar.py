@@ -77,7 +77,7 @@ class Statusbar:
                     self._cores_combobox.addItem(f"{i} Core" + ("s" if i > 1 else ""))
 
             self._cores_combobox.currentIndexChanged.connect(  # type: ignore
-                lambda: self.gui.config.set_int("num_cores", self._cores_combobox.currentIndex())
+                lambda: self.gui.project.set_int("num_cores", self._cores_combobox.currentIndex())
             )
 
         else:
@@ -124,12 +124,12 @@ class Statusbar:
 
         self.gui.blockSignals(True)
 
-        self._auto_calculation_checkbox.setChecked(self.gui.config.get_bool("auto_calculation"))
-        if 0 > self.gui.config.get_int("num_cores") > cpu_count():
-            self.gui.config.set_int("num_cores", 0)
+        self._auto_calculation_checkbox.setChecked(self.gui.project.get_bool("auto_calculation"))
+        if 0 > self.gui.project.get_int("num_cores") > cpu_count():
+            self.gui.project.set_int("num_cores", 0)
 
         if get_jit_enabled():
-            num_cores = self.gui.config.get_int("num_cores")
+            num_cores = self.gui.project.get_int("num_cores")
             for i in range(0, cpu_count() + 1):
                 if i == num_cores:
                     self._cores_combobox.setCurrentIndex(i)
@@ -149,7 +149,7 @@ class Statusbar:
 
         self._canceled = False
 
-        self.gui.config.set_bool("auto_calculation", self._auto_calculation_checkbox.isChecked())
+        self.gui.project.set_bool("auto_calculation", self._auto_calculation_checkbox.isChecked())
         if self._auto_calculation_checkbox.isChecked():
             if not self.gui.model.valid:
                 self.gui.recalculate()

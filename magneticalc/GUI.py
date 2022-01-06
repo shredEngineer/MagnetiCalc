@@ -45,7 +45,7 @@ class GUI(QMainWindow):
     # Minimum window size
     MinimumWindowSize = (800, 600)
 
-    # Default configuration filename
+    # Default project filename
     DefaultFilename = "MagnetiCalc-DefaultProject.ini"
 
     # These signals are fired from the calculation thread
@@ -68,8 +68,8 @@ class GUI(QMainWindow):
         self.setMinimumSize(*self.MinimumWindowSize)
         self.showMaximized()
 
-        self.config = Project(self)
-        self.config.open(self.DefaultFilename)
+        self.project = Project(self)
+        self.project.open(self.DefaultFilename)
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
@@ -87,7 +87,7 @@ class GUI(QMainWindow):
 
         # Create the left and right sidebar
         # Note: These create the wire, sampling volume, field, metric and parameters widgets,
-        #       each populating the model from config
+        #       each populating the model from the project
         self.sidebar_left = SidebarLeft(self)
         self.sidebar_right = SidebarRight(self)
 
@@ -137,14 +137,14 @@ class GUI(QMainWindow):
 
         self.vispy_canvas.load_perspective()
 
-        if self.config.get_bool("auto_calculation"):
+        if self.project.get_bool("auto_calculation"):
             self.recalculate()
         else:
             self.redraw()
 
     def redraw(self) -> None:
         """
-        Re-draws the scene.
+        Redraws the scene.
         """
         if self.calculation_thread is not None:
             if self.calculation_thread.isRunning():
@@ -162,7 +162,7 @@ class GUI(QMainWindow):
 
     def recalculate(self) -> None:
         """
-        Re-calculates the model.
+        Recalculates the model.
         """
         Debug(self, ".recalculate()")
 
@@ -242,7 +242,7 @@ class GUI(QMainWindow):
                 warning=True
             )
 
-        # Note: For some reason, most of the time we need an additional ("final-final") re-draw here; VisPy glitch?
+        # Note: For some reason, most of the time we need an additional ("final-final") redraw here; VisPy glitch?
         self.redraw()
 
         self.statusbar.disarm(success)
@@ -270,7 +270,7 @@ class GUI(QMainWindow):
             # Focus the main window (make sure to un-focus the wire base points table)
             self.setFocus()
 
-            # (Re-)Start calculation
+            # (Re)start calculation
             self.recalculate()
 
         elif event.key() == Qt.Key_Escape:
@@ -295,7 +295,7 @@ class GUI(QMainWindow):
         """
         Debug(self, ".closeEvent()")
 
-        closed = self.config.close()
+        closed = self.project.close()
         if not closed:
             event.ignore()
             return

@@ -47,7 +47,7 @@ class Menu:
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        # List of checkboxes that are bound to configuration
+        # List of checkboxes that are bound to project configuration
         self.config_bound_checkboxes = {}
 
         self.file_menu = File_Menu(self.gui)
@@ -124,7 +124,7 @@ class Menu:
 
         for i, item in enumerate(Backend_Types_Available.items()):
             backend_type, enabled = item
-            self.backend_actions[i].setChecked(backend_type == self.gui.config.get_int("backend_type"))
+            self.backend_actions[i].setChecked(backend_type == self.gui.project.get_int("backend_type"))
 
         self.reload_config_bound_checkboxes()
 
@@ -160,14 +160,14 @@ class Menu:
             return
 
         if self.backend_actions[index].isChecked():
-            self.gui.config.set_int("backend_type", index)
+            self.gui.project.set_int("backend_type", index)
             self.gui.sidebar_right.field_widget.set_field()
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def add_config_bound_checkbox(self, label: str, key: str, menu, callback) -> None:
         """
-        Creates a checkbox inside some menu. Checkbox state is bound to configuration.
+        Creates a checkbox inside some menu. Checkbox state is bound to project configuration.
 
         @param label: Checkbox label
         @param key: Configuration key
@@ -180,7 +180,7 @@ class Menu:
             partial(self.config_bound_checkbox_changed, key)
         )
         self.config_bound_checkboxes[key] = {"checkbox": checkbox, "callback_final": callback}
-        checkbox.setChecked(self.gui.config.get_bool(key))
+        checkbox.setChecked(self.gui.project.get_bool(key))
         menu.addAction(checkbox)
 
     def config_bound_checkbox_changed(self, key: str) -> None:
@@ -189,7 +189,7 @@ class Menu:
 
         @param key: Configuration key
         """
-        self.gui.config.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
+        self.gui.project.set_bool(key, self.config_bound_checkboxes[key]["checkbox"].isChecked())
         self.config_bound_checkboxes[key]["callback_final"]()
 
     def reload_config_bound_checkboxes(self) -> None:
@@ -200,4 +200,4 @@ class Menu:
         """
         for item in self.config_bound_checkboxes.items():
             key, dictionary = item
-            dictionary["checkbox"].setChecked(self.gui.config.get_bool(key))
+            dictionary["checkbox"].setChecked(self.gui.project.get_bool(key))

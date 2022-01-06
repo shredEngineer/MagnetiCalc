@@ -282,28 +282,28 @@ class Wire_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        wire_stretch = self.gui.config.get_point("wire_stretch")
+        wire_stretch = self.gui.project.get_point("wire_stretch")
         for i in range(3):
             self.stretch_spinbox[i].setValue(wire_stretch[i])
 
-        self.rotational_symmetry_count_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_count"))
-        self.rotational_symmetry_radius_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_radius"))
+        self.rotational_symmetry_count_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_count"))
+        self.rotational_symmetry_radius_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_radius"))
 
-        rotational_symmetry_axis = self.gui.config.get_int("rotational_symmetry_axis")
+        rotational_symmetry_axis = self.gui.project.get_int("rotational_symmetry_axis")
         for i, axis in enumerate(["X", "Y", "Z"]):
             if i == rotational_symmetry_axis:
                 self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
 
-        self.rotational_symmetry_offset_spinbox.setValue(self.gui.config.get_float("rotational_symmetry_offset"))
+        self.rotational_symmetry_offset_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_offset"))
 
-        self.close_loop_checkbox.setChecked(self.gui.config.get_bool("wire_close_loop"))
+        self.close_loop_checkbox.setChecked(self.gui.project.get_bool("wire_close_loop"))
 
-        self.slicer_limit_spinbox.setValue(self.gui.config.get_float("wire_slicer_limit"))
-        self.dc_spinbox.setValue(self.gui.config.get_float("wire_dc"))
+        self.slicer_limit_spinbox.setValue(self.gui.project.get_float("wire_slicer_limit"))
+        self.dc_spinbox.setValue(self.gui.project.get_float("wire_dc"))
 
         self.blockSignals(False)
 
-        # Initially load wire from configuration
+        # Initially load wire from project
         self.set_wire(recalculate=False, readjust_sampling_volume=False, invalidate=False)
 
         self.update()
@@ -499,7 +499,7 @@ class Wire_Widget(QGroupBox2):
         @param _slicer_limit_: Slicer limit
         @param _dc_: DC value
         @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final re-calculation
+        @param recalculate: Enable to trigger final recalculation
         @param readjust_sampling_volume: Enable to readjust sampling volume
         """
         if self.signalsBlocked():
@@ -512,13 +512,13 @@ class Wire_Widget(QGroupBox2):
             should_update_stretch_controls = _stretch_ is not None
             should_update_rotational_symmetry_controls = _rotational_symmetry_ is not None
 
-            points = self.gui.config.set_get_points("wire_points_base", _points_)
-            stretch = self.gui.config.set_get_point("wire_stretch", _stretch_)
-            close_loop = self.gui.config.set_get_bool("wire_close_loop", _close_loop_)
-            slicer_limit = self.gui.config.set_get_float("wire_slicer_limit", _slicer_limit_)
-            dc = self.gui.config.set_get_float("wire_dc", _dc_)
+            points = self.gui.project.set_get_points("wire_points_base", _points_)
+            stretch = self.gui.project.set_get_point("wire_stretch", _stretch_)
+            close_loop = self.gui.project.set_get_bool("wire_close_loop", _close_loop_)
+            slicer_limit = self.gui.project.set_get_float("wire_slicer_limit", _slicer_limit_)
+            dc = self.gui.project.set_get_float("wire_dc", _dc_)
 
-            rotational_symmetry = self.gui.config.set_get_dict(
+            rotational_symmetry = self.gui.project.set_get_dict(
                 prefix="rotational_symmetry_",
                 suffix="",
                 types={"count": "int", "radius": "float", "axis": "int", "offset": "float"},

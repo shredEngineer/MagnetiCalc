@@ -81,7 +81,7 @@ class ModelAccess:
             self.gui.invalidate_statusbar.emit()
 
         if self._recalculate:
-            if self.gui.config.get_bool("auto_calculation"):
+            if self.gui.project.get_bool("auto_calculation"):
                 self.gui.recalculate()
             else:
                 self.gui.redraw()

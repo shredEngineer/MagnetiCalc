@@ -285,7 +285,7 @@ class QTableWidget2(QTableWidget):
     def set_vertical_prefix(self, prefix: str) -> None:
         """
         Sets the per-row table prefix.
-        Used for mapping cells to configuration; configuration key = prefix + column key + "_" + row index.
+        Used for binding cells to project configuration; key = prefix + column key + "_" + row index.
 
         @param prefix: Prefix
         """
@@ -294,12 +294,12 @@ class QTableWidget2(QTableWidget):
     def set_horizontal_types(self, types: Optional[Dict]) -> None:
         """
         Sets the per-column cell types.
-        Used for mapping cells to configuration.
+        Used for binding cells to project configuration.
 
-        Note: Currently, *only the keys* are used for mapping cells to configuration;
+        Note: Currently, *only the keys* are used for binding cells to project configuration;
         the cell options actually determine the cell type, i.e. numerical or combobox.
 
-        @param types: Ordered dictionary of key-value pairs (column key : column type), or None to disable configuration
+        @param types: Ordered dictionary of key-value pairs (column key : column type), or None to disable binding
         """
         self._types = types
 
@@ -364,10 +364,6 @@ class QTableWidget2(QTableWidget):
             # Iterate over columns
             for col_index, col_contents in enumerate(row_contents):
 
-                # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-                # Determine the configuration and type binding of the cell
-
                 if self._options[col_index] is not None:
                     # Cell has options: Create a combobox
                     combobox = QComboBox()
@@ -375,10 +371,10 @@ class QTableWidget2(QTableWidget):
                     for i, text in enumerate(self._options[col_index]):
                         combobox.addItem(text)
 
-                        # Cell has config:
+                        # Cell is bound to project configuration:
                         if self._types is not None:
                             key = list(self._types.keys())[col_index]
-                            if text == self.gui.config.get_str(self._prefix + key + "_" + str(row_index)):
+                            if text == self.gui.project.get_str(self._prefix + key + "_" + str(row_index)):
                                 combobox.setCurrentIndex(i)
 
                     combobox.currentIndexChanged.connect(  # type: ignore
@@ -400,10 +396,10 @@ class QTableWidget2(QTableWidget):
                         flags |= Qt.ItemIsEditable
                     item.setFlags(flags)  # type: ignore
 
-                    # Cell has config:
+                    # Cell is bound to project configuration:
                     if self._types is not None:
                         key = list(self._types.keys())[col_index]
-                        item.setText(self.gui.config.get_str(self._prefix + key + "_" + str(row_index)))
+                        item.setText(self.gui.project.get_str(self._prefix + key + "_" + str(row_index)))
 
                     self.setItem(row_index, col_index, item)
 

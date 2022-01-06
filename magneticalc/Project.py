@@ -125,24 +125,24 @@ class Project(Config):
 
     def validate(self) -> None:
         """
-        Validates the configuration.
+        Validates the project.
         """
         Debug(self.gui, ".validate()")
 
         # Ensure valid backend type
-        backend_type = self.gui.config.get_int("backend_type")
+        backend_type = self.gui.project.get_int("backend_type")
         if backend_type != backend_type_safe(backend_type):
-            backend_type = self.gui.config.set_get_int("backend_type", backend_type_safe(backend_type))
+            backend_type = self.gui.project.set_get_int("backend_type", backend_type_safe(backend_type))
 
         # Use default backend if selected backend is not available
         if backend_type != Backend_Type_Default and not Backend_Types_Available[backend_type]:
             Debug(self.gui, ".validate(): WARNING: Selected backend not available, using default backend", warning=True)
-            self.gui.config.set_int("backend_type", Backend_Type_Default)
+            self.gui.project.set_int("backend_type", Backend_Type_Default)
 
         # Ensue valid field type
-        field_type = self.gui.config.get_int("field_type")
+        field_type = self.gui.project.get_int("field_type")
         if field_type != field_type_safe(field_type):
-            self.gui.config.set_int("field_type", field_type_safe(field_type))
+            self.gui.project.set_int("field_type", field_type_safe(field_type))
 
     @staticmethod
     def get_default() -> Dict:

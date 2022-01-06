@@ -123,15 +123,15 @@ class Field_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        field_type = self.gui.config.get_int("field_type")
+        field_type = self.gui.project.get_int("field_type")
         for i, button in enumerate(self.field_type_group.buttons()):
             button.setChecked(i == field_type)
 
-        self.distance_limit_spinbox.setValue(self.gui.config.get_float("field_distance_limit"))
+        self.distance_limit_spinbox.setValue(self.gui.project.get_float("field_distance_limit"))
 
         self.blockSignals(False)
 
-        # Initially load field from configuration
+        # Initially load field from project
         self.set_field(recalculate=False, invalidate=False)
 
         self.update()
@@ -198,7 +198,7 @@ class Field_Widget(QGroupBox2):
         @param _field_type_: Field type
         @param _distance_limit_: Distance limit
         @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final re-calculation
+        @param recalculate: Enable to trigger final recalculation
         """
         if self.signalsBlocked():
             return
@@ -207,9 +207,9 @@ class Field_Widget(QGroupBox2):
 
         with ModelAccess(self.gui, recalculate):
 
-            field_type = self.gui.config.set_get_int("field_type", _field_type_)
-            backend_type = self.gui.config.get_int("backend_type")
-            distance_limit = self.gui.config.set_get_float("field_distance_limit", _distance_limit_)
+            field_type = self.gui.project.set_get_int("field_type", _field_type_)
+            backend_type = self.gui.project.get_int("backend_type")
+            distance_limit = self.gui.project.set_get_float("field_distance_limit", _distance_limit_)
 
             self.gui.model.set_field(
                 invalidate=invalidate,

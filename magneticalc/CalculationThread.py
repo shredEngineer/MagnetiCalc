@@ -102,7 +102,7 @@ class CalculationThread(QThread):
             if not self.gui.model.field.valid:
                 self.gui.calculation_status.emit("Calculating Field … (3/5)")
 
-                num_cores = self.gui.config.get_int("num_cores")
+                num_cores = self.gui.project.get_int("num_cores")
                 if num_cores == 0:
                     # "Auto" setting
                     num_cores = max(1, cpu_count() - 1)

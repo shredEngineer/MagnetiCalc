@@ -166,12 +166,12 @@ class Display_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        self.field_point_scale_slider.setValue(self.gui.config.get_float("field_point_scale"))
-        self.field_arrow_head_scale_slider.setValue(self.gui.config.get_float("field_arrow_head_scale"))
-        self.field_arrow_line_scale_slider.setValue(self.gui.config.get_float("field_arrow_line_scale"))
-        self.field_boost_slider.setValue(self.gui.config.get_float("field_boost"))
+        self.field_point_scale_slider.setValue(self.gui.project.get_float("field_point_scale"))
+        self.field_arrow_head_scale_slider.setValue(self.gui.project.get_float("field_arrow_head_scale"))
+        self.field_arrow_line_scale_slider.setValue(self.gui.project.get_float("field_arrow_line_scale"))
+        self.field_boost_slider.setValue(self.gui.project.get_float("field_boost"))
         self.display_field_magnitude_labels_checkbox.setChecked(
-            self.gui.config.get_bool("display_field_magnitude_labels")
+            self.gui.project.get_bool("display_field_magnitude_labels")
         )
 
         self.blockSignals(False)
@@ -217,7 +217,7 @@ class Display_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        # Re-populate field label resolution combobox
+        # Repopulate field label resolution combobox
         if self.field_label_resolution_combobox_connection is not None:
             self.field_label_resolution_combobox.currentIndexChanged.disconnect(  # type: ignore
                 self.field_label_resolution_combobox_connection
@@ -238,16 +238,16 @@ class Display_Widget(QGroupBox2):
         self.field_label_resolution_combobox.currentIndexChanged.connect(connection)  # type: ignore
 
         # Set default field label resolution if it is not available anymore
-        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
+        target = self.gui.project.get_int("sampling_volume_label_resolution_exponent")
         if target not in label_resolution_options_dict.values():
             Debug(self, f": WARNING: Invalid: sampling_volume_label_resolution_exponent = {target}", warning=True)
-            self.gui.config.set_int(
+            self.gui.project.set_int(
                 "sampling_volume_label_resolution_exponent",
                 next(iter(label_resolution_options_dict.items()))[1]  # First value from combobox
             )
 
         # Select the field label resolution
-        target = self.gui.config.get_int("sampling_volume_label_resolution_exponent")
+        target = self.gui.project.get_int("sampling_volume_label_resolution_exponent")
         for i, value in enumerate(label_resolution_options_dict.values()):
             if value == target:
                 self.field_label_resolution_combobox.setCurrentIndex(i)
@@ -265,7 +265,7 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.config.set_float("field_point_scale", value)
+        self.gui.project.set_float("field_point_scale", value)
         self.gui.redraw()
 
     def set_field_arrow_head_scale(self, value: float) -> None:
@@ -277,7 +277,7 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.config.set_float("field_arrow_head_scale", value)
+        self.gui.project.set_float("field_arrow_head_scale", value)
         self.gui.redraw()
 
     def set_field_arrow_line_scale(self, value: float) -> None:
@@ -289,7 +289,7 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.config.set_float("field_arrow_line_scale", value)
+        self.gui.project.set_float("field_arrow_line_scale", value)
         self.gui.redraw()
 
     def set_field_boost(self, value: float) -> None:
@@ -301,7 +301,7 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.config.set_float("field_boost", value)
+        self.gui.project.set_float("field_boost", value)
         self.gui.redraw()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -315,7 +315,7 @@ class Display_Widget(QGroupBox2):
         if self.signalsBlocked():
             return
 
-        self.gui.config.set_bool("display_field_magnitude_labels", value)
+        self.gui.project.set_bool("display_field_magnitude_labels", value)
 
         self.prevent_excessive_field_labels(choice=True)
 
@@ -344,7 +344,7 @@ class Display_Widget(QGroupBox2):
         """
         Debug(self, ".disable_field_labels()")
 
-        self.gui.config.set_bool("display_field_magnitude_labels", False)
+        self.gui.project.set_bool("display_field_magnitude_labels", False)
 
         previous_signals_blocked = self.signalsBlocked()
         self.blockSignals(True)
@@ -359,7 +359,7 @@ class Display_Widget(QGroupBox2):
         """
         Debug(self, f".prevent_excessive_field_labels(choice={choice})")
 
-        if not self.gui.config.get_bool("display_field_magnitude_labels"):
+        if not self.gui.project.get_bool("display_field_magnitude_labels"):
             return
 
         if not self.gui.model.sampling_volume.valid:

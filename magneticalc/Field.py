@@ -36,23 +36,23 @@ class Field(Validatable):
 
     def __init__(self) -> None:
         """
-        Initializes an empty field.
+        Initializes a field.
         """
         Validatable.__init__(self)
         Debug(self, ": Init", init=True)
 
-        self._total_calculations: int = 0
-        self._total_skipped_calculations: int = 0
-        self._vectors: np.ndarray = np.array([])
-
-        self._backend_type = 0
+        # Parameters
         self._field_type = 0
         self._distance_limit = 0
         self._length_scale = 0
 
+        # Result
+        self._total_calculations: int = 0
+        self._total_skipped_calculations: int = 0
+        self._vectors: np.ndarray = np.array([])
+
     def set(
             self,
-            backend_type: int,
             field_type: int,
             distance_limit: float,
             length_scale: float
@@ -60,12 +60,10 @@ class Field(Validatable):
         """
         Sets the parameters.
 
-        @param backend_type: Backend type
         @param field_type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
-        self._backend_type = backend_type
         self._field_type = field_type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
@@ -131,7 +129,8 @@ class Field(Validatable):
             wire: Wire,
             sampling_volume: SamplingVolume,
             progress_callback: Callable,
-            num_cores: int
+            num_cores: int,
+            backend_type: int
     ) -> bool:
         """
         Recalculates field vectors.
@@ -140,6 +139,7 @@ class Field(Validatable):
         @param sampling_volume: Sampling volume
         @param progress_callback: Progress callback
         @param num_cores: Number of cores to use for multiprocessing
+        @param backend_type: Backend type
         @return: True if successful, False if interrupted (CUDA backend currently not interruptable)
         """
         Debug(self, ".recalculate()")
@@ -147,36 +147,36 @@ class Field(Validatable):
         # Compute the current elements.
         current_elements = wire.get_elements()
 
-        if self._backend_type == BACKEND_TYPE_JIT:
+        if backend_type == BACKEND_TYPE_JIT:
 
             # Initialize Biot-Savart JIT backend
             backend = Backend_JIT(
-                self._field_type,
-                self._distance_limit,
-                self._length_scale,
-                wire.get_dc(),
-                current_elements,
-                sampling_volume.get_points(),
-                sampling_volume.get_permeabilities(),
-                progress_callback
+                field_type=self._field_type,
+                distance_limit=self._distance_limit,
+                length_scale=self._length_scale,
+                dc=wire.get_dc(),
+                current_elements=current_elements,
+                sampling_volume_points=sampling_volume.get_points(),
+                sampling_volume_permeabilities=sampling_volume.get_permeabilities(),
+                progress_callback=progress_callback
             )
 
             # Fetch result using Biot-Savart JIT backend
             set_num_threads(num_cores)
             backend_result = backend.get_result()
 
-        elif self._backend_type == BACKEND_TYPE_CUDA:
+        elif backend_type == BACKEND_TYPE_CUDA:
 
             # Initialize Biot-Savart CUDA backend
             backend = Backend_CUDA(
-                self._field_type,
-                self._distance_limit,
-                self._length_scale,
-                wire.get_dc(),
-                current_elements,
-                sampling_volume.get_points(),
-                sampling_volume.get_permeabilities(),
-                progress_callback
+                field_type=self._field_type,
+                distance_limit=self._distance_limit,
+                length_scale=self._length_scale,
+                dc=wire.get_dc(),
+                current_elements=current_elements,
+                sampling_volume_points=sampling_volume.get_points(),
+                sampling_volume_permeabilities=sampling_volume.get_permeabilities(),
+                progress_callback=progress_callback
             )
 
             # Fetch result using Biot-Savart CUDA backend
@@ -185,7 +185,7 @@ class Field(Validatable):
 
         else:
 
-            Debug(self, f".recalculate(): ERROR: No such backend: {self._backend_type}", error=True)
+            Debug(self, f".recalculate(): ERROR: No such backend: {backend_type}", error=True)
             return False
 
         # Handle interrupt

@@ -298,7 +298,7 @@ class Model:
         """
         Debug(self, ".calculate_wire()")
         self.invalidate(do_sampling_volume=True, do_field=True, do_metric=True)
-        return self.wire.recalculate(progress_callback)
+        return self.wire.recalculate(progress_callback=progress_callback)
 
     def calculate_sampling_volume(self, progress_callback: Callable) -> bool:
         """
@@ -309,19 +309,26 @@ class Model:
         """
         Debug(self, ".calculate_sampling_volume()")
         self.invalidate(do_field=True, do_metric=True)
-        return self.sampling_volume.recalculate(progress_callback)
+        return self.sampling_volume.recalculate(progress_callback=progress_callback)
 
-    def calculate_field(self, progress_callback: Callable, num_cores: int) -> bool:
+    def calculate_field(self, progress_callback: Callable, num_cores: int, backend_type: int) -> bool:
         """
         Calculates the field.
 
         @param progress_callback: Progress callback
         @param num_cores: Number of CPU cores to use
+        @param backend_type: Backend type
         @return: True if successful, False if interrupted
         """
         Debug(self, f".calculate_field(num_cores={num_cores})")
         self.invalidate(do_metric=True)
-        return self.field.recalculate(self.wire, self.sampling_volume, progress_callback, num_cores)
+        return self.field.recalculate(
+            wire=self.wire,
+            sampling_volume=self.sampling_volume,
+            progress_callback=progress_callback,
+            num_cores=num_cores,
+            backend_type=backend_type
+        )
 
     def calculate_metric(self, progress_callback: Callable) -> bool:
         """
@@ -331,7 +338,11 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_metric()")
-        return self.metric.recalculate(self.sampling_volume, self.field, progress_callback)
+        return self.metric.recalculate(
+            sampling_volume=self.sampling_volume,
+            field=self.field,
+            progress_callback=progress_callback
+        )
 
     def calculate_parameters(self, progress_callback: Callable) -> bool:
         """
@@ -341,7 +352,12 @@ class Model:
         @return: True (currently non-interruptable)
         """
         Debug(self, ".calculate_parameters()")
-        return self.parameters.recalculate(self.wire, self.sampling_volume, self.field, progress_callback)
+        return self.parameters.recalculate(
+            wire=self.wire,
+            sampling_volume=self.sampling_volume,
+            field=self.field,
+            progress_callback=progress_callback
+        )
 
     # ------------------------------------------------------------------------------------------------------------------
 

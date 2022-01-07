@@ -208,12 +208,10 @@ class Field_Widget(QGroupBox2):
         with ModelAccess(self.gui, recalculate):
 
             field_type = self.gui.project.set_get_int("field_type", _field_type_)
-            backend_type = self.gui.project.get_int("backend_type")
             distance_limit = self.gui.project.set_get_float("field_distance_limit", _distance_limit_)
 
             self.gui.model.set_field(
                 invalidate=invalidate,
-                backend_type=backend_type,
                 field_type=field_type,
                 distance_limit=distance_limit,
                 length_scale=Metric.LengthScale

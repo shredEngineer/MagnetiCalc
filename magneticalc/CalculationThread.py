@@ -107,9 +107,12 @@ class CalculationThread(QThread):
                     # "Auto" setting
                     num_cores = max(1, cpu_count() - 1)
 
+                backend_type = self.gui.project.get_int("backend_type")
+
                 success = self.gui.model.calculate_field(
-                    self._progress_update.emit,  # type: ignore
-                    num_cores
+                    progress_callback=self._progress_update.emit,  # type: ignore
+                    num_cores=num_cores,
+                    backend_type=backend_type
                 )
 
                 if not success:

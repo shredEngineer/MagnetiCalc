@@ -89,33 +89,28 @@ class SamplingVolume(Validatable):
         """
         return self._bounds_max - self._bounds_min
 
-    def set_bounds_nearest(self, bounds_min: np.ndarray, bounds_max: np.ndarray) -> None:
+    def set_bounds_nearest(self, bounds: np.ndarray) -> None:
         """
         Adjusts this volume's bounding box to fully enclose a 3D wire curve.
         This expands the bounding box to the next integer grid coordinates.
 
-        Note: This will not automatically invalidate the sampling volume
+        Note: This will not automatically invalidate the sampling volume.
 
-        @param bounds_min: Minimum bounding box point
-        @param bounds_max: Maximum bounding box point
+        @param bounds: Bounding box (minimum bounds, maximum bounds)
         @return: Rounded (_bounds_min, _bounds_max)
         """
-        Debug(self, ".set_bounds_nearest()")
-
-        self._bounds_min = np.array([np.floor(x) for x in bounds_min])
-        self._bounds_max = np.array([np.ceil(x) for x in bounds_max])
+        self._bounds_min = np.array([np.floor(x) for x in bounds[0]])
+        self._bounds_max = np.array([np.ceil(x) for x in bounds[1]])
 
     def set_padding_nearest(self, padding: np.ndarray) -> None:
         """
         Shrinks or enlarges this volume's bounding box by some amount, in each direction, symmetrically.
         This shrinks or expands the bounding box to the next integer grid coordinates.
 
-        Note: This will not automatically invalidate the sampling volume
+        Note: This will not automatically invalidate the sampling volume.
 
         @param padding: Amount of padding (3D point)
         """
-        Debug(self, ".set_padding_nearest()")
-
         self._bounds_min -= np.array([np.floor(x) for x in padding])
         self._bounds_max += np.array([np.ceil(x) for x in padding])
 

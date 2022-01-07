@@ -400,33 +400,22 @@ class SamplingVolume_Widget(QGroupBox2):
         override_padding = self.gui.project.set_get_bool("sampling_volume_override_padding", _override_padding_)
         bounding_box = self.gui.project.set_get_points("sampling_volume_bounding_box", _bounding_box_)
 
-        # ToDo: Move as much of this stuff as possible into SamplingVolume:
+        self.gui.model.sampling_volume.set_bounds_nearest(
+            bounding_box if override_padding else self.gui.model.wire.bounds
+        )
 
-        if override_padding:
-
-            self.gui.model.sampling_volume.set_bounds_nearest(*bounding_box)
-
-        else:
-
-            self.gui.model.sampling_volume.set_bounds_nearest(*self.gui.model.wire.bounds)
-
-            bounds_min, bounds_max = self.gui.model.sampling_volume.bounds
-
+        if not override_padding:
+            bounds = self.gui.model.sampling_volume.bounds
             padding = self.gui.project.set_get_point("sampling_volume_padding", _padding_)
 
             # Adjust padding values if they are now outside the new minimum padding bounds
-            padding_adjusted = False
-            for i in range(3):
-                if bounds_min[i] > self.padding_spinbox[i].value():
-                    padding[i] = bounds_min[i]
-                    padding_adjusted = True
-            if padding_adjusted:
-                Debug(self, ".readjust(): Adjusted padding values to new minimum padding bounds")
+            padding_exceeded = [bounds[0][i] > self.padding_spinbox[i].value() for i in range(3)]
+            padding = [bounds[0][i] if padding_exceeded[i] else padding[i] for i in range(3)]
+            if any(padding_exceeded):
                 self.gui.project.set_point("sampling_volume_padding", padding)
 
-            self.blockSignals(True)
-            for i in range(3):
-                self.padding_spinbox[i].setMinimum(bounds_min[i])
-            self.blockSignals(False)
-
             self.gui.model.sampling_volume.set_padding_nearest(padding)
+
+            self.blockSignals(True)
+            [self.padding_spinbox[i].setMinimum(bounds[0][i]) for i in range(3)]
+            self.blockSignals(False)

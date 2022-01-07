@@ -266,7 +266,7 @@ class SamplingVolume_Widget(QGroupBox2):
         dialog = OverridePadding_Dialog(self.gui)
         dialog.show()
 
-        if not dialog.success:
+        if not dialog.user_accepted:
             return
 
         # This needlessly also clears the override padding and bounding box settings, but that's acceptable.

@@ -174,12 +174,12 @@ class Metric_Widget(QGroupBox2):
 
         if self.gui.model.metric.valid:
 
-            limits = self.gui.model.metric.get_limits()
+            limits = self.gui.model.metric.limits
 
             show_gauss = self.gui.project.get_bool("show_gauss")
             field_units, field_factor = self.gui.model.field.get_units(show_gauss=show_gauss)
 
-            if self.gui.model.metric.get_color_preset()["is_angle"]:
+            if self.gui.model.metric.color_preset["is_angle"]:
                 color_label_min = "0°"
                 color_label_max = "360°"
                 self.color_metric_limits_widget.setStyleSheet(self.HSV_Gradient_CSS)
@@ -187,7 +187,7 @@ class Metric_Widget(QGroupBox2):
                 self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
                 color_log_prefix, color_log_suffix = ("log(", ")") \
-                    if self.gui.model.metric.get_color_preset()["is_log"] else ("", "")
+                    if self.gui.model.metric.color_preset["is_log"] else ("", "")
 
                 if np.isnan(limits["color_min"]):
                     color_label_min = "NaN"
@@ -215,7 +215,7 @@ class Metric_Widget(QGroupBox2):
                 self.color_metric_min_label.setStyleSheet("background: none; color: #000000; font-weight: bold;")
                 self.color_metric_max_label.setStyleSheet("background: none; color: #ffffff; font-weight: bold;")
 
-            if self.gui.model.metric.get_alpha_preset()["is_angle"]:
+            if self.gui.model.metric.alpha_preset["is_angle"]:
                 # Note: (v1.9)
                 # Using angle metric for alpha transparency is discouraged and is not available in the combobox anymore.
                 alpha_label_min = "0°"
@@ -225,7 +225,7 @@ class Metric_Widget(QGroupBox2):
                 self.alpha_metric_max_label.setStyleSheet("background: none; color: #ffffff;")
             else:
                 alpha_log_prefix, alpha_log_suffix = ("log(", ")") \
-                    if self.gui.model.metric.get_alpha_preset()["is_log"] else ("", "")
+                    if self.gui.model.metric.alpha_preset["is_log"] else ("", "")
 
                 if np.isnan(limits["alpha_min"]):
                     alpha_label_min = "NaN"

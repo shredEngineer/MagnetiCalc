@@ -244,7 +244,7 @@ class Model:
                 do_parameters=True
             )
 
-            self.field.set(field_type=field_type, *args, **kwargs)
+            self.field.set(type=field_type, *args, **kwargs)
 
     def set_metric(
             self,

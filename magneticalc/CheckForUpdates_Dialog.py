@@ -76,11 +76,11 @@ class CheckForUpdates_Dialog(QDialog2):
 
         @return: Icon, text, success flag, error flag
         """
-        contents = self.get_remote_contents(url=__VERSION__URL__, timeout=2)
+        contents = self.remote_contents(url=__VERSION__URL__, timeout=2)
         if contents is None:
             return "fa.exclamation-circle", "Network Error", False, True
 
-        version = self.parse_version(contents)
+        version = self.parse_contents(contents)
         if version is None:
             return "fa.exclamation-circle", "Invalid Format", False, True
 
@@ -92,7 +92,7 @@ class CheckForUpdates_Dialog(QDialog2):
             return "fa.exclamation-circle", f"Ahead of current release ({version})", False, True
 
     @staticmethod
-    def get_remote_contents(url: str, timeout: int) -> Optional[str]:
+    def remote_contents(url: str, timeout: int) -> Optional[str]:
         """
         Gets the contents of a remote file.
 
@@ -108,7 +108,7 @@ class CheckForUpdates_Dialog(QDialog2):
             return None
 
     @staticmethod
-    def parse_version(contents: str) -> Optional[str]:
+    def parse_contents(contents: str) -> Optional[str]:
         """
         Extracts and parses the version number from the raw Version.py contents.
 

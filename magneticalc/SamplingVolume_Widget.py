@@ -210,16 +210,16 @@ class SamplingVolume_Widget(QGroupBox2):
 
         if self.gui.model.sampling_volume.valid:
             self.total_extent_label.setText(
-                " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.get_extent()]) + " cm³"
+                " × ".join([f"{extent:.0f}" for extent in self.gui.model.sampling_volume.extent]) + " cm³"
             )
             self.total_points_label.setText(
-                str(self.gui.model.sampling_volume.get_points_count())
+                str(self.gui.model.sampling_volume.points_count)
             )
         else:
             self.total_extent_label.setText("N/A")
             self.total_points_label.setText("N/A")
 
-        self.total_constraints_label.setText(str(self.constraint_editor.get_count()))
+        self.total_constraints_label.setText(str(self.constraint_editor.count))
 
     def update_controls(self) -> None:
         """
@@ -346,7 +346,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
             # Convert every line in the constraint editor to a Constraint() object
             constraints = []
-            for constraint in self.constraint_editor.get_constraints():
+            for constraint in self.constraint_editor.constraints:
                 Debug(self, f".set_sampling_volume(): Constraint: {constraint}")
                 constraints.append(
                     Constraint(
@@ -400,15 +400,17 @@ class SamplingVolume_Widget(QGroupBox2):
         override_padding = self.gui.project.set_get_bool("sampling_volume_override_padding", _override_padding_)
         bounding_box = self.gui.project.set_get_points("sampling_volume_bounding_box", _bounding_box_)
 
+        # ToDo: Move as much of this stuff as possible into SamplingVolume:
+
         if override_padding:
 
             self.gui.model.sampling_volume.set_bounds_nearest(*bounding_box)
 
         else:
 
-            self.gui.model.sampling_volume.set_bounds_nearest(*self.gui.model.wire.get_bounds())
+            self.gui.model.sampling_volume.set_bounds_nearest(*self.gui.model.wire.bounds)
 
-            bounds_min, bounds_max = self.gui.model.sampling_volume.get_bounds()
+            bounds_min, bounds_max = self.gui.model.sampling_volume.bounds
 
             padding = self.gui.project.set_get_point("sampling_volume_padding", _padding_)
 

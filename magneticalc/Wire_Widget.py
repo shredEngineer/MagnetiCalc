@@ -238,7 +238,7 @@ class Wire_Widget(QGroupBox2):
             QPushButton2(
                 " Replace base points",
                 "mdi.content-copy",
-                lambda: self.set_wire(_points_=self.gui.model.wire.get_points_transformed())
+                lambda: self.set_wire(_points_=self.gui.model.wire.points_transformed)
             )
         )
 
@@ -337,7 +337,7 @@ class Wire_Widget(QGroupBox2):
         Debug(self, ".update_labels()", refresh=True)
 
         if self.gui.model.wire.valid:
-            self.sliced_total_label.setText(str(len(self.gui.model.wire.get_points_sliced())))
+            self.sliced_total_label.setText(str(len(self.gui.model.wire.points_sliced)))
         else:
             self.sliced_total_label.setText("N/A")
 
@@ -357,14 +357,14 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_table()")
 
-        points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.get_points_base()]
+        points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.points_base]
 
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.get_points_base()))])
+        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.points_base))])
         self.table.set_contents(points)
         self.table.select_last_row(focus=False)
 
-        self.table_total_label.setText(str(len(self.gui.model.wire.get_points_base())))
+        self.table_total_label.setText(str(len(self.gui.model.wire.points_base)))
 
     def on_table_row_added(self) -> None:
         """
@@ -373,7 +373,7 @@ class Wire_Widget(QGroupBox2):
         Debug(self, ".on_table_row_added()")
 
         # Add a new base point (0, 0, 0) to the wire
-        self.set_wire(_points_=list(self.gui.model.wire.get_points_base()) + [np.zeros(3)])
+        self.set_wire(_points_=list(self.gui.model.wire.points_base) + [np.zeros(3)])
         self.table.select_last_row()
 
     def on_table_cell_edited(self, value: float, row: int, column: int) -> None:
@@ -384,7 +384,7 @@ class Wire_Widget(QGroupBox2):
         @param row: Row index
         @param column: Column index
         """
-        points = self.gui.model.wire.get_points_base()
+        points = self.gui.model.wire.points_base
         points[row][column] = value
         self.set_wire(_points_=points)
 
@@ -397,7 +397,7 @@ class Wire_Widget(QGroupBox2):
         Debug(self, ".on_table_row_deleted()")
 
         # Delete the wire base point at the given index
-        self.set_wire(_points_=np.delete(self.gui.model.wire.get_points_base(), index, axis=0))
+        self.set_wire(_points_=np.delete(self.gui.model.wire.points_base, index, axis=0))
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -556,7 +556,7 @@ class Wire_Widget(QGroupBox2):
             if should_update_rotational_symmetry_controls:
                 self.update_rotational_symmetry(rotational_symmetry=rotational_symmetry)
 
-            self.transformed_total_label.setText(str(len(self.gui.model.wire.get_points_transformed())))
+            self.transformed_total_label.setText(str(len(self.gui.model.wire.points_transformed)))
 
             if readjust_sampling_volume:
                 self.gui.sidebar_left.sampling_volume_widget.readjust()

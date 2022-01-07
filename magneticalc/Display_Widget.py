@@ -194,7 +194,7 @@ class Display_Widget(QGroupBox2):
         Debug(self, ".update_labels()", refresh=True)
 
         if self.gui.model.sampling_volume.valid:
-            n = self.gui.model.sampling_volume.get_labels_count()
+            n = self.gui.model.sampling_volume.labels_count
             color = Theme.FailureColor if n > self.ExcessiveFieldLabelsThreshold else Theme.MainColor
             self.total_labels_label.setText(str(n))
             self.total_labels_label.setStyleSheet(f"color: {color}; font-style: italic;")
@@ -209,7 +209,7 @@ class Display_Widget(QGroupBox2):
         Debug(self, ".update_controls()", refresh=True)
 
         # Possible field label resolution values: Less than or equal to sampling volume resolution
-        sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
+        sampling_volume_resolution = self.gui.model.sampling_volume.resolution
         label_resolution_options_dict = {
             key: value for key, value in SamplingVolume_Widget.ResolutionOptionsDict.items()
             if np.power(2.0, value) <= sampling_volume_resolution
@@ -365,7 +365,7 @@ class Display_Widget(QGroupBox2):
         if not self.gui.model.sampling_volume.valid:
             return
 
-        if not self.gui.model.sampling_volume.get_labels_count() > self.ExcessiveFieldLabelsThreshold:
+        if not self.gui.model.sampling_volume.labels_count > self.ExcessiveFieldLabelsThreshold:
             return
 
         if choice:

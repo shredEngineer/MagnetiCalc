@@ -150,8 +150,8 @@ class Field_Widget(QGroupBox2):
         Updates the labels.
         """
         if self.gui.model.field.valid:
-            self.total_calculations_label.setText(str(self.gui.model.field.get_total_calculations()))
-            self.total_skipped_calculations_label.setText(str(self.gui.model.field.get_total_skipped_calculations()))
+            self.total_calculations_label.setText(str(self.gui.model.field.total_calculations))
+            self.total_skipped_calculations_label.setText(str(self.gui.model.field.total_skipped_calculations))
         else:
             self.total_calculations_label.setText("N/A")
             self.total_skipped_calculations_label.setText("N/A")

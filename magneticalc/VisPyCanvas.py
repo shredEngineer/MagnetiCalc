@@ -273,11 +273,11 @@ class VisPyCanvas(scene.SceneCanvas):
             # Use metric colors
             boost = self.gui.project.get_float("field_boost")
             direction = 1 if self.gui.project.get_bool("dark_background") else -1
-            colors = Metric.boost_colors(boost, direction, self.gui.model.metric.get_colors().copy())
+            colors = Metric.boost_colors(boost, direction, self.gui.model.metric.colors.copy())
         else:
             if self.gui.model.sampling_volume.valid:
                 # Use foreground color for all arrows and points
-                colors = [self.foreground] * self.gui.model.sampling_volume.get_points_count()
+                colors = [self.foreground] * self.gui.model.sampling_volume.points_count
             else:
                 # Dummy argument (not accessed by redraw_field_arrows/_points/_labels in this case)
                 colors = None
@@ -301,10 +301,10 @@ class VisPyCanvas(scene.SceneCanvas):
 
         if visible:
             if self.DebugVisuals:
-                Debug(self, ".redraw_wire_segments(): pos[{len(self.gui.model.wire.get_points_sliced())}]")
+                Debug(self, f".redraw_wire_segments(): pos[{len(self.gui.model.wire.points_sliced)}]")
 
             self.visual_wire_segments.set_data(
-                pos=self.gui.model.wire.get_points_sliced(),
+                pos=self.gui.model.wire.points_sliced,
                 connect="strip",
                 color=self.foreground
             )
@@ -321,10 +321,10 @@ class VisPyCanvas(scene.SceneCanvas):
 
         if visible:
             if self.DebugVisuals:
-                Debug(self, ".redraw_wire_points_sliced(): pos[{len(self.gui.model.wire.get_points_sliced())}]")
+                Debug(self, f".redraw_wire_points_sliced(): pos[{len(self.gui.model.wire.points_sliced)}]")
 
             self.visual_wire_points_sliced.set_data(
-                pos=self.gui.model.wire.get_points_sliced(),
+                pos=self.gui.model.wire.points_sliced,
                 face_color=self.foreground,
                 size=VisPyCanvas.WirePointSize,
                 edge_width=0,
@@ -345,16 +345,16 @@ class VisPyCanvas(scene.SceneCanvas):
 
         if visible:
             points_selected = np.array([
-                self.gui.model.wire.get_points_transformed()[i]
+                self.gui.model.wire.points_transformed[i]
                 for i in range(
                     point_index,
-                    len(self.gui.model.wire.get_points_transformed()) + point_index - 1,
-                    len(self.gui.model.wire.get_points_base())
+                    len(self.gui.model.wire.points_transformed) + point_index - 1,
+                    len(self.gui.model.wire.points_base)
                 )
             ])
 
             if self.DebugVisuals:
-                Debug(self, ".redraw_wire_points_selected(): pos[{len(points_selected)}]")
+                Debug(self, f".redraw_wire_points_selected(): pos[{len(points_selected)}]")
 
             self.visual_wire_points_selected.set_data(
                 pos=points_selected,
@@ -375,7 +375,7 @@ class VisPyCanvas(scene.SceneCanvas):
 
         @param colors: Colors
         """
-        sampling_volume_resolution = self.gui.model.sampling_volume.get_resolution()
+        sampling_volume_resolution = self.gui.model.sampling_volume.resolution
         arrow_head_scale = VisPyCanvas.FieldArrowHeadSize * self.gui.project.get_float("field_arrow_head_scale")
         arrow_line_scale = 2 * (1 / sampling_volume_resolution) * self.gui.project.get_float("field_arrow_line_scale")
 
@@ -386,12 +386,12 @@ class VisPyCanvas(scene.SceneCanvas):
 
         if visible:
 
-            line_pairs = np.zeros([2 * self.gui.model.sampling_volume.get_points_count(), 3])
-            head_points = np.zeros([self.gui.model.sampling_volume.get_points_count(), 3])
+            line_pairs = np.zeros([2 * self.gui.model.sampling_volume.points_count, 3])
+            head_points = np.zeros([self.gui.model.sampling_volume.points_count, 3])
 
             line_pairs, head_points = Field.get_arrows(
-                self.gui.model.sampling_volume.get_points(),
-                self.gui.model.field.get_vectors(),
+                self.gui.model.sampling_volume.points,
+                self.gui.model.field.vectors,
                 line_pairs,
                 head_points,
                 arrow_line_scale,
@@ -399,7 +399,7 @@ class VisPyCanvas(scene.SceneCanvas):
             )
 
             if self.DebugVisuals:
-                Debug(self, ".redraw_field_arrows(): arrow lines: pos[{len(line_pairs)}] color[{len(colors)}]")
+                Debug(self, f".redraw_field_arrows(): arrow lines: pos[{len(line_pairs)}] color[{len(colors)}]")
 
             self.visual_field_arrow_lines.set_data(
                 pos=line_pairs,
@@ -408,7 +408,7 @@ class VisPyCanvas(scene.SceneCanvas):
             )
 
             if self.DebugVisuals:
-                Debug(self, ".redraw_field_arrows(): arrow heads: pos[{len(head_points)}] face_color[{len(colors)}]")
+                Debug(self, f".redraw_field_arrows(): arrow heads: pos[{len(head_points)}] face_color[{len(colors)}]")
 
             self.visual_field_arrow_heads.set_data(
                 pos=head_points,
@@ -440,11 +440,11 @@ class VisPyCanvas(scene.SceneCanvas):
                 Debug(
                     self,
                     ".redraw_field_points(): "
-                    "pos[{self.gui.model.sampling_volume.get_points_count()}] face_color[{len(colors)}]"
+                    f"pos[{self.gui.model.sampling_volume.points_count}] face_color[{len(colors)}]"
                 )
 
             self.visual_field_points.set_data(
-                pos=self.gui.model.sampling_volume.get_points(),
+                pos=self.gui.model.sampling_volume.points,
                 face_color=colors,
                 size=point_scale,
                 edge_width=0,
@@ -460,7 +460,7 @@ class VisPyCanvas(scene.SceneCanvas):
         """
         Creates field labels.
         """
-        n = len(self.gui.model.sampling_volume.get_labeled_indices())
+        n = len(self.gui.model.sampling_volume.labeled_indices)
 
         if self.DebugVisuals:
             Debug(self, f".create_field_labels(): Creating {n} labels …")
@@ -471,8 +471,8 @@ class VisPyCanvas(scene.SceneCanvas):
         # Iterate through the labeled sampling volume points
         for i in range(n):
 
-            sampling_volume_point, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
-            magnitude = np.linalg.norm(self.gui.model.field.get_vectors()[field_vector_index])
+            sampling_volume_point, field_vector_index = self.gui.model.sampling_volume.labeled_indices[i]
+            magnitude = np.linalg.norm(self.gui.model.field.vectors[field_vector_index])
             if np.isnan(magnitude):
                 text = "NaN"
             else:
@@ -536,7 +536,7 @@ class VisPyCanvas(scene.SceneCanvas):
             for i in range(len(self.visual_field_labels)):
                 if show_colored_labels:
                     # Use metric color at labeled sampling volume point
-                    _, field_vector_index = self.gui.model.sampling_volume.get_labeled_indices()[i]
+                    _, field_vector_index = self.gui.model.sampling_volume.labeled_indices[i]
                     self.visual_field_labels[i].color = np.append(colors[field_vector_index][:3], 1.0)
                 else:
                     # Use foreground color for all labels

@@ -117,4 +117,4 @@ class Wire_Menu(QMenu):
             _filter="Text File (*.txt)"
         )
         if action.filename:
-            API.export_wire(action.filename, self.gui.model.wire.get_points_sliced())
+            API.export_wire(action.filename, self.gui.model.wire.points_sliced)

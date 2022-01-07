@@ -48,36 +48,9 @@ class Parameters(Validatable):
         Sets the parameters
         """
 
-    @require_valid
-    def get_energy(self) -> float:
-        """
-        Returns calculated energy.
-
-        @return: Float
-        """
-        return self._energy
-
-    @require_valid
-    def get_self_inductance(self) -> float:
-        """
-        Returns calculated self-inductance.
-
-        @return: Float
-        """
-        return self._self_inductance
-
-    @require_valid
-    def get_magnetic_dipole_moment(self) -> float:
-        """
-        Returns calculated magnetic dipole moment.
-
-        @return: Float
-        """
-        return self._magnetic_dipole_moment
-
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_squared_field(
+    def _get_squared_field(
             self,
             sampling_volume: SamplingVolume,  # type: ignore
             field: Field  # type: ignore
@@ -89,7 +62,7 @@ class Parameters(Validatable):
         @param field: B-field
         @return: Float
         """
-        return self._get_squared_field_worker(sampling_volume.get_permeabilities(), field.get_vectors())
+        return self._get_squared_field_worker(sampling_volume.permeabilities, field.vectors)
 
     @staticmethod
     @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
@@ -119,10 +92,10 @@ class Parameters(Validatable):
         @param length_scale: Length scale (m)
         @return: Float
         """
-        elements_center = np.array([element[0] for element in wire.get_elements()])
-        elements_direction = np.array([element[1] for element in wire.get_elements()])
+        elements_center = np.array([element[0] for element in wire.elements])
+        elements_direction = np.array([element[1] for element in wire.elements])
         vector = self._get_magnetic_dipole_moment_worker(elements_center, elements_direction, length_scale)
-        return np.abs(wire.get_dc() * np.linalg.norm(vector) / 2)
+        return np.abs(wire.dc * np.linalg.norm(vector) / 2)
 
     @staticmethod
     @ConditionalDecorator(get_jit_enabled(), jit, nopython=True, parallel=True)
@@ -171,19 +144,49 @@ class Parameters(Validatable):
 
         progress_callback(33)
 
-        if field.get_type == FIELD_TYPE_A:
+        if field.type == FIELD_TYPE_A:
 
             pass
 
-        elif field.get_type() == FIELD_TYPE_B:
+        elif field.type == FIELD_TYPE_B:
 
-            dV = (Metric.LengthScale / sampling_volume.get_resolution()) ** 3  # Sampling volume element
-            self._energy = self.get_squared_field(sampling_volume, field) * dV / Constants.mu_0
+            dV = (Metric.LengthScale / sampling_volume.resolution) ** 3  # Sampling volume element
+            self._energy = self._get_squared_field(sampling_volume, field) * dV / Constants.mu_0
 
             progress_callback(66)
 
-            self._self_inductance = self._energy / np.square(wire.get_dc())
+            self._self_inductance = self._energy / np.square(wire.dc)
 
         progress_callback(100)
 
         return True
+
+    @property
+    @require_valid
+    def energy(self) -> float:
+        """
+        Returns calculated energy.
+
+        @return: Float
+        """
+        return self._energy
+
+    @property
+    @require_valid
+    def self_inductance(self) -> float:
+        """
+        Returns calculated self-inductance.
+
+        @return: Float
+        """
+        return self._self_inductance
+
+    @property
+    @require_valid
+    def magnetic_dipole_moment(self) -> float:
+        """
+        Returns calculated magnetic dipole moment.
+
+        @return: Float
+        """
+        return self._magnetic_dipole_moment

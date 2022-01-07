@@ -35,15 +35,20 @@ class Wire(Validatable):
         Validatable.__init__(self)
         Debug(self, ": Init", init=True)
 
-        self._points_base = np.array([])
+        self.points_base = np.array([])
+        self.points_transformed = np.array([])
+
+        """ Bounding box: Minimum bounds (3D point), maximum bounds (3D point). """
+        self.bounds = np.array([]), np.array([])
 
         self._slicer_limit = 0
-        self._dc = 0
+        self.dc = 0
 
         self._points_sliced = np.array([])
         self._length = 0
 
-        self._points_transformed = np.array([])
+        """ Wire Elements: Ordered list of segment center points and directions. """
+        self._elements = np.array([])
 
     def set(
             self,
@@ -64,122 +69,48 @@ class Wire(Validatable):
         @param slicer_limit: Slicer limit
         @param dc: Wire current (A)
         """
-        self._points_base = np.array(points)
-
         self._slicer_limit = slicer_limit
-        self._dc = dc
+        self.dc = dc
 
         self._points_sliced = np.array([])
         self._length = 0
 
-        self._points_transformed = self._points_base.copy()
+        self.points_base = np.array(points)
 
-        self._set_stretch(stretch)
-        self._set_rotational_symmetry(rotational_symmetry, close_loop=close_loop)
+        axes = np.array(points).T
+        axes = self._transform_stretch(axes, stretch)
+        axes = self._transform_rotational_symmetry(axes, rotational_symmetry, close_loop=close_loop)
+        self.points_transformed = axes.T
 
-        Assert_Dialog(len(self._points_base) >= 2, "Number of points must be >= 2")
+        self.bounds = [min(axes[0]), min(axes[1]), min(axes[2])], [max(axes[0]), max(axes[1]), max(axes[2])]
 
-    # ------------------------------------------------------------------------------------------------------------------
+        Assert_Dialog(len(self.points_base) >= 2, "Number of points must be >= 2")
 
-    def get_dc(self) -> float:
-        """
-        @return: Wire current (A)
-        """
-        return self._dc
-
-    def get_bounds(self) -> Tuple[List, List]:
-        """
-        Returns this curve's bounding box.
-
-        @return: Minimum bounds (3D point), maximum bounds (3D point)
-        """
-        axes = self.get_points_transformed().transpose()
-        bounds_min = [min(axes[0]), min(axes[1]), min(axes[2])]
-        bounds_max = [max(axes[0]), max(axes[1]), max(axes[2])]
-        return bounds_min, bounds_max
-
-    def get_points_base(self) -> np.ndarray:
-        """
-        Returns this wire's base points.
-
-        @return: Ordered list of 3D points
-        """
-        return self._points_base
-
-    def get_points_transformed(self) -> np.ndarray:
-        """
-        Returns this wire's transformed points.
-
-        @return: Ordered list of 3D points
-        """
-        return self._points_transformed
-
-    @require_valid
-    def get_points_sliced(self) -> np.ndarray:
-        """
-        Returns this wire's points after slicing.
-
-        @return: Ordered list of 3D points
-        """
-        return self._points_sliced
-
-    @require_valid
-    def get_elements(self) -> np.ndarray:
-        """
-        Returns this curve's elements, i.e. an ordered list of segment center points and directions.
-
-        @return: [[element_center, element_direction], …]
-        """
-        result = []
-
-        for i in range(len(self._points_sliced) - 1):
-            element_direction = np.array(self._points_sliced[i + 1]) - np.array(self._points_sliced[i])
-            element_center = self._points_sliced[i] + element_direction / 2
-            result.append([element_center, element_direction])
-
-        return np.array(result)
-
-    @require_valid
-    def get_length(self) -> float:
-        """
-        @return: Wire length
-        """
-        return self._length
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def _set_stretch(self, stretch: np.ndarray) -> None:
+    @staticmethod
+    def _transform_stretch(axes: np.ndarray, stretch: np.ndarray) -> np.ndarray:
         """
         This transformation stretches (and/or mirrors) this curve by some factor in any direction.
         Use the factor +1 / -1 to retain / mirror the curve in that direction.
 
-        Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
-
+        @param axes: Transposed array of Wire points
         @param stretch: XYZ stretch transform factors (3D point)
+        @return: Transposed array of Wire points
         """
-        Debug(self, "._set_stretch()")
-
-        axes = self.get_points_transformed().transpose()
-
         for i in range(3):
             axes[i] *= stretch[i]
+        return axes
 
-        self._points_transformed = axes.transpose()
-
-    def _set_rotational_symmetry(self, parameters: Dict, close_loop: bool) -> None:
+    @staticmethod
+    def _transform_rotational_symmetry(axes: np.ndarray, parameters: Dict, close_loop: bool) -> np.ndarray:
         """
         This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
 
-        Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)
-
+        @param axes: Transposed array of Wire points
         @param parameters: Dictionary containing the transformation parameters
                            (number of replications, radius, axis and offset angle)
         @param close_loop: Enable to transform the wire into a closed loop (append first point)
+        @return: Transposed array of Wire points
         """
-        Debug(self, "._set_rotational_symmetry()")
-
-        axes = self.get_points_transformed().transpose()
-
         x, y, z = [], [], []
 
         axis_other_1 = (parameters["axis"] + 1) % 3
@@ -197,7 +128,7 @@ class Wire(Validatable):
             for i in range(3):
                 axes[i] = np.append(axes[i], axes[i][0])
 
-        self._points_transformed = np.array(axes).transpose()
+        return np.array(axes)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -214,32 +145,76 @@ class Wire(Validatable):
         points_sliced = []
         length = 0
 
-        for i in range(len(self.get_points_transformed()) - 1):
+        for i in range(len(self.points_transformed) - 1):
 
             # Calculate direction and length of wire segment
-            segment_direction = np.array(self.get_points_transformed()[i + 1] - self.get_points_transformed()[i])
+            segment_direction = np.array(self.points_transformed[i + 1] - self.points_transformed[i])
             segment_length = np.linalg.norm(segment_direction)
             length += segment_length
 
             # Calculate required number of slices (subdivisions) and perform linear interpolation
             slices = np.ceil(segment_length / self._slicer_limit).astype(int)
             linear = np.linspace(0, 1, slices, endpoint=False)
-            points_sliced += [self.get_points_transformed()[i] + segment_direction * j for j in linear]
+            points_sliced += [self.points_transformed[i] + segment_direction * j for j in linear]
 
             # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
             if i & 0xf == 0:
-                progress_callback(100 * (i + 1) / (len(self.get_points_transformed()) - 1))
+                progress_callback(50 * (i + 1) / (len(self.points_transformed) - 1))
 
                 if QThread.currentThread().isInterruptionRequested():
                     Debug(self, ".recalculate(): WARNING: Interruption requested, exiting now", warning=True)
                     return False
 
         # Append the very last point since it is not appended by the interpolation above
-        points_sliced.append(self.get_points_transformed()[-1])
+        points_sliced.append(self.points_transformed[-1])
 
         self._points_sliced = np.array(points_sliced)
         self._length = length
 
+        # Calculate wire elements: [[element_center, element_direction], …]
+        elements = []
+        for i in range(len(self._points_sliced) - 1):
+
+            element_direction = np.array(self._points_sliced[i + 1]) - np.array(self._points_sliced[i])
+            element_center = self._points_sliced[i] + element_direction / 2
+            elements.append([element_center, element_direction])
+
+            # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
+            if i & 0xf == 0:
+                progress_callback(50 + 50 * (i + 1) / (len(self._points_sliced) - 1))
+
+                if QThread.currentThread().isInterruptionRequested():
+                    Debug(self, ".recalculate(): WARNING: Interruption requested, exiting now", warning=True)
+                    return False
+
+        self._elements = np.array(elements)
+
         progress_callback(100)
 
         return True
+
+    @property
+    @require_valid
+    def points_sliced(self) -> np.ndarray:
+        """
+        Returns this wire's points after slicing.
+
+        @return: Ordered list of 3D points
+        """
+        return self._points_sliced
+
+    @property
+    @require_valid
+    def length(self) -> float:
+        """
+        @return: Wire length
+        """
+        return self._length
+
+    @property
+    @require_valid
+    def elements(self) -> np.ndarray:
+        """
+        @return: Wire elements
+        """
+        return self._elements

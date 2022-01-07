@@ -120,17 +120,17 @@ class ExportContainer_Dialog(QDialog2):
                 continue
 
             if item_name == "Wire Points":
-                wire_points_components = self.gui.model.wire.get_points_sliced().T
+                wire_points_components = self.gui.model.wire.points_sliced.T
                 wire_points = dict(zip(["x", "y", "z"], wire_points_components))
                 container.update({"wire_points": wire_points})
 
             elif item_name == "Wire Current":
-                wire_current = self.gui.model.wire.get_dc()
+                wire_current = self.gui.model.wire.dc
                 container.update({"wire_current": wire_current})
 
             else:
                 field_type = field_name_to_type(item_name)
-                field_components = self.gui.model.get_valid_field(field_type).get_vectors().T
+                field_components = self.gui.model.get_valid_field(field_type).vectors.T
                 field_abbreviation = Field_Types_Abbreviations_Map[field_type]
                 fields.update(dict(zip(
                     [field_abbreviation + "_x", field_abbreviation + "_y", field_abbreviation + "_z"],
@@ -139,7 +139,7 @@ class ExportContainer_Dialog(QDialog2):
 
         if fields != {}:
             fields.update(dict(zip(["nx", "ny", "nz"], self.gui.model.sampling_volume.dimension)))
-            fields.update(dict(zip(["x", "y", "z"], self.gui.model.sampling_volume.get_points().T)))
+            fields.update(dict(zip(["x", "y", "z"], self.gui.model.sampling_volume.points.T)))
             container.update({"fields": fields})
 
         API.export_hdf5(action.filename, container)

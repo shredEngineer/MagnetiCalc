@@ -109,11 +109,11 @@ class Parameters_Widget(QGroupBox2):
         if self.gui.model.parameters.valid:
 
             self.wire_length_value_label.set(
-                f"{self.gui.model.wire.get_length():.2f}", color=Theme.MainColor, bold=True
+                f"{self.gui.model.wire.length:.2f}", color=Theme.MainColor, bold=True
             )
             self.wire_length_units_label.set("cm", color=Theme.MainColor, bold=True)
 
-            if self.gui.model.field.get_type() == FIELD_TYPE_A:
+            if self.gui.model.field.type == FIELD_TYPE_A:
 
                 self.energy_value_label.set("", color=Theme.MainColor)
                 self.energy_units_label.set("N/A", color=Theme.MainColor)
@@ -124,9 +124,9 @@ class Parameters_Widget(QGroupBox2):
                 self.magnetic_dipole_moment_value_label.set("", color=Theme.MainColor)
                 self.magnetic_dipole_moment_units_label.set("N/A", color=Theme.MainColor)
 
-            elif self.gui.model.field.get_type() == FIELD_TYPE_B:
+            elif self.gui.model.field.type == FIELD_TYPE_B:
 
-                energy_value = self.gui.model.parameters.get_energy()
+                energy_value = self.gui.model.parameters.energy
                 if np.isnan(energy_value):
                     energy_value = "NaN NaN"
                 else:
@@ -138,7 +138,7 @@ class Parameters_Widget(QGroupBox2):
                 self.energy_value_label.set(energy_value.split(" ")[0], color=Theme.MainColor, bold=True)
                 self.energy_units_label.set(energy_value.split(" ")[1], color=Theme.MainColor, bold=True)
 
-                self_inductance_value = self.gui.model.parameters.get_self_inductance()
+                self_inductance_value = self.gui.model.parameters.self_inductance
                 if np.isnan(self_inductance_value):
                     self_inductance_value = "NaN NaN"
                 else:
@@ -154,7 +154,7 @@ class Parameters_Widget(QGroupBox2):
                     self_inductance_value.split(" ")[1], color=Theme.MainColor, bold=True
                 )
 
-                magnetic_dipole_moment_value = self.gui.model.parameters.get_magnetic_dipole_moment()
+                magnetic_dipole_moment_value = self.gui.model.parameters.magnetic_dipole_moment
                 if np.isnan(magnetic_dipole_moment_value):
                     magnetic_dipole_moment_value = "NaN NaN"
                 else:

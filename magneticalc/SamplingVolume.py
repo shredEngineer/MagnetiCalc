@@ -47,7 +47,7 @@ class SamplingVolume(Validatable):
         self._labeled_indices: List = []
         self._neighbor_indices: List[np.ndarray] = []
 
-        self._resolution = 0
+        self.resolution = 0
         self._label_resolution = 0
         self._constraints = []
 
@@ -64,7 +64,7 @@ class SamplingVolume(Validatable):
         @param label_resolution: Label resolution
         @param constraints: List of constraints
         """
-        self._resolution = resolution
+        self.resolution = resolution
         self._label_resolution = label_resolution
         self._constraints = constraints
 
@@ -72,24 +72,7 @@ class SamplingVolume(Validatable):
         Assert_Dialog(label_resolution > 0, "Label resolution must be > 0")
 
     @property
-    @require_valid
-    def dimension(self) -> Tuple[int, int, int]:
-        """
-        @return: Sampling volume dimension if it is valid, None otherwise.
-        """
-        return self._dimension
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def get_resolution(self) -> float:
-        """
-        Returns this volume's resolution.
-
-        @return: Resolution
-        """
-        return self._resolution
-
-    def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
+    def bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         """
         Returns this volume's bounding box.
 
@@ -97,69 +80,14 @@ class SamplingVolume(Validatable):
         """
         return self._bounds_min, self._bounds_max
 
-    def get_extent(self) -> List:
+    @property
+    def extent(self) -> List:
         """
         Returns this volume's extent.
 
         @return: 3D point
         """
         return self._bounds_max - self._bounds_min
-
-    @require_valid
-    def get_points(self) -> np.array:
-        """
-        Returns this sampling volume's points.
-
-        @return: Array of 3D points
-        """
-        return self._points
-
-    @require_valid
-    def get_points_count(self) -> int:
-        """
-        Returns this sampling volume's point count.
-
-        @return: Point count
-        """
-        return len(self._points)
-
-    @require_valid
-    def get_permeabilities(self) -> np.ndarray:
-        """
-        Returns this sampling volume's relative permeabilities µ_r.
-
-        @return: Ordered list of sampling volume's relative permeabilities µ_r
-        """
-        return self._permeabilities
-
-    @require_valid
-    def get_labeled_indices(self) -> List:
-        """
-        Returns this sampling volume's labeled indices.
-
-        @return: Unordered list of pairs [sampling volume point, field index]
-        """
-        return self._labeled_indices
-
-    @require_valid
-    def get_labels_count(self) -> int:
-        """
-        Returns this sampling volume's label count.
-
-        @return: Label count
-        """
-        return len(self._labeled_indices)
-
-    @require_valid
-    def get_neighbor_indices(self) -> List[np.ndarray]:
-        """
-        Returns this sampling volume's neighborhood indices.
-
-        @return: Ordered list of sampling volume neighborhood indices (six 3D vectors)
-        """
-        return self._neighbor_indices
-
-    # ------------------------------------------------------------------------------------------------------------------
 
     def set_bounds_nearest(self, bounds_min: np.ndarray, bounds_max: np.ndarray) -> None:
         """
@@ -219,7 +147,7 @@ class SamplingVolume(Validatable):
         # Calculate all possible grid points
         points_axes_all = [[], [], []]
         for i in range(3):
-            steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self._resolution).astype(int) + 1
+            steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self.resolution).astype(int) + 1
             points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
 
         self._dimension = np.array([len(axis) for axis in points_axes_all])
@@ -326,9 +254,9 @@ class SamplingVolume(Validatable):
 
                 # Provide orthogonal spacing between labels
                 if \
-                        np.fmod(x, self._resolution / self._label_resolution) == 0 and \
-                        np.fmod(y, self._resolution / self._label_resolution) == 0 and \
-                        np.fmod(z, self._resolution / self._label_resolution) == 0:
+                        np.fmod(x, self.resolution / self._label_resolution) == 0 and \
+                        np.fmod(y, self.resolution / self._label_resolution) == 0 and \
+                        np.fmod(z, self.resolution / self._label_resolution) == 0:
                     # Generate a label at this point
                     labeled_indices.append([point, i])
 
@@ -417,3 +345,71 @@ class SamplingVolume(Validatable):
         progress_callback(100)
 
         return True
+
+    @property
+    @require_valid
+    def dimension(self) -> Tuple[int, int, int]:
+        """
+        @return: Sampling volume dimension if it is valid, None otherwise.
+        """
+        return self._dimension
+
+    @property
+    @require_valid
+    def points(self) -> np.array:
+        """
+        Returns this sampling volume's points.
+
+        @return: Array of 3D points
+        """
+        return self._points
+
+    @property
+    @require_valid
+    def points_count(self) -> int:
+        """
+        Returns this sampling volume's point count.
+
+        @return: Point count
+        """
+        return len(self._points)
+
+    @property
+    @require_valid
+    def permeabilities(self) -> np.ndarray:
+        """
+        Returns this sampling volume's relative permeabilities µ_r.
+
+        @return: Ordered list of sampling volume's relative permeabilities µ_r
+        """
+        return self._permeabilities
+
+    @property
+    @require_valid
+    def labeled_indices(self) -> List:
+        """
+        Returns this sampling volume's labeled indices.
+
+        @return: Unordered list of pairs [sampling volume point, field index]
+        """
+        return self._labeled_indices
+
+    @property
+    @require_valid
+    def labels_count(self) -> int:
+        """
+        Returns this sampling volume's label count.
+
+        @return: Label count
+        """
+        return len(self._labeled_indices)
+
+    @property
+    @require_valid
+    def neighbor_indices(self) -> List[np.ndarray]:
+        """
+        Returns this sampling volume's neighborhood indices.
+
+        @return: Ordered list of sampling volume neighborhood indices (six 3D vectors)
+        """
+        return self._neighbor_indices

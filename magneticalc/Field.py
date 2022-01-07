@@ -42,39 +42,31 @@ class Field(Validatable):
         Debug(self, ": Init", init=True)
 
         # Parameters
-        self._field_type = 0
+        self.type = 0
         self._distance_limit = 0
         self._length_scale = 0
 
-        # Result
+        # Results
         self._total_calculations: int = 0
         self._total_skipped_calculations: int = 0
         self._vectors: np.ndarray = np.array([])
 
     def set(
             self,
-            field_type: int,
+            type: int,
             distance_limit: float,
             length_scale: float
     ):
         """
         Sets the parameters.
 
-        @param field_type: Field type
+        @param type: Field type
         @param distance_limit: Distance limit (mitigating divisions by zero)
         @param length_scale: Length scale (m)
         """
-        self._field_type = field_type
+        self.type = type
         self._distance_limit = distance_limit
         self._length_scale = length_scale
-
-    def get_type(self) -> int:
-        """
-        Gets field type.
-
-        @return: Field type
-        """
-        return self._field_type
 
     def get_units(self, show_gauss=False) -> Tuple[str, float]:
         """
@@ -87,39 +79,12 @@ class Field(Validatable):
             return {
                 FIELD_TYPE_A: "Gs·m",    # Gauss · meter
                 FIELD_TYPE_B: "Gs"       # Gauss
-            }.get(self._field_type, ""), 1e4
+            }.get(self.type, ""), 1e4
         else:
             return {
                 FIELD_TYPE_A: "T·m",     # Tesla · meter
                 FIELD_TYPE_B: "T"        # Tesla
-            }.get(self._field_type, ""), 1e0
-
-    @require_valid
-    def get_vectors(self) -> np.ndarray:
-        """
-        Gets field vectors. (The selected field type determined which field was calculated.)
-
-        @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
-        """
-        return self._vectors
-
-    @require_valid
-    def get_total_calculations(self) -> int:
-        """
-        Gets total number of calculations.
-
-        @return: Total number of calculations
-        """
-        return self._total_calculations
-
-    @require_valid
-    def get_total_skipped_calculations(self) -> int:
-        """
-        Gets total number of skipped calculations.
-
-        @return: Total number of skipped calculations
-        """
-        return self._total_skipped_calculations
+            }.get(self.type, ""), 1e0
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -145,19 +110,19 @@ class Field(Validatable):
         Debug(self, ".recalculate()")
 
         # Compute the current elements.
-        current_elements = wire.get_elements()
+        current_elements = wire.elements
 
         if backend_type == BACKEND_TYPE_JIT:
 
             # Initialize Biot-Savart JIT backend
             backend = Backend_JIT(
-                field_type=self._field_type,
+                field_type=self.type,
                 distance_limit=self._distance_limit,
                 length_scale=self._length_scale,
-                dc=wire.get_dc(),
+                dc=wire.dc,
                 current_elements=current_elements,
-                sampling_volume_points=sampling_volume.get_points(),
-                sampling_volume_permeabilities=sampling_volume.get_permeabilities(),
+                sampling_volume_points=sampling_volume.points,
+                sampling_volume_permeabilities=sampling_volume.permeabilities,
                 progress_callback=progress_callback
             )
 
@@ -169,13 +134,13 @@ class Field(Validatable):
 
             # Initialize Biot-Savart CUDA backend
             backend = Backend_CUDA(
-                field_type=self._field_type,
+                field_type=self.type,
                 distance_limit=self._distance_limit,
                 length_scale=self._length_scale,
-                dc=wire.get_dc(),
+                dc=wire.dc,
                 current_elements=current_elements,
-                sampling_volume_points=sampling_volume.get_points(),
-                sampling_volume_permeabilities=sampling_volume.get_permeabilities(),
+                sampling_volume_points=sampling_volume.points,
+                sampling_volume_permeabilities=sampling_volume.permeabilities,
                 progress_callback=progress_callback
             )
 
@@ -197,7 +162,7 @@ class Field(Validatable):
         self._vectors = backend_result[2]
 
         # Sanity check
-        expected_total_calculations = len(current_elements) * sampling_volume.get_points_count()
+        expected_total_calculations = len(current_elements) * sampling_volume.points_count
         if expected_total_calculations != self._total_calculations:
             Assert_Dialog(False, "ERROR: Unexpected number of calculations – Backend seems to be buggy")
             return False
@@ -249,3 +214,41 @@ class Field(Validatable):
             head_points[i] = p_end
 
         return line_pairs, head_points
+
+    @property
+    @require_valid
+    def vectors(self) -> np.ndarray:
+        """
+        Gets field vectors. (The selected field type determined which field was calculated.)
+
+        @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
+        """
+        return self._vectors
+
+    @property
+    @require_valid
+    def vectors_count(self) -> int:
+        """
+        @return: Number of field vectors
+        """
+        return len(self._vectors)
+
+    @property
+    @require_valid
+    def total_calculations(self) -> int:
+        """
+        Gets total number of calculations.
+
+        @return: Total number of calculations
+        """
+        return self._total_calculations
+
+    @property
+    @require_valid
+    def total_skipped_calculations(self) -> int:
+        """
+        Gets total number of skipped calculations.
+
+        @return: Total number of skipped calculations
+        """
+        return self._total_skipped_calculations

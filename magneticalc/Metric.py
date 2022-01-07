@@ -168,9 +168,11 @@ class Metric(Validatable):
         Validatable.__init__(self)
         Debug(self, ": Init", init=True)
 
-        self._color_preset = {}
-        self._alpha_preset = {}
+        # Parameters
+        self.color_preset = {}
+        self.alpha_preset = {}
 
+        # Results
         self._colors: np.ndarray = np.array([])
         self._limits: Dict = {}
 
@@ -185,27 +187,12 @@ class Metric(Validatable):
         @param color_preset: Color metric preset (dictionary)
         @param alpha_preset: Alpha metric preset (dictionary)
         """
-        self._color_preset = color_preset
-        self._alpha_preset = alpha_preset
+        self.color_preset = color_preset
+        self.alpha_preset = alpha_preset
 
-    def get_color_preset(self) -> Dict:
-        """
-        Returns color metric preset.
-
-        @return: Color metric preset (dictionary)
-        """
-        return self._color_preset
-
-    def get_alpha_preset(self) -> Dict:
-        """
-        Returns alpha metric preset.
-
-        @return: Alpha metric preset (dictionary)
-        """
-        return self._alpha_preset
-
+    @property
     @require_valid
-    def get_colors(self) -> np.ndarray:
+    def colors(self) -> np.ndarray:
         """
         Returns calculated colors.
 
@@ -213,8 +200,9 @@ class Metric(Validatable):
         """
         return self._colors
 
+    @property
     @require_valid
-    def get_limits(self) -> Dict:
+    def limits(self) -> Dict:
         """
         Returns calculated limits.
 
@@ -375,51 +363,51 @@ class Metric(Validatable):
         """
         Debug(self, ".recalculate()")
 
-        n = len(field.get_vectors())
+        n = field.vectors_count
 
         progress_callback(0)
 
         # Sampling volume length element (only needed for divergence metric)
-        dL = Metric.LengthScale / sampling_volume.get_resolution()
+        dL = Metric.LengthScale / sampling_volume.resolution
 
         # Calculate color metric values
-        if self._color_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
+        if self.color_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
             # Calculate divergence
             color_norm_values = self._divergence_worker(
-                sampling_volume.get_neighbor_indices(),
-                field.get_vectors(),
+                sampling_volume.neighbor_indices,
+                field.vectors,
                 dL,
-                self._color_preset["polarity"]
+                self.color_preset["polarity"]
             )
         else:
             # Calculate other norm
             color_norm_values = self._norm_worker(
-                self._color_preset["norm_type"],
-                field.get_vectors()
+                self.color_preset["norm_type"],
+                field.vectors
             )
 
         progress_callback(25)
 
         # Calculate alpha metric values
-        if self._alpha_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
+        if self.alpha_preset["norm_type"] == NORM_TYPE_DIVERGENCE:
             # Calculate divergence
             alpha_norm_values = self._divergence_worker(
-                sampling_volume.get_neighbor_indices(),
-                field.get_vectors(),
+                sampling_volume.neighbor_indices,
+                field.vectors,
                 dL,
-                self._alpha_preset["polarity"]
+                self.alpha_preset["polarity"]
             )
         else:
             # Calculate other norm
             alpha_norm_values = self._norm_worker(
-                self._alpha_preset["norm_type"],
-                field.get_vectors()
+                self.alpha_preset["norm_type"],
+                field.vectors
             )
 
         progress_callback(50)
 
         # Select color range
-        if self._color_preset["is_angle"]:
+        if self.color_preset["is_angle"]:
             color_norm_min, color_norm_max = 0.0, 1.0
         elif all(np.isnan(color_norm_values)):
             color_norm_min, color_norm_max = np.nan, np.nan
@@ -427,7 +415,7 @@ class Metric(Validatable):
             color_norm_min, color_norm_max = np.nanmin(color_norm_values), np.nanmax(color_norm_values)
 
         # Select alpha range
-        if self._alpha_preset["is_angle"]:
+        if self.alpha_preset["is_angle"]:
             alpha_norm_min, alpha_norm_max = 0.0, 1.0
         elif all(np.isnan(alpha_norm_values)):
             alpha_norm_min, alpha_norm_max = np.nan, np.nan
@@ -435,10 +423,10 @@ class Metric(Validatable):
             alpha_norm_min, alpha_norm_max = np.nanmin(alpha_norm_values), np.nanmax(alpha_norm_values)
 
         # Select color normalizer
-        if self._color_preset["is_log"]:
+        if self.color_preset["is_log"]:
             # Logarithmic normalization
 
-            Assert_Dialog(not self._color_preset["is_angle"], "Logarithmic angles don't make any sense")
+            Assert_Dialog(not self.color_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
             color_norm_min_ = max(color_norm_min, Metric.LogNormMin)    # avoiding ValueError: min must be positive
@@ -449,10 +437,10 @@ class Metric(Validatable):
             color_norm_max_ = color_norm_max
 
         # Select alpha normalizer
-        if self._alpha_preset["is_log"]:
+        if self.alpha_preset["is_log"]:
             # Logarithmic normalization
 
-            Assert_Dialog(not self._alpha_preset["is_angle"], "Logarithmic angles don't make any sense")
+            Assert_Dialog(not self.alpha_preset["is_angle"], "Logarithmic angles don't make any sense")
 
             # Adjust range for logarithm (out-of-range values will be clipped in the loop below)
             alpha_norm_min_ = max(alpha_norm_min, Metric.LogNormMin)    # avoiding ValueError: min must be positive
@@ -467,12 +455,12 @@ class Metric(Validatable):
         # Calculate final color values
         # Note: If using logarithmic scaling, out-of-range values (still exceeding [0…1] here) may be clipped
         colors = self._normalize_worker(
-            self._color_preset["colormap"],
-            self._color_preset["is_log"],
+            self.color_preset["colormap"],
+            self.color_preset["is_log"],
             color_norm_values,
             color_norm_min_,
             color_norm_max_,
-            self._alpha_preset["is_log"],
+            self.alpha_preset["is_log"],
             alpha_norm_values,
             alpha_norm_min_,
             alpha_norm_max_,

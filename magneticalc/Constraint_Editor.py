@@ -152,13 +152,14 @@ class Constraint_Editor(QDialog2):
         Populates the table.
         """
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(self.get_count())])
-        self.table.set_contents(self.get_constraints())
+        self.table.set_vertical_header([str(i + 1) for i in range(self.count)])
+        self.table.set_contents(self.constraints)
         self.table.select_last_row(focus=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def get_count(self) -> int:
+    @property
+    def count(self) -> int:
         """
         Gets the number of constraints.
 
@@ -166,7 +167,8 @@ class Constraint_Editor(QDialog2):
         """
         return self._constraint_collection.get_count()
 
-    def get_constraints(self) -> List[Dict]:
+    @property
+    def constraints(self) -> List[Dict]:
         """
         Gets the list of constraints.
 

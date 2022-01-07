@@ -20,7 +20,6 @@ from __future__ import annotations
 from typing import List, Dict
 from PyQt5.Qt import QShowEvent
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QSizePolicy
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
@@ -102,14 +101,13 @@ class Constraint_Editor(QDialog2):
 
         self.table = QTableWidget2(
             self.gui,
-            _cell_edited_callback_=self.on_table_cell_edited,
-            _row_deleted_callback_=self.on_table_row_deleted
+            row_prefix="constraint_",
+            col_types=self.Constraint_Types,
+            col_options=self.Constraint_Options,
+            cell_edited_callback=self.on_table_cell_edited,
+            row_deleted_callback=self.on_table_row_deleted
         )
-        self.table.set_horizontal_header(["Norm", "Comparison", "Min.", "Max.", "µ (relative)"])
-        self.table.set_vertical_prefix("constraint_")
-        self.table.set_horizontal_types(self.Constraint_Types)
-        self.table.set_horizontal_options(self.Constraint_Options)
-        self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.table.set_col_keys(["Norm", "Comparison", "Min.", "Max.", "µ (relative)"])
         self.addWidget(self.table)
 
         self.text_browser = QTextBrowser2(html=self.HTML)
@@ -160,7 +158,7 @@ class Constraint_Editor(QDialog2):
         Populates the table.
         """
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(self.rows_count)])
+        self.table.set_row_keys([str(i + 1) for i in range(self.rows_count)])
         self.table.set_contents(self.rows)
         self.table.select_last_row(focus=False)
 

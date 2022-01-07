@@ -42,7 +42,7 @@ class Debug:
     EnableRefresh = False
 
     # Block debug output from specific classes
-    BlacklistEnabled = True
+    EnableBlacklist = True
     Blacklist = [
         "About_Dialog",
         "CheckForUpdates_Dialog",
@@ -105,7 +105,7 @@ class Debug:
 
         if not force:
             # Skip blacklisted class names
-            if self.BlacklistEnabled and name in self.Blacklist:
+            if self.EnableBlacklist and name in self.Blacklist:
                 return
 
         # A class may specify its own default color

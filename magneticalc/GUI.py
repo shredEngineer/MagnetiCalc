@@ -20,7 +20,7 @@ import time
 import atexit
 from sty import fg
 import qtawesome as qta
-from PyQt5.Qt import QCloseEvent, QKeyEvent
+from PyQt5.Qt import QCloseEvent, QKeyEvent, QTimer
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QLocale
 from PyQt5.QtWidgets import QMainWindow, QSplitter
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -137,6 +137,13 @@ class GUI(QMainWindow):
 
         self.vispy_canvas.load_perspective()
 
+        Debug(self, ".reload(): Waiting 1 second for GUI update")
+        QTimer.singleShot(1000, self.re_wrapper)
+
+    def re_wrapper(self):
+        """
+        Simple wrapper that decides between recalculation or redraw.
+        """
         if self.project.get_bool("auto_calculation"):
             self.recalculate()
         else:

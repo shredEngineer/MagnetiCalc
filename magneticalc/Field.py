@@ -169,6 +169,44 @@ class Field(Validatable):
 
         return True
 
+    @property
+    @require_valid
+    def vectors(self) -> np.ndarray:
+        """
+        Gets field vectors. (The selected field type determined which field was calculated.)
+
+        @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
+        """
+        return self._vectors
+
+    @property
+    @require_valid
+    def vectors_count(self) -> int:
+        """
+        @return: Number of field vectors
+        """
+        return len(self._vectors)
+
+    @property
+    @require_valid
+    def total_calculations(self) -> int:
+        """
+        Gets total number of calculations.
+
+        @return: Total number of calculations
+        """
+        return self._total_calculations
+
+    @property
+    @require_valid
+    def total_skipped_calculations(self) -> int:
+        """
+        Gets total number of skipped calculations.
+
+        @return: Total number of skipped calculations
+        """
+        return self._total_skipped_calculations
+
     # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
@@ -214,41 +252,3 @@ class Field(Validatable):
             head_points[i] = p_end
 
         return line_pairs, head_points
-
-    @property
-    @require_valid
-    def vectors(self) -> np.ndarray:
-        """
-        Gets field vectors. (The selected field type determined which field was calculated.)
-
-        @return: Ordered list of 3D vectors (field vectors & corresponding sampling volume points have the same indices)
-        """
-        return self._vectors
-
-    @property
-    @require_valid
-    def vectors_count(self) -> int:
-        """
-        @return: Number of field vectors
-        """
-        return len(self._vectors)
-
-    @property
-    @require_valid
-    def total_calculations(self) -> int:
-        """
-        Gets total number of calculations.
-
-        @return: Total number of calculations
-        """
-        return self._total_calculations
-
-    @property
-    @require_valid
-    def total_skipped_calculations(self) -> int:
-        """
-        Gets total number of skipped calculations.
-
-        @return: Total number of skipped calculations
-        """
-        return self._total_skipped_calculations

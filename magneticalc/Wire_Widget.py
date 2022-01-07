@@ -99,15 +99,12 @@ class Wire_Widget(QGroupBox2):
         self.addLayout(table_icon_label)
         self.table = QTableWidget2(
             self.gui,
-            _cell_edited_callback_=self.on_table_cell_edited,
-            _selection_changed_callback_=self.gui.redraw,
-            _row_deleted_callback_=self.on_table_row_deleted,
-            minimum_rows=2
+            row_count_minimum=2,
+            cell_edited_callback=self.on_table_cell_edited,
+            selection_changed_callback=self.gui.redraw,
+            row_deleted_callback=self.on_table_row_deleted
         )
-        self.table.set_horizontal_header(["X", "Y", "Z"])
-        self.table.set_vertical_prefix("")
-        self.table.set_horizontal_types(None)
-        self.table.set_horizontal_options([None, None, None])
+        self.table.set_col_keys(["X", "Y", "Z"])
         self.addWidget(self.table)
 
         table_total_layout = QHBoxLayout()
@@ -357,10 +354,10 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_table()")
 
-        points = [[f"{round(col, 2):+0.02f}" for col in row] for row in self.gui.model.wire.points_base]
+        points = [[f"{col:+0.02f}" for col in row] for row in self.gui.model.wire.points_base]
 
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(len(self.gui.model.wire.points_base))])
+        self.table.set_row_keys([str(i + 1) for i in range(len(self.gui.model.wire.points_base))])
         self.table.set_contents(points)
         self.table.select_last_row(focus=False)
 

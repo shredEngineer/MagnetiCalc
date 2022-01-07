@@ -39,7 +39,6 @@ def metric_norm(norm_type: int, vector: np.ndarray) -> float:
     @param vector: 3D vector
     @return: Scalar if successful, np.inf on error
     """
-
     if norm_type == NORM_TYPE_X:
         value = vector[0]
     elif norm_type == NORM_TYPE_Y:
@@ -156,8 +155,6 @@ class Metric(Validatable):
     # Minimum argument limit for logarithmic scaling
     LogNormMin = 1e-12
 
-    # ------------------------------------------------------------------------------------------------------------------
-
     def __init__(self) -> None:
         """
         Initializes an empty metric.
@@ -189,26 +186,6 @@ class Metric(Validatable):
         """
         self.color_preset = color_preset
         self.alpha_preset = alpha_preset
-
-    @property
-    @require_valid
-    def colors(self) -> np.ndarray:
-        """
-        Returns calculated colors.
-
-        @return: Ordered list of color values (4-tuples)
-        """
-        return self._colors
-
-    @property
-    @require_valid
-    def limits(self) -> Dict:
-        """
-        Returns calculated limits.
-
-        @return: Dictionary
-        """
-        return self._limits
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -479,6 +456,26 @@ class Metric(Validatable):
         progress_callback(100)
 
         return True
+
+    @property
+    @require_valid
+    def colors(self) -> np.ndarray:
+        """
+        Returns calculated colors.
+
+        @return: Ordered list of color values (4-tuples)
+        """
+        return self._colors
+
+    @property
+    @require_valid
+    def limits(self) -> Dict:
+        """
+        Returns calculated limits.
+
+        @return: Dictionary
+        """
+        return self._limits
 
     # ------------------------------------------------------------------------------------------------------------------
 

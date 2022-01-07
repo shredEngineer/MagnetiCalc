@@ -228,7 +228,7 @@ The documentation for MagnetiCalc is auto-generated from docstrings in the Pytho
 
 ### Debugging
 
-If desired, MagnetiCalc can be *very* verbose about everything it is doing in the terminal:
+If desired, MagnetiCalc can be quite verbose about everything it is doing in the terminal:
 * Some modules are blacklisted in [`Debug.py`](magneticalc/Debug.py), but this can easily be changed.  
 * Some modules also provide their own debug switches to increase the level of detail. 
 
@@ -305,13 +305,13 @@ ToDo
   (derived from the fundamental
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
-* Add a list of objects, for wires and permeability classes (constraints),
+* Add a list of objects, for wires and permeability groups (constraints),
   with a transformation pipeline for each object;
   move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
 * Interactively display superposition of fields with varying currents.
 * Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
-* Highlight permeability classes with
+* Highlight permeability groups with
   <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
 * Add support for modeling of core material saturation and hysteresis effects.
@@ -328,12 +328,11 @@ ToDo
 * Fix issue where the points of a sampling volume with *fractional* resolution
   are not always spaced equidistantly for some sampling volume dimensions.
 * Fix calculation of divergence right at the sampling volume boundary.
-* Fix delayed GUI start-up when loading "complex" files.
 * Fix missing scaling of VisPy markers when zooming.
 * Fix unnecessary shading of VisPy markers.
 
 **Performance**
-* Parallelize sampling volume + constraint calculation which is currently slow.
+* Parallelize sampling volume calculation which is currently slow.
 
 **Code Quality**
 * Add unit tests.

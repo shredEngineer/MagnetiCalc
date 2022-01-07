@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, List, Callable, Dict
+from typing import Tuple, List, Callable
 import numpy as np
 from PyQt5.QtCore import QThread
 from magneticalc.Assert_Dialog import Assert_Dialog
@@ -28,9 +28,6 @@ from magneticalc.Validatable import Validatable, require_valid, validator
 class SamplingVolume(Validatable):
     """ Sampling volume class. """
 
-    # Enable to show additional debug info during constraint calculation
-    Debug_Constraints = False
-
     def __init__(self) -> None:
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
@@ -38,8 +35,8 @@ class SamplingVolume(Validatable):
         Validatable.__init__(self)
         Debug(self, ": Init", init=True)
 
-        self._bounds_min = np.zeros(3)
-        self._bounds_max = np.zeros(3)
+        self._bounds_min: np.ndarray = np.zeros(3)
+        self._bounds_max: np.ndarray = np.zeros(3)
         self._dimension: Tuple[int, int, int] = (0, 0, 0)
 
         self._points = np.array([])
@@ -116,6 +113,32 @@ class SamplingVolume(Validatable):
 
     # ------------------------------------------------------------------------------------------------------------------
 
+    def _i_to_xyz(self, _i: int) -> List:
+        """
+        Convert 1D index to 3D indices.
+        Note: "Fortran" indexing (column-major order).
+
+        @param _i: 1D index
+        @return: 3D indices
+        """
+        return [
+            _i % self._dimension[0],
+            (_i // self._dimension[0]) % self._dimension[1],
+            _i // (self._dimension[0] * self._dimension[1])
+        ]
+
+    def _xyz_to_i(self, xyz: List) -> int:
+        """
+        Convert 3D indices to 1D index.
+        Note: "Fortran" indexing (column-major order).
+
+        @param xyz: 3D indices
+        @return: 1D index
+        """
+        return xyz[0] + xyz[1] * self._dimension[0] + xyz[2] * self._dimension[0] * self._dimension[1]
+
+    # ------------------------------------------------------------------------------------------------------------------
+
     @validator
     def recalculate(self, progress_callback: Callable) -> bool:
         """
@@ -126,126 +149,69 @@ class SamplingVolume(Validatable):
         """
         Debug(self, ".recalculate()")
 
-        # Group constraints by permeability
-        constraints_precedence_dict: Dict = {}
-        for constraint in self._constraints:
-            if constraint.permeability in constraints_precedence_dict:
-                constraints_precedence_dict[constraint.permeability].append(constraint)
-            else:
-                constraints_precedence_dict[constraint.permeability] = [constraint]
+        # Gather permeabilities by descending permeability
+        permeability_groups = sorted(set([constraint.permeability for constraint in self._constraints]), reverse=True)
 
-        if self.Debug_Constraints:
-            Debug(self, f".recalculate(): Created {len(constraints_precedence_dict)} constraint group(s)")
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Group constraints by descending permeability
+        Permeability_Groups_Precedence_Map = {
+            permeability: [constraint for constraint in self._constraints if permeability == constraint.permeability]
+            for permeability in permeability_groups
+        }
+        Debug(
+            self,
+            ".set(): Permeability groups: { " +
+            ", ".join([
+                f"µ_r={permeability} ({len(constraints)})"
+                for permeability, constraints in Permeability_Groups_Precedence_Map.items()
+            ]) + " }"
+        )
 
         # Calculate all possible grid points
-        points_axes_all = [[], [], []]
-        for i in range(3):
-            steps = np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self.resolution).astype(int) + 1
-            points_axes_all[i] = np.linspace(self._bounds_min[i], self._bounds_max[i], steps)
+        total_axes = [
+            np.linspace(
+                self._bounds_min[i],
+                self._bounds_max[i],
+                np.ceil((self._bounds_max[i] - self._bounds_min[i]) * self.resolution).astype(int) + 1
+            )
+            for i in range(3)
+        ]
 
-        self._dimension = np.array([len(axis) for axis in points_axes_all])
-        n = self._dimension[0] * self._dimension[1] * self._dimension[2]
-
-        points_all = np.zeros(shape=(n, 3))
-        permeabilities_all = np.zeros(n)
-        neighbor_indices_all = [[0, 0, 0, 0, 0, 0]] * n
-
+        self._dimension = np.array([len(axis) for axis in total_axes])
+        total_count = np.prod(self._dimension)
+        total_points = np.zeros(shape=(total_count, 3))
+        total_permeabilities = np.zeros(total_count)
+        total_neighbor_indices = np.zeros(shape=(total_count, 6), dtype=int)
         labeled_indices = []
 
-        def i_to_xyz(_i: int) -> List:
-            """
-            Convert 1D index to 3D indices.
-
-            @param _i: 1D index
-            @return: 3D indices
-            """
-            _x = _i % self._dimension[0]
-            _y = (_i // self._dimension[0]) % self._dimension[1]
-            _z = _i // (self._dimension[0] * self._dimension[1])
-            return [_x, _y, _z]
-
-        def xyz_to_i(xyz: List) -> int:
-            """
-            Convert 3D indices to 1D index.
-
-            @param xyz: 3D indices
-            @return: 1D index
-            """
-            return xyz[0] + xyz[1] * self._dimension[0] + xyz[2] * self._dimension[0] * self._dimension[1]
-
         # Linearly iterate through all possible grid points, computing the 3D cartesian ("euclidean") product
-        for i in range(n):
+        for i in range(total_count):
+            x, y, z = self._i_to_xyz(i)
+            point = np.array([total_axes[0][x], total_axes[1][y], total_axes[2][z]])
 
-            x, y, z = i_to_xyz(i)
+            point_permeability = 1.0  # Default relative permeability for unconstrained points
 
-            point = np.array([points_axes_all[0][x], points_axes_all[1][y], points_axes_all[2][z]])
-
-            permeability = 1.0  # Default relative permeability for unconstrained points
-
-            # Iterate over constraint groups of descending permeability; higher permeabilities take precedence
-            for permeability_key in sorted(constraints_precedence_dict, reverse=True):
-
-                included = True
-
-                if self.Debug_Constraints:
-                    Debug(
-                        self,
-                        f".recalculate(): Point = {point}: "
-                        f"Calculating {len(constraints_precedence_dict[permeability_key])} constraint(s) "
-                        f"for permeability = {permeability_key} …"
-                    )
-
-                # Calculate the inclusion relation for the current group
-                for constraint in constraints_precedence_dict[permeability_key]:
-
-                    if not constraint.evaluate(point):
-
-                        if self.Debug_Constraints:
-                            Debug(self, f".recalculate(): Point = {point}: Constraint evaluated to False (breaking)")
-
-                        # Exclude this point within the current group
-                        included = False
-                        break
-
-                    else:
-
-                        if self.Debug_Constraints:
-                            Debug(self, f".recalculate(): Point = {point}: Constraint evaluated to True", success=True)
-
-                if included:
-
-                    if self.Debug_Constraints:
-                        Debug(self, f".recalculate(): Point = {point}: Included by precedence grouping", success=True)
-
-                    permeability = permeability_key
+            # Iterate over constraints grouped by descending permeability (higher permeabilities take precedence)
+            # and calculate the inclusion relation for every group, breaking on the first match.
+            for permeability, constraints in Permeability_Groups_Precedence_Map.items():
+                if all([constraint.evaluate(point) for constraint in constraints]):
+                    point_permeability = permeability
                     break
 
-                else:
-
-                    if self.Debug_Constraints:
-                        Debug(self, f".recalculate(): Point = {point}: Excluded by precedence grouping")
-
-            if permeability != 0:
-
-                if self.Debug_Constraints:
-                    Debug(self, f".recalculate(): Point = {point}: Finally included with permeability = {permeability}")
-
+            if point_permeability != 0:
                 # Include this point
-                points_all[i] = point
-                permeabilities_all[i] = permeability
+                total_points[i] = point
+                total_permeabilities[i] = point_permeability
 
                 # Generate this sampling volume point's neighborhood
                 neighborhood = [
-                    xyz_to_i([x + 1, y, z]),
-                    xyz_to_i([x, y + 1, z]),
-                    xyz_to_i([x, y, z + 1]),
-                    xyz_to_i([x - 1, y, z]),
-                    xyz_to_i([x, y - 1, z]),
-                    xyz_to_i([x, y, z - 1])
+                    self._xyz_to_i([x + 1, y, z]),
+                    self._xyz_to_i([x, y + 1, z]),
+                    self._xyz_to_i([x, y, z + 1]),
+                    self._xyz_to_i([x - 1, y, z]),
+                    self._xyz_to_i([x, y - 1, z]),
+                    self._xyz_to_i([x, y, z - 1])
                 ]
-                neighbor_indices_all[i] = neighborhood
+                total_neighbor_indices[i] = neighborhood
 
                 # Provide orthogonal spacing between labels
                 if \
@@ -255,14 +221,9 @@ class SamplingVolume(Validatable):
                     # Generate a label at this point
                     labeled_indices.append([point, i])
 
-            else:
-
-                if self.Debug_Constraints:
-                    Debug(self, f".recalculate(): Point = {point}: Finally excluded with permeability = 0")
-
-            # Signal progress update, handle interrupt (every 16 iterations to keep overhead low)
-            if i & 0xf == 0:
-                progress_callback(100 * (i + 1) / n)
+            # Signal progress update, handle interrupt (every 256 iterations to keep overhead low)
+            if i & 0xff == 0:
+                progress_callback(100 * (i + 1) / total_count)
 
                 if QThread.currentThread().isInterruptionRequested():
                     Debug(self, ".recalculate(): WARNING: Interruption requested, exiting now", warning=True)
@@ -270,11 +231,11 @@ class SamplingVolume(Validatable):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        index_all_to_filtered = [-1] * n
+        index_all_to_filtered = [-1] * total_count
         filtered_index = 0
 
         # Generate mapping from "all" indices to "filtered" indices
-        for i, permeability in enumerate(permeabilities_all):
+        for i, permeability in enumerate(total_permeabilities):
             if permeability == 0:
                 continue
 
@@ -288,17 +249,17 @@ class SamplingVolume(Validatable):
         neighbor_indices_filtered = []
 
         # Filter for included points, i.e. those with permeability != 0; translate neighborhood indices
-        for i, permeability in enumerate(permeabilities_all):
+        for i, permeability in enumerate(total_permeabilities):
             if permeability == 0:
                 continue
 
-            point = points_all[i]
-            permeability = permeabilities_all[i]
+            point = total_points[i]
+            permeability = total_permeabilities[i]
 
             # Translate neighborhood indices
-            neighborhood = neighbor_indices_all[i]
+            neighborhood = total_neighbor_indices[i]
             for j in range(6):
-                if 0 <= neighborhood[j] < n:
+                if 0 <= neighborhood[j] < total_count:
                     if index_all_to_filtered[neighborhood[j]] != -1:
                         neighborhood[j] = index_all_to_filtered[neighborhood[j]]
                     else:
@@ -326,11 +287,11 @@ class SamplingVolume(Validatable):
         Debug(
             self,
             ".recalculate(): "
-            f"{len(self._constraints)} constraints left {n} of {len(self._points)} possible points"
+            f"{len(self._constraints)} constraints left {len(self._points)} of {total_count} possible points"
         )
 
         if len(self._points) == 0:
-            Debug(self, ".recalculate: USER WARNING: Avoiding empty sampling volume by adding origin", warning=True)
+            Debug(self, ".recalculate: WARNING: Avoiding empty sampling volume by adding origin", warning=True)
             origin = np.zeros(3)
             self._points = np.array([origin])
             self._permeabilities = np.array([0])

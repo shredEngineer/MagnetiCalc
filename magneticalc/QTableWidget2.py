@@ -21,7 +21,7 @@ from typing import Optional, List, Dict, Union, Callable
 from functools import partial
 from PyQt5.Qt import QFocusEvent
 from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QComboBox
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QComboBox, QSizePolicy
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Format import Format
@@ -31,41 +31,45 @@ from magneticalc.Theme import Theme
 class QTableWidget2(QTableWidget):
     """ QTableWidget2 class. """
 
-    # Display settings
-    MinimumHeight = 150
-
     def __init__(
             self,
             gui: GUI,  # type: ignore
-            enabled: bool = True,
-            _cell_edited_callback_: Optional[Callable] = None,
-            _selection_changed_callback_: Optional[Callable] = None,
-            _row_deleted_callback_: Optional[Callable] = None,
-            minimum_rows: int = 0,
+            row_count_minimum: int = 0,
+            row_prefix: str = "",
+            col_types: Optional[Union[List, Dict]] = None,
+            col_options: Optional[List] = None,
+            cell_edited_callback: Optional[Callable] = None,
+            selection_changed_callback: Optional[Callable] = None,
+            row_deleted_callback: Optional[Callable] = None,
     ) -> None:
         """
         Initializes a table.
-        Underscored parameters are optional.
 
         @param gui: GUI
-        @param _cell_edited_callback_: Set this to make cells editable
-        @param _selection_changed_callback_: Used to inform the GUI that another row was selected
-        @param _row_deleted_callback_: Set this to make rows deletable
-        @param minimum_rows: Minimum number of rows (no further rows can be deleted)
+        @param row_count_minimum: Minimum number of rows (no further rows can be deleted)
+        @param row_prefix: Per-row prefix used for binding cells to configuration
+                           (key = prefix + column key + "_" + row index)
+        @param col_types: Per-column cell types used for binding cells to configuration.
+                          Ordered dictionary of key-value pairs (column key : column type) or None to disable binding.
+                          Note: Currently, *only the keys* are used for binding cells to project configuration;
+                          the cell options actually determine the cell type, i.e. numerical or combobox.
+        @param col_options: Per-column cell options. This determines the cell type, i.e. numerical or combobox.
+                            List of options for every column; items may be set to None to use numerical cells.
+        @param cell_edited_callback: Set this to make cells editable
+        @param selection_changed_callback: Used to inform the GUI that another row was selected
+        @param row_deleted_callback: Set this to make rows deletable
         """
         QTableWidget.__init__(self)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        self._enabled = enabled
-        self._cell_edited_callback = _cell_edited_callback_
-        self._selection_changed_callback = _selection_changed_callback_
-        self._row_deleted_callback = _row_deleted_callback_
-        self._minimum_rows = minimum_rows
-
-        self._prefix = None
-        self._types: Optional[Dict] = None
-        self._options: List = []
+        self._row_count_minimum = row_count_minimum
+        self._row_prefix = row_prefix
+        self._col_types = col_types
+        self._col_options = col_options
+        self._cell_edited_callback = cell_edited_callback
+        self._selection_changed_callback = selection_changed_callback
+        self._row_deleted_callback = row_deleted_callback
 
         if self._cell_edited_callback is not None:
             self.itemChanged.connect(self.on_numerical_cell_edited)  # type: ignore
@@ -74,127 +78,165 @@ class QTableWidget2(QTableWidget):
         if self._selection_changed_callback is not None:
             self.selectionModel().selectionChanged.connect(self.on_selection_changed)  # type: ignore
 
+        self.setFocusPolicy(Qt.StrongFocus)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.set_style(border_color="black", border_width=1)
-        self.setMinimumHeight(self.MinimumHeight)
         self.setAlternatingRowColors(True)
-
         self.setSelectionMode(QAbstractItemView.SingleSelection)
         self.setSelectionBehavior(QAbstractItemView.SelectItems)
 
-        self.setFocusPolicy(Qt.StrongFocus)
+    def set_style(self, border_color: str, border_width: int) -> None:
+        """
+        Sets this widget's style.
+
+        @param border_color: Border color
+        @param border_width: Border width
+        """
+        self.setStyleSheet(f"""
+            QTableWidget {{
+                border: {border_width}px solid {border_color};
+                border-radius: 5px;
+                padding: 1px;
+                margin: {2 - border_width}px;
+            }}
+
+            QTableCornerButton::section {{
+                border-width: 1px;
+                border-style: solid;
+                border-color: white silver silver white;
+            }}
+
+            QTableWidget::item {{
+                padding: 2;
+            }}
+        """)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def on_cell_changed(self, row: int, column: int) -> None:
+    def clear_rows(self) -> None:
         """
-        Gets called when a cell changed.
-        This is only used to correct the strange behaviour after editing a cell.
-
-        @param row: Row
-        @param column: Column
+        Clears all table rows.
         """
-        Debug(self, f".on_cell_changed({row}, {column})")
+        Debug(self, ".clear_rows()")
 
-        self.select_cell(row, column)
-        self.setFocus()
+        self.setRowCount(0)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def on_numerical_cell_edited(self, item: QTableWidgetItem) -> None:
+    def set_row_keys(self, row_keys: List[str]) -> None:
         """
-        Gets called when a numerical cell has been edited.
+        Sets row keys.
 
-        @param item: QTableWidgetItem
+        @param row_keys: List of row keys
         """
-        Debug(self, ".on_cell_edited()")
+        Debug(self, ".set_row_keys()")
 
-        try:
-            value = float(item.text().replace(",", "."))
-        except ValueError:
-            value = 0.0
+        self.setRowCount(len(row_keys))
 
-        value = Format.float_to_str(value)
-        row = item.row()
-        column = item.column()
+        self.blockSignals(True)
+        for row_index, label in enumerate(row_keys):
+            item = QTableWidgetItem(label)
+            item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.setVerticalHeaderItem(row_index, item)
+            self.verticalHeader().setSectionResizeMode(row_index, QHeaderView.ResizeToContents)
+        self.blockSignals(False)
 
-        item.setText(value)
+        self.verticalHeader().setStyleSheet("""
+            QHeaderView::section {
+                padding: 0 3px;
+            }
+        """)
 
-        if self._cell_edited_callback is not None:
-            self._cell_edited_callback(value, row, column)
-
-    def on_combobox_cell_edited(self, combobox: QComboBox, row: int, column: int) -> None:
+    def set_col_keys(self, col_keys: List[str]) -> None:
         """
-        Gets called when a combobox cell has been edited.
+        Sets column keys.
 
-        @param combobox: QCombobox
-        @param row: Row index
-        @param column: Column index
+        @param col_keys: List of column keys
         """
-        Debug(self, ".on_combobox_cell_edited()")
-
-        if self._cell_edited_callback is not None:
-            self._cell_edited_callback(combobox.currentText(), row, column)
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def on_selection_changed(self, _selected: QItemSelection, _deselected: QItemSelection) -> None:
-        """
-        Gets called when the selection changed.
-
-        @param _selected: Currently selected QItemSelection
-        @param _deselected: Currently deselected QItemSelection
-        """
-        if self.signalsBlocked():
-            return
-
-        Debug(self, ".on_selection_changed()")
-
-        if self._selection_changed_callback is not None:
-            self._selection_changed_callback()
-
-    def on_row_deleted(self, row: int) -> None:
-        """
-        Gets called when a row was deleted.
-
-        @param row: Row
-        """
-        Debug(self, f".on_row_deleted({row})")
+        Debug(self, ".set_col_keys()")
 
         if self._row_deleted_callback is not None:
-            self._row_deleted_callback(row)
+            col_keys.append("")
 
-        self.select_last_row()
+        self.setColumnCount(len(col_keys))
+
+        for col_index, label in enumerate(col_keys):
+            item = QTableWidgetItem(label)
+            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+            self.setHorizontalHeaderItem(col_index, item)
+            self.horizontalHeader().setSectionResizeMode(col_index, QHeaderView.Stretch)
+
+    def set_contents(self, rows: Union[List[List[str]], List[Dict]]) -> None:
+        """
+        Sets the table contents.
+
+        @param rows: List of rows
+        """
+        Debug(self, ".set_contents()")
+
+        self.blockSignals(True)
+
+        # Iterate over rows
+        for row_index, row_contents in enumerate(rows):
+
+            # Iterate over columns
+            for col_index, col_contents in enumerate(row_contents):
+
+                if self._col_options is not None and self._col_options[col_index] is not None:
+                    # Cell has options: Create a combobox
+                    combobox = QComboBox()
+
+                    for i, text in enumerate(self._col_options[col_index]):
+                        combobox.addItem(text)
+
+                        # Cell is bound to project configuration:
+                        if self._col_types is not None:
+                            key = list(self._col_types.keys())[col_index]
+                            if text == self.gui.project.get_str(self._row_prefix + key + "_" + str(row_index)):
+                                combobox.setCurrentIndex(i)
+
+                    combobox.currentIndexChanged.connect(  # type: ignore
+                        partial(self.on_combobox_cell_edited, combobox, row_index, col_index)
+                    )
+
+                    self.setCellWidget(row_index, col_index, combobox)
+
+                else:
+
+                    # Cell doesn't have options: Create a numerical cell
+                    item = QTableWidgetItem(col_contents)
+                    item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+                    # Set the cell flags
+                    flags = Qt.NoItemFlags | Qt.ItemIsSelectable | Qt.ItemIsEnabled
+                    if self._cell_edited_callback is not None:
+                        flags |= Qt.ItemIsEditable
+                    item.setFlags(flags)  # type: ignore
+
+                    # Cell is bound to project configuration:
+                    if self._col_types is not None:
+                        key = list(self._col_types.keys())[col_index]
+                        item.setText(self.gui.project.get_str(self._row_prefix + key + "_" + str(row_index)))
+
+                    self.setItem(row_index, col_index, item)
+
+            if self._row_deleted_callback is not None:
+                # Create a delete button
+                delete_button = QPushButton2("", "fa.minus", css="border: none; background: palette(window);")
+
+                if self.rowCount() > self._row_count_minimum:
+                    # Allow this row to be deleted
+                    delete_button.clicked.connect(  # type: ignore
+                        partial(self.on_row_deleted, row_index)
+                    )
+                else:
+                    # Don't allow the any more rows to be deleted
+                    delete_button.setEnabled(False)
+
+                # Insert the delete button into the last column
+                self.setCellWidget(row_index, self.columnCount() - 1, delete_button)
+
+        self.blockSignals(False)
 
     # ------------------------------------------------------------------------------------------------------------------
-
-    def get_selected_row(self) -> Optional[int]:
-        """
-        Returns the currently selected row index.
-
-        @return: Index of currently selected row (None if none selected)
-        """
-        if self.selectionModel().hasSelection():
-            return self.selectionModel().currentIndex().row()
-        else:
-            return None
-
-    def is_cell_widget_selected(self) -> bool:
-        """
-        Indicates whether a cell widget is selected (as opposed to a cell item).
-        """
-        row = self.selectionModel().currentIndex().row()
-        column = self.selectionModel().currentIndex().column()
-
-        if row == -1 or column == -1:
-            return False
-
-        if self._row_deleted_callback is not None:
-            if column == self.columnCount() - 1:
-                Debug(self, ".is_cell_widget_selected: Ignoring delete button")
-                return False
-
-        item = self.item(row, column)
-        return item is None
 
     def select_cell(self, _row_: Optional[int] = None, _col_: Optional[int] = None) -> None:
         """
@@ -261,195 +303,81 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_horizontal_header(self, header: List[str]) -> None:
+    def on_cell_changed(self, row: int, column: int) -> None:
         """
-        Sets horizontal header.
+        Gets called when a cell changed.
+        This is only used to correct the strange behaviour after editing a cell.
 
-        @param header: List of row header strings
+        @param row: Row
+        @param column: Column
         """
-        Debug(self, ".set_horizontal_header()")
+        Debug(self, f".on_cell_changed({row}, {column})")
+
+        self.select_cell(row, column)
+        self.setFocus()
+
+    def on_numerical_cell_edited(self, item: QTableWidgetItem) -> None:
+        """
+        Gets called when a numerical cell has been edited.
+
+        @param item: QTableWidgetItem
+        """
+        Debug(self, ".on_cell_edited()")
+
+        try:
+            value = float(item.text().replace(",", "."))
+        except ValueError:
+            value = 0.0
+
+        value = Format.float_to_str(value)
+        row = item.row()
+        column = item.column()
+
+        item.setText(value)
+
+        if self._cell_edited_callback is not None:
+            self._cell_edited_callback(value, row, column)
+
+    def on_combobox_cell_edited(self, combobox: QComboBox, row: int, column: int) -> None:
+        """
+        Gets called when a combobox cell has been edited.
+
+        @param combobox: QCombobox
+        @param row: Row index
+        @param column: Column index
+        """
+        Debug(self, ".on_combobox_cell_edited()")
+
+        if self._cell_edited_callback is not None:
+            self._cell_edited_callback(combobox.currentText(), row, column)
+
+    def on_selection_changed(self, _selected: QItemSelection, _deselected: QItemSelection) -> None:
+        """
+        Gets called when the selection changed.
+
+        @param _selected: Currently selected QItemSelection
+        @param _deselected: Currently deselected QItemSelection
+        """
+        if self.signalsBlocked():
+            return
+
+        Debug(self, ".on_selection_changed()")
+
+        if self._selection_changed_callback is not None:
+            self._selection_changed_callback()
+
+    def on_row_deleted(self, row: int) -> None:
+        """
+        Gets called when a row was deleted.
+
+        @param row: Row
+        """
+        Debug(self, f".on_row_deleted({row})")
 
         if self._row_deleted_callback is not None:
-            header.append("")
+            self._row_deleted_callback(row)
 
-        self.setColumnCount(len(header))
-
-        for col_index, label in enumerate(header):
-            item = QTableWidgetItem(label)
-            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-            self.setHorizontalHeaderItem(col_index, item)
-            self.horizontalHeader().setSectionResizeMode(col_index, QHeaderView.Stretch)
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def set_vertical_prefix(self, prefix: str) -> None:
-        """
-        Sets the per-row table prefix.
-        Used for binding cells to project configuration; key = prefix + column key + "_" + row index.
-
-        @param prefix: Prefix
-        """
-        self._prefix = prefix
-
-    def set_horizontal_types(self, types: Optional[Dict]) -> None:
-        """
-        Sets the per-column cell types.
-        Used for binding cells to project configuration.
-
-        Note: Currently, *only the keys* are used for binding cells to project configuration;
-        the cell options actually determine the cell type, i.e. numerical or combobox.
-
-        @param types: Ordered dictionary of key-value pairs (column key : column type), or None to disable binding
-        """
-        self._types = types
-
-    def set_horizontal_options(self, options: List) -> None:
-        """
-        Sets the per-column cell options.
-        This determines if the cell type, i.e. numerical or combobox.
-
-        @param options: List of options for every column; items may be set to None to use numerical cells
-        """
-        self._options = options
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def set_vertical_header(self, header: List) -> None:
-        """
-        Sets vertical header.
-
-        @param header: List of column header strings
-        """
-        Debug(self, ".set_vertical_header()")
-
-        self.setRowCount(len(header))
-
-        for row_index, label in enumerate(header):
-            item = QTableWidgetItem(label)
-            item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-            self.setVerticalHeaderItem(row_index, item)
-            self.verticalHeader().setSectionResizeMode(row_index, QHeaderView.ResizeToContents)
-
-        self.verticalHeader().setStyleSheet("""
-            QHeaderView::section {
-                padding: 0 3px;
-            }
-        """)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def clear_rows(self) -> None:
-        """
-        Clears all table rows.
-        """
-        Debug(self, ".clear_rows()")
-
-        self.setRowCount(0)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def set_contents(self, rows: Union[List[List[str]], List[Dict]]) -> None:
-        """
-        Sets the table contents.
-
-        @param rows: List of rows
-        """
-        Debug(self, ".set_contents()")
-
-        self.blockSignals(True)
-
-        # Iterate over rows
-        for row_index, row_contents in enumerate(rows):
-
-            # Iterate over columns
-            for col_index, col_contents in enumerate(row_contents):
-
-                if self._options[col_index] is not None:
-                    # Cell has options: Create a combobox
-                    combobox = QComboBox()
-
-                    for i, text in enumerate(self._options[col_index]):
-                        combobox.addItem(text)
-
-                        # Cell is bound to project configuration:
-                        if self._types is not None:
-                            key = list(self._types.keys())[col_index]
-                            if text == self.gui.project.get_str(self._prefix + key + "_" + str(row_index)):
-                                combobox.setCurrentIndex(i)
-
-                    combobox.currentIndexChanged.connect(  # type: ignore
-                        partial(self.on_combobox_cell_edited, combobox, row_index, col_index)
-                    )
-
-                    self.setCellWidget(row_index, col_index, combobox)
-
-                else:
-                    # Cell doesn't have options: Create a numerical cell
-                    item = QTableWidgetItem(col_contents)
-                    item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-
-                    # Set the cell flags
-                    flags = Qt.NoItemFlags | Qt.ItemIsSelectable
-                    if self._enabled:
-                        flags |= Qt.ItemIsEnabled
-                    if self._cell_edited_callback is not None:
-                        flags |= Qt.ItemIsEditable
-                    item.setFlags(flags)  # type: ignore
-
-                    # Cell is bound to project configuration:
-                    if self._types is not None:
-                        key = list(self._types.keys())[col_index]
-                        item.setText(self.gui.project.get_str(self._prefix + key + "_" + str(row_index)))
-
-                    self.setItem(row_index, col_index, item)
-
-                # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-            if self._row_deleted_callback is not None:
-                # Create a delete button
-                delete_button = QPushButton2("", "fa.minus", css="border: none; background: palette(window);")
-
-                if self.rowCount() > self._minimum_rows:
-                    # Allow this row to be deleted
-                    delete_button.clicked.connect(  # type: ignore
-                        partial(self.on_row_deleted, row_index)
-                    )
-                else:
-                    # Don't allow the any more rows to be deleted
-                    delete_button.setEnabled(False)
-
-                # Insert the delete button into the last column
-                self.setCellWidget(row_index, self.columnCount() - 1, delete_button)
-
-        self.blockSignals(False)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def set_style(self, border_color: str, border_width: int) -> None:
-        """
-        Sets this widget's style.
-
-        @param border_color: Border color
-        @param border_width: Border width
-        """
-        self.setStyleSheet(f"""
-            QTableWidget {{
-                border: {border_width}px solid {border_color};
-                border-radius: 5px;
-                padding: 1px;
-                margin: {2 - border_width}px;
-            }}
-
-            QTableCornerButton::section {{
-                border-width: 1px;
-                border-style: solid;
-                border-color: white silver silver white;
-            }}
-
-            QTableWidget::item {{
-                padding: 2;
-            }}
-        """)
+        self.select_last_row()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -482,3 +410,34 @@ class QTableWidget2(QTableWidget):
             Debug(self, ".focusOutEvent(): Clearing selection")
             self.clearSelection()
             self.set_style(border_color="black", border_width=1)
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def get_selected_row(self) -> Optional[int]:
+        """
+        Returns the currently selected row index.
+
+        @return: Index of currently selected row (None if none selected)
+        """
+        if self.selectionModel().hasSelection():
+            return self.selectionModel().currentIndex().row()
+        else:
+            return None
+
+    def is_cell_widget_selected(self) -> bool:
+        """
+        Indicates whether a cell widget is selected (as opposed to a cell item).
+        """
+        row = self.selectionModel().currentIndex().row()
+        column = self.selectionModel().currentIndex().column()
+
+        if row == -1 or column == -1:
+            return False
+
+        if self._row_deleted_callback is not None:
+            if column == self.columnCount() - 1:
+                Debug(self, ".is_cell_widget_selected: Ignoring delete button")
+                return False
+
+        item = self.item(row, column)
+        return item is None

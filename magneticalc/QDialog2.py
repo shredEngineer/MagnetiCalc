@@ -18,7 +18,6 @@
 
 from typing import Optional
 from PyQt5.Qt import QShowEvent
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from magneticalc.QLayouted import QLayouted
 from magneticalc.Debug import Debug
@@ -26,9 +25,6 @@ from magneticalc.Debug import Debug
 
 class QDialog2(QDialog, QLayouted):
     """ QDialog2 class. """
-
-    # Signal emitted when this dialog is shown.
-    dialog_shown = pyqtSignal()
 
     def __init__(
             self,
@@ -67,10 +63,8 @@ class QDialog2(QDialog, QLayouted):
 
     def showEvent(self, event: QShowEvent) -> None:
         """
-        Overrides the showEvent method.
+        Gets called when the dialog is opened.
 
-        @param event: QEvent
+        @param event: QShowEvent
         """
-        Debug(self, ".showEvent(): Dialog opened")
-
-        self.dialog_shown.emit()  # type: ignore
+        Debug(self, ".showEvent()")

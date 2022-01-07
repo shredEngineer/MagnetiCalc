@@ -18,6 +18,7 @@
 
 from __future__ import annotations
 from typing import List, Dict
+from PyQt5.Qt import QShowEvent
 from PyQt5.QtWidgets import QSizePolicy
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
@@ -103,17 +104,24 @@ class Constraint_Editor(QDialog2):
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.addWidget(self.table)
 
-        text_browser = QTextBrowser2(html=self.HTML)
-        self.dialog_shown.connect(text_browser.fit_to_contents)
-        self.addWidget(text_browser)
+        self.text_browser = QTextBrowser2(html=self.HTML)
+        self.addWidget(self.text_browser)
 
         self.addButtons({
             "OK": ("fa.check", self.accept)
         })
 
-        self.dialog_shown.connect(self.table.setFocus)
-
         self._changed = False
+
+    def showEvent(self, event: QShowEvent) -> None:
+        """
+        Gets called when the dialog is opened.
+
+        @param event: QShowEvent
+        """
+        Debug(self, ".showEvent()")
+        self.text_browser.fit_to_contents()
+        self.table.setFocus()
 
     @property
     def changed(self) -> bool:

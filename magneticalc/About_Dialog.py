@@ -18,6 +18,7 @@
 
 import webbrowser
 from functools import partial
+from PyQt5.Qt import QShowEvent
 from magneticalc.QDialog2 import QDialog2
 from magneticalc.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
@@ -67,12 +68,20 @@ class About_Dialog(QDialog2):
         QDialog2.__init__(self, title="About", width=640)
         Debug(self, ": Init", init=True)
 
-        text_browser = QTextBrowser2(html=self.HTML)
-        self.dialog_shown.connect(text_browser.fit_to_contents)
-        self.addWidget(text_browser)
+        self.text_browser = QTextBrowser2(html=self.HTML)
+        self.addWidget(self.text_browser)
 
         buttons = self.addButtons({
             "OK"            : ("fa.check", self.accept),
             "Donate 3€ …"   : ("fa.paypal", partial(webbrowser.open, About_Dialog.DonationURL))
         })
         buttons[0].setFocus()
+
+    def showEvent(self, event: QShowEvent) -> None:
+        """
+        Gets called when the dialog is opened.
+
+        @param event: QShowEvent
+        """
+        Debug(self, ".showEvent()")
+        self.text_browser.fit_to_contents()

@@ -90,26 +90,6 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#get_alpha_preset">get_alpha_preset</a></code></td>
-    <td>Returns alpha metric preset.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_color_preset">get_color_preset</a></code></td>
-    <td>Returns color metric preset.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_colors">get_colors</a></code></td>
-    <td>Returns calculated colors.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_limits">get_limits</a></code></td>
-    <td>Returns calculated limits.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
     <td>Recalculates color and alpha values for field.</td>
   </tr><tr class="method">
@@ -127,6 +107,26 @@
     <td>Class Variable</td>
     <td><code><a href="#LogNormMin">LogNormMin</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#alpha_preset">alpha_preset</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#color_preset">color_preset</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#colors">colors</a></code></td>
+    <td>Returns calculated colors.</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#limits">limits</a></code></td>
+    <td>Returns calculated limits.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
@@ -142,16 +142,6 @@
     <td>Static Method</td>
     <td><code><a href="#_normalize_worker">_normalize_worker</a></code></td>
     <td>Normalizes color and alpha norm values, populates final color values.</td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_alpha_preset">_alpha_preset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_color_preset">_color_preset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -238,82 +228,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Metric.Metric.get_alpha_preset">
-    
-  </a>
-  <a name="get_alpha_preset">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_alpha_preset</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns alpha metric preset.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Metric.Metric.get_color_preset">
-    
-  </a>
-  <a name="get_color_preset">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_color_preset</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns color metric preset.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Metric.Metric.get_colors">
-    
-  </a>
-  <a name="get_colors">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_colors</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns calculated colors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of color values (4-tuples)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Metric.Metric.get_limits">
-    
-  </a>
-  <a name="get_limits">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_limits</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns calculated limits.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Metric.Metric.recalculate">
     
   </a>
@@ -389,6 +303,86 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Metric.Metric.alpha_preset">
+    
+  </a>
+  <a name="alpha_preset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">alpha_preset</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Metric.Metric.color_preset">
+    
+  </a>
+  <a name="color_preset">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">color_preset</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Metric.Metric.colors">
+    
+  </a>
+  <a name="colors">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">colors</span>: <code>np.ndarray</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns calculated colors.</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Metric.Metric.limits">
+    
+  </a>
+  <a name="limits">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">limits</span>: <code>Dict</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns calculated limits.</div>
+    
+  </div>
 </div><div class="basestaticmethod private">
   
   
@@ -449,46 +443,6 @@
 </div><div class="baseinstancevariable private">
   
   
-  <a name="magneticalc.Metric.Metric._alpha_preset">
-    
-  </a>
-  <a name="_alpha_preset">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_alpha_preset</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.Metric.Metric._color_preset">
-    
-  </a>
-  <a name="_color_preset">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_color_preset</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  
   <a name="magneticalc.Metric.Metric._colors">
     
   </a>
@@ -536,7 +490,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 20:52:40.
+    21.12.0 at 2022-01-07 14:10:27.
   </div>
 </footer>
 

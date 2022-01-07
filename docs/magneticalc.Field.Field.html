@@ -86,32 +86,12 @@
     
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
-    <td>Initializes an empty field.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_total_calculations">get_total_calculations</a></code></td>
-    <td>Gets total number of calculations.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_total_skipped_calculations">get_total_skipped_calculations</a></code></td>
-    <td>Gets total number of skipped calculations.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_type">get_type</a></code></td>
-    <td>Gets field type.</td>
+    <td>Initializes a field.</td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#get_units">get_units</a></code></td>
     <td>Gets field units.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_vectors">get_vectors</a></code></td>
-    <td>Gets field vectors. (The selected field type determined which field was calculated.)</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -122,20 +102,35 @@
     <td>Method</td>
     <td><code><a href="#set">set</a></code></td>
     <td>Sets the parameters.</td>
-  </tr><tr class="instancevariable private">
+  </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_backend_type">_backend_type</a></code></td>
+    <td><code><a href="#type">type</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#total_calculations">total_calculations</a></code></td>
+    <td>Gets total number of calculations.</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#total_skipped_calculations">total_skipped_calculations</a></code></td>
+    <td>Gets total number of skipped calculations.</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#vectors">vectors</a></code></td>
+    <td>Gets field vectors. (The selected field type determined which field was calculated.)</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#vectors_count">vectors_count</a></code></td>
+    <td>Number of field vectors</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_distance_limit">_distance_limit</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_field_type">_field_type</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -226,64 +221,7 @@
   <div class="docstring functionBody">
     <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
     
-    <div>Initializes an empty field.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Field.Field.get_total_calculations">
-    
-  </a>
-  <a name="get_total_calculations">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_total_calculations</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets total number of calculations.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Total number of calculations</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Field.Field.get_total_skipped_calculations">
-    
-  </a>
-  <a name="get_total_skipped_calculations">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_total_skipped_calculations</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets total number of skipped calculations.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Total number of skipped calculations</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Field.Field.get_type">
-    
-  </a>
-  <a name="get_type">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_type</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets field type.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Field type</td></tr></table></div>
+    <div>Initializes a field.</div>
   </div>
 </div><div class="basemethod">
   
@@ -307,25 +245,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Field.Field.get_vectors">
-    
-  </a>
-  <a name="get_vectors">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_vectors</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets field vectors. (The selected field type determined which field was calculated.)<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors (field vectors &amp; corresponding sampling volume points have the same indices)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Field.Field.recalculate">
     
   </a>
@@ -334,13 +253,13 @@
   </a>
   <div class="functionHeader">
     @<a href="magneticalc.Validatable.html#validator">validator</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, wire, sampling_volume, progress_callback, num_cores):
+    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, wire, sampling_volume, progress_callback, num_cores, backend_type):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Recalculates field vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">wire:</span><code><a href="magneticalc.Wire.Wire.html">Wire</a></code></td><td class="fieldArgDesc">Wire</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code><a href="magneticalc.SamplingVolume.SamplingVolume.html">SamplingVolume</a></code></td><td class="fieldArgDesc">Sampling volume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">num_cores:</span><code>int</code></td><td class="fieldArgDesc">Number of cores to use for multiprocessing</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted (CUDA backend currently not interruptable)</td></tr></table></div>
+    <div>Recalculates field vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">wire:</span><code><a href="magneticalc.Wire.Wire.html">Wire</a></code></td><td class="fieldArgDesc">Wire</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code><a href="magneticalc.SamplingVolume.SamplingVolume.html">SamplingVolume</a></code></td><td class="fieldArgDesc">Sampling volume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">num_cores:</span><code>int</code></td><td class="fieldArgDesc">Number of cores to use for multiprocessing</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">backend_type:</span><code>int</code></td><td class="fieldArgDesc">Backend type</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False if interrupted (CUDA backend currently not interruptable)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -353,32 +272,112 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, backend_type, field_type, distance_limit, length_scale):
+    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, type, distance_limit, length_scale):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">backend_type:</span><code>int</code></td><td class="fieldArgDesc">Backend type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field_type:</span><code>int</code></td><td class="fieldArgDesc">Field type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">distance_limit:</span><code>float</code></td><td class="fieldArgDesc">Distance limit (mitigating divisions by zero)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">length_scale:</span><code>float</code></td><td class="fieldArgDesc">Length scale (m)</td></tr></table></div>
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">type:</span><code>int</code></td><td class="fieldArgDesc">Field type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">distance_limit:</span><code>float</code></td><td class="fieldArgDesc">Distance limit (mitigating divisions by zero)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">length_scale:</span><code>float</code></td><td class="fieldArgDesc">Length scale (m)</td></tr></table></div>
   </div>
-</div><div class="baseinstancevariable private">
+</div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.Field.Field._backend_type">
+  <a name="magneticalc.Field.Field.type">
     
   </a>
-  <a name="_backend_type">
+  <a name="type">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_backend_type</span> =
+    <span class="py-defname">type</span> =
     
   </div>
   <div class="functionBody">
     
     
     <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Field.Field.total_calculations">
+    
+  </a>
+  <a name="total_calculations">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">total_calculations</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Gets total number of calculations.</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Field.Field.total_skipped_calculations">
+    
+  </a>
+  <a name="total_skipped_calculations">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">total_skipped_calculations</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Gets total number of skipped calculations.</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Field.Field.vectors">
+    
+  </a>
+  <a name="vectors">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">vectors</span>: <code>np.ndarray</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Gets field vectors. (The selected field type determined which field was calculated.)</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Field.Field.vectors_count">
+    
+  </a>
+  <a name="vectors_count">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">vectors_count</span>: <code>int</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Number of field vectors</div>
     
   </div>
 </div><div class="baseinstancevariable private">
@@ -393,26 +392,6 @@
   <div class="functionHeader">
     
     <span class="py-defname">_distance_limit</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.Field.Field._field_type">
-    
-  </a>
-  <a name="_field_type">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_field_type</span> =
     
   </div>
   <div class="functionBody">
@@ -511,7 +490,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 20:52:40.
+    21.12.0 at 2022-01-07 14:10:27.
   </div>
 </footer>
 

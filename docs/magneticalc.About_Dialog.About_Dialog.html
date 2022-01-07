@@ -65,7 +65,7 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">About_Dialog</span>(<a href="magneticalc.QDialog2.QDialog2.html" title="magneticalc.QDialog2.QDialog2">QDialog2</a>):</code></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">About_Dialog</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p>
         <p><a href="classIndex.html#magneticalc.About_Dialog.About_Dialog">View In Hierarchy</a></p>
       </div>
 
@@ -82,6 +82,11 @@
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
     <td>Initializes the dialog.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#showEvent">showEvent</a></code></td>
+    <td>Gets called when the dialog is opened.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
@@ -92,11 +97,16 @@
     <td>Class Variable</td>
     <td><code><a href="#DonationURL">DonationURL</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#text_browser">text_browser</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>:
+            Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>:
           </p>
           <table class="children sortable" id="id6">
   
@@ -104,28 +114,18 @@
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QDialog2.QDialog2.html#show">show</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show">show</a></code></td>
     <td>Shows this dialog.</td>
-  </tr><tr class="basemethod">
-    
-    <td>Method</td>
-    <td><code><a href="magneticalc.QDialog2.QDialog2.html#showEvent">showEvent</a></code></td>
-    <td>Overrides the showEvent method.</td>
-  </tr><tr class="baseclassvariable">
-    
-    <td>Class Variable</td>
-    <td><code><a href="magneticalc.QDialog2.QDialog2.html#dialog_shown">dialog_shown</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QDialog2.QDialog2.html#user_accepted">user_accepted</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted">user_accepted</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
           
           <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QDialog2.QDialog2.html">QDialog2</a></code>):
+            Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>):
           </p>
           <table class="children sortable" id="id7">
   
@@ -133,32 +133,32 @@
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
     <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
     <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
     <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
     <td>Adds widget.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
     <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -184,9 +184,28 @@
     
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QDialog2.QDialog2.html#__init__">magneticalc.QDialog2.QDialog2.__init__</a></code></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
     
     <div>Initializes the dialog.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.About_Dialog.About_Dialog.showEvent">
+    
+  </a>
+  <a name="showEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">showEvent</span>(self, event):
+    
+  </div>
+  <div class="docstring functionBody">
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#showEvent">magneticalc.QtWidgets2.QDialog2.QDialog2.showEvent</a></code></div>
+    
+    <div>Gets called when the dialog is opened.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QShowEvent</code></td><td class="fieldArgDesc">QShowEvent</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -235,6 +254,26 @@ t;&lt;br&gt;
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.About_Dialog.About_Dialog.text_browser">
+    
+  </a>
+  <a name="text_browser">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">text_browser</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
 </div>
 
       </div>
@@ -245,7 +284,7 @@ t;&lt;br&gt;
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 20:52:40.
+    21.12.0 at 2022-01-07 14:10:27.
   </div>
 </footer>
 

@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id168">
+        <table class="children sortable" id="id169">
   
   
   <tr class="method">
@@ -85,41 +85,6 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#get_bounds">get_bounds</a></code></td>
-    <td>Returns this curve's bounding box.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_dc">get_dc</a></code></td>
-    <td></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_elements">get_elements</a></code></td>
-    <td>Returns this curve's elements, i.e. an ordered list of segment center points and directions.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_length">get_length</a></code></td>
-    <td></td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_points_base">get_points_base</a></code></td>
-    <td>Returns this wire's base points.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_points_sliced">get_points_sliced</a></code></td>
-    <td>Returns this wire's points after slicing.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_points_transformed">get_points_transformed</a></code></td>
-    <td>Returns this wire's transformed points.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
     <td>Slices wire segments into smaller ones until segment lengths equal or undershoot slicer limit.</td>
   </tr><tr class="method">
@@ -127,40 +92,65 @@
     <td>Method</td>
     <td><code><a href="#set">set</a></code></td>
     <td>Sets the parameters.</td>
-  </tr><tr class="method private">
+  </tr><tr class="instancevariable">
     
-    <td>Method</td>
-    <td><code><a href="#_set_rotational_symmetry">_set_rotational_symmetry</a></code></td>
+    <td>Instance Variable</td>
+    <td><code><a href="#bounds">bounds</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#dc">dc</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#points_base">points_base</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#points_transformed">points_transformed</a></code></td>
+    <td>Bounding box: Minimum bounds (3D point), maximum bounds (3D point).</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#elements">elements</a></code></td>
+    <td>Wire elements</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#length">length</a></code></td>
+    <td>Wire length</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#points_sliced">points_sliced</a></code></td>
+    <td>Returns this wire's points after slicing.</td>
+  </tr><tr class="staticmethod private">
+    
+    <td>Static Method</td>
+    <td><code><a href="#_transform_rotational_symmetry">_transform_rotational_symmetry</a></code></td>
     <td>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</td>
-  </tr><tr class="method private">
+  </tr><tr class="staticmethod private">
     
-    <td>Method</td>
-    <td><code><a href="#_set_stretch">_set_stretch</a></code></td>
+    <td>Static Method</td>
+    <td><code><a href="#_transform_stretch">_transform_stretch</a></code></td>
     <td>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_dc">_dc</a></code></td>
+    <td><code><a href="#_elements">_elements</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_length">_length</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_points_base">_points_base</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Wire Elements: Ordered list of segment center points and directions.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_points_sliced">_points_sliced</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable private">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#_points_transformed">_points_transformed</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
@@ -173,7 +163,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
           </p>
-          <table class="children sortable" id="id169">
+          <table class="children sortable" id="id170">
   
   
   <tr class="basemethod">
@@ -222,139 +212,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Wire.Wire.get_bounds">
-    
-  </a>
-  <a name="get_bounds">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_bounds</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns this curve's bounding box.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Tuple[<wbr></wbr>List, <wbr></wbr>List]</code></td><td class="fieldArgDesc">Minimum bounds (3D point), maximum bounds (3D point)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_dc">
-    
-  </a>
-  <a name="get_dc">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_dc</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_elements">
-    
-  </a>
-  <a name="get_elements">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_elements</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns this curve's elements, i.e. an ordered list of segment center points and directions.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">[[element_center, element_direction], …]</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_length">
-    
-  </a>
-  <a name="get_length">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_length</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Wire length</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_points_base">
-    
-  </a>
-  <a name="get_points_base">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_points_base</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns this wire's base points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_points_sliced">
-    
-  </a>
-  <a name="get_points_sliced">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_points_sliced</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns this wire's points after slicing.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire.Wire.get_points_transformed">
-    
-  </a>
-  <a name="get_points_transformed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_points_transformed</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns this wire's transformed points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D points</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Wire.Wire.recalculate">
     
   </a>
@@ -390,60 +247,196 @@
     
     <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D coordinates (see presets)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary for rotational symmetry transform</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">slicer_limit:</span><code>float</code></td><td class="fieldArgDesc">Slicer limit</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dc:</span><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
   </div>
-</div><div class="basemethod private">
+</div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.Wire.Wire._set_rotational_symmetry">
+  <a name="magneticalc.Wire.Wire.bounds">
     
   </a>
-  <a name="_set_rotational_symmetry">
+  <a name="bounds">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">_set_rotational_symmetry</span>(self, parameters, close_loop):
+    <span class="py-defname">bounds</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire.Wire.dc">
+    
+  </a>
+  <a name="dc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">dc</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire.Wire.points_base">
+    
+  </a>
+  <a name="points_base">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">points_base</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire.Wire.points_transformed">
+    
+  </a>
+  <a name="points_transformed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">points_transformed</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Bounding box: Minimum bounds (3D point), maximum bounds (3D point).</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Wire.Wire.elements">
+    
+  </a>
+  <a name="elements">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">elements</span>: <code>np.ndarray</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Wire elements</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Wire.Wire.length">
+    
+  </a>
+  <a name="length">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">length</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Wire length</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Wire.Wire.points_sliced">
+    
+  </a>
+  <a name="points_sliced">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">points_sliced</span>: <code>np.ndarray</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns this wire's points after slicing.</div>
+    
+  </div>
+</div><div class="basestaticmethod private">
+  
+  
+  <a name="magneticalc.Wire.Wire._transform_rotational_symmetry">
+    
+  </a>
+  <a name="_transform_rotational_symmetry">
+    
+  </a>
+  <div class="functionHeader">
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_transform_rotational_symmetry</span>(axes, parameters, close_loop):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.</p>
-<p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parameters:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary containing the transformation parameters (number of replications, radius, axis and offset angle)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr></table></div>
+    <div>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">axes:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parameters:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary containing the transformation parameters (number of replications, radius, axis and offset angle)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr></table></div>
   </div>
-</div><div class="basemethod private">
+</div><div class="basestaticmethod private">
   
   
-  <a name="magneticalc.Wire.Wire._set_stretch">
+  <a name="magneticalc.Wire.Wire._transform_stretch">
     
   </a>
-  <a name="_set_stretch">
+  <a name="_transform_stretch">
     
   </a>
   <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">_set_stretch</span>(self, stretch):
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_transform_stretch</span>(axes, stretch):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div><p>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.</p>
-<p>Note: Intended to be called from the class constructor (doesn't automatically invalidate the wire)</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr></table></div>
+    <div>This transformation stretches (and/or mirrors) this curve by some factor in any direction. Use the factor +1 / -1 to retain / mirror the curve in that direction.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">axes:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
   
-  <a name="magneticalc.Wire.Wire._dc">
+  <a name="magneticalc.Wire.Wire._elements">
     
   </a>
-  <a name="_dc">
+  <a name="_elements">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_dc</span> =
+    <span class="py-defname">_elements</span> =
     
   </div>
   <div class="functionBody">
@@ -469,27 +462,7 @@
   <div class="functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.Wire.Wire._points_base">
-    
-  </a>
-  <a name="_points_base">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_points_base</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
+    <div>Wire Elements: Ordered list of segment center points and directions.</div>
     
   </div>
 </div><div class="baseinstancevariable private">
@@ -504,26 +477,6 @@
   <div class="functionHeader">
     
     <span class="py-defname">_points_sliced</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable private">
-  
-  
-  <a name="magneticalc.Wire.Wire._points_transformed">
-    
-  </a>
-  <a name="_points_transformed">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_points_transformed</span> =
     
   </div>
   <div class="functionBody">
@@ -562,7 +515,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 20:52:40.
+    21.12.0 at 2022-01-07 14:10:27.
   </div>
 </footer>
 

@@ -85,26 +85,6 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#get_energy">get_energy</a></code></td>
-    <td>Returns calculated energy.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_magnetic_dipole_moment">get_magnetic_dipole_moment</a></code></td>
-    <td>Returns calculated magnetic dipole moment.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_self_inductance">get_self_inductance</a></code></td>
-    <td>Returns calculated self-inductance.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_squared_field">get_squared_field</a></code></td>
-    <td>Returns the "squared" field scalar.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
     <td><code><a href="#recalculate">recalculate</a></code></td>
     <td>Recalculates parameters.</td>
   </tr><tr class="method">
@@ -112,6 +92,21 @@
     <td>Method</td>
     <td><code><a href="#set">set</a></code></td>
     <td>Sets the parameters</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#energy">energy</a></code></td>
+    <td>Returns calculated energy.</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#magnetic_dipole_moment">magnetic_dipole_moment</a></code></td>
+    <td>Returns calculated magnetic dipole moment.</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#self_inductance">self_inductance</a></code></td>
+    <td>Returns calculated self-inductance.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
@@ -127,6 +122,11 @@
     <td>Method</td>
     <td><code><a href="#_get_magnetic_dipole_moment">_get_magnetic_dipole_moment</a></code></td>
     <td>Returns the magnetic dipole moment scalar.</td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
+    <td><code><a href="#_get_squared_field">_get_squared_field</a></code></td>
+    <td>Returns the "squared" field scalar.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -197,82 +197,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Parameters.Parameters.get_energy">
-    
-  </a>
-  <a name="get_energy">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_energy</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns calculated energy.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Parameters.Parameters.get_magnetic_dipole_moment">
-    
-  </a>
-  <a name="get_magnetic_dipole_moment">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_magnetic_dipole_moment</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns calculated magnetic dipole moment.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Parameters.Parameters.get_self_inductance">
-    
-  </a>
-  <a name="get_self_inductance">
-    
-  </a>
-  <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_self_inductance</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns calculated self-inductance.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Parameters.Parameters.get_squared_field">
-    
-  </a>
-  <a name="get_squared_field">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">get_squared_field</span>(self, sampling_volume, field):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Returns the "squared" field scalar.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">B-field</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Parameters.Parameters.recalculate">
     
   </a>
@@ -307,6 +231,66 @@
     
     
     <div>Sets the parameters</div>
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Parameters.Parameters.energy">
+    
+  </a>
+  <a name="energy">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">energy</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns calculated energy.</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Parameters.Parameters.magnetic_dipole_moment">
+    
+  </a>
+  <a name="magnetic_dipole_moment">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">magnetic_dipole_moment</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns calculated magnetic dipole moment.</div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="magneticalc.Parameters.Parameters.self_inductance">
+    
+  </a>
+  <a name="self_inductance">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <span class="py-defname">self_inductance</span>: <code>float</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div>Returns calculated self-inductance.</div>
+    
   </div>
 </div><div class="basestaticmethod private">
   
@@ -364,6 +348,25 @@
     
     
     <div>Returns the magnetic dipole moment scalar.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">wire:</span><code>Wire</code></td><td class="fieldArgDesc">Wire</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">length_scale:</span><code>float</code></td><td class="fieldArgDesc">Length scale (m)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="magneticalc.Parameters.Parameters._get_squared_field">
+    
+  </a>
+  <a name="_get_squared_field">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_get_squared_field</span>(self, sampling_volume, field):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns the "squared" field scalar.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">B-field</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>float</code></td><td class="fieldArgDesc">Float</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -435,7 +438,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-06 20:52:40.
+    21.12.0 at 2022-01-07 14:10:27.
   </div>
 </footer>
 

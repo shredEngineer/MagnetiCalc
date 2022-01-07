@@ -19,12 +19,11 @@
 from __future__ import annotations
 from typing import Dict
 from functools import partial
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Theme import Theme
@@ -42,7 +41,7 @@ class Perspective_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Perspective")
+        QGroupBox2.__init__(self, "Perspective", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 

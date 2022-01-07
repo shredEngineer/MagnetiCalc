@@ -20,7 +20,7 @@ from __future__ import annotations
 import qtawesome as qta
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMenu, QFileDialog
-from magneticalc.QSaveAction import QSaveAction
+from magneticalc.QtWidgets2.QSaveAction import QSaveAction
 from magneticalc.Debug import Debug
 from magneticalc.ExportContainer_Dialog import ExportContainer_Dialog
 

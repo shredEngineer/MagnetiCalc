@@ -20,8 +20,7 @@ from typing import Optional
 from PyQt5.Qt import QFont
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QHBoxLayout
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 
 
 class QIconLabel(QHBoxLayout):
@@ -34,8 +33,9 @@ class QIconLabel(QHBoxLayout):
             self,
             text: str,
             icon: str,
-            text_color: str = Theme.DarkColor,
-            icon_color: str = Theme.DarkColor,
+            color: Optional[str] = None,
+            text_color: Optional[str] = None,
+            icon_color: Optional[str] = None,
             icon_size: QSize = QSize(16, 16),
             font: Optional[QFont] = None,
             expand: bool = True
@@ -45,14 +45,23 @@ class QIconLabel(QHBoxLayout):
 
         @param text: Label text
         @param icon: QtAwesome icon ID
-        @param text_color: Text color
-        @param icon_color: Icon color
+        @param color: Text and icon color (optional)
+        @param text_color: Text color (optional, overrides color)
+        @param icon_color: Icon color (optional, overrides color)
         @param icon_size: Icon size
         @param font: QFont
         @param expand: Enable to expand label
         """
         QHBoxLayout.__init__(self)
         self.setContentsMargins(0, 0, 0, 0)
+
+        if color is not None:
+
+            if text_color is None:
+                text_color = color
+
+            if icon_color is None:
+                icon_color = color
 
         if icon != "":
             self.addWidget(QLabel2("", icon=icon, icon_color=icon_color, icon_size=icon_size, expand=False))

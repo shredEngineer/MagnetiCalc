@@ -18,9 +18,8 @@
 
 from PyQt5.Qt import QSize
 from PyQt5.QtWidgets import QMessageBox
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.Debug import Debug
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.Theme import Theme
 
 
@@ -45,7 +44,6 @@ class QMessageBox2(QDialog2):
         @param default_button: Default button
         """
         QDialog2.__init__(self, title=title)
-        Debug(self, ": Init", init=True)
 
         self.choice = 0
 
@@ -109,7 +107,6 @@ class QMessageBox2(QDialog2):
         """
         Sets the choice and accepts the dialog.
         """
-        Debug(self, ".accepting()", success=True)
         self.choice = button_flag
         self.accept()
 
@@ -117,4 +114,3 @@ class QMessageBox2(QDialog2):
         """
         Gets called when the user hits the ESC key.
         """
-        Debug(self, ".rejecting()", warning=True)

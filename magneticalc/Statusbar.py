@@ -21,7 +21,7 @@ from typing import Optional
 from multiprocessing import cpu_count
 from sty import fg
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QCheckBox, QComboBox, QProgressBar, QLabel
-from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme

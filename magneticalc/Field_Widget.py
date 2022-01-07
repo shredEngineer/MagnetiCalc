@@ -21,11 +21,11 @@ from typing import Optional
 from functools import partial
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSizePolicy
 from PyQt5.QtWidgets import QButtonGroup, QCheckBox, QRadioButton
-from magneticalc.QDoubleSpinBox2 import QDoubleSpinBox2
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QDoubleSpinBox2 import QDoubleSpinBox2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import Field_Types_Names_Map
 from magneticalc.Metric import Metric
@@ -51,13 +51,13 @@ class Field_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Field")
+        QGroupBox2.__init__(self, "Field", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addLayout(QIconLabel("Type", "mdi.tune-variant"))
+        self.addLayout(QIconLabel("Type", "mdi.tune-variant", color=Theme.DarkColor))
 
         field_type_layout_left = QVBoxLayout()
         field_type_layout_right = QVBoxLayout()
@@ -92,7 +92,7 @@ class Field_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Distance Limit", "mdi.ruler"))
+        self.addLayout(QIconLabel("Distance Limit", "mdi.ruler", color=Theme.DarkColor))
         self.distance_limit_spinbox = QDoubleSpinBox2(
             gui=self.gui,
             minimum=self.DistanceLimitMin,
@@ -163,7 +163,7 @@ class Field_Widget(QGroupBox2):
         for field_type in Field_Types_Names_Map:
             self.field_type_checkboxes[field_type].setChecked(self.gui.model.get_valid_field(field_type) is not None)
 
-        self.indicate_valid(self.gui.model.field.valid)
+        self.set_color(Theme.MainColor if self.gui.model.field.valid else Theme.FailureColor)
 
     # ------------------------------------------------------------------------------------------------------------------
 

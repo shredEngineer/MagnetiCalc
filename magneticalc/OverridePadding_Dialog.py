@@ -17,10 +17,10 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QHBoxLayout2 import QHBoxLayout2
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.QSpinBox2 import QSpinBox2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QHBoxLayout2 import QHBoxLayout2
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 

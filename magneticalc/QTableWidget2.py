@@ -22,7 +22,7 @@ from functools import partial
 from PyQt5.Qt import QFocusEvent
 from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QComboBox
-from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Format import Format
 from magneticalc.Theme import Theme

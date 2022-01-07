@@ -19,7 +19,7 @@
 from typing import Dict, Tuple, Callable, Union, Optional
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLayout, QWidget, QPushButton
-from magneticalc.QButtons import QButtons
+from magneticalc.QtWidgets2.QButtons import QButtons
 
 
 class QLayouted:

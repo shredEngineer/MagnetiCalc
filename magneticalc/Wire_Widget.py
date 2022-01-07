@@ -19,15 +19,14 @@
 from __future__ import annotations
 from typing import Optional, Dict, List, Union
 import numpy as np
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QCheckBox
-from magneticalc.QDoubleSpinBox2 import QDoubleSpinBox2
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.QPushButton2 import QPushButton2
-from magneticalc.QSpinBox2 import QSpinBox2
+from magneticalc.QtWidgets2.QDoubleSpinBox2 import QDoubleSpinBox2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
@@ -86,13 +85,13 @@ class Wire_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Wire")
+        QGroupBox2.__init__(self, "Wire", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
         # --------------------------------------------------------------------------------------------------------------
 
-        table_icon_label = QIconLabel("Points", "mdi.vector-square", expand=False)
+        table_icon_label = QIconLabel("Points", "mdi.vector-square", color=Theme.DarkColor, expand=False)
         table_icon_label.addWidget(QLabel2("⟨F2⟩, ⟨ESC⟩", font_size="13px", color=Theme.LiteColor, expand=False))
         table_icon_label.addStretch()
         table_icon_label.addWidget(QPushButton2("", "fa.plus", self.on_table_row_added))
@@ -121,7 +120,7 @@ class Wire_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        stretch_icon_label = QIconLabel("Stretch", "mdi.arrow-all")
+        stretch_icon_label = QIconLabel("Stretch", "mdi.arrow-all", color=Theme.DarkColor)
         stretch_icon_label.addWidget(QPushButton2("", "fa.eraser", self.clear_stretch))
         stretch_icon_label.addWidget(QLabel2("cm", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(stretch_icon_label)
@@ -147,7 +146,9 @@ class Wire_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        rotational_symmetry_icon_label = QIconLabel("Rotational Symmetry", "mdi.rotate-3d-variant")
+        rotational_symmetry_icon_label = QIconLabel(
+            "Rotational Symmetry", "mdi.rotate-3d-variant", color=Theme.DarkColor
+        )
         rotational_symmetry_icon_label.addWidget(QPushButton2("", "fa.eraser", self.clear_rotational_symmetry))
         self.addLayout(rotational_symmetry_icon_label)
         rotational_symmetry_layout = QHBoxLayout()
@@ -245,7 +246,7 @@ class Wire_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Slicer Limit", "mdi.box-cutter"))
+        self.addLayout(QIconLabel("Slicer Limit", "mdi.box-cutter", color=Theme.DarkColor))
         self.slicer_limit_spinbox = QDoubleSpinBox2(
             gui=self.gui,
             minimum=self.SlicerLimitMin,
@@ -271,7 +272,7 @@ class Wire_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Wire Current", "fa.cog"))
+        self.addLayout(QIconLabel("Wire Current", "fa.cog", color=Theme.DarkColor))
         self.dc_spinbox = QDoubleSpinBox2(
             gui=self.gui,
             minimum=self.DcMin,
@@ -346,7 +347,7 @@ class Wire_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()", refresh=True)
 
-        self.indicate_valid(self.gui.model.wire.valid)
+        self.set_color(Theme.MainColor if self.gui.model.wire.valid else Theme.FailureColor)
 
     # ------------------------------------------------------------------------------------------------------------------
 

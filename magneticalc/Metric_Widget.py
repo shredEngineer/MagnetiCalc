@@ -21,14 +21,14 @@ from typing import Optional, Dict
 import numpy as np
 from si_prefix import si_format
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QComboBox
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
-from magneticalc.Metric import Metric
 from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
+from magneticalc.Theme import Theme
 
 
 class Metric_Widget(QGroupBox2):
@@ -75,11 +75,11 @@ class Metric_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Metric")
+        QGroupBox2.__init__(self, "Metric", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        self.addLayout(QIconLabel("Color", "fa.tint"))
+        self.addLayout(QIconLabel("Color", "fa.tint", color=Theme.DarkColor))
         self.color_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             self.color_metric_combobox.addItem(preset["id"])
@@ -96,7 +96,7 @@ class Metric_Widget(QGroupBox2):
         self.color_metric_limits_layout.addWidget(self.color_metric_min_label)
         self.color_metric_limits_layout.addStretch()
         self.color_metric_limits_layout.addWidget(
-            QLabel2("", icon="mdi.dots-horizontal", css="background: none;", expand=False)
+            QLabel2("", icon="mdi.dots-horizontal", icon_color=Theme.DarkColor, css="background: none;", expand=False)
         )
         self.color_metric_limits_layout.addStretch()
         self.color_metric_limits_layout.addWidget(self.color_metric_max_label)
@@ -106,7 +106,7 @@ class Metric_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Alpha", "mdi.blur"))
+        self.addLayout(QIconLabel("Alpha", "mdi.blur", color=Theme.DarkColor))
         self.alpha_metric_combobox = QComboBox()
         for i, preset in enumerate(Metric_Presets.List):
             # Note: (v1.9)
@@ -126,7 +126,7 @@ class Metric_Widget(QGroupBox2):
         self.alpha_metric_limits_layout.addWidget(self.alpha_metric_min_label)
         self.alpha_metric_limits_layout.addStretch()
         self.alpha_metric_limits_layout.addWidget(
-            QLabel2("", icon="mdi.dots-horizontal", css="background: none;", expand=False)
+            QLabel2("", icon="mdi.dots-horizontal", icon_color=Theme.DarkColor, css="background: none;", expand=False)
         )
         self.alpha_metric_limits_layout.addStretch()
         self.alpha_metric_limits_layout.addWidget(self.alpha_metric_max_label)
@@ -277,7 +277,7 @@ class Metric_Widget(QGroupBox2):
         Updates the controls.
         """
         Debug(self, ".update_controls()", refresh=True)
-        self.indicate_valid(self.gui.model.metric.valid)
+        self.set_color(Theme.MainColor if self.gui.model.metric.valid else Theme.FailureColor)
 
     # ------------------------------------------------------------------------------------------------------------------
 

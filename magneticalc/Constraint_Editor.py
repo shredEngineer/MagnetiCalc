@@ -25,11 +25,11 @@ from magneticalc.Debug import Debug
 from magneticalc.Comparison_Types import comparison_type_to_name
 from magneticalc.Config_Group import Config_Collection
 from magneticalc.Norm_Types import norm_type_to_name
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QTableWidget2 import QTableWidget2
-from magneticalc.QTextBrowser2 import QTextBrowser2
+from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Theme import Theme
 
 
@@ -87,7 +87,7 @@ class Constraint_Editor(QDialog2):
             first_without_suffix=False
         )
 
-        table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
+        table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit", color=Theme.DarkColor)
         table_add_button = QPushButton2("Add constraint", "fa.plus", self.on_table_row_added)
         table_icon_label.addWidget(table_add_button)
         self.addLayout(table_icon_label)

@@ -20,14 +20,14 @@ from __future__ import annotations
 import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox, QComboBox, QHBoxLayout, QVBoxLayout, QMessageBox, QSizePolicy
-from magneticalc.QMessageBox2 import QMessageBox2
+from magneticalc.QtWidgets2.QMessageBox2 import QMessageBox2
 from magneticalc.Debug import Debug
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
-from magneticalc.QSliderFloat import QSliderFloat
+from magneticalc.QtWidgets2.QSliderFloat import QSliderFloat
 from magneticalc.Theme import Theme
 from magneticalc.VisPyCanvas import VisPyCanvas
 
@@ -61,13 +61,13 @@ class Display_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Display")
+        QGroupBox2.__init__(self, "Display", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self.addLayout(QIconLabel("Point Scale", "fa.circle"))
+        self.addLayout(QIconLabel("Point Scale", "fa.circle", color=Theme.DarkColor))
         self.field_point_scale_slider = QSliderFloat(
             orientation=Qt.Horizontal,
             minimum=self.FieldPointScaleMin,
@@ -83,7 +83,7 @@ class Display_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Arrow Scale", "fa.arrow-right"))
+        self.addLayout(QIconLabel("Arrow Scale", "fa.arrow-right", color=Theme.DarkColor))
 
         field_arrow_scale_layout_left = QVBoxLayout()
         field_arrow_scale_layout_right = QVBoxLayout()
@@ -121,7 +121,7 @@ class Display_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Field Boost", "fa.adjust"))
+        self.addLayout(QIconLabel("Field Boost", "fa.adjust", color=Theme.DarkColor))
         self.field_boost_slider = QSliderFloat(
             orientation=Qt.Horizontal,
             minimum=self.FieldBoostMin,
@@ -137,7 +137,7 @@ class Display_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Field Labels", "fa.tags"))
+        self.addLayout(QIconLabel("Field Labels", "fa.tags", color=Theme.DarkColor))
         self.display_field_magnitude_labels_checkbox = QCheckBox(" Display Magnitude")
         self.display_field_magnitude_labels_checkbox.toggled.connect(  # type: ignore
             lambda: self.set_display_field_magnitude_labels(self.display_field_magnitude_labels_checkbox.isChecked())

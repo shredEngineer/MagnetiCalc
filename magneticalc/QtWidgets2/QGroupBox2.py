@@ -17,14 +17,13 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from PyQt5.QtWidgets import QGroupBox
-from magneticalc.QLayouted import QLayouted
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.QLayouted import QLayouted
 
 
 class QGroupBox2(QGroupBox, QLayouted):
     """ QGroupBox2 class. """
 
-    def __init__(self, title: str) -> None:
+    def __init__(self, title: str, color: str) -> None:
         """
         Initializes a groupbox.
 
@@ -36,9 +35,9 @@ class QGroupBox2(QGroupBox, QLayouted):
 
         self.setTitle(title)
 
-        self.set_color()
+        self.set_color(color)
 
-    def set_color(self, color: str = Theme.MainColor) -> None:
+    def set_color(self, color: str) -> None:
         """
         Sets the style and label color of the groupbox.
 
@@ -60,11 +59,3 @@ class QGroupBox2(QGroupBox, QLayouted):
                 background-color: palette(window);
             }}
         """)
-
-    def indicate_valid(self, valid: bool) -> None:
-        """
-        Sets the foreground color based on the valid flag.
-
-        @param valid: Valid flag
-        """
-        self.set_color(Theme.MainColor if valid else Theme.FailureColor)

@@ -21,7 +21,6 @@ import qtawesome as qta
 from PyQt5.Qt import QFont
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QLabel, QSizePolicy
-from magneticalc.Theme import Theme
 
 
 class QLabel2(QLabel):
@@ -33,7 +32,7 @@ class QLabel2(QLabel):
             self,
             text: str,
             icon: Optional[str] = None,
-            icon_color: str = Theme.DarkColor,
+            icon_color: Optional[str] = None,
             icon_size: QSize = QSize(16, 16),
             expand: bool = True,
             align_right: bool = False,
@@ -47,7 +46,7 @@ class QLabel2(QLabel):
 
         @param text: Text
         @param icon: QtAwesome icon ID (optional)
-        @param icon_color: Icon color
+        @param icon_color: Icon color (optional)
         @param icon_size: Icon size
         @param expand: Enable to expand
         @param align_right: Enable to align right

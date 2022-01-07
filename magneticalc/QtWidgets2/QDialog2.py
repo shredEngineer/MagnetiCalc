@@ -19,8 +19,7 @@
 from typing import Optional
 from PyQt5.Qt import QShowEvent
 from PyQt5.QtWidgets import QDialog
-from magneticalc.QLayouted import QLayouted
-from magneticalc.Debug import Debug
+from magneticalc.QtWidgets2.QLayouted import QLayouted
 
 
 class QDialog2(QDialog, QLayouted):
@@ -41,8 +40,6 @@ class QDialog2(QDialog, QLayouted):
         QLayouted.__init__(self)
         self.install_layout(self)
 
-        Debug(self, f": Init: {title}", init=True)
-
         if title:
             self.setWindowTitle(title)
 
@@ -55,11 +52,7 @@ class QDialog2(QDialog, QLayouted):
         """
         Shows this dialog.
         """
-        Debug(self, ".show()")
-
         self.user_accepted = self.exec() == QDialog.Accepted
-
-        Debug(self, f".show(): Dialog closed: accepted = {self.user_accepted}")
 
     def showEvent(self, event: QShowEvent) -> None:
         """
@@ -67,4 +60,4 @@ class QDialog2(QDialog, QLayouted):
 
         @param event: QShowEvent
         """
-        Debug(self, ".showEvent()")
+        pass

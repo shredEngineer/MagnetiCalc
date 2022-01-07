@@ -21,9 +21,9 @@ import re
 from urllib.request import urlopen
 from PyQt5.Qt import QFont, QSize
 from PyQt5.QtWidgets import QTextEdit
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 from magneticalc.Version import __VERSION__, __VERSION__URL__

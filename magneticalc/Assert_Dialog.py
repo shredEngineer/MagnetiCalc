@@ -18,8 +18,8 @@
 
 import sys
 from urllib.parse import urlencode, quote_plus
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QTextBrowser2 import QTextBrowser2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 from magneticalc.Version import Version, __URL__

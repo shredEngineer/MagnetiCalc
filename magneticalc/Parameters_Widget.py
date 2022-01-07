@@ -20,8 +20,8 @@ from __future__ import annotations
 import numpy as np
 from si_prefix import si_format
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Theme import Theme
@@ -42,7 +42,7 @@ class Parameters_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Parameters")
+        QGroupBox2.__init__(self, "Parameters", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
@@ -190,4 +190,4 @@ class Parameters_Widget(QGroupBox2):
         """
         Debug(self, ".update_controls()", refresh=True)
 
-        self.indicate_valid(self.gui.model.parameters.valid)
+        self.set_color(Theme.MainColor if self.gui.model.parameters.valid else Theme.FailureColor)

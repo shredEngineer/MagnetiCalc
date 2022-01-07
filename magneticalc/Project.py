@@ -19,7 +19,7 @@
 from __future__ import annotations
 from typing import Dict
 from PyQt5.QtWidgets import QMessageBox
-from magneticalc.QMessageBox2 import QMessageBox2
+from magneticalc.QtWidgets2.QMessageBox2 import QMessageBox2
 from magneticalc.Backend_Types import BACKEND_TYPE_CUDA
 from magneticalc.Backend_Types import Backend_Types_Available, Backend_Type_Default, backend_type_safe
 from magneticalc.Config import Config

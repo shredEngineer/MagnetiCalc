@@ -20,12 +20,12 @@ from __future__ import annotations
 from typing import Optional, List, Tuple
 import numpy as np
 from PyQt5.QtWidgets import QHBoxLayout, QComboBox, QWidget, QSizePolicy
-from magneticalc.QGroupBox2 import QGroupBox2
-from magneticalc.QHLine import QHLine
-from magneticalc.QIconLabel import QIconLabel
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.QPushButton2 import QPushButton2
-from magneticalc.QSpinBox2 import QSpinBox2
+from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
+from magneticalc.QtWidgets2.QHLine import QHLine
+from magneticalc.QtWidgets2.QIconLabel import QIconLabel
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
+from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.Comparison_Types import comparison_name_to_type
 from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
@@ -76,14 +76,14 @@ class SamplingVolume_Widget(QGroupBox2):
 
         @param gui: GUI
         """
-        QGroupBox2.__init__(self, "Sampling Volume")
+        QGroupBox2.__init__(self, "Sampling Volume", color=Theme.DarkColor)
         Debug(self, ": Init", init=True)
         self.gui = gui
 
         # Insert constraint editor, but don't fully initialize it yet
         self.constraint_editor = Constraint_Editor(self.gui)
 
-        padding_icon_label = QIconLabel("Padding", "mdi.arrow-expand-all")
+        padding_icon_label = QIconLabel("Padding", "mdi.arrow-expand-all", color=Theme.DarkColor)
         padding_override_button = QPushButton2("  Override …  ", "", self.override_padding)
         padding_icon_label.addWidget(padding_override_button)
         padding_icon_label.addWidget(QPushButton2("", "fa.eraser", self.clear_padding))
@@ -116,7 +116,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        constraints_icon_label = QIconLabel("Constraints", "mdi.playlist-edit")
+        constraints_icon_label = QIconLabel("Constraints", "mdi.playlist-edit", color=Theme.DarkColor)
         constraints_icon_label.addWidget(QLabel2("⟨F3⟩", font_size="13px", color=Theme.LiteColor, expand=False))
         constraints_icon_label.addWidget(QPushButton2("Edit …", "", self.open_constraint_editor))
         self.addLayout(constraints_icon_label)
@@ -131,7 +131,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.addWidget(QHLine())
 
-        self.addLayout(QIconLabel("Resolution", "fa.th"))
+        self.addLayout(QIconLabel("Resolution", "fa.th", color=Theme.DarkColor))
 
         self.resolution_combobox = QComboBox()
         self.resolution_combobox.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -229,7 +229,7 @@ class SamplingVolume_Widget(QGroupBox2):
 
         self.padding_widget.setEnabled(not self.gui.project.get_bool("sampling_volume_override_padding"))
 
-        self.indicate_valid(self.gui.model.sampling_volume.valid)
+        self.set_color(Theme.MainColor if self.gui.model.sampling_volume.valid else Theme.FailureColor)
 
     # ------------------------------------------------------------------------------------------------------------------
 

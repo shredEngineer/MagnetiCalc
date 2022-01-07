@@ -16,8 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QTextBrowser2 import QTextBrowser2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
 

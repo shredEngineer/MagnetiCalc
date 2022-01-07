@@ -18,9 +18,9 @@
 
 from __future__ import annotations
 from PyQt5.QtWidgets import QCheckBox
-from magneticalc.QLabel2 import QLabel2
-from magneticalc.QDialog2 import QDialog2
-from magneticalc.QSaveAction import QSaveAction
+from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.QDialog2 import QDialog2
+from magneticalc.QtWidgets2.QSaveAction import QSaveAction
 from magneticalc.API import API
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B

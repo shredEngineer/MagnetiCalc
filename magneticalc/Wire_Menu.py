@@ -20,7 +20,7 @@ from __future__ import annotations
 from functools import partial
 import qtawesome as qta
 from PyQt5.QtWidgets import QMenu, QFileDialog, QAction
-from magneticalc.QSaveAction import QSaveAction
+from magneticalc.QtWidgets2.QSaveAction import QSaveAction
 from magneticalc import API
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
@@ -92,7 +92,6 @@ class Wire_Menu(QMenu):
             filter="Text File (*.txt)",
             options=QFileDialog.DontUseNativeDialog
         )
-
         if filename != "":
             points = API.import_wire(filename)
             self.gui.sidebar_left.wire_widget.set_wire(

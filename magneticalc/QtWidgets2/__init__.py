@@ -1,4 +1,4 @@
-""" QHBoxLayout2 module. """
+""" MagnetiCalc package initialization. """
 
 #  ISC License
 #
@@ -15,27 +15,3 @@
 #  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-from typing import Union
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QWidget, QLayout
-
-
-class QHBoxLayout2(QHBoxLayout):
-    """ QHBoxLayout2 class. """
-
-    def __init__(
-            self,
-            *elements: Union[QWidget, QLayout]
-    ) -> None:
-        """
-        Initializes a horizontal layout with multiple elements at once.
-
-        @param elements: Arbitrary arguments of QWidget and QLayout
-        """
-        QHBoxLayout.__init__(self)
-        for element in elements:
-            if isinstance(element, QWidget):
-                self.addWidget(element)
-            elif isinstance(element, QLayout):
-                self.addLayout(element)

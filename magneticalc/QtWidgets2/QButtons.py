@@ -16,7 +16,7 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Dict, Tuple, Callable, Union
+from typing import Dict, Tuple, Callable
 import qtawesome as qta
 from PyQt5.QtWidgets import QHBoxLayout, QPushButton
 

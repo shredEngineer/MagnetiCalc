@@ -77,8 +77,8 @@ class Field(Validatable):
         """
         if show_gauss:
             return {
-                FIELD_TYPE_A: "Gs·m",    # Gauss · meter
-                FIELD_TYPE_B: "Gs"       # Gauss
+                FIELD_TYPE_A: "G·m",    # Gauss · meter
+                FIELD_TYPE_B: "G"       # Gauss
             }.get(self.type, ""), 1e4
         else:
             return {

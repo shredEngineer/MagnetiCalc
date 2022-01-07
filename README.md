@@ -238,7 +238,9 @@ Data Import/Export and Python API
 MagnetiCalc allows the following data to be imported/exported using the GUI:
 * Import/export wire points from/to TXT file.
 * Export <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-/<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields,
-wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.
+  wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.<br>
+  *Note:* You could use [Panoply](https://www.giss.nasa.gov/tools/panoply/download/) to open HDF5 files.
+  (The "official" [HDFView](https://www.hdfgroup.org/downloads/hdfview/) software didn't work for me.)
 
 ### API
 The [`API`](magneticalc/API.py) class

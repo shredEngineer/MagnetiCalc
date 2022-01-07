@@ -259,7 +259,7 @@ wire = [
     for a in np.linspace(0, 2 * np.pi, 200)
 ]
 
-API.export_wire("My Wire.txt", wire)
+API.export_wire("Custom Wire.txt", wire)
 ```
 
 #### Example: Field Import
@@ -271,7 +271,7 @@ and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
 from magneticalc import API
 import matplotlib.pyplot as plt
 
-data = API.import_hdf5("examples/My Export.hdf5")
+data = API.import_hdf5("examples/Custom Export.hdf5")
 axes = data.get_axes()
 a_field = data.get_a_field()
 

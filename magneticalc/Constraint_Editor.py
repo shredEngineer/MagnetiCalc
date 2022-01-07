@@ -19,20 +19,18 @@
 from __future__ import annotations
 from typing import List, Dict
 from PyQt5.Qt import QShowEvent
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSizePolicy
-from magneticalc.Constraint import Constraint
-from magneticalc.Debug import Debug
-from magneticalc.Comparison_Types import comparison_type_to_name
-from magneticalc.Config_Group import Config_Collection
-from magneticalc.Norm_Types import norm_type_to_name
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
-from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
-from magneticalc.Comparison_Types import comparison_name_to_type
 from magneticalc.Constraint import Constraint
-from magneticalc.Norm_Types import norm_name_to_type
+from magneticalc.Comparison_Types import comparison_type_to_name, comparison_name_to_type
+from magneticalc.Config_Group import Config_Collection
+from magneticalc.Debug import Debug
+from magneticalc.Norm_Types import norm_type_to_name, norm_name_to_type
+from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.Theme import Theme
 
 
@@ -74,8 +72,7 @@ class Constraint_Editor(QDialog2):
         <code>AND</code>
         (<code>B</code> <b>Not</b> <i>In Range</i>) =
         <b>Not</b> (<code>A</code> <i>In Range</i> <code>OR</code> <code>B</code> <i>In Range</i>).<br>
-        This result can then be inverted by setting some default permeability µ<sub>r</sub> ≠ 0 everywhere<br>
-        and letting <code>A</code> and <code>B</code> evaluate to µ<sub>r</sub> = 0.
+        This result can then be inverted by letting <code>A</code> and <code>B</code> evaluate to µ<sub>r</sub> = 0.
     """
 
     def __init__(
@@ -116,7 +113,7 @@ class Constraint_Editor(QDialog2):
         self.addWidget(self.table)
 
         self.text_browser = QTextBrowser2(html=self.HTML)
-        self.addWidget(self.text_browser)
+        self.addWidget(self.text_browser, alignment=Qt.AlignBottom)
 
         self.addButtons({
             "OK": ("fa.check", self.accept)

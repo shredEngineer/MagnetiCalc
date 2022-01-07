@@ -4,13 +4,13 @@
 import os
 import sys
 import inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir) 
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
-#-----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
-wire_filename = "../examples/My Wire.txt"
+wire_filename = "../examples/Custom Wire.txt"
 
 from magneticalc import API
 import numpy as np
@@ -24,9 +24,9 @@ API.export_wire(wire_filename, wire)
 wire2 = API.import_wire(wire_filename)
 assert np.array_equal(wire, wire2)
 
-#-----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
-export_filename = "../examples/My Export.hdf5"
+export_filename = "../examples/Custom Export.hdf5"
 
 from magneticalc import API
 import matplotlib.pyplot as plt

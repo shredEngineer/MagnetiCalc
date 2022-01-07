@@ -18,7 +18,7 @@
 
 from typing import Optional
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QTextBrowser
+from PyQt5.QtWidgets import QTextBrowser, QSizePolicy
 
 
 class QTextBrowser2(QTextBrowser):
@@ -49,6 +49,8 @@ class QTextBrowser2(QTextBrowser):
         cursor = self.textCursor()
         cursor.setPosition(0)
         self.setTextCursor(cursor)
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def fit_to_contents(self) -> None:
         """

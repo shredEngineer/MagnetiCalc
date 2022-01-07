@@ -23,7 +23,7 @@ from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QSaveAction import QSaveAction
 from magneticalc.API import API
 from magneticalc.Debug import Debug
-from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
+from magneticalc.Field_Types import Field_Types_Names_Map, Field_Types_Abbreviations_Map, field_name_to_type
 from magneticalc.Theme import Theme
 
 
@@ -50,44 +50,28 @@ class ExportContainer_Dialog(QDialog2):
         ))
         self.addSpacing(16)
 
-        wire_points_available = self.gui.model.wire.valid
-        wire_current_available = self.gui.model.wire.valid
+        self.Export_Names_Available_Map = {
+            "Wire Points"   : self.gui.model.wire.valid,
+            "Wire Current"  : self.gui.model.wire.valid
+        }
+        self.Export_Names_Available_Map.update({
+            field_name: self.gui.model.get_valid_field(field_type) is not None
+            for field_type, field_name in Field_Types_Names_Map.items()
+        })
 
-        a_field_available = self.gui.model.get_valid_field(FIELD_TYPE_A) is not None
-        b_field_available = self.gui.model.get_valid_field(FIELD_TYPE_B) is not None
-
-        calculate_hint = " (not calculated)"
-
-        wire_points_hint = "" if wire_points_available else calculate_hint
-        wire_current_hint = "" if wire_current_available else calculate_hint
-        a_field_hint = "" if a_field_available else calculate_hint
-        b_field_hint = "" if b_field_available else calculate_hint
-
-        self.wire_points_checkbox = QCheckBox(" Wire Points" + wire_points_hint)
-        self.wire_current_checkbox = QCheckBox(" Wire Current" + wire_current_hint)
-        self.a_field_checkbox = QCheckBox(" A-Field" + a_field_hint)
-        self.b_field_checkbox = QCheckBox(" B-Field" + b_field_hint)
-
-        self.wire_points_checkbox.setEnabled(wire_points_available)
-        self.wire_current_checkbox.setEnabled(wire_current_available)
-        self.a_field_checkbox.setEnabled(a_field_available)
-        self.b_field_checkbox.setEnabled(b_field_available)
-
-        self.wire_points_checkbox.setChecked(wire_points_available)
-        self.wire_current_checkbox.setChecked(wire_current_available)
-        self.a_field_checkbox.setChecked(a_field_available)
-        self.b_field_checkbox.setChecked(b_field_available)
-
-        self.addWidget(self.a_field_checkbox)
-        self.addWidget(self.b_field_checkbox)
-        self.addWidget(self.wire_points_checkbox)
-        self.addWidget(self.wire_current_checkbox)
+        self.checkboxes = {}
+        for i, item in enumerate(self.Export_Names_Available_Map.items()):
+            item_name, item_available = item
+            self.checkboxes[item_name] = QCheckBox(" " + item_name + ("" if item_available else " (not calculated)"))
+            self.checkboxes[item_name].setEnabled(item_available)
+            self.checkboxes[item_name].setChecked(item_available)
+            self.addWidget(self.checkboxes[item_name])
 
         self.addSpacing(16)
 
         buttons = self.addButtons({
-            "Cancel": ("fa.close", self.reject),
-            "Save Container …": ("fa.save", self.export)
+            "Cancel"            : ("fa.close", self.reject),
+            "Save Container …"  : ("fa.save", self.export)
         })
         buttons[1].setFocus()
 
@@ -97,58 +81,67 @@ class ExportContainer_Dialog(QDialog2):
         """
         Debug(self, ".export()")
 
-        export_a_field = self.a_field_checkbox.isChecked()
-        export_b_field = self.b_field_checkbox.isChecked()
-        export_wire_points = self.wire_points_checkbox.isChecked()
-        export_wire_current = self.wire_current_checkbox.isChecked()
-
-        export_types_map = {
-            "A": export_a_field,
-            "B": export_b_field,
-            "Wire": export_wire_points,
-            "Current": export_wire_current
+        Export_Names_Selection_Map = {
+            item_name: self.checkboxes[item_name].isChecked()
+            for item_name, item_available in self.Export_Names_Available_Map.items()
         }
-        export_types_str = "-".join([string for string, condition in export_types_map.items() if condition])
+
+        Export_Names_Abbreviations_Map = {
+            "Wire Current"  :   "Current",
+            "Wire Points"   :   "Wire"
+        }
+        Export_Names_Abbreviations_Map.update({
+            field_name: Field_Types_Abbreviations_Map[field_type]
+            for field_type, field_name in Field_Types_Names_Map.items()
+        })
+        export_abbreviations_str = "-".join([
+            Export_Names_Abbreviations_Map[item_name]
+            for item_name, item_selected in Export_Names_Selection_Map.items() if item_selected
+        ])
 
         action = QSaveAction(
             self.gui,
             title="Export Container",
             date=True,
-            filename="MagnetiCalc_Export" + (("_" + export_types_str) if export_types_str else ""),
+            filename="MagnetiCalc_Export" + (("_" + export_abbreviations_str) if export_abbreviations_str else ""),
             extension=".hdf5",
             _filter="HDF5 Container (*.hdf5)"
         )
-        if action.filename:
+        if not action.filename:
+            self.reject()
+            return
 
-            container_dictionary = {}
+        container = {}
+        fields = {}
 
-            fields = {}
-            if export_a_field or export_b_field:
-                sampling_volume_components = self.gui.model.sampling_volume.get_points().T
-                fields.update(dict(zip(["nx", "ny", "nz"], self.gui.model.sampling_volume.dimension)))
-                fields.update(dict(zip(["x", "y", "z"], sampling_volume_components)))
-            if export_a_field:
-                a_field_components = self.gui.model.get_valid_field(FIELD_TYPE_A).get_vectors().T
-                fields.update(dict(zip(["A_x", "A_y", "A_z"], a_field_components)))
-            if export_b_field:
-                b_field_components = self.gui.model.get_valid_field(FIELD_TYPE_B).get_vectors().T
-                fields.update(dict(zip(["B_x", "B_y", "B_z"], b_field_components)))
-            if export_a_field or export_b_field:
-                container_dictionary.update({"fields": fields})
+        for item_name, item_selected in Export_Names_Selection_Map.items():
 
-            if export_wire_points:
+            if not item_selected:
+                continue
+
+            if item_name == "Wire Points":
                 wire_points_components = self.gui.model.wire.get_points_sliced().T
                 wire_points = dict(zip(["x", "y", "z"], wire_points_components))
-                container_dictionary.update({"wire_points": wire_points})
+                container.update({"wire_points": wire_points})
 
-            if export_wire_current:
+            elif item_name == "Wire Current":
                 wire_current = self.gui.model.wire.get_dc()
-                container_dictionary.update({"wire_current": wire_current})
+                container.update({"wire_current": wire_current})
 
-            API.export_hdf5(action.filename, container_dictionary)
+            else:
+                field_type = field_name_to_type(item_name)
+                field_components = self.gui.model.get_valid_field(field_type).get_vectors().T
+                field_abbreviation = Field_Types_Abbreviations_Map[field_type]
+                fields.update(dict(zip(
+                    [field_abbreviation + "_x", field_abbreviation + "_y", field_abbreviation + "_z"],
+                    field_components
+                )))
 
-            self.accept()
+        if fields != {}:
+            fields.update(dict(zip(["nx", "ny", "nz"], self.gui.model.sampling_volume.dimension)))
+            fields.update(dict(zip(["x", "y", "z"], self.gui.model.sampling_volume.get_points().T)))
+            container.update({"fields": fields})
 
-        else:
+        API.export_hdf5(action.filename, container)
 
-            self.reject()
+        self.accept()

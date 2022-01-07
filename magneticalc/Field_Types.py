@@ -32,6 +32,12 @@ Field_Types_Names_Map = {
     FIELD_TYPE_B    :   "B-Field (Flux Density)"
 }
 
+""" Map of field types to abbreviations. """
+Field_Types_Abbreviations_Map = {
+    FIELD_TYPE_A    :   "A",
+    FIELD_TYPE_B    :   "B"
+}
+
 """ Default field type. """
 Field_Type_Default = FIELD_TYPE_A
 
@@ -48,3 +54,13 @@ def field_type_safe(field_type: int) -> int:
     else:
         Assert_Dialog(False, "Invalid field type, using fallback type")
         return Field_Type_Default
+
+
+def field_name_to_type(field_name: str) -> int:
+    """
+    Converts a field name to a field type.
+
+    @param field_name: Field name
+    @return: Field type
+    """
+    return {_name: _type for _type, _name in Field_Types_Names_Map.items()}[field_name]

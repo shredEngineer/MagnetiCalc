@@ -348,18 +348,18 @@ class QTableWidget2(QTableWidget):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def set_contents(self, contents: Union[List[List[str]], List[Dict]]) -> None:
+    def set_contents(self, rows: Union[List[List[str]], List[Dict]]) -> None:
         """
         Sets the table contents.
 
-        @param contents: 2D array
+        @param rows: List of rows
         """
         Debug(self, ".set_contents()")
 
         self.blockSignals(True)
 
         # Iterate over rows
-        for row_index, row_contents in enumerate(contents):
+        for row_index, row_contents in enumerate(rows):
 
             # Iterate over columns
             for col_index, col_contents in enumerate(row_contents):

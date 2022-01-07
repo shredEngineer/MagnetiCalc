@@ -26,12 +26,9 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
-from magneticalc.Comparison_Types import comparison_name_to_type
-from magneticalc.Constraint import Constraint
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Norm_Types import norm_name_to_type
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
 from magneticalc.Theme import Theme
 
@@ -219,7 +216,7 @@ class SamplingVolume_Widget(QGroupBox2):
             self.total_extent_label.setText("N/A")
             self.total_points_label.setText("N/A")
 
-        self.total_constraints_label.setText(str(self.constraint_editor.count))
+        self.total_constraints_label.setText(str(self.constraint_editor.rows_count))
 
     def update_controls(self) -> None:
         """
@@ -345,24 +342,11 @@ class SamplingVolume_Widget(QGroupBox2):
             label_resolution = np.power(2.0, label_resolution_exponent)
 
             # Convert every line in the constraint editor to a Constraint() object
-            constraints = []
-            for constraint in self.constraint_editor.constraints:
-                Debug(self, f".set_sampling_volume(): Constraint: {constraint}")
-                constraints.append(
-                    Constraint(
-                        norm_name_to_type(constraint["norm"]),
-                        comparison_name_to_type(constraint["comparison"]),
-                        constraint["min"],
-                        constraint["max"],
-                        constraint["permeability"]
-                    )
-                )
-
             self.gui.model.set_sampling_volume(
                 invalidate=invalidate,
                 resolution=resolution,
                 label_resolution=label_resolution,
-                constraints=constraints
+                constraints=self.constraint_editor.get_constraints()
             )
 
             self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)

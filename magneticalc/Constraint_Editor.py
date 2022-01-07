@@ -30,6 +30,9 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QTableWidget2 import QTableWidget2
 from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
+from magneticalc.Comparison_Types import comparison_name_to_type
+from magneticalc.Constraint import Constraint
+from magneticalc.Norm_Types import norm_name_to_type
 from magneticalc.Theme import Theme
 
 
@@ -62,9 +65,17 @@ class Constraint_Editor(QDialog2):
 
         By default, all sampling volume points have relative permeability µ<sub>r</sub> = 1.<br>
         A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
-        Constraints of identical permeability are effectively intersected (logical AND).<br>
-        In case of ambiguous constraints, the ones with maximum permeability take precedence.<br>
-        Setting the permeability of some region to zero locally disables the field calculation.
+        Setting the permeability of some region to zero locally disables the field calculation.<br>
+        In case of ambiguous constraints, the ones with maximum permeability take precedence.<br><br>
+        
+        Constraints of identical permeability are effectively intersected (logical <code>AND</code> behaviour).<br>
+        <i>Note:</i> You can achieve a logical <code>OR</code> behaviour using <i>De Morgan's laws</i>.<br>
+        (<code>A</code> <b>Not</b> <i>In Range</i>)
+        <code>AND</code>
+        (<code>B</code> <b>Not</b> <i>In Range</i>) =
+        <b>Not</b> (<code>A</code> <i>In Range</i> <code>OR</code> <code>B</code> <i>In Range</i>).<br>
+        This result can then be inverted by setting some default permeability µ<sub>r</sub> ≠ 0 everywhere<br>
+        and letting <code>A</code> and <code>B</code> evaluate to µ<sub>r</sub> = 0.
     """
 
     def __init__(
@@ -152,29 +163,49 @@ class Constraint_Editor(QDialog2):
         Populates the table.
         """
         self.table.clear_rows()
-        self.table.set_vertical_header([str(i + 1) for i in range(self.count)])
-        self.table.set_contents(self.constraints)
+        self.table.set_vertical_header([str(i + 1) for i in range(self.rows_count)])
+        self.table.set_contents(self.rows)
         self.table.select_last_row(focus=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     @property
-    def count(self) -> int:
+    def rows_count(self) -> int:
         """
-        Gets the number of constraints.
+        Gets the number of rows.
 
-        @return: Number of constraints
+        @return: Number of rows
         """
         return self._constraint_collection.get_count()
 
     @property
-    def constraints(self) -> List[Dict]:
+    def rows(self) -> List[Dict]:
+        """
+        Gets all rows (constraint groups).
+
+        @return: List of rows (constraint groups).
+        """
+        return self._constraint_collection.get_all_groups()
+
+    def get_constraints(self) -> List[Constraint]:
         """
         Gets the list of constraints.
 
         @return: List of constraints
         """
-        return self._constraint_collection.get_all_groups()
+        constraints = []
+        for row in self.rows:
+            Debug(self, f".get_constraints(): {row}")
+            constraints.append(
+                Constraint(
+                    norm_name_to_type(row["norm"]),
+                    comparison_name_to_type(row["comparison"]),
+                    row["min"],
+                    row["max"],
+                    row["permeability"]
+                )
+            )
+        return constraints
 
     # ------------------------------------------------------------------------------------------------------------------
 

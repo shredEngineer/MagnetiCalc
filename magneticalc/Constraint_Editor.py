@@ -67,7 +67,7 @@ class Constraint_Editor(QDialog2):
         A constraint assigns some other µ<sub>r</sub> to some region of the sampling volume.<br>
         Setting the permeability of some region to zero locally disables the field calculation.<br>
         In case of ambiguous constraints, the ones with maximum permeability take precedence.<br><br>
-        
+
         Constraints of identical permeability are effectively intersected (logical <code>AND</code> behaviour).<br>
         <i>Note:</i> You can achieve a logical <code>OR</code> behaviour using <i>De Morgan's laws</i>.<br>
         (<code>A</code> <b>Not</b> <i>In Range</i>)

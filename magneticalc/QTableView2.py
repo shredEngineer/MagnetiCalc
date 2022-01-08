@@ -122,7 +122,7 @@ class TableModel(QAbstractTableModel):
         else:
             return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable
 
-    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> QVariant:
         """
         Sets the header data.
 
@@ -131,10 +131,10 @@ class TableModel(QAbstractTableModel):
         @param role: Data role
         """
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return self._col_keys[section]
+            return QVariant(self._col_keys[section])
         elif orientation == Qt.Vertical and role == Qt.DisplayRole:
-            return self._row_keys[section]
-        return ""
+            return QVariant(self._row_keys[section])
+        return QVariant()
 
 
 class QTableView2(QTableView):

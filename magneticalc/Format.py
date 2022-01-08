@@ -28,7 +28,7 @@ class Format:
     FloatPrecision = 4
 
     """ Coordinate precision. """
-    CoordinatePrecision = 6
+    CoordinatePrecision = 4
 
     @staticmethod
     def absolute_filename(filename: str) -> str:
@@ -51,11 +51,34 @@ class Format:
         return "file://" + filename.replace(" ", "%20")
 
     @staticmethod
+    def safe_str_float(value: str) -> str:
+        """
+        Safely converts a string to float and converts that value to string.
+
+        @param value: String
+        @return: String
+        """
+        return Format.float_to_str(Format.safe_str_to_float(value))
+
+    @staticmethod
+    def safe_str_to_float(value: str) -> float:
+        """
+        Safely converts a string to float.
+
+        @param value: String
+        @return: Float (0.0 on error)
+        """
+        try:
+            return float(value)
+        except ValueError:
+            return 0.0
+
+    @staticmethod
     def float_to_str(value: float) -> str:
         """
         Converts a float value to string.
         """
-        return f"{float(value):.{Format.FloatPrecision}f}"
+        return f"{float(value):+.{Format.FloatPrecision}f}"
 
     @staticmethod
     def point_to_str(point: Union[np.ndarray, List[float]]) -> str:

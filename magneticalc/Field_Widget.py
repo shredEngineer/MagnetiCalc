@@ -30,7 +30,7 @@ from magneticalc.Debug import Debug
 from magneticalc.Field_Types import Field_Types_Names_Map
 from magneticalc.Metric import Metric
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class Field_Widget(QGroupBox2):

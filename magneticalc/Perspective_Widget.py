@@ -26,7 +26,7 @@ from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Perspective_Presets import Perspective_Presets
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class Perspective_Widget(QGroupBox2):

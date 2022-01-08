@@ -17,17 +17,24 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-__VERSION__ = "v1.14.0"  # MAJ.MIN.REV
-
-
-__URL__ = "https://github.com/shredEngineer/MagnetiCalc"
-__PYPI_SIMPLE__URL__ = "https://pypi.org/simple/magneticalc/"
-
-
 class Version:
     """ Version class. """
 
+    # Major, Minor, Revision
+    VERSION_MAJ = 2
+    VERSION_MIN = 0
+    VERSION_REV = 0
+
+    # Compact version string
+    VERSION = f"v{VERSION_MAJ}.{VERSION_MIN}.{VERSION_REV}"
+
+    # GitHub Project URL
+    GitHub_URL = "https://github.com/shredEngineer/MagnetiCalc"
+
+    # PyPI Simple Repository URL
+    PyPI_Simple_URL = "https://pypi.org/simple/magneticalc/"
+
     # Full application version string
-    String = "MagnetiCalc " + __VERSION__
+    String = "MagnetiCalc " + VERSION
     Copyright = "Copyright © 2020–2022, Paul Wilhelm, M. Sc. <mailto:anfrage@paulwilhelm.de>"
     License = "ISC License (see README.md)"

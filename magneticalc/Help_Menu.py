@@ -26,7 +26,7 @@ from magneticalc.About_Dialog import About_Dialog
 from magneticalc.CheckForUpdates_Dialog import CheckForUpdates_Dialog
 from magneticalc.Debug import Debug
 from magneticalc.Usage_Dialog import Usage_Dialog
-from magneticalc.Version import __URL__
+from magneticalc.Version import Version
 
 
 class Help_Menu(QMenu):
@@ -51,7 +51,10 @@ class Help_Menu(QMenu):
         self.addAction(
             qta.icon("fa.github"),
             "&GitHub Repository …",
-            partial(webbrowser.open, __URL__)  # type: ignore
+            partial(
+                webbrowser.open,
+                Version.GitHub_URL
+            )
         )
         self.addSeparator()
         self.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())

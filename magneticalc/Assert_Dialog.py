@@ -21,14 +21,14 @@ from urllib.parse import urlencode, quote_plus
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
-from magneticalc.Version import Version, __URL__
+from magneticalc.QtWidgets2.Theme import Theme
+from magneticalc.Version import Version
 
 
 class Assert_Dialog:
     """ Assert_Dialog class. """
 
-    def __init__(self, assertion: bool, message: str) -> None:
+    def __init__(self, assertion: bool, message: str, allow_resume: bool = True) -> None:
         """
         Shows a user dialog if an assertion failed. Intended for beta-testing.
         This allows the user to either quit or resume (possibly resulting in unstable behaviour).
@@ -36,6 +36,7 @@ class Assert_Dialog:
 
         @param assertion: Boolean
         @param message: Error message
+        @param allow_resume: Enable to allow the user to resume
         """
         if assertion:
             return
@@ -46,7 +47,7 @@ class Assert_Dialog:
 
         # Generate Github issue URL
         issue_url = \
-            f"{__URL__}/issues/new?" + \
+            f"{Version.GitHub_URL}/issues/new?" + \
             urlencode(
                 {
                     "title": f"Assertion failed: {message}",
@@ -77,10 +78,16 @@ class Assert_Dialog:
         text_browser = QTextBrowser2(html=html)
         self._dialog.addWidget(text_browser)
 
-        buttons = self._dialog.addButtons({
-            "Abort application"         : ("fa.times-circle", self._dialog.reject),
-            "Resume (possibly unstable)": ("fa.play-circle", self._dialog.accept)
-        })
+        buttons_dict = {
+            "Abort application": ("fa.times-circle", self._dialog.reject),
+        }
+
+        if allow_resume:
+            buttons_dict.update({
+                "Resume (possibly unstable)": ("fa.play-circle", self._dialog.accept)
+            })
+
+        buttons = self._dialog.addButtons(buttons_dict)
         buttons[0].setFocus()
 
         self._dialog.show()

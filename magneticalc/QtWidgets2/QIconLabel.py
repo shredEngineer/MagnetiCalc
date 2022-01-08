@@ -21,6 +21,7 @@ from PyQt5.Qt import QFont
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QHBoxLayout
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class QIconLabel(QHBoxLayout):
@@ -36,7 +37,7 @@ class QIconLabel(QHBoxLayout):
             color: Optional[str] = None,
             text_color: Optional[str] = None,
             icon_color: Optional[str] = None,
-            icon_size: QSize = QSize(16, 16),
+            icon_size: QSize = Theme.IconSizeSmall,
             font: Optional[QFont] = None,
             expand: bool = True
     ) -> None:

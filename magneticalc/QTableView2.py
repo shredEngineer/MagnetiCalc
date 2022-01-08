@@ -17,16 +17,76 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Any, Optional, List, Dict, Callable
+from typing import Callable, Dict, List, Optional, Union
 from functools import partial
 from PyQt5 import QtCore
-from PyQt5.Qt import QFocusEvent
+from PyQt5.Qt import QFocusEvent, QDoubleValidator
 from PyQt5.QtCore import Qt, QItemSelectionModel, QItemSelection, QAbstractTableModel, QVariant
-from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QComboBox, QSizePolicy
+from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QItemDelegate, QStyleOptionViewItem
+from PyQt5.QtWidgets import QComboBox, QSizePolicy, QLineEdit
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.Debug import Debug
 from magneticalc.Format import Format
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
+
+
+class CellEditor(QItemDelegate):
+    """ ItemDelegate class. """
+
+    def __init__(self, parent: QTableView):
+        """
+        Initializes the cell editor.
+        Provides basic validation for float values and only writes well-formatted float-strings into the model.
+
+        @param parent: QTableView
+        """
+        QItemDelegate.__init__(self, parent=parent)
+
+    def createEditor(self, parent: QTableView, option: QStyleOptionViewItem, index: QtCore.QModelIndex) -> QLineEdit:
+        """
+        Creates the cell editor.
+
+        @param parent: QTableView
+        @param option: Style option
+        @param index: Model index
+        @return: QLineEdit
+        """
+        validator = QDoubleValidator(parent)
+        validator.setLocale(parent.locale())
+        editor = QLineEdit(parent)
+        editor.setValidator(validator)
+        editor.setAlignment(Qt.AlignRight)
+        editor.setFont(Theme.MonoFont)
+        return editor
+
+    def setEditorData(self, editor: QLineEdit, index: QtCore.QModelIndex) -> None:
+        """
+        Sets the cell editor data.
+
+        @param editor: QLineEdit
+        @param index: Model index
+        """
+        editor.setText(index.model().data(index))
+
+    def setModelData(self, editor: QLineEdit, model: QtCore.QAbstractItemModel, index: QtCore.QModelIndex) -> None:
+        """
+        Sets the model data.
+
+        @param editor: QLineEdit
+        @param model: Model
+        @param index: Model index
+        """
+        model.setData(index, Format.safe_str_float(editor.text()), QtCore.Qt.EditRole)
+
+    def updateEditorGeometry(self, editor: QLineEdit, option: QStyleOptionViewItem, index: QtCore.QModelIndex) -> None:
+        """
+        Sets the editor geometry.
+
+        @param editor: QLineEdit
+        @param option: Style option
+        @param index: Model index
+        """
+        editor.setGeometry(option.rect)
 
 
 class TableModel(QAbstractTableModel):
@@ -81,7 +141,7 @@ class TableModel(QAbstractTableModel):
         """
         return len(self._data[0]) if self.rowCount() > 0 else 0
 
-    def setData(self, index: QtCore.QModelIndex, value: Any, role: int = Qt.EditRole) -> bool:
+    def setData(self, index: QtCore.QModelIndex, value: str, role: int = Qt.EditRole) -> bool:
         """
         Sets a cell value.
 
@@ -97,7 +157,7 @@ class TableModel(QAbstractTableModel):
                 return True
         return False
 
-    def data(self, index: QtCore.QModelIndex, role: int = Qt.DisplayRole) -> QVariant:
+    def data(self, index: QtCore.QModelIndex, role: int = Qt.DisplayRole) -> Union[str, QVariant]:
         """
         Gets a cell value.
 
@@ -108,6 +168,10 @@ class TableModel(QAbstractTableModel):
         if role == Qt.DisplayRole or role == Qt.EditRole:
             if not self.is_widget(index):
                 return self._data[index.row()][index.column()]
+        elif role == Qt.TextAlignmentRole:
+            return QVariant(Qt.AlignRight | Qt.AlignVCenter)
+        elif role == Qt.FontRole:
+            return QVariant(Theme.MonoFont)
         return QVariant()
 
     def flags(self, index: QtCore.QModelIndex) -> int:
@@ -166,8 +230,8 @@ class QTableView2(QTableView):
                             List of options for every column; items may be set to None to use numerical cells.
         @param row_allow_delete: Enable to add an extra column for row delete buttons
         @param row_count_minimum: Minimum number of rows (no further rows can be deleted)
-        @param row_prefix: Per-row prefix used for binding cells to configuration
-                           (key = prefix + column key + "_" + row index)
+        @param row_prefix: Per-row prefix used for binding cells to configuration:
+                           key = prefix + column key + "_" + row index
         @param on_cell_edited: Set this to make cells editable
         @param on_selection_changed: Used to inform the GUI that another row was selected
         @param on_row_deleted: Set this to make rows deletable
@@ -175,6 +239,7 @@ class QTableView2(QTableView):
         QTableView.__init__(self)
         Debug(self, ": Init", init=True)
         self.gui = gui
+        self.setLocale(gui.locale())
 
         self._allow_delete = row_allow_delete
         self._row_count_minimum = row_count_minimum
@@ -246,7 +311,7 @@ class QTableView2(QTableView):
             for row, row_data in enumerate(data):
                 for col, col_data in enumerate(data):
                     key = list(self._col_types.keys())[col]
-                    data[row][col] = self.gui.project.get_str(self._row_prefix + key + "_" + str(row))
+                    self.gui.project.get_str(self._row_prefix + key + "_" + str(row))
 
         # Indicate if a column contains only widgets (only data otherwise)
         if self._col_options is not None:
@@ -255,17 +320,24 @@ class QTableView2(QTableView):
         else:
             col_is_widget = None
 
-        # Initialize the table model
+        # Initialize the table model (only writes well-formatted float-strings into the model)
         # Note: If enabled, this adds an empty column for row delete buttons
         self.setModel(
             TableModel(
                 parent=self,
-                data=[col_data + ([""] if self._allow_delete else []) for col_data in data],
+                data=[
+                    [Format.safe_str_float(value) for value in col_data] +
+                    ([""] if self._allow_delete else [])
+                    for col_data in data
+                ],
                 row_keys=row_keys,
                 col_keys=self._col_keys + ([""] if self._allow_delete else []),
                 col_is_widget=col_is_widget
             )
         )
+
+        # Set the cell editor
+        self.setItemDelegate(CellEditor(self))
 
         # Connect callbacks
         if self._on_cell_edited is not None:
@@ -333,15 +405,8 @@ class QTableView2(QTableView):
         row, col = top_left_index.row(), top_left_index.column()
         Debug(self, f".on_cell_changed({row}, {col})")
 
-        data = str(self.model().data(top_left_index))
-        try:
-            value = float(data.replace(",", "."))
-        except ValueError:
-            value = 0.0
-        value = Format.float_to_str(value)
-
         if self._on_cell_edited is not None:
-            self._on_cell_edited(value, row, col)
+            self._on_cell_edited(self.model().data(top_left_index), row, col)
 
     def on_combobox_cell_edited(self, combobox: QComboBox, row: int, column: int) -> None:
         """
@@ -462,8 +527,8 @@ class QTableView2(QTableView):
 
         @param _event: QFocusEvent
         """
-        if self.state() == QAbstractItemView.EditingState:
-            Debug(self, ".focusOutEvent(): Ignored in editing mode")
-        else:
-            self.clearSelection()
-            self.set_style(border_color="black", border_width=1)
+        #if self.state() == QAbstractItemView.EditingState:
+        #    Debug(self, ".focusOutEvent(): Ignored in editing mode")
+        #else:
+        self.clearSelection()
+        self.set_style(border_color="black", border_width=1)

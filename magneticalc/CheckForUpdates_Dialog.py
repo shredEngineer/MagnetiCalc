@@ -20,14 +20,13 @@ from typing import Optional, Tuple
 import re
 from urllib.error import URLError
 from urllib.request import urlopen
-from PyQt5.Qt import QFont, QSize
 from PyQt5.QtWidgets import QTextEdit
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
-from magneticalc.Version import __VERSION__, __PYPI_SIMPLE__URL__
+from magneticalc.QtWidgets2.Theme import Theme
+from magneticalc.Version import Version
 
 
 class CheckForUpdates_Dialog(QDialog2):
@@ -42,7 +41,7 @@ class CheckForUpdates_Dialog(QDialog2):
 
         icon, string, success, error = self.check_for_updates()
 
-        Debug(self, f": Check for Updates ({__PYPI_SIMPLE__URL__}): {string}", success=success, error=error)
+        Debug(self, f": Check for Updates ({Version.PyPI_Simple_URL}): {string}", success=success, error=error)
 
         color = Theme.FailureColor if error else (Theme.SuccessColor if success else Theme.DialogTextColor)
         self.addLayout(
@@ -51,7 +50,7 @@ class CheckForUpdates_Dialog(QDialog2):
                 icon=icon,
                 text_color=color,
                 icon_color=color,
-                icon_size=QSize(48, 48)
+                icon_size=Theme.IconSizeBig
             )
         )
 
@@ -60,7 +59,7 @@ class CheckForUpdates_Dialog(QDialog2):
             self.addWidget(QLabel2("Please update now:", italic=True))
             self.addSpacing(8)
             cmd = QTextEdit("python3 -m pip install magneticalc --upgrade")
-            cmd.setFont(QFont(Theme.DefaultFontFace, 12))
+            cmd.setFont(Theme.MonoFont)
             cmd.setMaximumHeight(64)
             cmd.setReadOnly(True)
             self.addWidget(cmd)
@@ -77,7 +76,7 @@ class CheckForUpdates_Dialog(QDialog2):
 
         @return: Icon, text, success flag, error flag
         """
-        contents = self.remote_contents(url=__PYPI_SIMPLE__URL__, timeout=2)
+        contents = self.remote_contents(url=Version.PyPI_Simple_URL, timeout=2)
         if contents is None:
             return "fa.exclamation-circle", "Network Error", False, True
 
@@ -85,9 +84,9 @@ class CheckForUpdates_Dialog(QDialog2):
         if version is None:
             return "fa.exclamation-circle", "Invalid Format", False, True
 
-        if version > __VERSION__:
+        if version > Version.VERSION:
             return "fa.info-circle", f"Newer version available ({version})", True, False
-        elif version == __VERSION__:
+        elif version == Version.VERSION:
             return "fa.check-circle", f"Up-to-date ({version})", False, False
         else:
             return "fa.exclamation-circle", f"Ahead of current release ({version})", False, True

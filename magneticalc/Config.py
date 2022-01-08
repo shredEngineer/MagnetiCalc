@@ -38,7 +38,27 @@ class Config(metaclass=abc.ABCMeta):
         Debug(self, ": Init", init=True)
         self._parser: Optional[configparser.ConfigParser] = None
         self.filename: Optional[str] = None
-        self.synced: bool = False
+        self._synced: bool = False
+
+    @property
+    def synced(self) -> bool:
+        """
+        Gets the synced flag: Indicates if the configuration has changed.
+
+        @return: True if the configuration has changed, False otherwise
+        """
+        return self._synced
+
+    @synced.setter
+    def synced(self, synced: bool):
+        """
+        Sets the synced flag: Indicates if the configuration has changed.
+
+        @value: True if the configuration has changed, False otherwise
+        """
+        if self._synced != synced:
+            self._synced = synced
+            self.on_changed()
 
     @abc.abstractmethod
     def on_changed(self) -> None:
@@ -47,7 +67,7 @@ class Config(metaclass=abc.ABCMeta):
         """
         pass
 
-    def load(self, default_config: Dict, signal_changed: bool = True) -> None:
+    def load(self, default_config: Dict) -> None:
         """
         Loads the default configuration.
 
@@ -56,14 +76,7 @@ class Config(metaclass=abc.ABCMeta):
         Debug(self, f".load(): Loading defaults")
         self._parser = configparser.ConfigParser()
         self._parser["DEFAULT"] = default_config
-
-        Debug(self, ".load(): Creating empty User section")
-        self._parser["User"] = {}
-
         self.synced = True
-
-        if signal_changed:
-            self.on_changed()
 
     def load_file(self, filename: str, default_config: Dict) -> None:
         """
@@ -75,24 +88,17 @@ class Config(metaclass=abc.ABCMeta):
         self.filename = Format.absolute_filename(filename)
         Debug(self, f".load_file(): {Format.filename_uri(self.filename)}")
 
-        self.load(default_config, signal_changed=False)
+        self.load(default_config)
 
         assert self._parser is not None, "Not initialized"
 
         self._parser.read(self.filename)
-
-        if "User" not in self._parser:
-            Debug(self, ".load_file(): Creating empty User section")
-            self._parser["User"] = {}
-            self.synced = False
 
         if not os.path.isfile(self.filename):
             Debug(
                 self, f".load_file(): WARNING: File does not exist: {Format.filename_uri(self.filename)}", warning=True
             )
             self.synced = False
-
-        self.on_changed()
 
     def save_file(self, filename: Optional[str] = None) -> None:
         """
@@ -113,7 +119,6 @@ class Config(metaclass=abc.ABCMeta):
             self._parser.write(file)
 
         self.synced = True
-        self.on_changed()
 
     def cleanup(self) -> None:
         """
@@ -128,16 +133,40 @@ class Config(metaclass=abc.ABCMeta):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def remove_key(self, key: str) -> None:
+    def rename_key(self, key_old: str, key_new: str, section: str) -> None:
+        """
+        Renames an old key in the configuration after transferring its value to a new key.
+
+        @param key_old: Old key
+        @param key_new: New key
+        @param section: Section name
+        """
+        assert self._parser is not None, "Not initialized"
+
+        if self.DebugAccess:
+            Debug(self, f".rename_key({key_old}, {key_new}, {section})")
+
+        self._parser[section][key_new] = self._parser[section][key_old]
+        self.remove_key(key_old, section)
+
+        self.synced = False
+
+    def remove_key(self, key: str, section: str = "DEFAULT") -> None:
         """
         Removes a key from the configuration.
 
         @param key: Key
+        @param section: Section name
         """
         assert self._parser is not None, "Not initialized"
 
-        if not self._parser.remove_option("User", key):
-            Debug(self, f".remove_key({key}): ERROR: No such key", error=True)
+        if self.DebugAccess:
+            Debug(self, f".remove_key({key}, {section})")
+
+        if self._parser.remove_option(section, key):
+            self.synced = False
+        else:
+            Debug(self, f".remove_key({key}, {section}): WARNING: No such key", warning=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -163,16 +192,15 @@ class Config(metaclass=abc.ABCMeta):
         """
         assert self._parser is not None, "Not initialized"
 
-        old_value = self._parser.get("User", key, fallback=None)
+        old_value = self._parser.get("DEFAULT", key, fallback=None)
         if old_value != value:
             if self.DebugAccess:
                 if old_value is None:
                     Debug(self, f".set_str(\"{key}\"): Created key with value \"{value}\"")
                 else:
                     Debug(self, f".set_str(\"{key}\"): Changing \"{old_value}\" to \"{value}\"")
-            self._parser.set("User", key, value)
+            self._parser.set("DEFAULT", key, value)
             self.synced = False
-            self.on_changed()
         else:
             if self.DebugAccess:
                 Debug(self, f".set_str(\"{key}\"): Unchanged: \"{old_value}\"")
@@ -186,7 +214,7 @@ class Config(metaclass=abc.ABCMeta):
         """
         assert self._parser is not None, "Not initialized"
 
-        value = self._parser.get("User", key, fallback=None)
+        value = self._parser.get("DEFAULT", key, fallback=None)
         assert value is not None, f"Attempting to read non-existing key: {key}"
 
         if self.DebugAccess:

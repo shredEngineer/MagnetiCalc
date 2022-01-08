@@ -16,11 +16,10 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from PyQt5.Qt import QSize
 from PyQt5.QtWidgets import QMessageBox
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QIconLabel import QIconLabel
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class QMessageBox2(QDialog2):
@@ -63,7 +62,7 @@ class QMessageBox2(QDialog2):
                 icon=icon_id,
                 text_color=Theme.DialogTextColor,
                 icon_color=color,
-                icon_size=QSize(48, 48)
+                icon_size=Theme.IconSizeBig
             )
         )
 

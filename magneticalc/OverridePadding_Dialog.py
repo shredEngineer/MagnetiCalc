@@ -22,7 +22,7 @@ from magneticalc.QtWidgets2.QHBoxLayout2 import QHBoxLayout2
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class OverridePadding_Dialog(QDialog2):

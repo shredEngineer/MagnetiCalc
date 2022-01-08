@@ -27,15 +27,15 @@ from vispy.visuals.visual import Visual
 from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Metric import Metric
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class VisPyCanvas(scene.SceneCanvas):
     """ VisPyCanvas class. """
 
     # Font
-    DefaultFontFace = Theme.DefaultFontFace
-    DefaultFontSize = 9
+    FontFamily = Theme.MonoFontFamily
+    FontSize = Theme.MonoFontSize
 
     # Enable to additionally debug drawing of visuals
     DebugVisuals = False
@@ -101,8 +101,8 @@ class VisPyCanvas(scene.SceneCanvas):
             pos=(10, 10),
             anchor_x="left",
             anchor_y="bottom",
-            face=self.DefaultFontFace,
-            font_size=self.DefaultFontSize,
+            face=self.FontFamily,
+            font_size=self.FontSize,
             font_manager=self.font_manager
         )
 
@@ -134,15 +134,15 @@ class VisPyCanvas(scene.SceneCanvas):
         self.initializing = False
         self.visual_startup_info = scene.visuals.create_visual_node(visuals.TextVisual)(
             parent=self.view_text.scene,
-            pos=(10, 10 + 2 * self.DefaultFontSize),
+            pos=(10, 10 + 2 * self.FontSize),
             anchor_x="left",
             anchor_y="bottom",
             bold=True,
             text="Performing initial just-in-time compilation;\n"
                  "subsequent calculations will execute faster!\n",
             color=(1, .55, 0),  # Orange
-            face=self.DefaultFontFace,
-            font_size=self.DefaultFontSize,
+            face=self.FontFamily,
+            font_size=self.FontSize,
             font_manager=self.font_manager
         )
 
@@ -485,8 +485,8 @@ class VisPyCanvas(scene.SceneCanvas):
             visual = scene.visuals.create_visual_node(visuals.TextVisual)(
                 parent=None,
                 pos=sampling_volume_point,
-                face=self.DefaultFontFace,
-                font_size=self.DefaultFontSize,
+                face=self.FontFamily,
+                font_size=self.FontSize,
                 color=self.foreground,
                 text=text,
                 font_manager=self.font_manager

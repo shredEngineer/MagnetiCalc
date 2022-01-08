@@ -46,7 +46,7 @@ class QDoubleSpinBox2(QDoubleSpinBox):
         @param value_changed: Value changed callback
         """
         QDoubleSpinBox.__init__(self)
-        self.setLocale(gui.user_locale)
+        self.setLocale(gui.locale())
         self.setMinimum(minimum)
         self.setMaximum(maximum)
         self.setValue(value)

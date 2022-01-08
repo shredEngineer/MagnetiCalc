@@ -171,7 +171,7 @@ class File_Menu(QMenu):
         Debug(self.gui, ".close_project()")
 
         self.gui.project.close()
-        self.gui.project.open_default()
+        self.gui.project.open(None)  # Open default project
 
     def export_image(self) -> None:
         """

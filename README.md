@@ -300,7 +300,6 @@ which provides convenience functions for accessing, transforming and reshaping t
 ToDo
 ----
 **Functional**
-* Add a histogram for every metric.
 * Add an overlay for vector metrics, like gradient or curvature
   (derived from the fundamental
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
@@ -311,8 +310,6 @@ ToDo
   (Add support for multiple wires, study mutual induction.)
 * Interactively display superposition of fields with varying currents.
 * Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
-* Highlight permeability groups with
-  <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
 * Add support for modeling of core material saturation and hysteresis effects.
 * Provide a means to emulate permanent magnets.
@@ -321,8 +318,6 @@ ToDo
 * Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu;
   alternatively, provide a dialog for parametric generation.
 * Add stationary coordinate system and ruler in the bottom left corner.
-* Add support for selective display over a portion of the metric range,
-  enabling a kind of iso-contour display.
 
 **Known Bugs**
 * Fix issue where the points of a sampling volume with *fractional* resolution
@@ -330,9 +325,6 @@ ToDo
 * Fix calculation of divergence right at the sampling volume boundary.
 * Fix missing scaling of VisPy markers when zooming.
 * Fix unnecessary shading of VisPy markers.
-
-**Performance**
-* Parallelize sampling volume calculation which is currently slow.
 
 **Code Quality**
 * Add unit tests.

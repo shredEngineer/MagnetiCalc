@@ -24,7 +24,7 @@ from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class Parameters_Widget(QGroupBox2):

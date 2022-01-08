@@ -21,6 +21,7 @@ import qtawesome as qta
 from PyQt5.Qt import QFont
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import QLabel, QSizePolicy
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class QLabel2(QLabel):
@@ -33,7 +34,7 @@ class QLabel2(QLabel):
             text: str,
             icon: Optional[str] = None,
             icon_color: Optional[str] = None,
-            icon_size: QSize = QSize(16, 16),
+            icon_size: QSize = Theme.IconSizeSmall,
             expand: bool = True,
             align_right: bool = False,
             width: Optional[int] = None,

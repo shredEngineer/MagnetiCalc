@@ -28,7 +28,7 @@ from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Metric_Presets import Metric_Presets
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class Metric_Widget(QGroupBox2):

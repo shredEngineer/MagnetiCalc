@@ -16,6 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+from PyQt5.Qt import QFont, QSize
+
 
 class Theme:
     """ Theme class. """
@@ -30,4 +32,10 @@ class Theme:
     DialogTextColor = "#000000"
 
     # Default font
-    DefaultFontFace = "DejaVu Sans Mono"
+    MonoFontFamily = "DejaVu Sans Mono"
+    MonoFontSize = 11
+    MonoFont = QFont(MonoFontFamily, MonoFontSize)
+    MonoFont.setStyleHint(QFont.Monospace)
+
+    IconSizeSmall = QSize(16, 16)
+    IconSizeBig = QSize(48, 48)

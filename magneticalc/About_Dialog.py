@@ -22,7 +22,7 @@ from PyQt5.Qt import QShowEvent
 from magneticalc.QtWidgets2.QDialog2 import QDialog2
 from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Debug import Debug
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 from magneticalc.Version import Version
 
 

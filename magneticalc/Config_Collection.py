@@ -28,8 +28,7 @@ class Config_Collection:
             self,
             gui: GUI,  # type: ignore
             prefix: str,
-            types: Dict,
-            first_without_suffix: bool
+            types: Dict
     ) -> None:
         """
         Initializes a config collection: A list of groups (dictionaries).
@@ -44,23 +43,12 @@ class Config_Collection:
         @param gui: GUI
         @param prefix: Prefix
         @param types: Key:Type (Dictionary)
-        @param first_without_suffix: Enable to omit the suffix "_0" for the first group
         """
         self.gui = gui
         self.prefix = prefix
         self.types = types
-        self.first_without_suffix = first_without_suffix
 
-    def _get_suffix(self, group_index: int) -> str:
-        """
-        Gets the suffix for a given group index.
-
-        @param group_index: Group index
-        @return: String
-        """
-        return "" if group_index == 0 and self.first_without_suffix else f"_{group_index}"
-
-    def get_count(self) -> int:
+    def get_groups_count(self) -> int:
         """
         Gets the number of groups in the collection.
 
@@ -77,18 +65,18 @@ class Config_Collection:
         """
         return self.gui.project.set_get_dict(
             prefix=self.prefix,
-            suffix=self._get_suffix(group_index),
+            suffix=f"_{group_index}",
             types=self.types,
             values=None
         )
 
-    def get_all_groups(self) -> List[Dict]:
+    def get_groups(self) -> List[Dict]:
         """
         Gets every group in the collection.
 
         @return: List of groups (dictionaries)
         """
-        return [self.get_group(group_index) for group_index in range(self.get_count())]
+        return [self.get_group(group_index) for group_index in range(self.get_groups_count())]
 
     def add_group(self, values: Optional[Dict]) -> None:
         """
@@ -96,10 +84,10 @@ class Config_Collection:
 
         @param values: Key:Value (Dictionary)
         """
-        group_index = self.get_count()
+        group_index = self.get_groups_count()
         self.gui.project.set_get_dict(
             prefix=self.prefix,
-            suffix=self._get_suffix(group_index),
+            suffix=f"_{group_index}",
             types=self.types,
             values=values,
         )
@@ -111,16 +99,16 @@ class Config_Collection:
 
         @param group_index: Group index
         """
-        Assert_Dialog(group_index < self.get_count(), "Attempting to delete non-existing group")
+        Assert_Dialog(group_index < self.get_groups_count(), "Attempting to delete non-existing group")
 
         # Make a copy of all groups
-        groups = self.get_all_groups()
+        groups = self.get_groups()
 
         # Delete the desired group from the copy
         del groups[group_index]
 
         # Delete all groups from the collection
-        for i in range(self.get_count()):
+        for i in range(self.get_groups_count()):
             for key in self.types.keys():
                 self.gui.project.remove_key(f"{self.prefix}{key}_{i}")
 

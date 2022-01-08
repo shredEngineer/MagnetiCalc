@@ -17,9 +17,10 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Dict
-from PyQt5.QtWidgets import QMessageBox
-from magneticalc.QMessageBox2 import QMessageBox2
+from typing import Dict, Optional
+import re
+from PyQt5.QtWidgets import QMessageBox as QMB
+from magneticalc.QtWidgets2.QMessageBox2 import QMessageBox2
 from magneticalc.Backend_Types import BACKEND_TYPE_CUDA
 from magneticalc.Backend_Types import Backend_Types_Available, Backend_Type_Default, backend_type_safe
 from magneticalc.Config import Config
@@ -48,32 +49,37 @@ class Project(Config):
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-    def open_default(self, reload: bool = True) -> None:
+    def open(self, filename: Optional[str], reload: bool = True) -> bool:
         """
-        Opens the default project.
+        Opens a project from file, or the default project.
 
+        @param filename: Project filename, or None to load the default project
         @param reload: Enable to reload GUI
+        @return: True if successful, False otherwise
         """
-        Debug(self, ".open_default()")
-        self.load(default_config=Project.get_default())
-        self.validate()
+        if filename is not None:
+            Debug(self, ".open(): Loading project file")
+            self.load_file(filename=filename, default_config=Project.get_default())
+
+            if not self.validate():
+                Debug(self, ".open(): ERROR: Invalid project file. Using default project.", error=True)
+
+                # Let's try this again with the default project
+                self.cleanup()
+                filename = None
+
+        if filename is None:
+            Debug(self, ".open(): Loading default project")
+            self.load(default_config=Project.get_default())
+
+            if not self.validate():
+                Debug(self, ".open(): ERROR: Invalid default project. Aborting.", error=True)
+                return False
 
         if reload:
             self.gui.reload()
 
-    def open(self, filename: str, reload: bool = True) -> None:
-        """
-        Opens a project from file.
-
-        @param filename: Project filename
-        @param reload: Enable to reload GUI
-        """
-        Debug(self, ".open()")
-        self.load_file(filename=filename, default_config=Project.get_default())
-        self.validate()
-
-        if reload:
-            self.gui.reload()
+        return True
 
     def close(self, invalidate: bool = True) -> bool:
         """
@@ -91,14 +97,12 @@ class Project(Config):
             messagebox = QMessageBox2(
                 title="Project Changed",
                 text="Do you want to save your changes?",
-                icon=QMessageBox.Question,
-                buttons=QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
-                default_button=QMessageBox.Save
+                icon=QMB.Question, buttons=QMB.Save | QMB.Discard | QMB.Cancel, default_button=QMB.Save
             )
-            if not messagebox.user_accepted or messagebox.choice == QMessageBox.Cancel:
+            if not messagebox.user_accepted or messagebox.choice == QMB.Cancel:
                 Debug(self, ".close(): Canceled")
                 return False
-            elif messagebox.choice == QMessageBox.Save:
+            elif messagebox.choice == QMB.Save:
                 Debug(self, ".close(): Saving changes to project", success=True)
                 self.save_file()
             else:
@@ -140,11 +144,51 @@ class Project(Config):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def validate(self) -> None:
+    def validate(self) -> bool:
         """
         Validates the project.
+
+        @return: True if valid project, False otherwise
         """
-        Debug(self.gui, ".validate()")
+        Debug(self, f".validate(): Application version string: {Version.String}")
+
+        # Parse project version
+        project_version = self.gui.project.get_str("version")
+        Debug(self, f".validate(): Project version string: {project_version}")
+
+        # noinspection RegExpAnonymousGroup
+        pattern = re.compile(r"MagnetiCalc v(\d+)\.(\d+)\.(\d+)")
+        result = pattern.search(project_version)
+        if result is None:
+            error_head = "Invalid Project"
+            error_text = \
+                "Cannot determine project version.\n\n" \
+                "Opening default project instead."
+            Debug(self, f".validate(): ERROR: {error_head}: " + error_text.replace("\n", " "), error=True)
+            QMessageBox2(title=error_head, text=error_text, icon=QMB.Warning, buttons=QMB.Ok, default_button=QMB.Ok)
+            return False
+        project_maj, project_min, project_rev = [int(result.groups()[i]) for i in range(3)]
+
+        # Check for compatible major version
+        if project_maj > Version.VERSION_MAJ:
+            error_head = "Incompatible Project"
+            error_text = \
+                "This project was created with a newer major version of MagnetiCalc.\n" \
+                "Please upgrade MagnetiCalc!\n\n" \
+                "Opening default project instead."
+            Debug(self, f".validate(): ERROR: {error_head}: " + error_text.replace("\n", " "), error=True)
+            QMessageBox2(title=error_head, text=error_text, icon=QMB.Warning, buttons=QMB.Ok, default_button=QMB.Ok)
+            return False
+
+        # Upgrade an older project if necessary
+        if not self.upgrade(project_maj, project_min, project_rev):
+            error_head = "Failed Upgrade"
+            error_text = \
+                "Could not upgrade project format.\n\n" \
+                "Opening default project instead."
+            Debug(self, f".validate(): ERROR: {error_head}: " + error_text.replace("\n", " "), error=True)
+            QMessageBox2(title=error_head, text=error_text, icon=QMB.Warning, buttons=QMB.Ok, default_button=QMB.Ok)
+            return False
 
         # Ensure valid backend type
         backend_type = self.gui.project.get_int("backend_type")
@@ -153,13 +197,83 @@ class Project(Config):
 
         # Use default backend if selected backend is not available
         if backend_type != Backend_Type_Default and not Backend_Types_Available[backend_type]:
-            Debug(self.gui, ".validate(): WARNING: Selected backend not available, using default backend", warning=True)
+            Debug(self, ".validate(): WARNING: Selected backend not available, using default backend", warning=True)
             self.gui.project.set_int("backend_type", Backend_Type_Default)
 
-        # Ensue valid field type
+        # Ensure valid field type
         field_type = self.gui.project.get_int("field_type")
         if field_type != field_type_safe(field_type):
             self.gui.project.set_int("field_type", field_type_safe(field_type))
+
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def upgrade(self, project_maj: int, project_min: int, project_rev: int) -> bool:
+        """
+        Upgrades the project if necessary.
+
+        @param project_maj: Project major version
+        @param project_min: Project minor version
+        @param project_rev: Project revision
+        @return: False on error, True otherwise
+        """
+        if 1 <= project_maj < 2:
+            if self._upgrade_1_x_x_to_2_x_x():
+                info_head = "Upgraded Project"
+                info_text = \
+                    "You project was upgraded from (1.x.x) to (2.x.x) format."
+                Debug(self, f".upgrade(): {info_head}: " + info_text.replace("\n", " "), success=True)
+                QMessageBox2(
+                    title=info_head, text=info_text, icon=QMB.Information, buttons=QMB.Ok, default_button=QMB.Ok
+                )
+            else:
+                return False
+
+        Debug(self, ".upgrade(): Done", success=True)
+        return True
+
+    def _upgrade_1_x_x_to_2_x_x(self) -> bool:
+        """
+        Upgrades the project from 1.x.x to 2.x.x format.
+
+        @return: True if successful, False otherwise
+        """
+        Debug(self, ": Upgrading from (1.x.x) to (2.x.x) format", warning=True)
+
+        if "User" not in self._parser:
+            Debug(self, ": ERROR: Missing User section", error=True)
+            return False
+
+        # First, we modify the old User section.
+        # The "wire_count" key is added, and the "wire_" and "rotational_symmetry_" keys are joined.
+        # Then the wire parameters can be accessed as one group in a Config_Collection.
+        self._parser["User"]["wire_count"] = "1"
+        self.rename_key("wire_points_base", "wire_points_base_1", section="User")
+        self.rename_key("wire_stretch", "wire_stretch_1", section="User")
+        self.rename_key("wire_slicer_limit", "wire_slicer_limit_1", section="User")
+        self.rename_key("wire_dc", "wire_dc_1", section="User")
+        self.rename_key("wire_close_loop", "wire_close_loop_1", section="User")
+        self.rename_key("rotational_symmetry_count", "wire_rotational_symmetry_count_1", section="User")
+        self.rename_key("rotational_symmetry_radius", "wire_rotational_symmetry_radius_1", section="User")
+        self.rename_key("rotational_symmetry_axis", "wire_rotational_symmetry_axis_1", section="User")
+        self.rename_key("rotational_symmetry_offset", "wire_rotational_symmetry_offset_1", section="User")
+
+        # Then, we upgrade to the latest DEFAULT section.
+        # This also upgrades the version string.
+        self._parser["DEFAULT"] = self.get_default()
+
+        # Finally, the User section merged with the DEFAULT section, and the User section is deleted.
+        # This eliminates redundancy. (Should have done it that way right from the beginning.)
+        user_copy = {key: value for key, value in sorted(list(self._parser["User"].items()))}
+        self._parser.remove_section("User")
+        self._parser["DEFAULT"] = user_copy
+
+        self.synced = False
+
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     def get_default() -> Dict:
@@ -173,20 +287,20 @@ class Project(Config):
             "backend_type"                              : BACKEND_TYPE_CUDA,
             "auto_calculation"                          : "True",
             "num_cores"                                 : "0",
-            "wire_points_base"                          :
+            "wire_points_base_1"                        :
                 Format.points_to_str(Wire_Presets.get_by_id("Straight Line")["points"]),
-            "wire_stretch"                              : "0.1000, 1.0000, 1.0000",
-            "wire_slicer_limit"                         : "0.0500",
-            "wire_dc"                                   : "1.0000",
-            "wire_close_loop"                           : "True",
-            "rotational_symmetry_count"                 : "30",
-            "rotational_symmetry_radius"                : "1.0000",
-            "rotational_symmetry_axis"                  : "2",
-            "rotational_symmetry_offset"                : "0",
+            "wire_stretch_1"                            : "0.1000, 1.0000, 1.0000",
+            "wire_slicer_limit_1"                       : "0.0500",
+            "wire_dc_1"                                 : "1.0000",
+            "wire_close_loop_1"                         : "True",
+            "wire_rotational_symmetry_count_1"          : "30",
+            "wire_rotational_symmetry_radius_1"         : "1.0000",
+            "wire_rotational_symmetry_axis_1"           : "2",
+            "wire_rotational_symmetry_offset_1"         : "0",
             "sampling_volume_padding"                   : "-1, 1, 1",
             "sampling_volume_override_padding"          : "False",
             "sampling_volume_bounding_box"              : "0.000000, 0.000000, 0.000000; 0.000000, 0.000000, 0.000000",
-            "sampling_volume_resolution_exponent"       : "4",
+            "sampling_volume_resolution_exponent"       : "3",
             "sampling_volume_label_resolution_exponent" : "0",
             "field_type"                                : FIELD_TYPE_B,
             "field_distance_limit"                      : "0.0008",

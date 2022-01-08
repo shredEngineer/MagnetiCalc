@@ -30,7 +30,7 @@ from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class SamplingVolume_Widget(QGroupBox2):
@@ -216,7 +216,7 @@ class SamplingVolume_Widget(QGroupBox2):
             self.total_extent_label.setText("N/A")
             self.total_points_label.setText("N/A")
 
-        self.total_constraints_label.setText(str(self.constraint_editor.rows_count))
+        self.total_constraints_label.setText(str(self.constraint_editor.get_groups_count()))
 
     def update_controls(self) -> None:
         """

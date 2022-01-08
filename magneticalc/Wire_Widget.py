@@ -28,9 +28,20 @@ from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.QTableView2 import QTableView2
+from magneticalc.Config_Collection import Config_Collection
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
+
+
+""" Wire collection types. """
+Wire_Collection_Types = {
+    "points_base"   : "points",
+    "stretch"       : "point",
+    "slicer_limit"  : "float",
+    "dc"            : "float",
+    "close_loop"    : "bool"
+}
 
 
 """ Default stretch setting. """
@@ -292,24 +303,28 @@ class Wire_Widget(QGroupBox2):
 
         self.blockSignals(True)
 
-        wire_stretch = self.gui.project.get_point("wire_stretch")
+        # TODO: access the wire like this
+        #wire_collection = Config_Collection(gui=self.gui, prefix="wire_", types=Wire_Collection_Types)
+        #wire_group = wire_collection.get_group(1)
+
+        wire_stretch = self.gui.project.get_point("wire_stretch_1")  # TODO: Vectorize
         for i in range(3):
             self.stretch_spinbox[i].setValue(wire_stretch[i])
 
-        self.rotational_symmetry_count_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_count"))
-        self.rotational_symmetry_radius_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_radius"))
+        self.rotational_symmetry_count_spinbox.setValue(self.gui.project.get_float("wire_rotational_symmetry_count_1"))  # TODO: Vectorize
+        self.rotational_symmetry_radius_spinbox.setValue(self.gui.project.get_float("wire_rotational_symmetry_radius_1"))  # TODO: Vectorize
 
-        rotational_symmetry_axis = self.gui.project.get_int("rotational_symmetry_axis")
+        rotational_symmetry_axis = self.gui.project.get_int("wire_rotational_symmetry_axis_1")  # TODO: Vectorize
         for i, axis in enumerate(["X", "Y", "Z"]):
             if i == rotational_symmetry_axis:
                 self.rotational_symmetry_axis_combobox.setCurrentIndex(i)
 
-        self.rotational_symmetry_offset_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_offset"))
+        self.rotational_symmetry_offset_spinbox.setValue(self.gui.project.get_float("wire_rotational_symmetry_offset_1"))  # TODO: Vectorize
 
-        self.close_loop_checkbox.setChecked(self.gui.project.get_bool("wire_close_loop"))
+        self.close_loop_checkbox.setChecked(self.gui.project.get_bool("wire_close_loop_1"))  # TODO: Vectorize
 
-        self.slicer_limit_spinbox.setValue(self.gui.project.get_float("wire_slicer_limit"))
-        self.dc_spinbox.setValue(self.gui.project.get_float("wire_dc"))
+        self.slicer_limit_spinbox.setValue(self.gui.project.get_float("wire_slicer_limit_1"))  # TODO: Vectorize
+        self.dc_spinbox.setValue(self.gui.project.get_float("wire_dc_1"))  # TODO: Vectorize
 
         self.blockSignals(False)
 
@@ -523,15 +538,15 @@ class Wire_Widget(QGroupBox2):
             should_update_stretch_controls = _stretch_ is not None
             should_update_rotational_symmetry_controls = _rotational_symmetry_ is not None
 
-            points = self.gui.project.set_get_points("wire_points_base", _points_)
-            stretch = self.gui.project.set_get_point("wire_stretch", _stretch_)
-            close_loop = self.gui.project.set_get_bool("wire_close_loop", _close_loop_)
-            slicer_limit = self.gui.project.set_get_float("wire_slicer_limit", _slicer_limit_)
-            dc = self.gui.project.set_get_float("wire_dc", _dc_)
+            points = self.gui.project.set_get_points("wire_points_base_1", _points_)  # TODO: Vectorize
+            stretch = self.gui.project.set_get_point("wire_stretch_1", _stretch_)  # TODO: Vectorize
+            close_loop = self.gui.project.set_get_bool("wire_close_loop_1", _close_loop_)  # TODO: Vectorize
+            slicer_limit = self.gui.project.set_get_float("wire_slicer_limit_1", _slicer_limit_)  # TODO: Vectorize
+            dc = self.gui.project.set_get_float("wire_dc_1", _dc_)  # TODO: Vectorize
 
             rotational_symmetry = self.gui.project.set_get_dict(
-                prefix="rotational_symmetry_",
-                suffix="",
+                prefix="wire_rotational_symmetry_",
+                suffix="_1",  # TODO: Vectorize
                 types={"count": "int", "radius": "float", "axis": "int", "offset": "float"},
                 values=_rotational_symmetry_,
             )

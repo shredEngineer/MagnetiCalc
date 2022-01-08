@@ -42,7 +42,7 @@ class Debug:
     EnableRefresh = False
 
     # Block debug output from specific classes
-    EnableBlacklist = True
+    EnableBlacklist = False
     Blacklist = [
         "About_Dialog",
         "CheckForUpdates_Dialog",

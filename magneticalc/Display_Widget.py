@@ -20,7 +20,7 @@ from __future__ import annotations
 import numpy as np
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCheckBox, QComboBox, QHBoxLayout, QVBoxLayout, QMessageBox, QSizePolicy
-from magneticalc.QMessageBox2 import QMessageBox2
+from magneticalc.QtWidgets2.QMessageBox2 import QMessageBox2
 from magneticalc.Debug import Debug
 from magneticalc.QtWidgets2.QGroupBox2 import QGroupBox2
 from magneticalc.QtWidgets2.QHLine import QHLine
@@ -28,7 +28,7 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QSliderFloat import QSliderFloat
 from magneticalc.SamplingVolume_Widget import SamplingVolume_Widget
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 from magneticalc.VisPyCanvas import VisPyCanvas
 
 

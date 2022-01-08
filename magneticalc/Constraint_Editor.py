@@ -26,11 +26,11 @@ from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QTextBrowser2 import QTextBrowser2
 from magneticalc.Constraint import Constraint
 from magneticalc.Comparison_Types import comparison_type_to_name, comparison_name_to_type
-from magneticalc.Config_Group import Config_Collection
+from magneticalc.Config_Collection import Config_Collection
 from magneticalc.Debug import Debug
 from magneticalc.Norm_Types import norm_type_to_name, norm_name_to_type
 from magneticalc.QTableView2 import QTableView2
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class Constraint_Editor(QDialog2):
@@ -90,8 +90,7 @@ class Constraint_Editor(QDialog2):
         self._constraint_collection = Config_Collection(
             gui=gui,
             prefix="constraint_",
-            types=self.Constraint_Types,
-            first_without_suffix=False
+            types=self.Constraint_Types
         )
 
         table_icon_label = QIconLabel("Constraints", "mdi.playlist-edit", color=Theme.DarkColor)
@@ -158,30 +157,28 @@ class Constraint_Editor(QDialog2):
         Populates the table.
         """
         self.table.set_data(
-            data=[list(col_data.values()) for col_data in self.rows],
-            row_keys=[str(i + 1) for i in range(self.rows_count)]
+            data=[list(col_data.values()) for col_data in self.get_groups()],
+            row_keys=[str(i + 1) for i in range(self.get_groups_count())]
         )
         self.table.select_last_row(focus=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    @property
-    def rows(self) -> List[Dict]:
+    def get_groups(self) -> List[Dict]:
         """
         Gets the list of rows (constraint groups).
 
         @return: List of rows (constraint groups).
         """
-        return self._constraint_collection.get_all_groups()
+        return self._constraint_collection.get_groups()
 
-    @property
-    def rows_count(self) -> int:
+    def get_groups_count(self) -> int:
         """
         Gets the number of rows (constraint groups).
 
         @return: Number of rows (constraint groups)
         """
-        return self._constraint_collection.get_count()
+        return self._constraint_collection.get_groups_count()
 
     def get_constraints(self) -> List[Constraint]:
         """
@@ -190,7 +187,7 @@ class Constraint_Editor(QDialog2):
         @return: List of constraints
         """
         constraints = []
-        for row in self.rows:
+        for row in self.get_groups():
             Debug(self, f".get_constraints(): {row}")
             constraints.append(
                 Constraint(

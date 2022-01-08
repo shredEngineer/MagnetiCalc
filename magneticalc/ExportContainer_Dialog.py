@@ -24,7 +24,7 @@ from magneticalc.QtWidgets2.QSaveAction import QSaveAction
 from magneticalc.API import API
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import Field_Types_Names_Map, Field_Types_Abbreviations_Map, field_name_to_type
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 
 
 class ExportContainer_Dialog(QDialog2):

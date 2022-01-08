@@ -32,7 +32,7 @@ from magneticalc.Project import Project
 from magneticalc.SidebarLeft import SidebarLeft
 from magneticalc.SidebarRight import SidebarRight
 from magneticalc.Statusbar import Statusbar
-from magneticalc.Theme import Theme
+from magneticalc.QtWidgets2.Theme import Theme
 from magneticalc.VisPyCanvas import VisPyCanvas
 
 
@@ -62,21 +62,24 @@ class GUI(QMainWindow):
         self.initializing = True
         self.exiting = False
 
-        self.user_locale = QLocale(QLocale.English)
+        self.setLocale(QLocale(QLocale.English))
 
         self.setWindowIcon(qta.icon("ei.magnet", color=Theme.MainColor))
         self.setMinimumSize(*self.MinimumWindowSize)
         self.showMaximized()
 
         self.project = Project(self)
-        self.project.open_default(reload=False)
 
-        # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
+        # Open default project, don't reload GUI
+        if not self.project.open(filename=None, reload=False):
+            # Abort in the unlikely case that the default project cannot be opened
+            Assert_Dialog(False, "Unable to open default project", allow_resume=False)
+
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
         self.calculation_start_time = time.monotonic()  # Will be overwritten by "recalculate()"
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.register(self.cleanup)
+        atexit.register(self.close)
 
         # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
         self.statusbar = Statusbar(self)
@@ -317,7 +320,7 @@ class GUI(QMainWindow):
         Debug(self, ".cleanup()")
 
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.unregister(self.cleanup)
+        atexit.unregister(self.close)
 
         self.exiting = True
 

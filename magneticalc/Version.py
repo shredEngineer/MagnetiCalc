@@ -21,7 +21,7 @@ __VERSION__ = "v1.14.0"  # MAJ.MIN.REV
 
 
 __URL__ = "https://github.com/shredEngineer/MagnetiCalc"
-__VERSION__URL__ = "https://raw.githubusercontent.com/shredEngineer/MagnetiCalc/master/magneticalc/Version.py"
+__PYPI_SIMPLE__URL__ = "https://pypi.org/simple/magneticalc/"
 
 
 class Version:

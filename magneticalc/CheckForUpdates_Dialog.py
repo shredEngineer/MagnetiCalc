@@ -18,6 +18,7 @@
 
 from typing import Optional, Tuple
 import re
+from urllib.error import URLError
 from urllib.request import urlopen
 from PyQt5.Qt import QFont, QSize
 from PyQt5.QtWidgets import QTextEdit
@@ -26,7 +27,7 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Theme import Theme
-from magneticalc.Version import __VERSION__, __VERSION__URL__
+from magneticalc.Version import __VERSION__, __PYPI_SIMPLE__URL__
 
 
 class CheckForUpdates_Dialog(QDialog2):
@@ -41,7 +42,7 @@ class CheckForUpdates_Dialog(QDialog2):
 
         icon, string, success, error = self.check_for_updates()
 
-        Debug(self, f": Check for Updates ({__VERSION__URL__}): {string}", success=success, error=error)
+        Debug(self, f": Check for Updates ({__PYPI_SIMPLE__URL__}): {string}", success=success, error=error)
 
         color = Theme.FailureColor if error else (Theme.SuccessColor if success else Theme.DialogTextColor)
         self.addLayout(
@@ -76,7 +77,7 @@ class CheckForUpdates_Dialog(QDialog2):
 
         @return: Icon, text, success flag, error flag
         """
-        contents = self.remote_contents(url=__VERSION__URL__, timeout=2)
+        contents = self.remote_contents(url=__PYPI_SIMPLE__URL__, timeout=2)
         if contents is None:
             return "fa.exclamation-circle", "Network Error", False, True
 
@@ -100,11 +101,9 @@ class CheckForUpdates_Dialog(QDialog2):
         @param timeout: Timeout (s)
         @return: Contents if successful, None otherwise
         """
-
-        # noinspection PyBroadException
         try:
             return urlopen(url=url, timeout=timeout).read().decode("utf-8")
-        except Exception:
+        except URLError:
             return None
 
     @staticmethod
@@ -117,14 +116,14 @@ class CheckForUpdates_Dialog(QDialog2):
         """
 
         # noinspection RegExpAnonymousGroup
-        pattern = re.compile(r'__VERSION__ = "v(\d+)\.(\d+)\.(\d+)"')
+        pattern = re.compile(r"MagnetiCalc-(\d+)\.(\d+)\.(\d+)")
 
-        # noinspection PyBroadException
-        try:
-            result = pattern.search(contents)
-            if result is None:
-                return None
+        result = pattern.findall(contents)
 
-            return "v" + ".".join(result.groups())
-        except Exception:
+        if result is None:
             return None
+
+        if len(result) == 0:
+            return None
+
+        return "v" + ".".join(result[-1])

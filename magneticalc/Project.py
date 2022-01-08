@@ -48,22 +48,43 @@ class Project(Config):
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-    def open(self, filename: str) -> None:
+    def open_default(self, reload: bool = True) -> None:
         """
-        Opens a project.
+        Opens the default project.
+
+        @param reload: Enable to reload GUI
+        """
+        Debug(self, ".open_default()")
+        self.load(default_config=Project.get_default())
+        self.validate()
+
+        if reload:
+            self.gui.reload()
+
+    def open(self, filename: str, reload: bool = True) -> None:
+        """
+        Opens a project from file.
 
         @param filename: Project filename
+        @param reload: Enable to reload GUI
         """
         Debug(self, ".open()")
         self.load_file(filename=filename, default_config=Project.get_default())
         self.validate()
 
-    def close(self) -> bool:
+        if reload:
+            self.gui.reload()
+
+    def close(self, invalidate: bool = True) -> bool:
         """
         Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.
 
+        @param invalidate: Enable to invalidate the GUI afterwards
         @return: False if canceled, True if saved/discarded
         """
+        if self.gui.calculation_thread is not None:
+            self.gui.interrupt_calculation()
+
         if not self.synced:
             Debug(self, ".close(): Project has unsaved changes", warning=True)
 
@@ -83,9 +104,14 @@ class Project(Config):
             else:
                 Debug(self, ".close(): Discarding changes to project", warning=True)
 
-        self.on_closing()
+        if invalidate:
+            Debug(self, ".close(): Invalidating GUI")
+            with ModelAccess(self.gui, recalculate=False):
+                self.gui.model.invalidate(do_all=True)
+        else:
+            Debug(self, ".close(): Not invalidating GUI")
 
-        self.close_file()
+        self.cleanup()
         Debug(self, ".close(): Project closed")
         return True
 
@@ -103,23 +129,14 @@ class Project(Config):
 
         self.open(filename)
 
-        self.gui.reload()
-
     # ------------------------------------------------------------------------------------------------------------------
 
     def on_changed(self) -> None:
         """
         Gets called when the project changed.
         """
-        self.gui.setWindowTitle(Version.String + " – " + self.filename + ("" if self.synced else " *"))
-
-    def on_closing(self) -> None:
-        """
-        Gets called just before the project file is closed.
-        Invalidates the model, also needlessly before closing the app, but that's ok.
-        """
-        with ModelAccess(self.gui, recalculate=False):
-            self.gui.model.invalidate(do_all=True)
+        name = self.filename or "Default Project"
+        self.gui.setWindowTitle(Version.String + " – " + name + ("" if self.synced else " *"))
 
     # ------------------------------------------------------------------------------------------------------------------
 

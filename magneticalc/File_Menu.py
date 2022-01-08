@@ -56,7 +56,7 @@ class File_Menu(QMenu):
         self.addAction(
             qta.icon("fa.save"),
             "&Save Project",
-            self.gui.project.save_file,
+            lambda: self.save_project_as() if self.gui.project.filename is None else self.gui.project.save_file(),
             Qt.CTRL + Qt.Key_S
         )
 
@@ -126,6 +126,7 @@ class File_Menu(QMenu):
         )
         if action.filename:
             self.gui.project.switch(action.filename)
+            self.gui.project.save_file()
 
     def open_project(self) -> None:
         """
@@ -169,10 +170,8 @@ class File_Menu(QMenu):
         """
         Debug(self.gui, ".close_project()")
 
-        if self.gui.calculation_thread is not None:
-            self.gui.interrupt_calculation()
-
-        self.gui.project.switch(self.gui.DefaultProjectFilename)
+        self.gui.project.close()
+        self.gui.project.open_default()
 
     def export_image(self) -> None:
         """

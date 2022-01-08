@@ -369,6 +369,7 @@ class Model:
 
         self.gui.sidebar_left.wire_widget.update()
         self.gui.menu.wire_menu.update()
+        self.gui.vispy_canvas.redraw()
 
     def on_sampling_volume_valid(self) -> None:
         """
@@ -379,6 +380,7 @@ class Model:
         self.gui.sidebar_left.sampling_volume_widget.update()
         self.gui.sidebar_right.display_widget.update()
         self.gui.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
+        self.gui.vispy_canvas.redraw()
 
     def on_field_valid(self) -> None:
         """
@@ -387,6 +389,7 @@ class Model:
         Debug(self, ".on_field_valid()")
 
         self.gui.sidebar_right.field_widget.update()
+        self.gui.vispy_canvas.redraw()
 
     def on_metric_valid(self) -> None:
         """
@@ -397,6 +400,7 @@ class Model:
         Debug(self, ".on_metric_valid()")
 
         self.gui.sidebar_right.metric_widget.update()
+        self.gui.vispy_canvas.redraw()
 
     def on_parameters_valid(self) -> None:
         """
@@ -405,6 +409,7 @@ class Model:
         Debug(self, ".on_parameters_valid()")
 
         self.gui.sidebar_right.parameters_widget.update()
+        self.gui.vispy_canvas.redraw()
 
     # ------------------------------------------------------------------------------------------------------------------
 

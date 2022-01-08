@@ -29,7 +29,7 @@ from magneticalc.Comparison_Types import comparison_type_to_name, comparison_nam
 from magneticalc.Config_Group import Config_Collection
 from magneticalc.Debug import Debug
 from magneticalc.Norm_Types import norm_type_to_name, norm_name_to_type
-from magneticalc.QTableWidget2 import QTableWidget2
+from magneticalc.QTableView2 import QTableView2
 from magneticalc.Theme import Theme
 
 
@@ -99,15 +99,15 @@ class Constraint_Editor(QDialog2):
         table_icon_label.addWidget(table_add_button)
         self.addLayout(table_icon_label)
 
-        self.table = QTableWidget2(
+        self.table = QTableView2(
             self.gui,
             row_prefix="constraint_",
+            col_keys=["Norm", "Comparison", "Min.", "Max.", "µ (relative)"],
             col_types=self.Constraint_Types,
             col_options=self.Constraint_Options,
-            cell_edited_callback=self.on_table_cell_edited,
-            row_deleted_callback=self.on_table_row_deleted
+            on_cell_edited=self.on_table_cell_edited,
+            on_row_deleted=self.on_table_row_deleted
         )
-        self.table.set_col_keys(["Norm", "Comparison", "Min.", "Max.", "µ (relative)"])
         self.addWidget(self.table)
 
         self.text_browser = QTextBrowser2(html=self.HTML)
@@ -157,30 +157,31 @@ class Constraint_Editor(QDialog2):
         """
         Populates the table.
         """
-        self.table.clear_rows()
-        self.table.set_row_keys([str(i + 1) for i in range(self.rows_count)])
-        self.table.set_contents(self.rows)
+        self.table.set_data(
+            data=[list(col_data.values()) for col_data in self.rows],
+            row_keys=[str(i + 1) for i in range(self.rows_count)]
+        )
         self.table.select_last_row(focus=False)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     @property
-    def rows_count(self) -> int:
-        """
-        Gets the number of rows.
-
-        @return: Number of rows
-        """
-        return self._constraint_collection.get_count()
-
-    @property
     def rows(self) -> List[Dict]:
         """
-        Gets all rows (constraint groups).
+        Gets the list of rows (constraint groups).
 
         @return: List of rows (constraint groups).
         """
         return self._constraint_collection.get_all_groups()
+
+    @property
+    def rows_count(self) -> int:
+        """
+        Gets the number of rows (constraint groups).
+
+        @return: Number of rows (constraint groups)
+        """
+        return self._constraint_collection.get_count()
 
     def get_constraints(self) -> List[Constraint]:
         """

@@ -27,7 +27,7 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
-from magneticalc.QTableWidget2 import QTableWidget2
+from magneticalc.QTableView2 import QTableView2
 from magneticalc.Debug import Debug
 from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Theme import Theme
@@ -97,14 +97,14 @@ class Wire_Widget(QGroupBox2):
         table_icon_label.addWidget(QPushButton2("", "fa.plus", self.on_table_row_added))
         table_icon_label.addWidget(QLabel2("cm", align_right=True, width=self.UnitsLabelWidth))
         self.addLayout(table_icon_label)
-        self.table = QTableWidget2(
+        self.table = QTableView2(
             self.gui,
             row_count_minimum=2,
-            cell_edited_callback=self.on_table_cell_edited,
-            selection_changed_callback=self.gui.redraw,
-            row_deleted_callback=self.on_table_row_deleted
+            col_keys=["X", "Y", "Z"],
+            on_cell_edited=self.on_table_cell_edited,
+            on_selection_changed=self.gui.redraw,
+            on_row_deleted=self.on_table_row_deleted
         )
-        self.table.set_col_keys(["X", "Y", "Z"])
         self.addWidget(self.table)
 
         table_total_layout = QHBoxLayout()
@@ -356,9 +356,10 @@ class Wire_Widget(QGroupBox2):
 
         points = [[f"{col:+0.02f}" for col in row] for row in self.gui.model.wire.points_base]
 
-        self.table.clear_rows()
-        self.table.set_row_keys([str(i + 1) for i in range(len(self.gui.model.wire.points_base))])
-        self.table.set_contents(points)
+        self.table.set_data(
+            data=points,
+            row_keys=[str(i + 1) for i in range(len(self.gui.model.wire.points_base))]
+        )
         self.table.select_last_row(focus=False)
 
         self.table_total_label.setText(str(len(self.gui.model.wire.points_base)))

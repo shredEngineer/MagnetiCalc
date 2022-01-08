@@ -100,13 +100,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_closing">on_closing</a></code></td>
-    <td>Gets called just before the project file is closed. Invalidates the model, also needlessly before closing the app, but that's ok.</td>
+    <td><code><a href="#open">open</a></code></td>
+    <td>Opens a project from file.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#open">open</a></code></td>
-    <td>Opens a project.</td>
+    <td><code><a href="#open_default">open_default</a></code></td>
+    <td>Opens the default project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -134,8 +134,8 @@
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#close_file">close_file</a></code></td>
-    <td>Closes the configuration.</td>
+    <td><code><a href="magneticalc.Config.Config.html#cleanup">cleanup</a></code></td>
+    <td>Perform clean-up.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
@@ -171,6 +171,11 @@
     <td>Method</td>
     <td><code><a href="magneticalc.Config.Config.html#get_str">get_str</a></code></td>
     <td>Reads a configuration value.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.Config.Config.html#load">load</a></code></td>
+    <td>Loads the default configuration.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
@@ -334,13 +339,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">close</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">close</span>(self, invalidate=True):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False if canceled, True if saved/discarded</td></tr></table></div>
+    <div>Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the GUI afterwards</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False if canceled, True if saved/discarded</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -364,25 +369,6 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Project.Project.on_closing">
-    
-  </a>
-  <a name="on_closing">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">on_closing</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets called just before the project file is closed. Invalidates the model, also needlessly before closing the app, but that's ok.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
   <a name="magneticalc.Project.Project.open">
     
   </a>
@@ -391,13 +377,32 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">open</span>(self, filename):
+    <span class="py-keyword">def</span> <span class="py-defname">open</span>(self, filename, reload=True):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Opens a project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr></table></div>
+    <div>Opens a project from file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Project.Project.open_default">
+    
+  </a>
+  <a name="open_default">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">open_default</span>(self, reload=True):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Opens the default project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -467,7 +472,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-07 14:10:27.
+    21.12.0 at 2022-01-08 14:25:07.
   </div>
 </footer>
 

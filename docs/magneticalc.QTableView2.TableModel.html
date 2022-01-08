@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>magneticalc.QTableView2.TableModel</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+    
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.QTableView2.html">QTableView2</a></code><wbr></wbr>.<code><a href="magneticalc.QTableView2.TableModel.html">TableModel</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
+
+      <div class="categoryHeader">
+        class documentation
+      </div>
+
+      <div class="extrasDocstring">
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">TableModel</span>(<span title="PyQt5.QtCore.QAbstractTableModel">QAbstractTableModel</span>):</code></p>
+        <p><a href="classIndex.html#magneticalc.QTableView2.TableModel">View In Hierarchy</a></p>
+      </div>
+
+      <div class="moduleDocstring">
+        <div>TableModel class.</div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id109">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes a table model.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#columnCount">columnCount</a></code></td>
+    <td>Gets the number of columns. Note: Enabling allow_delete adds an extra column for the row delete buttons.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#data">data</a></code></td>
+    <td>Gets a cell value.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#flags">flags</a></code></td>
+    <td>Gets the flags for a cell.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#headerData">headerData</a></code></td>
+    <td>Sets the header data.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#is_widget">is_widget</a></code></td>
+    <td>Checks if the cell is a widget button.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#rowCount">rowCount</a></code></td>
+    <td>Gets the number of rows.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#setData">setData</a></code></td>
+    <td>Sets a cell value.</td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_col_is_widget">_col_is_widget</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_col_keys">_col_keys</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_data">_data</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_row_keys">_row_keys</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, parent, data, row_keys, col_keys, col_is_widget=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Initializes a table model.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parent:</span><code>QTableView</code></td><td class="fieldArgDesc">QTableView</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>List[<wbr></wbr>List]</code></td><td class="fieldArgDesc">Data (2D)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row_keys:</span><code>List[<wbr></wbr>str]</code></td><td class="fieldArgDesc">List of vertical header strings</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col_keys:</span><code>List[<wbr></wbr>str]</code></td><td class="fieldArgDesc">List of horizontal header strings</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col_is_widget:</span><code>Optional[<wbr></wbr>List[<wbr></wbr>bool]]</code></td><td class="fieldArgDesc">Indicates columns contains only widgets instead of only data (may be None for data-only)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.columnCount">
+    
+  </a>
+  <a name="columnCount">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">columnCount</span>(self, parent=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the number of columns. Note: Enabling allow_delete adds an extra column for the row delete buttons.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parent:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td colspan="2">Number of columns</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.data">
+    
+  </a>
+  <a name="data">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">data</span>(self, index, role=Qt.DisplayRole):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets a cell value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Cell index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">role:</span><code>int</code></td><td class="fieldArgDesc">Data role</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>QVariant</code></td><td class="fieldArgDesc">Cell value</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.flags">
+    
+  </a>
+  <a name="flags">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">flags</span>(self, index):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the flags for a cell.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Cell index</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Cell flags</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.headerData">
+    
+  </a>
+  <a name="headerData">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">headerData</span>(self, section, orientation, role=Qt.DisplayRole):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the header data.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">section:</span><code>int</code></td><td class="fieldArgDesc">Row or column</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">orientation:</span><code>Qt.Orientation</code></td><td class="fieldArgDesc">Orientation</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">role:</span><code>int</code></td><td class="fieldArgDesc">Data role</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.is_widget">
+    
+  </a>
+  <a name="is_widget">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">is_widget</span>(self, index):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Checks if the cell is a widget button.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Cell index</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if the cell is a widget, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.rowCount">
+    
+  </a>
+  <a name="rowCount">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">rowCount</span>(self, parent=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the number of rows.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parent:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td colspan="2">Number of rows</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel.setData">
+    
+  </a>
+  <a name="setData">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">setData</span>(self, index, value, role=Qt.EditRole):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets a cell value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Cell index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>Any</code></td><td class="fieldArgDesc">Cell value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">role:</span><code>int</code></td><td class="fieldArgDesc">Data role</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel._col_is_widget">
+    
+  </a>
+  <a name="_col_is_widget">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_col_is_widget</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel._col_keys">
+    
+  </a>
+  <a name="_col_keys">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_col_keys</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel._data">
+    
+  </a>
+  <a name="_data">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_data</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.TableModel._row_keys">
+    
+  </a>
+  <a name="_row_keys">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_row_keys</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-08 14:25:07.
+  </div>
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

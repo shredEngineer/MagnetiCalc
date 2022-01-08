@@ -85,13 +85,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#closeEvent">closeEvent</a></code></td>
-    <td>Gets called when the window is closed (programmatically through close() or manually)</td>
+    <td><code><a href="#cleanup">cleanup</a></code></td>
+    <td>Perform clean-up upon quitting the application.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#goodbye">goodbye</a></code></td>
-    <td>Perform clean-up upon quitting the application.</td>
+    <td><code><a href="#closeEvent">closeEvent</a></code></td>
+    <td>Gets called when the window is closed (programmatically through close() or manually)</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -107,6 +107,11 @@
     <td>Method</td>
     <td><code><a href="#on_calculation_exited">on_calculation_exited</a></code></td>
     <td>This is called after calculation thread has exited.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#re_wrapper">re_wrapper</a></code></td>
+    <td>Simple wrapper that decides between recalculation or redraw.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -135,11 +140,6 @@
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#DefaultProjectFilename">DefaultProjectFilename</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="classvariable">
-    
-    <td>Class Variable</td>
     <td><code><a href="#invalidate_statusbar">invalidate_statusbar</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
@@ -156,6 +156,11 @@
     
     <td>Instance Variable</td>
     <td><code><a href="#calculation_thread">calculation_thread</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#exiting">exiting</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -238,6 +243,25 @@
 </div><div class="basemethod">
   
   
+  <a name="magneticalc.GUI.GUI.cleanup">
+    
+  </a>
+  <a name="cleanup">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">cleanup</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Perform clean-up upon quitting the application.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
   <a name="magneticalc.GUI.GUI.closeEvent">
     
   </a>
@@ -253,25 +277,6 @@
     
     
     <div>Gets called when the window is closed (programmatically through close() or manually)<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QCloseEvent</code></td><td class="fieldArgDesc">Close event</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.GUI.GUI.goodbye">
-    
-  </a>
-  <a name="goodbye">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">goodbye</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Perform clean-up upon quitting the application.</div>
   </div>
 </div><div class="basemethod">
   
@@ -329,6 +334,25 @@
     
     
     <div>This is called after calculation thread has exited.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">True if calculation was successful, False otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.re_wrapper">
+    
+  </a>
+  <a name="re_wrapper">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">re_wrapper</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Simple wrapper that decides between recalculation or redraw.</div>
   </div>
 </div><div class="basemethod">
   
@@ -430,26 +454,6 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.GUI.GUI.DefaultProjectFilename">
-    
-  </a>
-  <a name="DefaultProjectFilename">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">DefaultProjectFilename</span>: <code>str</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseclassvariable">
-  
-  
   <a name="magneticalc.GUI.GUI.invalidate_statusbar">
     
   </a>
@@ -519,6 +523,26 @@
   <div class="functionHeader">
     
     <span class="py-defname">calculation_thread</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.exiting">
+    
+  </a>
+  <a name="exiting">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">exiting</span>: <code>bool</code> =
     
   </div>
   <div class="functionBody">
@@ -737,7 +761,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-07 14:10:27.
+    21.12.0 at 2022-01-08 14:25:07.
   </div>
 </footer>
 

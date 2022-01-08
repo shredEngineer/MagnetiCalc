@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>magneticalc.QTableView2.QTableView2</title>
+    <meta name="generator" content="pydoctor 21.12.0"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default">
+  
+  <div class="container">
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+          <span class="navbar-brand">
+            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+          </span>
+
+          <a href="moduleIndex.html">
+            Modules
+          </a>
+
+          <a href="classIndex.html">
+            Classes
+          </a>
+
+          <a href="nameIndex.html">
+            Names
+          </a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+    
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.QTableView2.html">QTableView2</a></code><wbr></wbr>.<code><a href="magneticalc.QTableView2.QTableView2.html">QTableView2</a></code></code></h1>
+        <div id="showPrivate">
+          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        </div>
+      </div>
+
+      <div class="categoryHeader">
+        class documentation
+      </div>
+
+      <div class="extrasDocstring">
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">QTableView2</span>(<span title="PyQt5.QtWidgets.QTableView">QTableView</span>):</code></p>
+        <p><a href="classIndex.html#magneticalc.QTableView2.QTableView2">View In Hierarchy</a></p>
+      </div>
+
+      <div class="moduleDocstring">
+        <div>QTableView2 class.</div>
+      </div>
+
+      <div id="splitTables">
+        <table class="children sortable" id="id110">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__">__init__</a></code></td>
+    <td>Initializes a table.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#focusInEvent">focusInEvent</a></code></td>
+    <td>Gets called when the table gained focus. This highlights the border and selects the last-selected cell (if any).</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#focusOutEvent">focusOutEvent</a></code></td>
+    <td>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <code><a href="#on_selection_changed">on_selection_changed()</a></code>.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_selected_row">get_selected_row</a></code></td>
+    <td>Returns the currently selected row index.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_combobox_cell_edited">on_combobox_cell_edited</a></code></td>
+    <td>Gets called when a combobox cell has been edited.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_data_changed">on_data_changed</a></code></td>
+    <td>Gets called when the data in a selection changed. Note: Always assuming only a single cell is selected.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_row_deleted">on_row_deleted</a></code></td>
+    <td>Gets called when a row was deleted.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_selection_changed">on_selection_changed</a></code></td>
+    <td>Gets called when the selection changed.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#select_cell">select_cell</a></code></td>
+    <td>Selects a cell. Any parameter may be left set to None in order to load its value from the selection model.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#select_last_row">select_last_row</a></code></td>
+    <td>Selects the last row.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_data">set_data</a></code></td>
+    <td>Sets the table contents.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#set_style">set_style</a></code></td>
+    <td>Sets this widget's style.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#gui">gui</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_allow_delete">_allow_delete</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_col_keys">_col_keys</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_col_options">_col_options</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_col_types">_col_types</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_on_cell_edited">_on_cell_edited</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_on_row_deleted">_on_row_deleted</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_on_selection_changed">_on_selection_changed</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_row_count_minimum">_row_count_minimum</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_row_prefix">_row_prefix</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+        
+
+          
+      </div>
+
+      <div id="childList">
+
+        <div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui, col_keys, col_types=None, col_options=None, row_allow_delete=True, row_count_minimum=0, row_prefix=<span class="rst-variable-quote">'</span><span class="rst-variable-string"></span><span class="rst-variable-quote">'</span>, on_cell_edited=None, on_selection_changed=None, on_row_deleted=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Initializes a table.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col_keys:</span><code>List[<wbr></wbr>str]</code></td><td class="fieldArgDesc">List of horizontal header strings</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col_types:</span><code>Optional[<wbr></wbr>Dict]</code></td><td class="fieldArgDesc">Per-column cell types used for binding cells to configuration. Ordered dictionary of key-value pairs (column key : column type) or None to disable binding. Note: Currently, *only the keys* are used for binding cells to project configuration; the cell options actually determine the cell type, i.e. numerical or combobox.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col_options:</span><code>Optional[<wbr></wbr>List]</code></td><td class="fieldArgDesc">Per-column cell options. This determines the cell type, i.e. numerical or combobox. List of options for every column; items may be set to None to use numerical cells.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row_allow_delete:</span><code>bool</code></td><td class="fieldArgDesc">Enable to add an extra column for row delete buttons</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row_count_minimum:</span><code>int</code></td><td class="fieldArgDesc">Minimum number of rows (no further rows can be deleted)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row_prefix:</span><code>str</code></td><td class="fieldArgDesc">Per-row prefix used for binding cells to configuration (key = prefix + column key + "_" + row index)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">on_cell_edited:</span><code>Optional[<wbr></wbr>Callable]</code></td><td class="fieldArgDesc">Set this to make cells editable</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">on_selection_changed:</span><code>Optional[<wbr></wbr>Callable]</code></td><td class="fieldArgDesc">Used to inform the GUI that another row was selected</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">on_row_deleted:</span><code>Optional[<wbr></wbr>Callable]</code></td><td class="fieldArgDesc">Set this to make rows deletable</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.focusInEvent">
+    
+  </a>
+  <a name="focusInEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">focusInEvent</span>(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the table gained focus. This highlights the border and selects the last-selected cell (if any).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_event:</span><code>QFocusEvent</code></td><td class="fieldArgDesc">QFocusEvent</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.focusOutEvent">
+    
+  </a>
+  <a name="focusOutEvent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">focusOutEvent</span>(self, _event):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the table lost focus, or when a cell is being edited. When not editing, this clears the selection, triggering <code><a href="#on_selection_changed">on_selection_changed()</a></code>.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_event:</span><code>QFocusEvent</code></td><td class="fieldArgDesc">QFocusEvent</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.get_selected_row">
+    
+  </a>
+  <a name="get_selected_row">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_selected_row</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Returns the currently selected row index.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Optional[<wbr></wbr>int]</code></td><td class="fieldArgDesc">Index of currently selected row (None if none selected)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.on_combobox_cell_edited">
+    
+  </a>
+  <a name="on_combobox_cell_edited">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_combobox_cell_edited</span>(self, combobox, row, column):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when a combobox cell has been edited.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">combobox:</span><code>QComboBox</code></td><td class="fieldArgDesc">QCombobox</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">column:</span><code>int</code></td><td class="fieldArgDesc">Column index</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.on_data_changed">
+    
+  </a>
+  <a name="on_data_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_data_changed</span>(self, top_left_index, _bottom_right_index):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the data in a selection changed. Note: Always assuming only a single cell is selected.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">top_left_index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Model index of the top left selection bounds</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_bottom_right_index:</span><code>QtCore.QModelIndex</code></td><td class="fieldArgDesc">Model index of the bottom right selection bounds</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.on_row_deleted">
+    
+  </a>
+  <a name="on_row_deleted">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_row_deleted</span>(self, row):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when a row was deleted.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.on_selection_changed">
+    
+  </a>
+  <a name="on_selection_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_selection_changed</span>(self, _selected, _deselected):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the selection changed.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_selected:</span><code>QItemSelection</code></td><td class="fieldArgDesc">Currently selected QItemSelection</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_deselected:</span><code>QItemSelection</code></td><td class="fieldArgDesc">Currently deselected QItemSelection</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.select_cell">
+    
+  </a>
+  <a name="select_cell">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">select_cell</span>(self, row=None, col=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Selects a cell. Any parameter may be left set to None in order to load its value from the selection model.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>Optional[<wbr></wbr>int]</code></td><td class="fieldArgDesc">Row</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">col:</span><code>Optional[<wbr></wbr>int]</code></td><td class="fieldArgDesc">Column</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.select_last_row">
+    
+  </a>
+  <a name="select_last_row">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">select_last_row</span>(self, focus=True):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Selects the last row.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">focus:</span><code>bool</code></td><td class="fieldArgDesc">Enable to focus the table, disable to explicitly clear the visual selection</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.set_data">
+    
+  </a>
+  <a name="set_data">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_data</span>(self, data, row_keys):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets the table contents.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>List[<wbr></wbr>List[<wbr></wbr>str]]</code></td><td class="fieldArgDesc">Data (2D)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row_keys:</span><code>List[<wbr></wbr>str]</code></td><td class="fieldArgDesc">List of vertical header strings</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.set_style">
+    
+  </a>
+  <a name="set_style">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">set_style</span>(self, border_color, border_width):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Sets this widget's style.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">border_color:</span><code>str</code></td><td class="fieldArgDesc">Border color</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">border_width:</span><code>int</code></td><td class="fieldArgDesc">Border width</td></tr></table></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2.gui">
+    
+  </a>
+  <a name="gui">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">gui</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._allow_delete">
+    
+  </a>
+  <a name="_allow_delete">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_allow_delete</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._col_keys">
+    
+  </a>
+  <a name="_col_keys">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_col_keys</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._col_options">
+    
+  </a>
+  <a name="_col_options">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_col_options</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._col_types">
+    
+  </a>
+  <a name="_col_types">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_col_types</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._on_cell_edited">
+    
+  </a>
+  <a name="_on_cell_edited">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_on_cell_edited</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._on_row_deleted">
+    
+  </a>
+  <a name="_on_row_deleted">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_on_row_deleted</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._on_selection_changed">
+    
+  </a>
+  <a name="_on_selection_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_on_selection_changed</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._row_count_minimum">
+    
+  </a>
+  <a name="_row_count_minimum">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_row_count_minimum</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="magneticalc.QTableView2.QTableView2._row_prefix">
+    
+  </a>
+  <a name="_row_prefix">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_row_prefix</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    21.12.0 at 2022-01-08 14:25:07.
+  </div>
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -45,9 +45,6 @@ class GUI(QMainWindow):
     # Minimum window size
     MinimumWindowSize = (800, 600)
 
-    # Default project filename
-    DefaultProjectFilename = "MagnetiCalc-DefaultProject.ini"
-
     # These signals are fired from the calculation thread
     calculation_status = pyqtSignal(str)
     calculation_exited = pyqtSignal(bool)
@@ -62,6 +59,9 @@ class GUI(QMainWindow):
         QMainWindow.__init__(self, flags=Qt.Window)
         Debug(self, ": Init", init=True)
 
+        self.initializing = True
+        self.exiting = False
+
         self.user_locale = QLocale(QLocale.English)
 
         self.setWindowIcon(qta.icon("ei.magnet", color=Theme.MainColor))
@@ -69,14 +69,14 @@ class GUI(QMainWindow):
         self.showMaximized()
 
         self.project = Project(self)
-        self.project.open(self.DefaultProjectFilename)
+        self.project.open_default(reload=False)
 
         # The calculation thread is started once initially; after that, recalculation is triggered through ModelAccess
         self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
         self.calculation_start_time = time.monotonic()  # Will be overwritten by "recalculate()"
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.register(self.goodbye)
+        atexit.register(self.cleanup)
 
         # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
         self.statusbar = Statusbar(self)
@@ -105,16 +105,6 @@ class GUI(QMainWindow):
 
         # Create the menu
         self.menu = Menu(self)
-
-        # Connect the calculation thread communication signals
-        self.calculation_status.connect(  # type: ignore
-            lambda text: self.statusbar.set_text(text)
-        )
-        self.calculation_exited.connect(  # type: ignore
-            lambda success: self.on_calculation_exited(success)
-        )
-
-        self.initializing = True
 
         self.reload()
 
@@ -177,6 +167,13 @@ class GUI(QMainWindow):
             Debug(self, ".recalculate(): WARNING: Killing orphaned calculation thread", warning=True)
             self.interrupt_calculation()
 
+        # (Re-)connect all calculation thread communication signals.
+        if not self.initializing:
+            self.calculation_status.disconnect(self.statusbar.set_text)  # type: ignore
+            self.calculation_exited.disconnect(self.on_calculation_exited)  # type: ignore
+        self.calculation_status.connect(self.statusbar.set_text)  # type: ignore
+        self.calculation_exited.connect(self.on_calculation_exited)  # type: ignore
+
         if self.initializing:
             self.initializing = False
             self.vispy_canvas.initializing = True
@@ -196,6 +193,8 @@ class GUI(QMainWindow):
         if self.calculation_thread is None:
             Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
             return
+
+        self.calculation_thread.disconnect_signals()
 
         if self.calculation_thread.isRunning():
             Debug(self, ".interrupt_calculation(): WARNING: Requesting interruption", warning=True)
@@ -221,6 +220,10 @@ class GUI(QMainWindow):
 
         @param success: True if calculation was successful, False otherwise
         """
+        # Ignore when exiting
+        if self.exiting:
+            return
+
         calculation_time = time.monotonic() - self.calculation_start_time
 
         if self.calculation_thread is not None:
@@ -300,21 +303,23 @@ class GUI(QMainWindow):
         """
         Debug(self, ".closeEvent()")
 
-        closed = self.project.close()
+        closed = self.project.close(invalidate=False)
         if not closed:
             event.ignore()
             return
 
-        self.goodbye()
+        self.cleanup()
 
-    def goodbye(self):
+    def cleanup(self):
         """
         Perform clean-up upon quitting the application.
         """
         Debug(self, ".cleanup()")
 
         # Unregister exit handler (used by Assert_Dialog to exit gracefully)
-        atexit.unregister(self.goodbye)
+        atexit.unregister(self.cleanup)
+
+        self.exiting = True
 
         if self.calculation_thread != QThread.currentThread():
             if self.calculation_thread is not None:

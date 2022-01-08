@@ -28,7 +28,7 @@ from magneticalc.Format import Format
 class Config(metaclass=abc.ABCMeta):
     """ Config class. """
 
-    """ Enables debug output for config access. """
+    """ Enables debug output for configuration access. """
     DebugAccess = False
 
     def __init__(self) -> None:
@@ -37,30 +37,49 @@ class Config(metaclass=abc.ABCMeta):
         """
         Debug(self, ": Init", init=True)
         self._parser: Optional[configparser.ConfigParser] = None
-        self.filename: str = ""
+        self.filename: Optional[str] = None
         self.synced: bool = False
 
     @abc.abstractmethod
     def on_changed(self) -> None:
         """
-        Gets called when the project changed.
+        Gets called when the configuration was loaded, saved or changed.
         """
         pass
+
+    def load(self, default_config: Dict, signal_changed: bool = True) -> None:
+        """
+        Loads the default configuration.
+
+        @param default_config: Default configuration
+        """
+        Debug(self, f".load(): Loading defaults")
+        self._parser = configparser.ConfigParser()
+        self._parser["DEFAULT"] = default_config
+
+        Debug(self, ".load(): Creating empty User section")
+        self._parser["User"] = {}
+
+        self.synced = True
+
+        if signal_changed:
+            self.on_changed()
 
     def load_file(self, filename: str, default_config: Dict) -> None:
         """
         Loads the configuration from file.
 
         @param filename: Filename
-        @param default_config: Default config
+        @param default_config: Default configuration
         """
         self.filename = Format.absolute_filename(filename)
         Debug(self, f".load_file(): {Format.filename_uri(self.filename)}")
 
-        self._parser = configparser.ConfigParser()
+        self.load(default_config, signal_changed=False)
+
+        assert self._parser is not None, "Not initialized"
+
         self._parser.read(self.filename)
-        self._parser["DEFAULT"] = default_config
-        self.synced = True
 
         if "User" not in self._parser:
             Debug(self, ".load_file(): Creating empty User section")
@@ -86,6 +105,8 @@ class Config(metaclass=abc.ABCMeta):
         if filename is not None:
             self.filename = Format.absolute_filename(filename)
 
+        assert self.filename is not None, "No filename"
+
         Debug(self, f".save_file(): {Format.filename_uri(self.filename)}")
 
         with open(self.filename, "w") as file:
@@ -94,15 +115,15 @@ class Config(metaclass=abc.ABCMeta):
         self.synced = True
         self.on_changed()
 
-    def close_file(self) -> None:
+    def cleanup(self) -> None:
         """
-        Closes the configuration.
+        Perform clean-up.
         """
         assert self._parser is not None, "Not initialized"
 
-        Debug(self, ".close_file()")
+        Debug(self, ".cleanup()")
         self._parser = None
-        self.filename = ""
+        self.filename = None
         self.synced = False
 
     # ------------------------------------------------------------------------------------------------------------------

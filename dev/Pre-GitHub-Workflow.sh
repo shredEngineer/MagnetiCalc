@@ -18,6 +18,7 @@ pyright magneticalc/
 
 IGNORE_ERRORS=$(cat << EOF
   E203
+  E221
   E226
   E241
   E722
@@ -48,6 +49,9 @@ IGNORE_NAMES=$(cat << EOF
   focusOutEvent
   bgcolor
   keyPressEvent
+  setData
+  flags
+  headerData
 EOF
 )
 vulture \

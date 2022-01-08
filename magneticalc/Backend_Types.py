@@ -17,8 +17,8 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import os
+from numba import cuda
 from magneticalc.Assert_Dialog import Assert_Dialog
-from magneticalc.Backend_CUDA import Backend_CUDA
 
 
 def get_jit_enabled() -> bool:
@@ -28,6 +28,15 @@ def get_jit_enabled() -> bool:
     @return: True if JIT enabled, False otherwise
     """
     return (os.environ["NUMBA_DISABLE_JIT"] == "0") if "NUMBA_DISABLE_JIT" in os.environ else True
+
+
+def get_cuda_available() -> bool:
+    """
+    Checks if CUDA is available
+
+    @return: True if CUDA available, False otherwise
+    """
+    return cuda.is_available()
 
 
 """ Backend type: JIT. """
@@ -40,7 +49,7 @@ BACKEND_TYPE_CUDA = 1
 """ Map of backend types to their availability. """
 Backend_Types_Available = {
     BACKEND_TYPE_JIT :  get_jit_enabled(),
-    BACKEND_TYPE_CUDA:  get_jit_enabled() and Backend_CUDA.is_available()
+    BACKEND_TYPE_CUDA:  get_jit_enabled() and get_cuda_available()
 }
 
 

@@ -55,7 +55,7 @@ class Debug:
         "OverridePadding_Dialog",
         "Parameters_Widget",
         "Perspective_Widget",
-        "QTableWidget2",
+        "QTableView2",
         "SamplingVolume_Widget",
         "Usage_Dialog",
         "VisPyCanvas",

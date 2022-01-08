@@ -67,15 +67,6 @@ class Backend_CUDA:
         self._progress_callback = progress_callback
 
     @staticmethod
-    def is_available() -> bool:
-        """
-        Indicates the availability of this backend.
-
-        @return: True if this backend is available, False otherwise
-        """
-        return cuda.is_available()
-
-    @staticmethod
     @cuda.jit
     def worker(
             field_type: int,

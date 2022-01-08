@@ -34,11 +34,11 @@ class CalculationThread(QThread):
     _progress_update = pyqtSignal(int)
 
     # Valid state signals
-    _wire_valid = pyqtSignal()
-    _sampling_volume_valid = pyqtSignal()
-    _field_valid = pyqtSignal()
-    _metric_valid = pyqtSignal()
-    _parameters_valid = pyqtSignal()
+    _wire_valid             = pyqtSignal()
+    _sampling_volume_valid  = pyqtSignal()
+    _field_valid            = pyqtSignal()
+    _metric_valid           = pyqtSignal()
+    _parameters_valid       = pyqtSignal()
 
     def __init__(
             self,
@@ -58,12 +58,22 @@ class CalculationThread(QThread):
             lambda x: self.gui.statusbar.set_progress(x)
         )
 
-        # Connect valid state signals
-        self._wire_valid.connect(self.on_wire_valid)  # type: ignore
-        self._sampling_volume_valid.connect(self.on_sampling_volume_valid)  # type: ignore
-        self._field_valid.connect(self.on_field_valid)  # type: ignore
-        self._metric_valid.connect(self.on_metric_valid)  # type: ignore
-        self._parameters_valid.connect(self.on_parameters_valid)  # type: ignore
+        self._wire_valid.connect(self.gui.model.on_wire_valid)  # type: ignore
+        self._sampling_volume_valid.connect(self.gui.model.on_sampling_volume_valid)  # type: ignore
+        self._field_valid.connect(self.gui.model.on_field_valid)  # type: ignore
+        self._metric_valid.connect(self.gui.model.on_metric_valid)  # type: ignore
+        self._parameters_valid.connect(self.gui.model.on_parameters_valid)  # type: ignore
+
+    def disconnect_signals(self) -> None:
+        """
+        Disconnects all valid state signals
+        """
+        Debug(self, ".disconnect_signals()")
+        self._wire_valid.disconnect(self.gui.model.on_wire_valid)  # type: ignore
+        self._sampling_volume_valid.disconnect(self.gui.model.on_sampling_volume_valid)  # type: ignore
+        self._field_valid.disconnect(self.gui.model.on_field_valid)  # type: ignore
+        self._metric_valid.disconnect(self.gui.model.on_metric_valid)  # type: ignore
+        self._parameters_valid.disconnect(self.gui.model.on_parameters_valid)  # type: ignore
 
     def run(self) -> None:
         """
@@ -164,45 +174,3 @@ class CalculationThread(QThread):
         # Firing this signal results in slightly delayed execution, even after joining this thread;
         # the execution of "on_calculation_exited()" will later be skipped when it sees another thread running.
         self.gui.calculation_exited.emit(success)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def on_wire_valid(self) -> None:
-        """
-        Gets called when the wire was successfully calculated.
-        """
-        Debug(self, ".on_wire_valid()")
-        self.gui.model.on_wire_valid()
-        self.gui.vispy_canvas.redraw()
-
-    def on_sampling_volume_valid(self) -> None:
-        """
-        Gets called when the sampling volume was successfully calculated.
-        """
-        Debug(self, ".on_sampling_volume_valid()")
-        self.gui.model.on_sampling_volume_valid()
-        self.gui.vispy_canvas.redraw()
-
-    def on_field_valid(self) -> None:
-        """
-        Gets called when the field was successfully calculated.
-        """
-        Debug(self, ".on_field_valid()")
-        self.gui.model.on_field_valid()
-        self.gui.vispy_canvas.redraw()
-
-    def on_metric_valid(self) -> None:
-        """
-        Gets called when the metric was successfully calculated.
-        """
-        Debug(self, ".on_metric_valid()")
-        self.gui.model.on_metric_valid()
-        self.gui.vispy_canvas.redraw()
-
-    def on_parameters_valid(self) -> None:
-        """
-        Gets called when the parameters were successfully calculated.
-        """
-        Debug(self, ".on_parameters_valid()")
-        self.gui.model.on_parameters_valid()
-        self.gui.vispy_canvas.redraw()

@@ -203,6 +203,9 @@ class Statusbar:
         """
         "Invalidates" the statusbar.
         """
+        # Ignore when exiting
+        if self.gui.exiting:
+            return
 
         # Don't invalidate more than once
         if not self._valid:
@@ -254,6 +257,10 @@ class Statusbar:
 
         @param text: Text
         """
+        # Ignore when exiting
+        if self.gui.exiting:
+            return
+
         Debug(self, f": {text}")
 
         self._label.setText(text)

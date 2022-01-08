@@ -396,10 +396,11 @@ class SamplingVolume_Widget(QGroupBox2):
             padding_exceeded = [bounds[0][i] > self.padding_spinbox[i].value() for i in range(3)]
             padding = [bounds[0][i] if padding_exceeded[i] else padding[i] for i in range(3)]
             if any(padding_exceeded):
+                Debug(self, ".readjust(): Readjusted bounding box")
                 self.gui.project.set_point("sampling_volume_padding", padding)
-
-            self.gui.model.sampling_volume.set_padding_nearest(padding)
 
             self.blockSignals(True)
             [self.padding_spinbox[i].setMinimum(bounds[0][i]) for i in range(3)]
             self.blockSignals(False)
+
+            self.gui.model.sampling_volume.set_padding_nearest(padding)

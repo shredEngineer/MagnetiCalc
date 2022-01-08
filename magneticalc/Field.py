@@ -82,8 +82,8 @@ class Field(Validatable):
             }.get(self.type, ""), 1e4
         else:
             return {
-                FIELD_TYPE_A: "T·m",     # Tesla · meter
-                FIELD_TYPE_B: "T"        # Tesla
+                FIELD_TYPE_A: "T·m",    # Tesla · meter
+                FIELD_TYPE_B: "T"       # Tesla
             }.get(self.type, ""), 1e0
 
     # ------------------------------------------------------------------------------------------------------------------

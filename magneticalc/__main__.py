@@ -22,7 +22,7 @@ import os
 import sys
 from sty import ef
 from PyQt5.QtWidgets import QApplication
-from magneticalc.Backend_Types import get_jit_enabled
+from magneticalc.Backend_Types import get_jit_enabled, get_cuda_available
 from magneticalc.GUI import GUI
 from magneticalc.Version import Version
 
@@ -38,7 +38,8 @@ def main() -> None:
     print(Version.Copyright)
     print(Version.License)
     print()
-    print("JIT " + ("Enabled" if get_jit_enabled() else "Disabled"))
+    print("Performance Options: JIT " + ("Enabled" if get_jit_enabled() else "Disabled") + ", ", end="")
+    print("CUDA " + (("Available" if get_cuda_available() else "Not Available") if get_jit_enabled() else "Disabled"))
     print()
 
     app = QApplication(sys.argv)

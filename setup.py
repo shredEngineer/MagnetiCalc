@@ -16,15 +16,14 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 version = {}
 with open("magneticalc/Version.py") as file:
     exec(file.read(), version)
 
 setup(
-    packages=["magneticalc"],
-    package_dir={"magneticalc": "magneticalc"},
+    packages=find_packages(),
     name="MagnetiCalc",
     version=version["__VERSION__"],
     description="""MagnetiCalc calculates the magnetic flux density, vector potential, energy, self-inductance

@@ -47,10 +47,12 @@ class Wire_Menu(QMenu):
         for preset in Wire_Presets.List:
             action = QAction(qta.icon("mdi.vector-square"), preset["id"], self)
             action.triggered.connect(  # type: ignore
-                partial(
-                    self.gui.sidebar_left.wire_widget.set_wire,
-                    _points_=preset["points"], _stretch_=DefaultStretch, _rotational_symmetry_=DefaultRotationalSymmetry
-                )
+                lambda:
+                    partial(
+                        self.gui.sidebar_left.wire_widget.group.set({
+                            "points_base": preset["points"]
+                        }.update(DefaultStretch.update(DefaultRotationalSymmetry)))
+                    )()
             )
             load_preset_menu.addAction(action)
         self.addMenu(load_preset_menu)
@@ -93,10 +95,9 @@ class Wire_Menu(QMenu):
             options=QFileDialog.DontUseNativeDialog
         )
         if filename != "":
-            points = API.import_wire(filename)
-            self.gui.sidebar_left.wire_widget.set_wire(
-                _points_=points, _stretch_=DefaultStretch, _rotational_symmetry_=DefaultRotationalSymmetry
-            )
+            self.gui.sidebar_left.wire_widget.group.set({
+                "points_base": API.import_wire(filename)
+            }.update(DefaultStretch.update(DefaultRotationalSymmetry)))
 
     def wire_export(self) -> None:
         """

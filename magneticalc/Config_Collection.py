@@ -17,8 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Optional, List, Dict
+from typing import Callable, Dict, List, Optional, Union
 from magneticalc.Assert_Dialog import Assert_Dialog
+from magneticalc.Config_Group import Config_Group
 
 
 class Config_Collection:
@@ -56,9 +57,19 @@ class Config_Collection:
         """
         return self.gui.project.get_int(self.prefix + "count")
 
-    def get_group(self, group_index: int) -> Dict:
+    def get_group(self, group_index: int, on_changed: Callable) -> Config_Group:
         """
         Gets a group from the collection.
+
+        @param group_index: Group index
+        @param on_changed: Gets called when any data in the group changed
+        @return: Group (dictionary that's mapped to Config)
+        """
+        return Config_Group(self, group_index, on_changed)
+
+    def read_group_data(self, group_index: int) -> Dict:
+        """
+        Reads group data from Config.
 
         @param group_index: Group index
         @return: Group (dictionary)
@@ -70,30 +81,21 @@ class Config_Collection:
             values=None
         )
 
-    def get_groups(self) -> List[Dict]:
+    def write_group_data(self, group_index: int, data: Dict) -> None:
         """
-        Gets every group in the collection.
+        Writes group data to Config.
 
-        @return: List of groups (dictionaries)
+        @param group_index: Group index
+        @param data: Data (dictionary)
         """
-        return [self.get_group(group_index) for group_index in range(self.get_groups_count())]
-
-    def add_group(self, values: Optional[Dict]) -> None:
-        """
-        Appends a group to the collection.
-
-        @param values: Key:Value (Dictionary)
-        """
-        group_index = self.get_groups_count()
         self.gui.project.set_get_dict(
             prefix=self.prefix,
             suffix=f"_{group_index}",
             types=self.types,
-            values=values,
+            values=data
         )
-        self.gui.project.set_int(self.prefix + "count", group_index + 1)
 
-    def del_group(self, group_index: int) -> None:
+    def delete_group_data(self, group_index: int) -> None:
         """
         Deletes a group from the collection.
 
@@ -118,6 +120,29 @@ class Config_Collection:
         # Recreate the groups of the collection (regenerate suffixes)
         for group in groups:
             self.add_group(group)
+
+    def get_groups(self) -> List[Union[Dict, Config_Group]]:
+        """
+        Gets every group in the collection.
+
+        @return: List of groups (dictionaries)
+        """
+        return [self.get_group(self, group_index, on_changed=None) for group_index in range(self.get_groups_count())]
+
+    def add_group(self, values: Optional[Dict]) -> None:
+        """
+        Appends a group to the collection.
+
+        @param values: Key:Value (Dictionary)
+        """
+        group_index = self.get_groups_count()
+        self.gui.project.set_get_dict(
+            prefix=self.prefix,
+            suffix=f"_{group_index}",
+            types=self.types,
+            values=values,
+        )
+        self.gui.project.set_int(self.prefix + "count", group_index + 1)
 
     def set(self, group_index: int, key: str, value) -> None:
         """

@@ -310,7 +310,7 @@ class SamplingVolume_Widget(QGroupBox2):
             recalculate: bool = True
     ) -> None:
         """
-        Sets the sampling volume. This will overwrite the currently set sampling volume in the model.
+        Configures the currently set sampling volume in the model.
         Any underscored parameter may be left set to None in order to load its default value.
 
         @param _resolution_exponent_: Sampling volume resolution exponent

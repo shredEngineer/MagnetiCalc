@@ -235,6 +235,6 @@ class Constraint_Editor(QDialog2):
 
         @param row: Row index
         """
-        self._constraint_collection.del_group(row)
+        self._constraint_collection.delete_group_data(row)
         self.update_table()
         self.changed = True

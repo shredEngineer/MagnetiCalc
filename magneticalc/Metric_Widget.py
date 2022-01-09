@@ -290,7 +290,7 @@ class Metric_Widget(QGroupBox2):
             update_labels: bool = True
     ) -> None:
         """
-        Sets the metric. This will overwrite the currently set metric in the model.
+        Configures the currently set metric in the model.
         Any underscored parameter may be left set to None in order to load its default value.
 
         @param _color_preset_: Color metric preset (parameters, see Metric module)

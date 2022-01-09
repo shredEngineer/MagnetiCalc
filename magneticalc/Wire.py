@@ -52,9 +52,12 @@ class Wire(Validatable):
 
     def set(
             self,
-            points: np.ndarray,
+            points_base: np.ndarray,
             stretch: np.ndarray,
-            rotational_symmetry: Dict,
+            rotational_symmetry_axis: int,
+            rotational_symmetry_count: int,
+            rotational_symmetry_offset: float,
+            rotational_symmetry_radius: float,
             close_loop: bool,
             slicer_limit: float,
             dc: float
@@ -62,9 +65,12 @@ class Wire(Validatable):
         """
         Sets the parameters.
 
-        @param points: Ordered list of 3D coordinates (see presets)
+        @param points_base: Ordered list of 3D coordinates (see presets)
         @param stretch: XYZ stretch transform factors (3D point)
-        @param rotational_symmetry: Dictionary for rotational symmetry transform
+        @param rotational_symmetry_axis: Rotation axis
+        @param rotational_symmetry_count: Duplication count
+        @param rotational_symmetry_offset: Rotation offset (degrees)
+        @param rotational_symmetry_radius: Radius
         @param close_loop: Enable to transform the wire into a closed loop (append first point)
         @param slicer_limit: Slicer limit
         @param dc: Wire current (A)
@@ -75,11 +81,18 @@ class Wire(Validatable):
         self._points_sliced = np.array([])
         self._length = 0
 
-        self.points_base = np.array(points)
+        self.points_base = np.array(points_base)
 
-        axes = np.array(points).T
+        axes = self.points_base.T
         axes = self._transform_stretch(axes, stretch)
-        axes = self._transform_rotational_symmetry(axes, rotational_symmetry, close_loop=close_loop)
+        axes = self._transform_rotational_symmetry(
+            axes=axes,
+            axis=rotational_symmetry_axis,
+            count=rotational_symmetry_count,
+            offset=rotational_symmetry_offset,
+            radius=rotational_symmetry_radius,
+            close_loop=close_loop
+        )
         self.points_transformed = axes.T
 
         self.bounds = [min(axes[0]), min(axes[1]), min(axes[2])], [max(axes[0]), max(axes[1]), max(axes[2])]
@@ -101,26 +114,35 @@ class Wire(Validatable):
         return axes
 
     @staticmethod
-    def _transform_rotational_symmetry(axes: np.ndarray, parameters: Dict, close_loop: bool) -> np.ndarray:
+    def _transform_rotational_symmetry(
+            axes: np.ndarray,
+            axis: int,
+            count: int,
+            offset: float,
+            radius: float,
+            close_loop: bool
+    ) -> np.ndarray:
         """
         This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.
 
         @param axes: Transposed array of Wire points
-        @param parameters: Dictionary containing the transformation parameters
-                           (number of replications, radius, axis and offset angle)
+        @param axis: Rotation axis
+        @param count: Duplication count
+        @param offset: Rotation offset (degrees)
+        @param radius: Radius
         @param close_loop: Enable to transform the wire into a closed loop (append first point)
         @return: Transposed array of Wire points
         """
         x, y, z = [], [], []
 
-        axis_other_1 = (parameters["axis"] + 1) % 3
-        axis_other_2 = (parameters["axis"] + 2) % 3
+        axis_other_1 = (axis + 1) % 3
+        axis_other_2 = (axis + 2) % 3
 
-        for a in np.linspace(0, 2 * np.pi, parameters["count"], endpoint=False):
-            b = a + parameters["offset"] * np.pi / 180
-            x = np.append(x, axes[axis_other_1] * np.sin(b) - (axes[axis_other_2] + parameters["radius"]) * np.cos(b))
-            y = np.append(y, axes[axis_other_1] * np.cos(b) + (axes[axis_other_2] + parameters["radius"]) * np.sin(b))
-            z = np.append(z, axes[parameters["axis"]])
+        for a in np.linspace(0, 2 * np.pi, count, endpoint=False):
+            b = a + offset * np.pi / 180
+            x = np.append(x, axes[axis_other_1] * np.sin(b) - (axes[axis_other_2] + radius) * np.cos(b))
+            y = np.append(y, axes[axis_other_1] * np.cos(b) + (axes[axis_other_2] + radius) * np.sin(b))
+            z = np.append(z, axes[axis])
 
         axes = [x, y, z]
 

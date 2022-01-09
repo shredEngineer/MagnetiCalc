@@ -486,6 +486,10 @@ class QTableView2(QTableView):
 
         @return: Index of currently selected row (None if none selected)
         """
+        if self.model() is None:
+            Debug(self, ": ERROR: Attempting to access wire table before it is valid", error=True)
+            return
+
         if self.selectionModel().hasSelection():
             return self.selectionModel().currentIndex().row()
         else:

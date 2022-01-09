@@ -402,8 +402,7 @@ class Config(metaclass=abc.ABCMeta):
         If "values" is None, reads and returns all key-values in "types".
         Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".
 
-        If "values" is not None, writes and returns all key-values in "types".
-        Note: In this case, "values" must have the same keys as "types".
+        If "values" is not None, all key-values in "values" are written and returned.
 
         @param prefix: Prefix
         @param suffix: Suffix
@@ -416,8 +415,8 @@ class Config(metaclass=abc.ABCMeta):
                 result[_key] = self.get_generic(prefix + _key + suffix, _type)
             return result
         else:
-            for _key, _type in types.items():
-                self.set_generic(prefix + _key + suffix, _type, values[_key])
+            for _key, _value in values.items():
+                self.set_generic(prefix + _key + suffix, types[_key], _value)
             return values
 
     def get_generic(

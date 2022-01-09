@@ -27,7 +27,6 @@ from magneticalc.Config import Config
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import FIELD_TYPE_B, field_type_safe
 from magneticalc.Format import Format
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Perspective_Presets import Perspective_Presets
 from magneticalc.Version import Version
 from magneticalc.Wire_Presets import Wire_Presets
@@ -92,7 +91,7 @@ class Project(Config):
             self.gui.interrupt_calculation()
 
         if not self.synced:
-            Debug(self, ".close(): Project has unsaved changes", warning=True)
+            Debug(self, ".close(): WARNING: Project has unsaved changes", warning=True)
 
             messagebox = QMessageBox2(
                 title="Project Changed",
@@ -106,14 +105,13 @@ class Project(Config):
                 Debug(self, ".close(): Saving changes to project", success=True)
                 self.save_file()
             else:
-                Debug(self, ".close(): Discarding changes to project", warning=True)
+                Debug(self, ".close(): WARNING: Discarding changes to project", warning=True)
 
         if invalidate:
             Debug(self, ".close(): Invalidating GUI")
-            with ModelAccess(self.gui, recalculate=False):
-                self.gui.model.invalidate(do_all=True)
+            self.gui.model.invalidate(do_all=True)
         else:
-            Debug(self, ".close(): Not invalidating GUI")
+            Debug(self, ".close(): WARNING: Not invalidating GUI", warning=True)
 
         self.cleanup()
         Debug(self, ".close(): Project closed")
@@ -241,7 +239,9 @@ class Project(Config):
         """
         Debug(self, ": Upgrading from (1.x.x) to (2.x.x) format", warning=True)
 
-        if "User" not in self._parser:
+        assert self._parser is not None, "Not initialized"
+
+        if not self._parser.has_section("User"):
             Debug(self, ": ERROR: Missing User section", error=True)
             return False
 

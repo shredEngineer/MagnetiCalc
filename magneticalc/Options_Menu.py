@@ -49,11 +49,11 @@ class Options_Menu(QMenu):
                 partial(self.on_backend_changed, backend_type)
             )
 
-    def update(self):
+    def refresh(self):
         """
         Updates the menu.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
         self.gui.blockSignals(True)
 
         backend_type = self.gui.project.get_int("backend_type")

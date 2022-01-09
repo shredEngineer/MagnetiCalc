@@ -17,8 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Callable
+from typing import Callable, Optional
 from collections.abc import MutableMapping
+from magneticalc.Debug import Debug
 
 
 class Config_Group(MutableMapping):
@@ -28,7 +29,7 @@ class Config_Group(MutableMapping):
             self,
             config_collection: Config_Collection,  # type: ignore
             group_index: int,
-            on_changed: Callable
+            on_changed: Optional[Callable] = None
     ) -> None:
         """
         Initializes a config group (dictionary).
@@ -41,10 +42,19 @@ class Config_Group(MutableMapping):
         self.collection = config_collection
         self.group_index = group_index
         self.on_changed = on_changed
+        if on_changed is None:
+            Debug(self, ": WARNING: No data changed callback registered", warning=True)
+        self._signalsBlocked = False
+
+    def blockSignals(self, signals_blocked: bool) -> None:
+        """
+        @param signals_blocked: Enable to inhibit calling on_changed
+        """
+        self._signalsBlocked = signals_blocked
 
     def set(self, data):
         self.collection.write_group_data(self.group_index, data)
-        if self.on_changed is not None:
+        if self.on_changed is not None and not self._signalsBlocked:
             self.on_changed()
 
     def __getitem__(self, key):
@@ -52,7 +62,7 @@ class Config_Group(MutableMapping):
 
     def __setitem__(self, key, value):
         self.set({self._keytransform(key): value})
-        if self.on_changed is not None:
+        if self.on_changed is not None and not self._signalsBlocked:
             self.on_changed()
 
     def __delitem__(self, key):

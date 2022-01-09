@@ -46,11 +46,16 @@ class GUI(QMainWindow):
     MinimumWindowSize = (800, 600)
 
     # These signals are fired from the calculation thread
-    calculation_status = pyqtSignal(str)
-    calculation_exited = pyqtSignal(bool)
+    calculation_status_signal               = pyqtSignal(str)
+    calculation_exited_signal               = pyqtSignal(bool)
+    calculation_progress_update_signal      = pyqtSignal(int)
 
-    # Used by ModelAccess to invalidate the statusbar
-    invalidate_statusbar = pyqtSignal()
+    # Model valid state signals
+    wire_valid_changed_signal               = pyqtSignal(bool)
+    sampling_volume_valid_changed_signal    = pyqtSignal(bool)
+    field_valid_changed_signal              = pyqtSignal(bool)
+    metric_valid_changed_signal             = pyqtSignal(bool)
+    parameters_valid_changed_signal         = pyqtSignal(bool)
 
     def __init__(self) -> None:
         """
@@ -75,15 +80,14 @@ class GUI(QMainWindow):
             # Abort in the unlikely case that the default project cannot be opened
             Assert_Dialog(False, "Unable to open default project", allow_resume=False)
 
-        self.calculation_thread = None  # Will be initialized by "recalculate()" but is needed here for ModelAccess
+        self.calculation_thread = None  # Will be initialized by "recalculate()"
         self.calculation_start_time = time.monotonic()  # Will be overwritten by "recalculate()"
 
         # Register exit handler (used by Assert_Dialog to exit gracefully)
         atexit.register(self.close)
 
-        # Create the statusbar first, as it connects to the "invalidate_statusbar" signal emitted by ModelAccess
+        # Create the statusbar first
         self.statusbar = Statusbar(self)
-        self.invalidate_statusbar.connect(self.statusbar.invalidate)  # type: ignore
 
         # Create the model next, as the following objects will access it (each widget acts as view *and* controller)
         self.model = Model(self)
@@ -109,7 +113,102 @@ class GUI(QMainWindow):
         # Create the menu
         self.menu = Menu(self)
 
+        # Signals from CalculationThread to GUI
+        self.calculation_status_signal.connect(self.statusbar.set_text)  # type: ignore
+        self.calculation_exited_signal.connect(self.on_calculation_exited)  # type: ignore
+        self.calculation_progress_update_signal.connect(self.statusbar.set_progress)  # type: ignore
+
+        # Signals from Model to Gui
+        self.wire_valid_changed_signal.connect(self.on_wire_valid_changed)  # type: ignore
+        self.sampling_volume_valid_changed_signal.connect(self.on_sampling_volume_valid_changed)  # type: ignore
+        self.field_valid_changed_signal.connect(self.on_field_valid_changed)  # type: ignore
+        self.metric_valid_changed_signal.connect(self.on_metric_valid_changed)  # type: ignore
+        self.parameters_valid_changed_signal.connect(self.on_parameters_valid_changed)  # type: ignore
+
         self.reload()
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def on_wire_valid_changed(self, valid: bool) -> None:
+        """
+        Gets called when the wire was successfully calculated.
+
+        @param valid: Valid flag
+        """
+        self.vispy_canvas.redraw()
+        if valid:
+            Debug(self, ".on_wire_valid()", success=True)
+            self.sidebar_left.wire_widget.refresh()
+            self.menu.wire_menu.refresh()
+        else:
+            Debug(self, ".on_wire_invalid()", warning=True)
+            self.sidebar_left.wire_widget.refresh()
+            self.menu.wire_menu.refresh()
+            self.statusbar.invalidate()
+
+    def on_sampling_volume_valid_changed(self, valid: bool) -> None:
+        """
+        Gets called when the sampling volume was successfully calculated.
+
+        @param valid: Valid flag
+        """
+        self.vispy_canvas.redraw()
+        if valid:
+            Debug(self, ".on_sampling_volume_valid()")
+            self.sidebar_left.sampling_volume_widget.refresh()
+            self.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
+        else:
+            Debug(self, ".on_sampling_volume_invalid()")
+            self.sidebar_left.sampling_volume_widget.refresh()
+            self.statusbar.invalidate()
+
+    def on_field_valid_changed(self, valid: bool) -> None:
+        """
+        Gets called when the field was successfully calculated.
+
+        @param valid: Valid flag
+        """
+        self.vispy_canvas.redraw()
+        if valid:
+            Debug(self, ".on_field_valid()")
+            self.sidebar_right.display_widget.setEnabled(True)
+            self.sidebar_right.field_widget.refresh()
+        else:
+            Debug(self, ".on_field_invalid()")
+            self.sidebar_right.display_widget.setEnabled(False)
+            self.sidebar_right.field_widget.refresh()
+            self.statusbar.invalidate()
+
+    def on_metric_valid_changed(self, valid: bool) -> None:
+        """
+        Gets called when the metric was successfully calculated.
+
+        @param valid: Valid flag
+        """
+        self.vispy_canvas.redraw()
+        if valid:
+            Debug(self, ".on_metric_valid()")
+            self.sidebar_right.metric_widget.refresh()
+        else:
+            Debug(self, ".on_metric_invalid()")
+            self.sidebar_right.metric_widget.refresh()
+            self.vispy_canvas.delete_field_labels()
+            self.statusbar.invalidate()
+
+    def on_parameters_valid_changed(self, valid: bool) -> None:
+        """
+        Gets called when the parameters were successfully calculated.
+
+        @param valid: Valid flag
+        """
+        self.vispy_canvas.redraw()
+        if valid:
+            Debug(self, ".on_parameters_valid()")
+            self.sidebar_right.parameters_widget.refresh()
+        else:
+            Debug(self, ".on_parameters_invalid()")
+            self.sidebar_right.parameters_widget.refresh()
+            self.statusbar.invalidate()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -131,16 +230,31 @@ class GUI(QMainWindow):
         self.vispy_canvas.load_perspective()
 
         Debug(self, ".reload(): Waiting 1 second for GUI update")
-        QTimer.singleShot(1000, self.re_wrapper)
-
-    def re_wrapper(self):
-        """
-        Simple wrapper that decides between recalculation or redraw.
-        """
         if self.project.get_bool("auto_calculation"):
-            self.recalculate()
-        else:
-            self.redraw()
+            QTimer.singleShot(1000, self.recalculate)
+
+    def recalculate(self) -> None:
+        """
+        Recalculates the model.
+        """
+        print()
+        print()
+        Debug(self, ".recalculate()")
+
+        if self.calculation_thread is not None:
+            Debug(self, ".recalculate(): WARNING: Killing orphaned calculation thread", warning=True)
+            self.interrupt_calculation()
+
+        if self.initializing:
+            self.initializing = False
+            self.vispy_canvas.initializing = True
+
+        self.statusbar.arm()
+
+        # Create a new calculation thread and kick it off
+        self.calculation_thread = CalculationThread(self)
+        self.calculation_start_time = time.monotonic()
+        self.calculation_thread.start()
 
     def redraw(self) -> None:
         """
@@ -156,38 +270,7 @@ class GUI(QMainWindow):
         else:
             Debug(self, ".redraw()")
 
-        self.sidebar_right.display_widget.setEnabled(self.model.field.valid)
-
         self.vispy_canvas.redraw()
-
-    def recalculate(self) -> None:
-        """
-        Recalculates the model.
-        """
-        Debug(self, ".recalculate()")
-
-        if self.calculation_thread is not None:
-            Debug(self, ".recalculate(): WARNING: Killing orphaned calculation thread", warning=True)
-            self.interrupt_calculation()
-
-        # (Re-)connect all calculation thread communication signals.
-        if not self.initializing:
-            self.calculation_status.disconnect(self.statusbar.set_text)  # type: ignore
-            self.calculation_exited.disconnect(self.on_calculation_exited)  # type: ignore
-        self.calculation_status.connect(self.statusbar.set_text)  # type: ignore
-        self.calculation_exited.connect(self.on_calculation_exited)  # type: ignore
-
-        if self.initializing:
-            self.initializing = False
-            self.vispy_canvas.initializing = True
-
-        self.redraw()
-        self.statusbar.arm()
-
-        # Create a new calculation thread and kick it off
-        self.calculation_thread = CalculationThread(self)
-        self.calculation_start_time = time.monotonic()
-        self.calculation_thread.start()
 
     def interrupt_calculation(self) -> None:
         """
@@ -196,8 +279,6 @@ class GUI(QMainWindow):
         if self.calculation_thread is None:
             Debug(self, ".interrupt_calculation(): WARNING: No calculation thread to interrupt", warning=True)
             return
-
-        self.calculation_thread.disconnect_signals()
 
         if self.calculation_thread.isRunning():
             Debug(self, ".interrupt_calculation(): WARNING: Requesting interruption", warning=True)
@@ -253,10 +334,10 @@ class GUI(QMainWindow):
                 warning=True
             )
 
-        # Note: For some reason, most of the time we need an additional ("final-final") redraw here; VisPy glitch?
-        self.redraw()
-
         self.statusbar.disarm(success)
+
+        print()
+        print()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -268,7 +349,7 @@ class GUI(QMainWindow):
         """
         if event.key() == Qt.Key_F2:
 
-            # Focus the  wire base points table
+            # Focus the wire base points table
             self.sidebar_left.wire_widget.table.setFocus()
 
         elif event.key() == Qt.Key_F3:

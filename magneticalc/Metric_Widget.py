@@ -27,7 +27,6 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Metric_Presets import Metric_Presets
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.QtWidgets2.Theme import Theme
 
 
@@ -155,13 +154,13 @@ class Metric_Widget(QGroupBox2):
         # Initially load metric from project
         self.set_metric(recalculate=False, update_labels=False, invalidate=False)
 
-        self.update()
+        self.refresh()
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates the widget.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -304,25 +303,23 @@ class Metric_Widget(QGroupBox2):
 
         Debug(self, ".set_metric()")
 
-        with ModelAccess(self.gui, recalculate):
+        if _color_preset_ is None:
+            color_preset = Metric_Presets.get_by_id(self.gui.project.get_str("color_metric"))
+        else:
+            self.gui.project.set_str("color_metric", _color_preset_["id"])
+            color_preset = _color_preset_
 
-            if _color_preset_ is None:
-                color_preset = Metric_Presets.get_by_id(self.gui.project.get_str("color_metric"))
-            else:
-                self.gui.project.set_str("color_metric", _color_preset_["id"])
-                color_preset = _color_preset_
+        if _alpha_preset_ is None:
+            alpha_preset = Metric_Presets.get_by_id(self.gui.project.get_str("alpha_metric"))
+        else:
+            self.gui.project.set_str("alpha_metric", _alpha_preset_["id"])
+            alpha_preset = _alpha_preset_
 
-            if _alpha_preset_ is None:
-                alpha_preset = Metric_Presets.get_by_id(self.gui.project.get_str("alpha_metric"))
-            else:
-                self.gui.project.set_str("alpha_metric", _alpha_preset_["id"])
-                alpha_preset = _alpha_preset_
+        self.gui.model.set_metric(
+            invalidate=invalidate,
+            color_preset=color_preset,
+            alpha_preset=alpha_preset
+        )
 
-            self.gui.model.set_metric(
-                invalidate=invalidate,
-                color_preset=color_preset,
-                alpha_preset=alpha_preset
-            )
-
-            if update_labels:
-                self.update_labels()
+        if update_labels:
+            self.update_labels()

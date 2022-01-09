@@ -48,19 +48,18 @@ class Help_Menu(QMenu):
         self.addAction(
             qta.icon("fa.newspaper-o"), "&Check for Updates …", lambda: CheckForUpdates_Dialog().show()
         )
-        self.addAction(
-            qta.icon("fa.github"),
-            "&GitHub Repository …",
-            partial(
-                webbrowser.open,
-                Version.GitHub_URL
-            )
-        )
+        self.addAction(qta.icon("fa.github"), "&GitHub Repository …", self.open_github_url)
         self.addSeparator()
         self.addAction(qta.icon("fa.coffee"), "&About …", lambda: About_Dialog().show())
 
-    def update(self):
+    def refresh(self):
         """
         Updates the menu.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
+
+    def open_github_url(self) -> None:
+        """
+        Opens the GitHub repository URL.
+        """
+        webbrowser.open(Version.GitHub_URL)

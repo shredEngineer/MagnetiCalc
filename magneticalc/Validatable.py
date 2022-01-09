@@ -16,7 +16,8 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Any, Callable
+from typing import Any, Callable, Optional
+from PyQt5.QtCore import pyqtBoundSignal
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
 
@@ -24,12 +25,17 @@ from magneticalc.Debug import Debug
 class Validatable(object):
     """ Validatable class. """
 
-    def __init__(self) -> None:
+    def __init__(self, on_valid_changed_signal: Optional[pyqtBoundSignal] = None) -> None:
         """
         Initializes a validatable object.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
         Debug(self, ": Init", init=True)
         self._valid = False
+        self._on_valid_changed_signal = on_valid_changed_signal
+        if on_valid_changed_signal is None:
+            Debug(self, ": WARNING: No valid state changed callback registered", warning=True)
 
     @property
     def valid(self) -> bool:
@@ -44,7 +50,13 @@ class Validatable(object):
         @param valid: True if valid, False if invalid
         """
         Debug(self, f".valid = {valid}", success=valid, warning=not valid)
-        self._valid = valid
+        if self._valid == valid:
+            Debug(self, f".valid: WARNING: Setting the same value", warning=True)
+        else:
+            self._valid = valid
+            if self._on_valid_changed_signal is not None:
+                Debug(self, f".valid: DEBUG: Calling valid state changed callback", warning=True)
+                self._on_valid_changed_signal.emit(self._valid)
 
 
 def require_valid(func: Callable) -> Callable:

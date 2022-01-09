@@ -17,7 +17,6 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Optional, Dict, List, Union
 import numpy as np
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QCheckBox
 from magneticalc.QtWidgets2.QDoubleSpinBox2 import QDoubleSpinBox2
@@ -27,11 +26,11 @@ from magneticalc.QtWidgets2.QIconLabel import QIconLabel
 from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
+from magneticalc.QtWidgets2.Theme import Theme
 from magneticalc.QTableView2 import QTableView2
 from magneticalc.Config_Collection import Config_Collection
 from magneticalc.Debug import Debug
-from magneticalc.ModelAccess import ModelAccess
-from magneticalc.QtWidgets2.Theme import Theme
+from magneticalc.Format import Format
 
 
 """ Wire collection types. """
@@ -75,15 +74,15 @@ class Wire_Widget(QGroupBox2):
     StretchStep = 0.1
     StretchPrecision = 2
     RotationalSymmetryCountMin = 1
-    RotationalSymmetryCountMax = 99
+    RotationalSymmetryCountMax = 1000
     RotationalSymmetryRadiusMin = 0
-    RotationalSymmetryRadiusMax = 99
+    RotationalSymmetryRadiusMax = 1000
     RotationalSymmetryRadiusStep = 0.1
     RotationalSymmetryRadiusPrecision = 2
     RotationalSymmetryOffsetMin = -360
     RotationalSymmetryOffsetMax = 360
     RotationalSymmetryOffsetStep = 1
-    RotationalSymmetryOffsetPrecision = 1
+    RotationalSymmetryOffsetPrecision = 2
     SlicerLimitMin = 0.001
     SlicerLimitMax = 2.0
     SlicerLimitStep = 0.001
@@ -92,6 +91,17 @@ class Wire_Widget(QGroupBox2):
     DcMax = +1e4
     DcStep = 0.1
     DcPrecision = 3
+
+    def on_changed(self) -> None:
+        """
+        Gets called when some value was changed.
+        The controls are bound to configuration.
+        We just have to tell the model about it!
+        """
+        self.gui.interrupt_calculation()
+        self.gui.model.set_wire(**self.group)
+        if self.gui.project.get_bool("auto_calculation"):
+            self.gui.recalculate()
 
     def __init__(
             self,
@@ -107,7 +117,7 @@ class Wire_Widget(QGroupBox2):
         self.gui = gui
         self.wire = gui.model.wire
         self.config_collection = Config_Collection(gui=gui, prefix="wire_", types=Wire_Collection_Types)
-        self.group = self.config_collection.get_group(1, on_changed=self.update)
+        self.group = self.config_collection.get_group(1, on_changed=self.on_changed)
 
         # --------------------------------------------------------------------------------------------------------------
 
@@ -154,7 +164,7 @@ class Wire_Widget(QGroupBox2):
                 step=self.StretchStep,
                 precision=self.StretchPrecision,
                 value=0,
-                value_changed=lambda: self.group.set({"stretch": [self.stretch_spinbox[i].value() for i in range(3)]})
+                value_changed=lambda: self.group.set({"stretch": [self.stretch_spinbox[j].value() for j in range(3)]})
             )
             self.stretch_spinbox.append(stretch_spinbox)
             stretch_layout.addWidget(QLabel2(["X", "Y", "Z"][i] + ":", expand=False))
@@ -324,77 +334,50 @@ class Wire_Widget(QGroupBox2):
         Reloads the widget.
         This populates all widgets with their proper values.
         """
-        Debug(self, ".reload()", refresh=True)
+        Debug(self, ".reload(): WARNING: Reloading", refresh=True, warning=True)
 
-        self.gui.model.set_wire(invalidate=False, **self.group)
+        self.gui.model.set_wire(**self.group)
 
-    def update(
-            self,
-            invalidate: bool = True,
-            recalculate: bool = True,
-            readjust_sampling_volume: bool = True,
-    ) -> None:
+        self.group.blockSignals(True)
+        [self.stretch_spinbox[i].setValue(self.group["stretch"][i]) for i in range(3)]
+        self.rotational_symmetry_count_spinbox.setValue(self.group["rotational_symmetry_count"])
+        self.rotational_symmetry_radius_spinbox.setValue(self.group["rotational_symmetry_radius"])
+        self.rotational_symmetry_axis_combobox.setCurrentIndex(self.group["rotational_symmetry_axis"])
+        self.rotational_symmetry_offset_spinbox.setValue(self.group["rotational_symmetry_offset"])
+        self.close_loop_checkbox.setChecked(self.group["close_loop"])
+        self.slicer_limit_spinbox.setValue(self.group["slicer_limit"])
+        self.dc_spinbox.setValue(self.group["dc"])
+        self.group.blockSignals(False)
+
+        self.refresh()
+
+    def refresh(self) -> None:
         """
         Updates the widget.
-
-        @param invalidate: Enable to invalidate this model hierarchy level
-        @param recalculate: Enable to trigger final recalculation
-        @param readjust_sampling_volume: Enable to readjust sampling volume
         """
-        if self.signalsBlocked():
-            Debug(self, ".update(): Blocked", warning=True)
-            return
+        Debug(self, ".refresh(): WARNING: Update", refresh=True, warning=True)
 
-        Debug(self, ".update()", refresh=True)
+        self.set_color(Theme.MainColor if self.wire.valid else Theme.FailureColor)
 
-        with ModelAccess(self.gui, recalculate):
-
-            self.gui.model.set_wire(invalidate=invalidate, **self.group)
-
-            self.set_color(Theme.MainColor if self.wire.valid else Theme.FailureColor)
-
-            self.blockSignals(True)
-            [self.stretch_spinbox[i].setValue(self.group["stretch"][i]) for i in range(3)]
-            self.rotational_symmetry_count_spinbox.setValue(self.group["rotational_symmetry_count"])
-            self.rotational_symmetry_radius_spinbox.setValue(self.group["rotational_symmetry_radius"])
-            self.rotational_symmetry_axis_combobox.setCurrentIndex(self.group["rotational_symmetry_axis"])
-            self.rotational_symmetry_offset_spinbox.setValue(self.group["rotational_symmetry_offset"])
-            self.close_loop_checkbox.setChecked(self.group["close_loop"])
-            self.slicer_limit_spinbox.setValue(self.group["slicer_limit"])
-            self.dc_spinbox.setValue(self.group["dc"])
-            self.blockSignals(False)
-
-            Debug(self, ".update_labels()", refresh=True)
-
-            if self.wire.valid:
-                self.sliced_total_label.setText(str(len(self.wire.points_sliced)))
-            else:
-                self.sliced_total_label.setText("N/A")
-
-            self.update_table()
-
-            self.transformed_total_label.setText(str(len(self.wire.points_transformed)))
-
-            if readjust_sampling_volume:
-                self.gui.sidebar_left.sampling_volume_widget.readjust()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def update_table(self) -> None:
-        """
-        Populates the table.
-        """
-        Debug(self, ".update_table()")
-
-        points = [[f"{col:+0.02f}" for col in row] for row in self.wire.points_base]
+        if self.wire.valid:
+            self.sliced_total_label.setText(str(len(self.wire.points_sliced)))
+        else:
+            self.sliced_total_label.setText("N/A")
 
         self.table.set_data(
-            data=points,
+            data=[[Format.float_to_str(col) for col in row] for row in self.wire.points_base],
             row_keys=[str(i + 1) for i in range(len(self.wire.points_base))]
         )
         self.table.select_last_row(focus=False)
 
         self.table_total_label.setText(str(len(self.wire.points_base)))
+
+        self.transformed_total_label.setText(str(len(self.wire.points_transformed)))
+
+        if hasattr(self.gui.sidebar_left, "sampling_volume_widget"):
+            self.gui.sidebar_left.sampling_volume_widget.readjust()
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def on_table_row_added(self) -> None:
         """

@@ -57,13 +57,13 @@ class Menu:
         Reloads the menu.
         """
         Debug(self, ".reload()", refresh=True)
-        self.update()
+        self.refresh()
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates all menus.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
         self.file_menu.update()
         self.wire_menu.update()
         self.view_menu.update()

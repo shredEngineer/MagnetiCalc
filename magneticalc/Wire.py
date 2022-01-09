@@ -16,9 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Dict, Callable
+from typing import Callable, Optional
 import numpy as np
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, pyqtBoundSignal
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Debug import Debug
 from magneticalc.Validatable import Validatable, require_valid, validator
@@ -27,12 +27,17 @@ from magneticalc.Validatable import Validatable, require_valid, validator
 class Wire(Validatable):
     """ Wire class. """
 
-    def __init__(self) -> None:
+    def __init__(
+            self,
+            on_valid_changed_signal: Optional[pyqtBoundSignal] = None
+    ) -> None:
         """
         Initializes an empty wire.
         A 3D piecewise linear curve with some DC current associated with it.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
-        Validatable.__init__(self)
+        Validatable.__init__(self, on_valid_changed_signal)
         Debug(self, ": Init", init=True)
 
         self.points_base = np.array([])

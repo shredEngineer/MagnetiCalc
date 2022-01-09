@@ -62,11 +62,11 @@ class View_Menu(QMenu):
             self.checkbox_config.add("Dark Background", "dark_background", self.gui.redraw)
         )
 
-    def update(self):
+    def refresh(self):
         """
         Updates the menu.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.gui.blockSignals(True)
         self.checkbox_config.reload()
@@ -78,6 +78,6 @@ class View_Menu(QMenu):
         """
         Gets called when the "Show Gauss instead of Tesla" option changed.
         """
-        self.gui.sidebar_right.metric_widget.update()
+        self.gui.sidebar_right.metric_widget.refresh()
         self.gui.vispy_canvas.delete_field_labels()
         self.gui.redraw()

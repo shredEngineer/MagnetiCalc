@@ -46,8 +46,6 @@ class Parameters_Widget(QGroupBox2):
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        self.gui.model.set_parameters(invalidate=False)
-
         results_layout = QHBoxLayout()
         results_left = QVBoxLayout()
         results_middle = QVBoxLayout()
@@ -81,7 +79,7 @@ class Parameters_Widget(QGroupBox2):
         self.self_inductance_units_label = QLabel2("N/A", color=Theme.MainColor, expand=False)
         results_right.addWidget(self.self_inductance_units_label)
 
-        self.update()
+        self.refresh()
 
     def reload(self) -> None:
         """
@@ -91,11 +89,11 @@ class Parameters_Widget(QGroupBox2):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates the widget.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.update_labels()
         self.update_controls()

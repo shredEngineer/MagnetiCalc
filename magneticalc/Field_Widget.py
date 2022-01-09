@@ -29,7 +29,6 @@ from magneticalc.QtWidgets2.QLabel2 import QLabel2
 from magneticalc.Debug import Debug
 from magneticalc.Field_Types import Field_Types_Names_Map
 from magneticalc.Metric import Metric
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.QtWidgets2.Theme import Theme
 
 
@@ -134,13 +133,13 @@ class Field_Widget(QGroupBox2):
         # Initially load field from project
         self.set_field(recalculate=False, invalidate=False)
 
-        self.update()
+        self.refresh()
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates this widget.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -205,14 +204,12 @@ class Field_Widget(QGroupBox2):
 
         Debug(self, ".set_field()")
 
-        with ModelAccess(self.gui, recalculate):
+        field_type = self.gui.project.set_get_int("field_type", _field_type_)
+        distance_limit = self.gui.project.set_get_float("field_distance_limit", _distance_limit_)
 
-            field_type = self.gui.project.set_get_int("field_type", _field_type_)
-            distance_limit = self.gui.project.set_get_float("field_distance_limit", _distance_limit_)
-
-            self.gui.model.set_field(
-                invalidate=invalidate,
-                field_type=field_type,
-                distance_limit=distance_limit,
-                length_scale=Metric.LengthScale
-            )
+        self.gui.model.set_field(
+            invalidate=invalidate,
+            field_type=field_type,
+            distance_limit=distance_limit,
+            length_scale=Metric.LengthScale
+        )

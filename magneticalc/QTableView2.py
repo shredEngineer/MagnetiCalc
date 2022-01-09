@@ -487,8 +487,8 @@ class QTableView2(QTableView):
         @return: Index of currently selected row (None if none selected)
         """
         if self.model() is None:
-            Debug(self, ": ERROR: Attempting to access wire table before it is valid", error=True)
-            return
+            Debug(self, ": WARNING: Attempting to access wire table before it is valid", warning=True)
+            return None
 
         if self.selectionModel().hasSelection():
             return self.selectionModel().currentIndex().row()
@@ -531,8 +531,8 @@ class QTableView2(QTableView):
 
         @param _event: QFocusEvent
         """
-        #if self.state() == QAbstractItemView.EditingState:
-        #    Debug(self, ".focusOutEvent(): Ignored in editing mode")
-        #else:
-        self.clearSelection()
-        self.set_style(border_color="black", border_width=1)
+        if self.state() == QAbstractItemView.EditingState:
+            Debug(self, ".focusOutEvent(): Ignored in editing mode")
+        else:
+            self.clearSelection()
+            self.set_style(border_color="black", border_width=1)

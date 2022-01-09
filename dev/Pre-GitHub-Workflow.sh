@@ -52,6 +52,10 @@ IGNORE_NAMES=$(cat << EOF
   setData
   flags
   headerData
+  createEditor
+  setEditorData
+  setModelData
+  updateEditorGeometry
 EOF
 )
 vulture \

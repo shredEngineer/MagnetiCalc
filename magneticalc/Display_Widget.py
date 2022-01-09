@@ -176,13 +176,13 @@ class Display_Widget(QGroupBox2):
 
         self.blockSignals(False)
 
-        self.update()
+        self.refresh()
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates this widget.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -266,7 +266,7 @@ class Display_Widget(QGroupBox2):
             return
 
         self.gui.project.set_float("field_point_scale", value)
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()
 
     def set_field_arrow_head_scale(self, value: float) -> None:
         """
@@ -278,7 +278,7 @@ class Display_Widget(QGroupBox2):
             return
 
         self.gui.project.set_float("field_arrow_head_scale", value)
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()
 
     def set_field_arrow_line_scale(self, value: float) -> None:
         """
@@ -290,7 +290,7 @@ class Display_Widget(QGroupBox2):
             return
 
         self.gui.project.set_float("field_arrow_line_scale", value)
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()
 
     def set_field_boost(self, value: float) -> None:
         """
@@ -302,7 +302,7 @@ class Display_Widget(QGroupBox2):
             return
 
         self.gui.project.set_float("field_boost", value)
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -321,8 +321,6 @@ class Display_Widget(QGroupBox2):
 
         self.update()
 
-        self.gui.redraw()
-
     def set_field_label_resolution(self, value: int) -> None:
         """
         Sets field label resolution exponent.
@@ -336,7 +334,7 @@ class Display_Widget(QGroupBox2):
 
         # Note: "prevent_excessive_field_labels()" will be called by "Model.on_sampling_volume_valid()".
 
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()
 
     def disable_field_labels(self) -> None:
         """
@@ -350,6 +348,8 @@ class Display_Widget(QGroupBox2):
         self.blockSignals(True)
         self.display_field_magnitude_labels_checkbox.setChecked(False)
         self.blockSignals(previous_signals_blocked)
+
+        self.gui.vispy_canvas.redraw()
 
     def prevent_excessive_field_labels(self, choice: bool) -> None:
         """

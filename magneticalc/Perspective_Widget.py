@@ -76,4 +76,4 @@ class Perspective_Widget(QGroupBox2):
         self.gui.project.set_float("elevation", preset["elevation"])
         self.gui.vispy_canvas.view_main.camera.azimuth = preset["azimuth"]
         self.gui.vispy_canvas.view_main.camera.elevation = preset["elevation"]
-        self.gui.redraw()
+        self.gui.vispy_canvas.redraw()

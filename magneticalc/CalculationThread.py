@@ -17,10 +17,9 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread
 from multiprocessing import cpu_count
 from magneticalc.Debug import Debug
-from magneticalc.ModelAccess import ModelAccess
 
 
 class CalculationThread(QThread):
@@ -31,14 +30,6 @@ class CalculationThread(QThread):
     """
 
     # Progress update signal
-    _progress_update = pyqtSignal(int)
-
-    # Valid state signals
-    _wire_valid             = pyqtSignal()
-    _sampling_volume_valid  = pyqtSignal()
-    _field_valid            = pyqtSignal()
-    _metric_valid           = pyqtSignal()
-    _parameters_valid       = pyqtSignal()
 
     def __init__(
             self,
@@ -53,124 +44,84 @@ class CalculationThread(QThread):
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        # Connect progress update signal
-        self._progress_update.connect(  # type: ignore
-            lambda x: self.gui.statusbar.set_progress(x)
-        )
-
-        self._wire_valid.connect(self.gui.model.on_wire_valid)  # type: ignore
-        self._sampling_volume_valid.connect(self.gui.model.on_sampling_volume_valid)  # type: ignore
-        self._field_valid.connect(self.gui.model.on_field_valid)  # type: ignore
-        self._metric_valid.connect(self.gui.model.on_metric_valid)  # type: ignore
-        self._parameters_valid.connect(self.gui.model.on_parameters_valid)  # type: ignore
-
-    def disconnect_signals(self) -> None:
-        """
-        Disconnects all valid state signals
-        """
-        Debug(self, ".disconnect_signals()")
-        self._wire_valid.disconnect(self.gui.model.on_wire_valid)  # type: ignore
-        self._sampling_volume_valid.disconnect(self.gui.model.on_sampling_volume_valid)  # type: ignore
-        self._field_valid.disconnect(self.gui.model.on_field_valid)  # type: ignore
-        self._metric_valid.disconnect(self.gui.model.on_metric_valid)  # type: ignore
-        self._parameters_valid.disconnect(self.gui.model.on_parameters_valid)  # type: ignore
-
     def run(self) -> None:
         """
         Thread main function.
         """
         Debug(self, ".run()")
 
-        with ModelAccess(self.gui, recalculate=False):
+        if not self.gui.model.wire.valid:
+            self.gui.calculation_status_signal.emit("Calculating Wire Segments … (1/5)")
 
-            if not self.gui.model.wire.valid:
-                self.gui.calculation_status.emit("Calculating Wire Segments … (1/5)")
+            if not self.gui.model.calculate_wire(
+                progress_callback=self.gui.calculation_progress_update_signal.emit
+            ):
+                self.gui.calculation_exited_signal.emit(False)
+                return
 
-                if not self.gui.model.calculate_wire(
-                        self._progress_update.emit  # type: ignore
-                ):
-                    self._on_finished(False)
-                    return
+            self.gui.wire_valid_changed_signal.emit(True)  # type: ignore
 
-                self._wire_valid.emit()  # type: ignore
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if not self.gui.model.sampling_volume.valid:
+            self.gui.calculation_status_signal.emit("Calculating Sampling Volume … (2/5)")
 
-            if not self.gui.model.sampling_volume.valid:
-                self.gui.calculation_status.emit("Calculating Sampling Volume … (2/5)")
+            if not self.gui.model.calculate_sampling_volume(
+                    progress_callback=self.gui.calculation_progress_update_signal.emit
+            ):
+                self.gui.calculation_exited_signal.emit(False)
+                return
 
-                if not self.gui.model.calculate_sampling_volume(
-                        self._progress_update.emit  # type: ignore
-                ):
-                    self._on_finished(False)
-                    return
+            self.gui.sampling_volume_valid_changed_signal.emit(True)  # type: ignore
 
-                self._sampling_volume_valid.emit()  # type: ignore
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if not self.gui.model.field.valid:
+            self.gui.calculation_status_signal.emit("Calculating Field … (3/5)")
 
-            if not self.gui.model.field.valid:
-                self.gui.calculation_status.emit("Calculating Field … (3/5)")
+            num_cores = self.gui.project.get_int("num_cores")
+            if num_cores == 0:
+                # "Auto" setting
+                num_cores = max(1, cpu_count() - 1)
 
-                num_cores = self.gui.project.get_int("num_cores")
-                if num_cores == 0:
-                    # "Auto" setting
-                    num_cores = max(1, cpu_count() - 1)
+            backend_type = self.gui.project.get_int("backend_type")
 
-                backend_type = self.gui.project.get_int("backend_type")
+            if not self.gui.model.calculate_field(
+                progress_callback=self.gui.calculation_progress_update_signal.emit,
+                num_cores=num_cores,
+                backend_type=backend_type
+            ):
+                self.gui.calculation_exited_signal.emit(False)
+                return
 
-                success = self.gui.model.calculate_field(
-                    progress_callback=self._progress_update.emit,  # type: ignore
-                    num_cores=num_cores,
-                    backend_type=backend_type
-                )
+            self.gui.field_valid_changed_signal.emit(True)  # type: ignore
 
-                if not success:
-                    self._on_finished(False)
-                    return
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-                self._field_valid.emit()  # type: ignore
+        if not self.gui.model.metric.valid:
+            self.gui.calculation_status_signal.emit("Calculating Metric … (4/5)")
 
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            if not self.gui.model.calculate_metric(
+                progress_callback=self.gui.calculation_progress_update_signal.emit,
+            ):
+                self.gui.calculation_exited_signal.emit(False)
+                return
 
-            if not self.gui.model.metric.valid:
-                self.gui.calculation_status.emit("Calculating Metric … (4/5)")
+            self.gui.parameters_valid_changed_signal.emit(True)
 
-                if not self.gui.model.calculate_metric(
-                        self._progress_update.emit  # type: ignore
-                ):
-                    self._on_finished(False)
-                    return
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-                self._metric_valid.emit()  # type: ignore
+        if not self.gui.model.parameters.valid:
+            self.gui.calculation_status_signal.emit("Calculating Parameters … (5/5)")
 
-            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            if not self.gui.model.calculate_parameters(
+                progress_callback=self.gui.calculation_progress_update_signal.emit,
+            ):
+                self.gui.calculation_exited_signal.emit(False)
+                return
 
-            if not self.gui.model.parameters.valid:
-                self.gui.calculation_status.emit("Calculating Parameters … (5/5)")
-
-                if not self.gui.model.calculate_parameters(
-                        self._progress_update.emit  # type: ignore
-                ):
-                    self._on_finished(False)
-                    return
-
-                self._parameters_valid.emit()  # type: ignore
+            self.gui.parameters_valid_changed_signal.emit(True)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        self._on_finished(True)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def _on_finished(self, success: bool) -> None:
-        """
-        Signals that the calculation finished.
-
-        @param success: True if calculation was successful, False otherwise
-        """
-        Debug(self, f".on_finished(success={success})")
-
-        # Firing this signal results in slightly delayed execution, even after joining this thread;
-        # the execution of "on_calculation_exited()" will later be skipped when it sees another thread running.
-        self.gui.calculation_exited.emit(success)
+        self.gui.calculation_exited_signal.emit(True)

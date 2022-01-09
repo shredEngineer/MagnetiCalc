@@ -18,9 +18,10 @@
 
 from __future__ import annotations
 from magneticalc.Norm_Types import *
-from typing import Dict, List, Callable, Tuple
+from typing import Dict, List, Callable, Optional
 import numpy as np
 from numba import jit, prange
+from PyQt5.QtCore import pyqtBoundSignal
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.ConditionalDecorator import ConditionalDecorator
@@ -155,14 +156,16 @@ class Metric(Validatable):
     # Minimum argument limit for logarithmic scaling
     LogNormMin = 1e-12
 
-    def __init__(self) -> None:
+    def __init__(self, on_valid_changed_signal: Optional[pyqtBoundSignal] = None) -> None:
         """
         Initializes an empty metric.
 
         This class holds a pair of metric presets.
         Using these metric presets, colors (including alpha channel) and field limits are calculated.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
-        Validatable.__init__(self)
+        Validatable.__init__(self, on_valid_changed_signal)
         Debug(self, ": Init", init=True)
 
         # Parameters

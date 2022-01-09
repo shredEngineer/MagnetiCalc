@@ -23,7 +23,6 @@ from magneticalc.Debug import Debug
 from magneticalc.Field import Field
 from magneticalc.Field_Types import FIELD_TYPE_A, FIELD_TYPE_B
 from magneticalc.Metric import Metric
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.Parameters import Parameters
 from magneticalc.SamplingVolume import SamplingVolume
 from magneticalc.Wire import Wire
@@ -41,7 +40,7 @@ class Model:
     DebugColor = fg.yellow
 
     """ Enable to debug calls to L{invalidate()}. """
-    DebugInvalidate = False
+    DebugInvalidate = True
 
     def __init__(
             self,
@@ -55,15 +54,15 @@ class Model:
         Debug(self, ": Init", init=True)
         self.gui = gui
 
-        self.wire = Wire()
-        self.sampling_volume = SamplingVolume()
-        self.metric = Metric()
-        self.parameters = Parameters()
+        self.wire = Wire(on_valid_changed_signal=self.gui.wire_valid_changed_signal)
+        self.sampling_volume = SamplingVolume(on_valid_changed_signal=self.gui.sampling_volume_valid_changed_signal)
+        self.metric = Metric(on_valid_changed_signal=self.gui.metric_valid_changed_signal)
+        self.parameters = Parameters(on_valid_changed_signal=self.gui.parameters_valid_changed_signal)
 
         self._field_type_select: int = FIELD_TYPE_A
         self._field_cache: Dict[int, Field] = {
-            FIELD_TYPE_A: Field(),
-            FIELD_TYPE_B: Field(),
+            FIELD_TYPE_A: Field(on_valid_changed_signal=self.gui.field_valid_changed_signal),
+            FIELD_TYPE_B: Field(on_valid_changed_signal=self.gui.field_valid_changed_signal),
         }
 
     @property
@@ -148,53 +147,43 @@ class Model:
         if do_all or do_parameters:
             if self.parameters.valid:
                 self.parameters.valid = False
-                self.on_parameters_invalid()
 
         if do_all or do_metric:
             if self.metric.valid:
                 self.metric.valid = False
-                self.on_metric_invalid()
 
         if do_all or do_field:
             valid_fields = [field for field_type, field in self._field_cache.items() if field.valid]
             if any(valid_fields):
                 for field in valid_fields:
                     field.valid = False
-                self.on_field_invalid()
 
         if do_all or do_sampling_volume:
             if self.sampling_volume.valid:
                 self.sampling_volume.valid = False
-                self.on_sampling_volume_invalid()
 
         if do_all or do_wire:
             if self.wire.valid:
                 self.wire.valid = False
-                self.on_wire_invalid()
 
     def set_wire(
             self,
-            invalidate: bool,
             *args,
             **kwargs
     ) -> None:
         """
         Sets the wire.
-
-        @param invalidate: Enable to invalidate this model hierarchy level
         """
         Debug(self, ".set_wire()")
 
-        with ModelAccess(self.gui, recalculate=False):
-
-            self.invalidate(
-                do_wire=invalidate,
-                do_sampling_volume=True,
-                do_field=True,
-                do_metric=True,
-                do_parameters=True
-            )
-            self.wire.set(*args, **kwargs)
+        self.invalidate(
+            do_wire=True,
+            do_sampling_volume=True,
+            do_field=True,
+            do_metric=True,
+            do_parameters=True
+        )
+        self.wire.set(*args, **kwargs)
 
     def set_sampling_volume(
             self,
@@ -209,15 +198,13 @@ class Model:
         """
         Debug(self, ".set_sampling_volume()")
 
-        with ModelAccess(self.gui, recalculate=False):
-
-            self.invalidate(
-                do_sampling_volume=invalidate,
-                do_field=True,
-                do_metric=True,
-                do_parameters=True
-            )
-            self.sampling_volume.set(*args, **kwargs)
+        self.invalidate(
+            do_sampling_volume=invalidate,
+            do_field=True,
+            do_metric=True,
+            do_parameters=True
+        )
+        self.sampling_volume.set(*args, **kwargs)
 
     def set_field(
             self,
@@ -234,17 +221,15 @@ class Model:
         """
         Debug(self, ".set_field()")
 
-        with ModelAccess(self.gui, recalculate=False):
+        self.field_type_select = field_type
 
-            self.field_type_select = field_type
+        self.invalidate(
+            do_field=invalidate,
+            do_metric=True,
+            do_parameters=True
+        )
 
-            self.invalidate(
-                do_field=invalidate,
-                do_metric=True,
-                do_parameters=True
-            )
-
-            self.field.set(type=field_type, *args, **kwargs)
+        self.field.set(type=field_type, *args, **kwargs)
 
     def set_metric(
             self,
@@ -259,33 +244,11 @@ class Model:
         """
         Debug(self, ".set_metric()")
 
-        with ModelAccess(self.gui, recalculate=False):
-
-            self.invalidate(
-                do_metric=invalidate,
-                do_parameters=True
-            )
-            self.metric.set(*args, **kwargs)
-
-    def set_parameters(
-            self,
-            invalidate: bool,
-            *args,
-            **kwargs
-    ) -> None:
-        """
-        Sets the parameters.
-
-        @param invalidate: Enable to invalidate this model hierarchy level
-        """
-        Debug(self, ".set_parameters()")
-
-        with ModelAccess(self.gui, recalculate=False):
-
-            self.invalidate(
-                do_parameters=invalidate
-            )
-            self.parameters.set(*args, **kwargs)
+        self.invalidate(
+            do_metric=invalidate,
+            do_parameters=True
+        )
+        self.metric.set(*args, **kwargs)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -358,99 +321,3 @@ class Model:
             field=self.field,
             progress_callback=progress_callback
         )
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def on_wire_valid(self) -> None:
-        """
-        Gets called when the wire was successfully calculated.
-        """
-        Debug(self, ".on_wire_valid()")
-
-        self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.wire_menu.update()
-        self.gui.vispy_canvas.redraw()
-
-    def on_sampling_volume_valid(self) -> None:
-        """
-        Gets called when the sampling volume was successfully calculated.
-        """
-        Debug(self, ".on_sampling_volume_valid()")
-
-        self.gui.sidebar_left.sampling_volume_widget.update()
-        self.gui.sidebar_right.display_widget.update()
-        self.gui.sidebar_right.display_widget.prevent_excessive_field_labels(choice=False)
-        self.gui.vispy_canvas.redraw()
-
-    def on_field_valid(self) -> None:
-        """
-        Gets called when the field was successfully calculated.
-        """
-        Debug(self, ".on_field_valid()")
-
-        self.gui.sidebar_right.field_widget.update()
-        self.gui.vispy_canvas.redraw()
-
-    def on_metric_valid(self) -> None:
-        """
-        Gets called when the metric was successfully calculated.
-
-        Note: Field label creation is triggered on-demand inside L{VisPyCanvas.redraw()}, not here.
-        """
-        Debug(self, ".on_metric_valid()")
-
-        self.gui.sidebar_right.metric_widget.update()
-        self.gui.vispy_canvas.redraw()
-
-    def on_parameters_valid(self) -> None:
-        """
-        Gets called when the parameters were successfully calculated.
-        """
-        Debug(self, ".on_parameters_valid()")
-
-        self.gui.sidebar_right.parameters_widget.update()
-        self.gui.vispy_canvas.redraw()
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    def on_wire_invalid(self) -> None:
-        """
-        Gets called when the wire was invalidated.
-        """
-        Debug(self, ".on_wire_invalid()")
-
-        self.gui.sidebar_left.wire_widget.update()
-        self.gui.menu.wire_menu.update()
-
-    def on_sampling_volume_invalid(self) -> None:
-        """
-        Gets called when the sampling volume was invalidated.
-        """
-        Debug(self, ".on_sampling_volume_invalid()")
-
-        self.gui.sidebar_left.sampling_volume_widget.update()
-
-    def on_field_invalid(self) -> None:
-        """
-        Gets called when the field was invalidated.
-        """
-        Debug(self, ".on_field_invalid()")
-
-        self.gui.sidebar_right.field_widget.update()
-
-    def on_metric_invalid(self) -> None:
-        """
-        Gets called when the metric was invalidated.
-        """
-        Debug(self, ".on_metric_invalid()")
-
-        self.gui.sidebar_right.metric_widget.update()
-        self.gui.vispy_canvas.delete_field_labels()
-
-    def on_parameters_invalid(self) -> None:
-        """
-        Gets called when the parameters were invalidated.
-        """
-        Debug(self, ".on_parameters_invalid()")
-
-        self.gui.sidebar_right.parameters_widget.update()

@@ -36,10 +36,10 @@ class Debug:
     ErrorColor = fg.red
 
     # Enable debug output where init=True
-    EnableInit = False
+    EnableInit = True
 
     # Enable debug output where refresh=True
-    EnableRefresh = False
+    EnableRefresh = True
 
     # Block debug output from specific classes
     EnableBlacklist = False
@@ -51,7 +51,6 @@ class Debug:
         "ExportContainer_Dialog",
         "Field_Widget",
         "Metric_Widget",
-        "ModelAccess",
         "OverridePadding_Dialog",
         "Parameters_Widget",
         "Perspective_Widget",

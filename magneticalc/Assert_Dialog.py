@@ -78,14 +78,15 @@ class Assert_Dialog:
         text_browser = QTextBrowser2(html=html)
         self._dialog.addWidget(text_browser)
 
-        buttons_dict = {
-            "Abort application": ("fa.times-circle", self._dialog.reject),
-        }
-
         if allow_resume:
-            buttons_dict.update({
+            buttons_dict = {
+                "Abort application": ("fa.times-circle", self._dialog.reject),
                 "Resume (possibly unstable)": ("fa.play-circle", self._dialog.accept)
-            })
+            }
+        else:
+            buttons_dict = {
+                "Abort application": ("fa.times-circle", self._dialog.reject)
+            }
 
         buttons = self._dialog.addButtons(buttons_dict)
         buttons[0].setFocus()

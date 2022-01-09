@@ -170,7 +170,7 @@ class Constraint_Editor(QDialog2):
 
         @return: List of rows (constraint groups).
         """
-        return self._constraint_collection.get_groups()
+        return self._constraint_collection.get_all_group_data()
 
     def get_groups_count(self) -> int:
         """

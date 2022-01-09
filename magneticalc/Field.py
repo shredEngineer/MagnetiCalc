@@ -16,9 +16,10 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, Callable
+from typing import Tuple, Callable, Optional
 import numpy as np
 from numba import jit, prange, set_num_threads
+from PyQt5.QtCore import pyqtBoundSignal
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Backend_Types import BACKEND_TYPE_JIT, BACKEND_TYPE_CUDA, get_jit_enabled
 from magneticalc.Backend_CUDA import Backend_CUDA
@@ -34,11 +35,13 @@ from magneticalc.Wire import Wire
 class Field(Validatable):
     """ Field class. """
 
-    def __init__(self) -> None:
+    def __init__(self, on_valid_changed_signal: Optional[pyqtBoundSignal] = None) -> None:
         """
         Initializes a field.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
-        Validatable.__init__(self)
+        Validatable.__init__(self, on_valid_changed_signal)
         Debug(self, ": Init", init=True)
 
         # Parameters

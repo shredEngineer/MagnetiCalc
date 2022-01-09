@@ -17,6 +17,7 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
+from typing import Dict
 from functools import partial
 import qtawesome as qta
 from PyQt5.QtWidgets import QMenu, QFileDialog, QAction
@@ -30,6 +31,12 @@ from magneticalc.Wire_Presets import Wire_Presets
 
 class Wire_Menu(QMenu):
     """ Wire_Menu class. """
+
+    def set_multiple(self, *args: Dict) -> None:
+        data = {}
+        for arg in args:
+            data.update(arg)
+            self.gui.sidebar_left.wire_widget.group.set(data)
 
     def __init__(
             self,
@@ -46,13 +53,8 @@ class Wire_Menu(QMenu):
         load_preset_menu.setIcon(qta.icon("mdi.vector-square"))
         for preset in Wire_Presets.List:
             action = QAction(qta.icon("mdi.vector-square"), preset["id"], self)
-            action.triggered.connect(  # type: ignore
-                lambda:
-                    partial(
-                        self.gui.sidebar_left.wire_widget.group.set({
-                            "points_base": preset["points"]
-                        }.update(DefaultStretch.update(DefaultRotationalSymmetry)))
-                    )()
+            action.triggered.connect(
+                partial(self.set_multiple, {"points_base": preset["points"]}, DefaultStretch, DefaultRotationalSymmetry)
             )
             load_preset_menu.addAction(action)
         self.addMenu(load_preset_menu)
@@ -71,13 +73,13 @@ class Wire_Menu(QMenu):
         )
         self.addAction(self.export_wire_action)
 
-        self.update()
+        self.refresh()
 
-    def update(self):
+    def refresh(self):
         """
         Updates the menu.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
         self.export_wire_action.setEnabled(self.gui.model.wire.valid)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -95,9 +97,7 @@ class Wire_Menu(QMenu):
             options=QFileDialog.DontUseNativeDialog
         )
         if filename != "":
-            self.gui.sidebar_left.wire_widget.group.set({
-                "points_base": API.import_wire(filename)
-            }.update(DefaultStretch.update(DefaultRotationalSymmetry)))
+            self.set_multiple({"points_base": API.import_wire(filename)}, DefaultStretch, DefaultRotationalSymmetry)
 
     def wire_export(self) -> None:
         """

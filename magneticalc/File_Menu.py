@@ -99,11 +99,11 @@ class File_Menu(QMenu):
             Qt.CTRL + Qt.Key_Q
         )
 
-    def update(self):
+    def refresh(self):
         """
         Updates the menu.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
     # ------------------------------------------------------------------------------------------------------------------
 

@@ -17,9 +17,10 @@
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from __future__ import annotations
-from typing import Callable
+from typing import Callable, Optional
 import numpy as np
 from numba import jit, prange
+from PyQt5.QtCore import pyqtBoundSignal
 from magneticalc.Backend_Types import get_jit_enabled
 from magneticalc.ConditionalDecorator import ConditionalDecorator
 from magneticalc.Constants import Constants
@@ -32,21 +33,18 @@ from magneticalc.Validatable import Validatable, require_valid, validator
 class Parameters(Validatable):
     """ Parameters class. """
 
-    def __init__(self) -> None:
+    def __init__(self, on_valid_changed_signal: Optional[pyqtBoundSignal] = None) -> None:
         """
         Initializes parameters class.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
-        Validatable.__init__(self)
+        Validatable.__init__(self, on_valid_changed_signal)
         Debug(self, ": Init", init=True)
 
         self._energy: float = 0.0
         self._self_inductance: float = 0.0
         self._magnetic_dipole_moment: float = 0.0
-
-    def set(self, *args, **kwargs):
-        """
-        Sets the parameters
-        """
 
     # ------------------------------------------------------------------------------------------------------------------
 

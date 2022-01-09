@@ -57,7 +57,7 @@ class Config_Collection:
         """
         return self.gui.project.get_int(self.prefix + "count")
 
-    def get_group(self, group_index: int, on_changed: Callable) -> Config_Group:
+    def get_group(self, group_index: int, on_changed: Optional[Callable] = None) -> Config_Group:
         """
         Gets a group from the collection.
 
@@ -104,7 +104,7 @@ class Config_Collection:
         Assert_Dialog(group_index < self.get_groups_count(), "Attempting to delete non-existing group")
 
         # Make a copy of all groups
-        groups = self.get_groups()
+        groups = self.get_all_group_data()
 
         # Delete the desired group from the copy
         del groups[group_index]
@@ -121,13 +121,13 @@ class Config_Collection:
         for group in groups:
             self.add_group(group)
 
-    def get_groups(self) -> List[Union[Dict, Config_Group]]:
+    def get_all_group_data(self) -> List[Dict]:
         """
         Gets every group in the collection.
 
         @return: List of groups (dictionaries)
         """
-        return [self.get_group(self, group_index, on_changed=None) for group_index in range(self.get_groups_count())]
+        return [self.read_group_data(group_index) for group_index in range(self.get_groups_count())]
 
     def add_group(self, values: Optional[Dict]) -> None:
         """

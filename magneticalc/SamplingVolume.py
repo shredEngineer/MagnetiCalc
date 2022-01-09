@@ -16,9 +16,9 @@
 #  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 #  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-from typing import Tuple, List, Callable
+from typing import Tuple, List, Callable, Optional
 import numpy as np
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, pyqtBoundSignal
 from magneticalc.Assert_Dialog import Assert_Dialog
 from magneticalc.Constraint import Constraint
 from magneticalc.Debug import Debug
@@ -28,11 +28,13 @@ from magneticalc.Validatable import Validatable, require_valid, validator
 class SamplingVolume(Validatable):
     """ Sampling volume class. """
 
-    def __init__(self) -> None:
+    def __init__(self, on_valid_changed_signal: Optional[pyqtBoundSignal] = None) -> None:
         """
         Initializes an empty sampling volume, with zero bounds and no constraints.
+
+        @param on_valid_changed_signal: Gets called when the valid state changed
         """
-        Validatable.__init__(self)
+        Validatable.__init__(self, on_valid_changed_signal)
         Debug(self, ": Init", init=True)
 
         self._bounds_min: np.ndarray = np.zeros(3)
@@ -44,8 +46,8 @@ class SamplingVolume(Validatable):
         self._labeled_indices: List = []
         self._neighbor_indices: List[np.ndarray] = []
 
-        self.resolution = 0
-        self._label_resolution = 0
+        self.resolution = 1
+        self._label_resolution = 1
         self._constraints = []
 
     def set(

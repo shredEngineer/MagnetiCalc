@@ -28,7 +28,6 @@ from magneticalc.QtWidgets2.QPushButton2 import QPushButton2
 from magneticalc.QtWidgets2.QSpinBox2 import QSpinBox2
 from magneticalc.Constraint_Editor import Constraint_Editor
 from magneticalc.Debug import Debug
-from magneticalc.ModelAccess import ModelAccess
 from magneticalc.OverridePadding_Dialog import OverridePadding_Dialog
 from magneticalc.QtWidgets2.Theme import Theme
 
@@ -188,13 +187,13 @@ class SamplingVolume_Widget(QGroupBox2):
         # Initially load sampling volume from project
         self.set_sampling_volume(recalculate=False, invalidate=False)
 
-        self.update()
+        self.refresh()
 
-    def update(self) -> None:
+    def refresh(self) -> None:
         """
         Updates the widget.
         """
-        Debug(self, ".update()", refresh=True)
+        Debug(self, ".refresh()", refresh=True)
 
         self.update_labels()
         self.update_controls()
@@ -326,38 +325,36 @@ class SamplingVolume_Widget(QGroupBox2):
 
         Debug(self, ".set_sampling_volume()")
 
-        with ModelAccess(self.gui, recalculate):
+        resolution_exponent = self.gui.project.set_get_int(
+            "sampling_volume_resolution_exponent",
+            _resolution_exponent_
+        )
 
-            resolution_exponent = self.gui.project.set_get_int(
-                "sampling_volume_resolution_exponent",
-                _resolution_exponent_
-            )
+        label_resolution_exponent = self.gui.project.set_get_int(
+            "sampling_volume_label_resolution_exponent",
+            _label_resolution_exponent_
+        )
 
-            label_resolution_exponent = self.gui.project.set_get_int(
-                "sampling_volume_label_resolution_exponent",
-                _label_resolution_exponent_
-            )
+        resolution = np.power(2.0, resolution_exponent)
+        label_resolution = np.power(2.0, label_resolution_exponent)
 
-            resolution = np.power(2.0, resolution_exponent)
-            label_resolution = np.power(2.0, label_resolution_exponent)
+        # Convert every line in the constraint editor to a Constraint() object
+        self.gui.model.set_sampling_volume(
+            invalidate=invalidate,
+            resolution=resolution,
+            label_resolution=label_resolution,
+            constraints=self.constraint_editor.get_constraints()
+        )
 
-            # Convert every line in the constraint editor to a Constraint() object
-            self.gui.model.set_sampling_volume(
-                invalidate=invalidate,
-                resolution=resolution,
-                label_resolution=label_resolution,
-                constraints=self.constraint_editor.get_constraints()
-            )
+        self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)
 
-            self.readjust(_padding_=_padding_, _override_padding_=_override_padding_, _bounding_box_=_bounding_box_)
+        if recalculate:
+            # The display widget depends on the sampling volume
+            self.gui.sidebar_right.display_widget.refresh()
 
-            if recalculate:
-                # The display widget depends on the sampling volume
-                self.gui.sidebar_right.display_widget.update()
-
-                # This forces updating the number of constraints if the sampling volume is already invalidated
-                if not self.gui.model.sampling_volume.valid:
-                    self.update()
+            # This forces updating the number of constraints if the sampling volume is already invalidated
+            if not self.gui.model.sampling_volume.valid:
+                self.refresh()
 
     # ------------------------------------------------------------------------------------------------------------------
 

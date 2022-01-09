@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>magneticalc.Config_Group.Config_Collection</title>
+    <title>magneticalc.Config_Collection.Config_Collection</title>
     <meta name="generator" content="pydoctor 21.12.0"> 
         
     </meta>
@@ -54,7 +54,7 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Config_Group.html">Config_Group</a></code><wbr></wbr>.<code><a href="magneticalc.Config_Group.Config_Collection.html">Config_Collection</a></code></code></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Config_Collection.html">Config_Collection</a></code><wbr></wbr>.<code><a href="magneticalc.Config_Collection.Config_Collection.html">Config_Collection</a></code></code></h1>
         <div id="showPrivate">
           <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
         </div>
@@ -66,7 +66,7 @@
 
       <div class="extrasDocstring">
         <p><code><span class="py-keyword">class</span> <span class="py-defname">Config_Collection</span>:</code></p>
-        <p><a href="classIndex.html#magneticalc.Config_Group.Config_Collection">View In Hierarchy</a></p>
+        <p><a href="classIndex.html#magneticalc.Config_Collection.Config_Collection">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
@@ -90,18 +90,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#del_group">del_group</a></code></td>
+    <td><code><a href="#delete_group_data">delete_group_data</a></code></td>
     <td>Deletes a group from the collection.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#get_all_groups">get_all_groups</a></code></td>
+    <td><code><a href="#get_all_group_data">get_all_group_data</a></code></td>
     <td>Gets every group in the collection.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#get_count">get_count</a></code></td>
-    <td>Gets the number of groups in the collection.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -110,13 +105,23 @@
   </tr><tr class="method">
     
     <td>Method</td>
+    <td><code><a href="#get_groups_count">get_groups_count</a></code></td>
+    <td>Gets the number of groups in the collection.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#read_group_data">read_group_data</a></code></td>
+    <td>Reads group data from Config.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
     <td><code><a href="#set">set</a></code></td>
     <td>Sets a value for some key in a group of the collection.</td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="method">
     
-    <td>Instance Variable</td>
-    <td><code><a href="#first_without_suffix">first_without_suffix</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Method</td>
+    <td><code><a href="#write_group_data">write_group_data</a></code></td>
+    <td>Writes group data to Config.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
@@ -132,11 +137,6 @@
     <td>Instance Variable</td>
     <td><code><a href="#types">types</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="method private">
-    
-    <td>Method</td>
-    <td><code><a href="#_get_suffix">_get_suffix</a></code></td>
-    <td>Gets the suffix for a given group index.</td>
   </tr>
 </table>
         
@@ -149,7 +149,7 @@
         <div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.__init__">
+  <a name="magneticalc.Config_Collection.Config_Collection.__init__">
     
   </a>
   <a name="__init__">
@@ -157,7 +157,7 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui, prefix, types, first_without_suffix):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui, prefix, types):
     
   </div>
   <div class="docstring functionBody">
@@ -165,12 +165,12 @@
     
     <div><p>Initializes a config collection: A list of groups (dictionaries).</p>
 <p>Example for the SOMETHING collection, consisting of two groups _0 and _1, each with two keys FOO and BAR: SOMETHING_count = 2 SOMETHING_FOO_0 = "1st value in 1st group" SOMETHING_BAR_0 = "2nd value in 1st group" SOMETHING_FOO_1 = "1st value in 2nd group" SOMETHING_BAR_1 = "2nd value in 2nd group"</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">prefix:</span><code>str</code></td><td class="fieldArgDesc">Prefix</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">types:</span><code>Dict</code></td><td class="fieldArgDesc">Key:Type (Dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">first_without_suffix:</span><code>bool</code></td><td class="fieldArgDesc">Enable to omit the suffix "_0" for the first group</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">prefix:</span><code>str</code></td><td class="fieldArgDesc">Prefix</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">types:</span><code>Dict</code></td><td class="fieldArgDesc">Key:Type (Dictionary)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.add_group">
+  <a name="magneticalc.Config_Collection.Config_Collection.add_group">
     
   </a>
   <a name="add_group">
@@ -189,15 +189,15 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.del_group">
+  <a name="magneticalc.Config_Collection.Config_Collection.delete_group_data">
     
   </a>
-  <a name="del_group">
+  <a name="delete_group_data">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">del_group</span>(self, group_index):
+    <span class="py-keyword">def</span> <span class="py-defname">delete_group_data</span>(self, group_index):
     
   </div>
   <div class="docstring functionBody">
@@ -208,15 +208,15 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.get_all_groups">
+  <a name="magneticalc.Config_Collection.Config_Collection.get_all_group_data">
     
   </a>
-  <a name="get_all_groups">
+  <a name="get_all_group_data">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_all_groups</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_all_group_data</span>(self):
     
   </div>
   <div class="docstring functionBody">
@@ -227,15 +227,34 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.get_count">
+  <a name="magneticalc.Config_Collection.Config_Collection.get_group">
     
   </a>
-  <a name="get_count">
+  <a name="get_group">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_count</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">get_group</span>(self, group_index, on_changed=None):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets a group from the collection.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">on_changed:</span><code>Optional[<wbr></wbr>Callable]</code></td><td class="fieldArgDesc">Gets called when any data in the group changed</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="magneticalc.Config_Group.Config_Group.html">Config_Group</a></code></td><td class="fieldArgDesc">Group (dictionary that's mapped to Config)</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Config_Collection.Config_Collection.get_groups_count">
+    
+  </a>
+  <a name="get_groups_count">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_groups_count</span>(self):
     
   </div>
   <div class="docstring functionBody">
@@ -246,26 +265,26 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.get_group">
+  <a name="magneticalc.Config_Collection.Config_Collection.read_group_data">
     
   </a>
-  <a name="get_group">
+  <a name="read_group_data">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_group</span>(self, group_index):
+    <span class="py-keyword">def</span> <span class="py-defname">read_group_data</span>(self, group_index):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Gets a group from the collection.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Group (dictionary)</td></tr></table></div>
+    <div>Reads group data from Config.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Group (dictionary)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.set">
+  <a name="magneticalc.Config_Collection.Config_Collection.set">
     
   </a>
   <a name="set">
@@ -281,30 +300,29 @@
     
     <div>Sets a value for some key in a group of the collection.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">key:</span><code>str</code></td><td class="fieldArgDesc">Key</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value</span></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="basemethod">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.first_without_suffix">
+  <a name="magneticalc.Config_Collection.Config_Collection.write_group_data">
     
   </a>
-  <a name="first_without_suffix">
+  <a name="write_group_data">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">first_without_suffix</span> =
+    <span class="py-keyword">def</span> <span class="py-defname">write_group_data</span>(self, group_index, data):
     
   </div>
-  <div class="functionBody">
+  <div class="docstring functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
-    
+    <div>Writes group data to Config.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>Dict</code></td><td class="fieldArgDesc">Data (dictionary)</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.gui">
+  <a name="magneticalc.Config_Collection.Config_Collection.gui">
     
   </a>
   <a name="gui">
@@ -324,7 +342,7 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.prefix">
+  <a name="magneticalc.Config_Collection.Config_Collection.prefix">
     
   </a>
   <a name="prefix">
@@ -344,7 +362,7 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.Config_Group.Config_Collection.types">
+  <a name="magneticalc.Config_Collection.Config_Collection.types">
     
   </a>
   <a name="types">
@@ -361,25 +379,6 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="basemethod private">
-  
-  
-  <a name="magneticalc.Config_Group.Config_Collection._get_suffix">
-    
-  </a>
-  <a name="_get_suffix">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">_get_suffix</span>(self, group_index):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Gets the suffix for a given group index.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">group_index:</span><code>int</code></td><td class="fieldArgDesc">Group index</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
-  </div>
 </div>
 
       </div>
@@ -390,7 +389,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

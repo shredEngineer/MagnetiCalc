@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id170">
+        <table class="children sortable" id="id171">
   
   
   <tr class="method">
@@ -163,7 +163,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
           </p>
-          <table class="children sortable" id="id171">
+          <table class="children sortable" id="id172">
   
   
   <tr class="basemethod">
@@ -176,6 +176,11 @@
     <td>Property</td>
     <td><code><a href="magneticalc.Validatable.Validatable.html#valid">valid</a></code></td>
     <td>True if valid, False if invalid</td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#_on_valid_changed_signal">_on_valid_changed_signal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
@@ -201,13 +206,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, on_valid_changed_signal=None):
     
   </div>
   <div class="docstring functionBody">
     <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
     
-    <div>Initializes an empty wire. A 3D piecewise linear curve with some DC current associated with it.</div>
+    <div>Initializes an empty wire. A 3D piecewise linear curve with some DC current associated with it.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">on_valid_changed_signal:</span><code>Optional[<wbr></wbr>pyqtBoundSignal]</code></td><td class="fieldArgDesc">Gets called when the valid state changed</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -239,13 +244,13 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, points, stretch, rotational_symmetry, close_loop, slicer_limit, dc):
+    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, points_base, stretch, rotational_symmetry_axis, rotational_symmetry_count, rotational_symmetry_offset, rotational_symmetry_radius, close_loop, slicer_limit, dc):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D coordinates (see presets)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary for rotational symmetry transform</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">slicer_limit:</span><code>float</code></td><td class="fieldArgDesc">Slicer limit</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dc:</span><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
+    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points_base:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D coordinates (see presets)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>np.ndarray</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry_axis:</span><code>int</code></td><td class="fieldArgDesc">Rotation axis</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry_count:</span><code>int</code></td><td class="fieldArgDesc">Duplication count</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry_offset:</span><code>float</code></td><td class="fieldArgDesc">Rotation offset (degrees)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry_radius:</span><code>float</code></td><td class="fieldArgDesc">Radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">slicer_limit:</span><code>float</code></td><td class="fieldArgDesc">Slicer limit</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dc:</span><code>float</code></td><td class="fieldArgDesc">Wire current (A)</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -398,13 +403,13 @@
   </a>
   <div class="functionHeader">
     @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_transform_rotational_symmetry</span>(axes, parameters, close_loop):
+    <span class="py-keyword">def</span> <span class="py-defname">_transform_rotational_symmetry</span>(axes, axis, count, offset, radius, close_loop):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">axes:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">parameters:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary containing the transformation parameters (number of replications, radius, axis and offset angle)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr></table></div>
+    <div>This transformation replicates and rotates this curve `count` times about an `axis` with radius `radius`.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">axes:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">axis:</span><code>int</code></td><td class="fieldArgDesc">Rotation axis</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">count:</span><code>int</code></td><td class="fieldArgDesc">Duplication count</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">offset:</span><code>float</code></td><td class="fieldArgDesc">Rotation offset (degrees)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">radius:</span><code>float</code></td><td class="fieldArgDesc">Radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">close_loop:</span><code>bool</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Transposed array of Wire points</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -515,7 +520,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

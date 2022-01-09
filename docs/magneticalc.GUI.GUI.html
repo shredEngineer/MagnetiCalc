@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id59">
+        <table class="children sortable" id="id61">
   
   
   <tr class="method">
@@ -110,8 +110,28 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#re_wrapper">re_wrapper</a></code></td>
-    <td>Simple wrapper that decides between recalculation or redraw.</td>
+    <td><code><a href="#on_field_valid_changed">on_field_valid_changed</a></code></td>
+    <td>Gets called when the field was successfully calculated.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_metric_valid_changed">on_metric_valid_changed</a></code></td>
+    <td>Gets called when the metric was successfully calculated.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_parameters_valid_changed">on_parameters_valid_changed</a></code></td>
+    <td>Gets called when the parameters were successfully calculated.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_sampling_volume_valid_changed">on_sampling_volume_valid_changed</a></code></td>
+    <td>Gets called when the sampling volume was successfully calculated.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#on_wire_valid_changed">on_wire_valid_changed</a></code></td>
+    <td>Gets called when the wire was successfully calculated.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -130,22 +150,47 @@
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#calculation_exited">calculation_exited</a></code></td>
+    <td><code><a href="#calculation_exited_signal">calculation_exited_signal</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#calculation_status">calculation_status</a></code></td>
+    <td><code><a href="#calculation_progress_update_signal">calculation_progress_update_signal</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#invalidate_statusbar">invalidate_statusbar</a></code></td>
+    <td><code><a href="#calculation_status_signal">calculation_status_signal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#field_valid_changed_signal">field_valid_changed_signal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#metric_valid_changed_signal">metric_valid_changed_signal</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
     <td><code><a href="#MinimumWindowSize">MinimumWindowSize</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#parameters_valid_changed_signal">parameters_valid_changed_signal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#sampling_volume_valid_changed_signal">sampling_volume_valid_changed_signal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#wire_valid_changed_signal">wire_valid_changed_signal</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -201,11 +246,6 @@
     
     <td>Instance Variable</td>
     <td><code><a href="#statusbar">statusbar</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#user_locale">user_locale</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -338,21 +378,97 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.GUI.GUI.re_wrapper">
+  <a name="magneticalc.GUI.GUI.on_field_valid_changed">
     
   </a>
-  <a name="re_wrapper">
+  <a name="on_field_valid_changed">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">re_wrapper</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">on_field_valid_changed</span>(self, valid):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Simple wrapper that decides between recalculation or redraw.</div>
+    <div>Gets called when the field was successfully calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">Valid flag</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.on_metric_valid_changed">
+    
+  </a>
+  <a name="on_metric_valid_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_metric_valid_changed</span>(self, valid):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the metric was successfully calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">Valid flag</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.on_parameters_valid_changed">
+    
+  </a>
+  <a name="on_parameters_valid_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_parameters_valid_changed</span>(self, valid):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the parameters were successfully calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">Valid flag</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.on_sampling_volume_valid_changed">
+    
+  </a>
+  <a name="on_sampling_volume_valid_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_sampling_volume_valid_changed</span>(self, valid):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the sampling volume was successfully calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">Valid flag</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.GUI.GUI.on_wire_valid_changed">
+    
+  </a>
+  <a name="on_wire_valid_changed">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">on_wire_valid_changed</span>(self, valid):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets called when the wire was successfully calculated.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">valid:</span><code>bool</code></td><td class="fieldArgDesc">Valid flag</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -414,15 +530,15 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.GUI.GUI.calculation_exited">
+  <a name="magneticalc.GUI.GUI.calculation_exited_signal">
     
   </a>
-  <a name="calculation_exited">
+  <a name="calculation_exited_signal">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">calculation_exited</span> =
+    <span class="py-defname">calculation_exited_signal</span> =
     
   </div>
   <div class="functionBody">
@@ -434,15 +550,15 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.GUI.GUI.calculation_status">
+  <a name="magneticalc.GUI.GUI.calculation_progress_update_signal">
     
   </a>
-  <a name="calculation_status">
+  <a name="calculation_progress_update_signal">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">calculation_status</span> =
+    <span class="py-defname">calculation_progress_update_signal</span> =
     
   </div>
   <div class="functionBody">
@@ -454,15 +570,55 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.GUI.GUI.invalidate_statusbar">
+  <a name="magneticalc.GUI.GUI.calculation_status_signal">
     
   </a>
-  <a name="invalidate_statusbar">
+  <a name="calculation_status_signal">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">invalidate_statusbar</span> =
+    <span class="py-defname">calculation_status_signal</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.field_valid_changed_signal">
+    
+  </a>
+  <a name="field_valid_changed_signal">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">field_valid_changed_signal</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.metric_valid_changed_signal">
+    
+  </a>
+  <a name="metric_valid_changed_signal">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">metric_valid_changed_signal</span> =
     
   </div>
   <div class="functionBody">
@@ -483,6 +639,66 @@
   <div class="functionHeader">
     
     <span class="py-defname">MinimumWindowSize</span>: <code>tuple[<wbr></wbr>int, <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.parameters_valid_changed_signal">
+    
+  </a>
+  <a name="parameters_valid_changed_signal">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">parameters_valid_changed_signal</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.sampling_volume_valid_changed_signal">
+    
+  </a>
+  <a name="sampling_volume_valid_changed_signal">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">sampling_volume_valid_changed_signal</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.GUI.GUI.wire_valid_changed_signal">
+    
+  </a>
+  <a name="wire_valid_changed_signal">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">wire_valid_changed_signal</span> =
     
   </div>
   <div class="functionBody">
@@ -714,26 +930,6 @@
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.GUI.GUI.user_locale">
-    
-  </a>
-  <a name="user_locale">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">user_locale</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable">
-  
-  
   <a name="magneticalc.GUI.GUI.vispy_canvas">
     
   </a>
@@ -761,7 +957,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

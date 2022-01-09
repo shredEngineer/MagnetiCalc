@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>magneticalc.OverridePadding_Dialog.OverridePadding_Dialog</title>
+    <title>magneticalc.QtWidgets2.QMessageBox2.QMessageBox2</title>
     <meta name="generator" content="pydoctor 21.12.0"> 
         
     </meta>
@@ -54,7 +54,7 @@
     <div class="container">
 
       <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.OverridePadding_Dialog.html">OverridePadding_Dialog</a></code><wbr></wbr>.<code><a href="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.html">OverridePadding_Dialog</a></code></code></h1>
+        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.QtWidgets2.html">QtWidgets2</a></code><wbr></wbr>.<code><a href="magneticalc.QtWidgets2.QMessageBox2.html">QMessageBox2</a></code><wbr></wbr>.<code><a href="magneticalc.QtWidgets2.QMessageBox2.QMessageBox2.html">QMessageBox2</a></code></code></h1>
         <div id="showPrivate">
           <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
         </div>
@@ -65,52 +65,37 @@
       </div>
 
       <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">OverridePadding_Dialog</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.OverridePadding_Dialog.OverridePadding_Dialog">View In Hierarchy</a></p>
+        <p><code><span class="py-keyword">class</span> <span class="py-defname">QMessageBox2</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p>
+        <p><a href="classIndex.html#magneticalc.QtWidgets2.QMessageBox2.QMessageBox2">View In Hierarchy</a></p>
       </div>
 
       <div class="moduleDocstring">
-        <div>OverridePadding_Dialog class.</div>
+        <div>QMessageBox2 class.</div>
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id83">
+        <table class="children sortable" id="id130">
   
   
   <tr class="method">
     
     <td>Method</td>
     <td><code><a href="#__init__">__init__</a></code></td>
-    <td>Initializes the dialog.</td>
+    <td>Initializes a message box.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#validate">validate</a></code></td>
-    <td>Validates the bounding box values and enables/disables the "Apply" button accordingly.</td>
-  </tr><tr class="classvariable">
+    <td><code><a href="#accepting">accepting</a></code></td>
+    <td>Sets the choice and accepts the dialog.</td>
+  </tr><tr class="method">
     
-    <td>Class Variable</td>
-    <td><code><a href="#BoundsRange">BoundsRange</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Method</td>
+    <td><code><a href="#rejecting">rejecting</a></code></td>
+    <td>Gets called when the user hits the ESC key.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#bounds_max_spinbox">bounds_max_spinbox</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#bounds_min_spinbox">bounds_min_spinbox</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#buttons">buttons</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
+    <td><code><a href="#choice">choice</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -118,7 +103,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>:
           </p>
-          <table class="children sortable" id="id84">
+          <table class="children sortable" id="id131">
   
   
   <tr class="basemethod">
@@ -142,7 +127,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>):
           </p>
-          <table class="children sortable" id="id85">
+          <table class="children sortable" id="id132">
   
   
   <tr class="basemethod">
@@ -187,7 +172,7 @@
         <div class="basemethod">
   
   
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.__init__">
+  <a name="magneticalc.QtWidgets2.QMessageBox2.QMessageBox2.__init__">
     
   </a>
   <a name="__init__">
@@ -195,125 +180,64 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, title, text, icon, buttons, default_button):
     
   </div>
   <div class="docstring functionBody">
     <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
     
-    <div>Initializes the dialog.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div>Initializes a message box.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">title:</span><code>str</code></td><td class="fieldArgDesc">Title</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">text:</span><code>str</code></td><td class="fieldArgDesc">Text</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">icon</span></td><td class="fieldArgDesc">Icon</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">buttons</span></td><td class="fieldArgDesc">Buttons</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">default_button</span></td><td class="fieldArgDesc">Default button</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.validate">
+  <a name="magneticalc.QtWidgets2.QMessageBox2.QMessageBox2.accepting">
     
   </a>
-  <a name="validate">
+  <a name="accepting">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">validate</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">accepting</span>(self, button_flag):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Validates the bounding box values and enables/disables the "Apply" button accordingly.</div>
+    <div>Sets the choice and accepts the dialog.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">button_flag:</span><code>int</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
-</div><div class="baseclassvariable">
+</div><div class="basemethod">
   
   
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.BoundsRange">
+  <a name="magneticalc.QtWidgets2.QMessageBox2.QMessageBox2.rejecting">
     
   </a>
-  <a name="BoundsRange">
+  <a name="rejecting">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">BoundsRange</span>: <code>tuple[<wbr></wbr>int, <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code> =
+    <span class="py-keyword">def</span> <span class="py-defname">rejecting</span>(self):
     
   </div>
-  <div class="functionBody">
+  <div class="docstring functionBody">
     
     
-    <div><p class="undocumented">Undocumented</p></div>
-    
+    <div>Gets called when the user hits the ESC key.</div>
   </div>
 </div><div class="baseinstancevariable">
   
   
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.bounds_max_spinbox">
+  <a name="magneticalc.QtWidgets2.QMessageBox2.QMessageBox2.choice">
     
   </a>
-  <a name="bounds_max_spinbox">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">bounds_max_spinbox</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable">
-  
-  
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.bounds_min_spinbox">
-    
-  </a>
-  <a name="bounds_min_spinbox">
+  <a name="choice">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">bounds_min_spinbox</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable">
-  
-  
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.buttons">
-    
-  </a>
-  <a name="buttons">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">buttons</span> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
-  </div>
-</div><div class="baseinstancevariable">
-  
-  
-  <a name="magneticalc.OverridePadding_Dialog.OverridePadding_Dialog.gui">
-    
-  </a>
-  <a name="gui">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">gui</span> =
+    <span class="py-defname">choice</span> =
     
   </div>
   <div class="functionBody">

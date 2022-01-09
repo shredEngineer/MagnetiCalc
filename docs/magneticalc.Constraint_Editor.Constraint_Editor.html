@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id33">
+        <table class="children sortable" id="id35">
   
   
   <tr class="method">
@@ -92,6 +92,16 @@
     <td>Method</td>
     <td><code><a href="#get_constraints">get_constraints</a></code></td>
     <td>Gets the list of constraints.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_groups">get_groups</a></code></td>
+    <td>Gets the list of rows (constraint groups).</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_groups_count">get_groups_count</a></code></td>
+    <td>Gets the number of rows (constraint groups).</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -157,16 +167,6 @@
     <td>Instance Variable</td>
     <td><code><a href="#text_browser">text_browser</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="property">
-    
-    <td>Property</td>
-    <td><code><a href="#rows">rows</a></code></td>
-    <td>Gets the list of rows (constraint groups).</td>
-  </tr><tr class="property">
-    
-    <td>Property</td>
-    <td><code><a href="#rows_count">rows_count</a></code></td>
-    <td>Gets the number of rows (constraint groups).</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
@@ -183,7 +183,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>:
           </p>
-          <table class="children sortable" id="id34">
+          <table class="children sortable" id="id36">
   
   
   <tr class="basemethod">
@@ -202,7 +202,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>):
           </p>
-          <table class="children sortable" id="id35">
+          <table class="children sortable" id="id37">
   
   
   <tr class="basemethod">
@@ -300,6 +300,44 @@
     
     
     <div>Gets the list of constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr><a href="magneticalc.Constraint.Constraint.html">Constraint</a>]</code></td><td class="fieldArgDesc">List of constraints</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_groups">
+    
+  </a>
+  <a name="get_groups">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_groups</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the list of rows (constraint groups).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr>Dict]</code></td><td class="fieldArgDesc">List of rows (constraint groups).</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="magneticalc.Constraint_Editor.Constraint_Editor.get_groups_count">
+    
+  </a>
+  <a name="get_groups_count">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_groups_count</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Gets the number of rows (constraint groups).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">Number of rows (constraint groups)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -562,46 +600,6 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseproperty">
-  
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.rows">
-    
-  </a>
-  <a name="rows">
-    
-  </a>
-  <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">rows</span>: <code>List[<wbr></wbr>Dict]</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div>Gets the list of rows (constraint groups).</div>
-    
-  </div>
-</div><div class="baseproperty">
-  
-  
-  <a name="magneticalc.Constraint_Editor.Constraint_Editor.rows_count">
-    
-  </a>
-  <a name="rows_count">
-    
-  </a>
-  <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">rows_count</span>: <code>int</code> =
-    
-  </div>
-  <div class="functionBody">
-    
-    
-    <div>Gets the number of rows (constraint groups).</div>
-    
-  </div>
 </div><div class="baseinstancevariable private">
   
   
@@ -652,7 +650,7 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

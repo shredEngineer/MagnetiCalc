@@ -101,17 +101,17 @@
     
     <td>Method</td>
     <td><code><a href="#open">open</a></code></td>
-    <td>Opens a project from file.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#open_default">open_default</a></code></td>
-    <td>Opens the default project.</td>
+    <td>Opens a project from file, or the default project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#switch">switch</a></code></td>
     <td>Closes the current project and opens another project.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#upgrade">upgrade</a></code></td>
+    <td>Upgrades the project if necessary.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -122,6 +122,16 @@
     <td>Instance Variable</td>
     <td><code><a href="#gui">gui</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#synced">synced</a></code></td>
+    <td>Gets the synced flag: Indicates if the configuration has changed.</td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
+    <td><code><a href="#_upgrade_1_x_x_to_2_x_x">_upgrade_1_x_x_to_2_x_x</a></code></td>
+    <td>Upgrades the project from 1.x.x to 2.x.x format.</td>
   </tr>
 </table>
         
@@ -186,6 +196,11 @@
     <td>Method</td>
     <td><code><a href="magneticalc.Config.Config.html#remove_key">remove_key</a></code></td>
     <td>Removes a key from the configuration.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.Config.Config.html#rename_key">rename_key</a></code></td>
+    <td>Renames an old key in the configuration after transferring its value to a new key.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
@@ -261,6 +276,11 @@
     <td>Method</td>
     <td><code><a href="magneticalc.Config.Config.html#set_str">set_str</a></code></td>
     <td>Writes a configuration value.</td>
+  </tr><tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.Config.Config.html#synced.setter">synced.setter</a></code></td>
+    <td>Sets the synced flag: Indicates if the configuration has changed.</td>
   </tr><tr class="baseclassvariable">
     
     <td>Class Variable</td>
@@ -271,15 +291,15 @@
     <td>Instance Variable</td>
     <td><code><a href="magneticalc.Config.Config.html#filename">filename</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="baseinstancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="magneticalc.Config.Config.html#synced">synced</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="magneticalc.Config.Config.html#_parser">_parser</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="baseinstancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="magneticalc.Config.Config.html#_synced">_synced</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -383,26 +403,7 @@
   <div class="docstring functionBody">
     
     
-    <div>Opens a project from file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Project.Project.open_default">
-    
-  </a>
-  <a name="open_default">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">open_default</span>(self, reload=True):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Opens the default project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
+    <div>Opens a project from file, or the default project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>Optional[<wbr></wbr>str]</code></td><td class="fieldArgDesc">Project filename, or None to load the default project</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -426,6 +427,25 @@
 </div><div class="basemethod">
   
   
+  <a name="magneticalc.Project.Project.upgrade">
+    
+  </a>
+  <a name="upgrade">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">upgrade</span>(self, project_maj, project_min, project_rev):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Upgrades the project if necessary.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">project_maj:</span><code>int</code></td><td class="fieldArgDesc">Project major version</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">project_min:</span><code>int</code></td><td class="fieldArgDesc">Project minor version</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">project_rev:</span><code>int</code></td><td class="fieldArgDesc">Project revision</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False on error, True otherwise</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
   <a name="magneticalc.Project.Project.validate">
     
   </a>
@@ -440,7 +460,7 @@
   <div class="docstring functionBody">
     
     
-    <div>Validates the project.</div>
+    <div>Validates the project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if valid project, False otherwise</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -462,6 +482,45 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Project.Project.synced">
+    
+  </a>
+  <a name="synced">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">synced</span>: <code>bool</code> =
+    
+  </div>
+  <div class="functionBody">
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Config.Config.html#synced">magneticalc.Config.Config.synced</a></code></div>
+    
+    <div>Gets the synced flag: Indicates if the configuration has changed.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td colspan="2">True if the configuration has changed, False otherwise</td></tr></table></div>
+    
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="magneticalc.Project.Project._upgrade_1_x_x_to_2_x_x">
+    
+  </a>
+  <a name="_upgrade_1_x_x_to_2_x_x">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_upgrade_1_x_x_to_2_x_x</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Upgrades the project from 1.x.x to 2.x.x format.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True if successful, False otherwise</td></tr></table></div>
+  </div>
 </div>
 
       </div>
@@ -472,7 +531,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

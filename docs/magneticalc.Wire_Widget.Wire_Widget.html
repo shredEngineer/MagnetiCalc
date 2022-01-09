@@ -74,7 +74,7 @@
       </div>
 
       <div id="splitTables">
-        <table class="children sortable" id="id177">
+        <table class="children sortable" id="id178">
   
   
   <tr class="method">
@@ -85,13 +85,8 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#clear_rotational_symmetry">clear_rotational_symmetry</a></code></td>
-    <td>Clears the rotational symmetry values.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#clear_stretch">clear_stretch</a></code></td>
-    <td>Clears the stretch values.</td>
+    <td><code><a href="#on_changed">on_changed</a></code></td>
+    <td>Gets called when some value was changed. The controls are bound to configuration. We just have to tell the model about it!</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -110,53 +105,13 @@
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#reload">reload</a></code></td>
-    <td>Reloads the widget.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#set_rotational_symmetry">set_rotational_symmetry</a></code></td>
-    <td>Handles changes to rotational symmetry transform parameters.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#set_stretch">set_stretch</a></code></td>
-    <td>Handles changes to stretch transform parameters.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#set_wire">set_wire</a></code></td>
-    <td>Sets the wire. This will overwrite the currently set wire in the model. Any underscored parameter may be left set to None in order to load its default value.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#update">update</a></code></td>
+    <td><code><a href="#refresh">refresh</a></code></td>
     <td>Updates the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_controls">update_controls</a></code></td>
-    <td>Updates the controls.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#update_labels">update_labels</a></code></td>
-    <td>Updates the labels.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#update_rotational_symmetry">update_rotational_symmetry</a></code></td>
-    <td>Updates the rotational symmetry controls.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#update_stretch">update_stretch</a></code></td>
-    <td>Updates the stretch controls.</td>
-  </tr><tr class="method">
-    
-    <td>Method</td>
-    <td><code><a href="#update_table">update_table</a></code></td>
-    <td>Populates the table.</td>
+    <td><code><a href="#reload">reload</a></code></td>
+    <td>Reloads the widget. This populates all widgets with their proper values.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
@@ -280,7 +235,17 @@
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
+    <td><code><a href="#config_collection">config_collection</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
     <td><code><a href="#dc_spinbox">dc_spinbox</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#group">group</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
@@ -337,13 +302,18 @@
     <td>Instance Variable</td>
     <td><code><a href="#transformed_total_label">transformed_total_label</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#wire">wire</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
         
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>:
           </p>
-          <table class="children sortable" id="id178">
+          <table class="children sortable" id="id179">
   
   
   <tr class="basemethod">
@@ -357,7 +327,7 @@
           <p class="inheritedFrom">
             Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>):
           </p>
-          <table class="children sortable" id="id179">
+          <table class="children sortable" id="id180">
   
   
   <tr class="basemethod">
@@ -421,40 +391,21 @@
 </div><div class="basemethod">
   
   
-  <a name="magneticalc.Wire_Widget.Wire_Widget.clear_rotational_symmetry">
+  <a name="magneticalc.Wire_Widget.Wire_Widget.on_changed">
     
   </a>
-  <a name="clear_rotational_symmetry">
+  <a name="on_changed">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">clear_rotational_symmetry</span>(self):
+    <span class="py-keyword">def</span> <span class="py-defname">on_changed</span>(self):
     
   </div>
   <div class="docstring functionBody">
     
     
-    <div>Clears the rotational symmetry values.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.clear_stretch">
-    
-  </a>
-  <a name="clear_stretch">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">clear_stretch</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Clears the stretch values.</div>
+    <div>Gets called when some value was changed. The controls are bound to configuration. We just have to tell the model about it!</div>
   </div>
 </div><div class="basemethod">
   
@@ -516,6 +467,25 @@
 </div><div class="basemethod">
   
   
+  <a name="magneticalc.Wire_Widget.Wire_Widget.refresh">
+    
+  </a>
+  <a name="refresh">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-keyword">def</span> <span class="py-defname">refresh</span>(self):
+    
+  </div>
+  <div class="docstring functionBody">
+    
+    
+    <div>Updates the widget.</div>
+  </div>
+</div><div class="basemethod">
+  
+  
   <a name="magneticalc.Wire_Widget.Wire_Widget.reload">
     
   </a>
@@ -530,180 +500,7 @@
   <div class="docstring functionBody">
     
     
-    <div>Reloads the widget.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.set_rotational_symmetry">
-    
-  </a>
-  <a name="set_rotational_symmetry">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">set_rotational_symmetry</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Handles changes to rotational symmetry transform parameters.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.set_stretch">
-    
-  </a>
-  <a name="set_stretch">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">set_stretch</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Handles changes to stretch transform parameters.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.set_wire">
-    
-  </a>
-  <a name="set_wire">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">set_wire</span>(self, _points_=None, _stretch_=None, _rotational_symmetry_=None, _close_loop_=None, _slicer_limit_=None, _dc_=None, invalidate=True, recalculate=True, readjust_sampling_volume=True):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div><p>Sets the wire. This will overwrite the currently set wire in the model. Any underscored parameter may be left set to None in order to load its default value.</p>
-<p>Note: Currently, only `stretch` and `rotational symmetry` controls are automatically updated by this function.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_points_:</span><code>Optional[<wbr></wbr>Union[<wbr></wbr>List, <wbr></wbr>np.ndarray]]</code></td><td class="fieldArgDesc">Points (List of 3D points)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_stretch_:</span><code>Optional[<wbr></wbr>List]</code></td><td class="fieldArgDesc">XYZ stretch transform factors (3D point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_rotational_symmetry_:</span><code>Optional[<wbr></wbr>Dict]</code></td><td class="fieldArgDesc">Dictionary for rotational symmetry transform</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_close_loop_:</span><code>Optional[<wbr></wbr>bool]</code></td><td class="fieldArgDesc">Enable to transform the wire into a closed loop (append first point)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_slicer_limit_:</span><code>Optional[<wbr></wbr>float]</code></td><td class="fieldArgDesc">Slicer limit</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_dc_:</span><code>Optional[<wbr></wbr>float]</code></td><td class="fieldArgDesc">DC value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate this model hierarchy level</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">recalculate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to trigger final recalculation</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">readjust_sampling_volume:</span><code>bool</code></td><td class="fieldArgDesc">Enable to readjust sampling volume</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update">
-    
-  </a>
-  <a name="update">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Updates the widget.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update_controls">
-    
-  </a>
-  <a name="update_controls">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update_controls</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Updates the controls.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update_labels">
-    
-  </a>
-  <a name="update_labels">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update_labels</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Updates the labels.</div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update_rotational_symmetry">
-    
-  </a>
-  <a name="update_rotational_symmetry">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update_rotational_symmetry</span>(self, rotational_symmetry):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Updates the rotational symmetry controls.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">rotational_symmetry:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update_stretch">
-    
-  </a>
-  <a name="update_stretch">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update_stretch</span>(self, stretch):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Updates the stretch controls.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">stretch:</span><code>List</code></td><td class="fieldArgDesc">3D point</td></tr></table></div>
-  </div>
-</div><div class="basemethod">
-  
-  
-  <a name="magneticalc.Wire_Widget.Wire_Widget.update_table">
-    
-  </a>
-  <a name="update_table">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-keyword">def</span> <span class="py-defname">update_table</span>(self):
-    
-  </div>
-  <div class="docstring functionBody">
-    
-    
-    <div>Populates the table.</div>
+    <div>Reloads the widget. This populates all widgets with their proper values.</div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -1188,6 +985,26 @@
 </div><div class="baseinstancevariable">
   
   
+  <a name="magneticalc.Wire_Widget.Wire_Widget.config_collection">
+    
+  </a>
+  <a name="config_collection">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">config_collection</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
   <a name="magneticalc.Wire_Widget.Wire_Widget.dc_spinbox">
     
   </a>
@@ -1197,6 +1014,26 @@
   <div class="functionHeader">
     
     <span class="py-defname">dc_spinbox</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire_Widget.Wire_Widget.group">
+    
+  </a>
+  <a name="group">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">group</span> =
     
   </div>
   <div class="functionBody">
@@ -1425,6 +1262,26 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="magneticalc.Wire_Widget.Wire_Widget.wire">
+    
+  </a>
+  <a name="wire">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">wire</span> =
+    
+  </div>
+  <div class="functionBody">
+    
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
 </div>
 
       </div>
@@ -1435,7 +1292,7 @@
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-01-08 14:25:07.
+    21.12.0 at 2022-01-09 06:32:36.
   </div>
 </footer>
 

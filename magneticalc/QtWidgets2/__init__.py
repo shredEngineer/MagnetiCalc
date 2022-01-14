@@ -1,4 +1,4 @@
-""" MagnetiCalc package initialization. """
+""" QtWidgets2 package initialization. """
 
 #  ISC License
 #

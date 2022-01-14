@@ -79,7 +79,7 @@ class Debug:
         @param obj: Class instance
         @param text: Debug message
         @param color: Color (may be None)
-        @param force: Enable to override whitelist
+        @param force: Enable to override blacklist
         @param success: Enable to set color=SuccessColor
         @param warning: Enable to set color=WarningColor and force=True
         @param error: Enable to set color=ErrorColor and force=True

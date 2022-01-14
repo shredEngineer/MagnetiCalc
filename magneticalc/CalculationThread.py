@@ -29,8 +29,6 @@ class CalculationThread(QThread):
     The pipeline may be interrupted at (almost) any time, thereby exiting this thread.
     """
 
-    # Progress update signal
-
     def __init__(
             self,
             gui: GUI  # type: ignore

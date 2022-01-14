@@ -300,34 +300,34 @@ which provides convenience functions for accessing, transforming and reshaping t
 ToDo
 ----
 **Functional**
-* Add an overlay for vector metrics, like gradient or curvature
+* [ ] Add an overlay for vector metrics, like gradient or curvature
   (derived from the fundamental
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
   <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
-* Add a list of objects, for wires and permeability groups (constraints),
+* [ ] Add a list of objects, for wires and permeability groups (constraints),
   with a transformation pipeline for each object;
   move the `Wire` widget to a dedicated dialog window instead.
   (Add support for multiple wires, study mutual induction.)
-* Interactively display superposition of fields with varying currents.
-* Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
-* Add support for multiple current values and animate the resulting fields.
-* Add support for modeling of core material saturation and hysteresis effects.
-* Provide a means to emulate permanent magnets.
+* [ ] Interactively display superposition of fields with varying currents.
+* [ ] Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
+* [ ] Add support for multiple current values and animate the resulting fields.
+* [ ] Add support for modeling of core material saturation and hysteresis effects.
+* [ ] Provide a means to emulate permanent magnets.
 
 **Usability**
-* Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu;
+* [ ] Move variations of each wire preset (e.g. the number of turns) into an individual sub-menu;
   alternatively, provide a dialog for parametric generation.
-* Add stationary coordinate system and ruler in the bottom left corner.
+* [ ] Add stationary coordinate system and ruler in the bottom left corner.
 
 **Known Bugs**
-* Fix issue where the points of a sampling volume with *fractional* resolution
+* [ ] Fix issue where the points of a sampling volume with *fractional* resolution
   are not always spaced equidistantly for some sampling volume dimensions.
-* Fix calculation of divergence right at the sampling volume boundary.
-* Fix missing scaling of VisPy markers when zooming.
-* Fix unnecessary shading of VisPy markers.
+* [ ] Fix calculation of divergence right at the sampling volume boundary.
+* [ ] Fix missing scaling of VisPy markers when zooming.
+* [ ] Fix unnecessary shading of VisPy markers.
 
 **Code Quality**
-* Add unit tests.
+* [ ] Add unit tests.
 
 Video
 -----

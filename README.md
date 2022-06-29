@@ -90,6 +90,13 @@ Screenshot
 
 (Screenshot taken from the latest GitHub release.)
 
+Examples
+--------
+
+Some example projects can be found in the `examples/` folder.
+
+If you feel like your project should also be included as an example, you are welcome to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)!
+
 Installation
 ------------
 
@@ -105,6 +112,7 @@ Tested with:
 * Python 3.8 in Ubuntu 20.04
 * Python 3.8.2 in macOS 11.6 (M1)
 * Python 3.8.10 in Windows 10 (21H2)
+* Python 3.10.5 in Ubuntu 20.04
 
 ### Prerequisites
 On some systems, it may be necessary to upgrade pip first:

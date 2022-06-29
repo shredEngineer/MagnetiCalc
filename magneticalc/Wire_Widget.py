@@ -296,7 +296,7 @@ class Wire_Widget(QGroupBox2):
         for i in range(3):
             self.stretch_spinbox[i].setValue(wire_stretch[i])
 
-        self.rotational_symmetry_count_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_count"))
+        self.rotational_symmetry_count_spinbox.setValue(self.gui.project.get_int("rotational_symmetry_count"))
         self.rotational_symmetry_radius_spinbox.setValue(self.gui.project.get_float("rotational_symmetry_radius"))
 
         rotational_symmetry_axis = self.gui.project.get_int("rotational_symmetry_axis")

@@ -51,13 +51,13 @@ class OverridePadding_Dialog(QDialog2):
         self.addLayout(QHBoxLayout2(QLabel2("Units:", expand=False), QLabel2("cm", bold=True)))
         self.addSpacing(16)
 
-        bounding_box = self.gui.project.get_points_int("sampling_volume_bounding_box")
+        bounding_box = self.gui.project.get_points("sampling_volume_bounding_box")
         self.bounds_min_spinbox = [
-            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], bounding_box[0][i], self.validate)
+            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], int(bounding_box[0][i]), self.validate)
             for i in range(3)
         ]
         self.bounds_max_spinbox = [
-            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], bounding_box[1][i], self.validate)
+            QSpinBox2(self.BoundsRange[0], self.BoundsRange[1], int(bounding_box[1][i]), self.validate)
             for i in range(3)
         ]
 

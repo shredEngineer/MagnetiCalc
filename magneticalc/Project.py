@@ -182,7 +182,7 @@ class Project(Config):
             "rotational_symmetry_count"                 : "30",
             "rotational_symmetry_radius"                : "1.0000",
             "rotational_symmetry_axis"                  : "2",
-            "rotational_symmetry_offset"                : "0",
+            "rotational_symmetry_offset"                : "0.0",
             "sampling_volume_padding"                   : "-1, 1, 1",
             "sampling_volume_override_padding"          : "False",
             "sampling_volume_bounding_box"              : "0.000000, 0.000000, 0.000000; 0.000000, 0.000000, 0.000000",

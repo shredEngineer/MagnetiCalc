@@ -331,6 +331,7 @@ ToDo
 * Add stationary coordinate system and ruler in the bottom left corner.
 * Add support for selective display over a portion of the metric range,
   enabling a kind of iso-contour display.
+* HDF5 container export from command line, without opening the GUI.
 
 **Known Bugs**
 * Fix issue where the points of a sampling volume with *fractional* resolution

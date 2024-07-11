@@ -11,10 +11,10 @@ MagnetiCalc
 
 MagnetiCalc calculates the static magnetic flux density, vector potential, energy, self-inductance
 and magnetic dipole moment of arbitrary coils. Inside an OpenGL-accelerated GUI, the magnetic flux density
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field,
+($\mathbf{B}$-field,
 in units of <i>Tesla</i>)
 or the magnetic vector potential
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field,
+($\mathbf{A}$-field,
 in units of <i>Tesla-meter</i>)
 is displayed in interactive 3D, using multiple metrics for highlighting the field properties.
 
@@ -31,51 +31,51 @@ whenever I needed to solve a magnetostatic problem.
 
 **How does it work?**
 
-The <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field calculation
+The $\mathbf{B}$-field calculation
 is implemented using the Biot-Savart law [**1**], employing multiprocessing techniques;
 MagnetiCalc uses just-in-time compilation ([JIT](https://numba.pydata.org/))
 and, if available, GPU-acceleration ([CUDA](https://numba.pydata.org/numba-doc/dev/cuda/overview.html))
 to achieve high-performance calculations.
 Additionally, the use of easily constrainable "sampling volumes" allows for selective calculation over
 grids of arbitrary shape and arbitrary relative permeabilities
-<img src="https://render.githubusercontent.com/render/math?math=\mu_r(\mathbf{x})" alt="µ_r(x)">
+$\mu_r(\mathbf{x})$
 (<i>experimental</i>).
 
 The shape of any wire is modeled as a 3D piecewise linear curve.
 Arbitrary loops of wire are sliced into differential current elements
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{\ell}" alt="l">),
+($\mathbf{\ell}$),
 each of which contributes to the total resulting field
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">,
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">)
-at some fixed 3D grid point (<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x}" alt="x">),
+($\mathbf{A}$,
+$\mathbf{B}$)
+at some fixed 3D grid point ($\mathbf{x}$),
 summing over the positions of all current elements
-(<img src="https://render.githubusercontent.com/render/math?math=\mathbf{x^'}" alt="x'">):
+($\mathbf{x^{'}}$):
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^')}}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
+$\mathbf{A}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^{'}} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^{'}})}{\mid \mathbf{x} - \mathbf{x^{'}} \mid}$<br>
 
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^'} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^'}) \times (\mathbf{x} - \mathbf{x^'})}{\mid \mathbf{x} - \mathbf{x^'} \mid}"><br>
+$\mathbf{B}(\mathbf{x})=I \cdot \frac{\mu_0}{4 \pi} \cdot \displaystyle \sum_\mathbf{x^{'}} \mu_r(\mathbf{x}) \cdot \frac{\mathbf{\ell}(\mathbf{x^{'}}) \times (\mathbf{x} - \mathbf{x^{'}})}{\mid \mathbf{x} - \mathbf{x^{'}} \mid}$<br>
 
 At each grid point, the field magnitude (or field angle in some plane) is displayed
 using colored arrows and/or dots;
 field color and alpha transparency are individually mapped using one of the various
 [available metrics](#appendix-metrics).
 
-The coil's energy <img src="https://render.githubusercontent.com/render/math?math=E" alt="E"> [**2**]
-and self-inductance <img src="https://render.githubusercontent.com/render/math?math=L" alt="L"> [**3**]
+The coil's energy $E$ [**2**]
+and self-inductance $L$ [**3**]
 are calculated by summing the squared
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field
+$\mathbf{B}$-field
 over the entire sampling volume;
 ensure that the sampling volume encloses a large, non-singular portion of the field:
 
-<img src="https://render.githubusercontent.com/render/math?math=E=\frac{1}{\mu_0} \cdot \displaystyle \sum_\mathbf{x} \frac{\mathbf{B}(\mathbf{x}) \cdot \mathbf{B}(\mathbf{x})}{\mu_r(\mathbf{x})}"><br>
+$E=\frac{1}{\mu_0} \cdot \displaystyle \sum_\mathbf{x} \frac{\mathbf{B}(\mathbf{x}) \cdot \mathbf{B}(\mathbf{x})}{\mu_r(\mathbf{x})}$<br>
 
-<img src="https://render.githubusercontent.com/render/math?math=L=\frac{1}{\I^2} \cdot E"><br>
+$L=\frac{1}{I^{2}} \cdot E$<br>
 
 Additionally, the scalar magnetic dipole moment
-<img src="https://render.githubusercontent.com/render/math?math=m" alt="m"> [**4**]
+$m$ [**4**]
 is calculated by summing over all current elements:
 
-<img src="https://render.githubusercontent.com/render/math?math=m=\Bigl| I \cdot \frac{1}{2} \cdot \displaystyle \sum_\mathbf{x^'} \mathbf{x^'} \times \mathbf{\ell}(\mathbf{x^'}) \Bigr|"><br>
+$m=\Bigl| I \cdot \frac{1}{2} \cdot \displaystyle \sum_\mathbf{x^{'}} \mathbf{x^{'}} \times \mathbf{\ell}(\mathbf{x^{'}}) \Bigr|$<br>
 
 ***References***
 
@@ -113,6 +113,7 @@ Tested with:
 * Python 3.8.2 in macOS 11.6 (M1)
 * Python 3.8.10 in Windows 10 (21H2)
 * Python 3.10.5 in Ubuntu 20.04
+* Python 3.12.4 in Ubuntu 24.04
 
 ### Prerequisites
 On some systems, it may be necessary to upgrade pip first:
@@ -128,8 +129,8 @@ sudo apt install libxcb-xinerama0 --reinstall
 ```
 
 #### Windows
-It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
-Installation will currently fail for Python 3.9+ due to missing dependencies.
+~~It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
+Installation will currently fail for Python 3.9+ due to missing dependencies.~~
 
 On some systems, it may be necessary to install the latest
 [Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
@@ -158,7 +159,7 @@ python -m magneticalc
 ```
 
 #### macOS (M1)
-*Note:* On Apple Silicon, JIT must be disabled due to incomplete support, resulting in slow calculations. 
+*Note:* On Apple Silicon, JIT may need to be disabled due to incomplete support, resulting in slow calculations. 
 ```shell
 python3 -m pip install magneticalc --upgrade
 export NUMBA_DISABLE_JIT=1 && python3 -m magneticalc
@@ -245,7 +246,7 @@ Data Import/Export and Python API
 ### GUI
 MagnetiCalc allows the following data to be imported/exported using the GUI:
 * Import/export wire points from/to TXT file.
-* Export <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-/<img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields,
+* Export $\mathbf{A}$-/$\mathbf{B}$-fields,
   wire points and wire current to an [HDF5](https://www.h5py.org/) container for use in post-processing.<br>
   *Note:* You could use [Panoply](https://www.giss.nasa.gov/tools/panoply/download/) to open HDF5 files.
   (The "official" [HDFView](https://www.hdfgroup.org/downloads/hdfview/) software didn't work for me.)
@@ -272,7 +273,7 @@ API.export_wire("Custom Wire.txt", wire)
 
 #### Example: Field Import
 Import an HDF5 file containing an
-<img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">-field
+$\mathbf{A}$-field
 and plot it using [Matplotlib](https://matplotlib.org/stable/users/index.html):
 
 ```python
@@ -301,9 +302,9 @@ which provides convenience functions for accessing, transforming and reshaping t
 | `.get_axes_list()`                                       | Returns a list of all 3D points of the sampling volume.                                                                                                                                                                                                          |
 | `.get_axes()`                                            | Returns the raveled sampling volume coordinates as three arrays.                                                                                                                                                                                                 |
 | `.get_axes(reduce=True)`                                 | Returns the axis ticks of the sampling volume.                                                                                                                                                                                                                   |
-| `.get_a_field_list()`<br>`.get_b_field_list()`           | Returns a list of all 3D vectors of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field.                                     |
-| `.get_a_field()`<br>`.get_b_field()`                     | Returns the raveled <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field coordinates as three arrays.                             |
-| `.get_a_field(as_3d=True)`<br>`.get_b_field(as_3d=True)` | Returns a 3D field for each component of the <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- or <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-field, indexed over the reduced axes. |
+| `.get_a_field_list()`<br>`.get_b_field_list()`           | Returns a list of all 3D vectors of the $\mathbf{A}$- or $\mathbf{B}$-field.                                     |
+| `.get_a_field()`<br>`.get_b_field()`                     | Returns the raveled $\mathbf{A}$- or $\mathbf{B}$-field coordinates as three arrays.                             |
+| `.get_a_field(as_3d=True)`<br>`.get_b_field(as_3d=True)` | Returns a 3D field for each component of the $\mathbf{A}$- or $\mathbf{B}$-field, indexed over the reduced axes. |
 
 ToDo
 ----
@@ -311,8 +312,8 @@ ToDo
 * Add a histogram for every metric.
 * Add an overlay for vector metrics, like gradient or curvature
   (derived from the fundamental
-  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{A}" alt="A">- and
-  <img src="https://render.githubusercontent.com/render/math?math=\mathbf{B}" alt="B">-fields).
+  $\mathbf{A}$- and
+  $\mathbf{B}$-fields).
 * Add a list of objects, for wires and permeability groups (constraints),
   with a transformation pipeline for each object;
   move the `Wire` widget to a dedicated dialog window instead.
@@ -320,7 +321,7 @@ ToDo
 * Interactively display superposition of fields with varying currents.
 * Add (cross-)stress scalar metric: Ratio of absolute flux density contribution to actual flux density at every point.
 * Highlight permeability groups with
-  <img src="https://render.githubusercontent.com/render/math?math=\mu_r \neq 0"> in the 3D view.
+  $\mu_r \neq 0$ in the 3D view.
 * Add support for multiple current values and animate the resulting fields.
 * Add support for modeling of core material saturation and hysteresis effects.
 * Provide a means to emulate permanent magnets.
@@ -360,28 +361,28 @@ There is also a short article about MagnetiCalc on my personal website:
 *Appendix:* Metrics
 -------------------
 
-| Metric               | Symbol                                                                                                       | Description                           |
-|----------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| ``Magnitude``        | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}\mid">                            | Magnitude in space                    |
-| ``Magnitude X``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{X}\mid">                        | Magnitude in X-direction              |
-| ``Magnitude Y``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Y}\mid">                        | Magnitude in Y-direction              |
-| ``Magnitude Z``      | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{Z}\mid">                        | Magnitude in Z-direction              |
-| ``Magnitude XY``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XY}\mid">                       | Magnitude in XY-plane                 |
-| ``Magnitude XZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{XZ}\mid">                       | Magnitude in XZ-plane                 |
-| ``Magnitude YZ``     | <img src="https://render.githubusercontent.com/render/math?math=\mid\vec{B}_{YZ}\mid">                       | Magnitude in YZ-plane                 |
-| ``Divergence``       | <img src="https://render.githubusercontent.com/render/math?math=\nabla\cdot\vec{B}">                         | Divergence                            |
-| ``Divergence +``     | <img src="https://render.githubusercontent.com/render/math?math=%2b\{\nabla\cdot\vec{B}\}_{>0}">             | Positive Divergence                   |
-| ``Divergence –``     | <img src="https://render.githubusercontent.com/render/math?math=-\{\nabla\cdot\vec{B}\}_{<0}">               | Negative Divergence                   |
-| ``Log Magnitude``    | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}\mid">                  | Logarithmic Magnitude in space        |
-| ``Log Magnitude X``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_X}\mid">                | Logarithmic Magnitude in X-direction  |
-| ``Log Magnitude Y``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Y}\mid">                | Logarithmic Magnitude in Y-direction  |
-| ``Log Magnitude Z``  | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B_Z}\mid">                | Logarithmic Magnitude in Z-direction  |
-| ``Log Magnitude XY`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XY}\mid">             | Logarithmic Magnitude in XY-plane     |
-| ``Log Magnitude XZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{XZ}\mid">             | Logarithmic Magnitude in XZ-plane     |
-| ``Log Magnitude YZ`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \mid\vec{B}_{YZ}\mid">             | Logarithmic Magnitude in YZ-plane     |
-| ``Log Divergence``   | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ \ \nabla\cdot\vec{B}">           | Logarithmic Divergence                |
-| ``Log Divergence +`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ %2b\{\nabla\cdot\vec{B}\}_{>0}"> | Positive Logarithmic Divergence       |
-| ``Log Divergence –`` | <img src="https://render.githubusercontent.com/render/math?math=\log_{10} \ -\{\nabla\cdot\vec{B}\}_{<0}">   | Negative Logarithmic Divergence       |
-| ``Angle XY``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XY}">                 | Field angle in XY-plane               |
-| ``Angle XZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{XZ}">                 | Field angle in XZ-plane               |
-| ``Angle YZ``         | <img src="https://render.githubusercontent.com/render/math?math=\measuredangle\vec{B}_{YZ}">                 | Field angle in YZ-plane               |
+| Metric               | Symbol                                       | Description                           |
+|----------------------|----------------------------------------------|---------------------------------------|
+| ``Magnitude``        | $\mid\vec{B}\mid$                            | Magnitude in space                    |
+| ``Magnitude X``      | $\mid\vec{B}_{X}\mid$                        | Magnitude in X-direction              |
+| ``Magnitude Y``      | $\mid\vec{B}_{Y}\mid$                        | Magnitude in Y-direction              |
+| ``Magnitude Z``      | $\mid\vec{B}_{Z}\mid$                        | Magnitude in Z-direction              |
+| ``Magnitude XY``     | $\mid\vec{B}_{XY}\mid$                       | Magnitude in XY-plane                 |
+| ``Magnitude XZ``     | $\mid\vec{B}_{XZ}\mid$                       | Magnitude in XZ-plane                 |
+| ``Magnitude YZ``     | $\mid\vec{B}_{YZ}\mid$                       | Magnitude in YZ-plane                 |
+| ``Divergence``       | $\nabla\cdot\vec{B}$                         | Divergence                            |
+| ``Divergence +``     | $+\{\nabla\cdot\vec{B}\}_{>0}$               | Positive Divergence                   |
+| ``Divergence –``     | $-\{\nabla\cdot\vec{B}\}_{<0}$               | Negative Divergence                   |
+| ``Log Magnitude``    | $\log_{10} \mid\vec{B}\mid$                  | Logarithmic Magnitude in space        |
+| ``Log Magnitude X``  | $\log_{10} \mid\vec{B_X}\mid$                | Logarithmic Magnitude in X-direction  |
+| ``Log Magnitude Y``  | $\log_{10} \mid\vec{B_Y}\mid$                | Logarithmic Magnitude in Y-direction  |
+| ``Log Magnitude Z``  | $\log_{10} \mid\vec{B_Z}\mid$                | Logarithmic Magnitude in Z-direction  |
+| ``Log Magnitude XY`` | $\log_{10} \mid\vec{B}_{XY}\mid$             | Logarithmic Magnitude in XY-plane     |
+| ``Log Magnitude XZ`` | $\log_{10} \mid\vec{B}_{XZ}\mid$             | Logarithmic Magnitude in XZ-plane     |
+| ``Log Magnitude YZ`` | $\log_{10} \mid\vec{B}_{YZ}\mid$             | Logarithmic Magnitude in YZ-plane     |
+| ``Log Divergence``   | $\log_{10} \ \ \nabla\cdot\vec{B}$           | Logarithmic Divergence                |
+| ``Log Divergence +`` | $\log_{10} \ +\{\nabla\cdot\vec{B}\}_{>0}$   | Positive Logarithmic Divergence       |
+| ``Log Divergence –`` | $\log_{10} \ -\{\nabla\cdot\vec{B}\}_{<0}$   | Negative Logarithmic Divergence       |
+| ``Angle XY``         | $\measuredangle\vec{B}_{XY}$                 | Field angle in XY-plane               |
+| ``Angle XZ``         | $\measuredangle\vec{B}_{XZ}$                 | Field angle in XZ-plane               |
+| ``Angle YZ``         | $\measuredangle\vec{B}_{YZ}$                 | Field angle in YZ-plane               |

@@ -360,10 +360,14 @@ class Wire_Presets:
         PhaseJumpingToroidalLoop16,
         PhaseJumpingToroidalLoop32HiRes,
         PhaseJumpingToroidalLoop32LoRes,
+        PhaseJumpingToroidalLoop32HiResFlat,
+        PhaseJumpingToroidalLoop32LoResFlat,
         ToroidalLoop8,
         ToroidalLoop16,
         ToroidalLoop32HiRes,
         ToroidalLoop32LoRes,
+        ToroidalLoop32HiResFlat,
+        ToroidalLoop32LoResFlat,
     ]
 
     # ------------------------------------------------------------------------------------------------------------------

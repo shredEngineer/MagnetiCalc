@@ -261,6 +261,26 @@ class Wire_Presets:
             toroidal_freq=1, poloidal_freq=32
         )
     }
+    # Preset: A phase-jumping toroidal loop: 32 turns, hi-res, flat.
+    PhaseJumpingToroidalLoop32HiResFlat = {
+        "id": "Phase-jumping Toroidal Loop: 32 turns, hi-res, flat",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=2000, n_phase_jumps=32,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32,
+            flat=True,
+        )
+    }
+    # Preset: A phase-jumping toroidal loop: 32 turns, lo-res, flat.
+    PhaseJumpingToroidalLoop32LoResFlat = {
+        "id": "Phase-jumping Toroidal Loop: 32 turns, lo-res, flat",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=640, n_phase_jumps=32,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32,
+            flat=True,
+        )
+    }
 
     # Preset: A toroidal loop: 8 turns.
     ToroidalLoop8 = {
@@ -288,7 +308,8 @@ class Wire_Presets:
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=2000, n_phase_jumps=1,
             toroidal_radius=1, poloidal_radius=.5,
-            toroidal_freq=1, poloidal_freq=32
+            toroidal_freq=1, poloidal_freq=32,
+            flat=False,
         )
     }
     ToroidalLoop32LoRes = {
@@ -296,7 +317,28 @@ class Wire_Presets:
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=640, n_phase_jumps=1,
             toroidal_radius=1, poloidal_radius=.5,
-            toroidal_freq=1, poloidal_freq=32
+            toroidal_freq=1, poloidal_freq=32,
+            flat=False,
+        )
+    }
+
+    # Preset: A toroidal loop: 32 turns, hi-res, flat.
+    ToroidalLoop32HiResFlat = {
+        "id": "Toroidal Loop: 32 turns, hi-res",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=2000, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32,
+            flat=True,
+        )
+    }
+    ToroidalLoop32LoResFlat = {
+        "id": "Toroidal Loop: 32 turns, lo-res, flat",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=640, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32,
+            flat=True,
         )
     }
 

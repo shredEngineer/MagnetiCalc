@@ -244,7 +244,7 @@ class Wire_Presets:
         )
     }
     # Preset: A phase-jumping toroidal loop: 32 turns, hi-res.
-    PhaseJumpingToroidalLoop32 = {
+    PhaseJumpingToroidalLoop32HiRes = {
         "id": "Phase-jumping Toroidal Loop: 32 turns, hi-res",
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=2000, n_phase_jumps=32,
@@ -253,7 +253,7 @@ class Wire_Presets:
         )
     }
     # Preset: A phase-jumping toroidal loop: 32 turns, lo-res.
-    PhaseJumpingToroidalLoop32Nonlinear = {
+    PhaseJumpingToroidalLoop32LoRes = {
         "id": "Phase-jumping Toroidal Loop: 32 turns, lo-res",
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=640, n_phase_jumps=32,
@@ -282,9 +282,17 @@ class Wire_Presets:
         )
     }
 
-    # Preset: A toroidal loop: 32 turns.
-    ToroidalLoop32 = {
-        "id": "Toroidal Loop: 32 turns",
+    # Preset: A toroidal loop: 32 turns, hi-res.
+    ToroidalLoop32HiRes = {
+        "id": "Toroidal Loop: 32 turns, hi-res",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=2000, n_phase_jumps=1,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32
+        )
+    }
+    ToroidalLoop32LoRes = {
+        "id": "Toroidal Loop: 32 turns, lo-res",
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=640, n_phase_jumps=1,
             toroidal_radius=1, poloidal_radius=.5,
@@ -308,10 +316,12 @@ class Wire_Presets:
         CompensatedSolenoidCircularLoops8,
         PhaseJumpingToroidalLoop8,
         PhaseJumpingToroidalLoop16,
-        PhaseJumpingToroidalLoop32,
+        PhaseJumpingToroidalLoop32HiRes,
+        PhaseJumpingToroidalLoop32LoRes,
         ToroidalLoop8,
         ToroidalLoop16,
-        ToroidalLoop32,
+        ToroidalLoop32HiRes,
+        ToroidalLoop32LoRes,
     ]
 
     # ------------------------------------------------------------------------------------------------------------------

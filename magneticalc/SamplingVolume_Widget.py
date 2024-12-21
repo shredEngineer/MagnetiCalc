@@ -45,6 +45,8 @@ class SamplingVolume_Widget(QGroupBox2):
 
     # Resolution options
     ResolutionOptionsDict = {
+        "1024"       : 10,
+        "512"       : 9,
         "256"       : 8,
         "128"       : 7,
         "64"        : 6,
@@ -62,6 +64,8 @@ class SamplingVolume_Widget(QGroupBox2):
         "1 / 64"    : -6,
         "1 / 128"   : -7,
         "1 / 256"   : -8,
+        "1 / 512"   : -9,
+        "1 / 1024"   : -10,
     }
 
     def __init__(

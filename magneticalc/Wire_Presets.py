@@ -189,7 +189,8 @@ class Wire_Presets:
     def get_phase_jumping_toroidal_loop(
             n_points: int, n_phase_jumps: int,
             toroidal_radius: float, poloidal_radius: float,
-            toroidal_freq: float, poloidal_freq: float
+            toroidal_freq: float, poloidal_freq: float,
+            flat: bool = True,
     ) -> np.ndarray:
         """
         Generates a (phase-jumping) toroidal loop.
@@ -200,6 +201,7 @@ class Wire_Presets:
         @param poloidal_radius: Poloidal radius
         @param toroidal_freq: Toroidal frequency
         @param poloidal_freq: Poloidal frequency
+        @param flat: Flat mode
         """
         def rotate_xy(V: np.ndarray, A: float) -> np.ndarray:
             """
@@ -216,11 +218,11 @@ class Wire_Presets:
         for t in range(n_points + 1):
             phase_toroidal = 2 * np.pi * t / n_points * toroidal_freq
             phase_jump_poloidal = (1 if (t // (n_points / n_phase_jumps)) % 2 == 0 else -1)
-            phase_poloidal = 2 * np.pi * t / n_points * poloidal_freq * phase_jump_poloidal + np.pi / 2
+            phase_poloidal = 2 * np.pi * t / n_points * poloidal_freq * phase_jump_poloidal + (0 if flat else np.pi / 2)
             phase_poloidal = np.fmod(phase_poloidal, 2 * np.pi)
             p_toroidal = toroidal_radius * np.array([np.cos(phase_toroidal), np.sin(phase_toroidal), 0])
             p_poloidal = poloidal_radius * np.array([0, np.cos(phase_poloidal), np.sin(phase_poloidal)])
-            wire_points.append(p_toroidal + rotate_xy(p_poloidal, phase_toroidal + np.pi / 2))
+            wire_points.append(p_toroidal + rotate_xy(p_poloidal, phase_toroidal + (0 if flat else np.pi / 2)))
         return np.array(wire_points)
 
     # Preset: A phase-jumping toroidal loop: 8 turns.
@@ -241,9 +243,18 @@ class Wire_Presets:
             toroidal_freq=1, poloidal_freq=16
         )
     }
-    # Preset: A phase-jumping toroidal loop: 32 turns.
+    # Preset: A phase-jumping toroidal loop: 32 turns, hi-res.
     PhaseJumpingToroidalLoop32 = {
-        "id": "Phase-jumping Toroidal Loop: 32 turns",
+        "id": "Phase-jumping Toroidal Loop: 32 turns, hi-res",
+        "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
+            n_points=2000, n_phase_jumps=32,
+            toroidal_radius=1, poloidal_radius=.5,
+            toroidal_freq=1, poloidal_freq=32
+        )
+    }
+    # Preset: A phase-jumping toroidal loop: 32 turns, lo-res.
+    PhaseJumpingToroidalLoop32Nonlinear = {
+        "id": "Phase-jumping Toroidal Loop: 32 turns, lo-res",
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=640, n_phase_jumps=32,
             toroidal_radius=1, poloidal_radius=.5,

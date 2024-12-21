@@ -324,7 +324,7 @@ class Wire_Presets:
 
     # Preset: A toroidal loop: 32 turns, hi-res, flat.
     ToroidalLoop32HiResFlat = {
-        "id": "Toroidal Loop: 32 turns, hi-res",
+        "id": "Toroidal Loop: 32 turns, hi-res, flat",
         "points": get_phase_jumping_toroidal_loop.__func__(  # type: ignore
             n_points=2000, n_phase_jumps=1,
             toroidal_radius=1, poloidal_radius=.5,

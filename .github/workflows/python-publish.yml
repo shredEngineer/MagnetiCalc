@@ -27,8 +27,8 @@ jobs:
       - name: Upload to PyPI or TestPyPI
         env:
           TWINE_USERNAME: __token__
-          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-          TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+          TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
           # 💡 ACTIVATE ONE LINE ONLY:
           twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/* --verbose

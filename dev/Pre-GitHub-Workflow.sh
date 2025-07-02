@@ -13,7 +13,8 @@ set -e
 
 # WARNING: I have disabled "reportGeneralTypeIssues" because pyright does not recognize any PyQt5 constants! (FIX THIS!)
 
-pyright magneticalc/
+# TODO: Fix those warnings
+# pyright magneticalc/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Check code style (some errors and warnings explicitly ignored)

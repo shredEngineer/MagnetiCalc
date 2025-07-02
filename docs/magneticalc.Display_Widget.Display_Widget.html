@@ -7,314 +7,886 @@
   <head>
     
     <title>magneticalc.Display_Widget.Display_Widget</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Display_Widget.html">Display_Widget</a></code><wbr></wbr>.<code><a href="magneticalc.Display_Widget.Display_Widget.html">Display_Widget</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Display_Widget.Display_Widget.html" class="internal-link" title="This class"><wbr></wbr>Display_<wbr></wbr>Widget</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#disable_field_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.disable_field_labels">disable<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#prevent_excessive_field_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.prevent_excessive_field_labels">prevent<wbr></wbr>_excessive<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#reload" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.reload">reload</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_display_field_magnitude_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_display_field_magnitude_labels">set<wbr></wbr>_display<wbr></wbr>_field<wbr></wbr>_magnitude<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_field_arrow_head_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_head_scale">set<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_head<wbr></wbr>_scale</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_field_arrow_line_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_line_scale">set<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_line<wbr></wbr>_scale</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_field_boost" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_boost">set<wbr></wbr>_field<wbr></wbr>_boost</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_field_label_resolution" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_label_resolution">set<wbr></wbr>_field<wbr></wbr>_label<wbr></wbr>_resolution</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_field_point_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_point_scale">set<wbr></wbr>_field<wbr></wbr>_point<wbr></wbr>_scale</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update">update</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_controls" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update_controls">update<wbr></wbr>_controls</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update_labels">update<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.set_color">set<wbr></wbr>_color</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ExcessiveFieldLabelsThreshold" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.ExcessiveFieldLabelsThreshold"><wbr></wbr>Excessive<wbr></wbr>Field<wbr></wbr>Labels<wbr></wbr>Threshold</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowHeadScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMax"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Max</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowHeadScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMin"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowHeadScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleStep"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Step</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowLineScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMax"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Max</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowLineScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMin"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowLineScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleStep"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Step</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldBoostMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMax"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Max</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldBoostMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMin"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldBoostStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostStep"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Step</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldPointScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMax"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Max</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldPointScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMin"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldPointScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleStep"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Step</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#display_field_magnitude_labels_checkbox" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.display_field_magnitude_labels_checkbox">display<wbr></wbr>_field<wbr></wbr>_magnitude<wbr></wbr>_labels<wbr></wbr>_checkbox</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_arrow_head_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_arrow_head_scale_slider">field<wbr></wbr>_arrow<wbr></wbr>_head<wbr></wbr>_scale<wbr></wbr>_slider</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_arrow_line_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_arrow_line_scale_slider">field<wbr></wbr>_arrow<wbr></wbr>_line<wbr></wbr>_scale<wbr></wbr>_slider</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_boost_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_boost_slider">field<wbr></wbr>_boost<wbr></wbr>_slider</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_label_resolution_combobox" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox">field<wbr></wbr>_label<wbr></wbr>_resolution<wbr></wbr>_combobox</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_label_resolution_combobox_connection" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox_connection">field<wbr></wbr>_label<wbr></wbr>_resolution<wbr></wbr>_combobox<wbr></wbr>_connection</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#field_point_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_point_scale_slider">field<wbr></wbr>_point<wbr></wbr>_scale<wbr></wbr>_slider</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.gui">gui</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#total_labels_label" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.total_labels_label">total<wbr></wbr>_labels<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Display_Widget.html" class="internal-link" title="The parent of this class"><wbr></wbr>Display_<wbr></wbr>Widget</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Display_Widget.Display_Widget.html" class="internal-link" title="magneticalc.Display_Widget.Display_Widget"><wbr></wbr>Display_<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Display_Widget</span>(<a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.Display_Widget.Display_Widget">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Display_Widget class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id39">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Display_Widget.html" class="internal-link" title="magneticalc.Display_Widget">Display_Widget</a></code><wbr></wbr>.<code><a href="magneticalc.Display_Widget.Display_Widget.html" class="internal-link" title="magneticalc.Display_Widget.Display_Widget">Display_Widget</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Display_Widget</span>(<a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.__init__">Display_Widget(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.Display_Widget.Display_Widget">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Display_Widget class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id39">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.__init__">__init__</a></code></td>
     <td>Populates the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#disable_field_labels">disable_field_labels</a></code></td>
+    <td><code><a href="#disable_field_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.disable_field_labels">disable<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
     <td>Disables field labels.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#prevent_excessive_field_labels">prevent_excessive_field_labels</a></code></td>
+    <td><code><a href="#prevent_excessive_field_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.prevent_excessive_field_labels">prevent<wbr></wbr>_excessive<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
     <td>Prevents displaying an excessive number of field labels.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#reload">reload</a></code></td>
+    <td><code><a href="#reload" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.reload">reload</a></code></td>
     <td>Reloads the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_display_field_magnitude_labels">set_display_field_magnitude_labels</a></code></td>
+    <td><code><a href="#set_display_field_magnitude_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_display_field_magnitude_labels">set<wbr></wbr>_display<wbr></wbr>_field<wbr></wbr>_magnitude<wbr></wbr>_labels</a></code></td>
     <td>Sets field label "Display Magnitude" value.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_field_arrow_head_scale">set_field_arrow_head_scale</a></code></td>
+    <td><code><a href="#set_field_arrow_head_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_head_scale">set<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_head<wbr></wbr>_scale</a></code></td>
     <td>Sets field arrow head scale.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_field_arrow_line_scale">set_field_arrow_line_scale</a></code></td>
+    <td><code><a href="#set_field_arrow_line_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_line_scale">set<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_line<wbr></wbr>_scale</a></code></td>
     <td>Sets field arrow line scale.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_field_boost">set_field_boost</a></code></td>
+    <td><code><a href="#set_field_boost" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_boost">set<wbr></wbr>_field<wbr></wbr>_boost</a></code></td>
     <td>Sets field boost value.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_field_label_resolution">set_field_label_resolution</a></code></td>
+    <td><code><a href="#set_field_label_resolution" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_label_resolution">set<wbr></wbr>_field<wbr></wbr>_label<wbr></wbr>_resolution</a></code></td>
     <td>Sets field label resolution exponent.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_field_point_scale">set_field_point_scale</a></code></td>
+    <td><code><a href="#set_field_point_scale" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.set_field_point_scale">set<wbr></wbr>_field<wbr></wbr>_point<wbr></wbr>_scale</a></code></td>
     <td>Sets field point scale.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update">update</a></code></td>
+    <td><code><a href="#update" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update">update</a></code></td>
     <td>Updates this widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_controls">update_controls</a></code></td>
+    <td><code><a href="#update_controls" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update_controls">update<wbr></wbr>_controls</a></code></td>
     <td>Updates the field label resolution combobox.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_labels">update_labels</a></code></td>
+    <td><code><a href="#update_labels" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.update_labels">update<wbr></wbr>_labels</a></code></td>
     <td>Updates the labels.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ExcessiveFieldLabelsThreshold">ExcessiveFieldLabelsThreshold</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#ExcessiveFieldLabelsThreshold" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.ExcessiveFieldLabelsThreshold"><wbr></wbr>Excessive<wbr></wbr>Field<wbr></wbr>Labels<wbr></wbr>Threshold</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowHeadScaleMax">FieldArrowHeadScaleMax</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowHeadScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMax"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Max</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowHeadScaleMin">FieldArrowHeadScaleMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowHeadScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMin"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowHeadScaleStep">FieldArrowHeadScaleStep</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowHeadScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleStep"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Scale<wbr></wbr>Step</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowLineScaleMax">FieldArrowLineScaleMax</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowLineScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMax"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Max</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowLineScaleMin">FieldArrowLineScaleMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowLineScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMin"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowLineScaleStep">FieldArrowLineScaleStep</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowLineScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleStep"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Line<wbr></wbr>Scale<wbr></wbr>Step</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldBoostMax">FieldBoostMax</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldBoostMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMax"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Max</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldBoostMin">FieldBoostMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldBoostMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMin"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldBoostStep">FieldBoostStep</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldBoostStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldBoostStep"><wbr></wbr>Field<wbr></wbr>Boost<wbr></wbr>Step</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldPointScaleMax">FieldPointScaleMax</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldPointScaleMax" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMax"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Max</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldPointScaleMin">FieldPointScaleMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldPointScaleMin" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMin"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldPointScaleStep">FieldPointScaleStep</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldPointScaleStep" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleStep"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Scale<wbr></wbr>Step</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#display_field_magnitude_labels_checkbox">display_field_magnitude_labels_checkbox</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#display_field_magnitude_labels_checkbox" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.display_field_magnitude_labels_checkbox">display<wbr></wbr>_field<wbr></wbr>_magnitude<wbr></wbr>_labels<wbr></wbr>_checkbox</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_arrow_head_scale_slider">field_arrow_head_scale_slider</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_arrow_head_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_arrow_head_scale_slider">field<wbr></wbr>_arrow<wbr></wbr>_head<wbr></wbr>_scale<wbr></wbr>_slider</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_arrow_line_scale_slider">field_arrow_line_scale_slider</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_arrow_line_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_arrow_line_scale_slider">field<wbr></wbr>_arrow<wbr></wbr>_line<wbr></wbr>_scale<wbr></wbr>_slider</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_boost_slider">field_boost_slider</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_boost_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_boost_slider">field<wbr></wbr>_boost<wbr></wbr>_slider</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_label_resolution_combobox">field_label_resolution_combobox</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_label_resolution_combobox" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox">field<wbr></wbr>_label<wbr></wbr>_resolution<wbr></wbr>_combobox</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_label_resolution_combobox_connection">field_label_resolution_combobox_connection</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_label_resolution_combobox_connection" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox_connection">field<wbr></wbr>_label<wbr></wbr>_resolution<wbr></wbr>_combobox<wbr></wbr>_connection</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#field_point_scale_slider">field_point_scale_slider</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#field_point_scale_slider" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.field_point_scale_slider">field<wbr></wbr>_point<wbr></wbr>_scale<wbr></wbr>_slider</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#total_labels_label">total_labels_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr>
-</table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>:
-          </p>
-          <table class="children sortable" id="id40">
-  
-  
-  <tr class="basemethod">
-    
-    <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color">set_color</a></code></td>
-    <td>Sets the style and label color of the groupbox.</td>
+    <td><code><a href="#total_labels_label" class="internal-link" title="magneticalc.Display_Widget.Display_Widget.total_labels_label">total<wbr></wbr>_labels<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
           
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>):
-          </p>
-          <table class="children sortable" id="id41">
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a></code>:
+            </p>
+            <table class="children sortable" id="id40">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.set_color">set<wbr></wbr>_color</a></code></td>
+    <td>Sets the style and label color of the groupbox.</td>
+  </tr>
+</table>
+            
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a></code>):
+            </p>
+            <table class="children sortable" id="id41">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code></td>
     <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code></td>
     <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code></td>
     <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code></td>
     <td>Adds widget.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code></td>
     <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.Display_Widget.Display_Widget.__init__">
@@ -325,13 +897,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.Display_Widget.Display_Widget.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#__init__">magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.__init__</a></code></div>
-    
-    <div>Populates the widget.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#__init__" class="internal-link">magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.__init__</a></code></div>
+    <div><p>Populates the widget.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -344,13 +921,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">disable_field_labels</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">disable_field_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#disable_field_labels" title="magneticalc.Display_Widget.Display_Widget.disable_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Disables field labels.</div>
+    <div><p>Disables field labels.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -363,13 +945,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">prevent_excessive_field_labels</span>(self, choice):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">prevent_excessive_field_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">choice: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#prevent_excessive_field_labels" title="magneticalc.Display_Widget.Display_Widget.prevent_excessive_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Prevents displaying an excessive number of field labels.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">choice:</span><code>bool</code></td><td class="fieldArgDesc">True lets the user choose; False disables field labels if there is an excessive number of them</td></tr></table></div>
+    <div><p>Prevents displaying an excessive number of field labels.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">choice:</span><code>bool</code></td><td class="fieldArgDesc">True lets the user choose; False disables field labels if there is an excessive number of them</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -382,13 +969,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">reload</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">reload</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#reload" title="magneticalc.Display_Widget.Display_Widget.reload">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Reloads the widget.</div>
+    <div><p>Reloads the widget.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -401,13 +993,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_display_field_magnitude_labels</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_display_field_magnitude_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#set_display_field_magnitude_labels" title="magneticalc.Display_Widget.Display_Widget.set_display_field_magnitude_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field label "Display Magnitude" value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>bool</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field label "Display Magnitude" value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>bool</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -420,13 +1017,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_field_arrow_head_scale</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_field_arrow_head_scale</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>float</code></span>):</span>
+    
+    <a class="headerLink" href="#set_field_arrow_head_scale" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_head_scale">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field arrow head scale.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field arrow head scale.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -439,13 +1041,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_field_arrow_line_scale</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_field_arrow_line_scale</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>float</code></span>):</span>
+    
+    <a class="headerLink" href="#set_field_arrow_line_scale" title="magneticalc.Display_Widget.Display_Widget.set_field_arrow_line_scale">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field arrow line scale.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field arrow line scale.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -458,13 +1065,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_field_boost</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_field_boost</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>float</code></span>):</span>
+    
+    <a class="headerLink" href="#set_field_boost" title="magneticalc.Display_Widget.Display_Widget.set_field_boost">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field boost value.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field boost value.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -477,13 +1089,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_field_label_resolution</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_field_label_resolution</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>int</code></span>):</span>
+    
+    <a class="headerLink" href="#set_field_label_resolution" title="magneticalc.Display_Widget.Display_Widget.set_field_label_resolution">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field label resolution exponent.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>int</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field label resolution exponent.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>int</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -496,13 +1113,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_field_point_scale</span>(self, value):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_field_point_scale</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>float</code></span>):</span>
+    
+    <a class="headerLink" href="#set_field_point_scale" title="magneticalc.Display_Widget.Display_Widget.set_field_point_scale">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets field point scale.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
+    <div><p>Sets field point scale.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc">Value</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -515,13 +1137,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update" title="magneticalc.Display_Widget.Display_Widget.update">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates this widget.</div>
+    <div><p>Updates this widget.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -534,13 +1161,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_controls</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_controls</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_controls" title="magneticalc.Display_Widget.Display_Widget.update_controls">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the field label resolution combobox.</div>
+    <div><p>Updates the field label resolution combobox.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -553,13 +1185,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_labels</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_labels" title="magneticalc.Display_Widget.Display_Widget.update_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the labels.</div>
+    <div><p>Updates the labels.</p></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -574,9 +1211,13 @@
     
     <span class="py-defname">ExcessiveFieldLabelsThreshold</span>: <code>int</code> =
     
+    <a class="headerLink" href="#ExcessiveFieldLabelsThreshold" title="magneticalc.Display_Widget.Display_Widget.ExcessiveFieldLabelsThreshold">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -594,9 +1235,13 @@
     
     <span class="py-defname">FieldArrowHeadScaleMax</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldArrowHeadScaleMax" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMax">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -614,9 +1259,13 @@
     
     <span class="py-defname">FieldArrowHeadScaleMin</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldArrowHeadScaleMin" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -634,9 +1283,13 @@
     
     <span class="py-defname">FieldArrowHeadScaleStep</span> =
     
+    <a class="headerLink" href="#FieldArrowHeadScaleStep" title="magneticalc.Display_Widget.Display_Widget.FieldArrowHeadScaleStep">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -654,9 +1307,13 @@
     
     <span class="py-defname">FieldArrowLineScaleMax</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldArrowLineScaleMax" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMax">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -674,9 +1331,13 @@
     
     <span class="py-defname">FieldArrowLineScaleMin</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldArrowLineScaleMin" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -694,9 +1355,13 @@
     
     <span class="py-defname">FieldArrowLineScaleStep</span> =
     
+    <a class="headerLink" href="#FieldArrowLineScaleStep" title="magneticalc.Display_Widget.Display_Widget.FieldArrowLineScaleStep">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -714,9 +1379,13 @@
     
     <span class="py-defname">FieldBoostMax</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldBoostMax" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMax">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -734,9 +1403,13 @@
     
     <span class="py-defname">FieldBoostMin</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldBoostMin" title="magneticalc.Display_Widget.Display_Widget.FieldBoostMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -754,9 +1427,13 @@
     
     <span class="py-defname">FieldBoostStep</span> =
     
+    <a class="headerLink" href="#FieldBoostStep" title="magneticalc.Display_Widget.Display_Widget.FieldBoostStep">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -774,9 +1451,13 @@
     
     <span class="py-defname">FieldPointScaleMax</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldPointScaleMax" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMax">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -794,9 +1475,13 @@
     
     <span class="py-defname">FieldPointScaleMin</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldPointScaleMin" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -814,9 +1499,13 @@
     
     <span class="py-defname">FieldPointScaleStep</span> =
     
+    <a class="headerLink" href="#FieldPointScaleStep" title="magneticalc.Display_Widget.Display_Widget.FieldPointScaleStep">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -834,9 +1523,13 @@
     
     <span class="py-defname">display_field_magnitude_labels_checkbox</span> =
     
+    <a class="headerLink" href="#display_field_magnitude_labels_checkbox" title="magneticalc.Display_Widget.Display_Widget.display_field_magnitude_labels_checkbox">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -854,9 +1547,13 @@
     
     <span class="py-defname">field_arrow_head_scale_slider</span> =
     
+    <a class="headerLink" href="#field_arrow_head_scale_slider" title="magneticalc.Display_Widget.Display_Widget.field_arrow_head_scale_slider">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -874,9 +1571,13 @@
     
     <span class="py-defname">field_arrow_line_scale_slider</span> =
     
+    <a class="headerLink" href="#field_arrow_line_scale_slider" title="magneticalc.Display_Widget.Display_Widget.field_arrow_line_scale_slider">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -894,9 +1595,13 @@
     
     <span class="py-defname">field_boost_slider</span> =
     
+    <a class="headerLink" href="#field_boost_slider" title="magneticalc.Display_Widget.Display_Widget.field_boost_slider">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -914,9 +1619,13 @@
     
     <span class="py-defname">field_label_resolution_combobox</span> =
     
+    <a class="headerLink" href="#field_label_resolution_combobox" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -934,9 +1643,13 @@
     
     <span class="py-defname">field_label_resolution_combobox_connection</span> =
     
+    <a class="headerLink" href="#field_label_resolution_combobox_connection" title="magneticalc.Display_Widget.Display_Widget.field_label_resolution_combobox_connection">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -954,9 +1667,13 @@
     
     <span class="py-defname">field_point_scale_slider</span> =
     
+    <a class="headerLink" href="#field_point_scale_slider" title="magneticalc.Display_Widget.Display_Widget.field_point_scale_slider">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -974,9 +1691,13 @@
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.Display_Widget.Display_Widget.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -994,27 +1715,40 @@
     
     <span class="py-defname">total_labels_label</span> =
     
+    <a class="headerLink" href="#total_labels_label" title="magneticalc.Display_Widget.Display_Widget.total_labels_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

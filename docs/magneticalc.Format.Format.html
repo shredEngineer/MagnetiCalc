@@ -7,131 +7,367 @@
   <head>
     
     <title>magneticalc.Format.Format</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Format.html">Format</a></code><wbr></wbr>.<code><a href="magneticalc.Format.Format.html">Format</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Format.Format.html" class="internal-link" title="This class"><wbr></wbr>Format</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#absolute_filename" class="internal-link" title="magneticalc.Format.Format.absolute_filename">absolute<wbr></wbr>_filename</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#filename_uri" class="internal-link" title="magneticalc.Format.Format.filename_uri">filename<wbr></wbr>_uri</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#float_to_str" class="internal-link" title="magneticalc.Format.Format.float_to_str">float<wbr></wbr>_to<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#point_to_str" class="internal-link" title="magneticalc.Format.Format.point_to_str">point<wbr></wbr>_to<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#points_to_str" class="internal-link" title="magneticalc.Format.Format.points_to_str">points<wbr></wbr>_to<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#str_to_point" class="internal-link" title="magneticalc.Format.Format.str_to_point">str<wbr></wbr>_to<wbr></wbr>_point</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#str_to_points" class="internal-link" title="magneticalc.Format.Format.str_to_points">str<wbr></wbr>_to<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#CoordinatePrecision" class="internal-link" title="magneticalc.Format.Format.CoordinatePrecision"><wbr></wbr>Coordinate<wbr></wbr>Precision</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FloatPrecision" class="internal-link" title="magneticalc.Format.Format.FloatPrecision"><wbr></wbr>Float<wbr></wbr>Precision</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Format.html" class="internal-link" title="The parent of this class"><wbr></wbr>Format</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Format.Format.html" class="internal-link" title="magneticalc.Format.Format"><wbr></wbr>Format</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Format</span>:</code></p>
-        <p><a href="classIndex.html#magneticalc.Format.Format">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Format class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id57">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Format.html" class="internal-link" title="magneticalc.Format">Format</a></code><wbr></wbr>.<code><a href="magneticalc.Format.Format.html" class="internal-link" title="magneticalc.Format.Format">Format</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Format</span>:</code></p>
+          <p><a href="classIndex.html#magneticalc.Format.Format">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Format class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id57">
   
   
   <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#absolute_filename">absolute_filename</a></code></td>
+    <td><code><a href="#absolute_filename" class="internal-link" title="magneticalc.Format.Format.absolute_filename">absolute<wbr></wbr>_filename</a></code></td>
     <td>Converts a filename to an absolute filename.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#filename_uri">filename_uri</a></code></td>
+    <td><code><a href="#filename_uri" class="internal-link" title="magneticalc.Format.Format.filename_uri">filename<wbr></wbr>_uri</a></code></td>
     <td>Converts a filename to a filename URI.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#float_to_str">float_to_str</a></code></td>
+    <td><code><a href="#float_to_str" class="internal-link" title="magneticalc.Format.Format.float_to_str">float<wbr></wbr>_to<wbr></wbr>_str</a></code></td>
     <td>Converts a float value to string.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#point_to_str">point_to_str</a></code></td>
+    <td><code><a href="#point_to_str" class="internal-link" title="magneticalc.Format.Format.point_to_str">point<wbr></wbr>_to<wbr></wbr>_str</a></code></td>
     <td>Converts a single 3D point to string.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#points_to_str">points_to_str</a></code></td>
+    <td><code><a href="#points_to_str" class="internal-link" title="magneticalc.Format.Format.points_to_str">points<wbr></wbr>_to<wbr></wbr>_str</a></code></td>
     <td>Converts list of 3D points to string.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#str_to_point">str_to_point</a></code></td>
+    <td><code><a href="#str_to_point" class="internal-link" title="magneticalc.Format.Format.str_to_point">str<wbr></wbr>_to<wbr></wbr>_point</a></code></td>
     <td>Converts string to single 3D point.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#str_to_points">str_to_points</a></code></td>
+    <td><code><a href="#str_to_points" class="internal-link" title="magneticalc.Format.Format.str_to_points">str<wbr></wbr>_to<wbr></wbr>_points</a></code></td>
     <td>Converts string to list of 3D points.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#CoordinatePrecision">CoordinatePrecision</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#CoordinatePrecision" class="internal-link" title="magneticalc.Format.Format.CoordinatePrecision"><wbr></wbr>Coordinate<wbr></wbr>Precision</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FloatPrecision">FloatPrecision</a></code></td>
+    <td><code><a href="#FloatPrecision" class="internal-link" title="magneticalc.Format.Format.FloatPrecision"><wbr></wbr>Float<wbr></wbr>Precision</a></code></td>
     <td>Coordinate precision.</td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basestaticmethod">
+        <div id="childList">
+          <div class="basestaticmethod">
   
   
   <a name="magneticalc.Format.Format.absolute_filename">
@@ -141,14 +377,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">absolute_filename</span>(filename):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">absolute_filename</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code></span>) -&gt; <code>str</code>:</span>
+    
+    <a class="headerLink" href="#absolute_filename" title="magneticalc.Format.Format.absolute_filename">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts a filename to an absolute filename.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Absolute filename</td></tr></table></div>
+    <div><p>Converts a filename to an absolute filename.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Absolute filename</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -160,14 +401,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">filename_uri</span>(filename):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">filename_uri</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code></span>) -&gt; <code>str</code>:</span>
+    
+    <a class="headerLink" href="#filename_uri" title="magneticalc.Format.Format.filename_uri">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts a filename to a filename URI.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Filename URI</td></tr></table></div>
+    <div><p>Converts a filename to a filename URI.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">Filename URI</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -179,14 +425,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">float_to_str</span>(value):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">float_to_str</span><span class="function-signature">(<span class="rst-sig-param">value: <code>float</code></span>) -&gt; <code>str</code>:</span>
+    
+    <a class="headerLink" href="#float_to_str" title="magneticalc.Format.Format.float_to_str">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts a float value to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>float</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div><p>Converts a float value to string.</p></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -198,14 +449,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">point_to_str</span>(point):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">point_to_str</span><span class="function-signature">(<span class="rst-sig-param">point: <code>np.ndarray | list[<wbr></wbr>float]</code></span>) -&gt; <code>str</code>:</span>
+    
+    <a class="headerLink" href="#point_to_str" title="magneticalc.Format.Format.point_to_str">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts a single 3D point to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">point:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Single 3D point</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
+    <div><p>Converts a single 3D point to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">point:</span><code>np.ndarray | list[<wbr></wbr>float]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -217,14 +473,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">points_to_str</span>(points):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">points_to_str</span><span class="function-signature">(<span class="rst-sig-param">points: <code>np.ndarray | list[<wbr></wbr>list[<wbr></wbr>float]]</code></span>) -&gt; <code>str</code>:</span>
+    
+    <a class="headerLink" href="#points_to_str" title="magneticalc.Format.Format.points_to_str">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts list of 3D points to string.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
+    <div><p>Converts list of 3D points to string.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">points:</span><code>np.ndarray | list[<wbr></wbr>list[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">String</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -236,14 +497,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">str_to_point</span>(str_point):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">str_to_point</span><span class="function-signature">(<span class="rst-sig-param">str_point: <code>str</code></span>) -&gt; <code>np.ndarray | list[<wbr></wbr>float]</code>:</span>
+    
+    <a class="headerLink" href="#str_to_point" title="magneticalc.Format.Format.str_to_point">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts string to single 3D point.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str_point:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table></div>
+    <div><p>Converts string to single 3D point.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str<wbr></wbr>_point:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray | list[<wbr></wbr>float]</code></td><td class="fieldArgDesc">Single 3D point</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -255,14 +521,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">str_to_points</span>(str_points):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">str_to_points</span><span class="function-signature">(<span class="rst-sig-param">str_points: <code>str</code></span>) -&gt; <code>np.ndarray | list[<wbr></wbr>list[<wbr></wbr>float]]</code>:</span>
+    
+    <a class="headerLink" href="#str_to_points" title="magneticalc.Format.Format.str_to_points">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Converts string to list of 3D points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str_points:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Union[<wbr></wbr>np.ndarray, <wbr></wbr>List[<wbr></wbr>List[<wbr></wbr>float]]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table></div>
+    <div><p>Converts string to list of 3D points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">str<wbr></wbr>_points:</span><code>str</code></td><td class="fieldArgDesc">String</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray | list[<wbr></wbr>list[<wbr></wbr>float]]</code></td><td class="fieldArgDesc">List of 3D points</td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -277,9 +548,13 @@
     
     <span class="py-defname">CoordinatePrecision</span>: <code>int</code> =
     
+    <a class="headerLink" href="#CoordinatePrecision" title="magneticalc.Format.Format.CoordinatePrecision">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -297,27 +572,40 @@
     
     <span class="py-defname">FloatPrecision</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FloatPrecision" title="magneticalc.Format.Format.FloatPrecision">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Coordinate precision.</div>
+    <div><p>Coordinate precision.</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

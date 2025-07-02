@@ -7,221 +7,637 @@
   <head>
     
     <title>magneticalc.GUI.GUI</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.GUI.html">GUI</a></code><wbr></wbr>.<code><a href="magneticalc.GUI.GUI.html">GUI</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.GUI.GUI.html" class="internal-link" title="This class">GUI</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.GUI.GUI.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#cleanup" class="internal-link" title="magneticalc.GUI.GUI.cleanup">cleanup</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#closeEvent" class="internal-link" title="magneticalc.GUI.GUI.closeEvent">close<wbr></wbr>Event</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#interrupt_calculation" class="internal-link" title="magneticalc.GUI.GUI.interrupt_calculation">interrupt<wbr></wbr>_calculation</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#keyPressEvent" class="internal-link" title="magneticalc.GUI.GUI.keyPressEvent">key<wbr></wbr>Press<wbr></wbr>Event</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_calculation_exited" class="internal-link" title="magneticalc.GUI.GUI.on_calculation_exited">on<wbr></wbr>_calculation<wbr></wbr>_exited</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#re_wrapper" class="internal-link" title="magneticalc.GUI.GUI.re_wrapper">re<wbr></wbr>_wrapper</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#recalculate" class="internal-link" title="magneticalc.GUI.GUI.recalculate">recalculate</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw" class="internal-link" title="magneticalc.GUI.GUI.redraw">redraw</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#reload" class="internal-link" title="magneticalc.GUI.GUI.reload">reload</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#calculation_exited" class="internal-link" title="magneticalc.GUI.GUI.calculation_exited">calculation<wbr></wbr>_exited</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#calculation_status" class="internal-link" title="magneticalc.GUI.GUI.calculation_status">calculation<wbr></wbr>_status</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#invalidate_statusbar" class="internal-link" title="magneticalc.GUI.GUI.invalidate_statusbar">invalidate<wbr></wbr>_statusbar</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#MinimumWindowSize" class="internal-link" title="magneticalc.GUI.GUI.MinimumWindowSize"><wbr></wbr>Minimum<wbr></wbr>Window<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#calculation_start_time" class="internal-link" title="magneticalc.GUI.GUI.calculation_start_time">calculation<wbr></wbr>_start<wbr></wbr>_time</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#calculation_thread" class="internal-link" title="magneticalc.GUI.GUI.calculation_thread">calculation<wbr></wbr>_thread</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#exiting" class="internal-link" title="magneticalc.GUI.GUI.exiting">exiting</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#initializing" class="internal-link" title="magneticalc.GUI.GUI.initializing">initializing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#menu" class="internal-link" title="magneticalc.GUI.GUI.menu">menu</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#model" class="internal-link" title="magneticalc.GUI.GUI.model">model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#project" class="internal-link" title="magneticalc.GUI.GUI.project">project</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#sidebar_left" class="internal-link" title="magneticalc.GUI.GUI.sidebar_left">sidebar<wbr></wbr>_left</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#sidebar_right" class="internal-link" title="magneticalc.GUI.GUI.sidebar_right">sidebar<wbr></wbr>_right</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#splitter" class="internal-link" title="magneticalc.GUI.GUI.splitter">splitter</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#statusbar" class="internal-link" title="magneticalc.GUI.GUI.statusbar">statusbar</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#user_locale" class="internal-link" title="magneticalc.GUI.GUI.user_locale">user<wbr></wbr>_locale</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#vispy_canvas" class="internal-link" title="magneticalc.GUI.GUI.vispy_canvas">vispy<wbr></wbr>_canvas</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.GUI.html" class="internal-link" title="The parent of this class">GUI</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.GUI.GUI.html" class="internal-link" title="magneticalc.GUI.GUI">GUI</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">GUI</span>(<span title="PyQt5.QtWidgets.QMainWindow">QMainWindow</span>):</code></p>
-        <p><a href="classIndex.html#magneticalc.GUI.GUI">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>GUI class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id59">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.GUI.html" class="internal-link" title="magneticalc.GUI">GUI</a></code><wbr></wbr>.<code><a href="magneticalc.GUI.GUI.html" class="internal-link" title="magneticalc.GUI.GUI">GUI</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">GUI</span>(QMainWindow):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.GUI.GUI.__init__">GUI()</a></code></p>
+          <p><a href="classIndex.html#magneticalc.GUI.GUI">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>GUI class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id59">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.GUI.GUI.__init__">__init__</a></code></td>
     <td>Initializes the GUI.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#cleanup">cleanup</a></code></td>
+    <td><code><a href="#cleanup" class="internal-link" title="magneticalc.GUI.GUI.cleanup">cleanup</a></code></td>
     <td>Perform clean-up upon quitting the application.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#closeEvent">closeEvent</a></code></td>
+    <td><code><a href="#closeEvent" class="internal-link" title="magneticalc.GUI.GUI.closeEvent">close<wbr></wbr>Event</a></code></td>
     <td>Gets called when the window is closed (programmatically through close() or manually)</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#interrupt_calculation">interrupt_calculation</a></code></td>
+    <td><code><a href="#interrupt_calculation" class="internal-link" title="magneticalc.GUI.GUI.interrupt_calculation">interrupt<wbr></wbr>_calculation</a></code></td>
     <td>Kills any running calculation.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#keyPressEvent">keyPressEvent</a></code></td>
+    <td><code><a href="#keyPressEvent" class="internal-link" title="magneticalc.GUI.GUI.keyPressEvent">key<wbr></wbr>Press<wbr></wbr>Event</a></code></td>
     <td>Handles key press event.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_calculation_exited">on_calculation_exited</a></code></td>
+    <td><code><a href="#on_calculation_exited" class="internal-link" title="magneticalc.GUI.GUI.on_calculation_exited">on<wbr></wbr>_calculation<wbr></wbr>_exited</a></code></td>
     <td>This is called after calculation thread has exited.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#re_wrapper">re_wrapper</a></code></td>
+    <td><code><a href="#re_wrapper" class="internal-link" title="magneticalc.GUI.GUI.re_wrapper">re<wbr></wbr>_wrapper</a></code></td>
     <td>Simple wrapper that decides between recalculation or redraw.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#recalculate">recalculate</a></code></td>
+    <td><code><a href="#recalculate" class="internal-link" title="magneticalc.GUI.GUI.recalculate">recalculate</a></code></td>
     <td>Recalculates the model.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw">redraw</a></code></td>
+    <td><code><a href="#redraw" class="internal-link" title="magneticalc.GUI.GUI.redraw">redraw</a></code></td>
     <td>Redraws the scene.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#reload">reload</a></code></td>
+    <td><code><a href="#reload" class="internal-link" title="magneticalc.GUI.GUI.reload">reload</a></code></td>
     <td>Reloads the GUI.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#calculation_exited">calculation_exited</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#calculation_exited" class="internal-link" title="magneticalc.GUI.GUI.calculation_exited">calculation<wbr></wbr>_exited</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#calculation_status">calculation_status</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#calculation_status" class="internal-link" title="magneticalc.GUI.GUI.calculation_status">calculation<wbr></wbr>_status</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#invalidate_statusbar">invalidate_statusbar</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#invalidate_statusbar" class="internal-link" title="magneticalc.GUI.GUI.invalidate_statusbar">invalidate<wbr></wbr>_statusbar</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#MinimumWindowSize">MinimumWindowSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#MinimumWindowSize" class="internal-link" title="magneticalc.GUI.GUI.MinimumWindowSize"><wbr></wbr>Minimum<wbr></wbr>Window<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#calculation_start_time">calculation_start_time</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#calculation_start_time" class="internal-link" title="magneticalc.GUI.GUI.calculation_start_time">calculation<wbr></wbr>_start<wbr></wbr>_time</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#calculation_thread">calculation_thread</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#calculation_thread" class="internal-link" title="magneticalc.GUI.GUI.calculation_thread">calculation<wbr></wbr>_thread</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#exiting">exiting</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#exiting" class="internal-link" title="magneticalc.GUI.GUI.exiting">exiting</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#initializing">initializing</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#initializing" class="internal-link" title="magneticalc.GUI.GUI.initializing">initializing</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#menu">menu</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#menu" class="internal-link" title="magneticalc.GUI.GUI.menu">menu</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#model">model</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#model" class="internal-link" title="magneticalc.GUI.GUI.model">model</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#project">project</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#project" class="internal-link" title="magneticalc.GUI.GUI.project">project</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#sidebar_left">sidebar_left</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#sidebar_left" class="internal-link" title="magneticalc.GUI.GUI.sidebar_left">sidebar<wbr></wbr>_left</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#sidebar_right">sidebar_right</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#sidebar_right" class="internal-link" title="magneticalc.GUI.GUI.sidebar_right">sidebar<wbr></wbr>_right</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#splitter">splitter</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#splitter" class="internal-link" title="magneticalc.GUI.GUI.splitter">splitter</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#statusbar">statusbar</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#statusbar" class="internal-link" title="magneticalc.GUI.GUI.statusbar">statusbar</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#user_locale">user_locale</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#user_locale" class="internal-link" title="magneticalc.GUI.GUI.user_locale">user<wbr></wbr>_locale</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#vispy_canvas">vispy_canvas</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#vispy_canvas" class="internal-link" title="magneticalc.GUI.GUI.vispy_canvas">vispy<wbr></wbr>_canvas</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.GUI.GUI.__init__">
@@ -232,13 +648,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.GUI.GUI.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Initializes the GUI.</div>
+    <div><p>Initializes the GUI.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -251,13 +672,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">cleanup</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">cleanup</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#cleanup" title="magneticalc.GUI.GUI.cleanup">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Perform clean-up upon quitting the application.</div>
+    <div><p>Perform clean-up upon quitting the application.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -270,13 +696,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">closeEvent</span>(self, event):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">closeEvent</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">event: <code>QCloseEvent</code></span>):</span>
+    
+    <a class="headerLink" href="#closeEvent" title="magneticalc.GUI.GUI.closeEvent">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets called when the window is closed (programmatically through close() or manually)<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QCloseEvent</code></td><td class="fieldArgDesc">Close event</td></tr></table></div>
+    <div><p>Gets called when the window is closed (programmatically through close() or manually)</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QCloseEvent</code></td><td class="fieldArgDesc">Close event</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -289,13 +720,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">interrupt_calculation</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">interrupt_calculation</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#interrupt_calculation" title="magneticalc.GUI.GUI.interrupt_calculation">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Kills any running calculation.</div>
+    <div><p>Kills any running calculation.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -308,13 +744,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">keyPressEvent</span>(self, event):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">keyPressEvent</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">event: <code>QKeyEvent</code></span>):</span>
+    
+    <a class="headerLink" href="#keyPressEvent" title="magneticalc.GUI.GUI.keyPressEvent">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Handles key press event.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QKeyEvent</code></td><td class="fieldArgDesc">Key press event</td></tr></table></div>
+    <div><p>Handles key press event.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QKeyEvent</code></td><td class="fieldArgDesc">Key press event</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -327,13 +768,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_calculation_exited</span>(self, success):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_calculation_exited</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">success: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#on_calculation_exited" title="magneticalc.GUI.GUI.on_calculation_exited">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>This is called after calculation thread has exited.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">True if calculation was successful, False otherwise</td></tr></table></div>
+    <div><p>This is called after calculation thread has exited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">True if calculation was successful, False otherwise</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -346,13 +792,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">re_wrapper</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">re_wrapper</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#re_wrapper" title="magneticalc.GUI.GUI.re_wrapper">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Simple wrapper that decides between recalculation or redraw.</div>
+    <div><p>Simple wrapper that decides between recalculation or redraw.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -365,13 +816,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">recalculate</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#recalculate" title="magneticalc.GUI.GUI.recalculate">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Recalculates the model.</div>
+    <div><p>Recalculates the model.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -384,13 +840,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw" title="magneticalc.GUI.GUI.redraw">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws the scene.</div>
+    <div><p>Redraws the scene.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -403,13 +864,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">reload</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">reload</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#reload" title="magneticalc.GUI.GUI.reload">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Reloads the GUI.</div>
+    <div><p>Reloads the GUI.</p></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -424,9 +890,13 @@
     
     <span class="py-defname">calculation_exited</span> =
     
+    <a class="headerLink" href="#calculation_exited" title="magneticalc.GUI.GUI.calculation_exited">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -444,9 +914,13 @@
     
     <span class="py-defname">calculation_status</span> =
     
+    <a class="headerLink" href="#calculation_status" title="magneticalc.GUI.GUI.calculation_status">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -464,9 +938,13 @@
     
     <span class="py-defname">invalidate_statusbar</span> =
     
+    <a class="headerLink" href="#invalidate_statusbar" title="magneticalc.GUI.GUI.invalidate_statusbar">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -484,9 +962,13 @@
     
     <span class="py-defname">MinimumWindowSize</span>: <code>tuple[<wbr></wbr>int, <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code> =
     
+    <a class="headerLink" href="#MinimumWindowSize" title="magneticalc.GUI.GUI.MinimumWindowSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -504,9 +986,13 @@
     
     <span class="py-defname">calculation_start_time</span> =
     
+    <a class="headerLink" href="#calculation_start_time" title="magneticalc.GUI.GUI.calculation_start_time">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -524,9 +1010,13 @@
     
     <span class="py-defname">calculation_thread</span> =
     
+    <a class="headerLink" href="#calculation_thread" title="magneticalc.GUI.GUI.calculation_thread">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -544,9 +1034,13 @@
     
     <span class="py-defname">exiting</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#exiting" title="magneticalc.GUI.GUI.exiting">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -564,9 +1058,13 @@
     
     <span class="py-defname">initializing</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#initializing" title="magneticalc.GUI.GUI.initializing">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -584,9 +1082,13 @@
     
     <span class="py-defname">menu</span> =
     
+    <a class="headerLink" href="#menu" title="magneticalc.GUI.GUI.menu">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -604,9 +1106,13 @@
     
     <span class="py-defname">model</span> =
     
+    <a class="headerLink" href="#model" title="magneticalc.GUI.GUI.model">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -624,9 +1130,13 @@
     
     <span class="py-defname">project</span> =
     
+    <a class="headerLink" href="#project" title="magneticalc.GUI.GUI.project">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -644,9 +1154,13 @@
     
     <span class="py-defname">sidebar_left</span> =
     
+    <a class="headerLink" href="#sidebar_left" title="magneticalc.GUI.GUI.sidebar_left">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -664,9 +1178,13 @@
     
     <span class="py-defname">sidebar_right</span> =
     
+    <a class="headerLink" href="#sidebar_right" title="magneticalc.GUI.GUI.sidebar_right">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -684,9 +1202,13 @@
     
     <span class="py-defname">splitter</span> =
     
+    <a class="headerLink" href="#splitter" title="magneticalc.GUI.GUI.splitter">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -704,9 +1226,13 @@
     
     <span class="py-defname">statusbar</span> =
     
+    <a class="headerLink" href="#statusbar" title="magneticalc.GUI.GUI.statusbar">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -724,9 +1250,13 @@
     
     <span class="py-defname">user_locale</span> =
     
+    <a class="headerLink" href="#user_locale" title="magneticalc.GUI.GUI.user_locale">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -744,27 +1274,40 @@
     
     <span class="py-defname">vispy_canvas</span> =
     
+    <a class="headerLink" href="#vispy_canvas" title="magneticalc.GUI.GUI.vispy_canvas">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

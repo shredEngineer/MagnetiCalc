@@ -7,116 +7,319 @@
   <head>
     
     <title>magneticalc.API.API</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.API.html">API</a></code><wbr></wbr>.<code><a href="magneticalc.API.API.html">API</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.API.API.html" class="internal-link" title="This class">API</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#export_hdf5" class="internal-link" title="magneticalc.API.API.export_hdf5">export<wbr></wbr>_hdf5</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#export_wire" class="internal-link" title="magneticalc.API.API.export_wire">export<wbr></wbr>_wire</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#import_hdf5" class="internal-link" title="magneticalc.API.API.import_hdf5">import<wbr></wbr>_hdf5</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#import_wire" class="internal-link" title="magneticalc.API.API.import_wire">import<wbr></wbr>_wire</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_dict_to_hdf5_group" class="internal-link" title="magneticalc.API.API._dict_to_hdf5_group">_dict<wbr></wbr>_to<wbr></wbr>_hdf5<wbr></wbr>_group</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_hdf5_group_to_dict" class="internal-link" title="magneticalc.API.API._hdf5_group_to_dict">_hdf5<wbr></wbr>_group<wbr></wbr>_to<wbr></wbr>_dict</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.API.html" class="internal-link" title="The parent of this class">API</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.API.API.html" class="internal-link" title="magneticalc.API.API">API</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">API</span>:</code></p>
-        <p><a href="classIndex.html#magneticalc.API.API">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>API class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id3">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.API.html" class="internal-link" title="magneticalc.API">API</a></code><wbr></wbr>.<code><a href="magneticalc.API.API.html" class="internal-link" title="magneticalc.API.API">API</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">API</span>:</code></p>
+          <p><a href="classIndex.html#magneticalc.API.API">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>API class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id3">
   
   
   <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#export_hdf5">export_hdf5</a></code></td>
+    <td><code><a href="#export_hdf5" class="internal-link" title="magneticalc.API.API.export_hdf5">export<wbr></wbr>_hdf5</a></code></td>
     <td>Exports data to an HDF5 container.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#export_wire">export_wire</a></code></td>
+    <td><code><a href="#export_wire" class="internal-link" title="magneticalc.API.API.export_wire">export<wbr></wbr>_wire</a></code></td>
     <td>Exports wire points to a TXT file.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#import_hdf5">import_hdf5</a></code></td>
+    <td><code><a href="#import_hdf5" class="internal-link" title="magneticalc.API.API.import_hdf5">import<wbr></wbr>_hdf5</a></code></td>
     <td>Imports data from an HDF5 container.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#import_wire">import_wire</a></code></td>
+    <td><code><a href="#import_wire" class="internal-link" title="magneticalc.API.API.import_wire">import<wbr></wbr>_wire</a></code></td>
     <td>Imports wire points from a TXT file.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><code><a href="#_dict_to_hdf5_group">_dict_to_hdf5_group</a></code></td>
+    <td><code><a href="#_dict_to_hdf5_group" class="internal-link" title="magneticalc.API.API._dict_to_hdf5_group">_dict<wbr></wbr>_to<wbr></wbr>_hdf5<wbr></wbr>_group</a></code></td>
     <td>Recursively transforms a dictionary into an HDF5 group (in-place).</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><code><a href="#_hdf5_group_to_dict">_hdf5_group_to_dict</a></code></td>
+    <td><code><a href="#_hdf5_group_to_dict" class="internal-link" title="magneticalc.API.API._hdf5_group_to_dict">_hdf5<wbr></wbr>_group<wbr></wbr>_to<wbr></wbr>_dict</a></code></td>
     <td>Recursively transforms an HDF5 group into a dictionary (in-place).</td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basestaticmethod">
+        <div id="childList">
+          <div class="basestaticmethod">
   
   
   <a name="magneticalc.API.API.export_hdf5">
@@ -126,16 +329,21 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">export_hdf5</span>(filename, data):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">export_hdf5</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code>, </span><span class="rst-sig-param">data: <code>dict | <a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html" class="internal-link" title="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data">MagnetiCalc_Data</a></code></span>):</span>
+    
+    <a class="headerLink" href="#export_hdf5" title="magneticalc.API.API.export_hdf5">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
     <div><p>Exports data to an HDF5 container.</p>
 <p>Takes a dictionary and writes an HDF5 file using keys as keys, and items as groups if they are dictionaries or as datasets otherwise.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>Union[<wbr></wbr>Dict, <wbr></wbr><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html">MagnetiCalc_Data</a>]</code></td><td class="fieldArgDesc">Dictionary or MagnetiCalc_Data object</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>dict | <a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html" class="internal-link" title="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data">MagnetiCalc_Data</a></code></td><td class="fieldArgDesc">Dictionary or MagnetiCalc_Data object</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -147,14 +355,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">export_wire</span>(filename, data):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">export_wire</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code>, </span><span class="rst-sig-param">data: <code>list | np.ndarray</code></span>):</span>
+    
+    <a class="headerLink" href="#export_wire" title="magneticalc.API.API.export_wire">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Exports wire points to a TXT file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>Union[<wbr></wbr>List, <wbr></wbr>np.ndarray]</code></td><td class="fieldArgDesc">NumPy array of 3D points</td></tr></table></div>
+    <div><p>Exports wire points to a TXT file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>list | np.ndarray</code></td><td class="fieldArgDesc">NumPy array of 3D points</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -166,16 +379,21 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">import_hdf5</span>(filename):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">import_hdf5</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code></span>) -&gt; <code><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html" class="internal-link" title="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data">MagnetiCalc_Data</a></code>:</span>
+    
+    <a class="headerLink" href="#import_hdf5" title="magneticalc.API.API.import_hdf5">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
     <div><p>Imports data from an HDF5 container.</p>
 <p>Opens an HDF5 file and converts every group and subgroup into a dictionary where the keys are the group keys and the items are the datasets.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html">MagnetiCalc_Data</a></code></td><td class="fieldArgDesc">MagnetiCalc_Data object (can be accessed like a dictionary)</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data.html" class="internal-link" title="magneticalc.MagnetiCalc_Data.MagnetiCalc_Data">MagnetiCalc_Data</a></code></td><td class="fieldArgDesc">MagnetiCalc_Data object (can be accessed like a dictionary)</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -187,14 +405,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">import_wire</span>(filename):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">import_wire</span><span class="function-signature">(<span class="rst-sig-param">filename: <code>str</code></span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#import_wire" title="magneticalc.API.API.import_wire">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Imports wire points from a TXT file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">NumPy array of 3D points</td></tr></table></div>
+    <div><p>Imports wire points from a TXT file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">NumPy array of 3D points</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -206,14 +429,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_dict_to_hdf5_group</span>(hdf5_group, dictionary):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_dict_to_hdf5_group</span><span class="function-signature">(<span class="rst-sig-param">hdf5_group: <code>h5py.Group</code>, </span><span class="rst-sig-param">dictionary: <code>dict</code></span>):</span>
+    
+    <a class="headerLink" href="#_dict_to_hdf5_group" title="magneticalc.API.API._dict_to_hdf5_group">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Recursively transforms a dictionary into an HDF5 group (in-place).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">hdf5_group:</span><code>h5py.Group</code></td><td class="fieldArgDesc">HDF5 group</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dictionary:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
+    <div><p>Recursively transforms a dictionary into an HDF5 group (in-place).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">hdf5<wbr></wbr>_group:</span><code>h5py.Group</code></td><td class="fieldArgDesc">HDF5 group</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dictionary:</span><code>dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -225,29 +453,43 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_hdf5_group_to_dict</span>(hdf5_group, dictionary):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_hdf5_group_to_dict</span><span class="function-signature">(<span class="rst-sig-param">hdf5_group: <code>h5py.Group</code>, </span><span class="rst-sig-param">dictionary: <code>dict</code></span>):</span>
+    
+    <a class="headerLink" href="#_hdf5_group_to_dict" title="magneticalc.API.API._hdf5_group_to_dict">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Recursively transforms an HDF5 group into a dictionary (in-place).<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">hdf5_group:</span><code>h5py.Group</code></td><td class="fieldArgDesc">HDF5 group</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dictionary:</span><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
+    <div><p>Recursively transforms an HDF5 group into a dictionary (in-place).</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">hdf5<wbr></wbr>_group:</span><code>h5py.Group</code></td><td class="fieldArgDesc">HDF5 group</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dictionary:</span><code>dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

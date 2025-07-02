@@ -7,244 +7,676 @@
   <head>
     
     <title>magneticalc.Constraint_Editor.Constraint_Editor</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.html">Constraint_Editor</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.Constraint_Editor.html">Constraint_Editor</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Constraint_Editor.Constraint_Editor.html" class="internal-link" title="This class"><wbr></wbr>Constraint_<wbr></wbr>Editor</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#changed.setter" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.changed.setter">changed<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_constraints" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.get_constraints">get<wbr></wbr>_constraints</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_table_cell_edited" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_cell_edited">on<wbr></wbr>_table<wbr></wbr>_cell<wbr></wbr>_edited</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_table_row_added" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_added">on<wbr></wbr>_table<wbr></wbr>_row<wbr></wbr>_added</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_table_row_deleted" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_deleted">on<wbr></wbr>_table<wbr></wbr>_row<wbr></wbr>_deleted</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#reload" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.reload">reload</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#showEvent" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.showEvent">show<wbr></wbr>Event</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_table" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.update_table">update<wbr></wbr>_table</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.show">show</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#HTML" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.HTML">HTML</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#Constraint_Options" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Options"><wbr></wbr>Constraint_<wbr></wbr>Options</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#Constraint_Types" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Types"><wbr></wbr>Constraint_<wbr></wbr>Types</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#changed" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.changed">changed</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.gui">gui</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#table" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.table">table</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#text_browser" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.text_browser">text<wbr></wbr>_browser</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#rows" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.rows">rows</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#rows_count" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.rows_count">rows<wbr></wbr>_count</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_changed" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor._changed">_changed</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_constraint_collection" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">_constraint<wbr></wbr>_collection</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.user_accepted">user<wbr></wbr>_accepted</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Constraint_Editor.html" class="internal-link" title="The parent of this class"><wbr></wbr>Constraint_<wbr></wbr>Editor</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Constraint_Editor.Constraint_Editor.html" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor"><wbr></wbr>Constraint_<wbr></wbr>Editor</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Constraint_Editor</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.Constraint_Editor.Constraint_Editor">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Constraint_Editor class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id33">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.html" class="internal-link" title="magneticalc.Constraint_Editor">Constraint_Editor</a></code><wbr></wbr>.<code><a href="magneticalc.Constraint_Editor.Constraint_Editor.html" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor">Constraint_Editor</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Constraint_Editor</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.__init__">Constraint_Editor(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.Constraint_Editor.Constraint_Editor">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Constraint_Editor class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id33">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.__init__">__init__</a></code></td>
     <td>Prepares the constraint editor, but doesn't fully initialize it yet.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#changed.setter">changed.setter</a></code></td>
+    <td><code><a href="#changed.setter" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.changed.setter">changed<wbr></wbr>.setter</a></code></td>
     <td>Sets the "changed" state. This updates the window title.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#get_constraints">get_constraints</a></code></td>
+    <td><code><a href="#get_constraints" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.get_constraints">get<wbr></wbr>_constraints</a></code></td>
     <td>Gets the list of constraints.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_table_cell_edited">on_table_cell_edited</a></code></td>
+    <td><code><a href="#on_table_cell_edited" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_cell_edited">on<wbr></wbr>_table<wbr></wbr>_cell<wbr></wbr>_edited</a></code></td>
     <td>Gets called after a table cell has been edited.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_table_row_added">on_table_row_added</a></code></td>
+    <td><code><a href="#on_table_row_added" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_added">on<wbr></wbr>_table<wbr></wbr>_row<wbr></wbr>_added</a></code></td>
     <td>Gets called after a row has been added to the table.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_table_row_deleted">on_table_row_deleted</a></code></td>
+    <td><code><a href="#on_table_row_deleted" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_deleted">on<wbr></wbr>_table<wbr></wbr>_row<wbr></wbr>_deleted</a></code></td>
     <td>Gets called after a row has been deleted from the table.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#reload">reload</a></code></td>
+    <td><code><a href="#reload" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.reload">reload</a></code></td>
     <td>Reloads the constraint editor.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#showEvent">showEvent</a></code></td>
+    <td><code><a href="#showEvent" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.showEvent">show<wbr></wbr>Event</a></code></td>
     <td>Gets called when the dialog is opened.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_table">update_table</a></code></td>
+    <td><code><a href="#update_table" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.update_table">update<wbr></wbr>_table</a></code></td>
     <td>Populates the table.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
-    <td><code><a href="#HTML">HTML</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#HTML" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.HTML">HTML</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#Constraint_Options">Constraint_Options</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#Constraint_Options" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Options"><wbr></wbr>Constraint_<wbr></wbr>Options</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#Constraint_Types">Constraint_Types</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#Constraint_Types" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Types"><wbr></wbr>Constraint_<wbr></wbr>Types</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#changed">changed</a></code></td>
+    <td><code><a href="#changed" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.changed">changed</a></code></td>
     <td>Returns the "changed" state.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#table">table</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#table" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.table">table</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#text_browser">text_browser</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#text_browser" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.text_browser">text<wbr></wbr>_browser</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="property">
     
     <td>Property</td>
-    <td><code><a href="#rows">rows</a></code></td>
+    <td><code><a href="#rows" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.rows">rows</a></code></td>
     <td>Gets the list of rows (constraint groups).</td>
   </tr><tr class="property">
     
     <td>Property</td>
-    <td><code><a href="#rows_count">rows_count</a></code></td>
+    <td><code><a href="#rows_count" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.rows_count">rows<wbr></wbr>_count</a></code></td>
     <td>Gets the number of rows (constraint groups).</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_changed">_changed</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_changed" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor._changed">_changed</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_constraint_collection">_constraint_collection</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_constraint_collection" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">_constraint<wbr></wbr>_collection</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>:
-          </p>
-          <table class="children sortable" id="id34">
+          
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a></code>:
+            </p>
+            <table class="children sortable" id="id34">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show">show</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.show">show</a></code></td>
     <td>Shows this dialog.</td>
   </tr><tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted">user_accepted</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.user_accepted">user<wbr></wbr>_accepted</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>):
-          </p>
-          <table class="children sortable" id="id35">
+            
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a></code>):
+            </p>
+            <table class="children sortable" id="id35">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code></td>
     <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code></td>
     <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code></td>
     <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code></td>
     <td>Adds widget.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code></td>
     <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.Constraint_Editor.Constraint_Editor.__init__">
@@ -255,13 +687,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.Constraint_Editor.Constraint_Editor.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
-    
-    <div>Prepares the constraint editor, but doesn't fully initialize it yet.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__" class="internal-link">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
+    <div><p>Prepares the constraint editor, but doesn't fully initialize it yet.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -273,14 +710,19 @@
     
   </a>
   <div class="functionHeader">
-    @<a href="#changed.setter">changed.setter</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">changed</span>(self, changed):
     
+    <div><span class="decorator">@<a href="#changed.setter" class="internal-link" title="magneticalc.Constraint_Editor.Constraint_Editor.changed.setter">changed.setter</a><br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">changed</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">changed: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#changed.setter" title="magneticalc.Constraint_Editor.Constraint_Editor.changed.setter">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets the "changed" state. This updates the window title.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">changed:</span><code>bool</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div><p>Sets the "changed" state. This updates the window title.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -293,13 +735,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_constraints</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">get_constraints</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>) -&gt; <code>list[<wbr></wbr><a href="magneticalc.Constraint.Constraint.html" class="internal-link" title="magneticalc.Constraint.Constraint">Constraint</a>]</code>:</span>
+    
+    <a class="headerLink" href="#get_constraints" title="magneticalc.Constraint_Editor.Constraint_Editor.get_constraints">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets the list of constraints.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>List[<wbr></wbr><a href="magneticalc.Constraint.Constraint.html">Constraint</a>]</code></td><td class="fieldArgDesc">List of constraints</td></tr></table></div>
+    <div><p>Gets the list of constraints.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list[<wbr></wbr><a href="magneticalc.Constraint.Constraint.html" class="internal-link" title="magneticalc.Constraint.Constraint">Constraint</a>]</code></td><td class="fieldArgDesc">List of constraints</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -312,13 +759,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_table_cell_edited</span>(self, value, row, column):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_table_cell_edited</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">value: <code>str</code>, </span><span class="rst-sig-param">row: <code>int</code>, </span><span class="rst-sig-param">column: <code>int</code></span>):</span>
+    
+    <a class="headerLink" href="#on_table_cell_edited" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_cell_edited">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets called after a table cell has been edited.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>str</code></td><td class="fieldArgDesc">Cell value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">column:</span><code>int</code></td><td class="fieldArgDesc">Column index</td></tr></table></div>
+    <div><p>Gets called after a table cell has been edited.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">value:</span><code>str</code></td><td class="fieldArgDesc">Cell value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">column:</span><code>int</code></td><td class="fieldArgDesc">Column index</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -331,13 +783,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_table_row_added</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_table_row_added</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#on_table_row_added" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_added">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets called after a row has been added to the table.</div>
+    <div><p>Gets called after a row has been added to the table.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -350,13 +807,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_table_row_deleted</span>(self, row):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_table_row_deleted</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">row: <code>int</code></span>):</span>
+    
+    <a class="headerLink" href="#on_table_row_deleted" title="magneticalc.Constraint_Editor.Constraint_Editor.on_table_row_deleted">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets called after a row has been deleted from the table.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr></table></div>
+    <div><p>Gets called after a row has been deleted from the table.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">row:</span><code>int</code></td><td class="fieldArgDesc">Row index</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -369,13 +831,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">reload</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">reload</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#reload" title="magneticalc.Constraint_Editor.Constraint_Editor.reload">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Reloads the constraint editor.</div>
+    <div><p>Reloads the constraint editor.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -388,13 +855,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">showEvent</span>(self, event):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">showEvent</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">event: <code>QShowEvent</code></span>):</span>
+    
+    <a class="headerLink" href="#showEvent" title="magneticalc.Constraint_Editor.Constraint_Editor.showEvent">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#showEvent">magneticalc.QtWidgets2.QDialog2.QDialog2.showEvent</a></code></div>
-    
-    <div>Gets called when the dialog is opened.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QShowEvent</code></td><td class="fieldArgDesc">QShowEvent</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#showEvent" class="internal-link">magneticalc.QtWidgets2.QDialog2.QDialog2.showEvent</a></code></div>
+    <div><p>Gets called when the dialog is opened.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QShowEvent</code></td><td class="fieldArgDesc">QShowEvent</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -407,13 +879,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_table</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_table</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_table" title="magneticalc.Constraint_Editor.Constraint_Editor.update_table">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Populates the table.</div>
+    <div><p>Populates the table.</p></div>
   </div>
 </div><div class="baseconstant">
   
@@ -428,18 +905,22 @@
     
     <span class="py-defname">HTML</span> =
     
+    <a class="headerLink" href="#HTML" title="magneticalc.Constraint_Editor.Constraint_Editor.HTML">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
     <div><p class="undocumented">Undocumented</p></div>
-    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>f"""
-        Lengths in &lt;b&gt;cm&lt;/b&gt;. &amp;nbsp; Angles in &lt;b&gt;degrees&lt;/b&gt;.&lt;br&gt;&lt;br&gt;
-
-        &lt;b style="color: {Theme.MainColor};"&gt;Experimental Feature&lt;/b&gt;&lt;br&gt;&lt;br&gt;
-
-        By default, all sampling volume points have relative permeability µ&lt;sub&gt;<span class="rst-variable-linewrap">↵</span>
-r&lt;/sub&gt; = 1.&lt;br&gt;
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>f"""\n        Lengths in &lt;b&gt;cm&lt;/b&gt;. &amp;nbsp; Angles in &lt;b&gt;degrees&lt;/b&gt;.&lt;br&gt;&lt;br&gt;\n\n<span class="rst-variable-linewrap">↵</span>
+        &lt;b style="color: {Theme.MainColor};"&gt;Experimental Feature&lt;/b&gt;&lt;br&gt;&lt;br&gt;\n\<span class="rst-variable-linewrap">↵</span>
+n        By default, all sampling volume points have relative permeability µ&lt;sub<span class="rst-variable-linewrap">↵</span>
+&gt;r&lt;/sub&gt; = 1.&lt;br&gt;\n        A constraint assigns some other µ&lt;sub&gt;r&lt;/sub&gt; to some<span class="rst-variable-linewrap">↵</span>
+ region of the sampling volume.&lt;br&gt;\n        Setting the permeability of some re<span class="rst-variable-linewrap">↵</span>
+gion to zero locally disables the field calculation.&lt;br&gt;\n        In case of amb<span class="rst-variable-linewrap">↵</span>
+iguous constraints, the ones with maximum permeability take precedence.&lt;br&gt;&lt;br&gt;\<span class="rst-variable-linewrap">↵</span>
 <span class="rst-variable-ellipsis">...</span></code></pre></td></tr></table>
   </div>
 </div><div class="baseclassvariable">
@@ -455,9 +936,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">Constraint_Options</span> =
     
+    <a class="headerLink" href="#Constraint_Options" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Options">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -475,9 +960,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">Constraint_Types</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>str]</code> =
     
+    <a class="headerLink" href="#Constraint_Types" title="magneticalc.Constraint_Editor.Constraint_Editor.Constraint_Types">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -492,14 +981,18 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">changed</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#changed" title="magneticalc.Constraint_Editor.Constraint_Editor.changed">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Returns the "changed" state.</div>
+    <div><p>Returns the "changed" state.</p></div>
     
   </div>
 </div><div class="baseinstancevariable">
@@ -515,9 +1008,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.Constraint_Editor.Constraint_Editor.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -535,9 +1032,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">table</span> =
     
+    <a class="headerLink" href="#table" title="magneticalc.Constraint_Editor.Constraint_Editor.table">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -555,9 +1056,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">text_browser</span> =
     
+    <a class="headerLink" href="#text_browser" title="magneticalc.Constraint_Editor.Constraint_Editor.text_browser">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -572,14 +1077,18 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">rows</span>: <code>List[<wbr></wbr>Dict]</code> =
+    <div><span class="decorator">@property<br /></span></div>
+    <span class="py-defname">rows</span>: <code>list[<wbr></wbr>dict]</code> =
     
+    <a class="headerLink" href="#rows" title="magneticalc.Constraint_Editor.Constraint_Editor.rows">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Gets the list of rows (constraint groups).</div>
+    <div><p>Gets the list of rows (constraint groups).</p></div>
     
   </div>
 </div><div class="baseproperty">
@@ -592,14 +1101,18 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">rows_count</span>: <code>int</code> =
     
+    <a class="headerLink" href="#rows_count" title="magneticalc.Constraint_Editor.Constraint_Editor.rows_count">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Gets the number of rows (constraint groups).</div>
+    <div><p>Gets the number of rows (constraint groups).</p></div>
     
   </div>
 </div><div class="baseinstancevariable private">
@@ -615,9 +1128,13 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">_changed</span> =
     
+    <a class="headerLink" href="#_changed" title="magneticalc.Constraint_Editor.Constraint_Editor._changed">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -635,27 +1152,40 @@ r&lt;/sub&gt; = 1.&lt;br&gt;
     
     <span class="py-defname">_constraint_collection</span> =
     
+    <a class="headerLink" href="#_constraint_collection" title="magneticalc.Constraint_Editor.Constraint_Editor._constraint_collection">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

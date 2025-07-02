@@ -7,341 +7,997 @@
   <head>
     
     <title>magneticalc.VisPyCanvas.VisPyCanvas</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.VisPyCanvas.html">VisPyCanvas</a></code><wbr></wbr>.<code><a href="magneticalc.VisPyCanvas.VisPyCanvas.html">VisPyCanvas</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.VisPyCanvas.VisPyCanvas.html" class="internal-link" title="This class"><wbr></wbr>Vis<wbr></wbr>Py<wbr></wbr>Canvas</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#create_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.create_field_labels">create<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#delete_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.delete_field_labels">delete<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#load_perspective" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.load_perspective">load<wbr></wbr>_perspective</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_perspective_changed" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.on_perspective_changed">on<wbr></wbr>_perspective<wbr></wbr>_changed</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw">redraw</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_field_arrows" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_arrows">redraw<wbr></wbr>_field<wbr></wbr>_arrows</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_labels">redraw<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_field_points" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_points">redraw<wbr></wbr>_field<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_perspective_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_perspective_info">redraw<wbr></wbr>_perspective<wbr></wbr>_info</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_wire_points_selected" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_selected">redraw<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_selected</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_wire_points_sliced" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_sliced">redraw<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_sliced</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_wire_segments" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_segments">redraw<wbr></wbr>_wire<wbr></wbr>_segments</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#save_image" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.save_image">save<wbr></wbr>_image</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set_visible" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.set_visible">set<wbr></wbr>_visible</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_color_scheme" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.update_color_scheme">update<wbr></wbr>_color<wbr></wbr>_scheme</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#Black" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.Black"><wbr></wbr>Black</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#DebugPerspective" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugPerspective"><wbr></wbr>Debug<wbr></wbr>Perspective</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#DebugVisuals" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugVisuals"><wbr></wbr>Debug<wbr></wbr>Visuals</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#DefaultFontSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DefaultFontSize"><wbr></wbr>Default<wbr></wbr>Font<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldArrowHeadSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldArrowHeadSize"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#FieldPointSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldPointSize"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#MagnitudeLimit" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudeLimit"><wbr></wbr>Magnitude<wbr></wbr>Limit</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#MagnitudePrecision" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudePrecision"><wbr></wbr>Magnitude<wbr></wbr>Precision</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ScaleFactorMax" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMax"><wbr></wbr>Scale<wbr></wbr>Factor<wbr></wbr>Max</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ScaleFactorMin" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMin"><wbr></wbr>Scale<wbr></wbr>Factor<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#White" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.White"><wbr></wbr>White</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#WirePointSelectedColor" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedColor"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Selected<wbr></wbr>Color</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#WirePointSelectedSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedSize"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Selected<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#WirePointSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSize"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Size</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#background" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.background">background</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#bgcolor" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.bgcolor">bgcolor</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#font_manager" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.font_manager">font<wbr></wbr>_manager</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#foreground" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.foreground">foreground</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.gui">gui</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#initializing" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.initializing">initializing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#redraw_start_time" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_start_time">redraw<wbr></wbr>_start<wbr></wbr>_time</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#signals_blocked" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.signals_blocked">signals<wbr></wbr>_blocked</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#super_perspective_changed" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.super_perspective_changed">super<wbr></wbr>_perspective<wbr></wbr>_changed</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#view_main" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.view_main">view<wbr></wbr>_main</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#view_text" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.view_text">view<wbr></wbr>_text</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_coordinate_system" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_coordinate_system">visual<wbr></wbr>_coordinate<wbr></wbr>_system</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_field_arrow_heads" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_heads">visual<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_heads</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_field_arrow_lines" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_lines">visual<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_lines</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_labels">visual<wbr></wbr>_field<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_field_points" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_points">visual<wbr></wbr>_field<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_perspective_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_perspective_info">visual<wbr></wbr>_perspective<wbr></wbr>_info</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_startup_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_startup_info">visual<wbr></wbr>_startup<wbr></wbr>_info</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_wire_points_selected" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_selected">visual<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_selected</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_wire_points_sliced" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_sliced">visual<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_sliced</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#visual_wire_segments" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_segments">visual<wbr></wbr>_wire<wbr></wbr>_segments</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.VisPyCanvas.html" class="internal-link" title="The parent of this class"><wbr></wbr>Vis<wbr></wbr>Py<wbr></wbr>Canvas</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.VisPyCanvas.VisPyCanvas.html" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas"><wbr></wbr>Vis<wbr></wbr>Py<wbr></wbr>Canvas</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">VisPyCanvas</span>(<span title="vispy.scene.SceneCanvas">scene.SceneCanvas</span>):</code></p>
-        <p><a href="classIndex.html#magneticalc.VisPyCanvas.VisPyCanvas">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>VisPyCanvas class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id168">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.VisPyCanvas.html" class="internal-link" title="magneticalc.VisPyCanvas">VisPyCanvas</a></code><wbr></wbr>.<code><a href="magneticalc.VisPyCanvas.VisPyCanvas.html" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas">VisPyCanvas</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">VisPyCanvas</span>(scene.SceneCanvas):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.__init__">VisPyCanvas(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.VisPyCanvas.VisPyCanvas">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>VisPyCanvas class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id168">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.__init__">__init__</a></code></td>
     <td>Initialize VisPy canvas.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#create_field_labels">create_field_labels</a></code></td>
+    <td><code><a href="#create_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.create_field_labels">create<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
     <td>Creates field labels.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#delete_field_labels">delete_field_labels</a></code></td>
+    <td><code><a href="#delete_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.delete_field_labels">delete<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
     <td>Deletes the field labels.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#load_perspective">load_perspective</a></code></td>
+    <td><code><a href="#load_perspective" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.load_perspective">load<wbr></wbr>_perspective</a></code></td>
     <td>Loads perspective from project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_perspective_changed">on_perspective_changed</a></code></td>
+    <td><code><a href="#on_perspective_changed" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.on_perspective_changed">on<wbr></wbr>_perspective<wbr></wbr>_changed</a></code></td>
     <td>Handles a change of perspective.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw">redraw</a></code></td>
+    <td><code><a href="#redraw" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw">redraw</a></code></td>
     <td>Redraws the canvas.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_field_arrows">redraw_field_arrows</a></code></td>
+    <td><code><a href="#redraw_field_arrows" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_arrows">redraw<wbr></wbr>_field<wbr></wbr>_arrows</a></code></td>
     <td>Redraws field arrows.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_field_labels">redraw_field_labels</a></code></td>
+    <td><code><a href="#redraw_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_labels">redraw<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
     <td>Redraws field labels.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_field_points">redraw_field_points</a></code></td>
+    <td><code><a href="#redraw_field_points" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_points">redraw<wbr></wbr>_field<wbr></wbr>_points</a></code></td>
     <td>Redraws field points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_perspective_info">redraw_perspective_info</a></code></td>
+    <td><code><a href="#redraw_perspective_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_perspective_info">redraw<wbr></wbr>_perspective<wbr></wbr>_info</a></code></td>
     <td>Redraws the perspective info text.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_wire_points_selected">redraw_wire_points_selected</a></code></td>
+    <td><code><a href="#redraw_wire_points_selected" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_selected">redraw<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_selected</a></code></td>
     <td>Redraws selected wire base points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_wire_points_sliced">redraw_wire_points_sliced</a></code></td>
+    <td><code><a href="#redraw_wire_points_sliced" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_sliced">redraw<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_sliced</a></code></td>
     <td>Redraws sliced wire points.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#redraw_wire_segments">redraw_wire_segments</a></code></td>
+    <td><code><a href="#redraw_wire_segments" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_segments">redraw<wbr></wbr>_wire<wbr></wbr>_segments</a></code></td>
     <td>Redraws wire segments.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#save_image">save_image</a></code></td>
+    <td><code><a href="#save_image" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.save_image">save<wbr></wbr>_image</a></code></td>
     <td>Saves the currently displayed scene to PNG file.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set_visible">set_visible</a></code></td>
+    <td><code><a href="#set_visible" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.set_visible">set<wbr></wbr>_visible</a></code></td>
     <td>Sets some visual's visibility.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_color_scheme">update_color_scheme</a></code></td>
+    <td><code><a href="#update_color_scheme" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.update_color_scheme">update<wbr></wbr>_color<wbr></wbr>_scheme</a></code></td>
     <td>Updates the color scheme.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#Black">Black</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#Black" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.Black"><wbr></wbr>Black</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#DebugPerspective">DebugPerspective</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#DebugPerspective" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugPerspective"><wbr></wbr>Debug<wbr></wbr>Perspective</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#DebugVisuals">DebugVisuals</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#DebugVisuals" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugVisuals"><wbr></wbr>Debug<wbr></wbr>Visuals</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#DefaultFontSize">DefaultFontSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#DefaultFontSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.DefaultFontSize"><wbr></wbr>Default<wbr></wbr>Font<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldArrowHeadSize">FieldArrowHeadSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldArrowHeadSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldArrowHeadSize"><wbr></wbr>Field<wbr></wbr>Arrow<wbr></wbr>Head<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#FieldPointSize">FieldPointSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#FieldPointSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldPointSize"><wbr></wbr>Field<wbr></wbr>Point<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#MagnitudeLimit">MagnitudeLimit</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#MagnitudeLimit" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudeLimit"><wbr></wbr>Magnitude<wbr></wbr>Limit</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#MagnitudePrecision">MagnitudePrecision</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#MagnitudePrecision" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudePrecision"><wbr></wbr>Magnitude<wbr></wbr>Precision</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ScaleFactorMax">ScaleFactorMax</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#ScaleFactorMax" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMax"><wbr></wbr>Scale<wbr></wbr>Factor<wbr></wbr>Max</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ScaleFactorMin">ScaleFactorMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#ScaleFactorMin" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMin"><wbr></wbr>Scale<wbr></wbr>Factor<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#White">White</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#White" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.White"><wbr></wbr>White</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#WirePointSelectedColor">WirePointSelectedColor</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#WirePointSelectedColor" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedColor"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Selected<wbr></wbr>Color</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#WirePointSelectedSize">WirePointSelectedSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#WirePointSelectedSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedSize"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Selected<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#WirePointSize">WirePointSize</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#WirePointSize" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSize"><wbr></wbr>Wire<wbr></wbr>Point<wbr></wbr>Size</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#background">background</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#background" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.background">background</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#bgcolor">bgcolor</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#bgcolor" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.bgcolor">bgcolor</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#font_manager">font_manager</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#font_manager" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.font_manager">font<wbr></wbr>_manager</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#foreground">foreground</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#foreground" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.foreground">foreground</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#initializing">initializing</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#initializing" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.initializing">initializing</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#redraw_start_time">redraw_start_time</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#redraw_start_time" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_start_time">redraw<wbr></wbr>_start<wbr></wbr>_time</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#signals_blocked">signals_blocked</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#signals_blocked" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.signals_blocked">signals<wbr></wbr>_blocked</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#super_perspective_changed">super_perspective_changed</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#super_perspective_changed" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.super_perspective_changed">super<wbr></wbr>_perspective<wbr></wbr>_changed</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#view_main">view_main</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#view_main" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.view_main">view<wbr></wbr>_main</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#view_text">view_text</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#view_text" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.view_text">view<wbr></wbr>_text</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_coordinate_system">visual_coordinate_system</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_coordinate_system" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_coordinate_system">visual<wbr></wbr>_coordinate<wbr></wbr>_system</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_field_arrow_heads">visual_field_arrow_heads</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_field_arrow_heads" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_heads">visual<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_heads</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_field_arrow_lines">visual_field_arrow_lines</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_field_arrow_lines" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_lines">visual<wbr></wbr>_field<wbr></wbr>_arrow<wbr></wbr>_lines</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_field_labels">visual_field_labels</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_field_labels" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_labels">visual<wbr></wbr>_field<wbr></wbr>_labels</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_field_points">visual_field_points</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_field_points" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_points">visual<wbr></wbr>_field<wbr></wbr>_points</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_perspective_info">visual_perspective_info</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_perspective_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_perspective_info">visual<wbr></wbr>_perspective<wbr></wbr>_info</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_startup_info">visual_startup_info</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_startup_info" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_startup_info">visual<wbr></wbr>_startup<wbr></wbr>_info</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_wire_points_selected">visual_wire_points_selected</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_wire_points_selected" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_selected">visual<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_selected</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_wire_points_sliced">visual_wire_points_sliced</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_wire_points_sliced" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_sliced">visual<wbr></wbr>_wire<wbr></wbr>_points<wbr></wbr>_sliced</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#visual_wire_segments">visual_wire_segments</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#visual_wire_segments" class="internal-link" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_segments">visual<wbr></wbr>_wire<wbr></wbr>_segments</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.VisPyCanvas.VisPyCanvas.__init__">
@@ -352,13 +1008,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.VisPyCanvas.VisPyCanvas.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Initialize VisPy canvas.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div><p>Initialize VisPy canvas.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -371,13 +1032,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">create_field_labels</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">create_field_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#create_field_labels" title="magneticalc.VisPyCanvas.VisPyCanvas.create_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Creates field labels.</div>
+    <div><p>Creates field labels.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -390,13 +1056,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">delete_field_labels</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">delete_field_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#delete_field_labels" title="magneticalc.VisPyCanvas.VisPyCanvas.delete_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Deletes the field labels.</div>
+    <div><p>Deletes the field labels.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -409,13 +1080,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">load_perspective</span>(self, redraw=True):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">load_perspective</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">redraw: <code>bool</code> = True</span>):</span>
+    
+    <a class="headerLink" href="#load_perspective" title="magneticalc.VisPyCanvas.VisPyCanvas.load_perspective">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Loads perspective from project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">redraw:</span><code>bool</code></td><td class="fieldArgDesc">Enable to trigger final redraw</td></tr></table></div>
+    <div><p>Loads perspective from project.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">redraw:</span><code>bool</code></td><td class="fieldArgDesc">Enable to trigger final redraw</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -428,13 +1104,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_perspective_changed</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_perspective_changed</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#on_perspective_changed" title="magneticalc.VisPyCanvas.VisPyCanvas.on_perspective_changed">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Handles a change of perspective.</div>
+    <div><p>Handles a change of perspective.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -447,13 +1128,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws the canvas.</div>
+    <div><p>Redraws the canvas.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -466,13 +1152,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_arrows</span>(self, colors):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_field_arrows</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">colors: <code>np.ndarray</code></span>):</span>
+    
+    <a class="headerLink" href="#redraw_field_arrows" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_arrows">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws field arrows.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
+    <div><p>Redraws field arrows.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -485,13 +1176,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_labels</span>(self, colors):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_field_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">colors</span>):</span>
+    
+    <a class="headerLink" href="#redraw_field_labels" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws field labels.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors</span></td><td class="fieldArgDesc">Colors</td></tr></table></div>
+    <div><p>Redraws field labels.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors</span></td><td class="fieldArgDesc">Colors</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -504,13 +1200,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_field_points</span>(self, colors):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_field_points</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">colors: <code>np.ndarray</code></span>):</span>
+    
+    <a class="headerLink" href="#redraw_field_points" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_field_points">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws field points.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
+    <div><p>Redraws field points.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -523,13 +1224,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_perspective_info</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_perspective_info</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw_perspective_info" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_perspective_info">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws the perspective info text.</div>
+    <div><p>Redraws the perspective info text.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -542,13 +1248,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_points_selected</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_wire_points_selected</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw_wire_points_selected" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_selected">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws selected wire base points.</div>
+    <div><p>Redraws selected wire base points.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -561,13 +1272,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_points_sliced</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_wire_points_sliced</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw_wire_points_sliced" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_points_sliced">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws sliced wire points.</div>
+    <div><p>Redraws sliced wire points.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -580,13 +1296,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">redraw_wire_segments</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">redraw_wire_segments</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#redraw_wire_segments" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_wire_segments">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Redraws wire segments.</div>
+    <div><p>Redraws wire segments.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -599,13 +1320,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">save_image</span>(self, filename):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">save_image</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">filename: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#save_image" title="magneticalc.VisPyCanvas.VisPyCanvas.save_image">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Saves the currently displayed scene to PNG file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table></div>
+    <div><p>Saves the currently displayed scene to PNG file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Filename</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -618,13 +1344,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set_visible</span>(self, visual, is_visible):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set_visible</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">visual: <code>Visual</code>, </span><span class="rst-sig-param">is_visible: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#set_visible" title="magneticalc.VisPyCanvas.VisPyCanvas.set_visible">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets some visual's visibility.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">visual:</span><code>Visual</code></td><td class="fieldArgDesc">Visual</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">is_visible:</span><code>bool</code></td><td class="fieldArgDesc">Visibility</td></tr></table></div>
+    <div><p>Sets some visual's visibility.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">visual:</span><code>Visual</code></td><td class="fieldArgDesc">Visual</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">is<wbr></wbr>_visible:</span><code>bool</code></td><td class="fieldArgDesc">Visibility</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -637,13 +1368,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_color_scheme</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_color_scheme</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_color_scheme" title="magneticalc.VisPyCanvas.VisPyCanvas.update_color_scheme">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the color scheme.</div>
+    <div><p>Updates the color scheme.</p></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -658,9 +1394,13 @@
     
     <span class="py-defname">Black</span> =
     
+    <a class="headerLink" href="#Black" title="magneticalc.VisPyCanvas.VisPyCanvas.Black">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -678,9 +1418,13 @@
     
     <span class="py-defname">DebugPerspective</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#DebugPerspective" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugPerspective">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -698,9 +1442,13 @@
     
     <span class="py-defname">DebugVisuals</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#DebugVisuals" title="magneticalc.VisPyCanvas.VisPyCanvas.DebugVisuals">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -718,9 +1466,13 @@
     
     <span class="py-defname">DefaultFontSize</span>: <code>int</code> =
     
+    <a class="headerLink" href="#DefaultFontSize" title="magneticalc.VisPyCanvas.VisPyCanvas.DefaultFontSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -738,9 +1490,13 @@
     
     <span class="py-defname">FieldArrowHeadSize</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldArrowHeadSize" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldArrowHeadSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -758,9 +1514,13 @@
     
     <span class="py-defname">FieldPointSize</span>: <code>int</code> =
     
+    <a class="headerLink" href="#FieldPointSize" title="magneticalc.VisPyCanvas.VisPyCanvas.FieldPointSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -778,9 +1538,13 @@
     
     <span class="py-defname">MagnitudeLimit</span>: <code>float</code> =
     
+    <a class="headerLink" href="#MagnitudeLimit" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudeLimit">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -798,9 +1562,13 @@
     
     <span class="py-defname">MagnitudePrecision</span>: <code>int</code> =
     
+    <a class="headerLink" href="#MagnitudePrecision" title="magneticalc.VisPyCanvas.VisPyCanvas.MagnitudePrecision">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -818,9 +1586,13 @@
     
     <span class="py-defname">ScaleFactorMax</span>: <code>float</code> =
     
+    <a class="headerLink" href="#ScaleFactorMax" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMax">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -838,9 +1610,13 @@
     
     <span class="py-defname">ScaleFactorMin</span>: <code>float</code> =
     
+    <a class="headerLink" href="#ScaleFactorMin" title="magneticalc.VisPyCanvas.VisPyCanvas.ScaleFactorMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -858,9 +1634,13 @@
     
     <span class="py-defname">White</span> =
     
+    <a class="headerLink" href="#White" title="magneticalc.VisPyCanvas.VisPyCanvas.White">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -878,9 +1658,13 @@
     
     <span class="py-defname">WirePointSelectedColor</span>: <code>tuple[<wbr></wbr>int, <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code> =
     
+    <a class="headerLink" href="#WirePointSelectedColor" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedColor">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -898,9 +1682,13 @@
     
     <span class="py-defname">WirePointSelectedSize</span>: <code>int</code> =
     
+    <a class="headerLink" href="#WirePointSelectedSize" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSelectedSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -918,9 +1706,13 @@
     
     <span class="py-defname">WirePointSize</span>: <code>int</code> =
     
+    <a class="headerLink" href="#WirePointSize" title="magneticalc.VisPyCanvas.VisPyCanvas.WirePointSize">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -938,9 +1730,13 @@
     
     <span class="py-defname">background</span> =
     
+    <a class="headerLink" href="#background" title="magneticalc.VisPyCanvas.VisPyCanvas.background">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -958,9 +1754,13 @@
     
     <span class="py-defname">bgcolor</span> =
     
+    <a class="headerLink" href="#bgcolor" title="magneticalc.VisPyCanvas.VisPyCanvas.bgcolor">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -978,9 +1778,13 @@
     
     <span class="py-defname">font_manager</span> =
     
+    <a class="headerLink" href="#font_manager" title="magneticalc.VisPyCanvas.VisPyCanvas.font_manager">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -998,9 +1802,13 @@
     
     <span class="py-defname">foreground</span> =
     
+    <a class="headerLink" href="#foreground" title="magneticalc.VisPyCanvas.VisPyCanvas.foreground">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1018,9 +1826,13 @@
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.VisPyCanvas.VisPyCanvas.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1038,9 +1850,13 @@
     
     <span class="py-defname">initializing</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#initializing" title="magneticalc.VisPyCanvas.VisPyCanvas.initializing">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1056,11 +1872,15 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">redraw_start_time</span> =
+    <span class="py-defname">redraw_start_time</span>: <code>float | None</code> =
     
+    <a class="headerLink" href="#redraw_start_time" title="magneticalc.VisPyCanvas.VisPyCanvas.redraw_start_time">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1078,9 +1898,13 @@
     
     <span class="py-defname">signals_blocked</span>: <code>bool</code> =
     
+    <a class="headerLink" href="#signals_blocked" title="magneticalc.VisPyCanvas.VisPyCanvas.signals_blocked">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1098,9 +1922,13 @@
     
     <span class="py-defname">super_perspective_changed</span> =
     
+    <a class="headerLink" href="#super_perspective_changed" title="magneticalc.VisPyCanvas.VisPyCanvas.super_perspective_changed">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1118,9 +1946,13 @@
     
     <span class="py-defname">view_main</span> =
     
+    <a class="headerLink" href="#view_main" title="magneticalc.VisPyCanvas.VisPyCanvas.view_main">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1138,9 +1970,13 @@
     
     <span class="py-defname">view_text</span> =
     
+    <a class="headerLink" href="#view_text" title="magneticalc.VisPyCanvas.VisPyCanvas.view_text">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1158,9 +1994,13 @@
     
     <span class="py-defname">visual_coordinate_system</span> =
     
+    <a class="headerLink" href="#visual_coordinate_system" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_coordinate_system">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1178,9 +2018,13 @@
     
     <span class="py-defname">visual_field_arrow_heads</span> =
     
+    <a class="headerLink" href="#visual_field_arrow_heads" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_heads">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1198,9 +2042,13 @@
     
     <span class="py-defname">visual_field_arrow_lines</span> =
     
+    <a class="headerLink" href="#visual_field_arrow_lines" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_arrow_lines">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1218,9 +2066,13 @@
     
     <span class="py-defname">visual_field_labels</span>: <code>list</code> =
     
+    <a class="headerLink" href="#visual_field_labels" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1238,9 +2090,13 @@
     
     <span class="py-defname">visual_field_points</span> =
     
+    <a class="headerLink" href="#visual_field_points" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_field_points">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1258,9 +2114,13 @@
     
     <span class="py-defname">visual_perspective_info</span> =
     
+    <a class="headerLink" href="#visual_perspective_info" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_perspective_info">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1278,9 +2138,13 @@
     
     <span class="py-defname">visual_startup_info</span> =
     
+    <a class="headerLink" href="#visual_startup_info" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_startup_info">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1298,9 +2162,13 @@
     
     <span class="py-defname">visual_wire_points_selected</span> =
     
+    <a class="headerLink" href="#visual_wire_points_selected" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_selected">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1318,9 +2186,13 @@
     
     <span class="py-defname">visual_wire_points_sliced</span> =
     
+    <a class="headerLink" href="#visual_wire_points_sliced" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_points_sliced">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -1338,27 +2210,40 @@
     
     <span class="py-defname">visual_wire_segments</span> =
     
+    <a class="headerLink" href="#visual_wire_segments" title="magneticalc.VisPyCanvas.VisPyCanvas.visual_wire_segments">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

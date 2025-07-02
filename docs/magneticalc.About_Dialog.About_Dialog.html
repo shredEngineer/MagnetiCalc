@@ -7,169 +7,451 @@
   <head>
     
     <title>magneticalc.About_Dialog.About_Dialog</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.About_Dialog.html">About_Dialog</a></code><wbr></wbr>.<code><a href="magneticalc.About_Dialog.About_Dialog.html">About_Dialog</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.About_Dialog.About_Dialog.html" class="internal-link" title="This class"><wbr></wbr>About_<wbr></wbr>Dialog</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#showEvent" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.showEvent">show<wbr></wbr>Event</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.show">show</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#HTML" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.HTML">HTML</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#DonationURL" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.DonationURL"><wbr></wbr>Donation<wbr></wbr>URL</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#text_browser" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.text_browser">text<wbr></wbr>_browser</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.user_accepted">user<wbr></wbr>_accepted</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.About_Dialog.html" class="internal-link" title="The parent of this class"><wbr></wbr>About_<wbr></wbr>Dialog</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.About_Dialog.About_Dialog.html" class="internal-link" title="magneticalc.About_Dialog.About_Dialog"><wbr></wbr>About_<wbr></wbr>Dialog</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">About_Dialog</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.About_Dialog.About_Dialog">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>About_Dialog class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id5">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.About_Dialog.html" class="internal-link" title="magneticalc.About_Dialog">About_Dialog</a></code><wbr></wbr>.<code><a href="magneticalc.About_Dialog.About_Dialog.html" class="internal-link" title="magneticalc.About_Dialog.About_Dialog">About_Dialog</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">About_Dialog</span>(<a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.__init__">About_Dialog()</a></code></p>
+          <p><a href="classIndex.html#magneticalc.About_Dialog.About_Dialog">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>About_Dialog class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id5">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.__init__">__init__</a></code></td>
     <td>Initializes the dialog.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#showEvent">showEvent</a></code></td>
+    <td><code><a href="#showEvent" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.showEvent">show<wbr></wbr>Event</a></code></td>
     <td>Gets called when the dialog is opened.</td>
   </tr><tr class="constant">
     
     <td>Constant</td>
-    <td><code><a href="#HTML">HTML</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#HTML" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.HTML">HTML</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#DonationURL">DonationURL</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#DonationURL" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.DonationURL"><wbr></wbr>Donation<wbr></wbr>URL</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#text_browser">text_browser</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#text_browser" class="internal-link" title="magneticalc.About_Dialog.About_Dialog.text_browser">text<wbr></wbr>_browser</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>:
-          </p>
-          <table class="children sortable" id="id6">
+          
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a></code>:
+            </p>
+            <table class="children sortable" id="id6">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show">show</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#show" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.show">show</a></code></td>
     <td>Shows this dialog.</td>
   </tr><tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted">user_accepted</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#user_accepted" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2.user_accepted">user<wbr></wbr>_accepted</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html">QDialog2</a></code>):
-          </p>
-          <table class="children sortable" id="id7">
+            
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2.QDialog2">QDialog2</a></code>):
+            </p>
+            <table class="children sortable" id="id7">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code></td>
     <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code></td>
     <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code></td>
     <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code></td>
     <td>Adds widget.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code></td>
     <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.About_Dialog.About_Dialog.__init__">
@@ -180,13 +462,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.About_Dialog.About_Dialog.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
-    
-    <div>Initializes the dialog.</div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#__init__" class="internal-link">magneticalc.QtWidgets2.QDialog2.QDialog2.__init__</a></code></div>
+    <div><p>Initializes the dialog.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -199,13 +486,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">showEvent</span>(self, event):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">showEvent</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">event: <code>QShowEvent</code></span>):</span>
+    
+    <a class="headerLink" href="#showEvent" title="magneticalc.About_Dialog.About_Dialog.showEvent">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#showEvent">magneticalc.QtWidgets2.QDialog2.QDialog2.showEvent</a></code></div>
-    
-    <div>Gets called when the dialog is opened.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QShowEvent</code></td><td class="fieldArgDesc">QShowEvent</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QDialog2.QDialog2.html#showEvent" class="internal-link">magneticalc.QtWidgets2.QDialog2.QDialog2.showEvent</a></code></div>
+    <div><p>Gets called when the dialog is opened.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">event:</span><code>QShowEvent</code></td><td class="fieldArgDesc">QShowEvent</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -220,18 +512,22 @@
     
     <span class="py-defname">HTML</span> =
     
+    <a class="headerLink" href="#HTML" title="magneticalc.About_Dialog.About_Dialog.HTML">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
     <div><p class="undocumented">Undocumented</p></div>
-    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>f"""
-        &lt;span style="color: {Theme.MainColor};"&gt;&lt;b&gt;{Version.String}&lt;/b&gt;&lt;/span&gt;&lt;b<span class="rst-variable-linewrap">↵</span>
-r&gt;
-        &lt;br&gt;
-        Copyright © 2020–2022, Paul Wilhelm, M. Sc.
-        &amp;lt;&lt;a href="mailto:anfrage@paulwilhelm.de"&gt;anfrage@paulwilhelm.de&lt;/a&gt;&amp;g<span class="rst-variable-linewrap">↵</span>
-t;&lt;br&gt;
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>f'\n        &lt;span style="color: {Theme.MainColor};"&gt;&lt;b&gt;{Version.String}&lt;/b&gt;&lt;/spa<span class="rst-variable-linewrap">↵</span>
+n&gt;&lt;br&gt;\n        &lt;br&gt;\n        Copyright © 2020–2022, Paul Wilhelm, M. Sc.\n     <span class="rst-variable-linewrap">↵</span>
+   &amp;lt;&lt;a href="mailto:anfrage@paulwilhelm.de"&gt;anfrage@paulwilhelm.de&lt;/a&gt;&amp;gt;&lt;br<span class="rst-variable-linewrap">↵</span>
+&gt;\n        &lt;br&gt;\n        &lt;small&gt;\n            &lt;b&gt;ISC License&lt;/b&gt;&lt;br&gt;\n          <span class="rst-variable-linewrap">↵</span>
+  &lt;br&gt;\n            Permission to use, copy, modify, and/or distribute this soft<span class="rst-variable-linewrap">↵</span>
+ware for any\n            purpose with or without fee is hereby granted, provide<span class="rst-variable-linewrap">↵</span>
+d that the above\n            copyright notice and this permission notice appear<span class="rst-variable-linewrap">↵</span>
 <span class="rst-variable-ellipsis">...</span></code></pre></td></tr></table>
   </div>
 </div><div class="baseclassvariable">
@@ -247,9 +543,13 @@ t;&lt;br&gt;
     
     <span class="py-defname">DonationURL</span>: <code>str</code> =
     
+    <a class="headerLink" href="#DonationURL" title="magneticalc.About_Dialog.About_Dialog.DonationURL">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -267,27 +567,40 @@ t;&lt;br&gt;
     
     <span class="py-defname">text_browser</span> =
     
+    <a class="headerLink" href="#text_browser" title="magneticalc.About_Dialog.About_Dialog.text_browser">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

@@ -7,290 +7,832 @@
   <head>
     
     <title>magneticalc.Project.Project</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Project.html">Project</a></code><wbr></wbr>.<code><a href="magneticalc.Project.Project.html">Project</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Project.Project.html" class="internal-link" title="This class"><wbr></wbr>Project</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_default" class="internal-link" title="magneticalc.Project.Project.get_default">get<wbr></wbr>_default</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.Project.Project.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#close" class="internal-link" title="magneticalc.Project.Project.close">close</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#on_changed" class="internal-link" title="magneticalc.Project.Project.on_changed">on<wbr></wbr>_changed</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#open" class="internal-link" title="magneticalc.Project.Project.open">open</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#open_default" class="internal-link" title="magneticalc.Project.Project.open_default">open<wbr></wbr>_default</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#switch" class="internal-link" title="magneticalc.Project.Project.switch">switch</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#validate" class="internal-link" title="magneticalc.Project.Project.validate">validate</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#cleanup" class="internal-link" title="magneticalc.Config.Config.cleanup">cleanup</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_bool" class="internal-link" title="magneticalc.Config.Config.get_bool">get<wbr></wbr>_bool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_float" class="internal-link" title="magneticalc.Config.Config.get_float">get<wbr></wbr>_float</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_generic" class="internal-link" title="magneticalc.Config.Config.get_generic">get<wbr></wbr>_generic</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_int" class="internal-link" title="magneticalc.Config.Config.get_int">get<wbr></wbr>_int</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_point" class="internal-link" title="magneticalc.Config.Config.get_point">get<wbr></wbr>_point</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_points" class="internal-link" title="magneticalc.Config.Config.get_points">get<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#get_str" class="internal-link" title="magneticalc.Config.Config.get_str">get<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#load" class="internal-link" title="magneticalc.Config.Config.load">load</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#load_file" class="internal-link" title="magneticalc.Config.Config.load_file">load<wbr></wbr>_file</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#remove_key" class="internal-link" title="magneticalc.Config.Config.remove_key">remove<wbr></wbr>_key</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#save_file" class="internal-link" title="magneticalc.Config.Config.save_file">save<wbr></wbr>_file</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_bool" class="internal-link" title="magneticalc.Config.Config.set_bool">set<wbr></wbr>_bool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_float" class="internal-link" title="magneticalc.Config.Config.set_float">set<wbr></wbr>_float</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_generic" class="internal-link" title="magneticalc.Config.Config.set_generic">set<wbr></wbr>_generic</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_bool" class="internal-link" title="magneticalc.Config.Config.set_get_bool">set<wbr></wbr>_get<wbr></wbr>_bool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_dict" class="internal-link" title="magneticalc.Config.Config.set_get_dict">set<wbr></wbr>_get<wbr></wbr>_dict</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_float" class="internal-link" title="magneticalc.Config.Config.set_get_float">set<wbr></wbr>_get<wbr></wbr>_float</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_int" class="internal-link" title="magneticalc.Config.Config.set_get_int">set<wbr></wbr>_get<wbr></wbr>_int</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_point" class="internal-link" title="magneticalc.Config.Config.set_get_point">set<wbr></wbr>_get<wbr></wbr>_point</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_points" class="internal-link" title="magneticalc.Config.Config.set_get_points">set<wbr></wbr>_get<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_get_str" class="internal-link" title="magneticalc.Config.Config.set_get_str">set<wbr></wbr>_get<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_int" class="internal-link" title="magneticalc.Config.Config.set_int">set<wbr></wbr>_int</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_point" class="internal-link" title="magneticalc.Config.Config.set_point">set<wbr></wbr>_point</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_points" class="internal-link" title="magneticalc.Config.Config.set_points">set<wbr></wbr>_points</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#set_str" class="internal-link" title="magneticalc.Config.Config.set_str">set<wbr></wbr>_str</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.Project.Project.gui">gui</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#DebugAccess" class="internal-link" title="magneticalc.Config.Config.DebugAccess"><wbr></wbr>Debug<wbr></wbr>Access</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#filename" class="internal-link" title="magneticalc.Config.Config.filename">filename</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#synced" class="internal-link" title="magneticalc.Config.Config.synced">synced</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Config.Config.html#_parser" class="internal-link" title="magneticalc.Config.Config._parser">_parser</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Project.html" class="internal-link" title="The parent of this class"><wbr></wbr>Project</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Project.Project.html" class="internal-link" title="magneticalc.Project.Project"><wbr></wbr>Project</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Project</span>(<a href="magneticalc.Config.Config.html" title="magneticalc.Config.Config">Config</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.Project.Project">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Project class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id100">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Project.html" class="internal-link" title="magneticalc.Project">Project</a></code><wbr></wbr>.<code><a href="magneticalc.Project.Project.html" class="internal-link" title="magneticalc.Project.Project">Project</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Project</span>(<a href="magneticalc.Config.Config.html" class="internal-link" title="magneticalc.Config.Config">Config</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.Project.Project.__init__">Project(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.Project.Project">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Project class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id100">
   
   
   <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#get_default">get_default</a></code></td>
+    <td><code><a href="#get_default" class="internal-link" title="magneticalc.Project.Project.get_default">get<wbr></wbr>_default</a></code></td>
     <td>Gets the default project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.Project.Project.__init__">__init__</a></code></td>
     <td>Initializes the project class.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#close">close</a></code></td>
+    <td><code><a href="#close" class="internal-link" title="magneticalc.Project.Project.close">close</a></code></td>
     <td>Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#on_changed">on_changed</a></code></td>
+    <td><code><a href="#on_changed" class="internal-link" title="magneticalc.Project.Project.on_changed">on<wbr></wbr>_changed</a></code></td>
     <td>Gets called when the project changed.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#open">open</a></code></td>
+    <td><code><a href="#open" class="internal-link" title="magneticalc.Project.Project.open">open</a></code></td>
     <td>Opens a project from file.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#open_default">open_default</a></code></td>
+    <td><code><a href="#open_default" class="internal-link" title="magneticalc.Project.Project.open_default">open<wbr></wbr>_default</a></code></td>
     <td>Opens the default project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#switch">switch</a></code></td>
+    <td><code><a href="#switch" class="internal-link" title="magneticalc.Project.Project.switch">switch</a></code></td>
     <td>Closes the current project and opens another project.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#validate">validate</a></code></td>
+    <td><code><a href="#validate" class="internal-link" title="magneticalc.Project.Project.validate">validate</a></code></td>
     <td>Validates the project.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.Project.Project.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.Config.Config.html">Config</a></code>:
-          </p>
-          <table class="children sortable" id="id101">
+          
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.Config.Config.html" class="internal-link" title="magneticalc.Config.Config">Config</a></code>:
+            </p>
+            <table class="children sortable" id="id101">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#cleanup">cleanup</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#cleanup" class="internal-link" title="magneticalc.Config.Config.cleanup">cleanup</a></code></td>
     <td>Perform clean-up.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_bool">get_bool</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_bool" class="internal-link" title="magneticalc.Config.Config.get_bool">get<wbr></wbr>_bool</a></code></td>
     <td>Gets boolean value, convert from string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_float">get_float</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_float" class="internal-link" title="magneticalc.Config.Config.get_float">get<wbr></wbr>_float</a></code></td>
     <td>Gets float value, convert from string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_generic">get_generic</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_generic" class="internal-link" title="magneticalc.Config.Config.get_generic">get<wbr></wbr>_generic</a></code></td>
     <td>Gets some "_key"-"_value" of data type "_type".</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_int">get_int</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_int" class="internal-link" title="magneticalc.Config.Config.get_int">get<wbr></wbr>_int</a></code></td>
     <td>Gets integer value, convert from string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_point">get_point</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_point" class="internal-link" title="magneticalc.Config.Config.get_point">get<wbr></wbr>_point</a></code></td>
     <td>Gets a single 3D point, convert from string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_points">get_points</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_points" class="internal-link" title="magneticalc.Config.Config.get_points">get<wbr></wbr>_points</a></code></td>
     <td>Gets list of 3D points, convert from string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#get_str">get_str</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#get_str" class="internal-link" title="magneticalc.Config.Config.get_str">get<wbr></wbr>_str</a></code></td>
     <td>Reads a configuration value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#load">load</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#load" class="internal-link" title="magneticalc.Config.Config.load">load</a></code></td>
     <td>Loads the default configuration.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#load_file">load_file</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#load_file" class="internal-link" title="magneticalc.Config.Config.load_file">load<wbr></wbr>_file</a></code></td>
     <td>Loads the configuration from file.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#remove_key">remove_key</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#remove_key" class="internal-link" title="magneticalc.Config.Config.remove_key">remove<wbr></wbr>_key</a></code></td>
     <td>Removes a key from the configuration.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#save_file">save_file</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#save_file" class="internal-link" title="magneticalc.Config.Config.save_file">save<wbr></wbr>_file</a></code></td>
     <td>Saves the configuration to file.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_bool">set_bool</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_bool" class="internal-link" title="magneticalc.Config.Config.set_bool">set<wbr></wbr>_bool</a></code></td>
     <td>Sets boolean value, convert to string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_float">set_float</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_float" class="internal-link" title="magneticalc.Config.Config.set_float">set<wbr></wbr>_float</a></code></td>
     <td>Sets float value, convert to string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_generic">set_generic</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_generic" class="internal-link" title="magneticalc.Config.Config.set_generic">set<wbr></wbr>_generic</a></code></td>
     <td>Sets some "_key"-"_value" of data type "_type".</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_bool">set_get_bool</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_bool" class="internal-link" title="magneticalc.Config.Config.set_get_bool">set<wbr></wbr>_get<wbr></wbr>_bool</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_dict">set_get_dict</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_dict" class="internal-link" title="magneticalc.Config.Config.set_get_dict">set<wbr></wbr>_get<wbr></wbr>_dict</a></code></td>
     <td>If "values" is None, reads and returns all key-values in "types". Note: The actual keys saved in the configuration file are prefixed with "prefix", and suffixed with "suffix".</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_float">set_get_float</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_float" class="internal-link" title="magneticalc.Config.Config.set_get_float">set<wbr></wbr>_get<wbr></wbr>_float</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_int">set_get_int</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_int" class="internal-link" title="magneticalc.Config.Config.set_get_int">set<wbr></wbr>_get<wbr></wbr>_int</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_point">set_get_point</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_point" class="internal-link" title="magneticalc.Config.Config.set_get_point">set<wbr></wbr>_get<wbr></wbr>_point</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_points">set_get_points</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_points" class="internal-link" title="magneticalc.Config.Config.set_get_points">set<wbr></wbr>_get<wbr></wbr>_points</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_get_str">set_get_str</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_get_str" class="internal-link" title="magneticalc.Config.Config.set_get_str">set<wbr></wbr>_get<wbr></wbr>_str</a></code></td>
     <td>If value is not None, writes and returns key-value; otherwise (if value is None), reads and returns key-value.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_int">set_int</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_int" class="internal-link" title="magneticalc.Config.Config.set_int">set<wbr></wbr>_int</a></code></td>
     <td>Sets integer value, convert to string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_point">set_point</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_point" class="internal-link" title="magneticalc.Config.Config.set_point">set<wbr></wbr>_point</a></code></td>
     <td>Sets a single 3D point, convert to string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_points">set_points</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_points" class="internal-link" title="magneticalc.Config.Config.set_points">set<wbr></wbr>_points</a></code></td>
     <td>Sets list of 3D points, convert to string.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Config.Config.html#set_str">set_str</a></code></td>
+    <td><code><a href="magneticalc.Config.Config.html#set_str" class="internal-link" title="magneticalc.Config.Config.set_str">set<wbr></wbr>_str</a></code></td>
     <td>Writes a configuration value.</td>
   </tr><tr class="baseclassvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="magneticalc.Config.Config.html#DebugAccess">DebugAccess</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.Config.Config.html#DebugAccess" class="internal-link" title="magneticalc.Config.Config.DebugAccess"><wbr></wbr>Debug<wbr></wbr>Access</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.Config.Config.html#filename">filename</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.Config.Config.html#filename" class="internal-link" title="magneticalc.Config.Config.filename">filename</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.Config.Config.html#synced">synced</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.Config.Config.html#synced" class="internal-link" title="magneticalc.Config.Config.synced">synced</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.Config.Config.html#_parser">_parser</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.Config.Config.html#_parser" class="internal-link" title="magneticalc.Config.Config._parser">_parser</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basestaticmethod">
+        <div id="childList">
+          <div class="basestaticmethod">
   
   
   <a name="magneticalc.Project.Project.get_default">
@@ -300,14 +842,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_default</span>():
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">get_default</span><span class="function-signature">() -&gt; <code>dict</code>:</span>
+    
+    <a class="headerLink" href="#get_default" title="magneticalc.Project.Project.get_default">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Gets the default project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
+    <div><p>Gets the default project.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>dict</code></td><td class="fieldArgDesc">Dictionary</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -320,13 +867,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.Project.Project.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.Config.Config.html#__init__">magneticalc.Config.Config.__init__</a></code></div>
-    
-    <div>Initializes the project class.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Config.Config.html#__init__" class="internal-link">magneticalc.Config.Config.__init__</a></code></div>
+    <div><p>Initializes the project class.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -339,13 +891,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">close</span>(self, invalidate=True):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">close</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">invalidate: <code>bool</code> = True</span>) -&gt; <code>bool</code>:</span>
+    
+    <a class="headerLink" href="#close" title="magneticalc.Project.Project.close">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the GUI afterwards</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False if canceled, True if saved/discarded</td></tr></table></div>
+    <div><p>Attempts to close the project, but lets user choose to cancel closing, or save/discard changes if there are any.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">invalidate:</span><code>bool</code></td><td class="fieldArgDesc">Enable to invalidate the GUI afterwards</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">False if canceled, True if saved/discarded</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -358,13 +915,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">on_changed</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">on_changed</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#on_changed" title="magneticalc.Project.Project.on_changed">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.Config.Config.html#on_changed">magneticalc.Config.Config.on_changed</a></code></div>
-    
-    <div>Gets called when the project changed.</div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Config.Config.html#on_changed" class="internal-link">magneticalc.Config.Config.on_changed</a></code></div>
+    <div><p>Gets called when the project changed.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -377,13 +939,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">open</span>(self, filename, reload=True):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">open</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">filename: <code>str</code>, </span><span class="rst-sig-param">reload: <code>bool</code> = True</span>):</span>
+    
+    <a class="headerLink" href="#open" title="magneticalc.Project.Project.open">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Opens a project from file.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
+    <div><p>Opens a project from file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -396,13 +963,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">open_default</span>(self, reload=True):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">open_default</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">reload: <code>bool</code> = True</span>):</span>
+    
+    <a class="headerLink" href="#open_default" title="magneticalc.Project.Project.open_default">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Opens the default project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
+    <div><p>Opens the default project.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">reload:</span><code>bool</code></td><td class="fieldArgDesc">Enable to reload GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -415,13 +987,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">switch</span>(self, filename):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">switch</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">filename: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#switch" title="magneticalc.Project.Project.switch">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Closes the current project and opens another project.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr></table></div>
+    <div><p>Closes the current project and opens another project.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">Project filename</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -434,13 +1011,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">validate</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">validate</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#validate" title="magneticalc.Project.Project.validate">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Validates the project.</div>
+    <div><p>Validates the project.</p></div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -455,27 +1037,40 @@
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.Project.Project.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

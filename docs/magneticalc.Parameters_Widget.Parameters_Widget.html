@@ -7,214 +7,586 @@
   <head>
     
     <title>magneticalc.Parameters_Widget.Parameters_Widget</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Parameters_Widget.html">Parameters_Widget</a></code><wbr></wbr>.<code><a href="magneticalc.Parameters_Widget.Parameters_Widget.html">Parameters_Widget</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Parameters_Widget.Parameters_Widget.html" class="internal-link" title="This class"><wbr></wbr>Parameters_<wbr></wbr>Widget</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#reload" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.reload">reload</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update">update</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_controls" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update_controls">update<wbr></wbr>_controls</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_labels" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update_labels">update<wbr></wbr>_labels</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.set_color">set<wbr></wbr>_color</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ValuePrecision" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.ValuePrecision"><wbr></wbr>Value<wbr></wbr>Precision</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#energy_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_units_label">energy<wbr></wbr>_units<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#energy_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_value_label">energy<wbr></wbr>_value<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.gui">gui</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#magnetic_dipole_moment_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_units_label">magnetic<wbr></wbr>_dipole<wbr></wbr>_moment<wbr></wbr>_units<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#magnetic_dipole_moment_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_value_label">magnetic<wbr></wbr>_dipole<wbr></wbr>_moment<wbr></wbr>_value<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#self_inductance_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_units_label">self<wbr></wbr>_inductance<wbr></wbr>_units<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#self_inductance_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_value_label">self<wbr></wbr>_inductance<wbr></wbr>_value<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#wire_length_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_units_label">wire<wbr></wbr>_length<wbr></wbr>_units<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#wire_length_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_value_label">wire<wbr></wbr>_length<wbr></wbr>_value<wbr></wbr>_label</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Parameters_Widget.html" class="internal-link" title="The parent of this class"><wbr></wbr>Parameters_<wbr></wbr>Widget</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Parameters_Widget.Parameters_Widget.html" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget"><wbr></wbr>Parameters_<wbr></wbr>Widget</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Parameters_Widget</span>(<a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.Parameters_Widget.Parameters_Widget">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Parameters_Widget class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id90">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Parameters_Widget.html" class="internal-link" title="magneticalc.Parameters_Widget">Parameters_Widget</a></code><wbr></wbr>.<code><a href="magneticalc.Parameters_Widget.Parameters_Widget.html" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget">Parameters_Widget</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Parameters_Widget</span>(<a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.__init__">Parameters_Widget(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.Parameters_Widget.Parameters_Widget">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Parameters_Widget class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id90">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.__init__">__init__</a></code></td>
     <td>Populates the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#reload">reload</a></code></td>
+    <td><code><a href="#reload" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.reload">reload</a></code></td>
     <td>Reloads the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update">update</a></code></td>
+    <td><code><a href="#update" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update">update</a></code></td>
     <td>Updates the widget.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_controls">update_controls</a></code></td>
+    <td><code><a href="#update_controls" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update_controls">update<wbr></wbr>_controls</a></code></td>
     <td>Updates the controls.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#update_labels">update_labels</a></code></td>
+    <td><code><a href="#update_labels" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.update_labels">update<wbr></wbr>_labels</a></code></td>
     <td>Updates the labels.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ValuePrecision">ValuePrecision</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#ValuePrecision" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.ValuePrecision"><wbr></wbr>Value<wbr></wbr>Precision</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#energy_units_label">energy_units_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#energy_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_units_label">energy<wbr></wbr>_units<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#energy_value_label">energy_value_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#energy_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_value_label">energy<wbr></wbr>_value<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#magnetic_dipole_moment_units_label">magnetic_dipole_moment_units_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#magnetic_dipole_moment_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_units_label">magnetic<wbr></wbr>_dipole<wbr></wbr>_moment<wbr></wbr>_units<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#magnetic_dipole_moment_value_label">magnetic_dipole_moment_value_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#magnetic_dipole_moment_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_value_label">magnetic<wbr></wbr>_dipole<wbr></wbr>_moment<wbr></wbr>_value<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#self_inductance_units_label">self_inductance_units_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#self_inductance_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_units_label">self<wbr></wbr>_inductance<wbr></wbr>_units<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#self_inductance_value_label">self_inductance_value_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#self_inductance_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_value_label">self<wbr></wbr>_inductance<wbr></wbr>_value<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#wire_length_units_label">wire_length_units_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#wire_length_units_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_units_label">wire<wbr></wbr>_length<wbr></wbr>_units<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#wire_length_value_label">wire_length_value_label</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr>
-</table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>:
-          </p>
-          <table class="children sortable" id="id91">
-  
-  
-  <tr class="basemethod">
-    
-    <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color">set_color</a></code></td>
-    <td>Sets the style and label color of the groupbox.</td>
+    <td><code><a href="#wire_length_value_label" class="internal-link" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_value_label">wire<wbr></wbr>_length<wbr></wbr>_value<wbr></wbr>_label</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
           
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html">QGroupBox2</a></code>):
-          </p>
-          <table class="children sortable" id="id92">
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a></code>:
+            </p>
+            <table class="children sortable" id="id91">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons">addButtons</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#set_color" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.set_color">set<wbr></wbr>_color</a></code></td>
+    <td>Sets the style and label color of the groupbox.</td>
+  </tr>
+</table>
+            
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted">QLayouted</a></code> (via <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2">QGroupBox2</a></code>):
+            </p>
+            <table class="children sortable" id="id92">
+  
+  
+  <tr class="basemethod">
+    
+    <td>Method</td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addButtons" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addButtons">add<wbr></wbr>Buttons</a></code></td>
     <td>Adds buttons.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout">addLayout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addLayout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addLayout">add<wbr></wbr>Layout</a></code></td>
     <td>Adds layout.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing">addSpacing</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addSpacing" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addSpacing">add<wbr></wbr>Spacing</a></code></td>
     <td>Adds spacing.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget">addWidget</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#addWidget" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.addWidget">add<wbr></wbr>Widget</a></code></td>
     <td>Adds widget.</td>
   </tr><tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout">install_layout</a></code></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#install_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted.install_layout">install<wbr></wbr>_layout</a></code></td>
     <td>Installs this layout in the parent.</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout">_layout</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.QtWidgets2.QLayouted.QLayouted.html#_layout" class="internal-link" title="magneticalc.QtWidgets2.QLayouted.QLayouted._layout">_layout</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.Parameters_Widget.Parameters_Widget.__init__">
@@ -225,13 +597,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.Parameters_Widget.Parameters_Widget.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#__init__">magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.__init__</a></code></div>
-    
-    <div>Populates the widget.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.html#__init__" class="internal-link">magneticalc.QtWidgets2.QGroupBox2.QGroupBox2.__init__</a></code></div>
+    <div><p>Populates the widget.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -244,13 +621,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">reload</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">reload</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#reload" title="magneticalc.Parameters_Widget.Parameters_Widget.reload">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Reloads the widget.</div>
+    <div><p>Reloads the widget.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -263,13 +645,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update" title="magneticalc.Parameters_Widget.Parameters_Widget.update">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the widget.</div>
+    <div><p>Updates the widget.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -282,13 +669,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_controls</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_controls</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_controls" title="magneticalc.Parameters_Widget.Parameters_Widget.update_controls">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the controls.</div>
+    <div><p>Updates the controls.</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -301,13 +693,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">update_labels</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_labels</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#update_labels" title="magneticalc.Parameters_Widget.Parameters_Widget.update_labels">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Updates the labels.</div>
+    <div><p>Updates the labels.</p></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -322,9 +719,13 @@
     
     <span class="py-defname">ValuePrecision</span>: <code>int</code> =
     
+    <a class="headerLink" href="#ValuePrecision" title="magneticalc.Parameters_Widget.Parameters_Widget.ValuePrecision">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -342,9 +743,13 @@
     
     <span class="py-defname">energy_units_label</span> =
     
+    <a class="headerLink" href="#energy_units_label" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_units_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -362,9 +767,13 @@
     
     <span class="py-defname">energy_value_label</span> =
     
+    <a class="headerLink" href="#energy_value_label" title="magneticalc.Parameters_Widget.Parameters_Widget.energy_value_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -382,9 +791,13 @@
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.Parameters_Widget.Parameters_Widget.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -402,9 +815,13 @@
     
     <span class="py-defname">magnetic_dipole_moment_units_label</span> =
     
+    <a class="headerLink" href="#magnetic_dipole_moment_units_label" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_units_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -422,9 +839,13 @@
     
     <span class="py-defname">magnetic_dipole_moment_value_label</span> =
     
+    <a class="headerLink" href="#magnetic_dipole_moment_value_label" title="magneticalc.Parameters_Widget.Parameters_Widget.magnetic_dipole_moment_value_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -442,9 +863,13 @@
     
     <span class="py-defname">self_inductance_units_label</span> =
     
+    <a class="headerLink" href="#self_inductance_units_label" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_units_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -462,9 +887,13 @@
     
     <span class="py-defname">self_inductance_value_label</span> =
     
+    <a class="headerLink" href="#self_inductance_value_label" title="magneticalc.Parameters_Widget.Parameters_Widget.self_inductance_value_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -482,9 +911,13 @@
     
     <span class="py-defname">wire_length_units_label</span> =
     
+    <a class="headerLink" href="#wire_length_units_label" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_units_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -502,27 +935,40 @@
     
     <span class="py-defname">wire_length_value_label</span> =
     
+    <a class="headerLink" href="#wire_length_value_label" title="magneticalc.Parameters_Widget.Parameters_Widget.wire_length_value_label">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

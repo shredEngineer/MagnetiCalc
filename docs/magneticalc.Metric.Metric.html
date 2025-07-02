@@ -7,185 +7,560 @@
   <head>
     
     <title>magneticalc.Metric.Metric</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.html">Metric</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.Metric.html">Metric</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Metric.Metric.html" class="internal-link" title="This class"><wbr></wbr>Metric</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#boost_colors" class="internal-link" title="magneticalc.Metric.Metric.boost_colors">boost<wbr></wbr>_colors</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.Metric.Metric.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#recalculate" class="internal-link" title="magneticalc.Metric.Metric.recalculate">recalculate</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#set" class="internal-link" title="magneticalc.Metric.Metric.set">set</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_divergence_worker" class="internal-link" title="magneticalc.Metric.Metric._divergence_worker">_divergence<wbr></wbr>_worker</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_norm_worker" class="internal-link" title="magneticalc.Metric.Metric._norm_worker">_norm<wbr></wbr>_worker</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_normalize_worker" class="internal-link" title="magneticalc.Metric.Metric._normalize_worker">_normalize<wbr></wbr>_worker</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Validatable.Validatable.html#valid.setter" class="internal-link" title="magneticalc.Validatable.Validatable.valid.setter">valid<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#LengthScale" class="internal-link" title="magneticalc.Metric.Metric.LengthScale"><wbr></wbr>Length<wbr></wbr>Scale</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#LogNormMin" class="internal-link" title="magneticalc.Metric.Metric.LogNormMin"><wbr></wbr>Log<wbr></wbr>Norm<wbr></wbr>Min</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#alpha_preset" class="internal-link" title="magneticalc.Metric.Metric.alpha_preset">alpha<wbr></wbr>_preset</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#color_preset" class="internal-link" title="magneticalc.Metric.Metric.color_preset">color<wbr></wbr>_preset</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#colors" class="internal-link" title="magneticalc.Metric.Metric.colors">colors</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#limits" class="internal-link" title="magneticalc.Metric.Metric.limits">limits</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_colors" class="internal-link" title="magneticalc.Metric.Metric._colors">_colors</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_limits" class="internal-link" title="magneticalc.Metric.Metric._limits">_limits</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        <div class="childrenKindTitle">Inherited Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Validatable.Validatable.html#valid" class="internal-link" title="magneticalc.Validatable.Validatable.valid">valid</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Validatable.Validatable.html#_valid" class="internal-link" title="magneticalc.Validatable.Validatable._valid">_valid</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Metric.html" class="internal-link" title="The parent of this class"><wbr></wbr>Metric</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Metric.Metric.html" class="internal-link" title="magneticalc.Metric.Metric"><wbr></wbr>Metric</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Metric.html#color_map_cyclic" class="internal-link" title="magneticalc.Metric.color_map_cyclic">color<wbr></wbr>_map<wbr></wbr>_cyclic</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Metric.html#color_map_divergent" class="internal-link" title="magneticalc.Metric.color_map_divergent">color<wbr></wbr>_map<wbr></wbr>_divergent</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Metric.html#metric_divergence" class="internal-link" title="magneticalc.Metric.metric_divergence">metric<wbr></wbr>_divergence</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Metric.html#metric_norm" class="internal-link" title="magneticalc.Metric.metric_norm">metric<wbr></wbr>_norm</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Metric</span>(<a href="magneticalc.Validatable.Validatable.html" title="magneticalc.Validatable.Validatable">Validatable</a>):</code></p>
-        <p><a href="classIndex.html#magneticalc.Metric.Metric">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Provides different metrics, used for mapping some field vector properties to some color and alpha range.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id67">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.html" class="internal-link" title="magneticalc.Metric">Metric</a></code><wbr></wbr>.<code><a href="magneticalc.Metric.Metric.html" class="internal-link" title="magneticalc.Metric.Metric">Metric</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Metric</span>(<a href="magneticalc.Validatable.Validatable.html" class="internal-link" title="magneticalc.Validatable.Validatable">Validatable</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.Metric.Metric.__init__">Metric()</a></code></p>
+          <p><a href="classIndex.html#magneticalc.Metric.Metric">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Provides different metrics, used for mapping some field vector properties to some color and alpha range.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id67">
   
   
   <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#boost_colors">boost_colors</a></code></td>
+    <td><code><a href="#boost_colors" class="internal-link" title="magneticalc.Metric.Metric.boost_colors">boost<wbr></wbr>_colors</a></code></td>
     <td>"Boosts" an array of color values.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.Metric.Metric.__init__">__init__</a></code></td>
     <td>Initializes an empty metric.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#recalculate">recalculate</a></code></td>
+    <td><code><a href="#recalculate" class="internal-link" title="magneticalc.Metric.Metric.recalculate">recalculate</a></code></td>
     <td>Recalculates color and alpha values for field.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#set">set</a></code></td>
+    <td><code><a href="#set" class="internal-link" title="magneticalc.Metric.Metric.set">set</a></code></td>
     <td>Sets the parameters.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#LengthScale">LengthScale</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#LengthScale" class="internal-link" title="magneticalc.Metric.Metric.LengthScale"><wbr></wbr>Length<wbr></wbr>Scale</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#LogNormMin">LogNormMin</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#LogNormMin" class="internal-link" title="magneticalc.Metric.Metric.LogNormMin"><wbr></wbr>Log<wbr></wbr>Norm<wbr></wbr>Min</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#alpha_preset">alpha_preset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#alpha_preset" class="internal-link" title="magneticalc.Metric.Metric.alpha_preset">alpha<wbr></wbr>_preset</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#color_preset">color_preset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#color_preset" class="internal-link" title="magneticalc.Metric.Metric.color_preset">color<wbr></wbr>_preset</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="property">
     
     <td>Property</td>
-    <td><code><a href="#colors">colors</a></code></td>
+    <td><code><a href="#colors" class="internal-link" title="magneticalc.Metric.Metric.colors">colors</a></code></td>
     <td>Returns calculated colors.</td>
   </tr><tr class="property">
     
     <td>Property</td>
-    <td><code><a href="#limits">limits</a></code></td>
+    <td><code><a href="#limits" class="internal-link" title="magneticalc.Metric.Metric.limits">limits</a></code></td>
     <td>Returns calculated limits.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><code><a href="#_divergence_worker">_divergence_worker</a></code></td>
+    <td><code><a href="#_divergence_worker" class="internal-link" title="magneticalc.Metric.Metric._divergence_worker">_divergence<wbr></wbr>_worker</a></code></td>
     <td>Calculates the divergence values of a list of vectors.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><code><a href="#_norm_worker">_norm_worker</a></code></td>
+    <td><code><a href="#_norm_worker" class="internal-link" title="magneticalc.Metric.Metric._norm_worker">_norm<wbr></wbr>_worker</a></code></td>
     <td>Calculates the norm values of a list of vectors.</td>
   </tr><tr class="staticmethod private">
     
     <td>Static Method</td>
-    <td><code><a href="#_normalize_worker">_normalize_worker</a></code></td>
+    <td><code><a href="#_normalize_worker" class="internal-link" title="magneticalc.Metric.Metric._normalize_worker">_normalize<wbr></wbr>_worker</a></code></td>
     <td>Normalizes color and alpha norm values, populates final color values.</td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_colors">_colors</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_colors" class="internal-link" title="magneticalc.Metric.Metric._colors">_colors</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#_limits">_limits</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_limits" class="internal-link" title="magneticalc.Metric.Metric._limits">_limits</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-          <p class="inheritedFrom">
-            Inherited from <code><a href="magneticalc.Validatable.Validatable.html">Validatable</a></code>:
-          </p>
-          <table class="children sortable" id="id68">
+          
+            <p class="inheritedFrom">
+              Inherited from <code><a href="magneticalc.Validatable.Validatable.html" class="internal-link" title="magneticalc.Validatable.Validatable">Validatable</a></code>:
+            </p>
+            <table class="children sortable" id="id68">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
-    <td><code><a href="magneticalc.Validatable.Validatable.html#valid.setter">valid.setter</a></code></td>
-    <td></td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid.setter" class="internal-link" title="magneticalc.Validatable.Validatable.valid.setter">valid<wbr></wbr>.setter</a></code></td>
+    <td><span class="rst-undocumented">No summary</span></td>
   </tr><tr class="baseproperty">
     
     <td>Property</td>
-    <td><code><a href="magneticalc.Validatable.Validatable.html#valid">valid</a></code></td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#valid" class="internal-link" title="magneticalc.Validatable.Validatable.valid">valid</a></code></td>
     <td>True if valid, False if invalid</td>
   </tr><tr class="baseinstancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="magneticalc.Validatable.Validatable.html#_valid">_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="magneticalc.Validatable.Validatable.html#_valid" class="internal-link" title="magneticalc.Validatable.Validatable._valid">_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-          
+            
 
-          
-      </div>
+            
+        </div>
 
-      <div id="childList">
-
-        <div class="basestaticmethod">
+        <div id="childList">
+          <div class="basestaticmethod">
   
   
   <a name="magneticalc.Metric.Metric.boost_colors">
@@ -195,14 +570,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
-    <span class="py-keyword">def</span> <span class="py-defname">boost_colors</span>(boost, direction, colors):
     
+    <div><span class="decorator">@staticmethod<br /></span><span class="decorator">@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html" class="internal-link" title="magneticalc.ConditionalDecorator.ConditionalDecorator">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled" class="internal-link" title="magneticalc.Backend_Types.get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">boost_colors</span><span class="function-signature">(<span class="rst-sig-param">boost: <code>float</code>, </span><span class="rst-sig-param">direction: <code>float</code>, </span><span class="rst-sig-param">colors: <code>np.ndarray</code></span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#boost_colors" title="magneticalc.Metric.Metric.boost_colors">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>"Boosts" an array of color values.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">boost:</span><code>float</code></td><td class="fieldArgDesc">Boost value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">direction:</span><code>float</code></td><td class="fieldArgDesc">Boost direction</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr></table></div>
+    <div><p>"Boosts" an array of color values.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">boost:</span><code>float</code></td><td class="fieldArgDesc">Boost value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">direction:</span><code>float</code></td><td class="fieldArgDesc">Boost direction</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Colors (ordered list of 4-tuples)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -215,12 +595,17 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.Metric.Metric.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__">magneticalc.Validatable.Validatable.__init__</a></code></div>
-    
+    <div class="interfaceinfo">overrides <code><a href="magneticalc.Validatable.Validatable.html#__init__" class="internal-link">magneticalc.Validatable.Validatable.__init__</a></code></div>
     <div><p>Initializes an empty metric.</p>
 <p>This class holds a pair of metric presets. Using these metric presets, colors (including alpha channel) and field limits are calculated.</p>
 </div>
@@ -235,14 +620,19 @@
     
   </a>
   <div class="functionHeader">
-    @<a href="magneticalc.Validatable.html#validator">validator</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">recalculate</span>(self, sampling_volume, field, progress_callback):
     
+    <div><span class="decorator">@<a href="magneticalc.Validatable.html#validator" class="internal-link" title="magneticalc.Validatable.validator">validator</a><br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">recalculate</span><span class="function-signature long-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">sampling_volume: <code>SamplingVolume</code>, </span><span class="rst-sig-param">field: <code>Field</code>, </span><span class="rst-sig-param">progress_callback: <code>Callable</code></span>) -&gt; <code>bool</code>:</span>
+    
+    <a class="headerLink" href="#recalculate" title="magneticalc.Metric.Metric.recalculate">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Recalculates color and alpha values for field.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
+    <div><p>Recalculates color and alpha values for field.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling<wbr></wbr>_volume:</span><code>SamplingVolume</code></td><td class="fieldArgDesc">SamplingVolume</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">field:</span><code>Field</code></td><td class="fieldArgDesc">Field</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">progress<wbr></wbr>_callback:</span><code>Callable</code></td><td class="fieldArgDesc">Progress callback</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bool</code></td><td class="fieldArgDesc">True (currently non-interruptable)</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -255,13 +645,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">set</span>(self, color_preset, alpha_preset):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">set</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">color_preset: <code>dict</code>, </span><span class="rst-sig-param">alpha_preset: <code>dict</code></span>):</span>
+    
+    <a class="headerLink" href="#set" title="magneticalc.Metric.Metric.set">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Sets the parameters.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_preset:</span><code>Dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
+    <div><p>Sets the parameters.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_preset:</span><code>dict</code></td><td class="fieldArgDesc">Color metric preset (dictionary)</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha<wbr></wbr>_preset:</span><code>dict</code></td><td class="fieldArgDesc">Alpha metric preset (dictionary)</td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -276,9 +671,13 @@
     
     <span class="py-defname">LengthScale</span>: <code>float</code> =
     
+    <a class="headerLink" href="#LengthScale" title="magneticalc.Metric.Metric.LengthScale">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -296,9 +695,13 @@
     
     <span class="py-defname">LogNormMin</span>: <code>float</code> =
     
+    <a class="headerLink" href="#LogNormMin" title="magneticalc.Metric.Metric.LogNormMin">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -316,9 +719,13 @@
     
     <span class="py-defname">alpha_preset</span> =
     
+    <a class="headerLink" href="#alpha_preset" title="magneticalc.Metric.Metric.alpha_preset">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -336,9 +743,13 @@
     
     <span class="py-defname">color_preset</span> =
     
+    <a class="headerLink" href="#color_preset" title="magneticalc.Metric.Metric.color_preset">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -353,14 +764,18 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
+    <div><span class="decorator">@property<br /></span><span class="decorator">@<a href="magneticalc.Validatable.html#require_valid" class="internal-link" title="magneticalc.Validatable.require_valid">require_valid</a><br /></span></div>
     <span class="py-defname">colors</span>: <code>np.ndarray</code> =
     
+    <a class="headerLink" href="#colors" title="magneticalc.Metric.Metric.colors">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Returns calculated colors.</div>
+    <div><p>Returns calculated colors.</p></div>
     
   </div>
 </div><div class="baseproperty">
@@ -373,14 +788,18 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />@<a href="magneticalc.Validatable.html#require_valid">require_valid</a><br />
-    <span class="py-defname">limits</span>: <code>Dict</code> =
+    <div><span class="decorator">@property<br /></span><span class="decorator">@<a href="magneticalc.Validatable.html#require_valid" class="internal-link" title="magneticalc.Validatable.require_valid">require_valid</a><br /></span></div>
+    <span class="py-defname">limits</span>: <code>dict</code> =
     
+    <a class="headerLink" href="#limits" title="magneticalc.Metric.Metric.limits">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
-    
-    <div>Returns calculated limits.</div>
+    <div><p>Returns calculated limits.</p></div>
     
   </div>
 </div><div class="basestaticmethod private">
@@ -393,14 +812,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_divergence_worker</span>(sampling_volume_neighborhood_indices, vectors, dL, polarity):
     
+    <div><span class="decorator">@staticmethod<br /></span><span class="decorator">@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html" class="internal-link" title="magneticalc.ConditionalDecorator.ConditionalDecorator">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled" class="internal-link" title="magneticalc.Backend_Types.get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_divergence_worker</span><span class="function-signature long-signature">(<span class="rst-sig-param">sampling_volume_neighborhood_indices: <code>list[<wbr></wbr>np.ndarray]</code>, </span><span class="rst-sig-param">vectors: <code>np.ndarray</code>, </span><span class="rst-sig-param">dL: <code>int</code>, </span><span class="rst-sig-param">polarity: <code>int</code></span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#_divergence_worker" title="magneticalc.Metric.Metric._divergence_worker">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Calculates the divergence values of a list of vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling_volume_neighborhood_indices:</span><code>List[<wbr></wbr>np.ndarray]</code></td><td class="fieldArgDesc">Ordered list of sampling volume neighborhood indices</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">dL:</span><code>int</code></td><td class="fieldArgDesc">Length element</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">polarity:</span><code>int</code></td><td class="fieldArgDesc">Polarity filter (-1: Keep values &lt;= 0; 0: Keep all values; +1: Keep values &gt;= 0)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
+    <div><p>Calculates the divergence values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">sampling<wbr></wbr>_volume<wbr></wbr>_neighborhood<wbr></wbr>_indices:</span><code>list[<wbr></wbr>np.ndarray]</code></td><td class="fieldArgDesc">Ordered list of sampling volume neighborhood indices</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">d<wbr></wbr>L:</span><code>int</code></td><td class="fieldArgDesc">Length element</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">polarity:</span><code>int</code></td><td class="fieldArgDesc">Polarity filter (-1: Keep values &lt;= 0; 0: Keep all values; +1: Keep values &gt;= 0)</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -412,14 +836,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_norm_worker</span>(norm_type, vectors):
     
+    <div><span class="decorator">@staticmethod<br /></span><span class="decorator">@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html" class="internal-link" title="magneticalc.ConditionalDecorator.ConditionalDecorator">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled" class="internal-link" title="magneticalc.Backend_Types.get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_norm_worker</span><span class="function-signature">(<span class="rst-sig-param">norm_type: <code>int</code>, </span><span class="rst-sig-param">vectors: <code>np.ndarray</code></span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#_norm_worker" title="magneticalc.Metric.Metric._norm_worker">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Calculates the norm values of a list of vectors.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
+    <div><p>Calculates the norm values of a list of vectors.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">norm<wbr></wbr>_type:</span><code>int</code></td><td class="fieldArgDesc">Norm type</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">vectors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Ordered list of 3D vectors</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Norm values</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod private">
   
@@ -431,14 +860,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_normalize_worker</span>(color_map_id, color_is_log, color_norm_values, color_norm_min, color_norm_max, alpha_is_log, alpha_norm_values, alpha_norm_min, alpha_norm_max, colors):
     
+    <div><span class="decorator">@staticmethod<br /></span><span class="decorator">@<a href="magneticalc.ConditionalDecorator.ConditionalDecorator.html" class="internal-link" title="magneticalc.ConditionalDecorator.ConditionalDecorator">ConditionalDecorator</a>(<wbr></wbr><a href="magneticalc.Backend_Types.html#get_jit_enabled" class="internal-link" title="magneticalc.Backend_Types.get_jit_enabled">get_jit_enabled</a>(), <wbr></wbr>jit, <wbr></wbr>nopython=True, <wbr></wbr>parallel=True)<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_normalize_worker</span><span class="function-signature long-signature">(<span class="rst-sig-param">color_map_id: <code>str</code>, </span><span class="rst-sig-param">color_is_log: <code>bool</code>, </span><span class="rst-sig-param">color_norm_values, </span><span class="rst-sig-param">color_norm_min: <code>float</code>, </span><span class="rst-sig-param">color_norm_max: <code>float</code>, </span><span class="rst-sig-param">alpha_is_log: <code>bool</code>, </span><span class="rst-sig-param">alpha_norm_values: <code>np.ndarray</code>, </span><span class="rst-sig-param">alpha_norm_min: <code>float</code>, </span><span class="rst-sig-param">alpha_norm_max: <code>float</code>, </span><span class="rst-sig-param">colors: <code>np.ndarray</code></span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#_normalize_worker" title="magneticalc.Metric.Metric._normalize_worker">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Normalizes color and alpha norm values, populates final color values.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_map_id:</span><code>str</code></td><td class="fieldArgDesc">Color map ID</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_is_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for color</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_values</span></td><td class="fieldArgDesc">Color norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color_norm_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_is_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for alpha</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_values:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Alpha norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha_norm_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Color value list to populate (list of 4D vectors)</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Color values (list of 4D vectors)</td></tr></table></div>
+    <div><p>Normalizes color and alpha norm values, populates final color values.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_map<wbr></wbr>_id:</span><code>str</code></td><td class="fieldArgDesc">Color map ID</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_is<wbr></wbr>_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for color</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_norm<wbr></wbr>_values</span></td><td class="fieldArgDesc">Color norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_norm<wbr></wbr>_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">color<wbr></wbr>_norm<wbr></wbr>_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum color norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha<wbr></wbr>_is<wbr></wbr>_log:</span><code>bool</code></td><td class="fieldArgDesc">Selects logarithmic normalizer for alpha</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha<wbr></wbr>_norm<wbr></wbr>_values:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Alpha norm values</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha<wbr></wbr>_norm<wbr></wbr>_min:</span><code>float</code></td><td class="fieldArgDesc">Minimum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alpha<wbr></wbr>_norm<wbr></wbr>_max:</span><code>float</code></td><td class="fieldArgDesc">Maximum alpha norm value</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">colors:</span><code>np.ndarray</code></td><td class="fieldArgDesc">Color value list to populate (list of 4D vectors)</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc">Color values (list of 4D vectors)</td></tr></table></div>
   </div>
 </div><div class="baseinstancevariable private">
   
@@ -451,11 +885,15 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_colors</span> =
+    <span class="py-defname">_colors</span>: <code>np.ndarray</code> =
     
+    <a class="headerLink" href="#_colors" title="magneticalc.Metric.Metric._colors">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -471,29 +909,42 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_limits</span> =
+    <span class="py-defname">_limits</span>: <code>dict</code> =
     
+    <a class="headerLink" href="#_limits" title="magneticalc.Metric.Metric._limits">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

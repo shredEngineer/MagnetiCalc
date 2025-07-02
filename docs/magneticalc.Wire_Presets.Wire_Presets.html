@@ -7,181 +7,607 @@
   <head>
     
     <title>magneticalc.Wire_Presets.Wire_Presets</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Presets.html">Wire_Presets</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Presets.Wire_Presets.html">Wire_Presets</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.Wire_Presets.Wire_Presets.html" class="internal-link" title="This class"><wbr></wbr>Wire_<wbr></wbr>Presets</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_by_id" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.get_by_id">get<wbr></wbr>_by<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_phase_jumping_toroidal_loop" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.get_phase_jumping_toroidal_loop">get<wbr></wbr>_phase<wbr></wbr>_jumping<wbr></wbr>_toroidal<wbr></wbr>_loop</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#CompensatedDoubleSquareLoop_Centered" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Centered"><wbr></wbr>Compensated<wbr></wbr>Double<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Centered</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#CompensatedDoubleSquareLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Offset"><wbr></wbr>Compensated<wbr></wbr>Double<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Offset</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#CompensatedSolenoidCircularLoops4" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops4"><wbr></wbr>Compensated<wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops4</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#CompensatedSolenoidCircularLoops8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops8"><wbr></wbr>Compensated<wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops8</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#List" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.List"><wbr></wbr>List</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop16" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop16"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop16</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop32HiRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiRes"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop32HiResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiResFlat"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res<wbr></wbr>Flat</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop32LoRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoRes"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop32LoResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoResFlat"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res<wbr></wbr>Flat</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#PhaseJumpingToroidalLoop8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop8"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop8</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#SingleCircularLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleCircularLoop_Offset"><wbr></wbr>Single<wbr></wbr>Circular<wbr></wbr>Loop_<wbr></wbr>Offset</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#SingleSquareLoop_Centered" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Centered"><wbr></wbr>Single<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Centered</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#SingleSquareLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Offset"><wbr></wbr>Single<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Offset</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#SolenoidCircularLoops4" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops4"><wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops4</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#SolenoidCircularLoops8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops8"><wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops8</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#StraightLine" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.StraightLine"><wbr></wbr>Straight<wbr></wbr>Line</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop16" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop16"><wbr></wbr>Toroidal<wbr></wbr>Loop16</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop32HiRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiRes"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop32HiResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiResFlat"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res<wbr></wbr>Flat</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop32LoRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoRes"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop32LoResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoResFlat"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res<wbr></wbr>Flat</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#ToroidalLoop8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop8"><wbr></wbr>Toroidal<wbr></wbr>Loop8</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.Wire_Presets.html" class="internal-link" title="The parent of this class"><wbr></wbr>Wire_<wbr></wbr>Presets</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.Wire_Presets.Wire_Presets.html" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets"><wbr></wbr>Wire_<wbr></wbr>Presets</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">Wire_Presets</span>:</code></p>
-        <p><a href="classIndex.html#magneticalc.Wire_Presets.Wire_Presets">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>Wire_Presets class.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id175">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Presets.html" class="internal-link" title="magneticalc.Wire_Presets">Wire_Presets</a></code><wbr></wbr>.<code><a href="magneticalc.Wire_Presets.Wire_Presets.html" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets">Wire_Presets</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Wire_Presets</span>:</code></p>
+          <p><a href="classIndex.html#magneticalc.Wire_Presets.Wire_Presets">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Wire_Presets class.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id175">
   
   
   <tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#get_by_id">get_by_id</a></code></td>
+    <td><code><a href="#get_by_id" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.get_by_id">get<wbr></wbr>_by<wbr></wbr>_id</a></code></td>
     <td>Selects a preset by name.</td>
   </tr><tr class="staticmethod">
     
     <td>Static Method</td>
-    <td><code><a href="#get_phase_jumping_toroidal_loop">get_phase_jumping_toroidal_loop</a></code></td>
+    <td><code><a href="#get_phase_jumping_toroidal_loop" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.get_phase_jumping_toroidal_loop">get<wbr></wbr>_phase<wbr></wbr>_jumping<wbr></wbr>_toroidal<wbr></wbr>_loop</a></code></td>
     <td>Generates a (phase-jumping) toroidal loop.</td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#CompensatedDoubleSquareLoop_Centered">CompensatedDoubleSquareLoop_Centered</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#CompensatedDoubleSquareLoop_Centered" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Centered"><wbr></wbr>Compensated<wbr></wbr>Double<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Centered</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#CompensatedDoubleSquareLoop_Offset">CompensatedDoubleSquareLoop_Offset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#CompensatedDoubleSquareLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Offset"><wbr></wbr>Compensated<wbr></wbr>Double<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Offset</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#CompensatedSolenoidCircularLoops4">CompensatedSolenoidCircularLoops4</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#CompensatedSolenoidCircularLoops4" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops4"><wbr></wbr>Compensated<wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops4</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#CompensatedSolenoidCircularLoops8">CompensatedSolenoidCircularLoops8</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#CompensatedSolenoidCircularLoops8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops8"><wbr></wbr>Compensated<wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops8</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#List">List</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#List" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.List"><wbr></wbr>List</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#PhaseJumpingToroidalLoop16">PhaseJumpingToroidalLoop16</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop16" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop16"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop16</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#PhaseJumpingToroidalLoop32">PhaseJumpingToroidalLoop32</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop32HiRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiRes"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#PhaseJumpingToroidalLoop8">PhaseJumpingToroidalLoop8</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop32HiResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiResFlat"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res<wbr></wbr>Flat</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#SingleCircularLoop_Offset">SingleCircularLoop_Offset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop32LoRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoRes"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#SingleSquareLoop_Centered">SingleSquareLoop_Centered</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop32LoResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoResFlat"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res<wbr></wbr>Flat</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#SingleSquareLoop_Offset">SingleSquareLoop_Offset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#PhaseJumpingToroidalLoop8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop8"><wbr></wbr>Phase<wbr></wbr>Jumping<wbr></wbr>Toroidal<wbr></wbr>Loop8</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#SolenoidCircularLoops4">SolenoidCircularLoops4</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#SingleCircularLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleCircularLoop_Offset"><wbr></wbr>Single<wbr></wbr>Circular<wbr></wbr>Loop_<wbr></wbr>Offset</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#SolenoidCircularLoops8">SolenoidCircularLoops8</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#SingleSquareLoop_Centered" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Centered"><wbr></wbr>Single<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Centered</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#StraightLine">StraightLine</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#SingleSquareLoop_Offset" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Offset"><wbr></wbr>Single<wbr></wbr>Square<wbr></wbr>Loop_<wbr></wbr>Offset</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ToroidalLoop16">ToroidalLoop16</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#SolenoidCircularLoops4" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops4"><wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops4</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ToroidalLoop32">ToroidalLoop32</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#SolenoidCircularLoops8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops8"><wbr></wbr>Solenoid<wbr></wbr>Circular<wbr></wbr>Loops8</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
     <td>Class Variable</td>
-    <td><code><a href="#ToroidalLoop8">ToroidalLoop8</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#StraightLine" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.StraightLine"><wbr></wbr>Straight<wbr></wbr>Line</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop16" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop16"><wbr></wbr>Toroidal<wbr></wbr>Loop16</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop32HiRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiRes"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop32HiResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiResFlat"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Hi<wbr></wbr>Res<wbr></wbr>Flat</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop32LoRes" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoRes"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop32LoResFlat" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoResFlat"><wbr></wbr>Toroidal<wbr></wbr>Loop32<wbr></wbr>Lo<wbr></wbr>Res<wbr></wbr>Flat</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#ToroidalLoop8" class="internal-link" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop8"><wbr></wbr>Toroidal<wbr></wbr>Loop8</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basestaticmethod">
+        <div id="childList">
+          <div class="basestaticmethod">
   
   
   <a name="magneticalc.Wire_Presets.Wire_Presets.get_by_id">
@@ -191,14 +617,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_by_id</span>(_id_):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">get_by_id</span><span class="function-signature">(<span class="rst-sig-param">_id_: <code>str</code></span>) -&gt; <code>dict</code>:</span>
+    
+    <a class="headerLink" href="#get_by_id" title="magneticalc.Wire_Presets.Wire_Presets.get_by_id">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Selects a preset by name.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_id_:</span><code>str</code></td><td class="fieldArgDesc">Preset ID</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>Dict</code></td><td class="fieldArgDesc">Preset parameters</td></tr></table></div>
+    <div><p>Selects a preset by name.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">_id_:</span><code>str</code></td><td class="fieldArgDesc">Preset ID</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>dict</code></td><td class="fieldArgDesc">Preset parameters</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -210,14 +641,19 @@
     
   </a>
   <div class="functionHeader">
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_phase_jumping_toroidal_loop</span>(n_points, n_phase_jumps, toroidal_radius, poloidal_radius, toroidal_freq, poloidal_freq):
     
+    <div><span class="decorator">@staticmethod<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">get_phase_jumping_toroidal_loop</span><span class="function-signature long-signature">(<span class="rst-sig-param">n_points: <code>int</code>, </span><span class="rst-sig-param">n_phase_jumps: <code>int</code>, </span><span class="rst-sig-param">toroidal_radius: <code>float</code>, </span><span class="rst-sig-param">poloidal_radius: <code>float</code>, </span><span class="rst-sig-param">toroidal_freq: <code>float</code>, </span><span class="rst-sig-param">poloidal_freq: <code>float</code>, </span><span class="rst-sig-param">flat: <code>bool</code> = True</span>) -&gt; <code>np.ndarray</code>:</span>
+    
+    <a class="headerLink" href="#get_phase_jumping_toroidal_loop" title="magneticalc.Wire_Presets.Wire_Presets.get_phase_jumping_toroidal_loop">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Generates a (phase-jumping) toroidal loop.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">n_points:</span><code>int</code></td><td class="fieldArgDesc">Number of points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">n_phase_jumps:</span><code>int</code></td><td class="fieldArgDesc">Number of phase jumps</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">toroidal_radius:</span><code>float</code></td><td class="fieldArgDesc">Toroidal radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">poloidal_radius:</span><code>float</code></td><td class="fieldArgDesc">Poloidal radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">toroidal_freq:</span><code>float</code></td><td class="fieldArgDesc">Toroidal frequency</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">poloidal_freq:</span><code>float</code></td><td class="fieldArgDesc">Poloidal frequency</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+    <div><p>Generates a (phase-jumping) toroidal loop.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">n<wbr></wbr>_points:</span><code>int</code></td><td class="fieldArgDesc">Number of points</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">n<wbr></wbr>_phase<wbr></wbr>_jumps:</span><code>int</code></td><td class="fieldArgDesc">Number of phase jumps</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">toroidal<wbr></wbr>_radius:</span><code>float</code></td><td class="fieldArgDesc">Toroidal radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">poloidal<wbr></wbr>_radius:</span><code>float</code></td><td class="fieldArgDesc">Poloidal radius</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">toroidal<wbr></wbr>_freq:</span><code>float</code></td><td class="fieldArgDesc">Toroidal frequency</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">poloidal<wbr></wbr>_freq:</span><code>float</code></td><td class="fieldArgDesc">Poloidal frequency</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">flat:</span><code>bool</code></td><td class="fieldArgDesc">Flat mode</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>np.ndarray</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
   </div>
 </div><div class="baseclassvariable">
   
@@ -232,9 +668,13 @@
     
     <span class="py-defname">CompensatedDoubleSquareLoop_Centered</span> =
     
+    <a class="headerLink" href="#CompensatedDoubleSquareLoop_Centered" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Centered">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -252,9 +692,13 @@
     
     <span class="py-defname">CompensatedDoubleSquareLoop_Offset</span> =
     
+    <a class="headerLink" href="#CompensatedDoubleSquareLoop_Offset" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedDoubleSquareLoop_Offset">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -272,9 +716,13 @@
     
     <span class="py-defname">CompensatedSolenoidCircularLoops4</span> =
     
+    <a class="headerLink" href="#CompensatedSolenoidCircularLoops4" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops4">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -292,9 +740,13 @@
     
     <span class="py-defname">CompensatedSolenoidCircularLoops8</span> =
     
+    <a class="headerLink" href="#CompensatedSolenoidCircularLoops8" title="magneticalc.Wire_Presets.Wire_Presets.CompensatedSolenoidCircularLoops8">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -312,9 +764,13 @@
     
     <span class="py-defname">List</span> =
     
+    <a class="headerLink" href="#List" title="magneticalc.Wire_Presets.Wire_Presets.List">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -332,9 +788,13 @@
     
     <span class="py-defname">PhaseJumpingToroidalLoop16</span> =
     
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop16" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop16">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -342,19 +802,95 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32">
+  <a name="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiRes">
     
   </a>
-  <a name="PhaseJumpingToroidalLoop32">
+  <a name="PhaseJumpingToroidalLoop32HiRes">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">PhaseJumpingToroidalLoop32</span> =
+    <span class="py-defname">PhaseJumpingToroidalLoop32HiRes</span> =
     
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop32HiRes" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiRes">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiResFlat">
+    
+  </a>
+  <a name="PhaseJumpingToroidalLoop32HiResFlat">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">PhaseJumpingToroidalLoop32HiResFlat</span> =
+    
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop32HiResFlat" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32HiResFlat">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoRes">
+    
+  </a>
+  <a name="PhaseJumpingToroidalLoop32LoRes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">PhaseJumpingToroidalLoop32LoRes</span> =
+    
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop32LoRes" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoRes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoResFlat">
+    
+  </a>
+  <a name="PhaseJumpingToroidalLoop32LoResFlat">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">PhaseJumpingToroidalLoop32LoResFlat</span> =
+    
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop32LoResFlat" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop32LoResFlat">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -372,9 +908,13 @@
     
     <span class="py-defname">PhaseJumpingToroidalLoop8</span> =
     
+    <a class="headerLink" href="#PhaseJumpingToroidalLoop8" title="magneticalc.Wire_Presets.Wire_Presets.PhaseJumpingToroidalLoop8">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -392,9 +932,13 @@
     
     <span class="py-defname">SingleCircularLoop_Offset</span> =
     
+    <a class="headerLink" href="#SingleCircularLoop_Offset" title="magneticalc.Wire_Presets.Wire_Presets.SingleCircularLoop_Offset">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -412,9 +956,13 @@
     
     <span class="py-defname">SingleSquareLoop_Centered</span> =
     
+    <a class="headerLink" href="#SingleSquareLoop_Centered" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Centered">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -432,9 +980,13 @@
     
     <span class="py-defname">SingleSquareLoop_Offset</span> =
     
+    <a class="headerLink" href="#SingleSquareLoop_Offset" title="magneticalc.Wire_Presets.Wire_Presets.SingleSquareLoop_Offset">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -452,9 +1004,13 @@
     
     <span class="py-defname">SolenoidCircularLoops4</span> =
     
+    <a class="headerLink" href="#SolenoidCircularLoops4" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops4">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -472,9 +1028,13 @@
     
     <span class="py-defname">SolenoidCircularLoops8</span> =
     
+    <a class="headerLink" href="#SolenoidCircularLoops8" title="magneticalc.Wire_Presets.Wire_Presets.SolenoidCircularLoops8">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -492,9 +1052,13 @@
     
     <span class="py-defname">StraightLine</span> =
     
+    <a class="headerLink" href="#StraightLine" title="magneticalc.Wire_Presets.Wire_Presets.StraightLine">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -512,9 +1076,13 @@
     
     <span class="py-defname">ToroidalLoop16</span> =
     
+    <a class="headerLink" href="#ToroidalLoop16" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop16">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -522,19 +1090,95 @@
 </div><div class="baseclassvariable">
   
   
-  <a name="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32">
+  <a name="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiRes">
     
   </a>
-  <a name="ToroidalLoop32">
+  <a name="ToroidalLoop32HiRes">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">ToroidalLoop32</span> =
+    <span class="py-defname">ToroidalLoop32HiRes</span> =
     
+    <a class="headerLink" href="#ToroidalLoop32HiRes" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiRes">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
     
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiResFlat">
+    
+  </a>
+  <a name="ToroidalLoop32HiResFlat">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ToroidalLoop32HiResFlat</span> =
+    
+    <a class="headerLink" href="#ToroidalLoop32HiResFlat" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32HiResFlat">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoRes">
+    
+  </a>
+  <a name="ToroidalLoop32LoRes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ToroidalLoop32LoRes</span> =
+    
+    <a class="headerLink" href="#ToroidalLoop32LoRes" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoRes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoResFlat">
+    
+  </a>
+  <a name="ToroidalLoop32LoResFlat">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">ToroidalLoop32LoResFlat</span> =
+    
+    <a class="headerLink" href="#ToroidalLoop32LoResFlat" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop32LoResFlat">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -552,27 +1196,40 @@
     
     <span class="py-defname">ToroidalLoop8</span> =
     
+    <a class="headerLink" href="#ToroidalLoop8" title="magneticalc.Wire_Presets.Wire_Presets.ToroidalLoop8">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

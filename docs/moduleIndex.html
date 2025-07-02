@@ -7,49 +7,98 @@
   <head>
     
     <title>Module Index</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
           </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <div id="search-status"> </div>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
       </div>
 
     </div>
+
+
   </div>
 </nav>
 
-    <div class="container">
+    <div class="container-fluid">
 
       <div class="page-header">
         <h1>Module Index</h1>
@@ -58,17 +107,25 @@
         </div>
       </div>
 
-      <ul id="summaryTree"><li><code><a href="magneticalc.html">magneticalc</a></code> - MagnetiCalc package initialization.<ul><li><code><a href="magneticalc.API.html">magneticalc.API</a></code> - API module.</li><li><code><a href="magneticalc.About_Dialog.html">magneticalc.About_Dialog</a></code> - About_Dialog module.</li><li><code><a href="magneticalc.Assert_Dialog.html">magneticalc.Assert_Dialog</a></code> - Assert_Dialog module.</li><li><code><a href="magneticalc.Backend_CUDA.html">magneticalc.Backend_CUDA</a></code> - Backend_CUDA module.</li><li><code><a href="magneticalc.Backend_JIT.html">magneticalc.Backend_JIT</a></code> - Backend_JIT module.</li><li><code><a href="magneticalc.Backend_Types.html">magneticalc.Backend_Types</a></code> - Backend_Types module.</li><li><code><a href="magneticalc.CalculationThread.html">magneticalc.CalculationThread</a></code> - CalculationThread module.</li><li><code><a href="magneticalc.CheckForUpdates_Dialog.html">magneticalc.CheckForUpdates_Dialog</a></code> - CheckForUpdates_Dialog module.</li><li><code><a href="magneticalc.Comparison_Types.html">magneticalc.Comparison_Types</a></code> - Comparison_Types module.</li><li><code><a href="magneticalc.ConditionalDecorator.html">magneticalc.ConditionalDecorator</a></code> - ConditionalDecorator module.</li><li><code><a href="magneticalc.Config.html">magneticalc.Config</a></code> - Config module.</li><li><code><a href="magneticalc.Config_Group.html">magneticalc.Config_Group</a></code> - Config_Collection module.</li><li><code><a href="magneticalc.Constants.html">magneticalc.Constants</a></code> - Constants module.</li><li><code><a href="magneticalc.Constraint.html">magneticalc.Constraint</a></code> - Constraint module.</li><li><code><a href="magneticalc.Constraint_Editor.html">magneticalc.Constraint_Editor</a></code> - Constraint_Editor module.</li><li><code><a href="magneticalc.Debug.html">magneticalc.Debug</a></code> - Debug module.</li><li><code><a href="magneticalc.Display_Widget.html">magneticalc.Display_Widget</a></code> - Display_Widget module.</li><li><code><a href="magneticalc.ExportContainer_Dialog.html">magneticalc.ExportContainer_Dialog</a></code> - ExportContainer_Dialog module.</li><li><code><a href="magneticalc.Field.html">magneticalc.Field</a></code> - Field module.</li><li><code><a href="magneticalc.Field_Types.html">magneticalc.Field_Types</a></code> - Field_Types module.</li><li><code><a href="magneticalc.Field_Widget.html">magneticalc.Field_Widget</a></code> - Field_Widget module.</li><li><code><a href="magneticalc.File_Menu.html">magneticalc.File_Menu</a></code> - File_Menu module.</li><li><code><a href="magneticalc.Format.html">magneticalc.Format</a></code> - Format module.</li><li><code><a href="magneticalc.GUI.html">magneticalc.GUI</a></code> - GUI module.</li><li><code><a href="magneticalc.Help_Menu.html">magneticalc.Help_Menu</a></code> - Help_Menu module.</li><li><code><a href="magneticalc.MagnetiCalc_Data.html">magneticalc.MagnetiCalc_Data</a></code> - MagnetiCalc_Data module.</li><li><code><a href="magneticalc.Menu.html">magneticalc.Menu</a></code> - Menu module.</li><li><code><a href="magneticalc.Metric.html">magneticalc.Metric</a></code> - Metric module.</li><li><code><a href="magneticalc.Metric_Presets.html">magneticalc.Metric_Presets</a></code> - Metric_Presets module.</li><li><code><a href="magneticalc.Metric_Widget.html">magneticalc.Metric_Widget</a></code> - Metric_Widget module.</li><li><code><a href="magneticalc.Model.html">magneticalc.Model</a></code> - Model module.</li><li><code><a href="magneticalc.ModelAccess.html">magneticalc.ModelAccess</a></code> - Model access module.</li><li><code><a href="magneticalc.Norm_Types.html">magneticalc.Norm_Types</a></code> - Norm_Types module.</li><li><code><a href="magneticalc.Options_Menu.html">magneticalc.Options_Menu</a></code> - Options_Menu module.</li><li><code><a href="magneticalc.OverridePadding_Dialog.html">magneticalc.OverridePadding_Dialog</a></code> - OverridePadding_Dialog module.</li><li><code><a href="magneticalc.Parameters.html">magneticalc.Parameters</a></code> - Parameters module.</li><li><code><a href="magneticalc.Parameters_Widget.html">magneticalc.Parameters_Widget</a></code> - Parameters_Widget module.</li><li><code><a href="magneticalc.Perspective_Presets.html">magneticalc.Perspective_Presets</a></code> - Perspective_Presets module.</li><li><code><a href="magneticalc.Perspective_Widget.html">magneticalc.Perspective_Widget</a></code> - Perspective_Widget module.</li><li><code><a href="magneticalc.Project.html">magneticalc.Project</a></code> - Project module.</li><li><code><a href="magneticalc.QCheckboxConfig.html">magneticalc.QCheckboxConfig</a></code> - QCheckboxConfig module.</li><li><code><a href="magneticalc.QMessageBox2.html">magneticalc.QMessageBox2</a></code> - QMessageBox2 module.</li><li><code><a href="magneticalc.QTableView2.html">magneticalc.QTableView2</a></code> - QTableView2 module.</li><li><code><a href="magneticalc.QtWidgets2.html">magneticalc.QtWidgets2</a></code> - MagnetiCalc package initialization.<ul><li><code><a href="magneticalc.QtWidgets2.QButtons.html">magneticalc.QtWidgets2.QButtons</a></code> - QButtons module.</li><li><code><a href="magneticalc.QtWidgets2.QDialog2.html">magneticalc.QtWidgets2.QDialog2</a></code> - QDialog2 module.</li><li><code><a href="magneticalc.QtWidgets2.QDoubleSpinBox2.html">magneticalc.QtWidgets2.QDoubleSpinBox2</a></code> - QDoubleSpinBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QGroupBox2.html">magneticalc.QtWidgets2.QGroupBox2</a></code> - QGroupBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QHBoxLayout2.html">magneticalc.QtWidgets2.QHBoxLayout2</a></code> - QHBoxLayout2 module.</li><li><code><a href="magneticalc.QtWidgets2.QHLine.html">magneticalc.QtWidgets2.QHLine</a></code> - QHLine module.</li><li><code><a href="magneticalc.QtWidgets2.QIconLabel.html">magneticalc.QtWidgets2.QIconLabel</a></code> - QIconLabel module.</li><li><code><a href="magneticalc.QtWidgets2.QLabel2.html">magneticalc.QtWidgets2.QLabel2</a></code> - QLabel2 module.</li><li><code><a href="magneticalc.QtWidgets2.QLayouted.html">magneticalc.QtWidgets2.QLayouted</a></code> - QLayouted module.</li><li><code><a href="magneticalc.QtWidgets2.QPushButton2.html">magneticalc.QtWidgets2.QPushButton2</a></code> - QPushButton2 module.</li><li><code><a href="magneticalc.QtWidgets2.QSaveAction.html">magneticalc.QtWidgets2.QSaveAction</a></code> - QSaveAction module.</li><li><code><a href="magneticalc.QtWidgets2.QSliderFloat.html">magneticalc.QtWidgets2.QSliderFloat</a></code> - QSliderFloat module.</li><li><code><a href="magneticalc.QtWidgets2.QSpinBox2.html">magneticalc.QtWidgets2.QSpinBox2</a></code> - QSpinBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QTextBrowser2.html">magneticalc.QtWidgets2.QTextBrowser2</a></code> - QTextBrowser2 module.</li></ul></li><li><code><a href="magneticalc.SamplingVolume.html">magneticalc.SamplingVolume</a></code> - Sampling volume module.</li><li><code><a href="magneticalc.SamplingVolume_Widget.html">magneticalc.SamplingVolume_Widget</a></code> - SamplingVolume_Widget module.</li><li><code><a href="magneticalc.SidebarLeft.html">magneticalc.SidebarLeft</a></code> - SidebarLeft module.</li><li><code><a href="magneticalc.SidebarRight.html">magneticalc.SidebarRight</a></code> - SidebarRight module.</li><li><code><a href="magneticalc.Statusbar.html">magneticalc.Statusbar</a></code> - Statusbar module.</li><li><code><a href="magneticalc.Theme.html">magneticalc.Theme</a></code> - Theme module.</li><li><code><a href="magneticalc.Usage_Dialog.html">magneticalc.Usage_Dialog</a></code> - Usage_Dialog module.</li><li><code><a href="magneticalc.Validatable.html">magneticalc.Validatable</a></code> - Validatable module.</li><li><code><a href="magneticalc.Version.html">magneticalc.Version</a></code> - Version module.</li><li><code><a href="magneticalc.View_Menu.html">magneticalc.View_Menu</a></code> - View_Menu module.</li><li><code><a href="magneticalc.VisPyCanvas.html">magneticalc.VisPyCanvas</a></code> - VisPyCanvas module.</li><li><code><a href="magneticalc.Wire.html">magneticalc.Wire</a></code> - Wire module.</li><li><code><a href="magneticalc.Wire_Menu.html">magneticalc.Wire_Menu</a></code> - Wire_Menu module.</li><li><code><a href="magneticalc.Wire_Presets.html">magneticalc.Wire_Presets</a></code> - Wire_Presets module.</li><li><code><a href="magneticalc.Wire_Widget.html">magneticalc.Wire_Widget</a></code> - Wire_Widget module.</li><li class="private"><code><a href="magneticalc.__main__.html">magneticalc.__main__</a></code> - MagnetiCalc main module.</li></ul></li></ul>
+      <ul id="summaryTree"><li><code><a href="index.html" class="internal-link">magneticalc</a></code> - MagnetiCalc package initialization.<ul><li><code><a href="magneticalc.About_Dialog.html" class="internal-link" title="magneticalc.About_Dialog">About_Dialog</a></code> - About_Dialog module.</li><li><code><a href="magneticalc.API.html" class="internal-link" title="magneticalc.API">API</a></code> - API module.</li><li><code><a href="magneticalc.Assert_Dialog.html" class="internal-link" title="magneticalc.Assert_Dialog">Assert_Dialog</a></code> - Assert_Dialog module.</li><li><code><a href="magneticalc.Backend_CUDA.html" class="internal-link" title="magneticalc.Backend_CUDA">Backend_CUDA</a></code> - Backend_CUDA module.</li><li><code><a href="magneticalc.Backend_JIT.html" class="internal-link" title="magneticalc.Backend_JIT">Backend_JIT</a></code> - Backend_JIT module.</li><li><code><a href="magneticalc.Backend_Types.html" class="internal-link" title="magneticalc.Backend_Types">Backend_Types</a></code> - Backend_Types module.</li><li><code><a href="magneticalc.CalculationThread.html" class="internal-link" title="magneticalc.CalculationThread">CalculationThread</a></code> - CalculationThread module.</li><li><code><a href="magneticalc.CheckForUpdates_Dialog.html" class="internal-link" title="magneticalc.CheckForUpdates_Dialog">CheckForUpdates_Dialog</a></code> - CheckForUpdates_Dialog module.</li><li><code><a href="magneticalc.Comparison_Types.html" class="internal-link" title="magneticalc.Comparison_Types">Comparison_Types</a></code> - Comparison_Types module.</li><li><code><a href="magneticalc.ConditionalDecorator.html" class="internal-link" title="magneticalc.ConditionalDecorator">ConditionalDecorator</a></code> - ConditionalDecorator module.</li><li><code><a href="magneticalc.Config.html" class="internal-link" title="magneticalc.Config">Config</a></code> - Config module.</li><li><code><a href="magneticalc.Config_Group.html" class="internal-link" title="magneticalc.Config_Group">Config_Group</a></code> - Config_Collection module.</li><li><code><a href="magneticalc.Constants.html" class="internal-link" title="magneticalc.Constants">Constants</a></code> - Constants module.</li><li><code><a href="magneticalc.Constraint.html" class="internal-link" title="magneticalc.Constraint">Constraint</a></code> - Constraint module.</li><li><code><a href="magneticalc.Constraint_Editor.html" class="internal-link" title="magneticalc.Constraint_Editor">Constraint_Editor</a></code> - Constraint_Editor module.</li><li><code><a href="magneticalc.Debug.html" class="internal-link" title="magneticalc.Debug">Debug</a></code> - Debug module.</li><li><code><a href="magneticalc.Display_Widget.html" class="internal-link" title="magneticalc.Display_Widget">Display_Widget</a></code> - Display_Widget module.</li><li><code><a href="magneticalc.ExportContainer_Dialog.html" class="internal-link" title="magneticalc.ExportContainer_Dialog">ExportContainer_Dialog</a></code> - ExportContainer_Dialog module.</li><li><code><a href="magneticalc.Field.html" class="internal-link" title="magneticalc.Field">Field</a></code> - Field module.</li><li><code><a href="magneticalc.Field_Types.html" class="internal-link" title="magneticalc.Field_Types">Field_Types</a></code> - Field_Types module.</li><li><code><a href="magneticalc.Field_Widget.html" class="internal-link" title="magneticalc.Field_Widget">Field_Widget</a></code> - Field_Widget module.</li><li><code><a href="magneticalc.File_Menu.html" class="internal-link" title="magneticalc.File_Menu">File_Menu</a></code> - File_Menu module.</li><li><code><a href="magneticalc.Format.html" class="internal-link" title="magneticalc.Format">Format</a></code> - Format module.</li><li><code><a href="magneticalc.GUI.html" class="internal-link" title="magneticalc.GUI">GUI</a></code> - GUI module.</li><li><code><a href="magneticalc.Help_Menu.html" class="internal-link" title="magneticalc.Help_Menu">Help_Menu</a></code> - Help_Menu module.</li><li><code><a href="magneticalc.MagnetiCalc_Data.html" class="internal-link" title="magneticalc.MagnetiCalc_Data">MagnetiCalc_Data</a></code> - MagnetiCalc_Data module.</li><li><code><a href="magneticalc.Menu.html" class="internal-link" title="magneticalc.Menu">Menu</a></code> - Menu module.</li><li><code><a href="magneticalc.Metric.html" class="internal-link" title="magneticalc.Metric">Metric</a></code> - Metric module.</li><li><code><a href="magneticalc.Metric_Presets.html" class="internal-link" title="magneticalc.Metric_Presets">Metric_Presets</a></code> - Metric_Presets module.</li><li><code><a href="magneticalc.Metric_Widget.html" class="internal-link" title="magneticalc.Metric_Widget">Metric_Widget</a></code> - Metric_Widget module.</li><li><code><a href="magneticalc.Model.html" class="internal-link" title="magneticalc.Model">Model</a></code> - Model module.</li><li><code><a href="magneticalc.ModelAccess.html" class="internal-link" title="magneticalc.ModelAccess">ModelAccess</a></code> - Model access module.</li><li><code><a href="magneticalc.Norm_Types.html" class="internal-link" title="magneticalc.Norm_Types">Norm_Types</a></code> - Norm_Types module.</li><li><code><a href="magneticalc.Options_Menu.html" class="internal-link" title="magneticalc.Options_Menu">Options_Menu</a></code> - Options_Menu module.</li><li><code><a href="magneticalc.OverridePadding_Dialog.html" class="internal-link" title="magneticalc.OverridePadding_Dialog">OverridePadding_Dialog</a></code> - OverridePadding_Dialog module.</li><li><code><a href="magneticalc.Parameters.html" class="internal-link" title="magneticalc.Parameters">Parameters</a></code> - Parameters module.</li><li><code><a href="magneticalc.Parameters_Widget.html" class="internal-link" title="magneticalc.Parameters_Widget">Parameters_Widget</a></code> - Parameters_Widget module.</li><li><code><a href="magneticalc.Perspective_Presets.html" class="internal-link" title="magneticalc.Perspective_Presets">Perspective_Presets</a></code> - Perspective_Presets module.</li><li><code><a href="magneticalc.Perspective_Widget.html" class="internal-link" title="magneticalc.Perspective_Widget">Perspective_Widget</a></code> - Perspective_Widget module.</li><li><code><a href="magneticalc.Project.html" class="internal-link" title="magneticalc.Project">Project</a></code> - Project module.</li><li><code><a href="magneticalc.QCheckboxConfig.html" class="internal-link" title="magneticalc.QCheckboxConfig">QCheckboxConfig</a></code> - QCheckboxConfig module.</li><li><code><a href="magneticalc.QMessageBox2.html" class="internal-link" title="magneticalc.QMessageBox2">QMessageBox2</a></code> - QMessageBox2 module.</li><li><code><a href="magneticalc.QTableView2.html" class="internal-link" title="magneticalc.QTableView2">QTableView2</a></code> - QTableView2 module.</li><li><code><a href="magneticalc.QtWidgets2.html" class="internal-link" title="magneticalc.QtWidgets2">QtWidgets2</a></code> - MagnetiCalc package initialization.<ul><li><code><a href="magneticalc.QtWidgets2.QButtons.html" class="internal-link" title="magneticalc.QtWidgets2.QButtons">QButtons</a></code> - QButtons module.</li><li><code><a href="magneticalc.QtWidgets2.QDialog2.html" class="internal-link" title="magneticalc.QtWidgets2.QDialog2">QDialog2</a></code> - QDialog2 module.</li><li><code><a href="magneticalc.QtWidgets2.QDoubleSpinBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QDoubleSpinBox2">QDoubleSpinBox2</a></code> - QDoubleSpinBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QGroupBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QGroupBox2">QGroupBox2</a></code> - QGroupBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QHBoxLayout2.html" class="internal-link" title="magneticalc.QtWidgets2.QHBoxLayout2">QHBoxLayout2</a></code> - QHBoxLayout2 module.</li><li><code><a href="magneticalc.QtWidgets2.QHLine.html" class="internal-link" title="magneticalc.QtWidgets2.QHLine">QHLine</a></code> - QHLine module.</li><li><code><a href="magneticalc.QtWidgets2.QIconLabel.html" class="internal-link" title="magneticalc.QtWidgets2.QIconLabel">QIconLabel</a></code> - QIconLabel module.</li><li><code><a href="magneticalc.QtWidgets2.QLabel2.html" class="internal-link" title="magneticalc.QtWidgets2.QLabel2">QLabel2</a></code> - QLabel2 module.</li><li><code><a href="magneticalc.QtWidgets2.QLayouted.html" class="internal-link" title="magneticalc.QtWidgets2.QLayouted">QLayouted</a></code> - QLayouted module.</li><li><code><a href="magneticalc.QtWidgets2.QPushButton2.html" class="internal-link" title="magneticalc.QtWidgets2.QPushButton2">QPushButton2</a></code> - QPushButton2 module.</li><li><code><a href="magneticalc.QtWidgets2.QSaveAction.html" class="internal-link" title="magneticalc.QtWidgets2.QSaveAction">QSaveAction</a></code> - QSaveAction module.</li><li><code><a href="magneticalc.QtWidgets2.QSliderFloat.html" class="internal-link" title="magneticalc.QtWidgets2.QSliderFloat">QSliderFloat</a></code> - QSliderFloat module.</li><li><code><a href="magneticalc.QtWidgets2.QSpinBox2.html" class="internal-link" title="magneticalc.QtWidgets2.QSpinBox2">QSpinBox2</a></code> - QSpinBox2 module.</li><li><code><a href="magneticalc.QtWidgets2.QTextBrowser2.html" class="internal-link" title="magneticalc.QtWidgets2.QTextBrowser2">QTextBrowser2</a></code> - QTextBrowser2 module.</li></ul></li><li><code><a href="magneticalc.SamplingVolume.html" class="internal-link" title="magneticalc.SamplingVolume">SamplingVolume</a></code> - Sampling volume module.</li><li><code><a href="magneticalc.SamplingVolume_Widget.html" class="internal-link" title="magneticalc.SamplingVolume_Widget">SamplingVolume_Widget</a></code> - SamplingVolume_Widget module.</li><li><code><a href="magneticalc.SidebarLeft.html" class="internal-link" title="magneticalc.SidebarLeft">SidebarLeft</a></code> - SidebarLeft module.</li><li><code><a href="magneticalc.SidebarRight.html" class="internal-link" title="magneticalc.SidebarRight">SidebarRight</a></code> - SidebarRight module.</li><li><code><a href="magneticalc.Statusbar.html" class="internal-link" title="magneticalc.Statusbar">Statusbar</a></code> - Statusbar module.</li><li><code><a href="magneticalc.Theme.html" class="internal-link" title="magneticalc.Theme">Theme</a></code> - Theme module.</li><li><code><a href="magneticalc.Usage_Dialog.html" class="internal-link" title="magneticalc.Usage_Dialog">Usage_Dialog</a></code> - Usage_Dialog module.</li><li><code><a href="magneticalc.Validatable.html" class="internal-link" title="magneticalc.Validatable">Validatable</a></code> - Validatable module.</li><li><code><a href="magneticalc.Version.html" class="internal-link" title="magneticalc.Version">Version</a></code> - Version module.</li><li><code><a href="magneticalc.View_Menu.html" class="internal-link" title="magneticalc.View_Menu">View_Menu</a></code> - View_Menu module.</li><li><code><a href="magneticalc.VisPyCanvas.html" class="internal-link" title="magneticalc.VisPyCanvas">VisPyCanvas</a></code> - VisPyCanvas module.</li><li><code><a href="magneticalc.Wire.html" class="internal-link" title="magneticalc.Wire">Wire</a></code> - Wire module.</li><li><code><a href="magneticalc.Wire_Menu.html" class="internal-link" title="magneticalc.Wire_Menu">Wire_Menu</a></code> - Wire_Menu module.</li><li><code><a href="magneticalc.Wire_Presets.html" class="internal-link" title="magneticalc.Wire_Presets">Wire_Presets</a></code> - Wire_Presets module.</li><li><code><a href="magneticalc.Wire_Widget.html" class="internal-link" title="magneticalc.Wire_Widget">Wire_Widget</a></code> - Wire_Widget module.</li><li class="private"><code><a href="magneticalc.__main__.html" class="internal-link" title="magneticalc.__main__">__main__</a></code> - MagnetiCalc main module.</li></ul></li></ul>
 
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
 </footer>
 
     <script src="pydoctor.js" type="text/javascript"></script>

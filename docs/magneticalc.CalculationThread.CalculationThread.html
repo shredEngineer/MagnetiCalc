@@ -7,141 +7,397 @@
   <head>
     
     <title>magneticalc.CalculationThread.CalculationThread</title>
-    <meta name="generator" content="pydoctor 21.12.0"> 
+    <meta name="generator" content="pydoctor 25.4.0"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.75" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
+    
 </head>
 
   <body>
 
     
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default mainnavbar">
+      
   
-  <div class="container">
+  <div class="container-fluid">
+
 
     <div class="navbar-header">
       
       <div class="navlinks">
-          <span class="navbar-brand">
-            <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
-          </span>
+        <span class="navbar-brand">
+          <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a> <a href="index.html">API Documentation</a>
+        </span>
 
-          <a href="moduleIndex.html">
-            Modules
-          </a>
+        <a href="moduleIndex.html">
+          Modules
+        </a>
 
-          <a href="classIndex.html">
-            Classes
-          </a>
+        <a href="classIndex.html">
+          Classes
+        </a>
 
-          <a href="nameIndex.html">
-            Names
-          </a>
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </div>
-</nav>
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
 
-    
+        <div id="search-status"> </div>
 
-    <div class="container">
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
 
-      <div class="page-header">
-        <h1 class="class"><code><code><a href="magneticalc.html">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.CalculationThread.html">CalculationThread</a></code><wbr></wbr>.<code><a href="magneticalc.CalculationThread.CalculationThread.html">CalculationThread</a></code></code></h1>
-        <div id="showPrivate">
-          <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
         </div>
       </div>
 
-      <div class="categoryHeader">
-        class documentation
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="magneticalc.CalculationThread.CalculationThread.html" class="internal-link" title="This class"><wbr></wbr>Calculation<wbr></wbr>Thread</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#disconnect_signals" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.disconnect_signals">disconnect<wbr></wbr>_signals</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#run" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.run">run</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_on_finished" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._on_finished">_on<wbr></wbr>_finished</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#gui" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.gui">gui</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_field_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._field_valid">_field<wbr></wbr>_valid</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_metric_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._metric_valid">_metric<wbr></wbr>_valid</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_parameters_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._parameters_valid">_parameters<wbr></wbr>_valid</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_progress_update" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._progress_update">_progress<wbr></wbr>_update</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_sampling_volume_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._sampling_volume_valid">_sampling<wbr></wbr>_volume<wbr></wbr>_valid</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_wire_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._wire_valid">_wire<wbr></wbr>_valid</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="magneticalc.CalculationThread.html" class="internal-link" title="The parent of this class"><wbr></wbr>Calculation<wbr></wbr>Thread</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="magneticalc.CalculationThread.CalculationThread.html" class="internal-link" title="magneticalc.CalculationThread.CalculationThread"><wbr></wbr>Calculation<wbr></wbr>Thread</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
       </div>
 
-      <div class="extrasDocstring">
-        <p><code><span class="py-keyword">class</span> <span class="py-defname">CalculationThread</span>(<span title="PyQt5.QtCore.QThread">QThread</span>):</code></p>
-        <p><a href="classIndex.html#magneticalc.CalculationThread.CalculationThread">View In Hierarchy</a></p>
-      </div>
+      <div id="main" class="">
+        
 
-      <div class="moduleDocstring">
-        <div>CalculationThread class. The calculation thread implements an offloaded pipeline of subsequent calculation subtasks. The pipeline may be interrupted at (almost) any time, thereby exiting this thread.</div>
-      </div>
+        
 
-      <div id="splitTables">
-        <table class="children sortable" id="id16">
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">magneticalc</a></code><wbr></wbr>.<code><a href="magneticalc.CalculationThread.html" class="internal-link" title="magneticalc.CalculationThread">CalculationThread</a></code><wbr></wbr>.<code><a href="magneticalc.CalculationThread.CalculationThread.html" class="internal-link" title="magneticalc.CalculationThread.CalculationThread">CalculationThread</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">CalculationThread</span>(QThread):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.__init__">CalculationThread(gui)</a></code></p>
+          <p><a href="classIndex.html#magneticalc.CalculationThread.CalculationThread">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>CalculationThread class. The calculation thread implements an offloaded pipeline of subsequent calculation subtasks. The pipeline may be interrupted at (almost) any time, thereby exiting this thread.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id16">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#__init__">__init__</a></code></td>
+    <td><code><a href="#__init__" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.__init__">__init__</a></code></td>
     <td>Initializes calculation thread.</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#disconnect_signals">disconnect_signals</a></code></td>
+    <td><code><a href="#disconnect_signals" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.disconnect_signals">disconnect<wbr></wbr>_signals</a></code></td>
     <td>Disconnects all valid state signals</td>
   </tr><tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#run">run</a></code></td>
+    <td><code><a href="#run" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.run">run</a></code></td>
     <td>Thread main function.</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#gui">gui</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#gui" class="internal-link" title="magneticalc.CalculationThread.CalculationThread.gui">gui</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="method private">
     
     <td>Method</td>
-    <td><code><a href="#_on_finished">_on_finished</a></code></td>
+    <td><code><a href="#_on_finished" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._on_finished">_on<wbr></wbr>_finished</a></code></td>
     <td>Signals that the calculation finished.</td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_field_valid">_field_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_field_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._field_valid">_field<wbr></wbr>_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_metric_valid">_metric_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_metric_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._metric_valid">_metric<wbr></wbr>_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_parameters_valid">_parameters_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_parameters_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._parameters_valid">_parameters<wbr></wbr>_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_progress_update">_progress_update</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_progress_update" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._progress_update">_progress<wbr></wbr>_update</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_sampling_volume_valid">_sampling_volume_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_sampling_volume_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._sampling_volume_valid">_sampling<wbr></wbr>_volume<wbr></wbr>_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable private">
     
     <td>Class Variable</td>
-    <td><code><a href="#_wire_valid">_wire_valid</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#_wire_valid" class="internal-link" title="magneticalc.CalculationThread.CalculationThread._wire_valid">_wire<wbr></wbr>_valid</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
-        
-
           
-      </div>
 
-      <div id="childList">
+            
+        </div>
 
-        <div class="basemethod">
+        <div id="childList">
+          <div class="basemethod">
   
   
   <a name="magneticalc.CalculationThread.CalculationThread.__init__">
@@ -152,13 +408,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span>(self, gui):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">gui: <code>GUI</code></span>):</span>
+    
+    <a class="headerLink" href="#__init__" title="magneticalc.CalculationThread.CalculationThread.__init__">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Initializes calculation thread.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
+    <div><p>Initializes calculation thread.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">gui:</span><code>GUI</code></td><td class="fieldArgDesc">GUI</td></tr></table></div>
   </div>
 </div><div class="basemethod">
   
@@ -171,13 +432,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">disconnect_signals</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">disconnect_signals</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#disconnect_signals" title="magneticalc.CalculationThread.CalculationThread.disconnect_signals">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Disconnects all valid state signals</div>
+    <div><p>Disconnects all valid state signals</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -190,13 +456,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">run</span>(self):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">run</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    
+    <a class="headerLink" href="#run" title="magneticalc.CalculationThread.CalculationThread.run">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Thread main function.</div>
+    <div><p>Thread main function.</p></div>
   </div>
 </div><div class="baseinstancevariable">
   
@@ -211,9 +482,13 @@
     
     <span class="py-defname">gui</span> =
     
+    <a class="headerLink" href="#gui" title="magneticalc.CalculationThread.CalculationThread.gui">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -229,13 +504,18 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-keyword">def</span> <span class="py-defname">_on_finished</span>(self, success):
     
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_on_finished</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">success: <code>bool</code></span>):</span>
+    
+    <a class="headerLink" href="#_on_finished" title="magneticalc.CalculationThread.CalculationThread._on_finished">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="docstring functionBody">
     
-    
-    <div>Signals that the calculation finished.<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">True if calculation was successful, False otherwise</td></tr></table></div>
+    <div><p>Signals that the calculation finished.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">success:</span><code>bool</code></td><td class="fieldArgDesc">True if calculation was successful, False otherwise</td></tr></table></div>
   </div>
 </div><div class="baseclassvariable private">
   
@@ -250,9 +530,13 @@
     
     <span class="py-defname">_field_valid</span> =
     
+    <a class="headerLink" href="#_field_valid" title="magneticalc.CalculationThread.CalculationThread._field_valid">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -270,9 +554,13 @@
     
     <span class="py-defname">_metric_valid</span> =
     
+    <a class="headerLink" href="#_metric_valid" title="magneticalc.CalculationThread.CalculationThread._metric_valid">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -290,9 +578,13 @@
     
     <span class="py-defname">_parameters_valid</span> =
     
+    <a class="headerLink" href="#_parameters_valid" title="magneticalc.CalculationThread.CalculationThread._parameters_valid">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -310,9 +602,13 @@
     
     <span class="py-defname">_progress_update</span> =
     
+    <a class="headerLink" href="#_progress_update" title="magneticalc.CalculationThread.CalculationThread._progress_update">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -330,9 +626,13 @@
     
     <span class="py-defname">_sampling_volume_valid</span> =
     
+    <a class="headerLink" href="#_sampling_volume_valid" title="magneticalc.CalculationThread.CalculationThread._sampling_volume_valid">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
@@ -350,27 +650,40 @@
     
     <span class="py-defname">_wire_valid</span> =
     
+    <a class="headerLink" href="#_wire_valid" title="magneticalc.CalculationThread.CalculationThread._wire_valid">
+      
+      
+      ¶
+    </a>
   </div>
   <div class="functionBody">
-    
     
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
 </div>
-
+        </div>
+      
       </div>
     </div>
 
     <footer class="navbar navbar-default">
+
   
-  <div class="container">
+  <div class="container-fluid">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/shredEngineer/MagnetiCalc" class="projecthome">MagnetiCalc</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    21.12.0 at 2022-06-30 11:47:05.
+    25.4.0 at 2025-07-02 08:04:56.
   </div>
-</footer>
 
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
     <script src="pydoctor.js" type="text/javascript"></script>
 
   </body>

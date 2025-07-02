@@ -30,6 +30,8 @@ jobs:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
-          # 💡 ACTIVATE ONE LINE ONLY:
-          twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/* --verbose
-          # twine upload -u __token__ -p "$PYPI_TOKEN" dist/* --verbose
+          # USE TESTPYPI
+          # twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/* --verbose
+          # ... OR ...
+          # USE PYPI
+          twine upload -u __token__ -p "$PYPI_TOKEN" dist/* --verbose

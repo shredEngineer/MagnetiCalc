@@ -1,0 +1,3 @@
+- Run `Pre-GitHub-Workflow.sh` to regenerate docs
+- Run `Upload-to-TestPyPI.sh` to test uploading to TestPyPI
+- Create a tag to trigger the actual uploading to PyPI (via the GitHub action `.github/workflows/python-publish.yml`)

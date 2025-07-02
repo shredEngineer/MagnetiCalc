@@ -100,96 +100,20 @@ If you feel like your project should also be included as an example, you are wel
 Installation
 ------------
 
-If you have trouble installing MagnetiCalc,
-make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
-so I can help you get it up and running!
+### With `pip`
 
-Requirements:
-* Python 3.6+
-
-Tested with:
-* Python 3.7 in Linux Mint 19.3
-* Python 3.8 in Ubuntu 20.04
-* Python 3.8.2 in macOS 11.6 (M1)
-* Python 3.8.10 in Windows 10 (21H2)
-* Python 3.10.5 in Ubuntu 20.04
-* Python 3.12.4 in Ubuntu 24.04
-
-### Prerequisites
-On some systems, it may be necessary to upgrade pip first:
- `python3 -m pip install pip --upgrade`
-
-*Note:* Windows users need to type `python` instead of `python3`
-
-#### Linux
-The following dependencies must be installed first (Ubuntu 20.04):
 ```shell
-sudo apt install python3-dev
-sudo apt install libxcb-xinerama0 --reinstall
+pip install magneticalc
+magneticalc
 ```
 
-#### Windows
-~~It is recommended to install [Python 3.8.10](https://www.python.org/downloads/release/python-3810/). 
-Installation will currently fail for Python 3.9+ due to missing dependencies.~~
+### From source
 
-On some systems, it may be necessary to install the latest
-[Microsoft Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
-first.
-
-#### macOS (M1)
-On Apple Silicon,
-[Open Using Rosetta](https://www.courier.com/blog/tips-and-tricks-to-setup-your-apple-m1-for-development/)
-must be enabled for the Terminal app before installing (upgrading) and starting MagnetiCalc.
-
-### Option A: Automatic install via pip
-This will install (upgrade) MagnetiCalc (and its dependencies) to the user site-packages directory and start it.
-
-[![PyPI version](https://img.shields.io/pypi/v/MagnetiCalc?label=PyPI)](https://pypi.org/project/MagnetiCalc/)
-
-#### Linux & macOS (Intel)
 ```shell
-python3 -m pip install magneticalc --upgrade
-python3 -m magneticalc
-```
-
-#### Windows
-```shell
-python -m pip install --upgrade magneticalc
-python -m magneticalc
-```
-
-#### macOS (M1)
-*Note:* On Apple Silicon, JIT may need to be disabled due to incomplete support, resulting in slow calculations. 
-```shell
-python3 -m pip install magneticalc --upgrade
-export NUMBA_DISABLE_JIT=1 && python3 -m magneticalc
-```
-
-#### Juptyer Notebook & Jupyter Lab
-From within a [Jupyter](https://jupyter.org/) Notebook,  MagnetiCalc can be installed (upgraded) and run like this:
-```python
-import sys
-!{sys.executable} -m pip install magneticalc --upgrade
-!{sys.executable} -m magneticalc
-```
-
-### Option B: Manual download
-*Note:* Windows users need to type `python` instead of `python3`.
-
-Install (upgrade) all dependencies to the user site-packages directory:
-```shell
-python3 -m pip install numpy numba scipy PyQt5 vispy "qtawesome>=1.0.0,<=1.3.1" sty si-prefix h5py --upgrade
-```
-
-Use [Git](https://git-scm.com/) to clone the latest version of MagnetiCalc from GitHub: 
-```shell
-git clone https://github.com/shredEngineer/MagnetiCalc
-```
-
-Enter the cloned directory and start MagnetiCalc:
-```shell
+git clone https://github.com/shredEngineer/MagnetiCalc.git
 cd MagnetiCalc
-python3 -m magneticalc
+poetry install
+poetry run magneticalc
 ```
 
 ### Enabling CUDA Support

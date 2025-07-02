@@ -2,27 +2,18 @@
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Upload-to-TestPyPI
-# Prerequisites:
-#     python3 -m pip install --upgrade --user setuptools wheel twine
-#     ~/.pypirc:  See: https://packaging.python.org/en/latest/specifications/pypirc/
 # ----------------------------------------------------------------------------------------------------------------------
 cd ..
 # set -e
 clear
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Package
-python3 setup.py sdist bdist_wheel
+# Configure TestPyPI repository
+poetry config repositories.testpypi https://test.pypi.org/legacy/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Upload
-twine upload --verbose -r testpypi dist/*
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Clean
-rm -rf build/
-rm -rf dist/
-rm -rf MagnetiCalc.egg-info/
+# Build and upload
+poetry publish --repository testpypi --build
 
 # ----------------------------------------------------------------------------------------------------------------------
 cd dev/

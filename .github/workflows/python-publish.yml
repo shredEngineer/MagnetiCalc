@@ -14,24 +14,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.13'
 
-      - name: Install build tools
+      - name: Install Poetry
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade build twine
+          pip install poetry
+          poetry config virtualenvs.create false
 
       - name: Build distributions
-        run: python -m build
+        run: poetry build
 
       - name: Upload to PyPI or TestPyPI
         env:
-          TWINE_USERNAME: __token__
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
           # USE TESTPYPI
-          # twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/* --verbose
+          # poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
           # ... OR ...
           # USE PYPI
-          twine upload -u __token__ -p "$PYPI_TOKEN" dist/* --verbose
+          poetry publish --username __token__ --password "$PYPI_TOKEN"

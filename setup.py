@@ -51,7 +51,7 @@ is displayed in interactive 3D, using multiple metrics for highlighting the fiel
         "scipy",
         "PyQt5",
         "vispy>=0.6.5",
-        "qtawesome>=1.0.0",
+        "qtawesome>=1.0.0,<=1.3.1",
         "sty",
         "si-prefix>=1.2.2",
         "h5py"

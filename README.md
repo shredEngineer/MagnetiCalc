@@ -178,7 +178,7 @@ import sys
 
 Install (upgrade) all dependencies to the user site-packages directory:
 ```shell
-python3 -m pip install numpy numba scipy PyQt5 vispy qtawesome sty si-prefix h5py --upgrade
+python3 -m pip install numpy numba scipy PyQt5 vispy "qtawesome>=1.0.0,<=1.3.1" sty si-prefix h5py --upgrade
 ```
 
 Use [Git](https://git-scm.com/) to clone the latest version of MagnetiCalc from GitHub: 

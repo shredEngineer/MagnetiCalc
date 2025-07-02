@@ -1,31 +1,46 @@
-# This workflows will upload a Python Package using Twine when a release is created
-# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
-
-name: Upload Python Package
+name: Publish Python Package (TestPyPI or PyPI)
 
 on:
   release:
-    types: [created]
+    types: [published]  # Trigger when a GitHub release is published
 
 jobs:
-  deploy:
-
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade setuptools wheel twine
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        python setup.py sdist bdist_wheel
-        twine upload dist/*
+      # Check out the code
+      - uses: actions/checkout@v4
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Install build tools
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade build twine
+
+      # Build the package (sdist and wheel)
+      - name: Build package
+        run: python -m build
+
+      # Determine target repository and upload accordingly
+      - name: Publish to TestPyPI or PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          echo "🔍 Branch or Tag: $GITHUB_REF"
+          if [[ "$GITHUB_REF" == refs/tags/test* ]]; then
+            echo "🧪 Uploading to TestPyPI..."
+            export TWINE_PASSWORD="$TESTPYPI_TOKEN"
+            twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          else
+            echo "🚀 Uploading to PyPI..."
+            export TWINE_PASSWORD="$PYPI_TOKEN"
+            twine upload dist/*

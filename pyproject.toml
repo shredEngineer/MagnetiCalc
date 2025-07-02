@@ -19,6 +19,8 @@ dependencies = [
     "h5py",
 ]
 
+[project.scripts]
+magneticalc = "magneticalc.__main__:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

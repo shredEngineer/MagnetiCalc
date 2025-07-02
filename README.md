@@ -100,21 +100,61 @@ If you feel like your project should also be included as an example, you are wel
 Installation
 ------------
 
-### With `pip`
+You can install MagnetiCalc either as a standard user or as a developer.
 
-```shell
-pip install magneticalc
-magneticalc
-```
+### For Users
 
-### From source
+This is the recommended way to install MagnetiCalc if you just want to use it.
 
-```shell
-git clone https://github.com/shredEngineer/MagnetiCalc.git
-cd MagnetiCalc
-poetry install
-poetry run magneticalc
-```
+1.  **Install `pipx`**
+
+    `pipx` is a tool that allows you to install and run Python applications in isolated environments. If you don't have it already, you can install it with:
+
+    ```shell
+    python3 -m pip install --user pipx
+    python3 -m pipx ensurepath
+    ```
+
+    You may need to restart your shell for the changes to take effect.
+
+2.  **Install MagnetiCalc**
+
+    ```shell
+    pipx install magneticalc
+    ```
+
+3.  **Run MagnetiCalc**
+
+    ```shell
+    magneticalc
+    ```
+
+### For Developers
+
+If you want to contribute to MagnetiCalc, you'll need to set up a development environment.
+
+1.  **Install Poetry**
+
+    Poetry is a tool for dependency management and packaging in Python. You can find the installation instructions here: [https://python-poetry.org/docs/#installation](https://python-poetry.org/docs/#installation)
+
+2.  **Clone the repository**
+
+    ```shell
+    git clone https://github.com/shredEngineer/MagnetiCalc.git
+    cd MagnetiCalc
+    ```
+
+3.  **Install dependencies**
+
+    ```shell
+    poetry install
+    ```
+
+4.  **Run MagnetiCalc**
+
+    ```shell
+    poetry run magneticalc
+    ```
 
 ### Enabling CUDA Support
 Tested in Ubuntu 20.04, using the NVIDIA CUDA 10.1 driver and NVIDIA GeForce GTX 1650 GPU.

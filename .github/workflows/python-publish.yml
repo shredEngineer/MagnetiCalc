@@ -1,4 +1,4 @@
-name: Publish Python Package (manual toggle)
+name: Publish Python Package
 
 on:
   release:
@@ -31,5 +31,5 @@ jobs:
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
         run: |
           # 💡 ACTIVATE ONE LINE ONLY:
-          twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/*
-          # twine upload -u __token__ -p "$PYPI_TOKEN" dist/*
+          twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$TESTPYPI_TOKEN" dist/* --verbose
+          # twine upload -u __token__ -p "$PYPI_TOKEN" dist/* --verbose

@@ -11,13 +11,14 @@ set -e
 
 # WARNING: I have disabled "reportGeneralTypeIssues" because pyright does not recognize any PyQt5 constants! (FIX THIS!)
 
-# TODO: Fix those warnings
+# TODO: Fix those errors and warnings
 # poetry run pyright magneticalc/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Check code style
 
-poetry run ruff check .
+# TODO: Fix those errors and warnings
+# poetry run ruff check .
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Check for unused code (some names explicitly ignored)

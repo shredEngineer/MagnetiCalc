@@ -21,6 +21,13 @@ jobs:
           pip install poetry
           poetry config virtualenvs.create false
 
+      - name: Configure Poetry repositories
+        run: |
+          # Configure TestPyPI
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          # Configure PyPI (optional, but good practice if you plan to use it later in the workflow)
+          poetry config repositories.pypi https://upload.pypi.org/legacy/
+
       - name: Build distributions
         run: poetry build
 

@@ -1,6 +1,6 @@
 [project]
 name = "magneticalc"
-version = "0.1.0"
+version = "1.16.0"
 description = ""
 authors = [
     {name = "Paul Wilhelm",email = "shredengineer@gmail.com"}
@@ -37,3 +37,6 @@ pyright = "^1.1.402"
 vulture = "^2.14"
 ruff = "^0.12.1"
 
+[tool.poetry.repositories]
+testpypi = { url = "https://test.pypi.org/legacy/" }
+pypi = { url = "https://upload.pypi.org/legacy/" }

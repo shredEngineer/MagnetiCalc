@@ -30,7 +30,7 @@ jobs:
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
           # USE TESTPYPI
-          # poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
+          poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
           # ... OR ...
           # USE PYPI
-          poetry publish --username __token__ --password "$PYPI_TOKEN"
+          # poetry publish --username __token__ --password "$PYPI_TOKEN"

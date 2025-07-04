@@ -25,7 +25,7 @@ jobs:
         run: |
           # Configure TestPyPI
           poetry config repositories.testpypi https://test.pypi.org/legacy/
-          # Configure PyPI (optional, but good practice if you plan to use it later in the workflow)
+          # Configure PyPI
           poetry config repositories.pypi https://upload.pypi.org/legacy/
 
       - name: Build distributions
@@ -37,7 +37,7 @@ jobs:
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
           # USE TESTPYPI
-          poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
+          # poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
           # ... OR ...
           # USE PYPI
-          # poetry publish --username __token__ --password "$PYPI_TOKEN"
+          poetry publish --username __token__ --password "$PYPI_TOKEN"

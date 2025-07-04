@@ -1,9 +1,9 @@
 [project]
 name = "magneticalc"
-version = "1.16.0"
+version = "1.16.1"
 description = ""
 authors = [
-    {name = "Paul Wilhelm",email = "shredengineer@gmail.com"}
+    {name = "Paul Wilhelm",email = "paul@wilhelm.dev"}
 ]
 readme = "README.md"
 requires-python = ">=3.13, <3.14"

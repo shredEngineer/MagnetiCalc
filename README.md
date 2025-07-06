@@ -111,11 +111,8 @@ This is the recommended way to install MagnetiCalc if you just want to use it.
     `pipx` is a tool that allows you to install and run Python applications in isolated environments. If you don't have it already, you can install it with:
 
     ```shell
-    python3 -m pip install --user pipx
-    python3 -m pipx ensurepath
+    sudo apt install pipx
     ```
-
-    You may need to restart your shell for the changes to take effect.
 
 2.  **Install MagnetiCalc**
 

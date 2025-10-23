@@ -20,7 +20,7 @@ from __future__ import annotations
 from typing import Dict
 from PyQt5.QtWidgets import QMessageBox
 from magneticalc.QMessageBox2 import QMessageBox2
-from magneticalc.Backend_Types import BACKEND_TYPE_CUDA
+from magneticalc.Backend_Types import BACKEND_TYPE_JIT
 from magneticalc.Backend_Types import Backend_Types_Available, Backend_Type_Default, backend_type_safe
 from magneticalc.Config import Config
 from magneticalc.Debug import Debug
@@ -170,7 +170,7 @@ class Project(Config):
         """
         return {
             "version"                                   : Version.String,
-            "backend_type"                              : BACKEND_TYPE_CUDA,
+            "backend_type"                              : BACKEND_TYPE_JIT,
             "auto_calculation"                          : "True",
             "num_cores"                                 : "0",
             "wire_points_base"                          :

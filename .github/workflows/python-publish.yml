@@ -11,25 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
 
-      - name: Install Poetry
-        run: |
-          pip install poetry
-          poetry config virtualenvs.create false
+      - name: Install project Python version
+        run: uv python install
 
-      - name: Configure Poetry repositories
-        run: |
-          # Configure TestPyPI
-          poetry config repositories.testpypi https://test.pypi.org/legacy/
-          # Configure PyPI
-          poetry config repositories.pypi https://upload.pypi.org/legacy/
+      - name: Configure project environment
+        run: uv sync --frozen
 
       - name: Build distributions
-        run: poetry build
+        run: uv build
 
       - name: Upload to PyPI or TestPyPI
         env:
@@ -37,7 +29,7 @@ jobs:
           TESTPYPI_TOKEN: ${{ secrets.TESTPYPI_TOKEN }}
         run: |
           # USE TESTPYPI
-          # poetry publish --repository testpypi --username __token__ --password "$TESTPYPI_TOKEN"
+          # uv publish --repository testpypi --token "$TESTPYPI_TOKEN"
           # ... OR ...
           # USE PYPI
-          poetry publish --username __token__ --password "$PYPI_TOKEN"
+          uv publish --token "$PYPI_TOKEN"

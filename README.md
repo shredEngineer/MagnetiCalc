@@ -97,61 +97,86 @@ Some example projects can be found in the `examples/` folder.
 
 If you feel like your project should also be included as an example, you are welcome to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)!
 
-Installation
-------------
+Here’s the updated **Installation** section, drop-in ready and style-preserving:
+
+---
+
+## Installation
+
+If you have trouble installing MagnetiCalc,
+make sure to file an [issue](https://github.com/shredEngineer/MagnetiCalc/issues)
+so I can help you get it up and running!
 
 You can install MagnetiCalc either as a standard user or as a developer.
+
+**Requirements:**
+
+* Python 3.9 … 3.12
+
+**Tested with:**
+
+* Python 3.7 in Linux Mint 19.3
+* Python 3.8 in Ubuntu 20.04
+* Python 3.8.2 in macOS 11.6 (M1)
+* Python 3.8.10 in Windows 10 (21H2)
+* Python 3.10.5 in Ubuntu 20.04
+* Python 3.12.4 in Ubuntu 24.04
+
+**Important:**
+
+* Linux users should reinstall the following driver to avoid errors like *"Could not load the Qt platform plugin"* :
+  `sudo apt install --reinstall libxcb-xinerama0`
 
 ### For Users
 
 This is the recommended way to install MagnetiCalc if you just want to use it.
 
-1.  **Install `pipx`**
+1. **Install `pipx`**
 
-    `pipx` is a tool that allows you to install and run Python applications in isolated environments. If you don't have it already, you can install it with:
+   `pipx` is a tool that allows you to install and run Python applications in isolated environments. If you don't have it already, you can install it with:
 
-    ```shell
-    sudo apt install pipx
-    ```
+   ```shell
+   sudo apt install pipx
+   ```
 
-2.  **Install MagnetiCalc**
+2. **Install MagnetiCalc**
 
-    ```shell
-    pipx install magneticalc
-    ```
+   ```shell
+   pipx install magneticalc
+   ```
 
-3.  **Run MagnetiCalc**
+3. **Run MagnetiCalc**
 
-    ```shell
-    magneticalc
-    ```
+   ```shell
+   magneticalc
+   ```
 
 ### For Developers
 
 If you want to contribute to MagnetiCalc, you'll need to set up a development environment.
 
-1.  **Install Poetry**
+1. **Install uv**
 
-    Poetry is a tool for dependency management and packaging in Python. You can find the installation instructions here: [https://python-poetry.org/docs/#installation](https://python-poetry.org/docs/#installation)
+   uv is a fast Python package manager. Installation instructions: [https://docs.astral.sh/uv/](https://docs.astral.sh/uv/)
 
-2.  **Clone the repository**
+2. **Clone the repository**
 
-    ```shell
-    git clone https://github.com/shredEngineer/MagnetiCalc.git
-    cd MagnetiCalc
-    ```
+   ```shell
+   git clone https://github.com/shredEngineer/MagnetiCalc.git
+   cd MagnetiCalc
+   ```
 
-3.  **Install dependencies**
+3. **Install dependencies**
 
-    ```shell
-    poetry install
-    ```
+   ```shell
+   uv sync
+   ```
 
-4.  **Run MagnetiCalc**
+4. **Run MagnetiCalc**
 
-    ```shell
-    poetry run magneticalc
-    ```
+   ```shell
+   uv run magneticalc
+   ```
 
 ### Enabling CUDA Support
 Tested in Ubuntu 20.04, using the NVIDIA CUDA 10.1 driver and NVIDIA GeForce GTX 1650 GPU.

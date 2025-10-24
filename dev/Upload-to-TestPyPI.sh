@@ -9,11 +9,12 @@ clear
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Configure TestPyPI repository
-poetry config repositories.testpypi https://test.pypi.org/legacy/
+TESTPYPI_URL="https://test.pypi.org/legacy/"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Build and upload
-poetry publish --repository testpypi --build
+uv build
+uv publish --publish-url "$TESTPYPI_URL" --token "$TESTPYPI_TOKEN"
 
 # ----------------------------------------------------------------------------------------------------------------------
 cd dev/

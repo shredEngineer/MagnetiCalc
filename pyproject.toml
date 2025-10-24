@@ -1,10 +1,10 @@
 [project]
 name = "magneticalc"
-version = "1.18.0"
+version = "1.18.1"
 description = "Magnetostatic field calculator with OpenGL GUI"
 readme = "README.md"
 authors = [{ name = "Paul Wilhelm", email = "paul@wilhelm.dev" }]
-requires-python = ">=3.9,<3.13"
+requires-python = ">=3.9,<4.0"
 dependencies = [
   "numpy",
   "numba>=0.55",

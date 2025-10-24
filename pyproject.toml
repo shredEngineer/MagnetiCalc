@@ -26,3 +26,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["magneticalc"]
+
+[dependency-groups]
+dev = [
+  "vulture>=2.14",
+  "pydoctor>=25.4.0",
+  "ruff>=0.12.1",
+  "pyright>=1.1.402",
+]

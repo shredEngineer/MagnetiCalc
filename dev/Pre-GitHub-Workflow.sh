@@ -12,13 +12,13 @@ set -e
 # WARNING: I have disabled "reportGeneralTypeIssues" because pyright does not recognize any PyQt5 constants! (FIX THIS!)
 
 # TODO: Fix those errors and warnings
-# poetry run pyright magneticalc/
+# uv run pyright magneticalc/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Check code style
 
 # TODO: Fix those errors and warnings
-# poetry run ruff check .
+# uv run ruff check .
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Check for unused code (some names explicitly ignored)
@@ -44,7 +44,7 @@ IGNORE_NAMES=$(cat << EOF
   headerData
 EOF
 )
-poetry run vulture \
+uv run vulture \
   --ignore-names "$(echo "$IGNORE_NAMES" | tr -d " \t" | paste -sd ",")" \
   magneticalc/
 
@@ -56,7 +56,7 @@ rm -r docs/*
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Create documentation
 
-poetry run pydoctor \
+uv run pydoctor \
   --make-html \
   --html-output=docs \
   --docformat=epytext \

@@ -182,7 +182,7 @@ If you want to contribute to MagnetiCalc, you'll need to set up a development en
 Tested in Ubuntu 20.04, using the NVIDIA CUDA 10.1 driver and NVIDIA GeForce GTX 1650 GPU.
 
 Please refer to the
-[Numba Installation Guide](https://numba.pydata.org/numba-doc/latest/user/installing.html)
+[Numba Installation Guide](https://numba.readthedocs.io/en/stable/user/installing.html)
 which includes the steps necessary to get CUDA up and running.
 
 License
